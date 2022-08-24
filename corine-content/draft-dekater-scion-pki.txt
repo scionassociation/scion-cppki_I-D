@@ -110,16 +110,18 @@ Table of Contents
    mutually distrustful parties cannot agree on a single trust root
    (monopoly model), and because (2) the security of a plethora of roots
    of trust is only as strong as its weakest link (oligopoly model) -
-   see also Barrera2017.  The monopoly model suffers from two main
-   drawbacks: First, all parties must agree on a single root of trust.
-   Secondly, the single root of trust represents a single point of
-   failure, the misuse of which enables the forging of certificates.
-   Also, its revocation can result in a kill-switch for all the entities
-   it certifies.  The oligopoly model relies on several roots of trust,
-   all equally and completely trusted.  However, this is not
-   automatically better: Whereas the monopoly model has a single point
-   of failure, the oligopoly model has the drawback of exposing more
-   than one point of failure.
+   see also [BARRERA17].
+
+   The monopoly model suffers from two main drawbacks: First, all
+   parties must agree on a single root of trust.  Secondly, the single
+   root of trust represents a single point of failure, the misuse of
+   which enables the forging of certificates.  Also, its revocation can
+   result in a kill-switch for all the entities it certifies.  The
+   oligopoly model relies on several roots of trust, all equally and
+   completely trusted.  However, this is not automatically better:
+   Whereas the monopoly model has a single point of failure, the
+   oligopoly model has the drawback of exposing more than one point of
+   failure.
 
    Thus, there is a need for a trust architecture that supports
    meaningful trust roots in a global environment with inherently
@@ -203,6 +205,13 @@ Table of Contents
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
 4.2.  Informative References
+
+   [BARRERA17]
+              Barrera, D., Chuat, L., Perrig, A., Reischuk, R., and P.
+              Szalachowski, "The SCION internet architecture",
+              Communications of the ACM vol. 60, no. 6, pp. 56-65,
+              DOI 10.1145/3085591, May 2017,
+              <https://doi.org/10.1145/3085591>.
 
    [CHUAT22]  Chuat, L., Legner, M., Basin, D., Hausheer, D., Hitz, S.,
               Mueller, P., and A. Perrig, "The Complete Guide to SCION",
