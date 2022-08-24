@@ -6,16 +6,16 @@ submissiontype: IRTF
 
 docname: draft-dekater-scion-pki-latest
 v: 3
-area: "IRTF"
-workgroup: "Path Aware Networking RG"
+# area: "IRTF"
+# workgroup: "Path Aware Networking RG"
 keyword: Internet-Draft
 venue:
-  group: "Path Aware Networking RG"
-  type: "Research Group"
-  mail: "panrg@irtf.org"
-  arch: "https://www.ietf.org/mail-archive/web/panrg/"
-  github: scionassociation/scion-cppki_I-D
-  latest: "https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-panrg-scion-pki.html"
+#  group: "Path Aware Networking RG"
+#  type: "Research Group"
+#  mail: "panrg@irtf.org"
+#  arch: "https://www.ietf.org/mail-archive/web/panrg/"
+  github: "scionassociation/scion-cppki_I-D"
+  latest: "https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html"
 
 author:
  -   ins: C. de Kater
