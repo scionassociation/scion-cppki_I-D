@@ -1,0 +1,161 @@
+
+
+
+
+Network Working Group                                        C. de Kater
+Internet-Draft                                             N. Rustignoli
+Intended status: Informational                               ETH Zuerich
+Expires: 25 February 2023                                 24 August 2022
+
+
+                        SCION Control-Plane PKI
+                  draft-dekater-panrg-scion-pki-latest
+
+Abstract
+
+   This document presents the trust concept and design of the SCION
+   _control-plane PKI_, SCION's public key infrastructure model.  SCION
+   (Scalability, Control, and Isolation On Next-generation networks) is
+   a path-aware, inter-domain network architecture.  The control-plane
+   PKI, or short CP-PKI, handles cryptographic material and lays the
+   foundation for the authentication procedures in SCION.  It is used by
+   SCION's control plane to authenticate and verify path information,
+   and builds the basis for SCION's special trust model based on so-
+   called Isolation Domains.
+
+   The document first describes the trust model behind SCION's control-
+   plane PKI, and provides a short overview of the certificates, keys,
+   and roles involved.  It then continues with detailed specifications
+   of the building blocks of SCION's control-plane PKI.  The document
+   concludes with several considerations in regard to deploying the
+   control-plane PKI.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-
+   panrg-scion-pki.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-dekater-panrg-scion-
+   pki/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/scionassociation/scion-cppki_I-D.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 25 February 2023.
+
+Copyright Notice
+
+   Copyright (c) 2022 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Conventions and Definitions
+   2.  Security Considerations
+   3.  IANA Considerations
+   4.  References
+     4.1.  Normative References
+     4.2.  Informative References
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   The control-plane PKI (CP-PKI) lays the foundation for the
+   authentication procedures in SCION.  It handles all cryptographic
+   material used in the public key infrastructure of SCION's control
+   plane.  This section first introduces the key concepts of the SCION
+   CP-PKI, including the trust model, its core elements (certificates,
+   keys, and roles), and their relationships.  The sections after the
+   Introduction provide detailed specifications of the building blocks
+   of the CP-PKI.
+
+   *Note*: For more detailed information on the SCION next-generation
+   inter-domain architecture, see [CHUAT22], especially Chapter 2, as
+   well as the IETF Internet Drafts [I-D.scion-overview] and
+   [I-D.scion-components].
+
+1.1.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Security Considerations
+
+   TODO Security
+
+3.  IANA Considerations
+
+   This document has no IANA actions.
+
+4.  References
+
+4.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+4.2.  Informative References
+
+   [CHUAT22]  Chuat, L., Legner, M., Basin, D., Hausheer, D., Hitz, S.,
+              Mueller, P., and A. Perrig, "The Complete Guide to SCION",
+              ISBN 978-3-031-05287-3, 2022,
+              <https://doi.org/10.1007/978-3-031-05288-0>.
+
+   [I-D.scion-components]
+              Rustignoli, N. and C. de Kater, "SCION Components
+              Analysis", 2022, <https://datatracker.ietf.org/doc/draft-
+              rustignoli-panrg-scion-components/>.
+
+   [I-D.scion-overview]
+              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
+              Overview", 2022, <https://datatracker.ietf.org/doc/draft-
+              dekater-panrg-scion-overview/>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Authors' Addresses
+
+   Corine de Kater
+   ETH Zuerich
+   Email: corine.dekatermuehlhaeuser@inf.ethz.ch
+
+
+   Nicola Rustignoli
+   ETH Zuerich
+   Email: nicola.rustignoli@inf.ethz.ch
