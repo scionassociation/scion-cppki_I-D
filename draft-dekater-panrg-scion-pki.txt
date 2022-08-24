@@ -9,7 +9,7 @@ Expires: 25 February 2023                                 24 August 2022
 
 
                         SCION Control-Plane PKI
-                     draft-dekater-scion-pki-latest
+                  draft-dekater-panrg-scion-pki-latest
 
 Abstract
 
@@ -21,8 +21,9 @@ About This Document
 
    The latest revision of this draft can be found at
    https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-
-   scion-pki.html.  Status information for this document may be found at
-   https://datatracker.ietf.org/doc/draft-dekater-scion-pki/.
+   panrg-scion-pki.html.  Status information for this document may be
+   found at https://datatracker.ietf.org/doc/draft-dekater-panrg-scion-
+   pki/.
 
    Source for this draft and an issue tracker can be found at
    https://github.com/scionassociation/scion-cppki_I-D.
