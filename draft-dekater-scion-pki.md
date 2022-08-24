@@ -7,13 +7,13 @@ submissiontype: independent
 docname: draft-dekater-scion-pki-latest
 v: 3
 # area: "IRTF"
-# workgroup: "PANRG"
+# workgroup: "Path Aware Networking RG"
 keyword: Internet-Draft
 venue:
-#  group: "WG"
-#  type: "Working Group"
+#  group: "Path Aware Networking RG"
+#  type: "Research Group"
 #  mail: "panrg@irtf.org"
-#  arch: "https://datatracker.ietf.org/rg/panrg"
+#  arch: "https://www.ietf.org/mail-archive/web/panrg/"
   github: "scionassociation/scion-cppki_I-D"
   latest: "https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html"
 
