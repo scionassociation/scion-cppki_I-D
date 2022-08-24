@@ -4,7 +4,7 @@ abbrev: "SCION CPPKI"
 category: info
 submissiontype: IRTF
 
-docname: draft-dekater-panrg-scion-pki-latest
+docname: draft-dekater-scion-pki-latest
 v: 3
 area: "IRTF"
 workgroup: "Path Aware Networking RG"
