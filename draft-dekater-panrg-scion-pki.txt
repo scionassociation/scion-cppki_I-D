@@ -13,7 +13,22 @@ Expires: 25 February 2023                                 24 August 2022
 
 Abstract
 
-   TODO Abstract
+   This document presents the trust concept and design of the SCION
+   _control-plane PKI_, SCION's public key infrastructure model.  SCION
+   (Scalability, Control, and Isolation On Next-generation networks) is
+   a path-aware, inter-domain network architecture.  The control-plane
+   PKI, or short CP-PKI, handles cryptographic material and lays the
+   foundation for the authentication procedures in SCION.  It is used by
+   SCION's control plane to authenticate and verify path information,
+   and builds the basis for SCION's special trust model based on so-
+   called Isolation Domains.
+
+   The document first describes the trust model behind SCION's control-
+   plane PKI, and provides a short overview of the certificates, keys,
+   and roles involved.  It then continues with detailed specifications
+   of the building blocks of SCION's control-plane PKI.  The document
+   concludes with several considerations in regard to deploying the
+   control-plane PKI.
 
 About This Document
 
@@ -59,18 +74,32 @@ Copyright Notice
 Table of Contents
 
    1.  Introduction
-   2.  Conventions and Definitions
-   3.  Security Considerations
-   4.  IANA Considerations
-   5.  Normative References
+     1.1.  Conventions and Definitions
+   2.  Security Considerations
+   3.  IANA Considerations
+   4.  References
+     4.1.  Normative References
+     4.2.  Informative References
    Acknowledgments
    Authors' Addresses
 
 1.  Introduction
 
-   TODO Introduction
+   The control-plane PKI (CP-PKI) lays the foundation for the
+   authentication procedures in SCION.  It handles all cryptographic
+   material used in the public key infrastructure of SCION's control
+   plane.  This section first introduces the key concepts of the SCION
+   CP-PKI, including the trust model, its core elements (certificates,
+   keys, and roles), and their relationships.  The sections after the
+   Introduction provide detailed specifications of the building blocks
+   of the CP-PKI.
 
-2.  Conventions and Definitions
+   *Note*: For more detailed information on the SCION next-generation
+   inter-domain architecture, see [CHUAT22], especially Chapter 2, as
+   well as the IETF Internet Drafts [I-D.scion-overview] and
+   [I-D.scion-components].
+
+1.1.  Conventions and Definitions
 
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
@@ -78,15 +107,17 @@ Table of Contents
    BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
-3.  Security Considerations
+2.  Security Considerations
 
    TODO Security
 
-4.  IANA Considerations
+3.  IANA Considerations
 
    This document has no IANA actions.
 
-5.  Normative References
+4.  References
+
+4.1.  Normative References
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -96,6 +127,23 @@ Table of Contents
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+4.2.  Informative References
+
+   [CHUAT22]  Chuat, L., Legner, M., Basin, D., Hausheer, D., Hitz, S.,
+              Mueller, P., and A. Perrig, "The Complete Guide to SCION",
+              ISBN 978-3-031-05287-3, 2022,
+              <https://doi.org/10.1007/978-3-031-05288-0>.
+
+   [I-D.scion-components]
+              Rustignoli, N. and C. de Kater, "SCION Components
+              Analysis", 2022, <https://datatracker.ietf.org/doc/draft-
+              rustignoli-panrg-scion-components/>.
+
+   [I-D.scion-overview]
+              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
+              Overview", 2022, <https://datatracker.ietf.org/doc/draft-
+              dekater-panrg-scion-overview/>.
 
 Acknowledgments
 
