@@ -1,0 +1,235 @@
+
+
+
+
+Network Working Group                                        C. de Kater
+Internet-Draft                                             N. Rustignoli
+Intended status: Informational                               ETH Zuerich
+Expires: 25 February 2023                                 24 August 2022
+
+
+                        SCION Control-Plane PKI
+                     draft-dekater-scion-pki-latest
+
+Abstract
+
+   This document presents the trust concept and design of the SCION
+   _control-plane PKI_, SCION's public key infrastructure model.  SCION
+   (Scalability, Control, and Isolation On Next-generation networks) is
+   a path-aware, inter-domain network architecture.  The control-plane
+   PKI, or short CP-PKI, handles cryptographic material and lays the
+   foundation for the authentication procedures in SCION.  It is used by
+   SCION's control plane to authenticate and verify path information,
+   and builds the basis for SCION's special trust model based on so-
+   called Isolation Domains.
+
+   The document first describes the trust model behind SCION's control-
+   plane PKI, and provides a short overview of the certificates, keys,
+   and roles involved.  It then continues with detailed specifications
+   of the building blocks of SCION's control-plane PKI.  The document
+   concludes with several considerations in regard to deploying the
+   control-plane PKI.
+
+About This Document
+
+   This note is to be removed before publishing as an RFC.
+
+   The latest revision of this draft can be found at
+   https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-
+   scion-pki.html.  Status information for this document may be found at
+   https://datatracker.ietf.org/doc/draft-dekater-scion-pki/.
+
+   Source for this draft and an issue tracker can be found at
+   https://github.com/scionassociation/scion-cppki_I-D.
+
+Status of This Memo
+
+   This Internet-Draft is submitted in full conformance with the
+   provisions of BCP 78 and BCP 79.
+
+   Internet-Drafts are working documents of the Internet Engineering
+   Task Force (IETF).  Note that other groups may also distribute
+   working documents as Internet-Drafts.  The list of current Internet-
+   Drafts is at https://datatracker.ietf.org/drafts/current/.
+
+   Internet-Drafts are draft documents valid for a maximum of six months
+   and may be updated, replaced, or obsoleted by other documents at any
+   time.  It is inappropriate to use Internet-Drafts as reference
+   material or to cite them other than as "work in progress."
+
+   This Internet-Draft will expire on 25 February 2023.
+
+Copyright Notice
+
+   Copyright (c) 2022 IETF Trust and the persons identified as the
+   document authors.  All rights reserved.
+
+   This document is subject to BCP 78 and the IETF Trust's Legal
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.
+
+Table of Contents
+
+   1.  Introduction
+     1.1.  Trust Model
+     1.2.  Conventions and Definitions
+   2.  Security Considerations
+   3.  IANA Considerations
+   4.  References
+     4.1.  Normative References
+     4.2.  Informative References
+   Acknowledgments
+   Authors' Addresses
+
+1.  Introduction
+
+   The control-plane PKI (CP-PKI) lays the foundation for the
+   authentication procedures in SCION.  It handles all cryptographic
+   material used in the public key infrastructure of SCION's control
+   plane.  This section first introduces the key concepts of the SCION
+   CP-PKI, including the trust model, its core elements (certificates,
+   keys, and roles), and their relationships.  The sections after the
+   Introduction provide detailed specifications of the building blocks
+   of the CP-PKI.
+
+   *Note*: For more detailed information on the SCION next-generation
+   inter-domain architecture, see [CHUAT22], especially Chapter 2, as
+   well as the IETF Internet Drafts [I-D.scion-overview] and
+   [I-D.scion-components].
+
+1.1.  Trust Model
+
+   Given the diverse nature of the constituents in the current Internet,
+   an important challenge is how to scale authentication of network
+   elements (such as AS ownership, hop-by-hop routing information, name
+   servers for DNS, and domains for TLS) to the global environment.  The
+   roots of trust of currently prevalent public key infrastructure (PKI)
+   models do not scale well to a global environment, because (1)
+   mutually distrustful parties cannot agree on a single trust root
+   (monopoly model), and because (2) the security of a plethora of roots
+   of trust is only as strong as its weakest link (oligopoly model) -
+   see also Barrera2017.  The monopoly model suffers from two main
+   drawbacks: First, all parties must agree on a single root of trust.
+   Secondly, the single root of trust represents a single point of
+   failure, the misuse of which enables the forging of certificates.
+   Also, its revocation can result in a kill-switch for all the entities
+   it certifies.  The oligopoly model relies on several roots of trust,
+   all equally and completely trusted.  However, this is not
+   automatically better: Whereas the monopoly model has a single point
+   of failure, the oligopoly model has the drawback of exposing more
+   than one point of failure.
+
+   Thus, there is a need for a trust architecture that supports
+   meaningful trust roots in a global environment with inherently
+   distrustful parties.  This new trust architecture should provide the
+   following properties:
+
+   *  Trust agility (see further below);
+
+   *  Resilience to single root of trust compromise;
+
+   *  Multilateral governance; and
+
+   *  Support for policy versioning and updates.
+
+   Ideally, the trust architecture allows parties that mutually trust
+   each other to form their own trust "union" or "domain", and to freely
+   decide whether to trust other trust unions (domains) outside their
+   own trust bubble.
+
+   To fulfill the above requirements, which in fact apply well to inter-
+   domain networking, SCION introduces the concept of *Isolation
+   Domains*. An Isolation Domain (ISD) is a building block for achieving
+   high availability, scalability, and support for heterogeneous trust.
+   It consists of a logical grouping of ASes that share a uniform trust
+   environment (i.e., a common jurisdiction).  An ISD is administered by
+   multiple ASes that form the ISD core; these are the *core ASes*. It
+   is governed by a policy called the *Trust Root Configuration* (TRC),
+   which is negotiated by the ISD core.  The TRC defines the locally
+   scoped roots of trust used to validate bindings between names and
+   public keys.
+
+   Authentication in SCION is based on digital certificates that bind
+   identifiers to public keys and carry digital signatures that are
+   verified by roots of trust.  SCION allows each ISD to define its own
+   set of trust roots, along with the policy governing their use.  Such
+   scoping of trust roots within an ISD improves security, as compromise
+   of a private key associated with a trust root cannot be used to forge
+   a certificate outside the ISD.  An ISD's trust roots and policy are
+   encoded in the TRC, which has a version number, a list of public keys
+   that serves as root of trust for various purposes, and policies
+   governing the number of signatures required for performing different
+   types of actions.  The TRC serves as a way to bootstrap all
+   authentication within SCION.  Additionally, TRC versioning is used to
+   efficiently revoke compromised roots of trust.
+
+   The TRC also provides _trust agility_, that is, it enables users to
+   select the trust roots used to initiate certificate validation.  This
+   implies that users are free to choose an ISD they believe maintains a
+   non-compromised set of trust roots.  ISD members can also decide
+   whether to trust other ISDs and thus transparently define trust
+   relationships between parts of the network.  SCION trust model,
+   therefore, differs from the one provided by other PKI architectures.
+
+1.2.  Conventions and Definitions
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
+
+2.  Security Considerations
+
+   TODO Security
+
+3.  IANA Considerations
+
+   This document has no IANA actions.
+
+4.  References
+
+4.1.  Normative References
+
+   [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
+              Requirement Levels", BCP 14, RFC 2119,
+              DOI 10.17487/RFC2119, March 1997,
+              <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+4.2.  Informative References
+
+   [CHUAT22]  Chuat, L., Legner, M., Basin, D., Hausheer, D., Hitz, S.,
+              Mueller, P., and A. Perrig, "The Complete Guide to SCION",
+              ISBN 978-3-031-05287-3, 2022,
+              <https://doi.org/10.1007/978-3-031-05288-0>.
+
+   [I-D.scion-components]
+              Rustignoli, N. and C. de Kater, "SCION Components
+              Analysis", 2022, <https://datatracker.ietf.org/doc/draft-
+              rustignoli-panrg-scion-components/>.
+
+   [I-D.scion-overview]
+              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
+              Overview", 2022, <https://datatracker.ietf.org/doc/draft-
+              dekater-panrg-scion-overview/>.
+
+Acknowledgments
+
+   TODO acknowledge.
+
+Authors' Addresses
+
+   Corine de Kater
+   ETH Zuerich
+   Email: corine.dekatermuehlhaeuser@inf.ethz.ch
+
+
+   Nicola Rustignoli
+   ETH Zuerich
+   Email: nicola.rustignoli@inf.ethz.ch
