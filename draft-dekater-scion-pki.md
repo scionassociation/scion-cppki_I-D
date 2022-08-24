@@ -6,14 +6,14 @@ submissiontype: independent
 
 docname: draft-dekater-scion-pki-latest
 v: 3
-# area: 
-# workgroup: 
+# area: "IRTF"
+# workgroup: "PANRG"
 keyword: Internet-Draft
 venue:
-#  group: 
-#  type: 
-#  mail: 
-#  arch: 
+#  group: "WG"
+#  type: "Working Group"
+#  mail: "panrg@irtf.org"
+#  arch: "https://datatracker.ietf.org/rg/panrg"
   github: "scionassociation/scion-cppki_I-D"
   latest: "https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html"
 
