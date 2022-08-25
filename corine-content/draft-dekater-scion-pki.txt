@@ -405,10 +405,8 @@ Table of Contents
 
                                   Table 1
 
-   Table: Key pairs
-
-   1: K_x = PK_x + SK_x, where x = certificate type, PK_x = public key,
-   and SK_x = private key
+   _1)_ : K_x = PK_x + SK_x, where x = certificate type, PK_x = public
+   key, and SK_x = private key
 
 2.1.1.  Control-Plane Root Certificate
 
