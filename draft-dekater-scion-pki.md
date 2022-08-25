@@ -184,7 +184,7 @@ The output of the bootstrapping of trust ceremony, or the trust "function", are 
 {::boilerplate bcp14-tagged}
 
 
-# Certificate Specification
+# Certificate Specification {#cert-specs}
 
 This section provides a detailed specification of all certificates used in SCION's control-plane PKI. It starts with an overview of the main keys and certificates.
 
@@ -219,6 +219,28 @@ The following list summarizes the main certificates and corresponding key pairs 
    - Section [Voting Certificates](#cp-voting-cert) provides more details on the voting certificates.
 
 The tables below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
+
+### Control-Plane Root Certificate {#cp-root-cert}
+
+TODO
+
+### Control-Plane CA Certificate {#cp-ca-cert}
+
+TODO
+
+### Control-Plane AS Certificate {#cp-as-cert}
+
+TODO
+
+### Voting Certificates {#cp-voting-cert}
+
+TODO
+
+
+
+# Specification of the Trust Root Configuration {#trc-specification}
+
+TODO
 
 
 # Security Considerations
