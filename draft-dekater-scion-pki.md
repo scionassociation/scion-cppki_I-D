@@ -115,8 +115,8 @@ The document first describes the trust model behind SCION's control-plane PKI, a
 
 The control-plane PKI (CP-PKI) lays the foundation for the authentication procedures in SCION. It handles all cryptographic material used in the public key infrastructure of SCION's control plane. This section first introduces the key concepts of the SCION CP-PKI, including the trust model, its core elements (certificates, keys, and roles), and their relationships. The sections after the Introduction provide detailed specifications of the building blocks of the CP-PKI.
 
-**Note:**<br>
-For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
+**Note:** For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
+
 
 ## Trust Model
 
@@ -212,8 +212,8 @@ The following list summarizes the main certificates and corresponding key pairs 
    - *CP AS certificate*: This is the container for the public key associated with the CP AS private key.
    - Section [Control-Plane AS Certificate](#cp-as-cert) provides more details on the CP AS certificates.
 
-**Note:**<br>
-The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
+**Note:** The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
+
 
 - **Voting Certificates** - Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.
    - *Regular voting private key*: This private key is used to sign regular TRC updates. The corresponding public key is embedded in TRCs (via the regular voting certificate).
@@ -267,8 +267,7 @@ SCION control-plane certificates are X.509 v3 certificates. Every certificate ha
 
 The next code block shows the generic format of SCION control-plane certificates. It is followed by a description of the SCION specifics for each certificate field.
 
-**Note:**<br>
-For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+**Note:** For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
 
 ~~~~
    TBSCertificate ::= SEQUENCE {
@@ -345,8 +344,7 @@ The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecd
        us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 4 }
 ~~~~
 
-**Important:**<br>
-The accepted cryptographic algorithms listed in this document are the only currently accepted cryptographic algorithms. SCION implementations MUST reject cryptographic algorithms not found in the list.
+**Important:** The accepted cryptographic algorithms listed in this document are the only currently accepted cryptographic algorithms. SCION implementations MUST reject cryptographic algorithms not found in the list.
 
 The only accepted curves for ECDSA are:
 
@@ -372,8 +370,7 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
 
-**Important:**<br>
-SCION implementations MUST include support for P-256, P-384, and P-521.
+**Important:** SCION implementations MUST include support for P-256, P-384, and P-521.
 
 
 ##### `AlgorithmIdentifier` Sequence
@@ -387,8 +384,7 @@ SCION implementations MUST include support for P-256, P-384, and P-521.
    }
 ~~~~
 
-**Note:**<br>
-In SCION implementations, the `parameters` field MUST be absent, as defined in {{RFC8410}}.
+**Note:** In SCION implementations, the `parameters` field MUST be absent, as defined in {{RFC8410}}.
 
 In general, if the `AlgorithmIdentifier` in a specific SCION implementation is not defined as described above, the implementation should stop the validation process entirely and error out.
 
@@ -440,8 +436,7 @@ Except for the `ISD-AS number` attribute, all the above attributes are defined i
 
 As an additional constraint compared to {{RFC5280}}, SCION implementations MUST use the `UTF8String` value type for all the above attributes, including the `ISD-AS number` attribute.
 
-**Note:**<br>
-Besides the above listed required attributes, SCION implementations may additionally also support other attributes.
+**Note:** Besides the above listed required attributes, SCION implementations may additionally also support other attributes.
 
 
 ##### `ISD-AS number` Attribute {#isd-as-nr}
@@ -454,8 +449,7 @@ The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open
 
 where `id-ana` specifies the root SCION object identifier (OID).
 
-**Note:**<br>
-The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+**Note:** The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
 `id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
 The following points apply when setting the attribute value of the `ISD-AS number` attribute:
