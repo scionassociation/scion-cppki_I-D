@@ -222,15 +222,15 @@ The tables below provide a formal overview of the different types of key pairs a
 
 *Table 1: Key pairs*
 
-| Name                 | Notation^1)^   	| Used to verify/sign   	|
+| Name                 | Notation<sup>1)</sup>   	| Used to verify/sign   	|
 | -------------------- | ------- | ----------------------- |
-| Sensitive voting key | K~sens~ | TRC updates (sensitive) |
-| Regular voting key   | K~reg~  | TRC updates (regular)   |
-| CP root key          | K~root~ | CP CA certificates      |
-| CP CA key            | K~CA~   | CP AS certificates      |
-| CP AS key            | K~AS~   | PCBs, path segments     |
+| Sensitive voting key | K<sub>sens</sub> | TRC updates (sensitive) |
+| Regular voting key   | K<sub>reg</sub>  | TRC updates (regular)   |
+| CP root key          | K<sub>root</sub> | CP CA certificates      |
+| CP CA key            | K<sub>CA</sub>   | CP AS certificates      |
+| CP AS key            | K<sub>AS</sub>   | PCBs, path segments     |
 
-1) K~x~ = PK~x~ + SK~x~, where x = certificate type, PK~x~ = public key, and SK~x~ = private key
+1) K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
