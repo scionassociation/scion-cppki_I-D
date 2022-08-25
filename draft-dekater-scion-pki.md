@@ -32,6 +32,7 @@ normative:
 
 informative:
   RFC5280:
+  X.509: 
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
     title: "The Complete Guide to SCION"
@@ -151,7 +152,7 @@ There are two types of TRC updates: regular and sensitive. A **regular TRC updat
 
 The base TRC constitutes the root of trust within an ISD. The next figure provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to the chapters [Certificate Specification](#cert-specs) and [Specification of the Trust Root Configuration](#trc-specification).
 
->>>>>> **Figure 2** - *Chain of trust within an ISD*
+>>>>>> **Figure 1** - *Chain of trust within an ISD*
 
 All certificates used in SCION's control-plane PKI are in X.509 v3 format {{RFC5280}}. Additionally, the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key.
 
@@ -218,7 +219,7 @@ The following list summarizes the main certificates and corresponding key pairs 
    - *Sensitive voting certificate*: This is the container for the public key associated with the sensitive voting private key.
    - Section [Voting Certificates](#cp-voting-cert) provides more details on the voting certificates.
 
-The tables below {{table-1}} provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
+{{table-1}} and {{table-2}} below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
 
 
 | Name                 | Notation (1)   	| Used to verify/sign   	|
@@ -232,6 +233,30 @@ The tables below {{table-1}} provide a formal overview of the different types of
 
 (1) : K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
+| Name                   | Notation       	 | Signed with           	                  | Contains                                                | Validity (2) |              
+|------------------------+-------------------+------------------------------------------+---------------------------------------------------------+--------------|
+| TRC (trust root conf)  | TRC               | SK<sub>sens</sub>, SK<sub>reg</sub> (1)  | C<sub>root</sub>, C<sub>sens</sub>, C<sub>reg</sub> (1) | 1 year       |
+| Sensitive voting cert. | C<sub>sens</sub>  | SK<sub>sens</sub>                        | PK<sub>sens</sub>                                       | 5 years      |
+| Regular voting cert.   | C<sub>reg</sub>   | SK<sub>reg</sub>                         | PK<sub>reg</sub>                                        | 1 year       |
+| CP root certificate    | C<sub>root</sub>  | SK<sub>root</sub>                        | PK<sub>root</sub>                                       | 1 year       |
+| CP CA certificate      | C<sub>CA</sub>    | SK<sub>root</sub>                        | PK<sub>CA</sub>                                         | 11 days (3)  |
+| CP AS certificate      | C<sub>AS</sub>    | SK<sub>CA</sub>                          | PK<sub>AS</sub>                                         | 3 days       |
+{: #table-2 title="Certificates"}
+
+(1) Multiple signatures and certificates of each type may be included in a TRC.
+(2) Recommended maximum validity period.
+(3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable best possible operational procedures when performing a CA certificate rollover.
+
+Figure 2 illustrates, at a high level, the relationship between a TRC and the five types of certificates. 
+
+>>>>>>>>>>>>>>> **figure 2** - *TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.*
+
+
+## Certificate Specification
+
+This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of {{RFC5280}}, which in turn builds on top of {{X.509}}. However, the SCION specification is more restrictive.
+
+This section defines the additional constraints compared to [RFC5280]_ for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation [scionproto]_. Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
