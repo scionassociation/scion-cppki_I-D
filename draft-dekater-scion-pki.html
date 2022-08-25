@@ -1232,7 +1232,8 @@ svg :is([stroke="fill"], [fill^="#fff"]) {
 <a href="#section-1" class="section-number selfRef">1. </a><a href="#name-introduction" class="section-name selfRef">Introduction</a>
       </h2>
 <p id="section-1-1">The control-plane PKI (CP-PKI) lays the foundation for the authentication procedures in SCION. It handles all cryptographic material used in the public key infrastructure of SCION's control plane. This section first introduces the key concepts of the SCION CP-PKI, including the trust model, its core elements (certificates, keys, and roles), and their relationships. The sections after the Introduction provide detailed specifications of the building blocks of the CP-PKI.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2"><strong>Note</strong>: For more detailed information on the SCION next-generation inter-domain architecture, see <span>[<a href="#CHUAT22" class="xref">CHUAT22</a>]</span>, especially Chapter 2, as well as the IETF Internet Drafts <span>[<a href="#I-D.scion-overview" class="xref">I-D.scion-overview</a>]</span> and <span>[<a href="#I-D.scion-components" class="xref">I-D.scion-components</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-2"><strong>Note:</strong><br>
+For more detailed information on the SCION next-generation inter-domain architecture, see <span>[<a href="#CHUAT22" class="xref">CHUAT22</a>]</span>, especially Chapter 2, as well as the IETF Internet Drafts <span>[<a href="#I-D.scion-overview" class="xref">I-D.scion-overview</a>]</span> and <span>[<a href="#I-D.scion-components" class="xref">I-D.scion-components</a>]</span>.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <div id="trust-model">
 <section id="section-1.1">
         <h3 id="name-trust-model">
@@ -1413,7 +1414,8 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
             </ul>
 </li>
         </ul>
-<p id="section-2.1-5"><strong>Note</strong>: The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see <span><a href="#trc-specification" class="xref">Specification of the Trust Root Configuration</a> (<a href="#trc-specification" class="xref">Section 3</a>)</span>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.1-5"><strong>Note:</strong><br>
+The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see <span><a href="#trc-specification" class="xref">Specification of the Trust Root Configuration</a> (<a href="#trc-specification" class="xref">Section 3</a>)</span>.<a href="#section-2.1-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.1-6.1">
             <p id="section-2.1-6.1.1"><strong>Voting Certificates</strong> - Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.<a href="#section-2.1-6.1.1" class="pilcrow">¶</a></p>
@@ -1605,7 +1607,8 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
           </h4>
 <p id="section-2.2.1-1">SCION control-plane certificates are X.509 v3 certificates. Every certificate has a <code>subject</code>, which is the entity that owns the certificate, and an <code>issuer</code>, which is the entity that issued the certificate, usually a CA.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.2.1-2">The next code block shows the generic format of SCION control-plane certificates. It is followed by a description of the SCION specifics for each certificate field.<a href="#section-2.2.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-3"><strong>Note</strong>: For information regarding the full format, see <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a>, clause 7.2.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.1-3"><strong>Note:</strong><br>
+For information regarding the full format, see <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a>, clause 7.2.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
 <div class="alignLeft art-text artwork" id="section-2.2.1-4">
 <pre>
    TBSCertificate ::= SEQUENCE {
@@ -1650,20 +1653,234 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
    }
 </pre><a href="#section-2.2.1-4" class="pilcrow">¶</a>
 </div>
-<div id="version">
+<div id="version-field">
 <section id="section-2.2.1.1">
-            <h5 id="name-version">
-<a href="#section-2.2.1.1" class="section-number selfRef">2.2.1.1. </a><a href="#name-version" class="section-name selfRef">Version</a>
+            <h5 id="name-version-field">
+<a href="#section-2.2.1.1" class="section-number selfRef">2.2.1.1. </a><a href="#name-version-field" class="section-name selfRef"><code>version</code> Field</a>
             </h5>
-<p id="section-2.2.1.1-1">The <code>version</code> field is always set to <code>v3</code> in SCION, as extensions are mandatory.<a href="#section-2.2.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.1-1">The <code>version</code> field <span class="bcp14">MUST</span> be set to <code>v3</code> in SCION, as extensions are mandatory.<a href="#section-2.2.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="serial-number">
+<div id="serialnumber-field">
 <section id="section-2.2.1.2">
-            <h5 id="name-serial-number">
-<a href="#section-2.2.1.2" class="section-number selfRef">2.2.1.2. </a><a href="#name-serial-number" class="section-name selfRef">Serial number</a>
+            <h5 id="name-serialnumber-field">
+<a href="#section-2.2.1.2" class="section-number selfRef">2.2.1.2. </a><a href="#name-serialnumber-field" class="section-name selfRef"><code>serialNumber</code> Field</a>
             </h5>
 <p id="section-2.2.1.2-1">The <code>serialNumber</code> field is used as specified in <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>.<a href="#section-2.2.1.2-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="certificate-signature">
+<section id="section-2.2.1.3">
+            <h5 id="name-signature-field">
+<a href="#section-2.2.1.3" class="section-number selfRef">2.2.1.3. </a><a href="#name-signature-field" class="section-name selfRef"><code>signature</code> Field</a>
+            </h5>
+<p id="section-2.2.1.3-1">For security reasons, SCION uses a custom list of acceptable signature algorithms. This list of acceptable signature algorithms is specified in the <code>signature</code> field.<a href="#section-2.2.1.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.3-2">The list currently only contains the ECDSA signature algorithm (defined in <a href="https://standards.globalspec.com/std/1955141/ansi-x9-62">X.962</a>) - see the code block below. However, the list might be extended in the future.<a href="#section-2.2.1.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.3-3">The Object Identifiers (OIDs) for ECDSA are defined as <code>ecdsa-with-SHA256</code>, <code>ecdsa-with-SHA384</code>, and <code>ecdsa-with-SHA512</code> in <span>[<a href="#RFC5758" class="xref">RFC5758</a>]</span>. They are included as follows:<a href="#section-2.2.1.3-3" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.3-4">
+<pre>
+   sigAlg-ecdsa-SHA256      ALGORITHM         ::= { OID ecdsa-with-SHA256 }
+   sigAlg-ecdsa-SHA384      ALGORITHM         ::= { OID ecdsa-with-SHA384 }
+   sigAlg-ecdsa-SHA512      ALGORITHM         ::= { OID ecdsa-with-SHA512 }
+
+   ecdsa-with-SHA256 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 2 }
+   ecdsa-with-SHA384 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 3 }
+   ecdsa-with-SHA512 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 4 }
+</pre><a href="#section-2.2.1.3-4" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.3-5"><strong>Important:</strong><br>
+The accepted cryptographic algorithms listed in this document are the only currently accepted cryptographic algorithms. SCION implementations <span class="bcp14">MUST</span> reject cryptographic algorithms not found in the list.<a href="#section-2.2.1.3-5" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.3-6">The only accepted curves for ECDSA are:<a href="#section-2.2.1.3-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1.3-7.1">NIST P-256 (<a href="http://dx.doi.org/10.6028/NIST.FIPS.186-4">NISTFIPS186-4</a>, section D.1.2.3) (named <code>secp256r1</code> in <span>[<a href="#RFC5480" class="xref">RFC5480</a>]</span>)<a href="#section-2.2.1.3-7.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.3-7.2">NIST P-384 (<a href="http://dx.doi.org/10.6028/NIST.FIPS.186-4">NISTFIPS186-4</a>, section D.1.2.4) (named <code>secp384r1</code> in <span>[<a href="#RFC5480" class="xref">RFC5480</a>]</span>)<a href="#section-2.2.1.3-7.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.3-7.3">NIST P-521 (<a href="http://dx.doi.org/10.6028/NIST.FIPS.186-4">NISTFIPS186-4</a>, section D.1.2.5) (named <code>secp521r1</code> in <span>[<a href="#RFC5480" class="xref">RFC5480</a>]</span>)<a href="#section-2.2.1.3-7.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-2.2.1.3-8">The OIDs for the above curves are:<a href="#section-2.2.1.3-8" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.3-9">
+<pre>
+   secp256r1 OBJECT IDENTIFIER ::= {
+       iso(1) member-body(2) us(840) ansi-X9-62(10045) curves(3)
+       prime(1) 7 }
+   secp384r1 OBJECT IDENTIFIER ::= {
+       iso(1) identified-organization(3) certicom(132) curve(0) 34 }
+   secp521r1 OBJECT IDENTIFIER ::= {
+       iso(1) identified-organization(3) certicom(132) curve(0) 35 }
+</pre><a href="#section-2.2.1.3-9" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.3-10">The appropriate hash size to use when producing a signature with an ECDSA key is:<a href="#section-2.2.1.3-10" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1.3-11.1">ECDSA with SHA-256, for a P-256 signing key<a href="#section-2.2.1.3-11.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.3-11.2">ECDSA with SHA-384, for a P-384 signing key<a href="#section-2.2.1.3-11.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.3-11.3">ECDSA with SHA-512, for a P-521 signing key<a href="#section-2.2.1.3-11.3" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-2.2.1.3-12"><strong>Important:</strong><br>
+SCION implementations <span class="bcp14">MUST</span> include support for P-256, P-384, and P-521.<a href="#section-2.2.1.3-12" class="pilcrow">¶</a></p>
+<div id="algorithmidentifier-sequence">
+<section id="section-2.2.1.3.1">
+              <h6 id="name-algorithmidentifier-sequenc">
+<a href="#section-2.2.1.3.1" class="section-number selfRef">2.2.1.3.1. </a><a href="#name-algorithmidentifier-sequenc" class="section-name selfRef"><code>AlgorithmIdentifier</code> Sequence</a>
+              </h6>
+<p id="section-2.2.1.3.1-1"><a href="https://handle.itu.int/11.1002/1000/13031">X.509</a> defines the syntax of the <code>AlgorithmIdentifier</code> as follows:<a href="#section-2.2.1.3.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.3.1-2">
+<pre>
+   AlgorithmIdentifier  ::=  SEQUENCE  {
+       algorithm   OBJECT IDENTIFIER,
+       parameters  ANY DEFINED BY algorithm OPTIONAL
+   }
+</pre><a href="#section-2.2.1.3.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.3.1-3"><strong>Note:</strong><br>
+In SCION implementations, the <code>parameters</code> field <span class="bcp14">MUST</span> be absent, as defined in <span>[<a href="#RFC8410" class="xref">RFC8410</a>]</span>.<a href="#section-2.2.1.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.3.1-4">In general, if the <code>AlgorithmIdentifier</code> in a specific SCION implementation is not defined as described above, the implementation should stop the validation process entirely and error out.<a href="#section-2.2.1.3.1-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="issuer">
+<section id="section-2.2.1.4">
+            <h5 id="name-issuer-field">
+<a href="#section-2.2.1.4" class="section-number selfRef">2.2.1.4. </a><a href="#name-issuer-field" class="section-name selfRef"><code>issuer</code> Field</a>
+            </h5>
+<p id="section-2.2.1.4-1">The <code>issuer</code> field contains the distinguished name (DN) of the CA that created the certificate. The <code>issuer</code> field <span class="bcp14">MUST</span> be non-empty.<a href="#section-2.2.1.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.4-2"><a href="http://handle.itu.int/11.1002/1000/13030">X.501</a> (10/2016), clause 9.2, defines the syntax for <code>Name</code> as follows:<a href="#section-2.2.1.4-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.4-3">
+<pre>
+   Name ::= CHOICE {
+       rdnSequence RDNSequence
+   }
+
+   RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
+
+   RelativeDistinguishedName ::= SET SIZE (1..MAX) OF AttributeTypeAndValue
+
+   AttributeType ::= OBJECT IDENTIFIER
+
+   AttributeValue ::= ANY -- DEFINED BY AttributeType
+</pre><a href="#section-2.2.1.4-3" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.4-4">In most SCION implementations, the type (<code>AttributeType</code>) will be a <code>DirectoryString</code> type, outlined as follows:<a href="#section-2.2.1.4-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.4-5">
+<pre>
+   DirectoryString ::= CHOICE {
+       teletexStrings TeletexString (SIZE (1..MAX)),
+       printableString PrintableString (SIZE (1..MAX)),
+       universalString UniversalString (SIZE (1..MAX)),
+       utf8String UTF8String (SIZE (1..MAX)),
+       bmpString BMPString (SIZE (1..MAX)),
+   }
+</pre><a href="#section-2.2.1.4-5" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.4-6">All SCION implementations <span class="bcp14">MUST</span> support the following standard attribute types:<a href="#section-2.2.1.4-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1.4-7.1">
+                <code>country</code><a href="#section-2.2.1.4-7.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.2">
+                <code>organization</code><a href="#section-2.2.1.4-7.2" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.3">
+                <code>organizational unit</code><a href="#section-2.2.1.4-7.3" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.4">
+                <code>distinguished name qualifier</code><a href="#section-2.2.1.4-7.4" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.5">
+                <code>state or province name</code><a href="#section-2.2.1.4-7.5" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.6">
+                <code>common name</code><a href="#section-2.2.1.4-7.6" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.7">
+                <code>serial number</code><a href="#section-2.2.1.4-7.7" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.4-7.8">
+                <code>ISD-AS number</code><a href="#section-2.2.1.4-7.8" class="pilcrow">¶</a>
+</li>
+            </ul>
+<p id="section-2.2.1.4-8">Except for the <code>ISD-AS number</code> attribute, all the above attributes are defined in <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>).<a href="#section-2.2.1.4-8" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.4-9">As an additional constraint compared to <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>, SCION implementations <span class="bcp14">MUST</span> use the <code>UTF8String</code> value type for all the above attributes, including the <code>ISD-AS number</code> attribute.<a href="#section-2.2.1.4-9" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.4-10"><strong>Note:</strong><br>
+Besides the above listed required attributes, SCION implementations may additionally also support other attributes.<a href="#section-2.2.1.4-10" class="pilcrow">¶</a></p>
+<div id="isd-as-nr">
+<section id="section-2.2.1.4.1">
+              <h6 id="name-isd-as-number-attribute">
+<a href="#section-2.2.1.4.1" class="section-number selfRef">2.2.1.4.1. </a><a href="#name-isd-as-number-attribute" class="section-name selfRef"><code>ISD-AS number</code> Attribute</a>
+              </h6>
+<p id="section-2.2.1.4.1-1">The <code>ISD-AS number</code> attribute identifies the SCION ISD and AS. In the SCION open source implementation, the attribute type is <code>id-at-ia</code>, defined as:<a href="#section-2.2.1.4.1-1" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-2.2.1.4.1-2">
+<pre>
+   id-at-ia AttributeType ::= {id-ana id-cppki(1) id-at(2) 1}
+</pre><a href="#section-2.2.1.4.1-2" class="pilcrow">¶</a>
+</div>
+<p id="section-2.2.1.4.1-3">where <code>id-ana</code> specifies the root SCION object identifier (OID).<a href="#section-2.2.1.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.4.1-4"><strong>Note:</strong><br>
+The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+                <code>id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}</code><a href="#section-2.2.1.4.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.4.1-5">The following points apply when setting the attribute value of the <code>ISD-AS number</code> attribute:<a href="#section-2.2.1.4.1-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1.4.1-6.1">The string representation <span class="bcp14">MUST</span> follow the canonical formatting defined in <a href="https://github.com/scionproto/scion/wiki/ISD-and-AS-numbering">ISD and AS numbering</a>.<a href="#section-2.2.1.4.1-6.1" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-2.2.1.4.1-6.2">The canonical string representation uses a dash separator between the ISD and AS numbers.<a href="#section-2.2.1.4.1-6.2" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-2.2.1.4.1-6.3">The ISD numbers are formatted as decimal.<a href="#section-2.2.1.4.1-6.3" class="pilcrow">¶</a>
+</li>
+                <li class="normal" id="section-2.2.1.4.1-6.4">The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: <code>1:0:0</code> to <code>ffff:ffff:ffff</code>.<a href="#section-2.2.1.4.1-6.4" class="pilcrow">¶</a>
+</li>
+              </ul>
+<p id="section-2.2.1.4.1-7"><strong>Example:</strong><br>
+AS <code>ff00:0:110</code> in ISD <code>1</code> is formatted as <code>1-ff00:0:110</code>.<a href="#section-2.2.1.4.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.4.1-8">The <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> be present exactly once in all SCION control-plane certificates. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates that do not include the ISD-AS number, or include it more than once.<a href="#section-2.2.1.4.1-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+</section>
+</div>
+<div id="cert-validity">
+<section id="section-2.2.1.5">
+            <h5 id="name-validity-field">
+<a href="#section-2.2.1.5" class="section-number selfRef">2.2.1.5. </a><a href="#name-validity-field" class="section-name selfRef"><code>validity</code> Field</a>
+            </h5>
+<p id="section-2.2.1.5-1">Section 4.1.2.5 of <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span> defines the <code>validity</code> field. In addition to this definition, the following constraints apply to SCION control-plane certificates:<a href="#section-2.2.1.5-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-2.2.1.5-2.1">All certificates <span class="bcp14">MUST</span> have a well-defined expiration date. SCION control-plane certificates that use the <em>99991231235959Z</em> generalized time value, instead of a well-defined expiration date, are not valid. SCION implementations <span class="bcp14">MUST NOT</span> create such certificates, and verifiers <span class="bcp14">MUST</span> error out when encountering such a certificate.<a href="#section-2.2.1.5-2.1" class="pilcrow">¶</a>
+</li>
+              <li class="normal" id="section-2.2.1.5-2.2">The validity period of a certificate is the period of time in between the values of the <code>notBefore</code> and <code>notAfter</code> attributes. For each control-plane certificate type, this validity period must have a specific maximum value. For more information, see the below sections describing the control-plane certificates: <span><a href="#cp-root-cert" class="xref">Control-Plane Root Certificate</a> (<a href="#cp-root-cert" class="xref">Section 2.2.2</a>)</span>, <span><a href="#cp-ca-cert" class="xref">Control-Plane CA Certificate</a> (<a href="#cp-ca-cert" class="xref">Section 2.2.3</a>)</span>, <span><a href="#cp-as-cert" class="xref">Control-Plane AS Certificate</a> (<a href="#cp-as-cert" class="xref">Section 2.2.4</a>)</span>, and <span><a href="#cp-voting-cert" class="xref">Voting Certificates</a> (<a href="#cp-voting-cert" class="xref">Section 2.2.5</a>)</span>.<a href="#section-2.2.1.5-2.2" class="pilcrow">¶</a>
+</li>
+            </ul>
+</section>
+</div>
+<div id="subject">
+<section id="section-2.2.1.6">
+            <h5 id="name-subject-field">
+<a href="#section-2.2.1.6" class="section-number selfRef">2.2.1.6. </a><a href="#name-subject-field" class="section-name selfRef"><code>subject</code> Field</a>
+            </h5>
+<p id="section-2.2.1.6-1">The <code>subject</code> field defines the entity that owns the certificate. It is specified in the same way as the <code>issuer</code> field (see <span><a href="#issuer" class="xref"><code>issuer</code> Field</a> (<a href="#issuer" class="xref">Section 2.2.1.4</a>)</span>). All SCION control-plane certificates <span class="bcp14">MUST</span> have the <code>subject</code> field defined (with the same requirements as those for the <code>issuer</code> field).<a href="#section-2.2.1.6-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="subjectpublickeyinfo-field">
+<section id="section-2.2.1.7">
+            <h5 id="name-subjectpublickeyinfo-field">
+<a href="#section-2.2.1.7" class="section-number selfRef">2.2.1.7. </a><a href="#name-subjectpublickeyinfo-field" class="section-name selfRef"><code>subjectPublicKeyInfo</code> Field</a>
+            </h5>
+<p id="section-2.2.1.7-1">The <code>subjectPublicKeyInfo</code> field carries the public key of the subject (the entity that owns the certificate). It identifies which algorithm to use with the key.<a href="#section-2.2.1.7-1" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.7-2">The SCION constraints in <span><a href="#certificate-signature" class="xref"><code>signature</code> Field</a> (<a href="#certificate-signature" class="xref">Section 2.2.1.3</a>)</span> also apply here: The key must be a valid key for the selected curve, and the algorithm used must be included in the list of acceptable signature algorithms. The list currently only contains the ECDSA signature algorithm (defined in <a href="https://standards.globalspec.com/std/1955141/ansi-x9-62">X.962</a>).<a href="#section-2.2.1.7-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="issueruniqueid-and-subjectuniqueid-fields">
+<section id="section-2.2.1.8">
+            <h5 id="name-issueruniqueid-and-subjectu">
+<a href="#section-2.2.1.8" class="section-number selfRef">2.2.1.8. </a><a href="#name-issueruniqueid-and-subjectu" class="section-name selfRef"><code>issuerUniqueID</code> and <code>subjectUniqueID</code> Fields</a>
+            </h5>
+<p id="section-2.2.1.8-1">The fields <code>issuerUniqueID</code> and <code>subjectUniqueID</code> are disallowed and thus <span class="bcp14">MUST NOT</span> be used in a SCION implementation.<a href="#section-2.2.1.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1769,8 +1986,20 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
 <span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">A. Perrig</span>, <span class="refTitle">"SCION Overview"</span>, <time datetime="2022" class="refDate">2022</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/draft-dekater-panrg-scion-overview/">https://datatracker.ietf.org/doc/draft-dekater-panrg-scion-overview/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5280">[RFC5280]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Cooper, D.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Farrell, S.</span>, <span class="refAuthor">Boeyen, S.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">W. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile"</span>, <span class="seriesInfo">RFC 5280</span>, <span class="seriesInfo">DOI 10.17487/RFC5280</span>, <time datetime="2008-05" class="refDate">May 2008</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5280">https://www.rfc-editor.org/rfc/rfc5280</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5480">[RFC5480]</dt>
+        <dd>
+<span class="refAuthor">Turner, S.</span>, <span class="refAuthor">Brown, D.</span>, <span class="refAuthor">Yiu, K.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">T. Polk</span>, <span class="refTitle">"Elliptic Curve Cryptography Subject Public Key Information"</span>, <span class="seriesInfo">RFC 5480</span>, <span class="seriesInfo">DOI 10.17487/RFC5480</span>, <time datetime="2009-03" class="refDate">March 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5480">https://www.rfc-editor.org/rfc/rfc5480</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC5758">[RFC5758]</dt>
+        <dd>
+<span class="refAuthor">Dang, Q.</span>, <span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Moriarty, K.</span>, <span class="refAuthor">Brown, D.</span>, and <span class="refAuthor">T. Polk</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure: Additional Algorithms and Identifiers for DSA and ECDSA"</span>, <span class="seriesInfo">RFC 5758</span>, <span class="seriesInfo">DOI 10.17487/RFC5758</span>, <time datetime="2010-01" class="refDate">January 2010</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5758">https://www.rfc-editor.org/rfc/rfc5758</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8410">[RFC8410]</dt>
+      <dd>
+<span class="refAuthor">Josefsson, S.</span> and <span class="refAuthor">J. Schaad</span>, <span class="refTitle">"Algorithm Identifiers for Ed25519, Ed448, X25519, and X448 for Use in the Internet X.509 Public Key Infrastructure"</span>, <span class="seriesInfo">RFC 8410</span>, <span class="seriesInfo">DOI 10.17487/RFC8410</span>, <time datetime="2018-08" class="refDate">August 2018</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8410">https://www.rfc-editor.org/rfc/rfc8410</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
