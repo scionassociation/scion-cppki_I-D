@@ -1557,8 +1557,8 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
           </tbody>
         </table>
 </div>
-<p id="section-2.1-11">(1) Multiple signatures and certificates of each type may be included in a TRC.
-(2) Recommended maximum validity period.
+<p id="section-2.1-11">(1) Multiple signatures and certificates of each type may be included in a TRC.<br>
+(2) Recommended maximum validity period.<br>
 (3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable best possible operational procedures when performing a CA certificate rollover.<a href="#section-2.1-11" class="pilcrow">¶</a></p>
 <p id="section-2.1-12">Figure 2 illustrates, at a high level, the relationship between a TRC and the five types of certificates.<a href="#section-2.1-12" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
@@ -1573,43 +1573,7 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
 <li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1">
                             <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1">
-                                <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                    <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                        <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                            <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                                <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                                    <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                                        <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                                            <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                                                <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1">
-                                                                    <p id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1"><strong>figure 2</strong> - <em>TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.</em><a href="#section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1.1" class="pilcrow">¶</a></p>
-</li>
-                                                                </ul>
-</li>
-                                                            </ul>
-</li>
-                                                        </ul>
-</li>
-                                                    </ul>
-</li>
-                                                </ul>
-</li>
-                                            </ul>
-</li>
-                                        </ul>
-</li>
-                                    </ul>
-</li>
-                                </ul>
+                                <p id="section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1"><strong>Figure 2</strong> - <em>TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.</em><a href="#section-2.1-13.1.1.1.1.1.1.1.1.1.1.1.1" class="pilcrow">¶</a></p>
 </li>
                             </ul>
 </li>
@@ -1629,7 +1593,7 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
         <h3 id="name-certificate-specification-2">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-certificate-specification-2" class="section-name selfRef">Certificate Specification</a>
         </h3>
-<p id="section-2.2-1">This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>, which in turn builds on top of <a href="https://handle.itu.int/11.1002/1000/13031/">X.509</a>. However, the SCION specification is more restrictive.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span>, which in turn builds on top of <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a>. However, the SCION specification is more restrictive.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.2-2">This section defines the additional constraints compared to <span>[<a href="#RFC5280" class="xref">RFC5280</a>]</span> for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation <a href="https://github.com/scionproto/scion/">scionproto</a>. Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <div id="cp-root-cert">
 <section id="section-2.2.1">
