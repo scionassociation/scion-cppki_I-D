@@ -308,6 +308,18 @@ The next code block shows the generic format of SCION control-plane certificates
 ~~~~
 
 
+#### Version
+
+The `version` field is always set to `v3` in SCION, as extensions are mandatory.
+
+
+#### Serial number
+
+The `serialNumber` field is used as specified in {{RFC5280}}.
+
+
+
+
 ### Control-Plane Root Certificate {#cp-root-cert}
 
 TODO
