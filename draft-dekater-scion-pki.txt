@@ -84,10 +84,11 @@ Table of Contents
    2.  Certificate Specification
      2.1.  SCION Control-Plane PKI Keys and Certificates - Overview
      2.2.  Certificate Specification
-       2.2.1.  Control-Plane Root Certificate
-       2.2.2.  Control-Plane CA Certificate
-       2.2.3.  Control-Plane AS Certificate
-       2.2.4.  Voting Certificates
+       2.2.1.  General Certificate Requirements
+       2.2.2.  Control-Plane Root Certificate
+       2.2.3.  Control-Plane CA Certificate
+       2.2.4.  Control-Plane AS Certificate
+       2.2.5.  Voting Certificates
    3.  Specification of the Trust Root Configuration
    4.  Security Considerations
    5.  IANA Considerations
@@ -331,7 +332,7 @@ Table of Contents
       -  _CP root certificate_: This is the container for the public key
          associated with the CP root private key.
 
-      -  Section Control-Plane Root Certificate (Section 2.2.1) provides
+      -  Section Control-Plane Root Certificate (Section 2.2.2) provides
          more details on the CP root certificates.
 
    *  *Control-Plane CA Certificates* - Control-plane (CP) CA
@@ -343,7 +344,7 @@ Table of Contents
       -  _CP CA certificate_: This is the container for the public key
          associated with the CP CA private key.
 
-      -  Section Control-Plane CA Certificate (Section 2.2.2) provides
+      -  Section Control-Plane CA Certificate (Section 2.2.3) provides
          more details on the CP CA certificates.
 
    *  *Control-Plane AS Certificates* - Control-plane (CP) AS
@@ -357,7 +358,7 @@ Table of Contents
       -  _CP AS certificate_: This is the container for the public key
          associated with the CP AS private key.
 
-      -  Section Control-Plane AS Certificate (Section 2.2.3) provides
+      -  Section Control-Plane AS Certificate (Section 2.2.4) provides
          more details on the CP AS certificates.
 
    *Note*: The TRC of each ISD contains a trusted set of control-plane
@@ -384,7 +385,7 @@ Table of Contents
       -  _Sensitive voting certificate_: This is the container for the
          public key associated with the sensitive voting private key.
 
-      -  Section Voting Certificates (Section 2.2.4) provides more
+      -  Section Voting Certificates (Section 2.2.5) provides more
          details on the voting certificates.
 
    Table 1 and Table 2 below provide a formal overview of the different
@@ -406,8 +407,8 @@ Table of Contents
 
                              Table 1: Key chain
 
-   (1) : K_x = PK_x + SK_x, where x = certificate type, PK_x = public
-   key, and SK_x = private key
+   (1) K_x = PK_x + SK_x, where x = certificate type, PK_x = public key,
+   and SK_x = private key
 
    +==============+==========+============+=================+==========+
    | Name         | Notation | Signed     | Contains        | Validity |
@@ -468,19 +469,74 @@ Table of Contents
    Adjusting the optional constraints to the requirements of a customer
    implementation is possible and allowed.
 
-2.2.1.  Control-Plane Root Certificate
+2.2.1.  General Certificate Requirements
+
+   SCION control-plane certificates are X.509 v3 certificates.  Every
+   certificate has a subject, which is the entity that owns the
+   certificate, and an issuer, which is the entity that issued the
+   certificate, usually a CA.
+
+   The next code block shows the generic format of SCION control-plane
+   certificates.  It is followed by a description of the SCION specifics
+   for each certificate field.
+
+   *Note*: For information regarding the full format, see X.509
+   (https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+
+   TBSCertificate ::= SEQUENCE {
+       version               [0]   EXPLICIT Version DEFAULT v1,
+       serialNumber                CertificateSerialNumber,
+       signature                   AlgorithmIdentifier{{SupportedAlgorithms}},
+       issuer                      Name,
+       validity                    Validity,
+       subject                     Name,
+       subjectPublicKeyInfo        SubjectPublicKeyInfo,
+       issuerUniqueID        [1]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       subjectUniqueID       [2]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       extensions            [3]   EXPLICIT Extensions OPTIONAL
+   }
+
+   Version ::= INTEGER { v1(0), v2(1), v3(2)}  -- v1, v2 are disallowed in SCION
+   CertificateSerialNumber ::= INTEGER
+
+   Validity ::= SEQUENCE {
+       notBefore Time,
+       notAfter Time
+   }
+
+   Time ::= CHOICE {
+       utcTime UTCTime,
+       generalizedTime GeneralizedTime
+   }
+
+   SubjectPublicKeyInfo ::= SEQUENCE {
+       algorithm         AlgorithmIdentifier{{SupportedAlgorithms}},
+       subjectPublicKey  BIT STRING
+   }
+
+   Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension
+
+   Extension ::= SEQUENCE {
+       extnId      OBJECT IDENTIFIER,
+       critical    BOOLEAN DEFAULT FALSE,
+       extnValue   OCTET STRING
+                       -- contains DER encoding of ASN.1 value
+                       -- corresponding to type identified by extnID
+   }
+
+2.2.2.  Control-Plane Root Certificate
 
    TODO
 
-2.2.2.  Control-Plane CA Certificate
+2.2.3.  Control-Plane CA Certificate
 
    TODO
 
-2.2.3.  Control-Plane AS Certificate
+2.2.4.  Control-Plane AS Certificate
 
    TODO
 
-2.2.4.  Voting Certificates
+2.2.5.  Voting Certificates
 
    TODO
 
