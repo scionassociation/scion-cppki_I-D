@@ -241,8 +241,8 @@ The following list summarizes the main certificates and corresponding key pairs 
 | CP AS certificate      | C<sub>AS</sub>    | SK<sub>CA</sub>                          | PK<sub>AS</sub>                                         | 3 days       |
 {: #table-2 title="Certificates"}
 
-(1) Multiple signatures and certificates of each type may be included in a TRC.  
-(2) Recommended maximum validity period.  
+(1) Multiple signatures and certificates of each type may be included in a TRC.<br>
+(2) Recommended maximum validity period.<br>
 (3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable best possible operational procedures when performing a CA certificate rollover.
 
 Figure 2 illustrates, at a high level, the relationship between a TRC and the five types of certificates.
