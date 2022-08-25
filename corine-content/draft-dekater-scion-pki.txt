@@ -83,10 +83,11 @@ Table of Contents
      1.5.  Conventions and Definitions
    2.  Certificate Specification
      2.1.  SCION Control-Plane PKI Keys and Certificates - Overview
-       2.1.1.  Control-Plane Root Certificate
-       2.1.2.  Control-Plane CA Certificate
-       2.1.3.  Control-Plane AS Certificate
-       2.1.4.  Voting Certificates
+     2.2.  Certificate Specification
+       2.2.1.  Control-Plane Root Certificate
+       2.2.2.  Control-Plane CA Certificate
+       2.2.3.  Control-Plane AS Certificate
+       2.2.4.  Voting Certificates
    3.  Specification of the Trust Root Configuration
    4.  Security Considerations
    5.  IANA Considerations
@@ -222,7 +223,7 @@ Table of Contents
    chapters Certificate Specification (Section 2) and Specification of
    the Trust Root Configuration (Section 3).
 
-      *Figure 2* - _Chain of trust within an ISD_
+      *Figure 1* - _Chain of trust within an ISD_
 
    All certificates used in SCION's control-plane PKI are in X.509 v3
    format [RFC5280].  Additionally, the TRC contains self-signed
@@ -330,7 +331,7 @@ Table of Contents
       -  _CP root certificate_: This is the container for the public key
          associated with the CP root private key.
 
-      -  Section Control-Plane Root Certificate (Section 2.1.1) provides
+      -  Section Control-Plane Root Certificate (Section 2.2.1) provides
          more details on the CP root certificates.
 
    *  *Control-Plane CA Certificates* - Control-plane (CP) CA
@@ -342,7 +343,7 @@ Table of Contents
       -  _CP CA certificate_: This is the container for the public key
          associated with the CP CA private key.
 
-      -  Section Control-Plane CA Certificate (Section 2.1.2) provides
+      -  Section Control-Plane CA Certificate (Section 2.2.2) provides
          more details on the CP CA certificates.
 
    *  *Control-Plane AS Certificates* - Control-plane (CP) AS
@@ -356,7 +357,7 @@ Table of Contents
       -  _CP AS certificate_: This is the container for the public key
          associated with the CP AS private key.
 
-      -  Section Control-Plane AS Certificate (Section 2.1.3) provides
+      -  Section Control-Plane AS Certificate (Section 2.2.3) provides
          more details on the CP AS certificates.
 
    *Note*: The TRC of each ISD contains a trusted set of control-plane
@@ -383,10 +384,10 @@ Table of Contents
       -  _Sensitive voting certificate_: This is the container for the
          public key associated with the sensitive voting private key.
 
-      -  Section Voting Certificates (Section 2.1.4) provides more
+      -  Section Voting Certificates (Section 2.2.4) provides more
          details on the voting certificates.
 
-   The tables below Table 1 provide a formal overview of the different
+   Table 1 and Table 2 below provide a formal overview of the different
    types of key pairs and certificates in the control-plane PKI.
 
      +======================+==============+=========================+
@@ -408,19 +409,84 @@ Table of Contents
    (1) : K_x = PK_x + SK_x, where x = certificate type, PK_x = public
    key, and SK_x = private key
 
-2.1.1.  Control-Plane Root Certificate
+   +==============+==========+============+=================+==========+
+   | Name         | Notation | Signed     | Contains        | Validity |
+   |              |          | with       |                 | (2)      |
+   +==============+==========+============+=================+==========+
+   | TRC (trust   | TRC      | SK_sens,   | C_root, C_sens, | 1 year   |
+   | root conf)   |          | SK_reg (1) | C_reg (1)       |          |
+   +--------------+----------+------------+-----------------+----------+
+   | Sensitive    | C_sens   | SK_sens    | PK_sens         | 5 years  |
+   | voting       |          |            |                 |          |
+   | cert.        |          |            |                 |          |
+   +--------------+----------+------------+-----------------+----------+
+   | Regular      | C_reg    | SK_reg     | PK_reg          | 1 year   |
+   | voting       |          |            |                 |          |
+   | cert.        |          |            |                 |          |
+   +--------------+----------+------------+-----------------+----------+
+   | CP root      | C_root   | SK_root    | PK_root         | 1 year   |
+   | certificate  |          |            |                 |          |
+   +--------------+----------+------------+-----------------+----------+
+   | CP CA        | C_CA     | SK_root    | PK_CA           | 11 days  |
+   | certificate  |          |            |                 | (3)      |
+   +--------------+----------+------------+-----------------+----------+
+   | CP AS        | C_AS     | SK_CA      | PK_AS           | 3 days   |
+   | certificate  |          |            |                 |          |
+   +--------------+----------+------------+-----------------+----------+
+
+                           Table 2: Certificates
+
+   (1) Multiple signatures and certificates of each type may be included
+   in a TRC. (2) Recommended maximum validity period. (3) A validity of
+   11 days with 4 days overlap between two CA certificates is
+   recommended to enable best possible operational procedures when
+   performing a CA certificate rollover.
+
+   Figure 2 illustrates, at a high level, the relationship between a TRC
+   and the five types of certificates.
+
+      *figure 2* - _TRC update
+                                                chain and the different
+                                                types of associated
+                                                certificates.  Arrows
+                                                show how signatures are
+                                                verified; in other
+                                                words, they indicate
+                                                that a public key
+                                                contained in a
+                                                certificate or TRC can
+                                                be used to verify the
+                                                authenticity of another
+                                                item._
+
+2.2.  Certificate Specification
+
+   This section provides an in-depth specification of the SCION
+   certificates.  The SCION certificate specification builds on top of
+   [RFC5280], which in turn builds on top of X.509
+   (https://handle.itu.int/11.1002/1000/13031/).  However, the SCION
+   specification is more restrictive.
+
+   This section defines the additional constraints compared to [RFC5280]
+   for each type of SCION control-plane certificate.  The recommended
+   settings for optional constraints are based on the SCION open source
+   implementation scionproto (https://github.com/scionproto/scion/).
+   Adjusting the optional constraints to the requirements of a customer
+   implementation is possible and allowed.
+
+2.2.1.  Control-Plane Root Certificate
 
    TODO
 
-2.1.2.  Control-Plane CA Certificate
+2.2.2.  Control-Plane CA Certificate
 
    TODO
 
-2.1.3.  Control-Plane AS Certificate
+2.2.3.  Control-Plane AS Certificate
 
    TODO
 
-2.1.4.  Voting Certificates
+2.2.4.  Voting Certificates
 
    TODO
 
@@ -480,8 +546,6 @@ Table of Contents
               <https://www.rfc-editor.org/rfc/rfc5280>.
 
 Acknowledgments
-
-   Thanks to Juan, Francois and Jordi (+ Adrian?)
 
 Authors' Addresses
 
