@@ -149,9 +149,9 @@ There are two types of TRC updates: regular and sensitive. A **regular TRC updat
 
 ## Overview of Certificates, Keys, and Roles
 
-The base TRC constitutes the root of trust within an ISD. The next figure provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to the chapters **reference: cert-specs** and **reference: trc-specification**.
+The base TRC constitutes the root of trust within an ISD. The next figure provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to the chapters [Certificate Specification](#cert-specs) and [Specification of the Trust Root Configuration](#trc-specification).
 
-**Figure 2** - *Chain of trust within an ISD*
+>>>>>> **Figure 2** - *Chain of trust within an ISD*
 
 All certificates used in SCION's control-plane PKI are in X.509 v3 format {{RFC5280}}. Additionally, the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key.
 
@@ -182,6 +182,78 @@ The output of the bootstrapping of trust ceremony, or the trust "function", are 
 ## Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
+
+
+# Certificate Specification {#cert-specs}
+
+This section provides a detailed specification of all certificates used in SCION's control-plane PKI. It starts with an overview of the main keys and certificates.
+
+## SCION Control-Plane PKI Keys and Certificates - Overview {#overview}
+
+All certificates in SCION's control-plane PKI are in X.509 v3 format {{RFC5280}}. Each certificate has a `subject` (the entity that owns the certificate) and an `issuer` (the entity that signed the certificate, usually a CA). In the case of self-signed certificates, the subject and the issuer are the same entity.
+
+There are three types of control-plane (CP) certificates: root certificates, CA certificates, and AS certificates. Together, they build a chain of trust that is anchored in the trust root configuration (TRC) file of the respective Isolation Domain (ISD). Additionally, there are regular and sensitive voting certificates, which define the keys to cast votes in a regular and a sensitive TRC update, respectively.
+
+The following list summarizes the main certificates and corresponding key pairs of SCION's control-plane PKI as well as the voting certificates and keys:
+
+- **Control-Plane Root Certificates** - Control-plane (CP) root certificates are used to verify control-plane CA certificates. Control-plane root certificates are embedded in TRCs, to facilitate the bootstrapping of trust.
+   - *CP root private key*: This private key is used to sign control-plane CA certificates.
+   - *CP root certificate*: This is the container for the public key associated with the CP root private key.
+   - Section [Control-Plane Root Certificate](#cp-root-cert) provides more details on the CP root certificates.
+- **Control-Plane CA Certificates** - Control-plane (CP) CA certificates are used to verify AS certificates.
+   - *CP CA private key*: This private key is used by the CA to sign AS certificates.
+   - *CP CA certificate*: This is the container for the public key associated with the CP CA private key.
+   - Section [Control-Plane CA Certificate](#cp-ca-cert) provides more details on the CP CA certificates.
+- **Control-Plane AS Certificates** - Control-plane (CP) AS certificates are used to verify control-plane messages such as path-segment construction beacons (PCB). PCBs explore network paths within an ISD.
+   - *CP AS private key*: This private key is used by an AS to sign control-plane messages.
+   - *CP AS certificate*: This is the container for the public key associated with the CP AS private key.
+   - Section [Control-Plane AS Certificate](#cp-as-cert) provides more details on the CP AS certificates.
+
+**Note**: The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
+
+- **Voting Certificates** - Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.
+   - *Regular voting private key*: This private key is used to sign regular TRC updates. The corresponding public key is embedded in TRCs (via the regular voting certificate).
+   - *Regular voting certificate*: This is the container for the public key associated with the regular voting private key.
+   - *Sensitive voting private key*: This private key is used to sign sensitive TRC updates. The corresponding public key is embedded in TRCs (via the sensitive voting certificate).
+   - *Sensitive voting certificate*: This is the container for the public key associated with the sensitive voting private key.
+   - Section [Voting Certificates](#cp-voting-cert) provides more details on the voting certificates.
+
+The tables below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
+
+
+| Name                 | Notation *1)*   	| Used to verify/sign   	|
+| -------------------- | ------- | ----------------------- |
+| Sensitive voting key | K<sub>sens</sub> | TRC updates (sensitive) |
+| Regular voting key   | K<sub>reg</sub>  | TRC updates (regular)   |
+| CP root key          | K<sub>root</sub> | CP CA certificates      |
+| CP CA key            | K<sub>CA</sub>   | CP AS certificates      |
+| CP AS key            | K<sub>AS</sub>   | PCBs, path segments     |
+
+
+*1)* : K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
+
+
+### Control-Plane Root Certificate {#cp-root-cert}
+
+TODO
+
+### Control-Plane CA Certificate {#cp-ca-cert}
+
+TODO
+
+### Control-Plane AS Certificate {#cp-as-cert}
+
+TODO
+
+### Voting Certificates {#cp-voting-cert}
+
+TODO
+
+
+
+# Specification of the Trust Root Configuration {#trc-specification}
+
+TODO
 
 
 # Security Considerations
