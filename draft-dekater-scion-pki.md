@@ -229,7 +229,7 @@ The following list summarizes the main certificates and corresponding key pairs 
 | CP AS key            | K<sub>AS</sub>   | PCBs, path segments     |
 {: #table-1 title="Key chain"}
 
-(1) : K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
+(1) K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
 | Name                   | Notation       	 | Signed with           	                  | Contains                                                | Validity (2) |
 |------------------------+-------------------+------------------------------------------+---------------------------------------------------------+--------------|
@@ -255,6 +255,57 @@ Figure 2 illustrates, at a high level, the relationship between a TRC and the fi
 This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of {{RFC5280}}, which in turn builds on top of [X.509](https://handle.itu.int/11.1002/1000/13031). However, the SCION specification is more restrictive.
 
 This section defines the additional constraints compared to {{RFC5280}} for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation [scionproto](https://github.com/scionproto/scion/). Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.
+
+### General Certificate Requirements {#general-cert-req}
+
+SCION control-plane certificates are X.509 v3 certificates. Every certificate has a `subject`, which is the entity that owns the certificate, and an `issuer`, which is the entity that issued the certificate, usually a CA.
+
+The next code block shows the generic format of SCION control-plane certificates. It is followed by a description of the SCION specifics for each certificate field.
+
+**Note**: For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+
+  ```
+   TBSCertificate ::= SEQUENCE {
+       version               [0]   EXPLICIT Version DEFAULT v1,
+       serialNumber                CertificateSerialNumber,
+       signature                   AlgorithmIdentifier{{SupportedAlgorithms}},
+       issuer                      Name,
+       validity                    Validity,
+       subject                     Name,
+       subjectPublicKeyInfo        SubjectPublicKeyInfo,
+       issuerUniqueID        [1]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       subjectUniqueID       [2]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       extensions            [3]   EXPLICIT Extensions OPTIONAL
+   }
+
+   Version ::= INTEGER { v1(0), v2(1), v3(2)}  -- v1, v2 are disallowed in SCION
+   CertificateSerialNumber ::= INTEGER
+
+   Validity ::= SEQUENCE {
+       notBefore Time,
+       notAfter Time
+   }
+
+   Time ::= CHOICE {
+       utcTime UTCTime,
+       generalizedTime GeneralizedTime
+   }
+
+   SubjectPublicKeyInfo ::= SEQUENCE {
+       algorithm         AlgorithmIdentifier{{SupportedAlgorithms}},
+       subjectPublicKey  BIT STRING
+   }
+
+   Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension
+
+   Extension ::= SEQUENCE {
+       extnId      OBJECT IDENTIFIER,
+       critical    BOOLEAN DEFAULT FALSE,
+       extnValue   OCTET STRING
+                       -- contains DER encoding of ASN.1 value
+                       -- corresponding to type identified by extnID
+   }
+  ```
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
