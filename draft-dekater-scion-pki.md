@@ -264,7 +264,6 @@ The next code block shows the generic format of SCION control-plane certificates
 
 **Note**: For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
 
-  
 ~~~~
    TBSCertificate ::= SEQUENCE {
        version               [0]   EXPLICIT Version DEFAULT v1,
@@ -306,7 +305,7 @@ The next code block shows the generic format of SCION control-plane certificates
                        -- contains DER encoding of ASN.1 value
                        -- corresponding to type identified by extnID
    }
-~~~~  
+~~~~
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
