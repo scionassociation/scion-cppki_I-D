@@ -389,8 +389,6 @@ Table of Contents
    The tables below provide a formal overview of the different types of
    key pairs and certificates in the control-plane PKI.
 
-   _Table 1: Key pairs_
-
        +======================+==========+=========================+
        | Name                 | Notation | Used to verify/sign     |
        +======================+==========+=========================+
@@ -407,7 +405,9 @@ Table of Contents
 
                                   Table 1
 
-   1) K_x = PK_x + SK_x, where x = certificate type, PK_x = public key,
+   Table: Key pairs
+
+   1: K_x = PK_x + SK_x, where x = certificate type, PK_x = public key,
    and SK_x = private key
 
 2.1.1.  Control-Plane Root Certificate
