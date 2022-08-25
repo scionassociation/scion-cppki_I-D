@@ -268,7 +268,7 @@ The next code block shows the generic format of SCION control-plane certificates
    TBSCertificate ::= SEQUENCE {
        version               [0]   EXPLICIT Version DEFAULT v1,
        serialNumber                CertificateSerialNumber,
-       signature                   AlgorithmIdentifier{{SupportedAlgorithms}},
+       signature                   AlgorithmIdentifier\{{SupportedAlgorithms}},
        issuer                      Name,
        validity                    Validity,
        subject                     Name,
@@ -292,7 +292,7 @@ The next code block shows the generic format of SCION control-plane certificates
    }
 
    SubjectPublicKeyInfo ::= SEQUENCE {
-       algorithm         AlgorithmIdentifier{{SupportedAlgorithms}},
+       algorithm         AlgorithmIdentifier\{{SupportedAlgorithms}},
        subjectPublicKey  BIT STRING
    }
 
