@@ -220,9 +220,8 @@ The following list summarizes the main certificates and corresponding key pairs 
 
 The tables below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
 
-*Table 1: Key pairs*
 
-| Name                 | Notation<sup>1)</sup>   	| Used to verify/sign   	|
+| Name                 | Notation<sup>1</sup>   	| Used to verify/sign   	|
 | -------------------- | ------- | ----------------------- |
 | Sensitive voting key | K<sub>sens</sub> | TRC updates (sensitive) |
 | Regular voting key   | K<sub>reg</sub>  | TRC updates (regular)   |
@@ -230,7 +229,9 @@ The tables below provide a formal overview of the different types of key pairs a
 | CP CA key            | K<sub>CA</sub>   | CP AS certificates      |
 | CP AS key            | K<sub>AS</sub>   | PCBs, path segments     |
 
-1) K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
+Table: Key pairs
+
+1: K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
