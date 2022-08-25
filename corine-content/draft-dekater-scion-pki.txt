@@ -389,23 +389,23 @@ Table of Contents
    The tables below provide a formal overview of the different types of
    key pairs and certificates in the control-plane PKI.
 
-       +======================+==========+=========================+
-       | Name                 | Notation | Used to verify/sign     |
-       +======================+==========+=========================+
-       | Sensitive voting key | K_sens   | TRC updates (sensitive) |
-       +----------------------+----------+-------------------------+
-       | Regular voting key   | K_reg    | TRC updates (regular)   |
-       +----------------------+----------+-------------------------+
-       | CP root key          | K_root   | CP CA certificates      |
-       +----------------------+----------+-------------------------+
-       | CP CA key            | K_CA     | CP AS certificates      |
-       +----------------------+----------+-------------------------+
-       | CP AS key            | K_AS     | PCBs, path segments     |
-       +----------------------+----------+-------------------------+
+     +======================+==============+=========================+
+     | Name                 | Notation (1) | Used to verify/sign     |
+     +======================+==============+=========================+
+     | Sensitive voting key | K_sens       | TRC updates (sensitive) |
+     +----------------------+--------------+-------------------------+
+     | Regular voting key   | K_reg        | TRC updates (regular)   |
+     +----------------------+--------------+-------------------------+
+     | CP root key          | K_root       | CP CA certificates      |
+     +----------------------+--------------+-------------------------+
+     | CP CA key            | K_CA         | CP AS certificates      |
+     +----------------------+--------------+-------------------------+
+     | CP AS key            | K_AS         | PCBs, path segments     |
+     +----------------------+--------------+-------------------------+
 
                                   Table 1
 
-   _1)_ : K_x = PK_x + SK_x, where x = certificate type, PK_x = public
+   (1) : K_x = PK_x + SK_x, where x = certificate type, PK_x = public
    key, and SK_x = private key
 
 2.1.1.  Control-Plane Root Certificate
@@ -481,7 +481,7 @@ Table of Contents
 
 Acknowledgments
 
-   TODO acknowledge.
+   Thanks to Juan, Francois and Jordi (+ Adrian?)
 
 Authors' Addresses
 
