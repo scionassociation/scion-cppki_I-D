@@ -32,6 +32,9 @@ normative:
 
 informative:
   RFC5280:
+  RFC5480:
+  RFC5758:
+  RFC8410:
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
     title: "The Complete Guide to SCION"
@@ -112,7 +115,8 @@ The document first describes the trust model behind SCION's control-plane PKI, a
 
 The control-plane PKI (CP-PKI) lays the foundation for the authentication procedures in SCION. It handles all cryptographic material used in the public key infrastructure of SCION's control plane. This section first introduces the key concepts of the SCION CP-PKI, including the trust model, its core elements (certificates, keys, and roles), and their relationships. The sections after the Introduction provide detailed specifications of the building blocks of the CP-PKI.
 
-**Note**: For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
+**Note:**<br>
+For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
 
 ## Trust Model
 
@@ -208,7 +212,8 @@ The following list summarizes the main certificates and corresponding key pairs 
    - *CP AS certificate*: This is the container for the public key associated with the CP AS private key.
    - Section [Control-Plane AS Certificate](#cp-as-cert) provides more details on the CP AS certificates.
 
-**Note**: The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
+**Note:**<br>
+The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
 
 - **Voting Certificates** - Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.
    - *Regular voting private key*: This private key is used to sign regular TRC updates. The corresponding public key is embedded in TRCs (via the regular voting certificate).
@@ -262,7 +267,8 @@ SCION control-plane certificates are X.509 v3 certificates. Every certificate ha
 
 The next code block shows the generic format of SCION control-plane certificates. It is followed by a description of the SCION specifics for each certificate field.
 
-**Note**: For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+**Note:**<br>
+For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
 
 ~~~~
    TBSCertificate ::= SEQUENCE {
@@ -308,15 +314,186 @@ The next code block shows the generic format of SCION control-plane certificates
 ~~~~
 
 
-#### Version
+#### `version` Field
 
-The `version` field is always set to `v3` in SCION, as extensions are mandatory.
+The `version` field MUST be set to `v3` in SCION, as extensions are mandatory.
 
 
-#### Serial number
+#### `serialNumber` Field
 
 The `serialNumber` field is used as specified in {{RFC5280}}.
 
+
+#### `signature` Field {#certificate-signature}
+
+For security reasons, SCION uses a custom list of acceptable signature algorithms. This list of acceptable signature algorithms is specified in the `signature` field.
+
+The list currently only contains the ECDSA signature algorithm (defined in [X.962](https://standards.globalspec.com/std/1955141/ansi-x9-62)) - see the code block below. However, the list might be extended in the future.
+
+The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}. They are included as follows:
+
+~~~~
+   sigAlg-ecdsa-SHA256      ALGORITHM         ::= { OID ecdsa-with-SHA256 }
+   sigAlg-ecdsa-SHA384      ALGORITHM         ::= { OID ecdsa-with-SHA384 }
+   sigAlg-ecdsa-SHA512      ALGORITHM         ::= { OID ecdsa-with-SHA512 }
+
+   ecdsa-with-SHA256 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 2 }
+   ecdsa-with-SHA384 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 3 }
+   ecdsa-with-SHA512 OBJECT IDENTIFIER ::= { iso(1) member-body(2)
+       us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 4 }
+~~~~
+
+**Important:**<br>
+The accepted cryptographic algorithms listed in this document are the only currently accepted cryptographic algorithms. SCION implementations MUST reject cryptographic algorithms not found in the list.
+
+The only accepted curves for ECDSA are:
+
+- NIST P-256 ([NISTFIPS186-4](http://dx.doi.org/10.6028/NIST.FIPS.186-4), section D.1.2.3) (named `secp256r1` in {{RFC5480}})
+- NIST P-384 ([NISTFIPS186-4](http://dx.doi.org/10.6028/NIST.FIPS.186-4), section D.1.2.4) (named `secp384r1` in {{RFC5480}})
+- NIST P-521 ([NISTFIPS186-4](http://dx.doi.org/10.6028/NIST.FIPS.186-4), section D.1.2.5) (named `secp521r1` in {{RFC5480}})
+
+The OIDs for the above curves are:
+
+~~~~
+   secp256r1 OBJECT IDENTIFIER ::= {
+       iso(1) member-body(2) us(840) ansi-X9-62(10045) curves(3)
+       prime(1) 7 }
+   secp384r1 OBJECT IDENTIFIER ::= {
+       iso(1) identified-organization(3) certicom(132) curve(0) 34 }
+   secp521r1 OBJECT IDENTIFIER ::= {
+       iso(1) identified-organization(3) certicom(132) curve(0) 35 }
+~~~~
+
+The appropriate hash size to use when producing a signature with an ECDSA key is:
+
+- ECDSA with SHA-256, for a P-256 signing key
+- ECDSA with SHA-384, for a P-384 signing key
+- ECDSA with SHA-512, for a P-521 signing key
+
+**Important:**<br>
+SCION implementations MUST include support for P-256, P-384, and P-521.
+
+
+##### `AlgorithmIdentifier` Sequence
+
+[X.509](https://handle.itu.int/11.1002/1000/13031) defines the syntax of the `AlgorithmIdentifier` as follows:
+
+~~~~
+   AlgorithmIdentifier  ::=  SEQUENCE  {
+       algorithm   OBJECT IDENTIFIER,
+       parameters  ANY DEFINED BY algorithm OPTIONAL
+   }
+~~~~
+
+**Note:**<br>
+In SCION implementations, the `parameters` field MUST be absent, as defined in {{RFC8410}}.
+
+In general, if the `AlgorithmIdentifier` in a specific SCION implementation is not defined as described above, the implementation should stop the validation process entirely and error out.
+
+
+#### `issuer` Field {#issuer}
+
+The `issuer` field contains the distinguished name (DN) of the CA that created the certificate. The `issuer` field MUST be non-empty.
+
+[X.501](http://handle.itu.int/11.1002/1000/13030) (10/2016), clause 9.2, defines the syntax for `Name` as follows:
+
+~~~~
+   Name ::= CHOICE {
+       rdnSequence RDNSequence
+   }
+
+   RDNSequence ::= SEQUENCE OF RelativeDistinguishedName
+
+   RelativeDistinguishedName ::= SET SIZE (1..MAX) OF AttributeTypeAndValue
+
+   AttributeType ::= OBJECT IDENTIFIER
+
+   AttributeValue ::= ANY -- DEFINED BY AttributeType
+~~~~
+
+In most SCION implementations, the type (`AttributeType`) will be a `DirectoryString` type, outlined as follows:
+
+~~~~
+   DirectoryString ::= CHOICE {
+       teletexStrings TeletexString (SIZE (1..MAX)),
+       printableString PrintableString (SIZE (1..MAX)),
+       universalString UniversalString (SIZE (1..MAX)),
+       utf8String UTF8String (SIZE (1..MAX)),
+       bmpString BMPString (SIZE (1..MAX)),
+   }
+~~~~
+
+All SCION implementations MUST support the following standard attribute types:
+
+- `country`
+- `organization`
+- `organizational unit`
+- `distinguished name qualifier`
+- `state or province name`
+- `common name`
+- `serial number`
+- `ISD-AS number`
+
+Except for the `ISD-AS number` attribute, all the above attributes are defined in {{RFC5280}).
+
+As an additional constraint compared to {{RFC5280}}, SCION implementations MUST use the `UTF8String` value type for all the above attributes, including the `ISD-AS number` attribute.
+
+**Note:**<br>
+Besides the above listed required attributes, SCION implementations may additionally also support other attributes.
+
+
+##### `ISD-AS number` Attribute {#isd-as-nr}
+
+The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open source implementation, the attribute type is `id-at-ia`, defined as:
+
+~~~~
+   id-at-ia AttributeType ::= {id-ana id-cppki(1) id-at(2) 1}
+~~~~
+
+where `id-ana` specifies the root SCION object identifier (OID).
+
+**Note:**<br>
+The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+`id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+
+The following points apply when setting the attribute value of the `ISD-AS number` attribute:
+
+- The string representation MUST follow the canonical formatting defined in [ISD and AS numbering](https://github.com/scionproto/scion/wiki/ISD-and-AS-numbering).
+- The canonical string representation uses a dash separator between the ISD and AS numbers.
+- The ISD numbers are formatted as decimal.
+- The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
+
+**Example:**<br>
+AS `ff00:0:110` in ISD `1` is formatted as `1-ff00:0:110`.
+
+The `ISD-AS number` attribute MUST be present exactly once in all SCION control-plane certificates. Implementations MUST NOT create nor successfully verify certificates that do not include the ISD-AS number, or include it more than once.
+
+
+#### `validity` Field {#cert-validity}
+
+Section 4.1.2.5 of {{RFC5280}} defines the `validity` field. In addition to this definition, the following constraints apply to SCION control-plane certificates:
+
+- All certificates MUST have a well-defined expiration date. SCION control-plane certificates that use the *99991231235959Z* generalized time value, instead of a well-defined expiration date, are not valid. SCION implementations MUST NOT create such certificates, and verifiers MUST error out when encountering such a certificate.
+- The validity period of a certificate is the period of time in between the values of the `notBefore` and `notAfter` attributes. For each control-plane certificate type, this validity period must have a specific maximum value. For more information, see the below sections describing the control-plane certificates: [Control-Plane Root Certificate](#cp-root-cert), [Control-Plane CA Certificate](#cp-ca-cert), [Control-Plane AS Certificate](#cp-as-cert), and [Voting Certificates](#cp-voting-cert).
+
+
+#### `subject` Field {#subject}
+
+The `subject` field defines the entity that owns the certificate. It is specified in the same way as the `issuer` field (see [`issuer` Field](#issuer)). All SCION control-plane certificates MUST have the `subject` field defined (with the same requirements as those for the `issuer` field).
+
+
+#### `subjectPublicKeyInfo` Field
+
+The `subjectPublicKeyInfo` field carries the public key of the subject (the entity that owns the certificate). It identifies which algorithm to use with the key.
+
+The SCION constraints in [`signature` Field](#certificate-signature) also apply here: The key must be a valid key for the selected curve, and the algorithm used must be included in the list of acceptable signature algorithms. The list currently only contains the ECDSA signature algorithm (defined in [X.962](https://standards.globalspec.com/std/1955141/ansi-x9-62)).
+
+
+#### `issuerUniqueID` and `subjectUniqueID` Fields
+
+The fields `issuerUniqueID` and `subjectUniqueID` are disallowed and thus MUST NOT be used in a SCION implementation.
 
 
 
