@@ -98,11 +98,6 @@ informative:
         ins: C. de Kater
         name: Corine de Kater
         org: ETH Zuerich
-  scionproto:
-    target: https://github.com/scionproto/scion/
-  X509:
-    title: Recommendation ITU-T X.509 (10/2016) - ISO/IEC 9594-8:2017 - Public-key and attribute certificate frameworks
-    target: https://handle.itu.int/11.1002/1000/13031/
 
 --- abstract
 
@@ -236,7 +231,7 @@ The following list summarizes the main certificates and corresponding key pairs 
 
 (1) : K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
-| Name                   | Notation       	 | Signed with           	                  | Contains                                                | Validity (2) |              
+| Name                   | Notation       	 | Signed with           	                  | Contains                                                | Validity (2) |
 |------------------------+-------------------+------------------------------------------+---------------------------------------------------------+--------------|
 | TRC (trust root conf)  | TRC               | SK<sub>sens</sub>, SK<sub>reg</sub> (1)  | C<sub>root</sub>, C<sub>sens</sub>, C<sub>reg</sub> (1) | 1 year       |
 | Sensitive voting cert. | C<sub>sens</sub>  | SK<sub>sens</sub>                        | PK<sub>sens</sub>                                       | 5 years      |
@@ -257,9 +252,9 @@ Figure 2 illustrates, at a high level, the relationship between a TRC and the fi
 
 ## Certificate Specification
 
-This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of {{RFC5280}}, which in turn builds on top of {{X509}}. However, the SCION specification is more restrictive.
+This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of {{RFC5280}}, which in turn builds on top of [X.509](https://handle.itu.int/11.1002/1000/13031/). However, the SCION specification is more restrictive.
 
-This section defines the additional constraints compared to {{RFC5280}} for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation {{scionproto}}. Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.
+This section defines the additional constraints compared to {{RFC5280}} for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation [scionproto](https://github.com/scionproto/scion/). Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
@@ -300,4 +295,3 @@ This document has no IANA actions.
 # Acknowledgments
 {:numbered="false"}
 
-Thanks to Juan, François and Jordi (+ Adrian?)
