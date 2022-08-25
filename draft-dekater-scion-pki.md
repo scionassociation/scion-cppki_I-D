@@ -32,7 +32,6 @@ normative:
 
 informative:
   RFC5280:
-  X.509: 
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
     title: "The Complete Guide to SCION"
@@ -99,7 +98,11 @@ informative:
         ins: C. de Kater
         name: Corine de Kater
         org: ETH Zuerich
-
+  scionproto:
+    target: https://github.com/scionproto/scion/
+  X509:
+    title: Recommendation ITU-T X.509 (10/2016) - ISO/IEC 9594-8:2017 - Public-key and attribute certificate frameworks
+    target: https://handle.itu.int/11.1002/1000/13031/
 
 --- abstract
 
@@ -247,16 +250,16 @@ The following list summarizes the main certificates and corresponding key pairs 
 (2) Recommended maximum validity period.
 (3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable best possible operational procedures when performing a CA certificate rollover.
 
-Figure 2 illustrates, at a high level, the relationship between a TRC and the five types of certificates. 
+Figure 2 illustrates, at a high level, the relationship between a TRC and the five types of certificates.
 
 >>>>>>>>>>>>>>> **figure 2** - *TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.*
 
 
 ## Certificate Specification
 
-This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of {{RFC5280}}, which in turn builds on top of {{X.509}}. However, the SCION specification is more restrictive.
+This section provides an in-depth specification of the SCION certificates. The SCION certificate specification builds on top of {{RFC5280}}, which in turn builds on top of {{X509}}. However, the SCION specification is more restrictive.
 
-This section defines the additional constraints compared to [RFC5280]_ for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation [scionproto]_. Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.
+This section defines the additional constraints compared to {{RFC5280}} for each type of SCION control-plane certificate. The recommended settings for optional constraints are based on the SCION open source implementation {{scionproto}}. Adjusting the optional constraints to the requirements of a customer implementation is possible and allowed.
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
