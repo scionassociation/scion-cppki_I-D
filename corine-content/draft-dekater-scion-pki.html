@@ -1611,7 +1611,7 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">Â
    TBSCertificate ::= SEQUENCE {
        version               [0]   EXPLICIT Version DEFAULT v1,
        serialNumber                CertificateSerialNumber,
-       signature                   AlgorithmIdentifier\{{SupportedAlgorithms}},
+       signature                   AlgorithmIdentifier{{SupportedAlgorithms}},
        issuer                      Name,
        validity                    Validity,
        subject                     Name,
@@ -1635,7 +1635,7 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">Â
    }
 
    SubjectPublicKeyInfo ::= SEQUENCE {
-       algorithm         AlgorithmIdentifier\{{SupportedAlgorithms}},
+       algorithm         AlgorithmIdentifier{{SupportedAlgorithms}},
        subjectPublicKey  BIT STRING
    }
 
