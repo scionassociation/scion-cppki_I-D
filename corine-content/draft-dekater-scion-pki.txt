@@ -389,6 +389,27 @@ Table of Contents
    The tables below provide a formal overview of the different types of
    key pairs and certificates in the control-plane PKI.
 
+   _Table 1: Key pairs_
+
+     +======================+==============+=========================+
+     | Name                 | Notation^1)^ | Used to verify/sign     |
+     +======================+==============+=========================+
+     | Sensitive voting key | K~sens~      | TRC updates (sensitive) |
+     +----------------------+--------------+-------------------------+
+     | Regular voting key   | K~reg~       | TRC updates (regular)   |
+     +----------------------+--------------+-------------------------+
+     | CP root key          | K~root~      | CP CA certificates      |
+     +----------------------+--------------+-------------------------+
+     | CP CA key            | K~CA~        | CP AS certificates      |
+     +----------------------+--------------+-------------------------+
+     | CP AS key            | K~AS~        | PCBs, path segments     |
+     +----------------------+--------------+-------------------------+
+
+                                  Table 1
+
+   1) K~x~ = PK~x~ + SK~x~, where x = certificate type, PK~x~ = public
+   key, and SK~x~ = private key
+
 2.1.1.  Control-Plane Root Certificate
 
    TODO
@@ -433,7 +454,11 @@ Table of Contents
 6.2.  Informative References
 
    [BARRERA17]
-              "*** BROKEN REFERENCE ***".
+              Barrera, D., Chuat, L., Perrig, A., Reischuk, R., and P.
+              Szalachowski, "The SCION internet architecture",
+              Communications of the ACM vol. 60, no. 6, pp. 56-65,
+              DOI 10.1145/3085591, May 2017,
+              <https://doi.org/10.1145/3085591>.
 
    [CHUAT22]  Chuat, L., Legner, M., Basin, D., Hausheer, D., Hitz, S.,
               Mueller, P., and A. Perrig, "The Complete Guide to SCION",

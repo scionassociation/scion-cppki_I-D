@@ -1430,6 +1430,45 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">Â
 </li>
         </ul>
 <p id="section-2.1-7">The tables below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.<a href="#section-2.1-7" class="pilcrow">Â¶</a></p>
+<p id="section-2.1-8"><em>Table 1: Key pairs</em><a href="#section-2.1-8" class="pilcrow">Â¶</a></p>
+<table class="center" id="table-1">
+          <caption><a href="#table-1" class="selfRef">Table 1</a></caption>
+<thead>
+            <tr>
+              <th class="text-left" rowspan="1" colspan="1">Name</th>
+              <th class="text-left" rowspan="1" colspan="1">Notation^1)^</th>
+              <th class="text-left" rowspan="1" colspan="1">Used to verify/sign</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Sensitive voting key</td>
+              <td class="text-left" rowspan="1" colspan="1">K~sens~</td>
+              <td class="text-left" rowspan="1" colspan="1">TRC updates (sensitive)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">Regular voting key</td>
+              <td class="text-left" rowspan="1" colspan="1">K~reg~</td>
+              <td class="text-left" rowspan="1" colspan="1">TRC updates (regular)</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">CP root key</td>
+              <td class="text-left" rowspan="1" colspan="1">K~root~</td>
+              <td class="text-left" rowspan="1" colspan="1">CP CA certificates</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">CP CA key</td>
+              <td class="text-left" rowspan="1" colspan="1">K~CA~</td>
+              <td class="text-left" rowspan="1" colspan="1">CP AS certificates</td>
+            </tr>
+            <tr>
+              <td class="text-left" rowspan="1" colspan="1">CP AS key</td>
+              <td class="text-left" rowspan="1" colspan="1">K~AS~</td>
+              <td class="text-left" rowspan="1" colspan="1">PCBs, path segments</td>
+            </tr>
+          </tbody>
+        </table>
+<p id="section-2.1-10">1) K~x~ = PK~x~ + SK~x~, where x = certificate type, PK~x~ = public key, and SK~x~ = private key<a href="#section-2.1-10" class="pilcrow">Â¶</a></p>
 <div id="cp-root-cert">
 <section id="section-2.1.1">
           <h4 id="name-control-plane-root-certific">
@@ -1516,7 +1555,7 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">Â
 <dl class="references">
 <dt id="BARRERA17">[BARRERA17]</dt>
         <dd>
-<span class="refTitle">"*** BROKEN REFERENCE ***"</span>. </dd>
+<span class="refAuthor">Barrera, D.</span>, <span class="refAuthor">Chuat, L.</span>, <span class="refAuthor">Perrig, A.</span>, <span class="refAuthor">Reischuk, R.</span>, and <span class="refAuthor">P. Szalachowski</span>, <span class="refTitle">"The SCION internet architecture"</span>, <span class="seriesInfo">Communications of the ACM vol. 60, no. 6, pp. 56-65</span>, <span class="seriesInfo">DOI 10.1145/3085591</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://doi.org/10.1145/3085591">https://doi.org/10.1145/3085591</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="CHUAT22">[CHUAT22]</dt>
         <dd>
