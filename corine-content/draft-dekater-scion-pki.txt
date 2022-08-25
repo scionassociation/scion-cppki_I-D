@@ -483,30 +483,46 @@ Table of Contents
    *Note*: For information regarding the full format, see X.509
    (https://handle.itu.int/11.1002/1000/13031), clause 7.2.
 
-   ``` TBSCertificate ::= SEQUENCE { version [0] EXPLICIT Version
-   DEFAULT v1, serialNumber CertificateSerialNumber, signature
-   AlgorithmIdentifier{{SupportedAlgorithms}}, issuer Name, validity
-   Validity, subject Name, subjectPublicKeyInfo SubjectPublicKeyInfo,
-   issuerUniqueID [1] IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed
-   in SCION subjectUniqueID [2] IMPLICIT UniqueIdentifier OPTIONAL, --
-   disallowed in SCION extensions [3] EXPLICIT Extensions OPTIONAL }
+   TBSCertificate ::= SEQUENCE {
+       version               [0]   EXPLICIT Version DEFAULT v1,
+       serialNumber                CertificateSerialNumber,
+       signature                   AlgorithmIdentifier\{{SupportedAlgorithms}},
+       issuer                      Name,
+       validity                    Validity,
+       subject                     Name,
+       subjectPublicKeyInfo        SubjectPublicKeyInfo,
+       issuerUniqueID        [1]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       subjectUniqueID       [2]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       extensions            [3]   EXPLICIT Extensions OPTIONAL
+   }
 
-   Version ::= INTEGER { v1(0), v2(1), v3(2)} -- v1, v2 are disallowed
-   in SCION CertificateSerialNumber ::= INTEGER
+   Version ::= INTEGER { v1(0), v2(1), v3(2)}  -- v1, v2 are disallowed in SCION
+   CertificateSerialNumber ::= INTEGER
 
-   Validity ::= SEQUENCE { notBefore Time, notAfter Time }
+   Validity ::= SEQUENCE {
+       notBefore Time,
+       notAfter Time
+   }
 
-   Time ::= CHOICE { utcTime UTCTime, generalizedTime GeneralizedTime }
+   Time ::= CHOICE {
+       utcTime UTCTime,
+       generalizedTime GeneralizedTime
+   }
 
-   SubjectPublicKeyInfo ::= SEQUENCE { algorithm
-   AlgorithmIdentifier{{SupportedAlgorithms}}, subjectPublicKey BIT
-   STRING }
+   SubjectPublicKeyInfo ::= SEQUENCE {
+       algorithm         AlgorithmIdentifier\{{SupportedAlgorithms}},
+       subjectPublicKey  BIT STRING
+   }
 
    Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension
 
-   Extension ::= SEQUENCE { extnId OBJECT IDENTIFIER, critical BOOLEAN
-   DEFAULT FALSE, extnValue OCTET STRING -- contains DER encoding of
-   ASN.1 value -- corresponding to type identified by extnID } ```
+   Extension ::= SEQUENCE {
+       extnId      OBJECT IDENTIFIER,
+       critical    BOOLEAN DEFAULT FALSE,
+       extnValue   OCTET STRING
+                       -- contains DER encoding of ASN.1 value
+                       -- corresponding to type identified by extnID
+   }
 
 2.2.2.  Control-Plane Root Certificate
 

@@ -1606,42 +1606,50 @@ appear in all capitals, as shown here.<a href="#section-1.5-1" class="pilcrow">�
 <p id="section-2.2.1-1">SCION control-plane certificates are X.509 v3 certificates. Every certificate has a <code>subject</code>, which is the entity that owns the certificate, and an <code>issuer</code>, which is the entity that issued the certificate, usually a CA.<a href="#section-2.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.2.1-2">The next code block shows the generic format of SCION control-plane certificates. It is followed by a description of the SCION specifics for each certificate field.<a href="#section-2.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.2.1-3"><strong>Note</strong>: For information regarding the full format, see <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a>, clause 7.2.<a href="#section-2.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-4">```
+<div class="alignLeft art-text artwork" id="section-2.2.1-4">
+<pre>
    TBSCertificate ::= SEQUENCE {
        version               [0]   EXPLICIT Version DEFAULT v1,
        serialNumber                CertificateSerialNumber,
-       signature                   AlgorithmIdentifier{{SupportedAlgorithms}},
+       signature                   AlgorithmIdentifier\{{SupportedAlgorithms}},
        issuer                      Name,
        validity                    Validity,
        subject                     Name,
        subjectPublicKeyInfo        SubjectPublicKeyInfo,
-       issuerUniqueID        [1]   IMPLICIT UniqueIdentifier <span class="bcp14">OPTIONAL</span>, -- disallowed in SCION
-       subjectUniqueID       [2]   IMPLICIT UniqueIdentifier <span class="bcp14">OPTIONAL</span>, -- disallowed in SCION
-       extensions            [3]   EXPLICIT Extensions <span class="bcp14">OPTIONAL</span>
-   }<a href="#section-2.2.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-5">Version ::= INTEGER { v1(0), v2(1), v3(2)}  -- v1, v2 are disallowed in SCION
-   CertificateSerialNumber ::= INTEGER<a href="#section-2.2.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-6">Validity ::= SEQUENCE {
+       issuerUniqueID        [1]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       subjectUniqueID       [2]   IMPLICIT UniqueIdentifier OPTIONAL, -- disallowed in SCION
+       extensions            [3]   EXPLICIT Extensions OPTIONAL
+   }
+
+   Version ::= INTEGER { v1(0), v2(1), v3(2)}  -- v1, v2 are disallowed in SCION
+   CertificateSerialNumber ::= INTEGER
+
+   Validity ::= SEQUENCE {
        notBefore Time,
        notAfter Time
-   }<a href="#section-2.2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-7">Time ::= CHOICE {
+   }
+
+   Time ::= CHOICE {
        utcTime UTCTime,
        generalizedTime GeneralizedTime
-   }<a href="#section-2.2.1-7" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-8">SubjectPublicKeyInfo ::= SEQUENCE {
-       algorithm         AlgorithmIdentifier{{SupportedAlgorithms}},
+   }
+
+   SubjectPublicKeyInfo ::= SEQUENCE {
+       algorithm         AlgorithmIdentifier\{{SupportedAlgorithms}},
        subjectPublicKey  BIT STRING
-   }<a href="#section-2.2.1-8" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-9">Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension<a href="#section-2.2.1-9" class="pilcrow">¶</a></p>
-<p id="section-2.2.1-10">Extension ::= SEQUENCE {
+   }
+
+   Extensions ::= SEQUENCE SIZE (1..MAX) OF Extension
+
+   Extension ::= SEQUENCE {
        extnId      OBJECT IDENTIFIER,
        critical    BOOLEAN DEFAULT FALSE,
        extnValue   OCTET STRING
                        -- contains DER encoding of ASN.1 value
                        -- corresponding to type identified by extnID
    }
-  ```<a href="#section-2.2.1-10" class="pilcrow">¶</a></p>
+</pre><a href="#section-2.2.1-4" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="cp-root-cert">
