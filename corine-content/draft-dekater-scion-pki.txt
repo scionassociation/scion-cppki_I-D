@@ -386,8 +386,8 @@ Table of Contents
       -  Section Voting Certificates (Section 2.1.4) provides more
          details on the voting certificates.
 
-   The tables below provide a formal overview of the different types of
-   key pairs and certificates in the control-plane PKI.
+   The tables below Table 1 provide a formal overview of the different
+   types of key pairs and certificates in the control-plane PKI.
 
      +======================+==============+=========================+
      | Name                 | Notation (1) | Used to verify/sign     |
@@ -403,7 +403,7 @@ Table of Contents
      | CP AS key            | K_AS         | PCBs, path segments     |
      +----------------------+--------------+-------------------------+
 
-                                  Table 1
+                             Table 1: Key chain
 
    (1) : K_x = PK_x + SK_x, where x = certificate type, PK_x = public
    key, and SK_x = private key
