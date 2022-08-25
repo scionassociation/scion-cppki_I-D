@@ -218,10 +218,10 @@ The following list summarizes the main certificates and corresponding key pairs 
    - *Sensitive voting certificate*: This is the container for the public key associated with the sensitive voting private key.
    - Section [Voting Certificates](#cp-voting-cert) provides more details on the voting certificates.
 
-The tables below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
+The tables below {{table1}} provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
 
 
-| Name                 | Notation<sup>1</sup>   	| Used to verify/sign   	|
+| Name                 | Notation *1)*   	| Used to verify/sign   	|
 | -------------------- | ------- | ----------------------- |
 | Sensitive voting key | K<sub>sens</sub> | TRC updates (sensitive) |
 | Regular voting key   | K<sub>reg</sub>  | TRC updates (regular)   |
@@ -229,9 +229,9 @@ The tables below provide a formal overview of the different types of key pairs a
 | CP CA key            | K<sub>CA</sub>   | CP AS certificates      |
 | CP AS key            | K<sub>AS</sub>   | PCBs, path segments     |
 
-Table: Key pairs
+{: #table1 title="Key pairs"}
 
-1: K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
+*1)* : K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
 
 ### Control-Plane Root Certificate {#cp-root-cert}
