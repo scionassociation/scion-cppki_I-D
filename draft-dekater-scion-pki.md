@@ -115,8 +115,9 @@ The document first describes the trust model behind SCION's control-plane PKI, a
 
 The control-plane PKI (CP-PKI) lays the foundation for the authentication procedures in SCION. It handles all cryptographic material used in the public key infrastructure of SCION's control plane. This section first introduces the key concepts of the SCION CP-PKI, including the trust model, its core elements (certificates, keys, and roles), and their relationships. The sections after the Introduction provide detailed specifications of the building blocks of the CP-PKI.
 
-**Note:**<br>
-For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
+<br>
+**Note:** For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
+<br>
 
 ## Trust Model
 
@@ -212,8 +213,9 @@ The following list summarizes the main certificates and corresponding key pairs 
    - *CP AS certificate*: This is the container for the public key associated with the CP AS private key.
    - Section [Control-Plane AS Certificate](#cp-as-cert) provides more details on the CP AS certificates.
 
-**Note:**<br>
-The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
+<br>
+**Note:** The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Specification of the Trust Root Configuration](#trc-specification).
+<br>
 
 - **Voting Certificates** - Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.
    - *Regular voting private key*: This private key is used to sign regular TRC updates. The corresponding public key is embedded in TRCs (via the regular voting certificate).
@@ -267,8 +269,9 @@ SCION control-plane certificates are X.509 v3 certificates. Every certificate ha
 
 The next code block shows the generic format of SCION control-plane certificates. It is followed by a description of the SCION specifics for each certificate field.
 
-**Note:**<br>
-For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+<br>
+**Note:** For information regarding the full format, see [X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+<br>
 
 ~~~~
    TBSCertificate ::= SEQUENCE {
@@ -345,8 +348,9 @@ The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecd
        us(840) ansi-X9-62(10045) signatures(4) ecdsa-with-SHA2(3) 4 }
 ~~~~
 
-**Important:**<br>
-The accepted cryptographic algorithms listed in this document are the only currently accepted cryptographic algorithms. SCION implementations MUST reject cryptographic algorithms not found in the list.
+<br>
+**Important:** The accepted cryptographic algorithms listed in this document are the only currently accepted cryptographic algorithms. SCION implementations MUST reject cryptographic algorithms not found in the list.
+<br>
 
 The only accepted curves for ECDSA are:
 
@@ -372,9 +376,9 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
 
-**Important:**<br>
-SCION implementations MUST include support for P-256, P-384, and P-521.
-
+<br>
+**Important:** SCION implementations MUST include support for P-256, P-384, and P-521.
+<br>
 
 ##### `AlgorithmIdentifier` Sequence
 
@@ -387,8 +391,9 @@ SCION implementations MUST include support for P-256, P-384, and P-521.
    }
 ~~~~
 
-**Note:**<br>
-In SCION implementations, the `parameters` field MUST be absent, as defined in {{RFC8410}}.
+<br>
+**Note:** In SCION implementations, the `parameters` field MUST be absent, as defined in {{RFC8410}}.
+<br>
 
 In general, if the `AlgorithmIdentifier` in a specific SCION implementation is not defined as described above, the implementation should stop the validation process entirely and error out.
 
@@ -435,13 +440,15 @@ All SCION implementations MUST support the following standard attribute types:
 - `common name`
 - `serial number`
 - `ISD-AS number`
+<br>
 
-Except for the `ISD-AS number` attribute, all the above attributes are defined in {{RFC5280}).
+Except for the `ISD-AS number` attribute, all the above attributes are defined in {{RFC5280}}.
 
 As an additional constraint compared to {{RFC5280}}, SCION implementations MUST use the `UTF8String` value type for all the above attributes, including the `ISD-AS number` attribute.
 
-**Note:**<br>
-Besides the above listed required attributes, SCION implementations may additionally also support other attributes.
+<br>
+**Note:** Besides the above listed required attributes, SCION implementations may additionally also support other attributes.
+<br>
 
 
 ##### `ISD-AS number` Attribute {#isd-as-nr}
@@ -454,9 +461,10 @@ The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open
 
 where `id-ana` specifies the root SCION object identifier (OID).
 
-**Note:**<br>
-The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+<br>
+**Note:** The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
 `id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+<br>
 
 The following points apply when setting the attribute value of the `ISD-AS number` attribute:
 
@@ -465,8 +473,10 @@ The following points apply when setting the attribute value of the `ISD-AS numbe
 - The ISD numbers are formatted as decimal.
 - The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
 
+<br>
 **Example:**<br>
 AS `ff00:0:110` in ISD `1` is formatted as `1-ff00:0:110`.
+<br>
 
 The `ISD-AS number` attribute MUST be present exactly once in all SCION control-plane certificates. Implementations MUST NOT create nor successfully verify certificates that do not include the ISD-AS number, or include it more than once.
 
@@ -476,7 +486,7 @@ The `ISD-AS number` attribute MUST be present exactly once in all SCION control-
 Section 4.1.2.5 of {{RFC5280}} defines the `validity` field. In addition to this definition, the following constraints apply to SCION control-plane certificates:
 
 - All certificates MUST have a well-defined expiration date. SCION control-plane certificates that use the *99991231235959Z* generalized time value, instead of a well-defined expiration date, are not valid. SCION implementations MUST NOT create such certificates, and verifiers MUST error out when encountering such a certificate.
-- The validity period of a certificate is the period of time in between the values of the `notBefore` and `notAfter` attributes. For each control-plane certificate type, this validity period must have a specific maximum value. For more information, see the below sections describing the control-plane certificates: [Control-Plane Root Certificate](#cp-root-cert), [Control-Plane CA Certificate](#cp-ca-cert), [Control-Plane AS Certificate](#cp-as-cert), and [Voting Certificates](#cp-voting-cert).
+- The validity period of a certificate is the period of time in between the values of the `notBefore` and `notAfter` attributes. For each control-plane certificate type, this validity period must have a specific maximum value. For more information, see the below sections describing the control-plane and voting certificates: [Control-Plane Root Certificate](#cp-root-cert), [Control-Plane CA Certificate](#cp-ca-cert), [Control-Plane AS Certificate](#cp-as-cert), and [Voting Certificates](#cp-voting-cert).
 
 
 #### `subject` Field {#subject}
@@ -496,26 +506,368 @@ The SCION constraints in [`signature` Field](#certificate-signature) also apply 
 The fields `issuerUniqueID` and `subjectUniqueID` are disallowed and thus MUST NOT be used in a SCION implementation.
 
 
+#### Extensions {#exts}
+
+[X.509](https://handle.itu.int/11.1002/1000/13031), clause 7.2, defines the syntax of the `Extensions` sequence.
+This section describes the extensions relevant for SCION.
+
+
+##### `authorityKeyIdentifier` Extension
+
+The `authorityKeyIdentifier` extension is defined in clause 9.2.2.1 of [X.509](https://handle.itu.int/11.1002/1000/13031).
+
+The `authorityKeyIdentifier` extension identifies the private key used to sign the certificate. It is defined as follows:
+
+~~~~
+   authorityKeyIdentifier EXTENSION ::= {
+       SYNTAX AuthorityKeyIdentifier
+       IDENTIFIED BY id-ce-authorityKeyIdentifier
+   }
+
+   AuthorityKeyIdentifier ::= SEQUENCE {
+       keyIdentifier             [0]   KeyIdentifier OPTIONAL,
+       authorityCertIssuer       [1]   GeneralNames OPTIONAL,
+       authorityCertSerialNumber [2]   CertificateSerialNumber OPTIONAL,
+       ...
+   }
+   (WITH COMPONENTS {..., authorityCertIssuer PRESENT,
+                          authorityCertSerialNumber PRESENT } |
+   WITH COMPONENTS {..., authorityCertIssuer ABSENT,
+                         authorityCertSerialNumber ABSENT } )
+
+   KeyIdentifier ::= OCTET STRING
+~~~~
+
+Using the `keyIdentifier` attribute is the preferred way to specify the `authorityKeyIdentifier` extension.
+
+<br>
+**Important:** SCION implementations may also support the use of the `authorityCertIssuer` and `authorityCertSerialNumber` attributes. However, if these attributes are set and support for them is missing, implementations should error out.
+<br>
+
+This extension MUST always be non-critical (which is the default, see the code block displaying the generic format of SCION control-plane certificates in [General Certificate Requirements](#general-cert-req)). However, SCION implementations MUST error out if the extension is not present AND the certificate is not self-signed.
+
+
+##### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
+
+The `subjectKeyIdentifier` extension is defined in clause 9.2.2.2 of [X.509](https://handle.itu.int/11.1002/1000/13031), (10/2016).
+
+The `subjectKeyIdentifier` extension identifies the public key being certified. It can be used, for example, by control-plane messages to identify which certificate to use for verification. The extension allows for overlapping control-plane CA keys, for example during updates. It is defined as follows:
+
+~~~~
+   subjectKeyIdentifier EXTENSION ::= {
+       SYNTAX SubjectKeyIdentifier
+       IDENTIFIED BY id-ce-subjectKeyIdentifier
+   }
+
+   SubjectKeyIdentifier ::= KeyIdentifier
+~~~~
+
+This extension MUST always be non-critical (which is the default, see the code block displaying the generic format of SCION control-plane certificates in [General Certificate Requirements](#general-cert-req)). However, SCION implementations must error out if the extension is not present.
+
+##### `keyUsage` Extension
+
+The `keyUsage` extension is defined in clause 9.2.2.3 of [X.509](https://handle.itu.int/11.1002/1000/13031), (10/2016).
+
+The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. The ASN.1 definition is as follows:
+
+~~~~
+   keyUsage EXTENSION ::= {
+       SYNTAX KeyUsage
+       IDENTIFIED BY id-ce-keyUsage
+   }
+
+   KeyUsage ::= BIT STRING {
+       digitalSignature  (0),
+       contentCommitment (1),
+       keyEncipherment   (2),
+       dataEncipherment  (3),
+       keyAgreement      (4),
+       keyCertSign       (5),
+       cRLSign           (6),
+       encipherOnly      (7),
+       decipherOnly      (8),
+   }
+~~~~
+
+The attributes of the `keyUsage` extension define the various possible ways of using the public key. The attributes have the following meaning in SCION:
+
+- `digitalSignature`: The public key can be used to verify the digital signature of a control-plane payload.
+- `contentCommitment`: Not used.
+- `keyEncipherment`: Not used.
+- `dataEncipherment`: Not used.
+- `keyAgreement`: Not used.
+- `keyCertSign`: The public key can be used to verify the CA signature on a control-plane certificate.
+- `cRLSign`: Not used.
+- `encipherOnly`: Not used.
+- `decipherOnly`: Not used.
+
+<br>
+**Important:** If the certificate's public key is used to verify the signature of a control-plane payload (`digitalSignature` attribute), it must be possible to trace back the private key used for the signature. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension, see [`subjectKeyIdentifier` Extension](#subject-key-id-ext).
+<br>
+
+Each control-plane certificate type uses the public key differently, and consequently also specifies the attributes of the `keyUsage` extension differently. For more information, see the below sections describing the control-plane and voting certificates: [Control-Plane Root Certificate](#cp-root-cert), [Control-Plane CA Certificate](#cp-ca-cert), [Control-Plane AS Certificate](#cp-as-cert), and [Voting Certificates](#cp-voting-cert).
+
+If present, the `keyUsage` extension should be marked as "critical". That is, the `critical` Boolean attribute of this extension must be set to TRUE (the default is FALSE, see the code block displaying the generic format of SCION control-plane certificates in [General Certificate Requirements](#general-cert-req)).
+
+<br>
+**Note:** If a certificate extension is marked "critical", the public key in the certificate should only be used for the purpose set in the critical extension.
+<br>
+
+
+##### `extKeyUsage` Extension
+
+The `extKeyUsage` extension is defined in clause 9.2.2.4 of [X.509](https://handle.itu.int/11.1002/1000/13031).
+
+The `extKeyUsage` extension specifies additional usages of the public key in the certificate. It is defined as follows:
+
+~~~~
+   extKeyUsage EXTENSION ::= {
+       SYNTAX             SEQUENCE SIZE (1..MAX) OF KeyPurposeId
+       IDENTIFIED BY      id-ce-extKeyUsage
+   }
+
+   KeyPurposeId ::= OBJECT IDENTIFIER
+~~~~
+
+SCION uses the following attributes of the Extended Key Usage extension, as defined in Section 4.2.1.12 of {{RFC5280}}:
+
+- `id-kp-serverAuth`: If set, the public key can be used for SCION control-plane server authentication.
+- `id-kp-clientAuth`: If set, the public key can be used for SCION control-plane client authentication.
+- `id-kp-timeStamping`: If set, the public key can be used for the verification of timestamps.
+
+This extension MUST be present in control-plane root-, AS- and voting certificates. It MAY be present in control-plane CA certificates. For the exact settings per certificate type, see the below sections describing the control-plane and voting certificates: [Control-Plane Root Certificate](#cp-root-cert), [Control-Plane CA Certificate](#cp-ca-cert), [Control-Plane AS Certificate](#cp-as-cert), and [Voting Certificates](#cp-voting-cert).
+
+
+##### `basicConstraints` Extension
+
+The `basicConstraints` extension is defined in clause 9.4.2.1 of [X.509](https://handle.itu.int/11.1002/1000/13031).
+
+The `basicConstraints` extension specifies whether the certificate subject may act as a CA. The ASN.1 definition for the `basicConstraints` extension is as follows:
+
+~~~~
+   basicConstraints EXTENSION ::= {
+       SYNTAX          BasicConstraintsSyntax
+       IDENTIFIED BY   id-ce-basicConstraints
+   }
+
+   BasicConstraintsSyntax ::= SEQUENCE {
+       cA                BOOLEAN DEFAULT FALSE,
+       pathLenConstraint INTEGER(0..MAX) OPTIONAL,
+   }
+~~~~
+
+- `cA` attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute MUST be set to TRUE.
+- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the allowed length of the certification path.
+
+The settings of the `basicConstraints` extension differ for each control-plane certificate type. For more information, see the below sections describing the control-plane and voting certificates: [Control-Plane Root Certificate](#cp-root-cert), [Control-Plane CA Certificate](#cp-ca-cert), [Control-Plane AS Certificate](#cp-as-cert), and [Voting Certificates](#cp-voting-cert).
+
+
 
 ### Control-Plane Root Certificate {#cp-root-cert}
 
-TODO
+The control-plane root private key is used to sign control-plane CA certificates. Consequently, the control-plane root certificate with the control-plane root public key is used to verify control-plane CA certificates. So indirectly, CP root certificates determine which ASes act as CA in an ISD.
+
+In X.509 terms, CP root certificates are self-*signed* CA certificates. That is, issuer and subject of the certificate are the same entity, and the public key in the root certificate can be used to verify the root certificate's signature. The CP root public key and proof of ownership of the private key are embedded in the Trust Root Configuration (TRC) of an Isolation Domain (ISD), via the self-signed CP root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the CP root certificates as the starting point of an ISD's certificate verification path.
+
+All constraints described in [General Certificate Requirements](#general-cert-req) also apply to CP root certificates.
+
+The recommended **maximum validity period** of a CP root certificate is: 1 year.
+
+
+#### Extension Constraints
+
+The extensions of a CP root certificate differ from the general certificate requirements described previously, in the following ways.
+
+
+##### `keyUsage` Extension
+
+- `digitalSignature` attribute: This attribute MUST NOT be set (because the CP root certificate should not be used to verify control-plane messages).
+- `keyCertSign` attribute: This attribute MUST be set.
+
+
+##### `extKeyUsage` Extension
+
+The `extKeyUsage` extension MUST be present in the CP root certificate.
+It must be defined as follows:
+
+- `id-kp-serverAuth` attribute: MUST NOT be set.
+- `id-kp-clientAuth` attribute: MUST NOT be set.
+- `id-kp-timeStamping` attribute: MUST be set.
+
+Additionally, the `id-kp-root` attribute must be specified, as follows:
+
+~~~~
+   id-kp-root AttributeType ::= {id-ana id-cppki(1) id-kp(3) 3}
+~~~~
+
+where `id-ana` specifies the root SCION object identifier (OID).
+
+<br>
+**Note:** The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+`id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+<br>
+
+##### `basicConstraints` Extension
+
+The `basicConstraints` extension MUST be present in the CP root certificate.<br>
+The extension attributes must be set as follows:
+
+- `cA` attribute: MUST be set to TRUE.
+- `pathLenConstraint` attribute: Should be set to "1". Additionally, it must be marked as "critical", according to [X.509](https://handle.itu.int/11.1002/1000/13031).
+<br>
 
 ### Control-Plane CA Certificate {#cp-ca-cert}
 
-TODO
+The control-plane CA private key is used to sign control-plane AS certificates. Consequently, control-plane CA certificates holding the control-plane CA public key are used to verify control-plane AS certificates.
+
+The public key needed to verify the CA certificate is in a CP root certificate. CA certificates do not bundle the root certificate needed to verify them. In order to verify a CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (see also [Signing and Verifying Control-Plane Messages](#signing-verifying-cp-messages).
+
+All constraints described in [General Certificate Requirements](#general-cert-req) also apply to control-plane CA certificates.
+
+The recommended **maximum validity period** of a CP CA certificate is: 11 days.
+
+#### Extension Constraints
+
+The extensions of a CP CA certificate differ from the general certificate requirements described previously, in the following ways.
+
+
+##### `keyUsage` Extension
+
+- `digitalSignature` attribute: This attribute MUST NOT be set (because the control-plane CA certificate should not be used to verify control-plane messages).
+- `keyCertSign` attribute: This attribute MUST be set.
+
+
+##### `extKeyUsage` Extension
+
+The `extKeyUsage` extension MAY be present in the CP CA certificate.
+
+If the `extKeyUsage` extension is present in the CP CA certificate, the attributes `id-kp-serverAuth` and `id-kp-clientAuth` MUST NOT be set.
+
+
+##### `basicConstraints` Extension
+
+The `basicConstraints` extension MUST be present in the CP CA certificate.<br>
+The extension attributes must be set as follows:
+
+- `cA` attribute: MUST be set to TRUE.
+- `pathLenConstraint` attribute: SHOULD be set to "0". This means that the CP CA certificate can only issue end-entity certificates. Additionally, the attribute must be marked as "critical", according to [X.509](https://handle.itu.int/11.1002/1000/13031).
+<br>
+
 
 ### Control-Plane AS Certificate {#cp-as-cert}
 
-TODO
+SCION ASes sign control-plane messages, such as PCBs, with their AS private key. Consequently, control-plane AS certificates holding the corresponding AS public key are required to verify control-plane messages.
+
+In X.509 terms, control-plane AS certificates are end-entity certificates. That is, they cannot be used to verify other certificates.
+
+All constraints described in [General Certificate Requirements](#general-cert-req) also apply to control-plane AS certificates.
+
+The recommended **maximum validity period** of a CP AS certificate is: 3 days.
+
+
+#### Extension Constraints
+
+The extensions of a CP AS certificate differ from the general certificate requirements described previously, in the following ways.
+
+##### `keyUsage` Extension
+
+- `digitalSignature` attribute: This attribute MUST be set.
+- `keyCertSign` attribute: This attribute MUST NOT be set.
+
+
+##### `extKeyUsage` Extension
+
+The `extKeyUsage` extension MUST be present in the CP AS certificate.<br>
+It must be defined as follows:
+
+- `id-kp-serverAuth` attribute: MUST be set, if the CP AS certificate is used on the server-side of a control-plane TLS session establishment.
+- `id-kp-clientAuth` attribute: MUST be set, if the CP AS certificate is used on the client-side of control-plane TLS session establishment.
+- `id-kp-timeStamping` attribute: MUST be set.
+<br>
+
+##### `basicConstraints` Extension
+
+Control-plane AS certificates should not include the ``basicConstraints`` extension.
+
 
 ### Voting Certificates {#cp-voting-cert}
 
-TODO
+There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that are allowed to cast votes in the TRC update process. Voting certificates are X.509-style certificates.
 
+Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.
+
+
+#### Regular Voting Certificate {#reg-vote}
+
+Regular voting certificates state which keys are allowed to cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the key within the certificate was used to sign the certificate. However, a regular voting certificate cannot be used to verify other certificates.
+
+The constraints described in [General Certificate Requirements](#general-cert-req) also apply to regular voting certificates. There is one exception: A regular voting certificate is not required to include the `ISD-AS number` attribute in their distinguished name (for more information on this attribute, see [`ISD-AS number` Attribute](#isd-as-nr)).
+
+The recommended **maximum validity period** of a regular voting certificate is: 1 year.
+
+
+#### Sensitive Voting Certificate {#sens-vote}
+
+Sensitive voting certificates specify which keys are allowed to cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the key within the certificate was used to sign the certificate. However, a sensitive voting certificate cannot be used to verify other certificates.
+
+The constraints described in [General Certificate Requirements](#general-cert-req) also apply to sensitive voting certificates. There is one exception: A sensitive voting certificate is not required to include the `ISD-AS number` attribute in their distinguished name (for more information on this attribute, see [`ISD-AS number` Attribute](#isd-as-nr)).
+
+The recommended **maximum validity period** of a sensitive voting certificate is: 5 years.
+
+
+##### Extension Constraints of Voting Certificates
+
+The extensions of both regular and sensitive voting certificates differ from the general certificate requirements described previously, in the following ways.
+
+###### `keyUsage` Extension
+
+The `keyUsage` extension is not required in a voting certificate.<br>
+However, if this extension is present, both the `digitalSignature` and the `keyCertSign` attributes MUST NOT be set.
+
+###### `extKeyUsage` Extension
+
+The `extKeyUsage` extension MUST be present in a voting certificate.<br>
+It must be defined as follows:
+
+- `id-kp-serverAuth` attribute: MUST NOT be set.
+- `id-kp-clientAuth` attribute: MUST NOT be set.
+- `id-kp-timeStamping` attribute: MUST be set.
+
+Additionally, the `id-kp-regular` / `id-kp-sensitive` attribute MUST be set, as follows:
+
+- For a regular voting certificate:<br>
+`id-kp-regular AttributeType ::= {id-ana id-cppki(1) id-kp(3) 1}`
+- For a sensitive voting certificate:<br>
+`id-kp-sensitive AttributeType ::= {id-ana id-cppki(1) id-kp(3) 1}`
+
+where `id-ana` specifies the root SCION object identifier (OID).
+
+<br>
+**Note:** The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+`id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+<br>
+
+
+###### `basicConstraints` Extension
+
+The `basicConstraints` extension SHOULD NOT be part of a voting certificate.<br>
+However, if this extension is present in a voting certificate, it MUST be defined as follows:
+
+- `cA` attribute: MUST be set to FALSE.
+- `pathLenConstraint` attribute: MUST NOT be present.
+<br>
+<br>
 
 
 # Specification of the Trust Root Configuration {#trc-specification}
+
+TODO
+
+# Deploying the CP PKI - Specifications {#deploy-cp-pki}
+
+TODO
+
+## Signing and Verifying Control-Plane Messages {#signing-verifying-cp-messages}
 
 TODO
 
