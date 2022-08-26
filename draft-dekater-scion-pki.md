@@ -119,6 +119,11 @@ The control-plane PKI (CP-PKI) lays the foundation for the authentication proced
 **Note:** For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
 
 
+## Conventions and Definitions
+
+{::boilerplate bcp14-tagged}
+
+
 ## Trust Model
 
 Given the diverse nature of the constituents in the current Internet, an important challenge is how to scale authentication of network elements (such as AS ownership, hop-by-hop routing information, name servers for DNS, and domains for TLS) to the global environment. The roots of trust of currently prevalent public key infrastructure (PKI) models do not scale well to a global environment, because (1) mutually distrustful parties cannot agree on a single trust root (monopoly model), and because (2) the security of a plethora of roots of trust is only as strong as its weakest link (oligopoly model) - see also {{BARRERA17}}.
@@ -153,9 +158,47 @@ There are two types of TRC updates: regular and sensitive. A **regular TRC updat
 
 ## Overview of Certificates, Keys, and Roles
 
-The base TRC constitutes the root of trust within an ISD. The next figure provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
+The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
 
->>>>>> **Figure 1** - *Chain of trust within an ISD*
+~~~~
+                                    TRC 2
+
+               +--------------------------------------+
+               |+------------------------------------+|
+               ||- Version       - Core ASes         ||
++--------+     ||- ID            - Description       ||    +--------+
+| TRC 1  |     ||- Validity      - No Trust Reset    ||    | TRC 3  |
+| (Base  |---->||- Grace Period  - Voting Quorum     ||--->|        |
+|  TRC)  |     ||- ...                               ||    |        |
++--------+     |+------------------------------------+|    +--------+
+               |+----------------+  +----------------+|
+               || Regular Voting |  |Sensitive Voting||
+               ||  Certificate   |  |  Certificate   ||
+               |+----------------+  +----------------+|
+               |+----------------+  +----------------+|
+               ||     Votes      |  |   Signatures   ||
+               |+----------------+  +----------------+|
+               |+------------------------------------+|
+               ||        CP Root Certificates        ||
+               |+----------+-------------+-----------+|
+               |           |             |            |
+               +-----------+-------------+------------+
+                           |             |
+                           |             |
+                           v             v
+                 +-----------+         +-----------+
+                 |   CP CA   |         |   CP CA   |
+                 |Certificate|         |Certificate|
+                 +-+-------+-+         +-----+-----+
+                   |       |                 |
+                   |       |                 |
+                   v       v                 v
+          +-----------+ +-----------+      +-----------+
+          |   CP AS   | |   CP AS   |      |   CP AS   |
+          |Certificate| |Certificate|      |Certificate|
+          +-----------+ +-----------+      +-----------+
+~~~~
+{: #figure-1 title="Chain of trust within an ISD"}
 
 All certificates used in SCION's control-plane PKI are in X.509 v3 format {{RFC5280}}. Additionally, the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key.
 
@@ -182,10 +225,6 @@ Prior to the ceremony, the trusted parties must decide about the validity period
 
 The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates--the latter are used to verify SCION's control-plane messages. Together with the ISD's control-plane root certificates, the CA and AS certificates build the ISD's trust and verification chain.
 
-
-## Conventions and Definitions
-
-{::boilerplate bcp14-tagged}
 
 
 # Certificate Specification {#cert-specs}
@@ -225,7 +264,7 @@ The following list summarizes the main certificates and corresponding key pairs 
 {{table-1}} and {{table-2}} below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
 
 
-| Name                 | Notation (1)   	| Used to verify/sign   	|
+| Name                 | Notation (1)     | Used to verify/sign   	|
 |----------------------+------------------+-------------------------|
 | Sensitive voting key | K<sub>sens</sub> | TRC updates (sensitive) |
 | Regular voting key   | K<sub>reg</sub>  | TRC updates (regular)   |
@@ -250,9 +289,70 @@ The following list summarizes the main certificates and corresponding key pairs 
 (2) Recommended maximum validity period.<br>
 (3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable best possible operational procedures when performing a CA certificate rollover.
 
-Figure 2 illustrates, at a high level, the relationship between a TRC and the five types of certificates.
+{{figure-2}} illustrates, at a high level, the relationship between a TRC and the five types of certificates.
 
->>>>>> **Figure 2** - *TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.*
+~~~~
+   +--------------------+     +--------------------+          +--------------+     +---------------+
+   |       TRC 1        +---->|       TRC 2       -+------>╳  |       TRC 3  +---->|       TRC 4   |
+   |  (base, initial)   |     |  (regular update)  |          | (base, trust |     | (sensitive    |
++--+--------------------+     +--------------------+------+   |     reset)   |     |     update)   |
+|                                                         |   +--------------+     +---------------+
+|                                                         |
++--------------------------------------------+        +---+----------------------------------------+
+|             TRC 1 (base, initial)          |        |             TRC 2 (regular update)         |
+|+------------------------------------------+|        |+------------------------------------------+|
+||- Version       - Core ASes               ||        ||- Version       - Core ASes               ||
+||- ID            - Description             ||        ||- ID            - Description             ||
+||- Validity      - No Trust Reset          ||        ||- Validity      - No Trust Reset          ||
+||- Grace Period  - Voting Quorum           ||        ||- Grace Period  - Voting Quorum           ||
+||- ...                                     ||        ||- ...                                     ||
+|+------------------------------------------+|        |+------------------------------------------+|
+|+--------------------++--------------------+|        |+--------------------++--------------------+|
+||Votes (cert.indices)||   Regular Voting   ||        ||Votes (cert.indices)||   Regular Voting   ||
+||                    ||    Certificates    ||        ||                    ||    Certificates    ||
+||    (empty)         ||                    ||        ||    (1),(2)...      ||                    ||
+||                    ||+-----+ +-----+     ||        ||                    ||+-----+ +-----+     ||
+||                    ||| (1) | | (2) |     ||        ||                    ||| (1) | | (2) |     ||
+||                    |||C    | |C    | ... ||        ||                    |||C    | |C    | ... ||
+||                    ||| reg | | reg |     ||        ||                    ||| reg | | reg |     ||
+|+--------------------+|+--+--+ +--+--+     ||        |+--------------------+|+-----+ +-----+     ||
+|+--------------------+|   |       |        ||        |+--------------------+|                    ||
+||                    ||   |       +--------++-----+  ||                    ||                    ||
+||                    ||   +----------------++-+   |  ||                    ||                    ||
+||    Signatures      |+--------------------+| |   |  ||    Signatures      |+--------------------+|
+||                    |+--------------------+| |   |  ||                    |+--------------------+|
+||+------------------+|| Sensitive Voting   || |   |  ||+------------------+|| Sensitive Voting   ||
+|||73 A9 4E AO 0D ...|||    Certificates    || |   +--+>|48 AE E4 80 DB ...|||    Certificates    ||
+||+------------------+||+-----+ +-----+     || |      ||+------------------+||+-----+ +-----+     ||
+||+------------------+||| (3) | | (4) |     || |      ||+------------------+||| (3) | | (4) |     ||
+|||53 B7 7C 98 56 ...||||C    | |C    |     || +------+>|7E BC 75 98 25 ...||||C    | |C    |     ||
+||+------------------+||| sens| | sens| ... ||        ||+------------------+||| sens| | sens| ... ||
+||        ...         ||+-----+ +-----+     ||        ||        ...         ||+-----+ +-----+     ||
+|+--------------------++--------------------+|        |+--------------------++--------------------+|
+|+------------------------------------------+|        |+------------------------------------------+|
+||          CP Root Certificates            ||        ||          CP Root Certificates            ||
+||                                          ||        ||                                          ||
+|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
+|| | (5) | | (6) | | (7) | | (8) |          ||        || | (5) | | (6) | | (7) | | (8) |          ||
+|| |C    | |C    | |C    | |C    |          ||        || |C    | |C    | |C    | |C    |          ||
+|| | root| | root| | root| | root| .....    ||        || | root| | root| | root| | root| .....    ||
+|| +-----+ +--+--+ +-----+ +--+--+          ||        || +-----+ +--+--+ +-----+ +--+--+          ||
+|+------------+---------------+-------------+|        |+------------+---------------+-------------+|
++-------------+---------------+--------------+        +-------------+---------------+--------------+
+              |               |                                     |               |
+    +---------v-+           +-v---------+                 +---------v-+           +-v---------+
+    |   CP CA   |           |   CP CA   |                 |   CP CA   |           |   CP CA   |
+    |Certificate|           |Certificate|                 |Certificate|           |Certificate|
+    +-----+-----+           +-----+-----+                 +-+-------+-+           +-----+-----+
+          |                       |                         |       |                   |
+          |                       |                         |       |                   |
+          v                       v                         v       v                   v
+    +-----------+           +-----------+          +-----------+ +-----------+        +-----------+
+    |   CP AS   |           |   CP AS   |          |   CP AS   | |   CP AS   |        |   CP AS   |
+    |Certificate|           |Certificate|          |Certificate| |Certificate|        |Certificate|
+    +-----------+           +-----------+          +-----------+ +-----------+        +-----------+
+~~~~
+{: #figure-2 title="TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item."}
 
 
 ## Certificate Specification
@@ -454,7 +554,8 @@ The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open
 
 where `id-ana` specifies the root SCION object identifier (OID).
 
-**Note:** The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID): `id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+**Note:** The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
+`id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
 The following points apply when setting the attribute value of the `ISD-AS number` attribute:
 
@@ -829,7 +930,6 @@ However, if this extension is present in a voting certificate, it MUST be define
 - `cA` attribute: MUST be set to FALSE.
 - `pathLenConstraint` attribute: MUST NOT be present.
 <br>
-<br>
 
 
 # Specification of the Trust Root Configuration {#trc-specification}
@@ -863,9 +963,52 @@ A TRC can have the following states:
 - Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity)). A TRC is considered valid if the current time falls within its validity period.
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC, if it is still in its grace period (as defined in the `grace` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
 
-Figure  shows the content of both a base/initial TRC and the first regularly-updated TRC based on the base TRC. All elements of the shown TRCs are specified in detail in the following subsections.
+{{figure-3}}  shows the content of both a base/initial TRC and the first regularly-updated TRC based on the base TRC. All elements of the shown TRCs are specified in detail in the following subsections.
 
->>>>>> **Figure 3** - *The TRC on the left-hand side is the initial base TRC. The TRC on the right is the product of the first regular update of the base TRC.*
+~~~~
++--------------------------------------------+        +--------------------------------------------+
+|             TRC 1 (base, initial)          |        |             TRC 2 (regular update)         |
+|+------------------------------------------+|        |+------------------------------------------+|
+||- Version       - Core ASes               ||        ||- Version       - Core ASes               ||
+||- ID            - Description             ||        ||- ID            - Description             ||
+||- Validity      - No Trust Reset          ||        ||- Validity      - No Trust Reset          ||
+||- Grace Period  - Voting Quorum           ||        ||- Grace Period  - Voting Quorum           ||
+||- ...                                     ||        ||- ...                                     ||
+|+------------------------------------------+|        |+------------------------------------------+|
+|+--------------------++--------------------+|        |+--------------------++--------------------+|
+||Votes (cert.indices)||   Regular Voting   ||        ||Votes (cert.indices)||   Regular Voting   ||
+||                    ||    Certificates    ||        ||                    ||    Certificates    ||
+||    (empty)         ||                    ||        ||    (1),(2)...      ||                    ||
+||                    ||+-----+ +-----+     ||        ||                    ||+-----+ +-----+     ||
+||                    ||| (1) | | (2) |     ||        ||                    ||| (1) | | (2) |     ||
+||                    |||C    | |C    | ... ||        ||                    |||C    | |C    | ... ||
+||                    ||| reg | | reg |     ||        ||                    ||| reg | | reg |     ||
+|+--------------------+|+--+--+ +--+--+     ||        |+--------------------+|+-----+ +-----+     ||
+|+--------------------+|   |       |        ||        |+--------------------+|                    ||
+||                    ||   |       +--------++-----+  ||                    ||                    ||
+||                    ||   +----------------++-+   |  ||                    ||                    ||
+||    Signatures      |+--------------------+| |   |  ||    Signatures      |+--------------------+|
+||                    |+--------------------+| |   |  ||                    |+--------------------+|
+||+------------------+|| Sensitive Voting   || |   |  ||+------------------+|| Sensitive Voting   ||
+|||73 A9 4E AO 0D ...|||    Certificates    || |   +--+>|48 AE E4 80 DB ...|||    Certificates    ||
+||+------------------+||+-----+ +-----+     || |      ||+------------------+||+-----+ +-----+     ||
+||+------------------+||| (3) | | (4) |     || |      ||+------------------+||| (3) | | (4) |     ||
+|||53 B7 7C 98 56 ...||||C    | |C    |     || +------+>|7E BC 75 98 25 ...||||C    | |C    |     ||
+||+------------------+||| sens| | sens| ... ||        ||+------------------+||| sens| | sens| ... ||
+||        ...         ||+-----+ +-----+     ||        ||        ...         ||+-----+ +-----+     ||
+|+--------------------++--------------------+|        |+--------------------++--------------------+|
+|+------------------------------------------+|        |+------------------------------------------+|
+||          CP Root Certificates            ||        ||          CP Root Certificates            ||
+||                                          ||        ||                                          ||
+|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
+|| | (5) | | (6) | | (7) | | (8) |          ||        || | (5) | | (6) | | (7) | | (8) |          ||
+|| |C    | |C    | |C    | |C    |          ||        || |C    | |C    | |C    | |C    |          ||
+|| | root| | root| | root| | root| .....    ||        || | root| | root| | root| | root| .....    ||
+|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
+|+------------------------------------------+|        |+------------------------------------------+|
++--------------------------------------------+        +--------------------------------------------+
+~~~~
+{: #figure-3 title="The TRC on the left-hand side is the initial base TRC. The TRC on the right is the product of the first regular update of the base TRC."}
 
 
 ### TRC Format
@@ -1603,7 +1746,7 @@ More details will follow in future versions of this draft.
 
 # IANA Considerations
 
-This document has no IANA actions.
+The PKI requires a root SCION object identifier (OID), as discussed in [](#isd-as-nr). The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) within the root SCION object identifier (OID). Future iterations of this draft will discuss whether this or another PEN should be used and comprise more detailed IANA considerations.
 
 
 --- back
