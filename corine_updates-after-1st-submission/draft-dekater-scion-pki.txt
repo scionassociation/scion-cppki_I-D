@@ -1692,9 +1692,10 @@ Table of Contents
    *Note:* The votes sequence of indices is mandatory in order to
    prevent stripping voting signatures from the TRC.  Absence of the
    votes sequence makes it possible to transform a TRC with more voting
-   signatures than the Section 3.1.2.2.7 into multiple verifiable TRCs
-   with the same payload, but different voting signature sets.  This
-   would violate the requirement of uniqueness of a TRC.
+   signatures than the defined voting quorum (see Section 3.1.2.2.7)
+   into multiple verifiable TRCs with the same payload, but different
+   voting signature sets.  This would violate the requirement of
+   uniqueness of a TRC.
 
 3.1.2.2.7.   votingQuorum Field
 
@@ -2326,9 +2327,13 @@ Table of Contents
       each other.
 
    *  A *voting AS representative* is capable of creating voting
-      signatures on the TRC.  This means the voting representative is in
-      possession of a device with the private keys of the respective
-      certificates in the TRC.
+      signatures on the TRC.  This means that the voting representative
+      is in possession of a device with the private keys of the
+      respective certificates in the TRC.
+
+   *  _A *CA AS representative* represents an AS that will be a
+      Certificate Authority providing one of the CP root certificates.
+      [CdK: is this correct??]_
 
    *  A *witness* is any person that participates in the ceremony as a
       passive entity.  The witness has no active role in any of the
@@ -2424,23 +2429,26 @@ Table of Contents
        document describing the TRC Signing Ceremony Phases to the
        participants, all in digital form.
 
-   2.  Remind all representatives of the voting ASes that they need to
-       agree on a common TRC policy before scheduling the TRC ceremony.
+   2.  Remind all representatives of the voting _[CdK: and CA??]_ ASes
+       that they need to agree on a common TRC policy before scheduling
+       the TRC ceremony.
 
    3.  Bring all digitally distributed documents as a printout for all
        parties that take part.
 
-3.2.2.2.3.2.   Preparatory Tasks of the Voting AS Representatives
+3.2.2.2.3.2.   Preparatory Tasks of the Voting [CdK: and CA?]  AS
+              Representatives
 
    The preparatory task of the representatives of the voting ASes
-   (short: the voters) is to generate the necessary certificates.
+   (short: the voters) _[CdK: and CA ASes??]_ is to generate the
+   necessary certificates.
 
-   *Important:* Before generating the certificates, all voters need to
-   agree on a preliminary TRC policy, in particular on the *validity
-   period of the TRC*. This is necessary because all the certificates
-   that are generated in advance must *cover the full TRC validity
-   period*. The other policy values could be amended during the ceremony
-   itself.
+   *Important:* Before generating the certificates, all representatives
+   need to agree on a preliminary TRC policy, in particular on the
+   *validity period of the TRC*. This is necessary because all the
+   certificates that are generated in advance must *cover the full TRC
+   validity period*. The other policy values could be amended during the
+   ceremony itself.
 
    Each representative of a voting AS must create the following keys and
    certificates:
@@ -2466,8 +2474,8 @@ Table of Contents
    The ceremony process contains the following phases:
 
    *  Phase 1: Certificate Exchange (Section 3.2.2.3.1).  In the first
-      phase of the ceremony, all voting parties share the certificates
-      that must be part of the TRC with the ceremony administrator.
+      phase of the ceremony, all parties share the certificates that
+      must be part of the TRC with the ceremony administrator.
 
    *  Phase 2: Generation of the TRC Payload (Section 3.2.2.3.2).  In
       the second phase, the ceremony administrator generates the TRC
@@ -2495,11 +2503,10 @@ Table of Contents
    the list of certificates must include the CP root certificate.
 
    The actual sharing happens over the data exchange device, which goes
-   from one voting representative to the next.  Each voting
-   representative copies the requested certificates from their own
-   machine onto the data exchange device, before forwarding the device
-   to the next voter.  The last voter returns the device to the ceremony
-   administrator.
+   from one representative to the next.  Each representative copies the
+   requested certificates from their own machine onto the data exchange
+   device, before forwarding the device to the next voter.  The last
+   representative returns the device to the ceremony administrator.
 
    *Important:* Note that only the *certificates* must be shared during
    this step, *not* the private keys.  Copying a private key by mistake
@@ -2516,16 +2523,17 @@ Table of Contents
    entire bundle.  Additionally, the ceremony administrator displays all
    hash values on the monitor.
 
-   The ceremony administrator now shares the bundle with all voters.
-   This could happen again via the data exchange device, which goes from
-   one voter to the next.  Each voting representative verifies that the
-   certificates they contributed have the same hash value as the
-   displayed value on the monitor.  Furthermore, all voting
-   representatives must confirm that the hash value of the bundled
-   certificates on their machine is equal to the value on the monitor.
+   The ceremony administrator now shares the bundle with all
+   representatives.  This could again happen via the data exchange
+   device, which goes from one representative to the next.  Each
+   representative verifies that the certificates they contributed have
+   the same hash value as the displayed value on the monitor.
+   Furthermore, all representatives must confirm that the hash value of
+   the bundled certificates on their machine is equal to the value on
+   the monitor.
 
-   Phase 1 is concluded when every voting representative has confirmed
-   that the SHA256 sums are correct.
+   Phase 1 is concluded when every representative has confirmed that the
+   SHA256 sums are correct.
 
    *Note:* If there is a mismatch in any of the SHA256 sums, Phase 1
    needs to be repeated.
@@ -2538,7 +2546,7 @@ Table of Contents
    value (SHA-512 digest).
 
    To be able to generate the payload, the ceremony administrator must
-   ask the voting representatives for
+   ask the representatives for
 
    *  The ISD number of the ISD.  The number (identifier, ID) of an ISD
       must be chosen and agreed upon by the participants during the
@@ -2562,19 +2570,20 @@ Table of Contents
    *  The validity period of the new TRC.  For more information, see
       Section 3.1.2.2.3.
 
-   *Note:* It is assumed that the voting ASes have agreed on the answers
-   to the above questions in advance, before the signing ceremony.
+   *Note:* It is assumed that the participating ASes have agreed on the
+   answers to the above questions in advance, before the signing
+   ceremony.
 
    The ceremony administrator can now specify the TRC payload variables
    in the payload template file, and show the filled-in template on the
-   monitor.  When the voters have verified the data, the ceremony
-   administrator can compute the DER encoding of the TRC data as well as
-   the SHA256 sum of the TRC payload file.  The ceremony administrator
-   then distributes the TRC payload (via the data exchange device) to
-   all voting representatives, who verify the payload's hash value.  The
-   voters do this by computing the hash value of the TRC payload on
-   their machine and checking whether their value matches the one on the
-   monitor.
+   monitor.  When the voters _[CdK: are all representatives?]_ have
+   verified the data, the ceremony administrator can compute the DER
+   encoding of the TRC data as well as the SHA256 sum of the TRC payload
+   file.  The ceremony administrator then distributes the TRC payload
+   (via the data exchange device) to all voting representatives, who
+   verify the payload's hash value.  The voters do this by computing the
+   hash value of the TRC payload on their machine and checking whether
+   their value matches the one on the monitor.
 
    Phase 2 successfully concludes once every voting representative
    confirms that the contents of the TRC payload are correct.
@@ -2636,7 +2645,7 @@ Table of Contents
    parties MUST discover TRC updates within the grace period defined in
    the updated TRC.  They SHOULD discover TRC updates in a matter of
    minutes to hours.  Regardless of the employed discovery method, the
-   following requirement must be satisfied:
+   following requirement MUST be satisfied:
 
    *Requirement:*
    Any entity sending information that is secured through the CP-PKI (be
