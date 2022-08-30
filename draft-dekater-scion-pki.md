@@ -649,7 +649,7 @@ The `subjectKeyIdentifier` extension identifies the public key being certified. 
    SubjectKeyIdentifier ::= KeyIdentifier
 ~~~~
 
-This extension MUST always be non-critical (which is the default, see the code block displaying the generic format of SCION control-plane certificates in [](#general-cert-req)). However, SCION implementations must error out if the extension is not present.
+This extension MUST always be non-critical (which is the default, see the code block displaying the generic format of SCION control-plane certificates in [](#general-cert-req)). However, SCION implementations MUST error out if the extension is not present.
 
 ##### `keyUsage` Extension
 
@@ -688,7 +688,7 @@ The attributes of the `keyUsage` extension define the various possible ways of u
 - `encipherOnly`: Not used.
 - `decipherOnly`: Not used.
 
-**Important:** If the certificate's public key is used to verify the signature of a control-plane payload (`digitalSignature` attribute), it must be possible to trace back the private key used for the signature. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension, see [](#subject-key-id-ext).
+**Important:** If the certificate's public key is used to verify the signature of a control-plane payload (`digitalSignature` attribute), it MUST be possible to trace back the private key used for the signature. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension, see [](#subject-key-id-ext).
 
 Each control-plane certificate type uses the public key differently, and consequently also specifies the attributes of the `keyUsage` extension differently. For more information, see the following sections describing the control-plane and voting certificates: [](#cp-root-cert), [](#cp-ca-cert), [](#cp-as-cert), and [](#cp-voting-cert).
 
@@ -800,7 +800,7 @@ The extension attributes must be set as follows:
 
 The control-plane CA private key is used to sign control-plane AS certificates. Consequently, control-plane CA certificates holding the control-plane CA public key are used to verify control-plane AS certificates.
 
-The public key needed to verify the CA certificate is in a CP root certificate. CA certificates do not bundle the root certificate needed to verify them. In order to verify a CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [](#signing-verifying-cp-messages).
+The public key needed to verify the CA certificate is in a CP root certificate. CA certificates do not bundle the root certificate needed to verify them. In order to verify a CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [](#signing-verifying-cp-messages)).
 
 All constraints described in [](#general-cert-req) also apply to control-plane CA certificates.
 
@@ -880,14 +880,14 @@ The constraints described in [](#general-cert-req) also apply to voting certific
 
 #### Regular Voting Certificate {#reg-vote}
 
-Regular voting certificates state which keys are allowed to cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the key within the certificate was used to sign the certificate. However, a regular voting certificate cannot be used to verify other certificates.
+Regular voting certificates state which keys are allowed to cast votes in a regular TRC update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the key within the certificate was used to sign the certificate. However, a regular voting certificate cannot be used to verify other certificates.
 
 The recommended **maximum validity period** of a regular voting certificate is: 1 year.
 
 
 #### Sensitive Voting Certificate {#sens-vote}
 
-Sensitive voting certificates specify which keys are allowed to cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the key within the certificate was used to sign the certificate. However, a sensitive voting certificate cannot be used to verify other certificates.
+Sensitive voting certificates specify which keys are allowed to cast votes in a sensitive TRC update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the key within the certificate was used to sign the certificate. However, a sensitive voting certificate cannot be used to verify other certificates.
 
 The recommended **maximum validity period** of a sensitive voting certificate is: 5 years.
 
