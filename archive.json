@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-08-28T02:22:05.947971+00:00",
+  "timestamp": "2022-09-01T02:05:10.334302+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -554,7 +554,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2022-08-26T20:21:55Z",
-      "updatedAt": "2022-08-26T20:22:29Z",
+      "updatedAt": "2022-08-30T11:46:39Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "82f264e7be43d18c2b49b90191fc707724192a61",
