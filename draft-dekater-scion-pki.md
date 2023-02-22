@@ -20,22 +20,33 @@ venue:
 author:
  -   ins: C. de Kater
      name: Corine de Kater
-     org: ETH Zuerich
-     email: corine.dekatermuehlhaeuser@inf.ethz.ch
+     org: SCION Association
+     email: cdk@scion.org
 
  -   ins: N. Rustignoli
      name: Nicola Rustignoli
+     org: SCION Association
+     email: nic@scion.org
+
+ -   ins: F. Steinmann
+     name: Fritz Steinmann
+     org: SIX
+     email: fritz.steinmann@six-group.com
+
+ -   ins: J. Garcia Pardo de los Gimenez
+     name: Juan Garcia Pardo de los Gimenez
      org: ETH Zuerich
-     email: nicola.rustignoli@inf.ethz.ch
+     email: juan.garcia@inf.ethz.ch
 
 normative:
-
-informative:
   RFC5280:
+  RFC5398:
   RFC5480:
   RFC5652:
   RFC5758:
-  RFC8410:
+  RFC6996:
+
+informative:
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
     title: "The Complete Guide to SCION"
@@ -105,9 +116,9 @@ informative:
 
 --- abstract
 
-This document presents the trust concept and design of the SCION *control-plane PKI*, SCION's public key infrastructure model. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture. The control-plane PKI, or short CP-PKI, handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on so-called Isolation Domains.
+This document presents the trust concept and design of the SCION *control-plane Public Key Infrastructure (PKI)*, SCION's public key infrastructure model. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture. The control-plane PKI, or short CP-PKI, handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on so-called Isolation Domains.
 
-The document first describes the trust model behind SCION's control-plane PKI, and provides a short overview of the certificates, keys, and roles involved. It then continues with detailed specifications of the building blocks of SCION's control-plane PKI. The document concludes with several considerations in regard to deploying the control-plane PKI.
+This document first introduces the trust model behind the SCION's control-plane PKI, as well as clarifications to the concepts used in it. This is followed by specifications of the different types of certificates and the Trust Root Configuration. The document then specifies how to deploy the whole infrastructure.
 
 
 --- middle
@@ -116,7 +127,7 @@ The document first describes the trust model behind SCION's control-plane PKI, a
 
 The control-plane PKI (CP-PKI) lays the foundation for the authentication procedures in SCION. It handles all cryptographic material used in the public key infrastructure of SCION's control plane. This section first introduces the key concepts of the SCION CP-PKI, including the trust model, its core elements (certificates, keys, and roles), and their relationships. The sections after the Introduction provide detailed specifications of the building blocks of the CP-PKI.
 
-**Note:** For more detailed information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
+**Note:** For extended information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
 
 
 ## Conventions and Definitions
@@ -143,7 +154,7 @@ To fulfill the above requirements, which in fact apply well to inter-domain netw
 
 Authentication in SCION is based on digital certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security, as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and policies governing the number of signatures required for performing different types of actions. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
-The TRC also provides *trust agility*, that is, it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a non-compromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. SCION trust model, therefore, differs from the one provided by other PKI architectures.
+The TRC also provides *trust agility*, that is, it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a non-compromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model, therefore, differs from the one provided by other PKI architectures.
 
 
 ## Trust Relations within an Isolation Domain
@@ -158,7 +169,7 @@ There are two types of TRC updates: regular and sensitive. A **regular TRC updat
 
 ## Overview of Certificates, Keys, and Roles
 
-The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
+The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a first impression of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [Certificate Specification](#cert-specs) and [Trust Root Configuration Specification](#trc-specification).
 
 ~~~~
                                     TRC 2
@@ -207,23 +218,65 @@ All ASes in SCION have the task to sign and verify control-plane messages. Howev
 - **Core ASes**: Core ASes are a distinct set of ASes in the SCION control plane. For each ISD, the core ASes are listed in the TRC. Each core AS in an ISD has links to other core ASes (in the same or in different ISDs).
 - **Certification authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
 - **Voting ASes**: Only certain ASes within an ISD may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote"; the designated ASes that hold the private keys to sign a TRC update are "voting ASes".
+- **Authoritative ASes**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. They start the announcement of a TRC update.
 
 All further details of the SCION control-plane PKI are specified in the following sections.
 
 
-## Trust Concept as a Function
+## Trust as a Function
 
 The SCION control-plane PKI can be seen as a function that transforms potential distrust among different parties into a mutually accepted trust contract including a trust update and reset policy as well as certificates used for authentication procedures in SCION's control plane.
 
-For the function to work, it is not necessary that the ASes of the ISD all trust each other. However, all ASes MUST trust the ISD's core ASes, authoritative ASes, voting ASes, as well as its CA(s). These trusted parties negotiate the ISD trust contract in a "bootstrapping of trust" ceremony, where cryptographic material is exchanged, and the ISD's trust anchor, the initial Trust Root Configuration, is created and signed.
+For the function to work, it is not necessary that the ASes of the ISD all trust each other. However, all ASes MUST trust the ISD's core ASes, authoritative ASes, voting ASes, as well as its CA(s). These trusted parties negotiate the ISD trust contract in a "bootstrapping of trust" ceremony, where cryptographic material is exchanged, and the ISD's trust anchor (the initial Trust Root Configuration) is created and signed.
 
-### Input
+### Input {#input}
 
-Prior to the ceremony, the trusted parties must decide about the validity period of the TRC as well as the number of votes required to update a TRC. They must also bring the required keys and certificates, the so-called root and voting keys/certificates. During the ceremony, the trusted parties decide about the number of the ISD, which must be an integer in the inclusive range between 1 and 65535.
+Prior to the ceremony, the trusted parties must decide about the validity period of the TRC as well as the number of votes required to update a TRC. They must also bring the required keys and certificates, the so-called root and voting keys/certificates.
+
+During the ceremony, the trusted parties decide about the number of the ISD. This must be an integer in the inclusive range between 64 and 4094. The next table shows the current allocation of ISD numbers in SCION:
+
+| ISD          | Description                                                                              |
+|--------------+------------------------------------------------------------------------------------------|
+| 0            | The wildcard ISD.                                                                        |
+| 1 - 15       | Reserved for documentation and sample code (analogous to {{RFC5398}}.                    |
+| 16 - 63      | Private use (analogous to {{RFC6996}}). Can be used for testing and private deployments. |
+| 64 - 4094    | Public ISDs. Should be allocated in ascending order, without gaps and "vanity" numbers.  |
+| 4095 - 65535 | Reserved for future use.                                                                 |
+{: #table-1 title="ISD Number Allocations"}
+
 
 ### Output
 
 The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates--the latter are used to verify SCION's control-plane messages. Together with the ISD's control-plane root certificates, the CA and AS certificates build the ISD's trust and verification chain.
+
+
+# Terminology
+
+**Control-Plane PKI (CP-PKI)**: The control-plane PKI is the public-key infrastructure upon which SCION's control plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
+
+**Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider, company, or university can constitute an AS. If an organization operates multiple networks that are not directly connected together, then the different networks are considered different ASes.
+
+**Isolation Domain (ISD)**: In SCION, autonomous systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction). A possible model is for ISDs to be formed along national boundaries or federations of nations.
+
+**Core AS**: Each isolation domain (ISD) is administered by a set of distinguished autonomous systems (ASes) called core ASes, which are responsible for initiating the path-discovery and -construction process (in SCION called "beaconing").
+
+**Trust Root Configuration (TRC)**: A trust root configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.
+
+**Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
+
+**Base TRC**: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. Each ISD must create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
+
+**TRC Signing Ceremony**: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.
+
+**TRC Update**: A *regular* TRC update is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged. A *sensitive* TRC update is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged.
+
+**Voting ASes**: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".
+
+**Voting Quorum**: The voting quorum is a trust root configuration (TRC) field that indicates the number of votes (signatures) needed on a successor TRC for it to be verifiable. A voting quorum greater than one will thus prevent a single entity from creating a malicious TRC update.
+
+**Grace Period**: The grace period is an interval during which the previous version of a trust root configuration (TRC) is still considered active after a new version has been published.
+
+**Trust Reset**: A trust reset is the action of announcing a new base TRC for an existing ISD. A trust reset should only be triggered after a catastrophic event involving the loss or compromise of several important private keys.
 
 
 
@@ -233,57 +286,108 @@ This section provides a detailed specification of all certificates used in SCION
 
 ## SCION Control-Plane PKI Keys and Certificates - Overview {#overview}
 
-All certificates in SCION's control-plane PKI are in X.509 v3 format {{RFC5280}}. Each certificate has a `subject` (the entity that owns the certificate) and an `issuer` (the entity that signed the certificate, usually a CA). In the case of self-signed certificates, the subject and the issuer are the same entity.
-
 There are three types of control-plane (CP) certificates: root certificates, CA certificates, and AS certificates. Together, they build a chain of trust that is anchored in the trust root configuration (TRC) file of the respective Isolation Domain (ISD). Additionally, there are regular and sensitive voting certificates, which define the keys to cast votes in a regular and a sensitive TRC update, respectively.
 
-The following list summarizes the main certificates and corresponding key pairs of SCION's control-plane PKI as well as the voting certificates and keys:
+All certificates in SCION's control-plane PKI are in X.509 v3 format {{RFC5280}}.
 
-- **Control-Plane Root Certificates** - Control-plane (CP) root certificates are used to verify control-plane CA certificates. Control-plane root certificates are embedded in TRCs, to facilitate the bootstrapping of trust.
-   - *CP root private key*: This private key is used to sign control-plane CA certificates.
-   - *CP root certificate*: This is the container for the public key associated with the CP root private key.
-   - [](#cp-root-cert) provides more details on the CP root certificates.
-- **Control-Plane CA Certificates** - Control-plane (CP) CA certificates are used to verify AS certificates.
-   - *CP CA private key*: This private key is used by the CA to sign AS certificates.
-   - *CP CA certificate*: This is the container for the public key associated with the CP CA private key.
-   - [](#cp-ca-cert) provides more details on the CP CA certificates.
-- **Control-Plane AS Certificates** - Control-plane (CP) AS certificates are used to verify control-plane messages such as path-segment construction beacons (PCB). PCBs explore network paths within an ISD.
-   - *CP AS private key*: This private key is used by an AS to sign control-plane messages.
-   - *CP AS certificate*: This is the container for the public key associated with the CP AS private key.
-   - [](#cp-as-cert) provides more details on the CP AS certificates.
+The next section shows SCION's trust hierarchy. This is followed by sections that describe the main certificates and corresponding key pairs of SCION's control-plane PKI as well as the voting certificates and keys.
 
-**Note:** The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [](#trc-specification).
+### Trust Hierarchy
 
-- **Voting Certificates** - Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively.
-   - *Regular voting private key*: This private key is used to sign regular TRC updates. The corresponding public key is embedded in TRCs (via the regular voting certificate).
-   - *Regular voting certificate*: This is the container for the public key associated with the regular voting private key.
-   - *Sensitive voting private key*: This private key is used to sign sensitive TRC updates. The corresponding public key is embedded in TRCs (via the sensitive voting certificate).
-   - *Sensitive voting certificate*: This is the container for the public key associated with the sensitive voting private key.
-   - [](#cp-voting-cert) provides more details on the voting certificates.
+The trust is anchored in the Trust Root Configuration (TRC) for each ISD. The trust root is axiomatic: All trust derived from this anchor relies on all parties transitively trusting the TRC.
 
-{{table-1}} and {{table-2}} below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
+The trust hierarchy looks like this:
+
+~~~~
+TRC
+── Regular Voting Certificates
+     └── TRC (next version)
+── Sensitive Voting Certificates
+     └── TRC base (trust reset)
+── CP Root Certificates
+     └── CP CA Certificates
+          └── CP AS Certificates
+~~~~
+
+### Control-Plane Root Certificate
+
+The control-plane root private key is used to sign control-plane CA certificates. Consequently, the control-plane root certificate with the control-plane root public key is used to verify control-plane CA certificates, i.e., root certificates determine which ASes act as CA in an ISD.
+
+In X.509 terms, CP root certificates are *self-signed* CA certificates. That is, issuer and subject of the certificate are the same entity, and the public key in the root certificate can be used to verify the root certificate's signature. The CP root public key and proof of ownership of the private key are embedded in the Trust Root Configuration (TRC) of an Isolation Domain (ISD), via the self-signed CP root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the CP root certificates as the starting point of an ISD's certificate verification path.
+
+The recommended **maximum validity period** of a CP root certificate is: 1 year.
+
+**NOTE**: The TRC of each ISD contains a trusted set of control-plane root certificates. This set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [Trust Root Configuration Specification](#trc-specification).
+
+### Control-Plane CA Certificate
+
+The control-plane CA private key is used to sign control-plane AS certificates. Consequently, control-plane CA certificates holding the control-plane CA public key are used to verify control-plane AS certificates.
+
+The public key needed to verify the CA certificate is in a CP root certificate. CA certificates do not bundle the root certificate needed to verify them. In order to verify a CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [Signing and Verifying Control-Plane Messages](#signing-verifying-cp-messages)).
+
+The recommended **maximum validity period** of a CP CA certificate is: 11 days.
+
+### Control-Plane AS Certificate
+
+SCION ASes sign control-plane messages, such as Path Construction Beacons, with their AS private key. Consequently, control-plane AS certificates holding the corresponding AS public key are required to verify control-plane messages.
+
+In X.509 terms, control-plane AS certificates are end-entity certificates. That is, they cannot be used to verify other certificates.
+
+The recommended **maximum validity period** of a CP AS certificate is: 3 days.
+
+### Voting Certificates
+
+There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that are allowed to cast votes in the TRC update process. Voting certificates are X.509-style certificates.
+
+Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively,
+and are embedded in the TRC.
+
+#### Regular Voting Certificate
+
+Regular voting certificates state which keys are allowed to cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
+
+The recommended **maximum validity period** of a regular voting certificate is: 1 year.
+
+#### Sensitive Voting Certificate
+
+Sensitive voting certificates specify which keys are allowed to cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
+
+The recommended **maximum validity period** of a sensitive voting certificate is: 5 years.
+
+**Note**:
+
+> Both SCION's control-plane root certificates and control-plane CA certificates are in fact CA certificates. That is, they can both be used to verify other certificates.
+>
+> One important difference between both certificate types lies in their validity period: A SCION control-plane root certificate has a recommended maximum validity period of one year, whereas the recommended maximum validity period of a SCION control-plane CA certificate is 11 days. This is because a root certificate is part of the Trust Root Configuration of an ISD, which itself also has a recommended maximum validity period of one year (see Table 2 below). This ensures that the TRC must not be updated all the time and is thus relatively stable.
+>
+> The SCION root private key and public key/certificate are used to sign and verify the control-plane CA certificates, respectively. The control-plane CA certificates are explicitly NOT part of the TRC, for reasons of security. The control-plane CA certificates are used to verify the control-plane AS certificates, which in turn are used to verify control-plane messages. Routing is made more secure if both the SCION control-plane CA and AS certificates can be renewed on a very regular basis. Would the control-plane CA and AS certificates be part of the TRC, then the TRC would have to be updated constantly, which is undesirable.
 
 
-| Name                 | Notation (1)     | Used to verify/sign   	|
-|----------------------+------------------+-------------------------|
-| Sensitive voting key | K<sub>sens</sub> | TRC updates (sensitive) |
-| Regular voting key   | K<sub>reg</sub>  | TRC updates (regular)   |
-| CP root key          | K<sub>root</sub> | CP CA certificates      |
-| CP CA key            | K<sub>CA</sub>   | CP AS certificates      |
-| CP AS key            | K<sub>AS</sub>   | PCBs, path segments     |
-{: #table-1 title="Key chain"}
+### Certificates - Formal Overview
 
-(1) K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
+{{table-2}} and {{table-3}} below provide a formal overview of the different types of key pairs and certificates in the control-plane PKI.
+
+
+| Name                 | Notation (1)         | Used to verify/sign   	   |
+|----------------------+----------------------+----------------------------|
+| Sensitive voting key | K<sub>sens</sub>     | TRC updates (sensitive)    |
+| Regular voting key   | K<sub>reg</sub>      | TRC updates (regular)      |
+| CP root key          | K<sub>root</sub>     | CP CA certificates         |
+| CP CA key            | K<sub>CA</sub>       | CP AS certificates         |
+| CP AS key            | K<sub>AS</sub>       | CP messages, path segments |
+{: #table-2 title="Key chain"}
+
+(1)  K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key
 
 | Name                   | Notation       	 | Signed with           	                  | Contains                                                | Validity (2) |
 |------------------------+-------------------+------------------------------------------+---------------------------------------------------------+--------------|
-| TRC (trust root conf)  | TRC               | SK<sub>sens</sub>, SK<sub>reg</sub> (1)  | C<sub>root</sub>, C<sub>sens</sub>, C<sub>reg</sub> (1) | 1 year       |
+| TRC (trust root conf.) | TRC               | SK<sub>sens</sub>, SK<sub>reg</sub> (1)  | C<sub>root</sub>, C<sub>sens</sub>, C<sub>reg</sub> (1) | 1 year       |
 | Sensitive voting cert. | C<sub>sens</sub>  | SK<sub>sens</sub>                        | PK<sub>sens</sub>                                       | 5 years      |
 | Regular voting cert.   | C<sub>reg</sub>   | SK<sub>reg</sub>                         | PK<sub>reg</sub>                                        | 1 year       |
 | CP root certificate    | C<sub>root</sub>  | SK<sub>root</sub>                        | PK<sub>root</sub>                                       | 1 year       |
 | CP CA certificate      | C<sub>CA</sub>    | SK<sub>root</sub>                        | PK<sub>CA</sub>                                         | 11 days (3)  |
 | CP AS certificate      | C<sub>AS</sub>    | SK<sub>CA</sub>                          | PK<sub>AS</sub>                                         | 3 days       |
-{: #table-2 title="Certificates"}
+{: #table-3 title="Certificates"}
 
 (1) Multiple signatures and certificates of each type may be included in a TRC.<br>
 (2) Recommended maximum validity period.<br>
@@ -488,7 +592,7 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
    }
 ~~~~
 
-**Note:** In SCION implementations, the `parameters` field MUST be absent, as defined in {{RFC8410}}.
+**Note:** In SCION implementations, the `parameters` field MUST be absent.
 
 In general, if the `AlgorithmIdentifier` in a specific SCION implementation is not defined as described above, the implementation should stop the validation process entirely and error out.
 
@@ -939,7 +1043,7 @@ This section provides an in-depth specification of the trust root configuration 
 The initial TRC of an ISD is signed during a signing ceremony and then distributed throughout the ISD. This signing ceremony follows specific rules; [](#trc-ceremony) describes these rules.
 
 
-## TRC Specification {#trc-spec}
+## Trust Root Configuration Specification {#trc-spec}
 
 The trust root configuration (TRC) is a signed collection of [X.509](https://handle.itu.int/11.1002/1000/13031) v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) {{RFC5652}} envelope.
 
@@ -1083,7 +1187,7 @@ The identifier is a unique sequence of
 
 All numbers MUST be positive integers.
 
-- The **ISD number** MUST be an integer in the inclusive range between 1 and 65535 (i.e., the ISD numbering range).
+- The **ISD number** MUST be an integer in the inclusive range from 64 and 4094 (i.e., the numbering range for public ISDs, see [Input](#input)).
 - The **base number** indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter MUST be the case after a trust reset.
 - The **serial number** represents the current update cycle, counting from the initial TRC of a specific ISD.
 
@@ -1104,7 +1208,7 @@ The following simple example illustrates how to specify the ID of the TRCs in an
 | Regular     | ISD14-B05-S06       | Only the serial number is incremented.           |
 | Regular     | ISD14-B05-S07       | Only the serial number is incremented.           |
 | And so on   |                     |                                                  |
-{: #table-3 title="ID of TRCs in TRC update chain"}
+{: #table-4 title="ID of TRCs in TRC update chain"}
 
 
 ##### `validity` Field {#validity}
@@ -1429,7 +1533,7 @@ The sections that follow provide more detailed descriptions of each rule.
 |                                    |                                          |                                                     |                                        |
 | Sensitive TRC Update               | If the update does not qualify as a regular update, it is a sensitive update |                 | `votes` field:<br>                     |
 |                                    |                                                                              |                 | - All votes must only refer to *sensitive* voting certificates in the predecessor TRC |
-{: #table-4 title="Overview of the update types and corresponding rules"}
+{: #table-5 title="Overview of the update types and corresponding rules"}
 
 
 #### General Update Rules
