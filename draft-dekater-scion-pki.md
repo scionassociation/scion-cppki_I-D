@@ -28,16 +28,6 @@ author:
      org: SCION Association
      email: nic@scion.org
 
- -   ins: F. Steinmann
-     name: Fritz Steinmann
-     org: SIX
-     email: fritz.steinmann@six-group.com
-
- -   ins: J. Garcia Pardo de los Gimenez
-     name: Juan Garcia Pardo de los Gimenez
-     org: ETH Zuerich
-     email: juan.garcia@inf.ethz.ch
-
 normative:
   RFC5280:
   RFC5398:
@@ -150,7 +140,7 @@ Thus, there is a need for a trust architecture that supports meaningful trust ro
 
 Ideally, the trust architecture allows parties that mutually trust each other to form their own trust "union" or "domain", and to freely decide whether to trust other trust unions (domains) outside their own trust bubble.
 
-To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of ASes that share a uniform trust environment (i.e., a common jurisdiction). An ISD is administered by multiple ASes that form the ISD core; these are the **core ASes**. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core. The TRC defines the locally scoped roots of trust used to validate bindings between names and public keys.
+To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of ASes that share a uniform trust environment (i.e., a common jurisdiction). An ISD is administered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core; these are the **core ASes**. The set of core and voting ASes can, but not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core. The TRC defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on digital certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security, as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and policies governing the number of signatures required for performing different types of actions. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
@@ -159,7 +149,7 @@ The TRC also provides *trust agility*, that is, it enables users to select the t
 
 ## Trust Relations within an Isolation Domain
 
-As already mentioned previously, the control-plane PKI, SCION's concept of trust, is organized on ISD-level. Each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates, which are used to sign CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD-policies that specify, for example, the TRC's usage, validity, and future updates. A TRC is a fundamental component of an ISD's control-plane PKI. The so-called **base TRC** constitutes the ISD's trust anchor. It is signed during a signing ceremony and then distributed throughout the ISD.
+As already mentioned previously, the control-plane PKI, SCION's concept of trust, is organized on ISD-level. Each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates, which are used to sign CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD-policies that specify, for example, the TRC's usage, validity, and future updates. A TRC is a fundamental component of an ISD's control-plane PKI. The so-called **base TRC** constitutes the ISD's trust anchor. It is signed during a signing ceremony by the voting ASes and then distributed throughout the ISD.
 
 
 ### Updates and Trust Resets {#trust-reset}
@@ -300,9 +290,9 @@ The trust hierarchy looks like this:
 ~~~~
 TRC
 ── Regular Voting Certificates
-     └── TRC (next version)
+     └── TRC (next version, regular update)
 ── Sensitive Voting Certificates
-     └── TRC base (trust reset)
+     └── TRC (next version, sensitive update)
 ── CP Root Certificates
      └── CP CA Certificates
           └── CP AS Certificates
@@ -338,8 +328,7 @@ The recommended **maximum validity period** of a CP AS certificate is: 3 days.
 
 There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that are allowed to cast votes in the TRC update process. Voting certificates are X.509-style certificates.
 
-Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively,
-and are embedded in the TRC.
+Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively, and are embedded in the TRC.
 
 #### Regular Voting Certificate
 
@@ -1328,7 +1317,7 @@ The PKI requires a root SCION object identifier (OID), as discussed in [](#isd-a
 # Acknowledgments
 {:numbered="false"}
 
-We are very grateful to Adrian Perrig, for providing guidance and feedback about each aspect of SCION. Additionally, many thanks go to Anapaya and ETH SCION development teams, for their practical knowledge and for the documentation about the CP PKI.
+Many thanks go to Samuel Hitz (Anapaya), Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
 
 # Appendix A. Signing Ceremony Base TRC {#initial-ceremony}
@@ -1341,7 +1330,7 @@ The following sections describe a possible signing ceremony for the first (initi
 {:numbered="false"}
 
 A signing ceremony includes participants from member organizations of the respective Isolation Domain.
-The participants of the signing ceremony fulfil different roles:
+The participants of the signing ceremony fulfill different roles:
 
 - The **ceremony administrator** is in charge of moderating the signing process. He/she guides all participants through the steps they need to take. The ceremony administrator may also act as an intermediary between participants when they share information with each other.
 - A **voting AS representative** is capable of creating voting signatures on the TRC. This means the voting representative is in possession of a device with the private keys of the respective certificates in the TRC.
