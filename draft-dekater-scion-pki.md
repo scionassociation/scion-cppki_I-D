@@ -538,12 +538,12 @@ The `issuer` field contains the distinguished name (DN) of the CA that created t
 ##### `ISD-AS number` Attribute {#isd-as-nr}
 
 The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open source implementation, the attribute type is `id-at-ia`, defined as:<br>
-`id-at-ia AttributeType ::= {id-ana id-cppki(1) id-at(2) 1}`
+`id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}`
 
-where `id-ana` specifies the root SCION object identifier (OID).
+where `id-scion` specifies the root SCION object identifier (OID).
 
-**Note**: The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID): <br>
-`id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+**Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
+`id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
 The following points apply when setting the attribute value of the `ISD-AS number` attribute:
 
@@ -664,14 +664,14 @@ The specifications of the `extKeyUsage` extension differ per SCION control-plane
 
 The `id-kp-root`, `id-kp-regular`, and `id-kp-sensitive` attributes must be specified as follows:
 
-- Root certificate:<br> `id-kp-root AttributeType ::= {id-ana id-cppki(1) id-kp(3) 3}`
-- Regular voting certificate:<br> `id-kp-regular AttributeType ::= {id-ana id-cppki(1) id-kp(3) 2}`
-- Sensitive voting certificate:<br> `id-kp-sensitive AttributeType ::= {id-ana id-cppki(1) id-kp(3) 1}`
+- Root certificate:<br> `id-kp-root AttributeType ::= {id-scion id-cppki(1) id-kp(3) 3}`
+- Regular voting certificate:<br> `id-kp-regular AttributeType ::= {id-scion id-cppki(1) id-kp(3) 2}`
+- Sensitive voting certificate:<br> `id-kp-sensitive AttributeType ::= {id-scion id-cppki(1) id-kp(3) 1}`
 
-where `id-ana` specifies the root SCION object identifier (OID).
+where `id-scion` specifies the root SCION object identifier (OID).
 
-**Note**: The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) as root SCION object identifier (OID):<br>
-`id-ana ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
+**Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
+`id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
 
 #### `basicConstraints` Extension {#basic-constr-ext}
@@ -1309,7 +1309,7 @@ More details will follow in future versions of this draft.
 
 # IANA Considerations
 
-The PKI requires a root SCION object identifier (OID), as discussed in [](#isd-as-nr). The SCION open source implementation currently uses the Anapaya IANA Private Enterprise Number (55324) within the root SCION object identifier (OID). Future iterations of this draft will discuss whether this or another PEN should be used and comprise more detailed IANA considerations.
+Future iterations of this draft will comprise more detailed IANA considerations.
 
 
 --- back
