@@ -1,6 +1,6 @@
 ---
 title: "SCION Control-Plane PKI"
-abbrev: "SCION CPPKI"
+abbrev: "SCION CP-PKI"
 category: info
 submissiontype: independent
 
