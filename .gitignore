@@ -18,3 +18,4 @@ archive.json
 draft-dekater-scion-pki.xml
 package-lock.json
 report.xml
+.DS_Store

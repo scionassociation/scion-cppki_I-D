@@ -120,6 +120,34 @@ The control-plane PKI (CP-PKI) lays the foundation for the authentication proced
 **Note:** For extended information on the SCION next-generation inter-domain architecture, see {{CHUAT22}}, especially Chapter 2, as well as the IETF Internet Drafts {{I-D.scion-overview}} and {{I-D.scion-components}}.
 
 
+## Terminology
+
+**Control-Plane PKI (CP-PKI)**: The control-plane PKI is the public-key infrastructure upon which SCION's control plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
+
+**Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider, company, or university can constitute an AS. If an organization operates multiple networks that are not directly connected together, then the different networks are considered different ASes.
+
+**Isolation Domain (ISD)**: In SCION, autonomous systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction). A possible model is for ISDs to be formed along national boundaries or federations of nations.
+
+**Core AS**: Each isolation domain (ISD) is administered by a set of distinguished autonomous systems (ASes) called core ASes, which are responsible for initiating the path-discovery and -construction process (in SCION called "beaconing").
+
+**Trust Root Configuration (TRC)**: A trust root configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.
+
+**Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
+
+**Base TRC**: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. Each ISD must create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
+
+**TRC Signing Ceremony**: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.
+
+**TRC Update**: A *regular* TRC update is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged. A *sensitive* TRC update is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged.
+
+**Voting ASes**: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".
+
+**Voting Quorum**: The voting quorum is a trust root configuration (TRC) field that indicates the number of votes (signatures) needed on a successor TRC for it to be verifiable. A voting quorum greater than one will thus prevent a single entity from creating a malicious TRC update.
+
+**Grace Period**: The grace period is an interval during which the previous version of a trust root configuration (TRC) is still considered active after a new version has been published.
+
+**Trust Reset**: A trust reset is the action of announcing a new base TRC for an existing ISD. A trust reset should only be triggered after a catastrophic event involving the loss or compromise of several important private keys.
+
 ## Conventions and Definitions
 
 {::boilerplate bcp14-tagged}
@@ -140,7 +168,7 @@ Thus, there is a need for a trust architecture that supports meaningful trust ro
 
 Ideally, the trust architecture allows parties that mutually trust each other to form their own trust "union" or "domain", and to freely decide whether to trust other trust unions (domains) outside their own trust bubble.
 
-To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of ASes that share a uniform trust environment (i.e., a common jurisdiction). An ISD is administered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core; these are the **core ASes**. The set of core and voting ASes can, but not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core. The TRC defines the locally scoped roots of trust used to validate bindings between names and public keys.
+To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consistnistered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the Is of a logical grouping of ASes that share a uniform trust environment (i.e., a common jurisdiction). An ISD is admiSD core; these are the **core ASes**. The set of core and voting ASes can, but not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core. The TRC defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on digital certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security, as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and policies governing the number of signatures required for performing different types of actions. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
@@ -239,34 +267,6 @@ During the ceremony, the trusted parties decide about the number of the ISD. Thi
 
 The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates--the latter are used to verify SCION's control-plane messages. Together with the ISD's control-plane root certificates, the CA and AS certificates build the ISD's trust and verification chain.
 
-
-# Terminology
-
-**Control-Plane PKI (CP-PKI)**: The control-plane PKI is the public-key infrastructure upon which SCION's control plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
-
-**Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider, company, or university can constitute an AS. If an organization operates multiple networks that are not directly connected together, then the different networks are considered different ASes.
-
-**Isolation Domain (ISD)**: In SCION, autonomous systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction). A possible model is for ISDs to be formed along national boundaries or federations of nations.
-
-**Core AS**: Each isolation domain (ISD) is administered by a set of distinguished autonomous systems (ASes) called core ASes, which are responsible for initiating the path-discovery and -construction process (in SCION called "beaconing").
-
-**Trust Root Configuration (TRC)**: A trust root configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.
-
-**Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
-
-**Base TRC**: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. Each ISD must create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
-
-**TRC Signing Ceremony**: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.
-
-**TRC Update**: A *regular* TRC update is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged. A *sensitive* TRC update is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged.
-
-**Voting ASes**: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".
-
-**Voting Quorum**: The voting quorum is a trust root configuration (TRC) field that indicates the number of votes (signatures) needed on a successor TRC for it to be verifiable. A voting quorum greater than one will thus prevent a single entity from creating a malicious TRC update.
-
-**Grace Period**: The grace period is an interval during which the previous version of a trust root configuration (TRC) is still considered active after a new version has been published.
-
-**Trust Reset**: A trust reset is the action of announcing a new base TRC for an existing ISD. A trust reset should only be triggered after a catastrophic event involving the loss or compromise of several important private keys.
 
 
 # Certificate Specification {#cert-specs}
@@ -1113,7 +1113,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
 
 ### TRC Updates {#update}
 
-All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. Based on the type of update, a different set of voters is necessary to create a verifiable TRC update. The type of update also determines the (payload) information that changes in the updated TRC. This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types, some only apply to a regular or a sensitive TRC update, respectively.
+All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The type of update determines the (payload) information that changes in the updated TRC. This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types, some only apply to a regular or a sensitive TRC update, respectively. Based on the type of update, a different set of voters is necessary to create a verifiable TRC update. The section concludes with
 
 
 #### Changed or New Certificates {#change-new}
@@ -1190,20 +1190,21 @@ To verify a TRC update, the relying party must perform the following checks:
 If one or more of the above checks gives a negative result, the updated TRC should be rejected.
 
 
+#### Signing a TRC Update
+
+The `votingQuorum` field of the predecessor TRC (see [](#quorum)) defines the quorum of voters required to sign the updated TRC to make it verifiable. Depending on the kind of update, these voters represent regular or sensitive voting certificates, respectively. Furthermore, if one or more *new* certificates are added to the updated TRC, the corresponding voting representatives must also sign the updated TRC. For the distinction between changed and new certificates in a TRC update, see [](#change-new).
+
+Signing an updated TRC happens during a signing ceremony. In this ceremony, it may be necessary to cast votes with both old and new keys: Voters representing regular or sensitive voting certificates already present in the predecessor TRC must cast their votes on the payload file of the updated TRC; the purpose of signing a TRC with keys contained in the previous TRC is to certify the update. Furthermore, if previously non-included voting certificates are added to the TRC, the corresponding voting representatives must show that they have access to the private keys listed in these fresh certificates. This is called "showing proof-of-possession", and done by signing the TRC with the respective private key.
+
+The ISD members decide themselves about the updating procedure. Some ISDs will make a distinction between regular and sensitive updates. These ISDs divide the regular and sensitive signing keys in different security classes and act accordingly. For example, they keep the regular key in an online vault while the sensitive key would be stored offline in cold storage. This way, the regular TRC update would lend itself to being automated (since the keys are accessible online) whereas the sensitive one would require manual actions to access the offline key. Other ISDs, however, keep both regular and sensitive keys online and perform both updates automatically.
+
+
 ## TRC Signing Ceremony {#trc-ceremony}
 
-The very first base TRC of an ISD, called the initial TRC, is a special case of the base TRC where the number of the ISD is chosen. The initial TRC must be signed during a signing ceremony--all voting representatives of the initial TRC need to take part in this signing ceremony to sign the agreed-upon TRC. As part of the ceremony, the public keys of all voters are exchanged. The TRC is then distributed throughout the ISD. All entities within an ISD can initially obtain an authentic TRC, by means of a secure off- or online mechanism.
+The very first base TRC of an ISD, called the initial TRC, is a special case of the base TRC where the number of the ISD is chosen. The initial TRC must be signed during a special signing ceremony--all voting representatives of the initial TRC need to take part in this signing ceremony to sign the agreed-upon TRC. As part of the ceremony, the public keys of all voters are exchanged. The TRC is then distributed throughout the ISD. All entities within an ISD can initially obtain an authentic TRC, by means of a secure off- or online mechanism.
 
 [](#initial-ceremony) describes a possible procedure for the signing ceremony of an ISD's initial TRC. It is in principle up to the initial members of an ISD how to shape the signing ceremony. However, it is recommended having a process in line with the ceremony described in the Appendix.
 
-
-### Non-Base TRC Updates
-
-A non-base TRC is the result of a TRC update, either regular or sensitive. Only a predefined quorum of voters needs to partake in a non-base TRC signing ceremony. This is defined in the `votingQuorum` field of the predecessor TRC (see [](#quorum)). Depending on the kind of update, these voters represent regular or sensitive voting certificates, respectively. Furthermore, if one or more *new* certificates are added to the updated TRC, the corresponding voting representatives must also join the signing ceremony. For the distinction between changed and new certificates in a TRC update, see [](#change-new).
-
-During the signing ceremony of an updated TRC, it may be necessary to cast votes with both old and new keys: Voters representing regular or sensitive voting certificates already present in the predecessor TRC must cast their votes on the payload file of the updated TRC; the purpose of signing a TRC with keys contained in the previous TRC is to certify the update. Furthermore, if previously non-included voting certificates are added to the TRC, the corresponding voting representatives must show that they have access to the private keys listed in these fresh certificates. This is called "showing proof-of-possession", and done by signing the TRC with the respective private key.
-
-The ISD members decide themselves about the updating procedure. Some ISDs will make a distinction between regular and sensitive updates. These ISDs divide the regular and sensitive signing keys in different security classes and act accordingly. For example, they keep the regular key in an online vault while the sensitive key would be stored offline in cold storage. This way, the regular TRC update would lend itself to being automated (since the keys are accessible online) whereas the sensitive one would require manual actions to access the offline key. Other ISDs, however, keep both regular and sensitive keys online and perform both updates automatically.
 
 
 
@@ -1235,7 +1236,7 @@ Any entity sending information that is secured by the CP-PKI MUST be able to pro
 SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:
 
 - *Beaconing Process*<br>
-The TRC version is announced in the beaconing process. Each AS must announce what it considers to be the latest TRC. Furthermore, each AS must include the hash value of the TRC contents to facilitate the discovery of discrepancies. Therefore, relying parties that are part of the beaconing process discover TRC updates passively. That is, the beacon service in a core AS notices TRC updates for remote ISDs that are on the beaconing path. The beacon service in a non-core AS only notices TRC updates for the local ISD through the beaconing process. The creation of a new TRC should trigger the generation of new control-plane messages, as the propagation of control-plane messages will help other ASes rapidly discover the new TRC.
+The TRC version is announced in the beaconing process. Each AS must announce what it considers to be the latest TRC. Furthermore, each AS must include the hash value of the TRC contents to facilitate the discovery of discrepancies. Therefore, relying parties that are part of the beaconing process discover TRC updates passively. That is, a core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process. The creation of a new TRC should trigger the generation of new control-plane messages, as the propagation of control-plane messages will help other ASes rapidly discover the new TRC.
 - *Path Lookup*<br>
 In every path segment, all ASes must reference the latest TRC of their ISD. Therefore, when resolving paths, every relying party will notice TRC updates, even remote ones.<br>
 **Note:** The above mechanism only works when there is an active communication between the relying party and the ISD in question.
