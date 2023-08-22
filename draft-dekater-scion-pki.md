@@ -1036,14 +1036,15 @@ Two TRCs with byte equal payloads can be considered as equal, because the TRC pa
 - The required signatures for new certificates are implied by the currently valid TRC payload, and, in case of a TRC update, the predecessor payload.
 
 
-### Control-Plane Certification Path
+### Certification Path - Trust Anchor Pool
 
-The certification path of a control-plane AS certificate starts in a control-plane root certificate. The control-plane root certificates for a given ISD are distributed via the TRC.
+The certification path of a control-plane AS certificate starts in a control-plane root certificate. The control-plane root certificates for a given ISD are distributed via the TRC. However, AS certificates and the corresponding signing CA certificates are **not** part of the TRC, but bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC, without having to modify the certificate chain. To be able to validate a certification path, each AS must build a collection of root certificates from the latest TRC of the relevant ISD. The following section explains how to build a trust anchor pool.
 
-To be able to validate the certification path, the relying party must build a trust anchor pool, which consists of a set of control-plane root certificates from the available TRCs. Based on this pool, the relying party can select candidate certification paths and verify them.
+**Note:** Any entity sending information that is secured by the CP-PKI, such as control-plane messages, MUST be able to provide all the necessary trust material, such as certificates, to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material. If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control-Plane Messages".
 
 
-#### Trust Anchor Pool - TRC Selection {#trc-selection}
+
+#### TRC Selection For Trust Anchor Pool {#trc-selection}
 
 The selection of the right set of TRCs to build the trust anchor pool depends on the time of verification. The trust anchor pool is usually used to verify control-plane messages. In this case, the time of verification is the current time. However, if the trust anchor pool will be used for auditing, the time of verification is the point in time for which you want to check whether a given signature was verifiable.
 
@@ -1113,7 +1114,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
 
 ### TRC Updates {#update}
 
-All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The type of update determines the (payload) information that changes in the updated TRC. This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types, some only apply to a regular or a sensitive TRC update, respectively. Based on the type of update, a different set of voters is necessary to create a verifiable TRC update. The section concludes with
+All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The type of update determines the (payload) information that changes in the updated TRC. This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types, some only apply to a regular or a sensitive TRC update, respectively. Based on the type of update, a different set of voters is necessary to create a verifiable TRC update. The section closes with a description of this signing process.
 
 
 #### Changed or New Certificates {#change-new}
@@ -1175,6 +1176,13 @@ If a TRC update does not qualify as a regular update, it is considered a sensiti
 - In order for a sensitive update to be verifiable, all votes MUST be cast by *sensitive* voting certificates. That is, each index in the `votes` field of the sensitively updated TRC MUST refer to a *sensitive* voting certificate in the `certificates` field of the predecessor TRC.
 
 
+#### Signing a TRC Update
+
+As described above, a set of voters must cast votes on the updated TRC to make the it verifiable. The `votingQuorum` field of the predecessor TRC (see [](#quorum)) defines the required number of voters, which will represent regular or sensitive voting certificates, respectively. Furthermore, if one or more *new* certificates are added to the updated TRC, the corresponding voting representatives must also sign the updated TRC, in order to show that they have access to the private keys listed in these fresh certificates. This is called "showing proof-of-possession", and done by signing the TRC with the respective private key. For the distinction between changed and new certificates in a TRC update, see [](#change-new).
+
+It is up to the ISD members to decide how the "casting a vote" procedure for updated TRCs will take place. Some ISDs will make a distinction between regular and sensitive updates. These ISDs divide the regular and sensitive signing keys in different security classes and act accordingly. For example, they keep the regular key in an online vault while the sensitive key would be stored offline in cold storage. This way, the regular TRC update would lend itself to being automated (since the keys are accessible online) whereas the sensitive one would require manual actions to access the offline key. Other ISDs, however, keep both regular and sensitive keys online and perform both updates automatically.
+
+
 #### TRC Update Verification
 
 To verify a TRC update, the relying party must perform the following checks:
@@ -1190,21 +1198,12 @@ To verify a TRC update, the relying party must perform the following checks:
 If one or more of the above checks gives a negative result, the updated TRC should be rejected.
 
 
-#### Signing a TRC Update
 
-The `votingQuorum` field of the predecessor TRC (see [](#quorum)) defines the quorum of voters required to sign the updated TRC to make it verifiable. Depending on the kind of update, these voters represent regular or sensitive voting certificates, respectively. Furthermore, if one or more *new* certificates are added to the updated TRC, the corresponding voting representatives must also sign the updated TRC. For the distinction between changed and new certificates in a TRC update, see [](#change-new).
-
-Signing an updated TRC happens during a signing ceremony. In this ceremony, it may be necessary to cast votes with both old and new keys: Voters representing regular or sensitive voting certificates already present in the predecessor TRC must cast their votes on the payload file of the updated TRC; the purpose of signing a TRC with keys contained in the previous TRC is to certify the update. Furthermore, if previously non-included voting certificates are added to the TRC, the corresponding voting representatives must show that they have access to the private keys listed in these fresh certificates. This is called "showing proof-of-possession", and done by signing the TRC with the respective private key.
-
-The ISD members decide themselves about the updating procedure. Some ISDs will make a distinction between regular and sensitive updates. These ISDs divide the regular and sensitive signing keys in different security classes and act accordingly. For example, they keep the regular key in an online vault while the sensitive key would be stored offline in cold storage. This way, the regular TRC update would lend itself to being automated (since the keys are accessible online) whereas the sensitive one would require manual actions to access the offline key. Other ISDs, however, keep both regular and sensitive keys online and perform both updates automatically.
-
-
-## TRC Signing Ceremony {#trc-ceremony}
+## Initial TRC Signing Ceremony {#trc-ceremony}
 
 The very first base TRC of an ISD, called the initial TRC, is a special case of the base TRC where the number of the ISD is chosen. The initial TRC must be signed during a special signing ceremony--all voting representatives of the initial TRC need to take part in this signing ceremony to sign the agreed-upon TRC. As part of the ceremony, the public keys of all voters are exchanged. The TRC is then distributed throughout the ISD. All entities within an ISD can initially obtain an authentic TRC, by means of a secure off- or online mechanism.
 
 [](#initial-ceremony) describes a possible procedure for the signing ceremony of an ISD's initial TRC. It is in principle up to the initial members of an ISD how to shape the signing ceremony. However, it is recommended having a process in line with the ceremony described in the Appendix.
-
 
 
 
@@ -1287,7 +1286,7 @@ To verify a control-plane message, the relying party must perform the following 
       - the CA certificate validity period covers the AS certificate validity period.
 5. If the verification of the certificate chain was successful, the relying party can now verify the control-plane messages, with the root certificates from the certificate chain.
 
-If any cryptographic material is missing in the process, the relying party queries the originator of the message for the missing material. If it cannot be resolved, the verification process fails.
+If any cryptographic material is missing in the process, the relying party must query the originator of the message for the missing material. If it cannot be resolved, the verification process fails.
 
 **Important:** An implication of the above procedure is that path segments should be verifiable at time of use. It is not enough to rely on path segments being verified on insert, since TRC updates that change the root key can invalidate a certificate chain.
 
@@ -1321,7 +1320,7 @@ Future iterations of this draft will comprise more detailed IANA considerations.
 Many thanks go to Samuel Hitz (Anapaya), Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
 
-# Appendix A. Signing Ceremony Base TRC {#initial-ceremony}
+# Appendix A. Signing Ceremony Initial TRC {#initial-ceremony}
 {:numbered="false"}
 
 The following sections describe a possible signing ceremony for the first (initial) base TRC of an ISD. Although each ISD is free to decide how to shape this signing ceremony, it is recommended establishing a procedure similar to the one below.
