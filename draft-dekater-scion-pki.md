@@ -168,7 +168,7 @@ Thus, there is a need for a trust architecture that supports meaningful trust ro
 
 Ideally, the trust architecture allows parties that mutually trust each other to form their own trust "union" or "domain", and to freely decide whether to trust other trust unions (domains) outside their own trust bubble.
 
-To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consistnistered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the Is of a logical grouping of ASes that share a uniform trust environment (i.e., a common jurisdiction). An ISD is admiSD core; these are the **core ASes**. The set of core and voting ASes can, but not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core. The TRC defines the locally scoped roots of trust used to validate bindings between names and public keys.
+To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of ASes that share a uniform trust environment (i.e., a common jurisdiction). An ISD is administered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core; these are the **core ASes**. The set of core and voting ASes can, but not necessarily have to, overlap.  The set of core and voting ASes can, but not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core. The TRC defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on digital certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security, as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and policies governing the number of signatures required for performing different types of actions. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
@@ -379,7 +379,7 @@ The recommended **maximum validity period** of a sensitive voting certificate is
 
 (1) Multiple signatures and certificates of each type may be included in a TRC.<br>
 (2) Recommended maximum validity period.<br>
-(3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable best possible operational procedures when performing a CA certificate rollover.
+(3) A validity of 11 days with 4 days overlap between two CA certificates is recommended to enable the best possible operational procedures when performing a CA certificate rollover.
 
 {{figure-2}} illustrates, at a high level, the relationship between a TRC and the five types of certificates.
 
@@ -475,7 +475,7 @@ This section briefly describes the fields of the SCION control-plane PKI certifi
   - **SCION constraints**:
 
     - This field MUST be non-empty.
-    - SCION implementations MUST ONLY use the “UTF8String” value type for all attributes (including the  SCION-specific attribute `ISD-AS number`).
+    - SCION implementations MUST ONLY use the “UTF8String” value type for all attributes (including the SCION-specific attribute `ISD-AS number`).
 
   - **Additional conditions and remarks**: All SCION implementations MUST support the additional SCION-specific attribute `ISD-AS number`. For details, see [](#issuer) and [](#isd-as-nr).
 
@@ -489,7 +489,7 @@ This section briefly describes the fields of the SCION control-plane PKI certifi
   - **SCION constraints**:
 
     - This field MUST be non-empty.
-    - SCION implementations MUST ONLY use the “UTF8String” value type for all attributes (including the  SCION-specific attribute `ISD-AS number`).
+    - SCION implementations MUST ONLY use the “UTF8String” value type for all attributes (including the SCION-specific attribute `ISD-AS number`).
 
   - **Additional conditions and remarks**: The `subject` field is specified in the same way as the `issuer` field. For details, see [](#issuer) and [](#isd-as-nr).
 
@@ -1015,7 +1015,7 @@ SCION implementations have to fulfil the following additional rules, on top of t
    - The content of the `eContent` field must be the DER-encoded TRC payload. This has the benefit that the format is backwards compatible with PKCS #7, as described in Section 5.2.1 of {{RFC5652}}.
 - `SignedData` sequence:
    - The `certificates` field MUST be left empty. The certificate pool used to verify a TRC update is already specified in the `certificates` field of the predecessor TRC's payload (see also [](#cert)).
-   - The `version` field MUST be set to "1". This is because SCION uses the "id-data" content type to encapsulate content info, and does not specify any certificate in the `SignedData` sequence  (see also Section 5.1 of {{RFC5652}}).
+   - The `version` field MUST be set to "1". This is because SCION uses the "id-data" content type to encapsulate content info, and does not specify any certificate in the `SignedData` sequence (see also Section 5.1 of {{RFC5652}}).
 - `SignerIdentifier` choice:
    - The type of signer identifier chosen here MUST be `IssuerAndSerialNumber`.
 - `SignerInfo` sequence:
@@ -1026,7 +1026,7 @@ SCION implementations have to fulfil the following additional rules, on top of t
 
 #### TRC Equality
 
-The signer infos in the signed TRC are part of an unordered set, per {{RFC5652}}. This implies that the signer infos can be reordered without affecting verification. Certain operations, however, require TRCs to be equal, according to the following equality definition:
+The signer informations in the signed TRC are part of an unordered set, per {{RFC5652}}. This implies that the signer informations can be reordered without affecting verification. Certain operations, however, require TRCs to be equal, according to the following equality definition:
 
 **Two TRCs are equal, if and only if their payloads are byte equal.**
 
@@ -1114,7 +1114,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
 
 ### TRC Updates {#update}
 
-All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The type of update determines the (payload) information that changes in the updated TRC. This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types, some only apply to a regular or a sensitive TRC update, respectively. Based on the type of update, a different set of voters is necessary to create a verifiable TRC update. The section closes with a description of this signing process.
+All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The type of update determines the (payload) information that changes in the updated TRC. This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types, some only apply to a regular or a sensitive TRC update, respectively. Based on the type of update, a different set of voters is necessary to create a verifiable TRC update - the section includes a description of the corresponding voting (signing) process. To verify a TRC update, a relying party must perform a couple of checks. These checks are listed at the end of the section.
 
 
 #### Changed or New Certificates {#change-new}
@@ -1178,7 +1178,7 @@ If a TRC update does not qualify as a regular update, it is considered a sensiti
 
 #### Signing a TRC Update
 
-As described above, a set of voters must cast votes on the updated TRC to make the it verifiable. The `votingQuorum` field of the predecessor TRC (see [](#quorum)) defines the required number of voters, which will represent regular or sensitive voting certificates, respectively. Furthermore, if one or more *new* certificates are added to the updated TRC, the corresponding voting representatives must also sign the updated TRC, in order to show that they have access to the private keys listed in these fresh certificates. This is called "showing proof-of-possession", and done by signing the TRC with the respective private key. For the distinction between changed and new certificates in a TRC update, see [](#change-new).
+As described above, a set of voters must cast votes on the updated TRC to make it verifiable. The `votingQuorum` field of the predecessor TRC (see [](#quorum)) defines the required number of voters, which will represent regular or sensitive voting certificates, respectively. Furthermore, if one or more *new* certificates are added to the updated TRC, the corresponding voting representatives must also sign the updated TRC, in order to show that they have access to the private keys listed in these fresh certificates. This is called "showing proof-of-possession", and done by signing the TRC with the respective private key. For the distinction between changed and new certificates in a TRC update, see [](#change-new).
 
 It is up to the ISD members to decide how the "casting a vote" procedure for updated TRCs will take place. Some ISDs will make a distinction between regular and sensitive updates. These ISDs divide the regular and sensitive signing keys in different security classes and act accordingly. For example, they keep the regular key in an online vault while the sensitive key would be stored offline in cold storage. This way, the regular TRC update would lend itself to being automated (since the keys are accessible online) whereas the sensitive one would require manual actions to access the offline key. Other ISDs, however, keep both regular and sensitive keys online and perform both updates automatically.
 
@@ -1358,7 +1358,7 @@ When these values are agreed upon, a number of voters, equal to or larger than t
 ### Location
 {:numbered="false"}
 
-The location must provide electricity and enough power sockets for each participant. Furthermore, it should provide a monitor (or projector) that allows the ceremony administrator to screen cast.
+The location must provide electricity and enough power sockets for each participant. Furthermore, it should provide a monitor (or projector) that allows the ceremony administrator to screencast.
 
 
 ### Devices
