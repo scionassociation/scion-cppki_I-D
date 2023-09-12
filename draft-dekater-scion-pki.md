@@ -1026,7 +1026,7 @@ SCION implementations have to fulfil the following additional rules, on top of t
 
 #### TRC Equality
 
-The signer informations in the signed TRC are part of an unordered set, per {{RFC5652}}. This implies that the signer informations can be reordered without affecting verification. Certain operations, however, require TRCs to be equal, according to the following equality definition:
+The signer information in the signed TRC is part of an unordered set, per {{RFC5652}}. This implies that the signer information can be reordered without affecting verification. Certain operations, however, require TRCs to be equal, according to the following equality definition:
 
 **Two TRCs are equal, if and only if their payloads are byte equal.**
 
@@ -1040,7 +1040,7 @@ Two TRCs with byte equal payloads can be considered as equal, because the TRC pa
 
 The certification path of a control-plane AS certificate starts in a control-plane root certificate. The control-plane root certificates for a given ISD are distributed via the TRC. However, AS certificates and the corresponding signing CA certificates are **not** part of the TRC, but bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC, without having to modify the certificate chain. To be able to validate a certification path, each AS must build a collection of root certificates from the latest TRC of the relevant ISD. The following section explains how to build a trust anchor pool.
 
-**Note:** Any entity sending information that is secured by the CP-PKI, such as control-plane messages, MUST be able to provide all the necessary trust material, such as certificates, to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material. If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control-Plane Messages".
+**Note:** Any entity sending information that is secured by the CP-PKI, such as control-plane messages, MUST be able to provide all the necessary trust material, such as certificates, to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material. If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control-Plane Messages" [](#signing-verifying-cp-messages).
 
 
 
