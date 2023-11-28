@@ -1303,8 +1303,9 @@ The steps required to create a new AS certificate are the following:
 
 # Security Considerations
 
-The entire document is about security considerations.
-More details will follow in future versions of this draft.
+This document presents the trust concept and design of the SCION *control-plane Public Key Infrastructure (PKI)*. The control-plane PKI, or short CP-PKI, handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on so-called Isolation Domains.
+
+This section describes the possible security risks and attacks that SCION's control-plane PKI may be prone to, and how these may be mitigated. The focus lies on *inter*-AS routing: SCION does not solve intra-AS routing issues, nor does it provide end-to-end payload encryption, and identity authentication. These topics lie therefore outside the scope of this section.
 
 
 # IANA Considerations
