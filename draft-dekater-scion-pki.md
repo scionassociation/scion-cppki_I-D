@@ -1335,13 +1335,14 @@ The steps required to create a new AS certificate are the following:
 
 # Security Considerations
 
-This section describes the possible security risks and attacks that SCION's control-plane PKI may be prone to, and how these may be mitigated. The focus lies on *inter*-AS routing: SCION does not solve intra-AS routing issues, nor does it provide end-to-end payload encryption, and identity authentication. These topics lie therefore outside the scope of this section.
+This section describes the possible security risks and attacks that SCION's control-plane PKI may be prone to, and how these may be mitigated. As SCION is an inter-domain network architecture, the focus lies on *inter*-AS routing.
+
+**Note:** This section only discusses security considerations related to SCION's control-plane PKI. For SCION control plane- and routing-specific security considerations, see {{I-D.scion-cp}}. {{I-D.scion-dp}} includes security considerations that concern the SCION data plane and data forwarding.
 
 As described above, the SCION's control-plane PKI handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on the Isolation Domains (ISDs). The CP-PKI provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all routing messages - every AS and end host can verify all routing messages by following the certificate chain.
 
 SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust. This prevents SCION from the occurrence of a global kill switch affecting all ISDs at once. However, local kill switches are to some extent still possible in SCION. The following sections explain these cases and possible countermeasures.
 
-**Note:** This section only discusses security considerations related to SCION's control-plane PKI. For SCION control plane- and routing-specific security considerations, see {{I-D.scion-cp}}. {{I-D.scion-dp}} includes security considerations that concern the SCION data plane and data forwarding.
 
 
 ## Local ISD Kill Switch
