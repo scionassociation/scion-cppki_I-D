@@ -103,6 +103,38 @@ informative:
         ins: C. de Kater
         name: Corine de Kater
         org: ETH Zuerich
+  I-D.scion-cp:
+    title: SCION Control Plane
+    date: 2023
+    target: https://datatracker.ietf.org/doc/draft-dekater-scion-controlplane/
+    author:
+      -
+        ins: C. de Kater
+        name: Corine de Kater
+        org: SCION Association
+      -
+        ins: N. Rustignoli
+        name: Nicola Rustignoli
+        org: SCION Association
+      -
+        ins: M. Frei
+        name: Matthias Frei
+        org: SCION Association
+  I-D.scion-dp:
+    title: SCION Data Plane
+    date: 2023
+    target: https://datatracker.ietf.org/doc/draft-dekater-scion-dataplane/
+    author:
+      -
+        ins: C. de Kater
+        name: Corine de Kater
+        org: SCION Association
+      -
+        ins: N. Rustignoli
+        name: Nicola Rustignoli
+        org: SCION Association
+
+
 
 --- abstract
 
@@ -1303,9 +1335,38 @@ The steps required to create a new AS certificate are the following:
 
 # Security Considerations
 
-This document presents the trust concept and design of the SCION *control-plane Public Key Infrastructure (PKI)*. The control-plane PKI, or short CP-PKI, handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on so-called Isolation Domains.
-
 This section describes the possible security risks and attacks that SCION's control-plane PKI may be prone to, and how these may be mitigated. The focus lies on *inter*-AS routing: SCION does not solve intra-AS routing issues, nor does it provide end-to-end payload encryption, and identity authentication. These topics lie therefore outside the scope of this section.
+
+As described above, the SCION's control-plane PKI handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on the Isolation Domains (ISDs). The CP-PKI provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all routing messages - every AS and end host can verify all routing messages by following the certificate chain.
+
+SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust. This prevents SCION from the occurrence of a global kill switch affecting all ISDs at once. However, local kill switches are to some extent still possible in SCION. The following sections explain these cases and possible countermeasures.
+
+**Note:** This section only discusses security considerations related to SCION's control-plane PKI. For SCION control plane- and routing-specific security considerations, see {{I-D.scion-cp}}. {{I-D.scion-dp}} includes security considerations that concern the SCION data plane and data forwarding.
+
+
+## Local ISD Kill Switch
+
+As in the case of DNSSEC and BGPsec, executing a kill switch inside a local ISD can be done at different levels of the AS-level hierarchy. One difference in SCION is that core ASes cannot be switched off by a parent authority since they manage their own cryptographic trust roots. Another difference is that the attack vector of intra-ISD kill switches has only two entry levels; all ASes obtain certificates directly from the CAs included in the TRC.
+
+If one of the core’s root keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks. However, multiple different voting keys (defined by the voting quorum) would be required to maliciously change the TRC through a TRC update.
+
+Moreover, the core might stop propagating PCBs, precluding the discovery of new paths. In this case, downstream ASes will notice that PCBs are no longer being propagated, but all previously discovered (and still valid) paths are still usable for data-plane forwarding until they expire.
+
+Perhaps a more stealthy kill switch would be to shut down path services in victim ASes. While this cannot be done remotely, an adversarial entity controlling an ISD (e.g., a government) might compel core and non-core ASes to stop replying to path requests. Alternatively, the compelled ASes might return only a subset of all available paths. If this attack were used in conjunction with blackholing, senders in the ISD would have difficulty getting traffic out of the ISD. However, note that in SCION, existing paths can continue to be used in the data plane as long as the traversed ASes allow the forwarding.
+
+
+## Remote ISD/AS Kill Switch
+
+SCION ISDs independently manage their own cryptographic keys and namespace. This prevents a remote attacker who is outside the victim's ISD from causing a kill switch in the victim ISD. That is, without access to the private keys forming the trust root in the remote ISD, the attacker is limited to data-plane attacks. Even if private keys became available to a remote attacker, they would need access to an AS inside the remote ISD to inject faulty information.
+
+
+## Recovery from Kill Switches
+
+In the event of a key compromise of a non-core AS, the impacted AS needs to obtain a new certificate from the core. This process will vary depending on internal issuance protocols. If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Only in the case of a catastrophic compromise of multiple voting keys at the same time must a trust reset be triggered.
+
+If the core AS has not been compromised, but is instead acting maliciously (e.g., by not propagating PCBs downstream or tampering with responses for paths or certificates), one way to recover is for downstream ASes to self- organize and form a new ISD. By now operating autonomously, the new ISD can begin path discovery and traffic forwarding.
+
+SCION, unlike BGP, has no notion of routing convergence. Instead, the flooding of PCBs disseminates topology information. This means that in the worst case, if all paths must be re-created, fresh paths are established after a single flood has reached all ASes.
 
 
 # IANA Considerations
