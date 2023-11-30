@@ -5,7 +5,7 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 1 June 2024                                    29 November 2023
+Expires: 2 June 2024                                    30 November 2023
 
 
                         SCION Control-Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 June 2024.
+   This Internet-Draft will expire on 2 June 2024.
 
 Copyright Notice
 
@@ -109,9 +109,11 @@ Table of Contents
        4.2.2.   Verifying a Control-Plane Message
      4.3.  Creating a New Control-Plane AS Certificate
    5.  Security Considerations
-     5.1.  Local ISD Kill Switch
-     5.2.  Remote ISD/AS Kill Switch
-     5.3.  Recovery from Kill Switches
+     5.1.   Kill Switches
+       5.1.1.  Local ISD Kill Switch
+       5.1.2.  Remote ISD/AS Kill Switch
+       5.1.3.  Recovery from Kill Switches
+     5.2.  Denial of Service Attacks
    6.  IANA Considerations
    7.  References
      7.1.  Normative References
@@ -2398,15 +2400,7 @@ Table of Contents
    includes security considerations that concern the SCION data plane
    and data forwarding.
 
-   As described above, the SCION's control-plane PKI handles
-   cryptographic material and lays the foundation for the authentication
-   procedures in SCION.  It is used by SCION's control plane to
-   authenticate and verify path information, and builds the basis for
-   SCION's special trust model based on the Isolation Domains (ISDs).
-   The CP-PKI provides each AS within a specific ISD with a certified
-   key pair.  These keys enable the authentication of all routing
-   messages - every AS and end host can verify all routing messages by
-   following the certificate chain.
+5.1.   Kill Switches
 
    SCION’s trust architecture fundamentally differs from a global
    monopolistic trust model.  In SCION, each ISD manages its own trust
@@ -2417,7 +2411,7 @@ Table of Contents
    are to some extent still possible in SCION.  The following sections
    explain these cases and possible countermeasures.
 
-5.1.  Local ISD Kill Switch
+5.1.1.  Local ISD Kill Switch
 
    As in the case of DNSSEC and BGPsec, executing a kill switch inside a
    local ISD can be done at different levels of the AS-level hierarchy.
@@ -2450,7 +2444,7 @@ Table of Contents
    continue to be used in the data plane as long as the traversed ASes
    allow the forwarding.
 
-5.2.  Remote ISD/AS Kill Switch
+5.1.2.  Remote ISD/AS Kill Switch
 
    SCION ISDs independently manage their own cryptographic keys and
    namespace.  This prevents a remote attacker who is outside the
@@ -2460,7 +2454,7 @@ Table of Contents
    private keys became available to a remote attacker, they would need
    access to an AS inside the remote ISD to inject faulty information.
 
-5.3.  Recovery from Kill Switches
+5.1.3.  Recovery from Kill Switches
 
    In the event of a key compromise of a non-core AS, the impacted AS
    needs to obtain a new certificate from the core.  This process will
@@ -2481,6 +2475,36 @@ Table of Contents
    the flooding of PCBs disseminates topology information.  This means
    that in the worst case, if all paths must be re-created, fresh paths
    are established after a single flood has reached all ASes.
+
+5.2.  Denial of Service Attacks
+
+   As described previously, the SCION's control-plane PKI lays the
+   foundation for the authentication procedures in SCION.  It provides
+   each AS within a specific ISD with a certified key pair.  These keys
+   enable the authentication of all routing messages - every AS and end
+   host can verify all routing messages by following the certificate
+   chain.  If an AS realizes that it misses any cryptographic material,
+   it must query the originator of the message for it.  This implies
+   that the AS can reach the originating AS of the message, that is,
+   that paths to the originator are available and that the relevant
+   services at the originating AS are accessible.
+
+   DoS attacks, where attackers overload different parts of the IT
+   infrastructure, may impede this process of retrieving missing
+   cryptographic material.  SCION offers protection against volumetric
+   DoS attacks, which aim to exhaust network bandwidth on links; in this
+   case, ASes can switch to alternative paths that do not contain the
+   congested links.  Transport protocol attacks however, where the
+   attacker tries to exhaust the resources on a target server by opening
+   a large number of connections, may be more difficult to avoid.
+   Possible means to mitigate this kind of DoS attacks are basically the
+   same as for the current Internet, e.g., geo-blocking or using
+   cookies.
+
+   *Note:* It is almost impossible for an outside attacker to launch DoS
+   attacks in an entirely SCION-enabled ecosystem.  However, DoS attacks
+   coming from a malicious element within the system may be a
+   conceivable scenario.
 
 6.  IANA Considerations
 
