@@ -1340,7 +1340,7 @@ This section describes the possible security risks and attacks that SCION's cont
 **Note:** This section only discusses security considerations related to SCION's control-plane PKI. For SCION control plane- and routing-specific security considerations, see {{I-D.scion-cp}}. {{I-D.scion-dp}} includes security considerations that concern the SCION data plane and data forwarding.
 
 
-## Kill Switches
+## Kill Switches
 
 SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust. This prevents SCION from the occurrence of a global kill switch affecting all ISDs at once. However, local kill switches are to some extent still possible in SCION. The following sections explain these cases and possible countermeasures.
 
