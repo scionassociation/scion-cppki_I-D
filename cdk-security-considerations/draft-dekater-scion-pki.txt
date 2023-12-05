@@ -5,7 +5,7 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 2 June 2024                                    30 November 2023
+Expires: 7 June 2024                                     5 December 2023
 
 
                         SCION Control-Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 June 2024.
+   This Internet-Draft will expire on 7 June 2024.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
        4.2.2.   Verifying a Control-Plane Message
      4.3.  Creating a New Control-Plane AS Certificate
    5.  Security Considerations
-     5.1.   Kill Switches
+     5.1.  Kill Switches
        5.1.1.  Local ISD Kill Switch
        5.1.2.  Remote ISD/AS Kill Switch
        5.1.3.  Recovery from Kill Switches
@@ -2400,7 +2400,7 @@ Table of Contents
    includes security considerations that concern the SCION data plane
    and data forwarding.
 
-5.1.   Kill Switches
+5.1.  Kill Switches
 
    SCION’s trust architecture fundamentally differs from a global
    monopolistic trust model.  In SCION, each ISD manages its own trust
