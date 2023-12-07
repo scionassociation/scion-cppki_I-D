@@ -5,7 +5,7 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 8 June 2024                                     6 December 2023
+Expires: 9 June 2024                                     7 December 2023
 
 
                         SCION Control-Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 June 2024.
+   This Internet-Draft will expire on 9 June 2024.
 
 Copyright Notice
 
@@ -2415,17 +2415,17 @@ Table of Contents
 5.1.1.  Local ISD Kill Switch
 
    Executing a kill switch inside a local ISD can be done at different
-   levels of the AS-level hierarchy.  Compared to DNSSEC and BGPsec,
-   however, SCION core ASes cannot be switched off by a parent authority
-   as they manage their own cryptographic trust roots.  Another
-   difference is that the attack vector of intra-ISD kill switches has
-   only two entry levels; all ASes within an ISD obtain certificates
+   levels of the AS-level hierarchy.  But compared to DNSSEC and BGPsec,
+   a parent authority cannot switch off SCION core ASes, as they manage
+   their own cryptographic trust roots.  Another difference with DNSSEC
+   and BGPsec is that the attack vector of intra-ISD kill switches has
+   only two entry levels: All ASes within an ISD obtain certificates
    directly from the CAs included in the ISD's TRC.  If one of the
    core’s root keys is compromised, an adversary could issue
    illegitimate AS certificates, which may be used in further attacks.
-   However, multiple different voting keys (defined by the voting quorum
-   in the TRC) would be required to maliciously change the TRC through a
-   TRC update.
+   Maliciously change the TRC through a TRC update is more complicated,
+   because each TRC update requires multiple different voting keys
+   (defined by the voting quorum in the TRC).
 
    Another possible attack is when a core AS stops propagating PCBs,
    thus frustrating the discovery of new paths.  In this case,
@@ -2434,27 +2434,25 @@ Table of Contents
    usable for data-plane forwarding until they expire.
 
    Perhaps a more stealthy kill switch would be to shut down control
-   services in victim ASes.  While this cannot be done remotely, an
-   adversarial entity controlling an ISD (e.g., a government) might
-   compel core and non-core ASes to stop replying to path requests.
-   Alternatively, the compelled ASes might return only a subset of all
-   available paths.  If this attack were used in conjunction with
-   blackholing, where traffic is redirected to a non-existent resource,
-   senders in the ISD would have difficulty getting traffic out of the
-   ISD.  However, note that in SCION, existing paths can continue to be
-   used in the data plane as long as the traversed ASes allow the
-   forwarding.
+   services in victim ASes.  An adversarial entity controlling an ISD
+   (e.g., a government) might compel core and non-core ASes to stop
+   replying to path requests.  Alternatively, the compelled ASes might
+   return only a subset of all available paths.  If this attack were
+   used in conjunction with blackholing, where traffic is redirected to
+   a non-existent resource, senders in the ISD would have difficulty
+   getting traffic out of the ISD.  In SCION, however, existing paths
+   can continue to be used in the data plane as long as the traversed
+   ASes allow the forwarding.
 
 5.1.2.  Remote ISD/AS Kill Switch
 
    SCION ISDs independently manage their own cryptographic keys and
    namespace.  This prevents a remote attacker who is outside the
-   victim's ISD from causing a kill switch in the victim ISD.  That is,
-   without access to the private keys forming the trust root in the
-   victim ISD, the remote attacker is limited to data-plane attacks.
-   Even if private keys became available to a remote attacker, they
-   would need access to an AS inside the remote ISD to inject faulty
-   information.
+   victim's ISD from causing a kill switch in the victim ISD.  Without
+   access to the private keys that form the trust root in the victim
+   ISD, the remote attacker is limited to data-plane attacks.  Even if
+   private keys became available to a remote attacker, they would need
+   access to an AS inside the remote ISD to inject faulty information.
 
 5.1.3.  Recovery from Kill Switches
 
@@ -2462,16 +2460,16 @@ Table of Contents
    needs to obtain a new certificate from the core.  This process will
    vary depending on internal issuance protocols.  If any of the root
    keys or voting keys contained in the TRC are compromised, the TRC
-   must be updated as described in Section 3.1.5.  Only in the case of a
-   catastrophic compromise of multiple voting keys at the same time must
-   a trust reset be triggered.
+   must be updated as described in Section 3.1.5.  A trust reset is only
+   required in the case of a catastrophic compromise of multiple voting
+   keys at the same time.
 
    If the core AS has not been compromised, but is instead acting
-   maliciously (e.g., by not propagating PCBs downstream or tampering
-   with responses for paths or certificates), one way to recover is for
-   downstream ASes to self-organize and form a new ISD.  By now
-   operating autonomously, the new ISD can begin path discovery and
-   traffic forwarding.  SCION, unlike BGP, has no notion of routing
+   maliciously (e.g., by not propagating PCBs downstream or by
+   falsifying responses to paths- or certificates requests), one way to
+   recover is for downstream ASes to self-organize and form a new ISD.
+   By now operating autonomously, the new ISD can begin path discovery
+   and traffic forwarding.  SCION, unlike BGP, has no notion of routing
    convergence.  Instead, the flooding of PCBs disseminates topology
    information.  This means that in the worst case, if all paths must be
    re-created, fresh paths are established after a single flood has
@@ -2482,8 +2480,8 @@ Table of Contents
    As described previously, the SCION's control-plane PKI lays the
    foundation for the authentication procedures in SCION.  It provides
    each AS within a specific ISD with a certified key pair.  These keys
-   enable the authentication of all routing messages - every AS and end
-   host can verify all routing messages by following the certificate
+   enable the authentication of all routing messages - every AS and
+   endpoint can verify all routing messages by following the certificate
    chain.  If an AS realizes that it misses any cryptographic material,
    it must query the originator of the message for it.  This implies
    that the AS can reach the originating AS of the message, that is,
