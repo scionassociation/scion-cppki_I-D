@@ -1257,7 +1257,7 @@ Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an I
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in [](#update).
 
 
-#### TRC Update Discovery
+#### TRC Update Discovery {#discover-trcupdate}
 
 Relying parties MUST have at least one valid TRC available. Relying parties MUST discover TRC updates within the grace period defined in the updated TRC. They SHOULD discover TRC updates in a matter of minutes to hours. Additionally, the following requirement must be satisfied:
 
@@ -1342,35 +1342,41 @@ This section describes the possible security risks and attacks that SCION's cont
 
 ## Kill Switches
 
+In a public key infrastructure, the certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can unavoidably be abused. A misbehaving CA can plainly refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonating another entity. In the context of the SCION control plane PKI, refusing an AS to obtain or renew their AS certificate will ultimately cut the AS off from the network, turning the CP-PKI into a network "kill switch".
+
 SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust. This prevents SCION from the occurrence of a global kill switch affecting all ISDs at once. However, local kill switches are to some extent still possible in SCION. The following sections explain these cases and possible countermeasures.
 
 
 ### Local ISD Kill Switch
 
-Executing a kill switch inside a local ISD can be done at different levels of the AS-level hierarchy. But compared to DNSSEC and BGPsec, a parent authority cannot switch off SCION core ASes, as they manage their own cryptographic trust roots. Another difference with DNSSEC and BGPsec is that the attack vector of intra-ISD kill switches has only two entry levels: All ASes within an ISD obtain certificates directly from the CAs included in the ISD's TRC. If one of the core’s root keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks. Maliciously change the TRC through a TRC update is more complicated, because each TRC update requires multiple different voting keys (defined by the voting quorum in the TRC).
+Compared to DNSSEC and BGPsec, a parent authority cannot switch off SCION core ASes, as they manage their own cryptographic trust roots. But executing a kill switch *inside* a local ISD can be done at different levels of the AS-level hierarchy:
 
-Another possible attack is when a core AS stops propagating PCBs, thus frustrating the discovery of new paths. In this case, downstream ASes will notice that PCBs are no longer being propagated, but all previously discovered (and still valid) paths are still usable for data-plane forwarding until they expire.
-
-Perhaps a more stealthy kill switch would be to shut down control services in victim ASes. An adversarial entity controlling an ISD (e.g., a government) might compel core and non-core ASes to stop replying to path requests. Alternatively, the compelled ASes might return only a subset of all available paths. If this attack were used in conjunction with blackholing, where traffic is redirected to a non-existent resource, senders in the ISD would have difficulty getting traffic out of the ISD. In SCION, however, existing paths can continue to be used in the data plane as long as the traversed ASes allow the forwarding.
-
-
-### Remote ISD/AS Kill Switch
-
-SCION ISDs independently manage their own cryptographic keys and namespace. This prevents a remote attacker who is outside the victim's ISD from causing a kill switch in the victim ISD. Without access to the private keys that form the trust root in the victim ISD, the remote attacker is limited to data-plane attacks. Even if private keys became available to a remote attacker, they would need access to an AS inside the remote ISD to inject faulty information.
+- On TRC level: The private root keys of the root certificates contained in an TRC are used to sign the CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates, which may be used in further attacks. To maliciously change the entire TRC through a TRC update is more complicated: Each TRC update requires multiple different voting keys (defined by the voting quorum in the TRC). The number of comprimised voting keys needed to permform a malicious update of a TRC depends on the voting quorum set in the TRC. The higher the quorum, the more complicated maliciously updating a TRC will be.
+- On CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates. All ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks.
+- On AS level: Each AS within an ISD signs control-plane messages, such as the Path Construction Beacons used for path discovery, with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control-plane messages, including PCBs. This means that the adversary can also manipulate the PCBs, and propagate the manipulated PCBs to neighboring ASes or register/store them as path segments.
 
 
 ### Recovery from Kill Switches
 
-In the event of a key compromise of a non-core AS, the impacted AS needs to obtain a new certificate from the core. This process will vary depending on internal issuance protocols. If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). A trust reset is only required in the case of a catastrophic compromise of multiple voting keys at the same time.
+The previous section describes possible "kill switches" on several levels within an ISD. This section deals with possible recovery of these kill switches.
 
-If the core AS has not been compromised, but is instead acting maliciously (e.g., by not propagating PCBs downstream or by falsifying responses to paths- or certificates requests), one way to recover is for downstream ASes to self-organize and form a new ISD. By now operating autonomously, the new ISD can begin path discovery and traffic forwarding. SCION, unlike BGP, has no notion of routing convergence. Instead, the flooding of PCBs disseminates topology information. This means that in the worst case, if all paths must be re-created, fresh paths are established after a single flood has reached all ASes.
+- On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case of a catastrophic compromise of multiple voting keys at the same time.
+- On CA level: If the private key related to a CA certificate is compromised, the impacted CA AS must obtain a new CA certificate from the corresponding root AS. This process will vary depending on internal issuance protocols.
+- On AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
+
+If a core AS has not been compromised, but is instead acting maliciously (e.g., by not issuing or renewing certificates for certain ASes), one way to recover is for downstream ASes to self-organize and form a new ISD. By now operating autonomously, the new ISD can begin path discovery and traffic forwarding. SCION, unlike BGP, has no notion of routing convergence. Instead, the flooding of PCBs disseminates topology information. This means that in the worst case, if all paths must be re-created, fresh paths are established after a single flood has reached all ASes.
+
+**Note** that in the above case, it may not be clear whether the core AS acting as described is actually being malicious. It is the job of the core AS to enforce an ISD's policy. If a non-core AS within an ISD does not agree with the in itself legal behavior of the core ASes, it is up to the non-core AS to stay within the ISD - alternatively, the AS could move to another ISD that suits better the non-core AS's needs.
 
 
 ## Denial of Service Attacks
 
-As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all routing messages - every AS and endpoint can verify all routing messages by following the certificate chain. If an AS realizes that it misses any cryptographic material, it must query the originator of the message for it. This implies that the AS can reach the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible.
+As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.
 
-DoS attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. SCION offers protection against volumetric DoS attacks, which aim to exhaust network bandwidth on links; in this case, ASes can switch to alternative paths that do not contain the congested links. Transport protocol attacks however, where the attacker tries to exhaust the resources on a target server by opening a large number of connections, may be more difficult to avoid. Possible means to mitigate this kind of DoS attacks are basically the same as for the current Internet, e.g., geo-blocking or using cookies.
+If an AS realizes that it misses any certificates, or that its certificates are no longer up-to-date (e.g., in case of certificate renewals and revocations), it must query the originator of the message for it. The same goes for an update of a TRC. Updated TRCs are not distributed actively, but must be discovered by the ASes within the ISD. This happens via the processes of beaconing and path-lookup (see also [](#discover-trcupdate)). Upon discovery of a new TRC, an AS must ask the sender of the message including the new TRC number for this new TRC.
+
+The above implies that the AS can *reach* the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering of and requesting for missing cryptographical material is based on *control-plane* messages and communication. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+
 
 
 # IANA Considerations
