@@ -5,7 +5,7 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 16 June 2024                                   14 December 2023
+Expires: 20 June 2024                                   18 December 2023
 
 
                         SCION Control-Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 June 2024.
+   This Internet-Draft will expire on 20 June 2024.
 
 Copyright Notice
 
@@ -2417,9 +2417,9 @@ Table of Contents
    roots instead of a single global entity providing those roots.  This
    structure gives each ISD autonomy in terms of key management and in
    terms of trust.  This prevents SCION from the occurrence of a global
-   kill switch affecting all ISDs at once.  However, local kill switches
-   are to some extent still possible in SCION.  The following sections
-   explain these cases and possible countermeasures.
+   kill switch affecting all ISDs at once.  However, local ISD kill
+   switches are still possible in SCION.  The following sections explain
+   these cases and possible countermeasures.
 
 5.1.1.  Local ISD Kill Switch
 
@@ -2434,11 +2434,10 @@ Table of Contents
       issue illegitimate CA certificates, which may be used in further
       attacks.  To maliciously change the entire TRC through a TRC
       update is more complicated: Each TRC update requires multiple
-      different voting keys (defined by the voting quorum in the TRC).
-      The number of comprimised voting keys needed to permform a
-      malicious update of a TRC depends on the voting quorum set in the
-      TRC.  The higher the quorum, the more complicated maliciously
-      updating a TRC will be.
+      different voting keys.  The number of comprimised voting keys
+      needed to perform a malicious update of a TRC depends on the
+      voting quorum set in the TRC.  The higher the quorum, the more
+      complicated maliciously updating a TRC will be.
 
    *  On CA level: The private keys of an ISD's CA certificates are used
       to sign the AS certificates.  All ASes within an ISD obtain
@@ -2447,12 +2446,13 @@ Table of Contents
       certificates, which may be used in further attacks.
 
    *  On AS level: Each AS within an ISD signs control-plane messages,
-      such as the Path Construction Beacons used for path discovery,
-      with their AS private key.  If the keys of an AS are compromised
-      by an adversary, this adversary can illegitimately sign control-
-      plane messages, including PCBs.  This means that the adversary can
-      also manipulate the PCBs, and propagate the manipulated PCBs to
-      neighboring ASes or register/store them as path segments.
+      such as the Path Construction Beacons (PCBs) used for path
+      discovery, with their AS private key.  If the keys of an AS are
+      compromised by an adversary, this adversary can illegitimately
+      sign control-plane messages, including PCBs.  This means that the
+      adversary can also manipulate the PCBs, and propagate the
+      manipulated PCBs to neighboring ASes or register/store them as
+      path segments.
 
 5.1.2.  Recovery from Kill Switches
 
@@ -2492,8 +2492,8 @@ Table of Contents
    the core AS to enforce an ISD's policy.  If a non-core AS within an
    ISD does not agree with the in itself legal behavior of the core
    ASes, it is up to the non-core AS to stay within the ISD -
-   alternatively, the AS could move to another ISD that suits better the
-   non-core AS's needs.
+   alternatively, the non-core AS could move to another ISD that suits
+   it needs better.
 
 5.2.  Denial of Service Attacks
 
