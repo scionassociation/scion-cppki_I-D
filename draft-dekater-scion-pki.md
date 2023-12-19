@@ -1396,7 +1396,7 @@ The above implies that the AS can *reach* the originating AS of the message, tha
 
 SCION is an inter-domain routing architecture, which bases its inter-domain routing on the <ISD, AS> tuple. For more details, see the "Addressing" section of {{I-D.scion-cp}}.
 
-The ISD-AS number is a SCION-specific number. It consists of 64-bits, where the top 16 bits represent the 16-bit global identifier for the ISD, and the bottom 48 bits indicate the AS. Currently, the ISD and AS numbers are allocated by Anapaya, the Swiss-based provider of SCION-based networking software and solutions. However, in the future, the SCION Association will take care of the allocation - we are currently in the process of transferring this task to the Association.
+The ISD-AS number is a SCION-specific number. It consists of 64-bits, where the top 16 bits represent the 16-bit global identifier for the ISD, and the bottom 48 bits indicate the AS. Currently, the ISD and AS numbers are allocated by Anapaya, the Swiss-based provider of SCION-based networking software and solutions. However, in the future, the SCION Association will take care of the allocation - we are currently in the process of transferring this task from Anapaya to the Association.
 
 
 --- back
