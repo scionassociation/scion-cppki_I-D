@@ -2604,10 +2604,9 @@ Table of Contents
               rustignoli-panrg-scion-components/>.
 
    [I-D.scion-cp]
-              de Kater, C., Rustignoli, N., Frei, M., and S. Hitz,
-              "SCION Control Plane", 2023,
-              <https://datatracker.ietf.org/doc/draft-dekater-scion-
-              controlplane/>.
+              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
+              Plane", 2023, <https://datatracker.ietf.org/doc/draft-
+              dekater-scion-controlplane/>.
 
    [I-D.scion-dp]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
