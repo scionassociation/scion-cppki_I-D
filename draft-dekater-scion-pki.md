@@ -125,7 +125,7 @@ informative:
         ins: M. Frei
         name: Matthias Frei
         org: SCION Association
-      -   
+      -
         ins: S. Hitz
         name: Samuel Hitz
         org: Anapaya Systems
