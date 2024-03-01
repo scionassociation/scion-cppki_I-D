@@ -1339,7 +1339,7 @@ SCION’s trust architecture fundamentally differs from a global monopolistic tr
 
 ### Compromise of an ISD
 
-Compared to DNSSEC and BGPsec, in SCION there is no central authority that could "switch off" an ISD, as each ISD relies on its own independent cryptographic trust roots. Each AS within an ISD is therefore dependant on its ISD's PKI for its functioning. This section discusses potential compromises of the PKI at various levels of the hierarchy.
+Compared to DNSSEC and RPKI, in SCION there is no central authority that could "switch off" an ISD, as each ISD relies on its own independent cryptographic trust roots. Each AS within an ISD is therefore dependant on its ISD's PKI for its functioning. This section discusses potential compromises of the PKI at various levels of the hierarchy.
 
 - On TRC level: The private root keys of the root certificates contained in an TRC are used to sign CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously  perform a TRC update, an attacker would need to compromise multiple voting keys. This number depends on the voting quorum set in the TRC: the higher the quorum, the more unlikely a malicious update will be.
 - On CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates. All ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks.
@@ -1353,10 +1353,6 @@ This section deals with possible recovery from compromises discussed in the prev
 - On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case of a catastrophic compromise of multiple voting keys at the same time.
 - On CA level: If the private key related to a CA certificate is compromised, the impacted CA AS must obtain a new CA certificate from the corresponding root AS. This process will vary depending on internal issuance protocols.
 - On AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
-
-If a core AS has not been compromised, but is instead acting maliciously (e.g., by not issuing or renewing certificates for certain ASes), one way to recover is for downstream ASes to self-organize and form a new ISD. By now operating autonomously, the new ISD can begin path discovery and traffic forwarding. SCION, unlike BGP, has no notion of routing convergence and instead the flooding of PCBs disseminates topology information. This means that in the worst case if all paths have to be re-created, fresh paths are established after a single flood has reached all ASes.
-
-**Note** that in the above case, it may not be clear whether the core AS acting as described is actually behaving maliciously. It is the job of the core AS to enforce an ISD's policy. If a non-core AS within an ISD does not agree with ostensibly legal behavior of the core ASes, it is up to the non-core AS to stay within the ISD. Alternatively, the non-core AS could move to another ISD that suits its needs better.
 
 
 ## Denial of Service Attacks
