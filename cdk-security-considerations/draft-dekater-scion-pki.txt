@@ -2598,11 +2598,6 @@ Table of Contents
               Plane", 2023, <https://datatracker.ietf.org/doc/draft-
               dekater-scion-controlplane/>.
 
-   [I-D.scion-dp]
-              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
-              Plane", 2023, <https://datatracker.ietf.org/doc/draft-
-              dekater-scion-dataplane/>.
-
    [I-D.scion-overview]
               de Kater, C., Rustignoli, N., and A. Perrig, "SCION
               Overview", 2022, <https://datatracker.ietf.org/doc/draft-
