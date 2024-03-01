@@ -125,23 +125,6 @@ informative:
         ins: S. Hitz
         name: Samuel Hitz
         org: Anapaya Systems
-  I-D.scion-dp:
-    title: SCION Data Plane
-    date: 2023
-    target: https://datatracker.ietf.org/doc/draft-dekater-scion-dataplane/
-    author:
-      -
-        ins: C. de Kater
-        name: Corine de Kater
-        org: SCION Association
-      -
-        ins: N. Rustignoli
-        name: Nicola Rustignoli
-        org: SCION Association
-      -
-        ins: S. Hitz
-        name: Samuel Hitz
-        org: Anapaya Systems
 
 
 
