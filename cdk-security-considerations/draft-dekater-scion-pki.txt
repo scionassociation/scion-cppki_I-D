@@ -2401,12 +2401,13 @@ Table of Contents
    In public key infrastructures, certificate authorities have both the
    responsibility and power to issue and revoke certificates.  If a CA
    is compromised or malicious, this power can be abused.  A misbehaving
-   CA can plainly refuse to issue certificates to legitimate entities,
-   or even issue illegitimate certificates to allow impersonating
-   another entity.  In the context of the SCION control plane PKI,
-   refusing an AS to obtain or renew their AS certificate will
-   ultimately cut the AS off from the network, turning the CP-PKI into a
-   potential network "kill switch".
+   CA could refuse to issue certificates to legitimate entities, or even
+   issue illegitimate certificates to allow impersonation of another
+   entity.  In the context of the SCION control plane PKI, refusing to
+   issue or renew a certificate to an AS will ultimately cut that AS off
+   from the network, turning the CP-PKI into a potential network "kill
+   switch".  In order to prevent this, within each ISD there are usually
+   multiple independent CAs.
 
    SCION’s trust architecture fundamentally differs from a global
    monopolistic trust model.  In SCION, each ISD manages its own trust
