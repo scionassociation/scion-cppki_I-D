@@ -1028,11 +1028,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">February 2024</td>
+<td class="right">March 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 31 August 2024</td>
+<td class="center">Expires 2 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1045,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-02-28" class="published">28 February 2024</time>
+<time datetime="2024-03-01" class="published">1 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-08-31">31 August 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-02">2 September 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1104,7 +1104,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 31 August 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1267,13 +1267,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-security-considerations" class="internal xref">Security Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-kill-switches" class="internal xref">Kill Switches</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-dependency-on-certificates" class="internal xref">Dependency on Certificates</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.1">
-                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-local-isd-kill-switch" class="internal xref">Local ISD Kill Switch</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.1.1"><a href="#section-5.1.1" class="auto internal xref">5.1.1</a>.  <a href="#name-compromise-of-an-isd" class="internal xref">Compromise of an ISD</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1.2.2">
-                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-recovery-from-kill-switches" class="internal xref">Recovery from Kill Switches</a></p>
+                    <p id="section-toc.1-1.5.2.1.2.2.1"><a href="#section-5.1.2" class="auto internal xref">5.1.2</a>.  <a href="#name-recovery-from-compromise" class="internal xref">Recovery from Compromise</a></p>
 </li>
                 </ul>
 </li>
@@ -3447,24 +3447,23 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
       <h2 id="name-security-considerations">
 <a href="#section-5" class="section-number selfRef">5. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
-<p id="section-5-1">This section describes the possible security risks and attacks that SCION's control-plane PKI may be prone to, and how these may be mitigated. As SCION is an inter-domain network architecture, the focus lies on <em>inter</em>-AS trust issues. All <em>intra</em>-AS trust- and security aspects are out of scope.<a href="#section-5-1" class="pilcrow">¶</a></p>
-<p id="section-5-2"><strong>Note:</strong> This section only discusses security considerations related to SCION's control-plane PKI. For SCION control plane- and routing-specific security considerations, see <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span>. <span>[<a href="#I-D.scion-dp" class="cite xref">I-D.scion-dp</a>]</span> includes security considerations that concern the SCION data plane and data forwarding.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<div id="kill-switches">
+<p id="section-5-1">The goal of SCION is to provide a secure inter-domain network architecture, therefore this paragraph focuses on <em>inter</em>-AS security considerations. Specifically, it covers potential attacks and mitigations for the control-plane PKI. All <em>intra</em>-AS trust- and security aspects are out of scope.<a href="#section-5-1" class="pilcrow">¶</a></p>
+<div id="dependency-on-certificates">
 <section id="section-5.1">
-        <h3 id="name-kill-switches">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-kill-switches" class="section-name selfRef">Kill Switches</a>
+        <h3 id="name-dependency-on-certificates">
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-dependency-on-certificates" class="section-name selfRef">Dependency on Certificates</a>
         </h3>
-<p id="section-5.1-1">In a public key infrastructure, the certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA could refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonation of another entity. In the context of the SCION control plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the CP-PKI into a network "kill switch".<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, local ISD kill switches are still possible in SCION. The following sections explain these cases and possible countermeasures.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<div id="local-isd-kill-switch">
+<p id="section-5.1-1">In public key infrastructures, certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA can plainly refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonating another entity. In the context of the SCION control plane PKI, refusing an AS to obtain or renew their AS certificate will ultimately cut the AS off from the network, turning the CP-PKI into a potential network "kill switch".<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-2">SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, each ISD is still susceptible of compromises that could affect or halt other components (control plane and forwarding). The following sections explain these cases and possible countermeasures.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
+<div id="compromise-of-an-isd">
 <section id="section-5.1.1">
-          <h4 id="name-local-isd-kill-switch">
-<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-local-isd-kill-switch" class="section-name selfRef">Local ISD Kill Switch</a>
+          <h4 id="name-compromise-of-an-isd">
+<a href="#section-5.1.1" class="section-number selfRef">5.1.1. </a><a href="#name-compromise-of-an-isd" class="section-name selfRef">Compromise of an ISD</a>
           </h4>
-<p id="section-5.1.1-1">Compared to DNSSEC and BGPsec, a parent authority cannot switch off SCION core ASes as they manage their own cryptographic trust roots, but executing a kill switch <em>inside</em> a local ISD can be done at different levels of the AS-level hierarchy:<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.1-1">Compared to DNSSEC and BGPsec, in SCION there is no central authority that could "switch off" an ISD, as each ISD relies on its own independent cryptographic trust roots. Each AS within an ISD is therefore dependant on its ISD's PKI for its functioning. This section discusses potential compromises of the PKI at various levels of the hierarchy.<a href="#section-5.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.1-2.1">
-              <p id="section-5.1.1-2.1.1">On TRC level: The private root keys of the root certificates contained in an TRC are used to sign the CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously change the entire TRC through a TRC update is more complicated as each TRC update requires multiple different voting keys. The number of compromised voting keys needed to perform a malicious update of a TRC depends on the voting quorum set in the TRC: the higher the quorum, the more complicated malicious updating of a TRC will be.<a href="#section-5.1.1-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-5.1.1-2.1.1">On TRC level: The private root keys of the root certificates contained in an TRC are used to sign CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously  perform a TRC update, an attacker would need to compromise multiple voting keys. This number depends on the voting quorum set in the TRC: the higher the quorum, the more unlikely a malicious update will be.<a href="#section-5.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-5.1.1-2.2">
               <p id="section-5.1.1-2.2.1">On CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates. All ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks.<a href="#section-5.1.1-2.2.1" class="pilcrow">¶</a></p>
@@ -3475,12 +3474,12 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
           </ul>
 </section>
 </div>
-<div id="recovery-from-kill-switches">
+<div id="recovery-from-compromise">
 <section id="section-5.1.2">
-          <h4 id="name-recovery-from-kill-switches">
-<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-recovery-from-kill-switches" class="section-name selfRef">Recovery from Kill Switches</a>
+          <h4 id="name-recovery-from-compromise">
+<a href="#section-5.1.2" class="section-number selfRef">5.1.2. </a><a href="#name-recovery-from-compromise" class="section-name selfRef">Recovery from Compromise</a>
           </h4>
-<p id="section-5.1.2-1">The previous section describes possible "kill switches" on several levels within an ISD. This section deals with possible recovery of these kill switches.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.1.2-1">This section deals with possible recovery from compromises discussed in the previous paragraph.<a href="#section-5.1.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.1.2-2.1">
               <p id="section-5.1.2-2.1.1">On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in <a href="#update" class="auto internal xref">Section 3.1.5</a>. Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case of a catastrophic compromise of multiple voting keys at the same time.<a href="#section-5.1.2-2.1.1" class="pilcrow">¶</a></p>
@@ -3505,7 +3504,7 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
         </h3>
 <p id="section-5.2-1">As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <p id="section-5.2-2">If an AS realizes that it is missing any certificates, or that its certificates are no longer up-to-date (e.g., in case of certificate renewals and revocations), it must query the originator of the message for these. The same goes for an update of a TRC as updated TRCs are not distributed actively, but must be discovered by the ASes within the ISD. This happens via the processes of beaconing and path-lookup (see also <a href="#discover-trcupdate" class="auto internal xref">Section 4.1.2.1</a>). Upon discovery of a new TRC, an AS must ask the sender of the message including the new TRC number for this new TRC.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">The above implies that the AS can <em>reach</em> the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering and requesting missing cryptographical information is based on <em>control-plane</em> messages and communication. We therefore refer to <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span> for a more detailed description of DoS vulnerabilities of control-plane messages.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">The above implies that the AS can <em>reach</em> the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering and requesting missing cryptographic information is based on <em>control-plane</em> messages and communication. We therefore refer to <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span> for a more detailed description of DoS vulnerabilities of control-plane messages.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
