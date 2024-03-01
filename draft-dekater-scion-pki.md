@@ -1344,30 +1344,28 @@ The steps required to create a new AS certificate are the following:
 
 # Security Considerations
 
-This section describes the possible security risks and attacks that SCION's control-plane PKI may be prone to, and how these may be mitigated. As SCION is an inter-domain network architecture, the focus lies on *inter*-AS trust issues. All *intra*-AS trust- and security aspects are out of scope.
-
-**Note:** This section only discusses security considerations related to SCION's control-plane PKI. For SCION control plane- and routing-specific security considerations, see {{I-D.scion-cp}}. {{I-D.scion-dp}} includes security considerations that concern the SCION data plane and data forwarding.
+The goal of SCION is to provide a secure inter-domain network architecture, therefore this paragraph focuses on *inter*-AS security considerations. Specifically, it covers potential attacks and mitigations for the control-plane PKI. All *intra*-AS trust- and security aspects are out of scope.
 
 
-## Kill Switches
+## Dependency on Certificates
 
-In a public key infrastructure, the certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA could refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonation of another entity. In the context of the SCION control plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the CP-PKI into a network "kill switch".
+In public key infrastructures, certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA can plainly refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonating another entity. In the context of the SCION control plane PKI, refusing an AS to obtain or renew their AS certificate will ultimately cut the AS off from the network, turning the CP-PKI into a potential network "kill switch".
 
-SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, local ISD kill switches are still possible in SCION. The following sections explain these cases and possible countermeasures.
+SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, each ISD is still susceptible of compromises that could affect or halt other components (control plane and forwarding). The following sections explain these cases and possible countermeasures.
 
 
-### Local ISD Kill Switch
+### Compromise of an ISD
 
-Compared to DNSSEC and BGPsec, a parent authority cannot switch off SCION core ASes as they manage their own cryptographic trust roots, but executing a kill switch *inside* a local ISD can be done at different levels of the AS-level hierarchy:
+Compared to DNSSEC and BGPsec, in SCION there is no central authority that could "switch off" an ISD, as each ISD relies on its own independent cryptographic trust roots. Each AS within an ISD is therefore dependant on its ISD's PKI for its functioning. This section discusses potential compromises of the PKI at various levels of the hierarchy.
 
-- On TRC level: The private root keys of the root certificates contained in an TRC are used to sign the CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously change the entire TRC through a TRC update is more complicated as each TRC update requires multiple different voting keys. The number of compromised voting keys needed to perform a malicious update of a TRC depends on the voting quorum set in the TRC: the higher the quorum, the more complicated malicious updating of a TRC will be.
+- On TRC level: The private root keys of the root certificates contained in an TRC are used to sign CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously  perform a TRC update, an attacker would need to compromise multiple voting keys. This number depends on the voting quorum set in the TRC: the higher the quorum, the more unlikely a malicious update will be.
 - On CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates. All ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks.
 - On AS level: Each AS within an ISD signs control-plane messages, such as the Path Construction Beacons (PCBs) used for path discovery, with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control-plane messages, including PCBs. This means that the adversary can also manipulate the PCBs, and propagate the manipulated PCBs to neighboring ASes or register/store them as path segments.
 
 
-### Recovery from Kill Switches
+### Recovery from Compromise
 
-The previous section describes possible "kill switches" on several levels within an ISD. This section deals with possible recovery of these kill switches.
+This section deals with possible recovery from compromises discussed in the previous paragraph.
 
 - On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case of a catastrophic compromise of multiple voting keys at the same time.
 - On CA level: If the private key related to a CA certificate is compromised, the impacted CA AS must obtain a new CA certificate from the corresponding root AS. This process will vary depending on internal issuance protocols.
@@ -1384,7 +1382,7 @@ As described previously, the SCION's control-plane PKI lays the foundation for t
 
 If an AS realizes that it is missing any certificates, or that its certificates are no longer up-to-date (e.g., in case of certificate renewals and revocations), it must query the originator of the message for these. The same goes for an update of a TRC as updated TRCs are not distributed actively, but must be discovered by the ASes within the ISD. This happens via the processes of beaconing and path-lookup (see also [](#discover-trcupdate)). Upon discovery of a new TRC, an AS must ask the sender of the message including the new TRC number for this new TRC.
 
-The above implies that the AS can *reach* the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering and requesting missing cryptographical information is based on *control-plane* messages and communication. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+The above implies that the AS can *reach* the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering and requesting missing cryptographic information is based on *control-plane* messages and communication. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
 
 
 
