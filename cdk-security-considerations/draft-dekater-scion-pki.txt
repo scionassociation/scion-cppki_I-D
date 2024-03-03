@@ -2467,8 +2467,8 @@ Table of Contents
 
    *  On CA level: If the private key related to a CA certificate is
       compromised, the impacted CA AS must obtain a new CA certificate
-      from the corresponding root AS.  This process will vary depending
-      on internal issuance protocols.
+      from the corresponding root AS.  CA certificates are generally
+      short lived to limit the impact of compromise.
 
    *  On AS level: In the event of a key compromise of a (non-core) AS,
       the impacted AS needs to obtain a new certificate from its CA.
