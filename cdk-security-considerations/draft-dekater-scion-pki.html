@@ -12,12 +12,12 @@
        This document presents the trust concept and design of the SCION  control-plane Public Key Infrastructure (PKI) , SCION's public key infrastructure model. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture. The control-plane PKI, or short CP-PKI, handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on so-called Isolation Domains. 
        This document first introduces the trust model behind the SCION's control-plane PKI, as well as clarifications to the concepts used in it. This is followed by specifications of the different types of certificates and the Trust Root Configuration. The document then specifies how to deploy the whole infrastructure. 
     " name="description">
-<meta content="xml2rfc 3.19.4" name="generator">
+<meta content="xml2rfc 3.20.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.19.4
-    Python 3.11.6
+  xml2rfc 3.20.0
+    Python 3.11.8
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
@@ -1032,7 +1032,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 2 September 2024</td>
+<td class="center">Expires 4 September 2024</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1045,12 +1045,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-03-01" class="published">1 March 2024</time>
+<time datetime="2024-03-03" class="published">3 March 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2024-09-02">2 September 2024</time></dd>
+<dd class="expires"><time datetime="2024-09-04">4 September 2024</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1104,7 +1104,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 2 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 September 2024.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3453,7 +3453,7 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
         <h3 id="name-dependency-on-certificates">
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-dependency-on-certificates" class="section-name selfRef">Dependency on Certificates</a>
         </h3>
-<p id="section-5.1-1">In public key infrastructures, certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA could refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonation of another entity. In the context of the SCION control plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the CP-PKI into a potential network "kill switch". In order to prevent this, within each ISD there are usually multiple independent CAs.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
+<p id="section-5.1-1">In public key infrastructures, certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA could refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonation of another entity. In the context of the SCION control-plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the CP-PKI into a potential network "kill switch". In order to prevent this, within each ISD there are usually multiple independent CAs.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, each ISD is still susceptible of compromises that could affect or halt other components (control plane and forwarding). The following sections explain these cases and possible countermeasures.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <div id="compromise-of-an-isd">
 <section id="section-5.1.1">
@@ -3501,8 +3501,8 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-denial-of-service-attacks" class="section-name selfRef">Denial of Service Attacks</a>
         </h3>
 <p id="section-5.2-1">As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.<a href="#section-5.2-1" class="pilcrow">¶</a></p>
-<p id="section-5.2-2">If an AS realizes that it is missing any certificates, or that its certificates are no longer up-to-date (e.g., in case of certificate renewals and revocations), it must query the originator of the message for these. The same goes for an update of a TRC as updated TRCs are not distributed actively, but must be discovered by the ASes within the ISD. This happens via the processes of beaconing and path-lookup (see also <a href="#discover-trcupdate" class="auto internal xref">Section 4.1.2.1</a>). Upon discovery of a new TRC, an AS must ask the sender of the message including the new TRC number for this new TRC.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
-<p id="section-5.2-3">The above implies that the AS can <em>reach</em> the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering and requesting missing cryptographic information is based on <em>control-plane</em> messages and communication. We therefore refer to <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span> for a more detailed description of DoS vulnerabilities of control-plane messages.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">When certificates or TRCs are updated, the relying party must discover and then obtain the new cryptographic material. Thanks to the process of beaconing and path-lookup (see also <a href="#discover-trcupdate" class="auto internal xref">Section 4.1.2.1</a>), relying parties are immediately notified in case a new certificate orn TRCs are available. Upon discovery, the relying party then asks the sender of the message for the new TRC or certificate by reversing the SCION path included in the message received. Reversible paths imply that if a relying party can be notified of  new certificates, then it can also reach the originator of the message to fetch the corresponding cryptographic information.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+<p id="section-5.2-3">When it comes to Denial of Service (DoS) attacks, the PKI is therefore dependant on <em>control-plane</em> messages and communication. We therefore refer to <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span> for a more detailed description of DoS vulnerabilities of control-plane messages.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>

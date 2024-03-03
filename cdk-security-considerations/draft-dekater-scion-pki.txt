@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 2 September 2024                                        S. Hitz
+Expires: 4 September 2024                                        S. Hitz
                                                          Anapaya Systems
-                                                            1 March 2024
+                                                            3 March 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2024.
+   This Internet-Draft will expire on 4 September 2024.
 
 Copyright Notice
 
@@ -2403,7 +2403,7 @@ Table of Contents
    is compromised or malicious, this power can be abused.  A misbehaving
    CA could refuse to issue certificates to legitimate entities, or even
    issue illegitimate certificates to allow impersonation of another
-   entity.  In the context of the SCION control plane PKI, refusing to
+   entity.  In the context of the SCION control-plane PKI, refusing to
    issue or renew a certificate to an AS will ultimately cut that AS off
    from the network, turning the CP-PKI into a potential network "kill
    switch".  In order to prevent this, within each ISD there are usually
@@ -2483,26 +2483,21 @@ Table of Contents
    and endpoint can verify all control-plane messages by following the
    certificate chain.
 
-   If an AS realizes that it is missing any certificates, or that its
-   certificates are no longer up-to-date (e.g., in case of certificate
-   renewals and revocations), it must query the originator of the
-   message for these.  The same goes for an update of a TRC as updated
-   TRCs are not distributed actively, but must be discovered by the ASes
-   within the ISD.  This happens via the processes of beaconing and
-   path-lookup (see also Section 4.1.2.1).  Upon discovery of a new TRC,
-   an AS must ask the sender of the message including the new TRC number
-   for this new TRC.
+   When certificates or TRCs are updated, the relying party must
+   discover and then obtain the new cryptographic material.  Thanks to
+   the process of beaconing and path-lookup (see also Section 4.1.2.1),
+   relying parties are immediately notified in case a new certificate
+   orn TRCs are available.  Upon discovery, the relying party then asks
+   the sender of the message for the new TRC or certificate by reversing
+   the SCION path included in the message received.  Reversible paths
+   imply that if a relying party can be notified of new certificates,
+   then it can also reach the originator of the message to fetch the
+   corresponding cryptographic information.
 
-   The above implies that the AS can _reach_ the originating AS of the
-   message, that is, that paths to the originator are available and that
-   the relevant services at the originating AS are accessible.  Denial
-   of Service (DoS) attacks, where attackers overload different parts of
-   the IT infrastructure, may impede this process of retrieving missing
-   cryptographic material.  However, the entire process of discovering
-   and requesting missing cryptographic information is based on
-   _control-plane_ messages and communication.  We therefore refer to
-   [I-D.scion-cp] for a more detailed description of DoS vulnerabilities
-   of control-plane messages.
+   When it comes to Denial of Service (DoS) attacks, the PKI is
+   therefore dependant on _control-plane_ messages and communication.
+   We therefore refer to [I-D.scion-cp] for a more detailed description
+   of DoS vulnerabilities of control-plane messages.
 
 6.  IANA Considerations
 
