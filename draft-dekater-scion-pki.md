@@ -21,12 +21,17 @@ author:
  -   ins: C. de Kater
      name: Corine de Kater
      org: SCION Association
-     email: cdk@scion.org
+     email: c_de_kater@gmx.ch
 
  -   ins: N. Rustignoli
      name: Nicola Rustignoli
      org: SCION Association
      email: nic@scion.org
+
+ -   ins: S. Hitz
+     name: Samuel Hitz
+     org: Anapaya Systems
+     email: hitz@anapaya.net
 
 normative:
   RFC5280:
@@ -103,6 +108,25 @@ informative:
         ins: C. de Kater
         name: Corine de Kater
         org: ETH Zuerich
+  I-D.scion-cp:
+    title: SCION Control Plane
+    date: 2023
+    target: https://datatracker.ietf.org/doc/draft-dekater-scion-controlplane/
+    author:
+      -
+        ins: C. de Kater
+        name: Corine de Kater
+        org: SCION Association
+      -
+        ins: N. Rustignoli
+        name: Nicola Rustignoli
+        org: SCION Association
+      -
+        ins: S. Hitz
+        name: Samuel Hitz
+        org: Anapaya Systems
+
+
 
 --- abstract
 
@@ -184,6 +208,13 @@ As already mentioned previously, the control-plane PKI, SCION's concept of trust
 
 There are two types of TRC updates: regular and sensitive. A **regular TRC update** is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a **sensitive TRC update** is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged. If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if allowed by the ISD's trust policy). In this case, a new base TRC is created.
 
+
+### Substitutes to Certificate Revocation {#substitutes-to-revocation}
+
+The CP-PKI does not explicitly support certificate revocation. Instead, it relies on the two mechanisms described above and on short-lived certificates. This approach constitutes an attractive alternative to a revocation system for the following reasons:
+
+- Both short-lived certificates and revocation lists must be signed by a CA. Instead of periodically signing a new revocation list, the CA can simply re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the CP-PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD.
+- Even with a revocation system, a compromised key cannot be instantaneously revoked. Through their validity period, both short-lived certificates and revocation lists implicitly define an attack window (i.e., a period during which an attacker who managed to compromise a key could use it before it becomes invalid). In both cases, the CA must consider a tradeoff between efficiency and security when picking this validity period.
 
 ## Overview of Certificates, Keys, and Roles
 
@@ -1225,7 +1256,7 @@ Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an I
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in [](#update).
 
 
-#### TRC Update Discovery
+#### TRC Update Discovery {#discover-trcupdate}
 
 Relying parties MUST have at least one valid TRC available. Relying parties MUST discover TRC updates within the grace period defined in the updated TRC. They SHOULD discover TRC updates in a matter of minutes to hours. Additionally, the following requirement must be satisfied:
 
@@ -1300,16 +1331,60 @@ The steps required to create a new AS certificate are the following:
 3. The CA uses its CA key and the CSR to create the new AS certificate.
 4. The CA sends the AS certificate back to the AS.
 
+When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals may be automated and can leverage the control-plane communication infrastructure.
 
 # Security Considerations
 
-The entire document is about security considerations.
-More details will follow in future versions of this draft.
+The goal of SCION is to provide a secure inter-domain network architecture, therefore this paragraph focuses on *inter*-AS security considerations. Specifically, it covers potential attacks and mitigations for the control-plane PKI. All *intra*-AS trust- and security aspects are out of scope.
+
+
+## Dependency on Certificates
+
+In public key infrastructures, certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA could refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonation of another entity. In the context of the SCION control-plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the CP-PKI into a potential network "kill switch". In order to prevent this, within each ISD there are usually multiple independent CAs.
+
+SCION’s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, each ISD is still susceptible of compromises that could affect or halt other components (control plane and forwarding). The following sections explain these cases and possible countermeasures.
+
+
+### Compromise of an ISD
+
+Compared to other trust architectures, in SCION there is no central authority that could "switch off" an ISD, as each ISD relies on its own independent cryptographic trust roots. Each AS within an ISD is therefore dependant on its ISD's PKI for its functioning. This section discusses potential compromises of the PKI at various levels of the hierarchy.
+
+- On TRC level: The private root keys of the root certificates contained in an TRC are used to sign CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously  perform a TRC update, an attacker would need to compromise multiple voting keys. This number depends on the voting quorum set in the TRC: the higher the quorum, the more unlikely a malicious update will be.
+- On CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates. All ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks.
+- On AS level: Each AS within an ISD signs control-plane messages, such as the Path Construction Beacons (PCBs) used for path discovery, with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control-plane messages, including PCBs. This means that the adversary can also manipulate the PCBs, and propagate the manipulated PCBs to neighboring ASes or register/store them as path segments.
+
+
+### Recovery from Compromise
+This section deals with possible recovery from the compromises discussed in the previous paragraph.
+As described in [](#substitutes-to-revocation), there is no revocation in the CP-PKI.
+
+- On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)).
+- On CA level: If the private key related to a CA certificate is compromised, the impacted CA AS must obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
+- On AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
+
+
+## Denial of Service Attacks
+
+As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.
+
+The relying party must be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
+As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+
+For certificate renewal, on the other hand, this does not apply.
+Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to prevent victim ASes from renewing their certificates, halting the path discovery process.
+This risk can be mitigated in multiple ways:
+
+- CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface
+- ISDs usually rely on multiple CAs
+- ISDs could create policies and processes to renew certificates out-of-band
+
 
 
 # IANA Considerations
 
-Future iterations of this draft will comprise more detailed IANA considerations.
+This document has no IANA actions.
+
+The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see [Anapaya ISD AS assignments](https://docs.anapaya.net/en/latest/resources/isd-as-assignments/)). This task is currently being transitioned from Anapaya to the SCION Association.
 
 
 --- back
@@ -1317,7 +1392,7 @@ Future iterations of this draft will comprise more detailed IANA considerations.
 # Acknowledgments
 {:numbered="false"}
 
-Many thanks go to Samuel Hitz (Anapaya), Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
 
 # Appendix A. Signing Ceremony Initial TRC {#initial-ceremony}
