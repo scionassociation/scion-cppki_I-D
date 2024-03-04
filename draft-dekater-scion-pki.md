@@ -1359,9 +1359,12 @@ This section deals with possible recovery from compromises discussed in the prev
 
 As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.
 
-When certificates or TRCs are updated, the relying party must discover and then obtain the new cryptographic material. Thanks to the process of beaconing and path-lookup (see also [](#discover-trcupdate)), relying parties are immediately notified in case a new certificate orn TRCs are available. Upon discovery, the relying party then asks the sender of the message for the new TRC or certificate by reversing the SCION path included in the message received. Reversible paths imply that if a relying party can be notified of  new certificates, then it can also reach the originator of the message to fetch the corresponding cryptographic information.
+The relying party must be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
+As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
 
-When it comes to Denial of Service (DoS) attacks, the PKI is therefore dependant on *control-plane* messages and communication. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+For certificate renewal, on the other hand, this does not apply.
+Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to refuse victim ASes from  renewing their certificates. After the short-lived certificates expire, an AS is effectively banished from the network.
+To address this risk, the individual isolation domains and/or CAs should have policies and processes to renew certificates out-of-band.
 
 
 
