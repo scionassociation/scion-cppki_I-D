@@ -1324,6 +1324,7 @@ The steps required to create a new AS certificate are the following:
 3. The CA uses its CA key and the CSR to create the new AS certificate.
 4. The CA sends the AS certificate back to the AS.
 
+When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals may be automated and can leverage the control-plane communication infrastructure.
 
 # Security Considerations
 
@@ -1363,8 +1364,12 @@ The relying party must be able to discover and obtain new or updated cryptograph
 As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
 
 For certificate renewal, on the other hand, this does not apply.
-Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to refuse victim ASes from  renewing their certificates. After the short-lived certificates expire, an AS is effectively banished from the network.
-To address this risk, the individual isolation domains and/or CAs should have policies and processes to renew certificates out-of-band.
+Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to prevent victim ASes from renewing their certificates, halting the path discovery process.
+This risk is mitigated in multiple ways:
+
+- CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface
+- ISDs usually rely on multiple CAs
+- ISDs could create policies and processes to renew certificates out-of-band
 
 
 
