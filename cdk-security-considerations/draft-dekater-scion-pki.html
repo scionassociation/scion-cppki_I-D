@@ -3438,6 +3438,7 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
             <p id="section-4.3-2.4.1">The CA sends the AS certificate back to the AS.<a href="#section-4.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
+<p id="section-4.3-3">When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals may be automated and can leverage the control-plane communication infrastructure.<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3504,8 +3505,19 @@ In every path segment, all ASes must reference the latest TRC of their ISD. Ther
 <p id="section-5.2-2">The relying party must be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
 As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span> for a more detailed description of DoS vulnerabilities of control-plane messages.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.2-3">For certificate renewal, on the other hand, this does not apply.
-Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to refuse victim ASes from  renewing their certificates. After the short-lived certificates expire, an AS is effectively banished from the network.
-To address this risk, the individual isolation domains and/or CAs should have policies and processes to renew certificates out-of-band.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to prevent victim ASes from renewing their certificates, halting the path discovery process.
+This risk is mitigated in multiple ways:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-5.2-4.1">
+            <p id="section-5.2-4.1.1">CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.2-4.2">
+            <p id="section-5.2-4.2.1">ISDs usually rely on multiple CAs<a href="#section-5.2-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-5.2-4.3">
+            <p id="section-5.2-4.3.1">ISDs could create policies and processes to renew certificates out-of-band<a href="#section-5.2-4.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
 </section>
 </div>
 </section>
