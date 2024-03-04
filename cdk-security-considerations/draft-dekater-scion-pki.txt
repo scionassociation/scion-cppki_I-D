@@ -2451,9 +2451,9 @@ Table of Contents
 
 5.1.1.  Compromise of an ISD
 
-   Compared to DNSSEC and RPKI, in SCION there is no central authority
-   that could "switch off" an ISD, as each ISD relies on its own
-   independent cryptographic trust roots.  Each AS within an ISD is
+   Compared to other trust architectures, in SCION there is no central
+   authority that could "switch off" an ISD, as each ISD relies on its
+   own independent cryptographic trust roots.  Each AS within an ISD is
    therefore dependant on its ISD's PKI for its functioning.  This
    section discusses potential compromises of the PKI at various levels
    of the hierarchy.
