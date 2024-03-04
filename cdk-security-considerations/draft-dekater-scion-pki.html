@@ -3526,7 +3526,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span> for a more detailed description of DoS vulnerabilities of control-plane messages.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
 <p id="section-5.2-3">For certificate renewal, on the other hand, this does not apply.
 Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to prevent victim ASes from renewing their certificates, halting the path discovery process.
-This risk is mitigated in multiple ways:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+This risk can be mitigated in multiple ways:<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-4.1">
             <p id="section-5.2-4.1.1">CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface<a href="#section-5.2-4.1.1" class="pilcrow">¶</a></p>

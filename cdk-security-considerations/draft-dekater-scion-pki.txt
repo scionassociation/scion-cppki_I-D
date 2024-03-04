@@ -2534,7 +2534,7 @@ Table of Contents
    Denial of Service on the CA infrastructure or on the communication
    links from the individual ASes to the CA, could be used by an
    attacker to prevent victim ASes from renewing their certificates,
-   halting the path discovery process.  This risk is mitigated in
+   halting the path discovery process.  This risk can be mitigated in
    multiple ways:
 
    *  CAs only need to be accessible from ASes within the ISD, reducing
