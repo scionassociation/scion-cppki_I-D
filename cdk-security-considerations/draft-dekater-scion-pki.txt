@@ -79,6 +79,7 @@ Table of Contents
      1.3.  Trust Model
      1.4.  Trust Relations within an Isolation Domain
        1.4.1.  Updates and Trust Resets
+       1.4.2.  Substitutes to Certificate Revocation
      1.5.  Overview of Certificates, Keys, and Roles
      1.6.  Trust as a Function
        1.6.1.  Input
@@ -332,6 +333,30 @@ Table of Contents
    necessary for an ISD to re-establish the trust root.  This is
    possible with a process called *trust reset* (if allowed by the ISD's
    trust policy).  In this case, a new base TRC is created.
+
+1.4.2.  Substitutes to Certificate Revocation
+
+   The CP-PKI does not explicitly support certificate revocation.
+   Instead, it relies on the two mechanisms described above and on
+   short-lived certificates.  This approach constitutes an attractive
+   alternative to a revocation system for the following reasons:
+
+   *  Both short-lived certificates and revocation lists must be signed
+      by a CA.  Instead of periodically signing a new revocation list,
+      the CA can simply re-issue all the non-revoked certificates.
+      Although the overhead of signing multiple certificates is greater
+      than that of signing a single revocation list, the overall
+      complexity of the system is reduced.  In the CP-PKI the number of
+      certificates that each CA must renew is manageable as it is
+      limited to at most the number of ASes within an ISD.
+
+   *  Even with a revocation system, a compromised key cannot be
+      instantaneously revoked.  Through their validity period, both
+      short-lived certificates and revocation lists implicitly define an
+      attack window (i.e., a period during which an attacker who managed
+      to compromise a key could use it before it becomes invalid).  In
+      both cases, the CA must consider a tradeoff between efficiency and
+      security when picking this validity period.
 
 1.5.  Overview of Certificates, Keys, and Roles
 
@@ -2459,8 +2484,9 @@ Table of Contents
 
 5.1.2.  Recovery from Compromise
 
-   This section deals with possible recovery from compromises discussed
-   in the previous paragraph.
+   This section deals with possible recovery from the compromises
+   discussed in the previous paragraph.  As described in Section 1.4.2,
+   there is no revocation in the CP-PKI.
 
    *  On TRC level: If any of the root keys or voting keys contained in
       the TRC are compromised, the TRC must be updated as described in
@@ -2474,7 +2500,9 @@ Table of Contents
    *  On CA level: If the private key related to a CA certificate is
       compromised, the impacted CA AS must obtain a new CA certificate
       from the corresponding root AS.  CA certificates are generally
-      short lived to limit the impact of compromise.
+      short lived to limit the impact of compromise.  Alternatively,
+      with a TRC update, a new root keys can also be forced,
+      invalidating the compromised CA.
 
    *  On AS level: In the event of a key compromise of a (non-core) AS,
       the impacted AS needs to obtain a new certificate from its CA.
