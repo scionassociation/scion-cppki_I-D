@@ -1350,7 +1350,7 @@ Compared to DNSSEC and RPKI, in SCION there is no central authority that could "
 
 This section deals with possible recovery from compromises discussed in the previous paragraph.
 
-- On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case of a catastrophic compromise of multiple voting keys at the same time.
+- On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)).
 - On CA level: If the private key related to a CA certificate is compromised, the impacted CA AS must obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise.
 - On AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
 
