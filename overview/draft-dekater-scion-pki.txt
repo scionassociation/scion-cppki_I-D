@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 5 September 2024                                        S. Hitz
+Expires: 12 December 2024                                        S. Hitz
                                                          Anapaya Systems
-                                                            4 March 2024
+                                                            10 June 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2024.
+   This Internet-Draft will expire on 12 December 2024.
 
 Copyright Notice
 
@@ -136,19 +136,61 @@ Table of Contents
 
 1.  Introduction
 
-   The control-plane PKI (CP-PKI) lays the foundation for the
-   authentication procedures in SCION.  It handles all cryptographic
-   material used in the public key infrastructure of SCION's control
-   plane.  This section first introduces the key concepts of the SCION
-   CP-PKI, including the trust model, its core elements (certificates,
-   keys, and roles), and their relationships.  The sections after the
-   Introduction provide detailed specifications of the building blocks
-   of the CP-PKI.
+   SCION is a path-aware internetworking routing architecture as
+   described in [RFC9217].  It allows endpoints and applications to
+   select paths across the network to use for traffic, based on
+   trustworthy path properties.  SCION is an inter-domain network
+   architecture and is therefore not concerned with intra-domain
+   forwarding.
 
-   *Note:* For extended information on the SCION next-generation inter-
-   domain architecture, see [CHUAT22], especially Chapter 2, as well as
-   the IETF Internet Drafts [I-D.scion-overview] and
-   [I-D.scion-components].
+   SCION has been developed with the following goals:
+
+   _Availability_ - to provide highly available communication that can
+   send traffic over paths with optimal or required characteristics,
+   quickly handle inter-domain link or router failures (both on the last
+   hop or anywhere along the path) and provide continuity in the
+   presence of adversaries.
+
+   _Security_ - to provide higher levels of trust in routing information
+   in order to prevent IP prefix hijacking/leaks, denial-of-service and
+   other attacks.  Endpoints can decide the trust roots they wish to
+   rely on, routing information can be unambiguously attributed to an
+   AS, and packets are only forwarded along authorized path segments.  A
+   particular use case is to enable geofencing.
+
+   _Scalability_ - to improve the scalability of the inter-domain
+   control plane and data plane, avoiding existing limitations related
+   to convergence and forwarding table size.  The advertising of path
+   segments is separated into a beaconing process within each Isolation
+   Domain (ISD) and between ISDs which incurs minimal overhead and
+   resource requirements on routers.
+
+   SCION relies on three main components:
+
+   _PKI_ - To achieve scalability and trust, SCION organizes existing
+   ASes into logical groups of independent routing planes called
+   _Isolation Domains (ISDs)_. All ASes in an ISD agree on a set of
+   trust roots called the _Trust Root Configuration (TRC)_ which is a
+   collection of signed root certificates in X.509 v3 format [RFC5280].
+   The ISD is governed by a set of _core ASes_ which typically manage
+   the trust roots and provide connectivity to other ISDs.  This is the
+   basis of the public key infrastructure which the SCION control plane
+   relies upon for the authentication of messages that is used for the
+   SCION control plane.
+
+   _Control Plane_ - performs inter-domain routing by discovering and
+   securely disseminating path information between ASes.  The core ASes
+   use Path-segment Construction Beacons (PCBs) to explore intra-ISD
+   paths, or to explore paths across different ISDs.  See [I-D.scion-cp]
+
+   _Data Plane_ - carries out secure packet forwarding between SCION-
+   enabled ASes over paths selected by endpoints.  A SCION border router
+   reuses existing intra-domain infrastructure to communicate to other
+   SCION routers or SCION endpoints within its AS.  See
+   [I-D.scion-dataplane]
+
+   This document describes the SCION PKI component used by the Control
+   Plane.
 
 1.1.  Terminology
 
@@ -165,7 +207,7 @@ Table of Contents
    directly connected together, then the different networks are
    considered different ASes.
 
-   *Isolation Domain (ISD)*: In SCION, autonomous systems (ASes) are
+   *Isolation Domain (ISD)*: In SCION, Autonomous Systems (ASes) are
    organized into logical groups called isolation domains or ISDs.  Each
    ISD consists of ASes that span an area with a uniform trust
    environment (i.e., a common jurisdiction).  A possible model is for
@@ -2598,6 +2640,10 @@ Table of Contents
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
+   [RFC9217]  Trammell, B., "Current Open Questions in Path-Aware
+              Networking", RFC 9217, DOI 10.17487/RFC9217, March 2022,
+              <https://www.rfc-editor.org/rfc/rfc9217>.
+
 7.2.  Informative References
 
    [BARRERA17]
@@ -2621,6 +2667,11 @@ Table of Contents
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", 2023, <https://datatracker.ietf.org/doc/draft-
               dekater-scion-controlplane/>.
+
+   [I-D.scion-dataplane]
+              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
+              Plane", 2023, <https://datatracker.ietf.org/doc/draft-
+              dekater-scion-dataplane/>.
 
    [I-D.scion-overview]
               de Kater, C., Rustignoli, N., and A. Perrig, "SCION
