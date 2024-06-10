@@ -40,7 +40,7 @@ normative:
   RFC5652:
   RFC5758:
   RFC6996:
-  RFC9217
+  RFC9217:
 
 informative:
   BARRERA17: DOI.10.1145/3085591
