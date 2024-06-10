@@ -157,7 +157,7 @@ SCION relies on three main components:
 
 *Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.dekater-scion-dataplane}}
 
-This document describes the SCION PKI used by the Control Plane. 
+This document describes the SCION PKI component used by the Control Plane. 
 
 ## Terminology
 
