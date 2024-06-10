@@ -126,7 +126,7 @@ informative:
         ins: S. Hitz
         name: Samuel Hitz
         org: Anapaya Systems
-  I-D.scion-dp:
+  I-D.scion-dataplane:
     title: SCION Data Plane
     date: 2023
     target: https://datatracker.ietf.org/doc/draft-dekater-scion-dataplane/
