@@ -1433,7 +1433,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-updates-and-trust-resets">
 <a href="#section-1.4.1" class="section-number selfRef">1.4.1. </a><a href="#name-updates-and-trust-resets" class="section-name selfRef">Updates and Trust Resets</a>
           </h4>
-<p id="section-1.4.1-1">There are two types of TRC updates: regular and sensitive. A <strong>regular TRC update</strong> is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a <strong>sensitive TRC update</strong> is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged. If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if allowed by the ISD's trust policy). In this case, a new base TRC is created.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.1-1">There are two types of TRC updates: regular and sensitive. A <strong>regular TRC update</strong> is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a <strong>sensitive TRC update</strong> is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged. If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if permitted by the ISD's trust policy). In this case, a new base TRC is created.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="substitutes-to-revocation">
@@ -1660,14 +1660,14 @@ TRC
           <h4 id="name-voting-certificates">
 <a href="#section-2.1.5" class="section-number selfRef">2.1.5. </a><a href="#name-voting-certificates" class="section-name selfRef">Voting Certificates</a>
           </h4>
-<p id="section-2.1.5-1">There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that are allowed to cast votes in the TRC update process. Voting certificates are X.509-style certificates.<a href="#section-2.1.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.1.5-1">There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that <span class="bcp14">MAY</span> to cast votes in the TRC update process. Voting certificates are X.509-style certificates.<a href="#section-2.1.5-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.5-2">Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively, and are embedded in the TRC.<a href="#section-2.1.5-2" class="pilcrow">¶</a></p>
 <div id="regular-voting-certificate">
 <section id="section-2.1.5.1">
             <h5 id="name-regular-voting-certificate">
 <a href="#section-2.1.5.1" class="section-number selfRef">2.1.5.1. </a><a href="#name-regular-voting-certificate" class="section-name selfRef">Regular Voting Certificate</a>
             </h5>
-<p id="section-2.1.5.1-1">Regular voting certificates state which keys are allowed to cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.<a href="#section-2.1.5.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1.5.1-1">Regular voting certificates state which keys <span class="bcp14">MAY</span> cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.<a href="#section-2.1.5.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.5.1-2">The recommended <strong>maximum validity period</strong> of a regular voting certificate is: 1 year.<a href="#section-2.1.5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1676,7 +1676,7 @@ TRC
             <h5 id="name-sensitive-voting-certificat">
 <a href="#section-2.1.5.2" class="section-number selfRef">2.1.5.2. </a><a href="#name-sensitive-voting-certificat" class="section-name selfRef">Sensitive Voting Certificate</a>
             </h5>
-<p id="section-2.1.5.2-1">Sensitive voting certificates specify which keys are allowed to cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.<a href="#section-2.1.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.1.5.2-1">Sensitive voting certificates specify which keys <span class="bcp14">MAY</span> cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.<a href="#section-2.1.5.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.1.5.2-2">The recommended <strong>maximum validity period</strong> of a sensitive voting certificate is: 5 years.<a href="#section-2.1.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.1.5.2-3"><strong>Note</strong>:<a href="#section-2.1.5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
@@ -1903,7 +1903,7 @@ TRC
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-certificate-specification-2" class="section-name selfRef">Certificate Specification</a>
         </h3>
 <p id="section-2.2-1">All certificates used in the SCION control-plane PKI are X.509 v3 certificates. However, the SCION specification is in some places more restrictive. This section defines these additional constraints and conditions compared to <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> for each type of SCION control-plane PKI certificate.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2"><strong>Note</strong>: The settings for the SCION-specific constraints and conditions are based on the SCION open-source implementation <a href="https://github.com/scionproto/scion/">scionproto</a>. Adjusting these settings to the requirements of a customer implementation may be possible and is allowed.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-2"><strong>Note</strong>: The settings for the SCION-specific constraints and conditions are based on the SCION open-source implementation <a href="https://github.com/scionproto/scion/">scionproto</a>. Adjusting these settings to the requirements of a customer implementation <span class="bcp14">SHOULD</span> be allowed.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <div id="basic-fields-scion-specific-constraints-and-conditions">
 <section id="section-2.2.1">
           <h4 id="name-basic-fields-scion-specific">
@@ -1916,7 +1916,7 @@ TRC
               <p id="section-2.2.1-3.1.1"><code>version</code> field: Describes the version of the encoded certificate.<a href="#section-2.2.1-3.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2.1-3.1.2.1">
-                  <p id="section-2.2.1-3.1.2.1.1"><strong>SCION constraints</strong>: "v1" and "v2" are not allowed.<a href="#section-2.2.1-3.1.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-2.2.1-3.1.2.1.1"><strong>SCION constraints</strong>: "v1" and "v2" <span class="bcp14">MUST NOT</span> be used.<a href="#section-2.2.1-3.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-2.2.1-3.1.2.2">
                   <p id="section-2.2.1-3.1.2.2.1"><strong>Additional conditions and remarks</strong>: <span class="bcp14">MUST</span> be set to "v3" (as extensions are used and mandatory in SCION).<a href="#section-2.2.1-3.1.2.2.1" class="pilcrow">¶</a></p>
@@ -1998,7 +1998,7 @@ TRC
               <p id="section-2.2.1-3.8.1"><code>issuerUniqueID</code> field: If set, it enables reusing the issuer name over time.<a href="#section-2.2.1-3.8.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2.1-3.8.2.1">
-                  <p id="section-2.2.1-3.8.2.1.1"><strong>SCION constraints</strong>: This field is disallowed in SCION and <span class="bcp14">MUST NOT</span> be used.<a href="#section-2.2.1-3.8.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-2.2.1-3.8.2.1.1"><strong>SCION constraints</strong>: This field <span class="bcp14">MUST NOT</span> be used in SCION.<a href="#section-2.2.1-3.8.2.1.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
@@ -2006,7 +2006,7 @@ TRC
               <p id="section-2.2.1-3.9.1"><code>subjectUniqueID</code> field: If set, it enables reusing the subject name over time.<a href="#section-2.2.1-3.9.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2.1-3.9.2.1">
-                  <p id="section-2.2.1-3.9.2.1.1"><strong>SCION constraints</strong>: This field is disallowed in SCION and <span class="bcp14">MUST NOT</span> be used.<a href="#section-2.2.1-3.9.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-2.2.1-3.9.2.1.1"><strong>SCION constraints</strong>: This field <span class="bcp14">MUST NOT</span> be used in SCION.<a href="#section-2.2.1-3.9.2.1.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
@@ -2400,7 +2400,7 @@ TRC
                 <p id="section-2.2.2.5-3.1.1"><code>cA</code> attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute <span class="bcp14">MUST</span> be set to TRUE.<a href="#section-2.2.2.5-3.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.2.2.5-3.2">
-                <p id="section-2.2.2.5-3.2.1"><code>pathLenConstraint</code> attribute: This attribute is only relevant if the <code>cA</code> attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the allowed length of the certification path.<a href="#section-2.2.2.5-3.2.1" class="pilcrow">¶</a></p>
+                <p id="section-2.2.2.5-3.2.1"><code>pathLenConstraint</code> attribute: This attribute is only relevant if the <code>cA</code> attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the permitted length of the certification path.<a href="#section-2.2.2.5-3.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 <p id="section-2.2.2.5-4">The settings of the <code>basicConstraints</code> extension differ for each SCION control-plane PKI certificate type. The next table shows the specifications per certificate type.<a href="#section-2.2.2.5-4" class="pilcrow">¶</a></p>
