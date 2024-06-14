@@ -207,7 +207,7 @@ As already mentioned previously, the control-plane PKI, SCION's concept of trust
 
 ### Updates and Trust Resets {#trust-reset}
 
-There are two types of TRC updates: regular and sensitive. A **regular TRC update** is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a **sensitive TRC update** is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged. If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if allowed by the ISD's trust policy). In this case, a new base TRC is created.
+There are two types of TRC updates: regular and sensitive. A **regular TRC update** is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a **sensitive TRC update** is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged. If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy). In this case, a new base TRC is created.
 
 
 ### Substitutes to Certificate Revocation {#substitutes-to-revocation}
@@ -358,19 +358,19 @@ The recommended **maximum validity period** of a CP AS certificate is: 3 days.
 
 ### Voting Certificates {#cp-voting-cert}
 
-There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that are allowed to cast votes in the TRC update process. Voting certificates are X.509-style certificates.
+There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that MAY to cast votes in the TRC update process. Voting certificates are X.509-style certificates.
 
 Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates, respectively, and are embedded in the TRC.
 
 #### Regular Voting Certificate
 
-Regular voting certificates state which keys are allowed to cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
+Regular voting certificates state which keys MAY cast votes in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
 
 The recommended **maximum validity period** of a regular voting certificate is: 1 year.
 
 #### Sensitive Voting Certificate
 
-Sensitive voting certificates specify which keys are allowed to cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
+Sensitive voting certificates specify which keys MAY cast votes in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
 
 The recommended **maximum validity period** of a sensitive voting certificate is: 5 years.
 
@@ -483,7 +483,7 @@ The recommended **maximum validity period** of a sensitive voting certificate is
 
 All certificates used in the SCION control-plane PKI are X.509 v3 certificates. However, the SCION specification is in some places more restrictive. This section defines these additional constraints and conditions compared to {{RFC5280}} for each type of SCION control-plane PKI certificate.
 
-**Note**: The settings for the SCION-specific constraints and conditions are based on the SCION open-source implementation [scionproto](https://github.com/scionproto/scion/). Adjusting these settings to the requirements of a customer implementation may be possible and is allowed.
+**Note**: The settings for the SCION-specific constraints and conditions are based on the SCION open-source implementation [scionproto](https://github.com/scionproto/scion/). Adjusting these settings to the requirements of a customer implementation SHOULD be allowed.
 
 ### Basic Fields: SCION-Specific Constraints and Conditions
 
@@ -493,7 +493,7 @@ This section briefly describes the fields of the SCION control-plane PKI certifi
 
 - `version` field: Describes the version of the encoded certificate.
 
-  - **SCION constraints**: "v1" and "v2" are not allowed.
+  - **SCION constraints**: "v1" and "v2" MUST NOT be used.
   - **Additional conditions and remarks**: MUST be set to "v3" (as extensions are used and mandatory in SCION).
 
 - `serialNumber` field: A positive integer assigned by the CA to each certificate. It MUST be unique for each certificate issued by a given CA.
@@ -531,11 +531,11 @@ This section briefly describes the fields of the SCION control-plane PKI certifi
 
 - `issuerUniqueID` field: If set, it enables reusing the issuer name over time.
 
-  - **SCION constraints**: This field is disallowed in SCION and MUST NOT be used.
+  - **SCION constraints**: This field MUST NOT be used in SCION.
 
 - `subjectUniqueID` field: If set, it enables reusing the subject name over time.
 
-  - **SCION constraints**: This field is disallowed in SCION and MUST NOT be used.
+  - **SCION constraints**: This field MUST NOT be used in SCION.
 
 - `extensions` sequence: Defines the extensions of the certificate. For a description of all extensions used in SCION, see [](#exts).
 
@@ -713,7 +713,7 @@ The `basicConstraints` extension specifies whether the certificate subject may a
 The `basicConstraints` extension includes the following attributes relevant for SCION:
 
 - `cA` attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute MUST be set to TRUE.
-- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the allowed length of the certification path.
+- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the permitted length of the certification path.
 
 The settings of the `basicConstraints` extension differ for each SCION control-plane PKI certificate type. The next table shows the specifications per certificate type.
 
