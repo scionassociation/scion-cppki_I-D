@@ -35,11 +35,9 @@ author:
 
 normative:
   RFC5280:
-  RFC5398:
   RFC5480:
   RFC5652:
   RFC5758:
-  RFC6996:
 
 informative:
   BARRERA17: DOI.10.1145/3085591
@@ -124,7 +122,9 @@ informative:
       -
         ins: S. Hitz
         name: Samuel Hitz
-        org: Anapaya Systems
+        org: Anapaya System
+  RFC5398:
+  RFC6996:
 
 
 
