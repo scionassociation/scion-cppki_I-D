@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 5 September 2024                                        S. Hitz
+Expires: 21 December 2024                                        S. Hitz
                                                          Anapaya Systems
-                                                            4 March 2024
+                                                            19 June 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 September 2024.
+   This Internet-Draft will expire on 21 December 2024.
 
 Copyright Notice
 
@@ -2571,10 +2571,6 @@ Table of Contents
               (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
               <https://www.rfc-editor.org/rfc/rfc5280>.
 
-   [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
-              Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
-              December 2008, <https://www.rfc-editor.org/rfc/rfc5398>.
-
    [RFC5480]  Turner, S., Brown, D., Yiu, K., Housley, R., and T. Polk,
               "Elliptic Curve Cryptography Subject Public Key
               Information", RFC 5480, DOI 10.17487/RFC5480, March 2009,
@@ -2589,10 +2585,6 @@ Table of Contents
               Additional Algorithms and Identifiers for DSA and ECDSA",
               RFC 5758, DOI 10.17487/RFC5758, January 2010,
               <https://www.rfc-editor.org/rfc/rfc5758>.
-
-   [RFC6996]  Mitchell, J., "Autonomous System (AS) Reservation for
-              Private Use", BCP 6, RFC 6996, DOI 10.17487/RFC6996, July
-              2013, <https://www.rfc-editor.org/rfc/rfc6996>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -2626,6 +2618,14 @@ Table of Contents
               de Kater, C., Rustignoli, N., and A. Perrig, "SCION
               Overview", 2022, <https://datatracker.ietf.org/doc/draft-
               dekater-panrg-scion-overview/>.
+
+   [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
+              Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
+              December 2008, <https://www.rfc-editor.org/rfc/rfc5398>.
+
+   [RFC6996]  Mitchell, J., "Autonomous System (AS) Reservation for
+              Private Use", BCP 6, RFC 6996, DOI 10.17487/RFC6996, July
+              2013, <https://www.rfc-editor.org/rfc/rfc6996>.
 
 Acknowledgments
 
