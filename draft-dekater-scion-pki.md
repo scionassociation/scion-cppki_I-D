@@ -483,7 +483,6 @@ The recommended **maximum validity period** of a sensitive voting certificate is
 
 All certificates used in the SCION control-plane PKI are X.509 v3 certificates. However, the SCION specification is in some places more restrictive. This section defines these additional constraints and conditions compared to {{RFC5280}} for each type of SCION control-plane PKI certificate.
 
-**Note**: The settings for the SCION-specific constraints and conditions are based on the SCION open-source implementation [scionproto](https://github.com/scionproto/scion/). Adjusting these settings to the requirements of a customer implementation may be possible and is allowed.
 
 ### Basic Fields: SCION-Specific Constraints and Conditions
 
