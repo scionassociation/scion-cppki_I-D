@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 16 December 2024                                        S. Hitz
+Expires: 4 January 2025                                          S. Hitz
                                                          Anapaya Systems
-                                                            14 June 2024
+                                                             3 July 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 December 2024.
+   This Internet-Draft will expire on 4 January 2025.
 
 Copyright Notice
 
@@ -828,12 +828,6 @@ Table of Contents
    and conditions compared to [RFC5280] for each type of SCION control-
    plane PKI certificate.
 
-   *Note*: The settings for the SCION-specific constraints and
-   conditions are based on the SCION open-source implementation
-   scionproto (https://github.com/scionproto/scion/).  Adjusting these
-   settings to the requirements of a customer implementation SHOULD be
-   allowed.
-
 2.2.1.  Basic Fields: SCION-Specific Constraints and Conditions
 
    This section briefly describes the fields of the SCION control-plane
@@ -850,11 +844,7 @@ Table of Contents
    the following fields:
 
    *  version field: Describes the version of the encoded certificate.
-
-      -  *SCION constraints*: "v1" and "v2" MUST NOT be used.
-
-      -  *Additional conditions and remarks*: MUST be set to "v3" (as
-         extensions are used and mandatory in SCION).
+      It MUST be set to "v3" (as extensions are required in SCION).
 
    *  serialNumber field: A positive integer assigned by the CA to each
       certificate.  It MUST be unique for each certificate issued by a
@@ -920,15 +910,9 @@ Table of Contents
       -  *SCION constraints*: For constraints regarding the algorithm,
          see the signature field.
 
-   *  issuerUniqueID field: If set, it enables reusing the issuer name
-      over time.
+   *  issuerUniqueID field: it MUST NOT be used in SCION.
 
-      -  *SCION constraints*: This field MUST NOT be used in SCION.
-
-   *  subjectUniqueID field: If set, it enables reusing the subject name
-      over time.
-
-      -  *SCION constraints*: This field MUST NOT be used in SCION.
+   *  subjectUniqueID field: it MUST NOT be used in SCION.
 
    *  extensions sequence: Defines the extensions of the certificate.
       For a description of all extensions used in SCION, see
@@ -1309,7 +1293,7 @@ Table of Contents
       of CA certificates that may follow this CA certificate in the
       certification chain.  Value "0" means that this CA may only issue
       end-entity certificates, but no CA certificates.  If the attribute
-      is not set, there is no limit to the permitted length of the
+      is not set, there is no limit to the maximum length of the
       certification path.
 
    The settings of the basicConstraints extension differ for each SCION
@@ -1671,10 +1655,10 @@ Table of Contents
 3.1.2.2.5.   noTrustReset Boolean
 
    The noTrustReset Boolean specifies whether a trust reset is forbidden
-   by the ISD.  Within a TRC update chain, this value CANNOT be changed
-   by a regular or sensitive update.  However, it is possible to change
-   the noTrustReset value in the event of a trust reset, where a new
-   base TRC is created.
+   by the ISD.  Within a TRC update chain, this value MUST NOT be
+   changed by a regular or sensitive update.  However, it is possible to
+   change the noTrustReset value in the event of a trust reset, where a
+   new base TRC is created.
 
    The noTrustReset field is optional and defaults to FALSE.
 
