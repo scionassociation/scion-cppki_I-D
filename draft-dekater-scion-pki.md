@@ -483,7 +483,6 @@ The recommended **maximum validity period** of a sensitive voting certificate is
 
 All certificates used in the SCION control-plane PKI are X.509 v3 certificates. However, the SCION specification is in some places more restrictive. This section defines these additional constraints and conditions compared to {{RFC5280}} for each type of SCION control-plane PKI certificate.
 
-**Note**: The settings for the SCION-specific constraints and conditions are based on the SCION open-source implementation [scionproto](https://github.com/scionproto/scion/). Adjusting these settings to the requirements of a customer implementation SHOULD be allowed.
 
 ### Basic Fields: SCION-Specific Constraints and Conditions
 
@@ -491,10 +490,7 @@ This section briefly describes the fields of the SCION control-plane PKI certifi
 
 `TBSCertificate` sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:
 
-- `version` field: Describes the version of the encoded certificate.
-
-  - **SCION constraints**: "v1" and "v2" MUST NOT be used.
-  - **Additional conditions and remarks**: MUST be set to "v3" (as extensions are used and mandatory in SCION).
+- `version` field: Describes the version of the encoded certificate. It MUST be set to "v3" (as extensions are required in SCION).
 
 - `serialNumber` field: A positive integer assigned by the CA to each certificate. It MUST be unique for each certificate issued by a given CA.
 - `signature` field: Contains the identifier for the algorithm used by the CA to sign the certificate.
@@ -529,13 +525,9 @@ This section briefly describes the fields of the SCION control-plane PKI certifi
 
   - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
 
-- `issuerUniqueID` field: If set, it enables reusing the issuer name over time.
+- `issuerUniqueID` field: it MUST NOT be used in SCION.
 
-  - **SCION constraints**: This field MUST NOT be used in SCION.
-
-- `subjectUniqueID` field: If set, it enables reusing the subject name over time.
-
-  - **SCION constraints**: This field MUST NOT be used in SCION.
+- `subjectUniqueID` field: it MUST NOT be used in SCION.
 
 - `extensions` sequence: Defines the extensions of the certificate. For a description of all extensions used in SCION, see [](#exts).
 
@@ -713,7 +705,7 @@ The `basicConstraints` extension specifies whether the certificate subject may a
 The `basicConstraints` extension includes the following attributes relevant for SCION:
 
 - `cA` attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute MUST be set to TRUE.
-- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the permitted length of the certification path.
+- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE. It specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the maximum length of the certification path.
 
 The settings of the `basicConstraints` extension differ for each SCION control-plane PKI certificate type. The next table shows the specifications per certificate type.
 
@@ -936,7 +928,7 @@ The value of the `gracePeriod` field in a base TRC MUST be zero. The value of th
 
 ##### `noTrustReset` Boolean {#notrustreset}
 
-The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value CANNOT be changed by a regular or sensitive update. However, it is possible to change the `noTrustReset` value in the event of a trust reset, where a new base TRC is created.
+The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value MUST NOT be changed by a regular or sensitive update. However, it is possible to change the `noTrustReset` value in the event of a trust reset, where a new base TRC is created.
 
 The `noTrustReset` field is optional and defaults to FALSE.
 
