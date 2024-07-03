@@ -828,12 +828,6 @@ Table of Contents
    and conditions compared to [RFC5280] for each type of SCION control-
    plane PKI certificate.
 
-   *Note*: The settings for the SCION-specific constraints and
-   conditions are based on the SCION open-source implementation
-   scionproto (https://github.com/scionproto/scion/).  Adjusting these
-   settings to the requirements of a customer implementation may be
-   possible and is allowed.
-
 2.2.1.  Basic Fields: SCION-Specific Constraints and Conditions
 
    This section briefly describes the fields of the SCION control-plane
