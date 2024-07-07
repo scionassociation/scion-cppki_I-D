@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 5 January 2025                                          S. Hitz
+Expires: 8 January 2025                                          S. Hitz
                                                          Anapaya Systems
-                                                             4 July 2024
+                                                             7 July 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 January 2025.
+   This Internet-Draft will expire on 8 January 2025.
 
 Copyright Notice
 
@@ -260,7 +260,7 @@ Table of Contents
    considered active after a new version has been published.
 
    *Trust Reset*: A trust reset is the action of announcing a new base
-   TRC for an existing ISD.  A trust reset should only be triggered
+   TRC for an existing ISD.  A trust reset SHOULD only be triggered
    after a catastrophic event involving the loss or compromise of
    several important private keys.
 
@@ -592,7 +592,7 @@ Table of Contents
    trust within an ISD, and marks the CP root certificates as the
    starting point of an ISD's certificate verification path.
 
-   The recommended *maximum validity period* of a CP root certificate
+   The RECOMMENDED *maximum validity period* of a CP root certificate
    is: 1 year.
 
    *Note*: The TRC of each ISD contains a trusted set of control-plane
@@ -613,7 +613,7 @@ Table of Contents
    of root certificates must first be extracted from one or more active
    TRCs (as described in Section 4.2).
 
-   The recommended *maximum validity period* of a CP CA certificate is:
+   The RECOMMENDED *maximum validity period* of a CP CA certificate is:
    11 days.
 
 2.1.4.  Control-Plane AS Certificate
@@ -627,7 +627,7 @@ Table of Contents
    certificates.  That is, they cannot be used to verify other
    certificates.
 
-   The recommended *maximum validity period* of a CP AS certificate is:
+   The RECOMMENDED *maximum validity period* of a CP AS certificate is:
    3 days.
 
 2.1.5.  Voting Certificates
@@ -651,7 +651,7 @@ Table of Contents
    certificate's signature.  However, a regular voting certificate
    cannot be used to verify other certificates.
 
-   The recommended *maximum validity period* of a regular voting
+   The RECOMMENDED *maximum validity period* of a regular voting
    certificate is: 1 year.
 
 2.1.5.2.  Sensitive Voting Certificate
@@ -664,7 +664,7 @@ Table of Contents
    certificate's signature.  However, a sensitive voting certificate
    cannot be used to verify other certificates.
 
-   The recommended *maximum validity period* of a sensitive voting
+   The RECOMMENDED *maximum validity period* of a sensitive voting
    certificate is: 5 years.
 
    *Note*:
@@ -675,11 +675,11 @@ Table of Contents
 
       One important difference between both certificate types lies in
       their validity period: A SCION control-plane root certificate has
-      a recommended maximum validity period of one year, whereas the
-      recommended maximum validity period of a SCION control-plane CA
+      a RECOMMENDED maximum validity period of one year, whereas the
+      RECOMMENDED maximum validity period of a SCION control-plane CA
       certificate is 11 days.  This is because a root certificate is
       part of the Trust Root Configuration of an ISD, which itself also
-      has a recommended maximum validity period of one year (see Table 2
+      has a RECOMMENDED maximum validity period of one year (see Table 2
       below).  This ensures that the TRC need not be updated all the
       time and is thus relatively stable.
 
@@ -745,11 +745,11 @@ Table of Contents
 
                            Table 3: Certificates
 
-   (1) Multiple signatures and certificates of each type may be included
+   (1) Multiple signatures and certificates of each type MAY be included
    in a TRC.
    (2) Recommended maximum validity period.
    (3) A validity of 11 days with 4 days overlap between two CA
-   certificates is recommended to enable the best possible operational
+   certificates is RECOMMENDED to enable the best possible operational
    procedures when performing a CA certificate rollover.
 
    Figure 2 illustrates, at a high level, the relationship between a TRC
@@ -844,7 +844,7 @@ Table of Contents
    the following fields:
 
    *  version field: Describes the version of the encoded certificate.
-      It MUST be set to "v3" (as extensions are required in SCION).
+      It MUST be set to "v3" (as extensions are REQUIRED in SCION).
 
    *  serialNumber field: A positive integer assigned by the CA to each
       certificate.  It MUST be unique for each certificate issued by a
@@ -1055,7 +1055,7 @@ Table of Contents
    In SCION, using the keyIdentifier attribute is the preferred way to
    specify the authorityKeyIdentifier extension.
 
-   *Important:* SCION implementations may also support the use of the
+   *Important:* SCION implementations MAY also support the use of the
    authorityCertIssuer and authorityCertSerialNumber attributes.
    However, if these attributes are set and support for them is missing,
    implementations SHOULD error out.
@@ -1180,7 +1180,7 @@ Table of Contents
    *  id-kp-timeStamping: If set, the public key can be used for the
       verification of timestamps.
 
-   Additionally, the Extended Key Usage extension sequence may include
+   Additionally, the Extended Key Usage extension sequence MAY include
    the SCION-specific attributes id-kp-root, id-kp-regular, and id-kp-
    sensitive.  These attributes are used in the Trust Root Configuration
    setup, to distinguish root certificates, regular voting certificates,
@@ -1660,7 +1660,7 @@ Table of Contents
    change the noTrustReset value in the event of a trust reset, where a
    new base TRC is created.
 
-   The noTrustReset field is optional and defaults to FALSE.
+   The noTrustReset field is OPTIONAL and defaults to FALSE.
 
    *Important:* Note that once the noTrustReset Boolean is set to TRUE
    and a trust reset is disallowed, this cannot be reversed.  Therefore,
@@ -1899,13 +1899,13 @@ Table of Contents
    the TRC payload exactly defines which signatures must be attached in
    the signed TRC:
 
-   *  The required signatures from voting certificates are explicitly
+   *  The REQUIRED signatures from voting certificates are explicitly
       mentioned in the votes field of the payload: If index "i" is part
       of the votes field, then the voting certificate at position i in
       the certificates sequence of the predecessor TRC casted a vote on
       the successor TRC.  See also Section 3.1.2.2.6.
 
-   *  The required signatures for new certificates are implied by the
+   *  The REQUIRED signatures for new certificates are implied by the
       currently valid TRC payload, and, in case of a TRC update, the
       predecessor payload.
 
@@ -2424,7 +2424,7 @@ Table of Contents
 
 4.3.  Creating a New Control-Plane AS Certificate
 
-   The steps required to create a new AS certificate are the following:
+   The steps REQUIRED to create a new AS certificate are the following:
 
    1.  The AS creates a new key pair and a certificate signing request
        (CSR) using that key pair.
@@ -2439,7 +2439,7 @@ Table of Contents
 
    When an AS joins an ISD, the first CSR is sent out of band to one of
    the CAs as part of the formalities to join the ISD.  Subsequent
-   certificate renewals may be automated and can leverage the control-
+   certificate renewals MAY be automated and can leverage the control-
    plane communication infrastructure.
 
 5.  Security Considerations
@@ -2748,22 +2748,21 @@ Ceremony Preparations
       the ceremony administrator, or, if preferable, by any of the
       voting representatives.
 
-   *  Ceremony administrator's device: The ceremony administrator should
+   *  Ceremony administrator's device: The ceremony administrator SHOULD
       bring a machine that is capable of creating and verifying a TRC.
       Furthermore, it needs to be able to compute the SHA-512 digest
       (hash value) of files.
 
-   *  Voting representative's device: The voting representative should
+   *  Voting representative's device: The voting representative SHOULD
       bring a machine that is capable of signing and verifying TRCs.
       Thus, the machine needs to have access to all the voting private
       keys.  Furthermore, it needs to be able to compute the SHA-512
       digest (hash value) of the files.  The exact binaries that are
       required are described in a separate document.
 
-   *Important:* It is very important that all devices, especially the
-   data exchange device, are not compromised.  Therefore, the ceremony
-   should ideally include a procedure to verify that the devices are
-   secure.
+   It is very important that all devices, especially the data exchange
+   device, are not compromised.  Therefore, the ceremony SHOULD ideally
+   include a procedure to verify that the devices are secure.
 
 Preparation Steps
 
