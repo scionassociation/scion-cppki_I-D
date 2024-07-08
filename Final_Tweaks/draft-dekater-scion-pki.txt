@@ -286,7 +286,7 @@ Table of Contents
    see also [BARRERA17].
 
    The monopoly model suffers from two main drawbacks: First, all
-   parties MUST agree on a single root of trust.  Secondly, the single
+   parties must agree on a single root of trust.  Secondly, the single
    root of trust represents a single point of failure, the misuse of
    which enables the forging of certificates.  Also, its revocation can
    result in a kill-switch for all the entities it certifies.  The
