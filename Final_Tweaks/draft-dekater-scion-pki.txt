@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 8 January 2025                                          S. Hitz
+Expires: 9 January 2025                                          S. Hitz
                                                          Anapaya Systems
-                                                             7 July 2024
+                                                             8 July 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 8 January 2025.
+   This Internet-Draft will expire on 9 January 2025.
 
 Copyright Notice
 
@@ -298,7 +298,7 @@ Table of Contents
 
    Thus, there is a need for a trust architecture that supports
    meaningful trust roots in a global environment with inherently
-   distrustful parties.  This new trust architecture SHOULD provide the
+   distrustful parties.  This new trust architecture should provide the
    following properties:
 
    *  Trust agility (see further below);
