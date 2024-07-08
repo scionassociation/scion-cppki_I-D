@@ -184,7 +184,7 @@ Given the diverse nature of the constituents in the current Internet, an importa
 
 The monopoly model suffers from two main drawbacks: First, all parties MUST agree on a single root of trust. Secondly, the single root of trust represents a single point of failure, the misuse of which enables the forging of certificates. Also, its revocation can result in a kill-switch for all the entities it certifies. The oligopoly model relies on several roots of trust, all equally and completely trusted. However, this is not automatically better: Whereas the monopoly model has a single point of failure, the oligopoly model has the drawback of exposing more than one point of failure.
 
-Thus, there is a need for a trust architecture that supports meaningful trust roots in a global environment with inherently distrustful parties. This new trust architecture SHOULD provide the following properties:
+Thus, there is a need for a trust architecture that supports meaningful trust roots in a global environment with inherently distrustful parties. This new trust architecture should provide the following properties:
 
 - Trust agility (see further below);
 - Resilience to single root of trust compromise;
