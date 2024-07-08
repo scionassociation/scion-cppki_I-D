@@ -1435,10 +1435,10 @@ The location must provide electricity and enough power sockets for each particip
 Each party brings their own device that is provisioned with the required material, as described below.
 
 - Device to exchange data. This device can either be provided by the ceremony administrator, or, if preferable, by any of the voting representatives.
-- Ceremony administrator's device: The ceremony administrator SHOULD bring a machine that is capable of creating and verifying a TRC. Furthermore, it needs to be able to compute the SHA-512 digest (hash value) of files.
-- Voting representative's device: The voting representative SHOULD bring a machine that is capable of signing and verifying TRCs. Thus, the machine needs to have access to all the voting private keys. Furthermore, it needs to be able to compute the SHA-512 digest (hash value) of the files. The exact binaries that are required are described in a separate document.
+- Ceremony administrator's device: The ceremony administrator should bring a machine that is capable of creating and verifying a TRC. Furthermore, it needs to be able to compute the SHA-512 digest (hash value) of files.
+- Voting representative's device: The voting representative should bring a machine that is capable of signing and verifying TRCs. Thus, the machine needs to have access to all the voting private keys. Furthermore, it needs to be able to compute the SHA-512 digest (hash value) of the files. The exact binaries that are required are described in a separate document.
 
-It is very important that all devices, especially the data exchange device, are not compromised. Therefore, the ceremony SHOULD ideally include a procedure to verify that the devices are secure.
+It is very important that all devices, especially the data exchange device, are not compromised. Therefore, the ceremony should ideally include a procedure to verify that the devices are secure.
 
 
 ### Preparation Steps
