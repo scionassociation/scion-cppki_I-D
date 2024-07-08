@@ -383,7 +383,7 @@ Table of Contents
    short-lived certificates.  This approach constitutes an attractive
    alternative to a revocation system for the following reasons:
 
-   *  Both short-lived certificates and revocation lists MUST be signed
+   *  Both short-lived certificates and revocation lists must be signed
       by a CA.  Instead of periodically signing a new revocation list,
       the CA can simply re-issue all the non-revoked certificates.
       Although the overhead of signing multiple certificates is greater
