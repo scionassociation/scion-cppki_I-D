@@ -1,18 +1,8 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2022-09-01T02:05:10.334302+00:00",
+  "timestamp": "2024-07-14T00:20:00.296606+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
-    {
-      "name": "bug",
-      "description": "Something isn't working",
-      "color": "d73a4a"
-    },
-    {
-      "name": "documentation",
-      "description": "Improvements or additions to documentation",
-      "color": "0075ca"
-    },
     {
       "name": "duplicate",
       "description": "This issue or pull request already exists",
@@ -24,45 +14,217 @@
       "color": "a2eeef"
     },
     {
-      "name": "good first issue",
-      "description": "Good for newcomers",
-      "color": "7057ff"
-    },
-    {
-      "name": "help wanted",
-      "description": "Extra attention is needed",
-      "color": "008672"
-    },
-    {
-      "name": "invalid",
-      "description": "This doesn't seem right",
-      "color": "e4e669"
-    },
-    {
       "name": "question",
       "description": "Further information is requested",
       "color": "d876e3"
     },
     {
-      "name": "wontfix",
-      "description": "This will not be worked on",
-      "color": "ffffff"
+      "name": "Prio 1",
+      "description": "",
+      "color": "B60205"
+    },
+    {
+      "name": "Prio 2",
+      "description": "",
+      "color": "FBCA04"
+    },
+    {
+      "name": "Prio 3",
+      "description": "",
+      "color": "0E8A16"
+    },
+    {
+      "name": "design",
+      "description": "",
+      "color": "1d76db"
+    },
+    {
+      "name": "editorial",
+      "description": "",
+      "color": "9855E2"
     }
   ],
   "issues": [
     {
-      "number": 18,
-      "id": "I_kwDOH386tM5QnVoX",
-      "title": "IANA considerations and PEN",
-      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/18",
+      "number": 26,
+      "id": "I_kwDOH386tM57aBYn",
+      "title": "Write IANA Considerations Section",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/26",
+      "state": "CLOSED",
+      "author": "jiceatscion",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "nicorusti",
+        "jiceatscion"
+      ],
+      "labels": [
+        "Prio 1"
+      ],
+      "body": "See [RFC 8126](https://www.rfc-editor.org/rfc/rfc8126.html)\r\n\r\n(Copied from https://github.com/scionassociation/standards/issues/100)\r\n",
+      "createdAt": "2024-01-08T13:04:30Z",
+      "updatedAt": "2024-05-14T12:29:48Z",
+      "closedAt": "2024-05-14T12:29:48Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@jiceatscion Wasn't this addressed in #25? \r\n",
+          "createdAt": "2024-04-26T16:34:12Z",
+          "updatedAt": "2024-04-26T16:34:12Z"
+        },
+        {
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Looks like it. There wasn't a link between the PR and the issue. Neither with the original issue:  https://github.com/scionassociation/standards/issues/100.\r\n\r\nBut if it's done, it's done.\r\n\r\n",
+          "createdAt": "2024-04-26T17:52:07Z",
+          "updatedAt": "2024-04-26T17:52:07Z"
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "id": "I_kwDOH386tM57aQZa",
+      "title": "Unaddressed Feedback from Reviews",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/27",
+      "state": "OPEN",
+      "author": "jiceatscion",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "jiceatscion"
+      ],
+      "labels": [
+        "Prio 1"
+      ],
+      "body": "(Moved from https://github.com/scionassociation/standards/issues/64)\r\n\r\nIETF 115 Feedback Russ on specific sections: \r\n\r\n- [x] Section 2.2.1.4.1 is incomplete.  You do not say which string type is associated with the ISD-AS number attribute.  I suggest that you keep it simple and use PrintableString.\r\n_--> This feedback is addressed in the new version of the draft, in the section Certificate Specification > Basic Fields._ \r\n- [x] Section 2.2.2.1.2 is confusing to me.  I do not understand the need for id-kp-root.  Further, the \"MUST be set\" language is not clear, since the extension is a list of OIDs.  The phrase \"MUST be included\" might be a better way to talk about it.\r\n_--> This feedback is addressed in the new version of the draft._ \r\n- [ ] In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n- [ ] #28. \r\n\r\nGeneral feedback Eliot:\r\n- [x] Make sure the references are correct:\r\n       - Normative references: Needed for the specification; specification is based on it.\r\n       - Informative references: Provide background/additional information\r\n- [x] Make sure MUST/MAY/SHOULD are used correctly (see also [RFC 8174](https://datatracker.ietf.org/doc/html/rfc8174)): \r\n       - MUST: Without this, the protocol will not work\r\n       - SHOULD: Should do this unless you have a very good reason not to\r\n       - MAY: Try to not use \"MAY\", unless not needed\r\n- [ ] What text can be removed? Be concise. Make sure every word that is there must be there. \r\n\r\n",
+      "createdAt": "2024-01-08T13:38:04Z",
+      "updatedAt": "2024-07-04T08:05:08Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 28,
+      "id": "I_kwDOH386tM57aRFd",
+      "title": "ASN.1 Module for new types",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/28",
+      "state": "OPEN",
+      "author": "jiceatscion",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "jiceatscion"
+      ],
+      "labels": [
+        "enhancement",
+        "Prio 3"
+      ],
+      "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n",
+      "createdAt": "2024-01-08T13:39:37Z",
+      "updatedAt": "2024-07-04T08:24:47Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "We received some more feedback from Russ: \r\n\r\n> I have a few suggestions.\r\nI think that Section 2.2.1.2.1 could be much more simple:\r\nThe ISD-AS number attribute identifies the SCION ISD and AS.  The\r\nattribute type id-at-ia is defined as:\r\n```\r\n  id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}\r\n\r\n  id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}\r\n```\r\n> Please turn Section 3.1.2.1 into an ASN.1 module so that it is clear where IMPORTed types are defined and whether IMPLICIT ot EXPLICIT tags are being used.\r\n\r\nRuss\r\n\r\n@jiceatscion @matzf FYI",
+          "createdAt": "2024-03-21T05:42:45Z",
+          "updatedAt": "2024-03-21T05:45:35Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@jiceatscion @matzf  do you think this could be addressed?",
+          "createdAt": "2024-07-04T08:06:15Z",
+          "updatedAt": "2024-07-04T08:24:47Z"
+        }
+      ]
+    },
+    {
+      "number": 29,
+      "id": "I_kwDOH386tM6JQtvM",
+      "title": "Extend introduction and remove/edit notes",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/29",
+      "state": "CLOSED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [
+        "enhancement",
+        "Prio 1",
+        "editorial"
+      ],
+      "body": "References to drafts not meant to be published should go away, e.g. \r\n\r\n```\r\n   *Note:* For extended information on the SCION next-generation inter-\r\n   domain architecture, see [CHUAT22], especially Chapter 2, as well as\r\n   the IETF Internet Drafts [I-D.scion-overview] and\r\n   [I-D.scion-components].\r\n```\r\n\r\nSame issue in other drafts: \r\n- DP https://github.com/scionassociation/scion-dp_I-D/issues/10\r\n- CP https://github.com/scionassociation/scion-cp_I-D/issues/14",
+      "createdAt": "2024-05-17T14:10:11Z",
+      "updatedAt": "2024-07-03T18:56:11Z",
+      "closedAt": "2024-07-03T18:56:11Z",
+      "comments": []
+    },
+    {
+      "number": 30,
+      "id": "I_kwDOH386tM6Kd7sh",
+      "title": "Add component overview",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/30",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-05-29T11:38:39Z",
+      "updatedAt": "2024-07-04T08:04:55Z",
+      "closedAt": "2024-07-04T08:04:55Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Duplicate of #29 ",
+          "createdAt": "2024-07-04T08:04:55Z",
+          "updatedAt": "2024-07-04T08:04:55Z"
+        }
+      ]
+    },
+    {
+      "number": 32,
+      "id": "I_kwDOH386tM6MeNyb",
+      "title": "Normative/informative references",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/32",
+      "state": "CLOSED",
+      "author": "jiceatscion",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "jiceatscion"
+      ],
+      "labels": [
+        "Prio 2",
+        "editorial"
+      ],
+      "body": " Make sure the references are righttly placed according to [guidelines](https://datatracker.ietf.org/doc/statement-iesg-iesg-statement-normative-and-informative-references-20060419/#:~:text=Normative%20references%20specify%20documents%20that,it%20only%20provides%20additional%20information): \r\n- Normative references: Needed for the specification; specification is based on it.\r\n- Informative references: Provide background/additional information\r\n\r\n\r\nPotential changes: \r\n- [x] I-D.scion-cppki should be normative \r\n- [x] Several RFCs might be informative\r\n- [x] Check if other drafts affected",
+      "createdAt": "2024-06-17T08:29:52Z",
+      "updatedAt": "2024-07-04T08:07:27Z",
+      "closedAt": "2024-07-04T08:07:27Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@nicorusti double check before resolving",
+          "createdAt": "2024-06-21T15:43:45Z",
+          "updatedAt": "2024-06-21T15:43:45Z"
+        }
+      ]
+    },
+    {
+      "number": 36,
+      "id": "I_kwDOH386tM6OtUlC",
+      "title": "Remove forward reference",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/36",
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "In a future draft iteration, we should (re)write IANA considerations according rfc8126.\r\n\r\nThis will require us to address the Anapaya PEN issue.",
-      "createdAt": "2022-08-26T16:37:25Z",
-      "updatedAt": "2022-08-26T16:37:25Z",
+      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```",
+      "createdAt": "2024-07-07T22:20:01Z",
+      "updatedAt": "2024-07-07T22:20:19Z",
       "closedAt": null,
       "comments": []
     }
@@ -75,7 +237,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/1",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -103,7 +265,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/2",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -131,7 +293,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/3",
       "state": "CLOSED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -157,7 +319,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/4",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -185,7 +347,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/5",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -213,7 +375,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/6",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Corine content",
@@ -241,7 +403,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/7",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -269,7 +431,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/8",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -297,7 +459,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/9",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -325,7 +487,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/10",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -353,7 +515,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/11",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -381,7 +543,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/12",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -409,7 +571,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/13",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -437,7 +599,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/14",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -465,7 +627,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/15",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -493,7 +655,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/16",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -521,7 +683,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/17",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -549,7 +711,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/19",
       "state": "MERGED",
       "author": "cdekater",
-      "authorAssociation": "COLLABORATOR",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
@@ -566,6 +728,1091 @@
       "mergedBy": "cdekater",
       "mergeCommit": {
         "oid": "51ec215009ce6d1f2599f622080e41d629fa7c1c"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 23,
+      "id": "PR_kwDOH386tM5Knjp-",
+      "title": "Corine update for 2nd submission",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/23",
+      "state": "MERGED",
+      "author": "cdekater",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-02-23T15:32:59Z",
+      "updatedAt": "2023-02-23T15:40:39Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "51ec215009ce6d1f2599f622080e41d629fa7c1c",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "corine_update-for-2nd-submission",
+      "headRefOid": "b278d35c0e217086fda4d9794f1c6e5b345e6d62",
+      "closedAt": "2023-02-23T15:40:38Z",
+      "mergedAt": "2023-02-23T15:40:38Z",
+      "mergedBy": "cdekater",
+      "mergeCommit": {
+        "oid": "ce97b758bd9cf48c49e4a4ee6e177b0889266595"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 24,
+      "id": "PR_kwDOH386tM5Krs79",
+      "title": "Integrate Feedback Anapaya",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/24",
+      "state": "MERGED",
+      "author": "cdekater",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-02-24T10:00:00Z",
+      "updatedAt": "2024-07-07T22:03:38Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "ce97b758bd9cf48c49e4a4ee6e177b0889266595",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "corine_update-for-2nd-submission",
+      "headRefOid": "9532035367807a42a3f96de4211a568184f335f4",
+      "closedAt": "2023-02-24T10:02:47Z",
+      "mergedAt": "2023-02-24T10:02:47Z",
+      "mergedBy": "cdekater",
+      "mergeCommit": {
+        "oid": "a5fdba28077113799e7aee0a954073416065645b"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 25,
+      "id": "PR_kwDOH386tM5ha_Ek",
+      "title": "Added Security Considerations section",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/25",
+      "state": "MERGED",
+      "author": "cdekater",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2023-12-07T13:12:03Z",
+      "updatedAt": "2024-07-03T08:13:18Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a69bcef0daa267e45b396f45101b8d028130e045",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "cdk-security-considerations",
+      "headRefOid": "020591c8b1ce1a57e930b920691a6c8e32a251fc",
+      "closedAt": "2024-03-04T16:08:40Z",
+      "mergedAt": "2024-03-04T16:08:40Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "b88e6dc2de2f7f9235477a1455bd5c7773d98273"
+      },
+      "comments": [
+        {
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Hello @matzf and @jiceatscion,\r\nThank you very much for your feedback! \r\nI have tried to implement it - see the updated file. \r\nPart of the feedback included the advice to move content to the Security Considerations section of the Control Plane draft. I did this, but still have to revise the section itself in the CP draft - I will do this next Monday (18.12).\r\nBest, Corine",
+          "createdAt": "2023-12-14T15:49:24Z",
+          "updatedAt": "2023-12-14T15:49:24Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM5pgmPx",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "My comments are merely suggestions. Deferring to your preference in applying them or not.",
+          "createdAt": "2023-12-07T13:20:05Z",
+          "updatedAt": "2023-12-07T13:27:32Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "Maliciously change -> \"Maliciously changing\" or \"To maliciously change\".\r\n ",
+              "createdAt": "2023-12-07T13:20:05Z",
+              "updatedAt": "2023-12-07T13:27:32Z"
+            },
+            {
+              "originalPosition": 66,
+              "body": "\"causing a kill switch\" -> \"Activating a kill switch\"?",
+              "createdAt": "2023-12-07T13:22:39Z",
+              "updatedAt": "2023-12-07T13:27:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5pgw0I",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "matzf",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-07T13:43:32Z",
+          "updatedAt": "2023-12-12T08:28:04Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "This last paragraph seems to make the scope a bit fuzzy. We should make it clear that this is only  talking about the CP PKI infrastructure here.\r\nI'd suggest to replace this second paragraph, by concluding the thought from the paragraph above; if the control plane message came through, then the CP-PKI message will likely also come through. Ideally, we'd end by referring to the CP draft for more detailed discussion of DoS vulnerabilities of the different CP messages/rpcs. In the CP draft there is currently no discussion of DoS to the CP though. ",
+              "createdAt": "2023-12-07T13:43:33Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 52,
+              "body": "I don't know if \"kill switch\" is an established technical term, but it sounds a bit vague to me. I think we should limit the scope to the CP-PKI and try to explain more precisely what type of kill switch this is referring to. Here's a try:\r\n\r\n\"In a public key infrastructures, the certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can unavoidably be abused. A misbehaving CA can plainly refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonating another entity. In the context of the SCION control plane PKI, refusing an AS to obtain or renew their AS certificate will ultimately cut the AS off from the network, turning the CP-PKI into a network \"kill switch\". [SCION's trust architecture differs ....]\"\r\n\r\n",
+              "createdAt": "2023-12-11T15:32:10Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 66,
+              "body": ">  Remote ISD/AS Kill Switch\r\n\r\nI think this section / paragraph is redundant. It's already discussed in the introduction of the section that ISDs are isolated.\r\n\r\n>Even if private keys became available to a remote attacker, they would need access to an AS inside the remote ISD to inject faulty information.\r\n\r\nI don't think that's accurate. There are many ways to bring illegitimately signed AS entries into \"circulation\".",
+              "createdAt": "2023-12-12T08:00:49Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 61,
+              "body": "Both of these attacks (stop propagating / filter paths) would seem to fit better in the CP section.",
+              "createdAt": "2023-12-12T08:01:12Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 80,
+              "body": "For certificate renewals, the statement above does not apply (because they are not triggered a CP message).\r\n\r\nI think DoS on the certificate renewal infrastructure might need to be discussed explicitly.",
+              "createdAt": "2023-12-12T08:21:15Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 71,
+              "body": "I think this would be clearer if we separately discuss compromise of every level of the CP-PKI hierarchy.\r\nThe distinction of core/non-core _AS_ is not entirely accurate; the distinction should be whether the AS keys, CA keys, root keys or voting keys have been compromised.",
+              "createdAt": "2023-12-12T08:23:31Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 73,
+              "body": "Again, I think we should focus on the CP-PKI here. We can replace the examples for \"acting maliciously\" to, \"e.g. by not issuing or renewing certificates for certain ASes\". \r\n\r\nReading this though, it's not clear that a core AS acting in such a way can even be considered malicious. It's the job of the core AS to enforce an ISDs policy. So the message is more \"If your not happy with an ISDs policy, then don't join this ISD\". This seems rather self-evident, to be honest, and doesn't really fit in these security considerations. Maybe we can leave this paragraph away.",
+              "createdAt": "2023-12-12T08:24:04Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            },
+            {
+              "originalPosition": 57,
+              "body": "I think this paragraph is the main part of this security considerations section. IMO it would make sense to expand this, discussing the results of compromised keys for every level of the CP-PKI.",
+              "createdAt": "2023-12-12T08:27:55Z",
+              "updatedAt": "2023-12-12T08:28:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qM28A",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T12:54:55Z",
+          "updatedAt": "2023-12-14T12:54:56Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "@jiceatscion: Thanks for the feedback! I have updated it accordingly.",
+              "createdAt": "2023-12-14T12:54:56Z",
+              "updatedAt": "2023-12-14T12:54:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qM4gd",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T12:58:37Z",
+          "updatedAt": "2023-12-14T12:58:37Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "@jiceatscion: Thank you for the feedback!\r\nMatthias suggested to remove this paragraph entirely, as it is redundant: It's message is already discussed in the introduction to the Kill Switches section. I think this is a good point. ",
+              "createdAt": "2023-12-14T12:58:37Z",
+              "updatedAt": "2023-12-14T12:58:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOJCk",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:34:45Z",
+          "updatedAt": "2023-12-14T15:34:46Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "@matzf: Thank you very much for your feedback!\r\nThis is good point. I have adjusted the draft accordingly (that is, the CP-PKI draft - I still have to revise the security section of the CP draft).\r\n",
+              "createdAt": "2023-12-14T15:34:45Z",
+              "updatedAt": "2023-12-14T15:34:46Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOJeW",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:35:37Z",
+          "updatedAt": "2023-12-14T15:35:38Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "@matzf: Thank you very much for your feedback and your suggestion!\r\nI have adjusted the draft accordingly.\r\nBest, Corine",
+              "createdAt": "2023-12-14T15:35:37Z",
+              "updatedAt": "2023-12-14T15:35:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOJ0P",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:36:20Z",
+          "updatedAt": "2023-12-14T15:36:20Z",
+          "comments": [
+            {
+              "originalPosition": 66,
+              "body": "@matzf: Thank you very much for your feedback!\r\nGood point. I have removed the section from the draft.\r\n\r\nBest\r\nCorine",
+              "createdAt": "2023-12-14T15:36:20Z",
+              "updatedAt": "2023-12-14T15:36:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOKtL",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:37:54Z",
+          "updatedAt": "2023-12-14T15:37:55Z",
+          "comments": [
+            {
+              "originalPosition": 61,
+              "body": "@matzf: Thanks again.\r\nAnother good point. I have moved both paragraphs to the Security Considerations section of the CP draft.",
+              "createdAt": "2023-12-14T15:37:54Z",
+              "updatedAt": "2023-12-14T15:37:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOLmZ",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:39:45Z",
+          "updatedAt": "2023-12-14T15:39:45Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "@matzf: Again, good point. I have tried to implement your suggestion, both in this section and in the \"Local ISD Kill Switch\" section. I am not sure if I got it right, though. It would be great if you could check this. Thanks!\r\nCorine",
+              "createdAt": "2023-12-14T15:39:45Z",
+              "updatedAt": "2023-12-14T15:39:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOMMR",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:40:49Z",
+          "updatedAt": "2023-12-14T15:40:50Z",
+          "comments": [
+            {
+              "originalPosition": 73,
+              "body": "@matzf: good consideration.  I have added a note about it to the text.",
+              "createdAt": "2023-12-14T15:40:49Z",
+              "updatedAt": "2023-12-14T15:40:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5qOM8z",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "cdekater",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2023-12-14T15:42:15Z",
+          "updatedAt": "2023-12-14T15:42:15Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "@matzf: As already mentioned a couple of comments above, I have tried to implement your suggestion about discussing it on each CP-PKI level. As I am not sure if I got it right, it would be great if you could check this. Thanks!",
+              "createdAt": "2023-12-14T15:42:15Z",
+              "updatedAt": "2023-12-14T15:42:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5s_vwX",
+          "commit": {
+            "abbreviatedOid": "80f9d66"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-01-18T03:22:25Z",
+          "updatedAt": "2024-01-18T03:33:38Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "```suggestion\r\nIn a public key infrastructure, the certificate authorities have both the responsibility and power to issue and revoke certificates. If a CA is compromised or malicious, this power can be abused. A misbehaving CA could refuse to issue certificates to legitimate entities, or even issue illegitimate certificates to allow impersonation of another entity. In the context of the SCION control plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the CP-PKI into a network \"kill switch\".\r\n```",
+              "createdAt": "2024-01-18T03:22:25Z",
+              "updatedAt": "2024-01-18T03:33:38Z"
+            },
+            {
+              "originalPosition": 83,
+              "body": "Would something like 'Service Denial' be better than 'Kill Switch' throughout this section?",
+              "createdAt": "2024-01-18T03:23:37Z",
+              "updatedAt": "2024-01-18T03:33:38Z"
+            },
+            {
+              "originalPosition": 87,
+              "body": "```suggestion\r\nSCION\u2019s trust architecture fundamentally differs from a global monopolistic trust model. In SCION, each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, local ISD kill switches are still possible in SCION. The following sections explain these cases and possible countermeasures.\r\n```",
+              "createdAt": "2024-01-18T03:25:17Z",
+              "updatedAt": "2024-01-18T03:33:38Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\r\nCompared to DNSSEC and BGPsec, a parent authority cannot switch off SCION core ASes as they manage their own cryptographic trust roots, but executing a kill switch *inside* a local ISD can be done at different levels of the AS-level hierarchy:\r\n```",
+              "createdAt": "2024-01-18T03:26:24Z",
+              "updatedAt": "2024-01-18T03:33:39Z"
+            },
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\r\n- On TRC level: The private root keys of the root certificates contained in an TRC are used to sign the CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously change the entire TRC through a TRC update is more complicated as each TRC update requires multiple different voting keys. The number of compromised voting keys needed to perform a malicious update of a TRC depends on the voting quorum set in the TRC: the higher the quorum, the more complicated malicious updating of a TRC will be.\r\n```",
+              "createdAt": "2024-01-18T03:27:51Z",
+              "updatedAt": "2024-01-18T03:33:39Z"
+            },
+            {
+              "originalPosition": 107,
+              "body": "```suggestion\r\nIf a core AS has not been compromised, but is instead acting maliciously (e.g., by not issuing or renewing certificates for certain ASes), one way to recover is for downstream ASes to self-organize and form a new ISD. By now operating autonomously, the new ISD can begin path discovery and traffic forwarding. SCION, unlike BGP, has no notion of routing convergence and instead the flooding of PCBs disseminates topology information. This means that in the worst case if all paths have to be re-created, fresh paths are established after a single flood has reached all ASes.\r\n```",
+              "createdAt": "2024-01-18T03:29:57Z",
+              "updatedAt": "2024-01-18T03:33:39Z"
+            },
+            {
+              "originalPosition": 109,
+              "body": "```suggestion\r\n**Note** that in the above case, it may not be clear whether the core AS acting as described is actually behaving maliciously. It is the job of the core AS to enforce an ISD's policy. If a non-core AS within an ISD does not agree with ostensibly legal behavior of the core ASes, it is up to the non-core AS to stay within the ISD. Alternatively, the non-core AS could move to another ISD that suits its needs better.\r\n```",
+              "createdAt": "2024-01-18T03:31:15Z",
+              "updatedAt": "2024-01-18T03:33:39Z"
+            },
+            {
+              "originalPosition": 116,
+              "body": "```suggestion\r\nIf an AS realizes that it is missing any certificates, or that its certificates are no longer up-to-date (e.g., in case of certificate renewals and revocations), it must query the originator of the message for these. The same goes for an update of a TRC as updated TRCs are not distributed actively, but must be discovered by the ASes within the ISD. This happens via the processes of beaconing and path-lookup (see also [](#discover-trcupdate)). Upon discovery of a new TRC, an AS must ask the sender of the message including the new TRC number for this new TRC.\r\n```",
+              "createdAt": "2024-01-18T03:32:25Z",
+              "updatedAt": "2024-01-18T03:33:39Z"
+            },
+            {
+              "originalPosition": 118,
+              "body": "```suggestion\r\nThe above implies that the AS can *reach* the originating AS of the message, that is, that paths to the originator are available and that the relevant services at the originating AS are accessible. Denial of Service (DoS) attacks, where attackers overload different parts of the IT infrastructure, may impede this process of retrieving missing cryptographic material. However, the entire process of discovering and requesting missing cryptographical information is based on *control-plane* messages and communication. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.\r\n```",
+              "createdAt": "2024-01-18T03:33:24Z",
+              "updatedAt": "2024-01-18T03:33:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq1yx",
+          "commit": {
+            "abbreviatedOid": "8f49b89"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:00:27Z",
+          "updatedAt": "2024-02-28T19:00:27Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "However there are multiple CAs typically in an ISD, so this is not really a SPOF.  Text needs further adjustment to mention this. \r\nFor example, in productive deployments, there are at least two independent CAs.",
+              "createdAt": "2024-02-28T19:00:27Z",
+              "updatedAt": "2024-02-28T19:00:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq2Sl",
+          "commit": {
+            "abbreviatedOid": "8f49b89"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:01:39Z",
+          "updatedAt": "2024-02-28T19:01:39Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "We are hinting to RPKI and DNSSEC, but without mentioning it. Maybe we could politely add a mention?",
+              "createdAt": "2024-02-28T19:01:39Z",
+              "updatedAt": "2024-02-28T19:01:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq6gr",
+          "commit": {
+            "abbreviatedOid": "8f49b89"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:12:00Z",
+          "updatedAt": "2024-02-28T19:12:00Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "Right? I'm not fan of the wording here. As far as I understand, compromise of a root certificate means compromise of one of the CAs. Maybe we could reword the paragraph to mention this? \r\n\r\nAlso, in principle a CA has  both a root certificate and a CA certificate (according to [here](https://docs.scion.org/en/latest/cryptography/certificates.html#cp-root-certificate), right? Are there cases where a CA certificate is issued to a different organization?",
+              "createdAt": "2024-02-28T19:12:00Z",
+              "updatedAt": "2024-02-28T19:12:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq7AT",
+          "commit": {
+            "abbreviatedOid": "8f49b89"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:13:07Z",
+          "updatedAt": "2024-02-28T19:13:08Z",
+          "comments": [
+            {
+              "originalPosition": 99,
+              "body": "```suggestion\r\n### Recovery from compromise\r\n```",
+              "createdAt": "2024-02-28T19:13:08Z",
+              "updatedAt": "2024-02-28T19:13:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq7vr",
+          "commit": {
+            "abbreviatedOid": "8f49b89"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:14:59Z",
+          "updatedAt": "2024-02-28T19:14:59Z",
+          "comments": [
+            {
+              "originalPosition": 104,
+              "body": "Once again, are \"root\" and CA AS the same? We should clarify this  ",
+              "createdAt": "2024-02-28T19:14:59Z",
+              "updatedAt": "2024-02-28T19:14:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq9tZ",
+          "commit": {
+            "abbreviatedOid": "58cb956"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:19:39Z",
+          "updatedAt": "2024-02-28T19:19:39Z",
+          "comments": [
+            {
+              "originalPosition": 118,
+              "body": "I'd reword this section to just mention that the PKI relies on the CP's availability to disseminate certs, and that there are exceptions in case of certificate renewals, as discussed in an older discussion here https://github.com/scionassociation/scion-cppki_I-D/pull/25#discussion_r1418985770 ",
+              "createdAt": "2024-02-28T19:19:39Z",
+              "updatedAt": "2024-02-28T19:22:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xq_1s",
+          "commit": {
+            "abbreviatedOid": "80f9d66"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:24:45Z",
+          "updatedAt": "2024-02-28T19:24:45Z",
+          "comments": [
+            {
+              "originalPosition": 83,
+              "body": "Discussed above https://github.com/scionassociation/scion-cppki_I-D/pull/25#discussion_r1422657515",
+              "createdAt": "2024-02-28T19:24:45Z",
+              "updatedAt": "2024-02-28T19:24:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xrAbv",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:26:12Z",
+          "updatedAt": "2024-02-28T19:26:13Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "I and @knmeynell are also not sure about the term \"Kill Switch\". It is used sometimes at IETF, but not so much in RFCs. \r\nMaybe we can use something like single point of failure?",
+              "createdAt": "2024-02-28T19:26:12Z",
+              "updatedAt": "2024-02-28T19:26:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xrBSG",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-28T19:28:22Z",
+          "updatedAt": "2024-02-28T19:28:23Z",
+          "comments": [
+            {
+              "originalPosition": 73,
+              "body": "> Reading this though, it's not clear that a core AS acting in such a way can even be considered malicious. \r\n\r\nI agree, maybe we should remove that paragraph.",
+              "createdAt": "2024-02-28T19:28:22Z",
+              "updatedAt": "2024-02-28T19:28:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5xxGOA",
+          "commit": {
+            "abbreviatedOid": "80f9d66"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-02-29T12:04:43Z",
+          "updatedAt": "2024-02-29T12:04:43Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "It would be good to mention that the CA certificates are not revoked, but short lived.",
+              "createdAt": "2024-02-29T12:04:43Z",
+              "updatedAt": "2024-02-29T12:04:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5x9AH3",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T18:50:34Z",
+          "updatedAt": "2024-03-01T18:50:34Z",
+          "comments": [
+            {
+              "originalPosition": 52,
+              "body": "In the end I moved away from \"kill switches\" towards key compromise in https://github.com/scionassociation/scion-cppki_I-D/pull/25/commits/6658f2b31a57ad909146eabad82c8b1d59db56ac ",
+              "createdAt": "2024-03-01T18:50:34Z",
+              "updatedAt": "2024-03-01T18:50:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5x9CgQ",
+          "commit": {
+            "abbreviatedOid": "80f9d66"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T18:57:24Z",
+          "updatedAt": "2024-03-01T18:57:24Z",
+          "comments": [
+            {
+              "originalPosition": 87,
+              "body": "This is mentioned a bit below. Resolving",
+              "createdAt": "2024-03-01T18:57:24Z",
+              "updatedAt": "2024-03-01T18:57:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5x9Eh3",
+          "commit": {
+            "abbreviatedOid": "80f9d66"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T19:03:24Z",
+          "updatedAt": "2024-03-01T19:03:24Z",
+          "comments": [
+            {
+              "originalPosition": 85,
+              "body": "Added note on multiple CAs in https://github.com/scionassociation/scion-cppki_I-D/pull/25/commits/1a562585fc21a86b0016e22d16f9c8e2c6deafe2 ",
+              "createdAt": "2024-03-01T19:03:24Z",
+              "updatedAt": "2024-03-01T19:03:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5x9FYn",
+          "commit": {
+            "abbreviatedOid": "842fe93"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-01T19:05:53Z",
+          "updatedAt": "2024-03-01T19:05:53Z",
+          "comments": [
+            {
+              "originalPosition": 73,
+              "body": "Removed in https://github.com/scionassociation/scion-cppki_I-D/pull/25/commits/6cb1402685fabf6c33241cfb70c065eb203379b2 ",
+              "createdAt": "2024-03-01T19:05:53Z",
+              "updatedAt": "2024-03-01T19:05:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yBY7N",
+          "commit": {
+            "abbreviatedOid": "6cb1402"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-03T12:55:04Z",
+          "updatedAt": "2024-03-03T12:55:04Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "@matzf is a trust reset only needed if the number of compromised >= quorum? If so, I'd change the text as follows: \r\n```suggestion\r\n- On TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC must be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key must be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)).\r\n```",
+              "createdAt": "2024-03-03T12:55:04Z",
+              "updatedAt": "2024-03-03T12:55:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yBZD9",
+          "commit": {
+            "abbreviatedOid": "6cb1402"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-03T12:58:00Z",
+          "updatedAt": "2024-03-03T12:59:47Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "@matzf so there is no revocation for CA certificates?  If one of it is compromised, do you just have to wait that it rolls over (typically 11 days)? Shall we add something more on recovery from compromise? \r\n\r\nIn addition, we don't talk about cert revocation at all, if not in the security considerations.. Does that sound good?",
+              "createdAt": "2024-03-03T12:58:00Z",
+              "updatedAt": "2024-03-03T13:41:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yBeTQ",
+          "commit": {
+            "abbreviatedOid": "80f9d66"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-03T13:40:27Z",
+          "updatedAt": "2024-03-03T13:40:27Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "> It would be good to mention that the CA certificates are not revoked, but short lived.\r\n\r\n\r\nDone in https://github.com/scionassociation/scion-cppki_I-D/pull/25/commits/41bc0a15cb19372761910aa2fa620f7b27cccbdc ",
+              "createdAt": "2024-03-03T13:40:27Z",
+              "updatedAt": "2024-03-03T13:40:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yDyMk",
+          "commit": {
+            "abbreviatedOid": "6cb1402"
+          },
+          "author": "matzf",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T08:03:59Z",
+          "updatedAt": "2024-03-04T08:03:59Z",
+          "comments": [
+            {
+              "originalPosition": 84,
+              "body": "Sounds good to me.",
+              "createdAt": "2024-03-04T08:03:59Z",
+              "updatedAt": "2024-03-04T08:03:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yEEyc",
+          "commit": {
+            "abbreviatedOid": "6cb1402"
+          },
+          "author": "matzf",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T08:30:08Z",
+          "updatedAt": "2024-03-04T08:30:08Z",
+          "comments": [
+            {
+              "originalPosition": 76,
+              "body": "Correct, there is no revocation, only expiration or TRC updates.\r\nFor a CA compromise, the alternative to waiting for expiration is to change the root key by updating the TRC. There is still a large-ish window for attacks during the time it takes for the TRC to be distributed and the grace period. This should be comparably shorter than expiration (I'd assume something on the order of dozens of minutes to few hours at most).\r\n\r\nTo me, only discussing (the lack of) revocations in the security considerations section does indeed not seem ideal. This is a big design decision and should be discussed front and center.\r\n\r\nThe book has a short and clearly written section on this topic (3.1.10 Substitutes to Certificate Revocation) that we could adapt. This would fit well into the section  \"Trust Relations within an Isolation Domain\". \r\n",
+              "createdAt": "2024-03-04T08:30:08Z",
+              "updatedAt": "2024-03-04T08:30:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yEwaw",
+          "commit": {
+            "abbreviatedOid": "41bc0a1"
+          },
+          "author": "matzf",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T09:39:36Z",
+          "updatedAt": "2024-03-04T09:39:37Z",
+          "comments": [
+            {
+              "originalPosition": 95,
+              "body": "While the wording is clearer now, I think this is moving away from the point that it was trying to make (or that I thought it should be making); that the PKI messages needed to verify the control plane messages don't pose any additional DoS risk.\r\n\r\nI've also added the point about certificate renewal being a point of failure. \r\n\r\n```suggestion\r\nThe relying party must be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.\r\nAs the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.\r\n\r\nFor certificate renewal, on the other hand, this does not apply.\r\nDenial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to refuse victim ASes from  renewing their certificates. After the short-lived certificates expire, an AS is effectively banished from the network.\r\nTo address this risk, the individual isolation domains and/or CAs should have policies and processes to renew certificates out-of-band.\r\n```",
+              "createdAt": "2024-03-04T09:39:37Z",
+              "updatedAt": "2024-03-04T09:40:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM5yE0UZ",
+          "commit": {
+            "abbreviatedOid": "41bc0a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-03-04T09:46:55Z",
+          "updatedAt": "2024-03-04T09:46:55Z",
+          "comments": [
+            {
+              "originalPosition": 95,
+              "body": "Thank you for rewording! I'm not fully convinced by OOB CA communication. Let's discuss ",
+              "createdAt": "2024-03-04T09:46:55Z",
+              "updatedAt": "2024-03-04T09:46:55Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 31,
+      "id": "PR_kwDOH386tM5yYuxc",
+      "title": "reword \"allowed\"",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/31",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Addresses https://github.com/scionassociation/scion-dp_I-D/issues/11 ",
+      "createdAt": "2024-06-13T16:26:42Z",
+      "updatedAt": "2024-07-07T22:00:14Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "overview",
+      "baseRefOid": "301640921ad398b4e468b1c0c58606e544be677f",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "allowed",
+      "headRefOid": "c0e2e2b350549a86d210247a327beddae3a9b815",
+      "closedAt": "2024-07-03T18:51:39Z",
+      "mergedAt": "2024-07-03T18:51:38Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "3f17ef98889ffbde9856a05a385287c3aa62edcb"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "There are a few more instances of allowed that I'm not sure are confusing.. Perhaps they could stay?",
+          "createdAt": "2024-06-13T16:30:53Z",
+          "updatedAt": "2024-06-13T16:30:53Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM5-JF0h",
+          "commit": {
+            "abbreviatedOid": "7a27487"
+          },
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-13T16:43:05Z",
+          "updatedAt": "2024-06-13T16:44:36Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "\"...used and mandatory in \":\r\nHow about simply \r\n\"...are required by \"?\r\n(Potentially \"required\" in upper-case, even.)",
+              "createdAt": "2024-06-13T16:43:05Z",
+              "updatedAt": "2024-06-13T16:45:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6Ak2ls",
+          "commit": {
+            "abbreviatedOid": "7a27487"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-03T18:51:00Z",
+          "updatedAt": "2024-07-03T18:51:00Z",
+          "comments": [
+            {
+              "originalPosition": 16,
+              "body": "Done ",
+              "createdAt": "2024-07-03T18:51:00Z",
+              "updatedAt": "2024-07-03T18:51:00Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 33,
+      "id": "PR_kwDOH386tM5yqTUS",
+      "title": "Move informative references to the informative section.",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/33",
+      "state": "MERGED",
+      "author": "jiceatscion",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Fixes #32 ",
+      "createdAt": "2024-06-17T08:30:16Z",
+      "updatedAt": "2024-06-19T11:24:53Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "b88e6dc2de2f7f9235477a1455bd5c7773d98273",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "informative_normative",
+      "headRefOid": "17939d858ba84d6efe1597ed6d787577a986de68",
+      "closedAt": "2024-06-19T11:24:49Z",
+      "mergedAt": "2024-06-19T11:24:49Z",
+      "mergedBy": "jiceatscion",
+      "mergeCommit": {
+        "oid": "1e9e13e17097ebb6b7dbd51633b3ec919189b1f1"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM5-iNwc",
+          "commit": {
+            "abbreviatedOid": "17939d8"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-06-17T13:21:50Z",
+          "updatedAt": "2024-06-17T13:21:50Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "id": "PR_kwDOH386tM50SsvW",
+      "title": "Rewrite overview",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/34",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #29 \r\nResolves #32 ",
+      "createdAt": "2024-07-03T08:15:10Z",
+      "updatedAt": "2024-07-04T08:07:19Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "1e9e13e17097ebb6b7dbd51633b3ec919189b1f1",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "overview",
+      "headRefOid": "4cd0b33cb6a0417700583747b0e0825ffbb58ed1",
+      "closedAt": "2024-07-03T18:55:59Z",
+      "mergedAt": "2024-07-03T18:55:59Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "3d19aa901191988f5848472d2018921b851a9196"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 35,
+      "id": "PR_kwDOH386tM50nyoG",
+      "title": "Clarified use of 'MUST', 'MUST NOT' and 'SHOULD' where required.",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/35",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Contributes to https://github.com/scionassociation/scion-cp_I-D/issues/12 ",
+      "createdAt": "2024-07-07T22:00:45Z",
+      "updatedAt": "2024-07-08T08:19:16Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "3d19aa901191988f5848472d2018921b851a9196",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Final_Tweaks",
+      "headRefOid": "b04f760b8a585c247e059498657ca2c434d17337",
+      "closedAt": "2024-07-08T08:19:13Z",
+      "mergedAt": "2024-07-08T08:19:13Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a157f68107029c017a5a687b5177147912492841"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6A3HPa",
+          "commit": {
+            "abbreviatedOid": "1321f3f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-07-07T22:06:45Z",
+          "updatedAt": "2024-07-08T08:10:04Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nThus, there is a need for a trust architecture that supports meaningful trust roots in a global environment with inherently distrustful parties. This new trust architecture should provide the following properties:\r\n```",
+              "createdAt": "2024-07-07T22:06:45Z",
+              "updatedAt": "2024-07-08T08:10:04Z"
+            },
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\r\nThe monopoly model suffers from two main drawbacks: First, all parties must agree on a single root of trust. Secondly, the single root of trust represents a single point of failure, the misuse of which enables the forging of certificates. Also, its revocation can result in a kill-switch for all the entities it certifies. The oligopoly model relies on several roots of trust, all equally and completely trusted. However, this is not automatically better: Whereas the monopoly model has a single point of failure, the oligopoly model has the drawback of exposing more than one point of failure.\r\n```\r\nThis is not about SCION< so I'd use lowercase",
+              "createdAt": "2024-07-07T22:07:23Z",
+              "updatedAt": "2024-07-08T08:10:04Z"
+            },
+            {
+              "originalPosition": 26,
+              "body": "```suggestion\r\n- Both short-lived certificates and revocation lists must be signed by a CA. Instead of periodically signing a new revocation list, the CA can simply re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the CP-PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD.\r\n```",
+              "createdAt": "2024-07-07T22:08:09Z",
+              "updatedAt": "2024-07-08T08:10:04Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 37,
+      "id": "PR_kwDOH386tM51FQ9Q",
+      "title": "Update GitHub actions",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/37",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-07-11T11:16:05Z",
+      "updatedAt": "2024-07-11T11:16:52Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a157f68107029c017a5a687b5177147912492841",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "actions_update",
+      "headRefOid": "128bc3013e2829701b5029c2db2a8064271dbd77",
+      "closedAt": "2024-07-11T11:16:49Z",
+      "mergedAt": "2024-07-11T11:16:49Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19"
       },
       "comments": [],
       "reviews": []
