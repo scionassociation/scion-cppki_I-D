@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-21T00:19:42.878137+00:00",
+  "timestamp": "2024-07-23T00:17:58.836545+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -221,10 +221,12 @@
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "Prio 2"
+      ],
       "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```",
       "createdAt": "2024-07-07T22:20:01Z",
-      "updatedAt": "2024-07-07T22:20:19Z",
+      "updatedAt": "2024-07-22T21:14:04Z",
       "closedAt": null,
       "comments": []
     }
