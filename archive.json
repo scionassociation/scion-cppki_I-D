@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-07-23T00:17:58.836545+00:00",
+  "timestamp": "2024-07-25T00:17:47.673013+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -227,6 +227,22 @@
       "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```",
       "createdAt": "2024-07-07T22:20:01Z",
       "updatedAt": "2024-07-22T21:14:04Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 38,
+      "id": "I_kwDOH386tM6Qf0aq",
+      "title": "Anapaya review",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/38",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-07-23T05:00:13Z",
+      "updatedAt": "2024-07-23T05:00:13Z",
       "closedAt": null,
       "comments": []
     }
