@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-06T00:18:02.593211+00:00",
+  "timestamp": "2024-08-08T00:18:05.006785+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -254,6 +254,27 @@
       "body": "",
       "createdAt": "2024-07-23T05:00:13Z",
       "updatedAt": "2024-07-26T22:56:21Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 39,
+      "id": "I_kwDOH386tM6SQybs",
+      "title": "Clarify relationship to RPKI",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/39",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [
+        "enhancement",
+        "Prio 2"
+      ],
+      "body": "Add a couple of sentences to clarify relationship to RPKI\r\n\r\n>Date: \tTue, 6 Aug 2024 23:44:57 +0000\r\nFrom: \tMichael McBride [<michael.mcbride@futurewei.com>](mailto:michael.mcbride@futurewei.com)\r\nTo: \t[rfc-ise@rfc-editor.org](mailto:rfc-ise@rfc-editor.org) [<rfc-ise@rfc-editor.org>](mailto:rfc-ise@rfc-editor.org)\r\nCC: \t'Mike McBride' [<mmcbride7@gmail.com>](mailto:mmcbride7@gmail.com)F. How else can the document be improved?\r\n \r\n> I\u2019m a believer. It\u2019s a good set of solutions. Using a PKI is a good solution. As is the current RPKI and ROA\u2019s. It might also be helpful, in the scion control plan pki document, to at least acknowledge RPKI. RPKI is widely used now and it could be helpful to understand how scions use of PKI would be similar and different. In the long run it would give operators a more comfortable understanding since most now use RPKI.  \r\nWe could add a couple of sentences about this. We have some text in the now expired [draft-rustignoli-panrg-scion-components](https://www.ietf.org/archive/id/draft-rustignoli-panrg-scion-components-03.t): \r\n\r\n\r\n\r\nWe have some text in the now expired [draft-rustignoli-panrg-scion-components](https://www.ietf.org/archive/id/draft-rustignoli-panrg-scion-components-03.t): \r\n```\r\n   The above-mentioned decoupling also implies that SCION does not\r\n   provide, by design, IP prefix origin validation, which is currently\r\n   provided by RPKI [RFC8210].  As prefix origin validation is outside\r\n   of SCION's scope, IP-to-SCION's coexistence mechanisms (SIAM, SBAS)\r\n   later discussed in Section 3.1 build on top of RPKI for IP origin\r\n   attestation.\r\n   ... \r\n   These properties would be lost if SCION were to rely on an existing\r\n   PKI (i.e., the web PKI, the RPKI, ...).  For example, if SCION were\r\n   to use the RPKI instead of the CP-PKI, its control plane would lack\r\n   the trust model required to support Isolation Domains.  This is\r\n   because RPKI's trust model follows the same structure as the IP\r\n   allocation hierarchy, where the five RIRs represent the trust roots.\r\n```",
+      "createdAt": "2024-08-07T16:23:50Z",
+      "updatedAt": "2024-08-07T16:23:50Z",
       "closedAt": null,
       "comments": []
     }
