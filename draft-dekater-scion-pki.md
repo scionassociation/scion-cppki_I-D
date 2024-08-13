@@ -199,6 +199,8 @@ Authentication in SCION is based on digital certificates that bind identifiers t
 
 The TRC also provides *trust agility*, that is, it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a non-compromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model, therefore, differs from the one provided by other PKI architectures.
 
+The need for trust agility also means that SCION does not by design provide IP prefix origin validation as provided by RPKI {{RFC8210}}. RPKI's trust model is currently reliant on the trust roots provided by the five Regional Internet Registries, and therefore outside of the governance of an ISD.
+
 
 ## Trust Relations within an Isolation Domain
 
