@@ -77,6 +77,7 @@ normative:
 informative:
   RFC5398:
   RFC6996:
+  RFC8210:
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
     title: "The Complete Guide to SCION"
