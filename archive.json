@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-13T00:18:59.010749+00:00",
+  "timestamp": "2024-08-15T00:17:58.653936+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -262,7 +262,7 @@
       "id": "I_kwDOH386tM6SQybs",
       "title": "Clarify relationship to RPKI",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/39",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -274,9 +274,17 @@
       ],
       "body": "Add a couple of sentences to clarify relationship to RPKI\r\n\r\n>Date: \tTue, 6 Aug 2024 23:44:57 +0000\r\nFrom: \tMichael McBride [<michael.mcbride@futurewei.com>](mailto:michael.mcbride@futurewei.com)\r\nTo: \t[rfc-ise@rfc-editor.org](mailto:rfc-ise@rfc-editor.org) [<rfc-ise@rfc-editor.org>](mailto:rfc-ise@rfc-editor.org)\r\nCC: \t'Mike McBride' [<mmcbride7@gmail.com>](mailto:mmcbride7@gmail.com)F. How else can the document be improved?\r\n \r\n> I\u2019m a believer. It\u2019s a good set of solutions. Using a PKI is a good solution. As is the current RPKI and ROA\u2019s. It might also be helpful, in the scion control plan pki document, to at least acknowledge RPKI. RPKI is widely used now and it could be helpful to understand how scions use of PKI would be similar and different. In the long run it would give operators a more comfortable understanding since most now use RPKI.  \r\nWe could add a couple of sentences about this. We have some text in the now expired [draft-rustignoli-panrg-scion-components](https://www.ietf.org/archive/id/draft-rustignoli-panrg-scion-components-03.t): \r\n\r\n\r\n\r\nWe have some text in the now expired [draft-rustignoli-panrg-scion-components](https://www.ietf.org/archive/id/draft-rustignoli-panrg-scion-components-03.t): \r\n```\r\n   The above-mentioned decoupling also implies that SCION does not\r\n   provide, by design, IP prefix origin validation, which is currently\r\n   provided by RPKI [RFC8210].  As prefix origin validation is outside\r\n   of SCION's scope, IP-to-SCION's coexistence mechanisms (SIAM, SBAS)\r\n   later discussed in Section 3.1 build on top of RPKI for IP origin\r\n   attestation.\r\n   ... \r\n   These properties would be lost if SCION were to rely on an existing\r\n   PKI (i.e., the web PKI, the RPKI, ...).  For example, if SCION were\r\n   to use the RPKI instead of the CP-PKI, its control plane would lack\r\n   the trust model required to support Isolation Domains.  This is\r\n   because RPKI's trust model follows the same structure as the IP\r\n   allocation hierarchy, where the five RIRs represent the trust roots.\r\n```",
       "createdAt": "2024-08-07T16:23:50Z",
-      "updatedAt": "2024-08-07T16:23:50Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-08-13T15:09:12Z",
+      "closedAt": "2024-08-13T15:09:12Z",
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Added reference to why RPKI isn't directly supported by SCION. Did not mention SIAM or SBAS as this appears to be experimental and would need to be further explained somewhere.",
+          "createdAt": "2024-08-13T15:09:07Z",
+          "updatedAt": "2024-08-13T15:09:07Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -1864,6 +1872,32 @@
       "mergeCommit": {
         "oid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 40,
+      "id": "PR_kwDOH386tM54PcT8",
+      "title": "Added reference to RPKI",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/40",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-08-13T14:27:01Z",
+      "updatedAt": "2024-08-13T14:35:28Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "rpki",
+      "headRefOid": "93fbbb5b30c915abe9379c3a789650df6c2e60bc",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
