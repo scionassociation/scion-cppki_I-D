@@ -540,7 +540,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 #### `signature` Field - Additional Information {#certsign}
 
-For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in [X962](https://webstore.ansi.org/standards/ascx9/ansix9621998)) although this may be extended in future. 
+For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in [X962](https://webstore.ansi.org/standards/ascx9/ansix9621998)) although this may be extended in future.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
@@ -1424,7 +1424,7 @@ The participants of the Signing Ceremony fulfill different roles:
 - A **Voting AS Representative** is capable of creating voting signatures on the TRC. The Voting Representative is in possession of a device with the private keys of the respective certificates in the TRC.
 - A **Witness** is any person that participates in the ceremony as a passive entity. The Witness has no active role in any of the steps of the ceremony but can stop the process and ask for more information if they feel the integrity of the process might have been compromised.
 
-**Note:** It is assumed that the member organizations of the ISD have decided in advance, before the Signing Ceremony, on the roles of the ceremony participants. That is, they have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates), the voting ASes, the voting AS representatives, the Ceremony Administrator and the Witnesses. 
+**Note:** It is assumed that the member organizations of the ISD have decided in advance, before the Signing Ceremony, on the roles of the ceremony participants. That is, they have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates), the voting ASes, the voting AS representatives, the Ceremony Administrator and the Witnesses.
 
 **Note:** For the Signing Ceremony, it is assumed that all parties are trustworthy. Issues encountered during the ceremony are assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes, such that every participant is sure that they operate on the same data. Furthermore, the private keys of each participant never leave their machine.The Ceremony Administrator does not have to be entrusted with private keys.
 
