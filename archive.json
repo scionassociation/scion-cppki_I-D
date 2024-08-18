@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-15T00:17:58.653936+00:00",
+  "timestamp": "2024-08-18T00:19:48.527616+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -225,7 +225,7 @@
       "id": "I_kwDOH386tM6OtUlC",
       "title": "General review - Remove forward references",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/36",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -235,9 +235,17 @@
       ],
       "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45",
       "createdAt": "2024-07-07T22:20:01Z",
-      "updatedAt": "2024-07-26T22:59:37Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2024-08-16T16:06:45Z",
+      "closedAt": "2024-08-16T16:06:44Z",
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "After reviewing the text, I could only find one forward reference. ",
+          "createdAt": "2024-08-16T16:06:44Z",
+          "updatedAt": "2024-08-16T16:06:44Z"
+        }
+      ]
     },
     {
       "number": 38,
@@ -1887,13 +1895,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-08-13T14:27:01Z",
-      "updatedAt": "2024-08-13T14:35:28Z",
+      "updatedAt": "2024-08-16T15:16:22Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "rpki",
-      "headRefOid": "93fbbb5b30c915abe9379c3a789650df6c2e60bc",
+      "headRefOid": "b47ffdc19dad1ce08e06c54abf13d1e2292ef246",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
