@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-25T00:20:10.404655+00:00",
+  "timestamp": "2024-08-27T00:19:08.340760+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -225,7 +225,7 @@
       "id": "I_kwDOH386tM6OtUlC",
       "title": "General review - Remove forward references",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/36",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -233,10 +233,10 @@
         "Prio 2",
         "editorial"
       ],
-      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45",
+      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45\r\n\r\n-  [ ] update terminology and de-hyphenate as in https://github.com/scionassociation/scion-dp_I-D/pull/51\r\n- [ ] @nicorusti general re-read through the draft",
       "createdAt": "2024-07-07T22:20:01Z",
-      "updatedAt": "2024-08-16T16:06:45Z",
-      "closedAt": "2024-08-16T16:06:44Z",
+      "updatedAt": "2024-08-26T16:16:40Z",
+      "closedAt": null,
       "comments": [
         {
           "author": "knmeynell",
@@ -1886,7 +1886,7 @@
     {
       "number": 40,
       "id": "PR_kwDOH386tM54PcT8",
-      "title": "Added reference to RPKI",
+      "title": "Added reference to RPKI & wording pass",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/40",
       "state": "OPEN",
       "author": "knmeynell",
@@ -1895,7 +1895,7 @@
       "labels": [],
       "body": "Resolves #39 ",
       "createdAt": "2024-08-13T14:27:01Z",
-      "updatedAt": "2024-08-21T14:22:47Z",
+      "updatedAt": "2024-08-26T09:23:32Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
