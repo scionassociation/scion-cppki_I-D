@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-27T00:19:08.340760+00:00",
+  "timestamp": "2024-08-29T00:18:50.586936+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -228,14 +228,16 @@
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
-      "assignees": [],
+      "assignees": [
+        "knmeynell"
+      ],
       "labels": [
         "Prio 2",
         "editorial"
       ],
-      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45\r\n\r\n-  [ ] update terminology and de-hyphenate as in https://github.com/scionassociation/scion-dp_I-D/pull/51\r\n- [ ] @nicorusti general re-read through the draft",
+      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45\r\n\r\nTODO: \r\n- [ ] @knmeynell update terminology and de-hyphenate as in https://github.com/scionassociation/scion-dp_I-D/pull/51\r\n- [ ] Add development note: https://github.com/scionassociation/scion-dp_I-D/issues/48\r\n- [ ] @nicorusti general re-read through the draft\r\n",
       "createdAt": "2024-07-07T22:20:01Z",
-      "updatedAt": "2024-08-26T16:16:40Z",
+      "updatedAt": "2024-08-28T15:18:03Z",
       "closedAt": null,
       "comments": [
         {
