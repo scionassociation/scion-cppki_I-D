@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-08-29T00:18:50.586936+00:00",
+  "timestamp": "2024-09-01T00:23:03.115183+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1895,9 +1895,9 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #39 ",
+      "body": "Resolves #39 \r\nContributes to #36 ",
       "createdAt": "2024-08-13T14:27:01Z",
-      "updatedAt": "2024-08-26T09:23:32Z",
+      "updatedAt": "2024-08-30T13:46:38Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
