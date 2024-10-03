@@ -12,18 +12,18 @@
        This document presents the trust concept and design of the SCION  control-plane Public Key Infrastructure (PKI) , SCION's public key infrastructure model. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture. The control-plane PKI, or short CP-PKI, handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's control plane to authenticate and verify path information, and builds the basis for SCION's special trust model based on so-called Isolation Domains. 
        This document first introduces the trust model behind the SCION's control-plane PKI, as well as clarifications to the concepts used in it. This is followed by specifications of the different types of certificates and the Trust Root Configuration. The document then specifies how to deploy the whole infrastructure. 
     " name="description">
-<meta content="xml2rfc 3.23.0" name="generator">
+<meta content="xml2rfc 3.23.2" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.23.0
-    Python 3.12.3
+  xml2rfc 3.23.2
+    Python 3.12.6
     ConfigArgParse 1.7
-    google-i18n-address 3.1.0
+    google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
     lxml 4.9.4
-    platformdirs 4.2.2
+    platformdirs 4.3.6
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.32.3
@@ -1027,11 +1027,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">September 2024</td>
+<td class="right">October 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 7 March 2025</td>
+<td class="center">Expires 6 April 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1044,12 +1044,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-09-03" class="published">3 September 2024</time>
+<time datetime="2024-10-03" class="published">3 October 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-03-07">7 March 2025</time></dd>
+<dd class="expires"><time datetime="2025-04-06">6 April 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1103,7 +1103,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 7 March 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1341,7 +1341,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
 </li>
         </ul>
 </nav>
@@ -1362,6 +1365,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-8"><em>Control Plane</em> - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See <span>[<a href="#I-D.scion-cp" class="cite xref">I-D.scion-cp</a>]</span><a href="#section-1-8" class="pilcrow">¶</a></p>
 <p id="section-1-9"><em>Data Plane</em> - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See <span>[<a href="#I-D.scion-dataplane" class="cite xref">I-D.scion-dataplane</a>]</span><a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">This document describes the SCION PKI component used by the Control Plane.<a href="#section-1-10" class="pilcrow">¶</a></p>
+<p id="section-1-11">The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. The aim of this document is to describe existing implementations and operational deployments, and to introduce new concepts that can potentially address particular problems with the current Internet architecture.<a href="#section-1-11" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-1.1">
         <h3 id="name-terminology">
@@ -1371,7 +1375,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1.1-2"><strong>Autonomous System (AS)</strong>: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider, company, or university can constitute an AS. If an organization operates multiple networks that are not directly connected together, then the different networks are considered different ASes.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3"><strong>Isolation Domain (ISD)</strong>: In SCION, Autonomous Systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction). A possible model is for ISDs to be formed along national boundaries or federations of nations.<a href="#section-1.1-3" class="pilcrow">¶</a></p>
 <p id="section-1.1-4"><strong>Core AS</strong>: Each isolation domain (ISD) is administered by a set of distinguished autonomous systems (ASes) called core ASes, which are responsible for initiating the path-discovery and -construction process (in SCION called "beaconing").<a href="#section-1.1-4" class="pilcrow">¶</a></p>
-<p id="section-1.1-5"><strong>Trust Root Configuration (TRC)</strong>: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
+<p id="section-1.1-5"><strong>Trust Root Configuration (TRC)</strong>: A trust root configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6"><strong>Authoritative AS</strong>: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
 <p id="section-1.1-7"><strong>Base TRC</strong>: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. Each ISD <span class="bcp14">MUST</span> create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
 <p id="section-1.1-8"><strong>TRC Signing Ceremony</strong>: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
@@ -3857,8 +3861,45 @@ The participants of the signing ceremony fulfill different roles:<a href="#appen
 </div>
 </section>
 </div>
-<div id="authors-addresses">
+<div id="change-log">
 <section id="appendix-C">
+      <h2 id="name-change-log">
+<a href="#name-change-log" class="section-name selfRef">Change Log</a>
+      </h2>
+<p id="appendix-C-1">Changes from draft-dekater-scion-pki-06:<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="appendix-C-2.1">
+          <p id="appendix-C-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-C-2.1.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.2">
+          <p id="appendix-C-2.2.1">Added RFC2119 compliant terminology.<a href="#appendix-C-2.2.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.3">
+          <p id="appendix-C-2.3.1">Added IANA Considerations.<a href="#appendix-C-2.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.4">
+          <p id="appendix-C-2.4.1">Added Security Considerations.<a href="#appendix-C-2.4.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.5">
+          <p id="appendix-C-2.5.1">Removed forward references.<a href="#appendix-C-2.5.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.6">
+          <p id="appendix-C-2.6.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-C-2.6.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.7">
+          <p id="appendix-C-2.7.1">Added Ceremony &amp; Deployment process.<a href="#appendix-C-2.7.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.8">
+          <p id="appendix-C-2.8.1">Added TRC Specs.<a href="#appendix-C-2.8.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="appendix-C-2.9">
+          <p id="appendix-C-2.9.1">Added Certificate Specification.<a href="#appendix-C-2.9.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+</section>
+</div>
+<div id="authors-addresses">
+<section id="appendix-D">
       <h2 id="name-authors-addresses">
 <a href="#name-authors-addresses" class="section-name selfRef">Authors' Addresses</a>
       </h2>
