@@ -1560,7 +1560,7 @@ The signed TRC is validated by inspecting its contents on the monitor and verify
 # Change Log
 {:numbered="false"}
 
-Changes from draft-dekater-scion-pki-06:
+Changes to the current draft:
 
 - Added overview of SCION components to Introduction section.
 - Added RFC2119 compliant terminology.
