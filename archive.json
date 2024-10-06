@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-03T00:20:10.679502+00:00",
+  "timestamp": "2024-10-06T00:22:14.782693+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -295,6 +295,26 @@
           "updatedAt": "2024-08-13T15:09:07Z"
         }
       ]
+    },
+    {
+      "number": 42,
+      "id": "I_kwDOH386tM6Y19G1",
+      "title": "Add changelog in appendix",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/42",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [
+        "Prio 1"
+      ],
+      "body": "",
+      "createdAt": "2024-10-03T14:55:50Z",
+      "updatedAt": "2024-10-03T14:55:51Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -1930,6 +1950,32 @@
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "knmeynell-patch-1",
       "headRefOid": "e9c01735c561723c9d02ad3272ece56cb8c9f3d3",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 43,
+      "id": "PR_kwDOH386tM59iQ_3",
+      "title": "Updated Intro and added Change Log",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/43",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-03T18:12:01Z",
+      "updatedAt": "2024-10-04T11:13:47Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Intro_update",
+      "headRefOid": "305fe68dac403365df39682fc7678f4c50dc7bb8",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
