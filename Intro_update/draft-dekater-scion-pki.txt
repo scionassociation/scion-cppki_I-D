@@ -3019,6 +3019,8 @@ draft-dekater-scion-pki-07
 
    *  Removed forward references.
 
+   *  Clarified relationship with RPKI.
+
 Authors' Addresses
 
    Corine de Kater
