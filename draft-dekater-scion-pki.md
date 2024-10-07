@@ -1560,14 +1560,22 @@ The signed TRC is validated by inspecting its contents on the monitor and verify
 # Change Log
 {:numbered="false"}
 
-Changes to the current draft:
+Changes made to drafts since ISE submission. This section is to be removed before publication.
+
+## draft-dekater-scion-pki-07
+{:numbered="false"}
+
+Major changes:
 
 - Added overview of SCION components to Introduction section.
 - Added RFC2119 compliant terminology.
 - Added IANA Considerations.
 - Added Security Considerations.
-- Removed forward references.
-- General edits to make terminology consistent, remove duplication and rationalize text.
 - Added Ceremony & Deployment process.
-- Added TRC Specs.
+- Added Trusted Root Configuration (TRC) Specification.
 - Added Certificate Specification.
+
+Minor changes:
+
+- General edits to make terminology consistent, remove duplication and rationalize text.
+- Removed forward references.
