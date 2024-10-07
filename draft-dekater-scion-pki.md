@@ -1580,4 +1580,3 @@ Minor changes:
 - General edits to make terminology consistent, remove duplication and rationalize text.
 - Removed forward references.
 - Clarified relationship with RPKI.
-  
