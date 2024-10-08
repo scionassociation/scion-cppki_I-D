@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-06T00:22:14.782693+00:00",
+  "timestamp": "2024-10-08T00:20:03.924390+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -263,9 +263,24 @@
       ],
       "body": "Points to be reviewed: \r\n- `5.`  Security Considerations\r\n- `1.4.2.`  Substitutes to Certificate Revocation\r\n\r\n\r\nLinks: \r\n\r\n- [Diff](https://author-tools.ietf.org/api/iddiff?doc_1=draft-dekater-scion-pki-04&url_2=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt) -04 (09.23) / current version",
       "createdAt": "2024-07-23T05:00:13Z",
-      "updatedAt": "2024-09-24T16:23:38Z",
+      "updatedAt": "2024-10-07T16:16:13Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "\r\n\r\n> Note that this is a sensitive TRC update, as the\t\r\n \t      certificate related to the compromised private key MUST be\t\r\n \t      replaced with an entirely new certificate (and not just changed).\r\n\r\nThis is not exactly true. If only the public key changes, and all other parameters are the same, It is a regular update AFAIK.\r\n\r\n",
+          "createdAt": "2024-10-07T16:13:48Z",
+          "updatedAt": "2024-10-07T16:13:48Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "> A trust reset is only required in the case the number of\t\r\n \t      compromised keys at the same time is greater or equal than the\t\r\n \t      TRC's quorum (see Section 3.1.2.2.7).\r\n \t \r\nand a invalid update has been produced and distributed in the network. I think if the compromise is noticed early enough and an Update is issued and distributed in the network, then there is nothing an attacker can do anymore. Nodes in the SCION network store all the TRCs they have seen, and history cannot be rewriten.\r\n\r\n\r\n",
+          "createdAt": "2024-10-07T16:16:11Z",
+          "updatedAt": "2024-10-07T16:16:11Z"
+        }
+      ]
     },
     {
       "number": 39,
@@ -1969,13 +1984,13 @@
       "labels": [],
       "body": "",
       "createdAt": "2024-10-03T18:12:01Z",
-      "updatedAt": "2024-10-04T11:13:47Z",
+      "updatedAt": "2024-10-07T12:39:31Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Intro_update",
-      "headRefOid": "305fe68dac403365df39682fc7678f4c50dc7bb8",
+      "headRefOid": "7a982cc4a9461afedc341ebe39bbfcbebcc533a2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
