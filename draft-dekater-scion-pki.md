@@ -39,40 +39,9 @@ normative:
   RFC5652:
   RFC5758:
   RFC9217:
-  I-D.scion-cp:
-    title: SCION Control Plane
-    date: 2023
-    target: https://datatracker.ietf.org/doc/draft-dekater-scion-controlplane/
-    author:
-      -
-        ins: C. de Kater
-        name: Corine de Kater
-        org: SCION Association
-      -
-        ins: N. Rustignoli
-        name: Nicola Rustignoli
-        org: SCION Association
-      -
-        ins: S. Hitz
-        name: Samuel Hitz
-        org: Anapaya Systems
-  I-D.scion-dataplane:
-    title: SCION Data Plane
-    date: 2023
-    target: https://datatracker.ietf.org/doc/draft-dekater-scion-dataplane/
-    author:
-      -
-        ins: C. de Kater
-        name: Corine de Kater
-        org: SCION Association
-      -
-        ins: N. Rustignoli
-        name: Nicola Rustignoli
-        org: SCION Association
-      -
-        ins: S. Hitz
-        name: Samuel Hitz
-        org: Anapaya Systems
+  I-D.dekater-scion-controlplane:
+  I-D.dekater-scion-dataplane:
+  I-D.dekater-panrg-scion-overview:
 
 informative:
   RFC5398:
@@ -139,11 +108,11 @@ SCION relies on three main components:
 
 *PKI* - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called *Isolation Domains (ISDs)*. All ASes in an ISD agree on a set of trust roots called the *Trust Root Configuration (TRC)* which is a collection of signed root certificates in X.509 v3 format {{RFC5280}}. The ISD is governed by a set of *core ASes* which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure which the SCION control plane relies upon for the authentication of messages that is used for the SCION control plane.
 
-*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See {{I-D.scion-cp}}
+*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See {{I-D.scion-controlplace}}
 
 *Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.scion-dataplane}}
 
-This document describes the SCION PKI component used by the Control Plane.
+This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with {{I-D.dekater-scion-pki}} and {{I-D.dekater-scion-dataplane}} and deprecates {{I-D.dekater-panrg-scion-overview}}.
 
 ## Terminology
 
@@ -1361,7 +1330,7 @@ As described in [](#substitutes-to-revocation), there is no revocation in the CP
 As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.
 
 The relying party MUST be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
-As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.dekater-scion-controlplace}} for a more detailed description of DoS vulnerabilities of control-plane messages.
 
 For certificate renewal, on the other hand, this does not apply.
 Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to prevent victim ASes from renewing their certificates, halting the path discovery process.
