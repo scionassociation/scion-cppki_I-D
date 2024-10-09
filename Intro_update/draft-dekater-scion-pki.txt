@@ -2999,12 +2999,6 @@ draft-dekater-scion-pki-07
 
    Minor changes:
 
-   *  Added Ceremony & Deployment process.
-
-   *  Added Trusted Root Configuration (TRC) Specification.
-
-   *  Added Certificate Specification.
-
    *  Clarified relationship with RPKI.
 
    *  Added this changelog
