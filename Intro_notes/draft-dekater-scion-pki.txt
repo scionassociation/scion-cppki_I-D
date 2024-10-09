@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 11 April 2025                                           S. Hitz
+Expires: 12 April 2025                                           S. Hitz
                                                          Anapaya Systems
-                                                          8 October 2024
+                                                          9 October 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 11 April 2025.
+   This Internet-Draft will expire on 12 April 2025.
 
 Copyright Notice
 
@@ -191,7 +191,20 @@ Table of Contents
    [I-D.dekater-scion-dataplane]
 
    This document describes the SCION PKI component used by the Control
-   Plane.  It should be read in conjunction with
+   Plane.
+
+   The SCION architecture was initially developed outside of the IETF by
+   ETH Zurich with significant contributions from Anapaya Systems.  It
+   is deployed in the Swiss finance sector to provide resilient
+   connectivity between financial institutions.  The aim of this
+   document is to document the existing protocol specification as
+   deployed, and to introduce new concepts that can potentially be
+   further improved to address particular problems with the current
+   Internet architecture.
+
+   The following text is to be removed before publication:
+
+   This document should be read in conjunction with
    [I-D.dekater-scion-controlplane] and [I-D.dekater-scion-dataplane]
    and deprecates [I-D.dekater-panrg-scion-overview].
 
@@ -2588,27 +2601,6 @@ Table of Contents
 
 7.1.  Normative References
 
-   [I-D.dekater-panrg-scion-overview]
-              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
-              Overview", Work in Progress, Internet-Draft, draft-
-              dekater-panrg-scion-overview-06, 7 May 2024,
-              <https://datatracker.ietf.org/doc/html/draft-dekater-
-              panrg-scion-overview-06>.
-
-   [I-D.dekater-scion-controlplane]
-              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
-              Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-05, 21 July 2024,
-              <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-05>.
-
-   [I-D.dekater-scion-dataplane]
-              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
-              Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-dataplane-02, 8 July 2024,
-              <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-02>.
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2656,6 +2648,27 @@ Table of Contents
               Mueller, P., and A. Perrig, "The Complete Guide to SCION",
               ISBN 978-3-031-05287-3, 2022,
               <https://doi.org/10.1007/978-3-031-05288-0>.
+
+   [I-D.dekater-panrg-scion-overview]
+              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
+              Overview", Work in Progress, Internet-Draft, draft-
+              dekater-panrg-scion-overview-06, 7 May 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              panrg-scion-overview-06>.
+
+   [I-D.dekater-scion-controlplane]
+              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
+              Plane", Work in Progress, Internet-Draft, draft-dekater-
+              scion-controlplane-05, 21 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              scion-controlplane-05>.
+
+   [I-D.dekater-scion-dataplane]
+              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
+              Plane", Work in Progress, Internet-Draft, draft-dekater-
+              scion-dataplane-02, 8 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              scion-dataplane-02>.
 
    [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
               Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
