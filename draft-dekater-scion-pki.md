@@ -34,6 +34,8 @@ author:
      email: hitz@anapaya.net
 
 normative:
+  I-D.dekater-scion-controlplane:
+  I-D.dekater-scion-dataplane:
   RFC5280:
   RFC5480:
   RFC5652:
@@ -41,8 +43,6 @@ normative:
   RFC9217:
 
 informative:
-  I-D.dekater-scion-controlplane:
-  I-D.dekater-scion-dataplane:
   I-D.dekater-panrg-scion-overview:
   RFC5398:
   RFC6996:
