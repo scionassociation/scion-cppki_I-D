@@ -1567,9 +1567,6 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 Minor changes:
 
-- Added Ceremony & Deployment process.
-- Added Trusted Root Configuration (TRC) Specification.
-- Added Certificate Specification.
 - Clarified relationship with RPKI.
 - Added this changelog
 - General text editing
