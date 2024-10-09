@@ -1565,9 +1565,12 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-07
 {:numbered="false"}
 
+
 Major changes:
 
-- Added overview of SCION components to Introduction section.
+
+Minor changes:
+
 - Added RFC2119 compliant terminology.
 - Added IANA Considerations.
 - Added Security Considerations.
@@ -1575,8 +1578,17 @@ Major changes:
 - Added Trusted Root Configuration (TRC) Specification.
 - Added Certificate Specification.
 
+
+- Clarified relationship with RPKI.
+
+## draft-dekater-scion-pki-06
+{:numbered="false"}
+
+Major changes:
+
+- Added overview of SCION components to Introduction section.
+
 Minor changes:
 
 - General edits to make terminology consistent, remove duplication and rationalize text.
 - Removed forward references.
-- Clarified relationship with RPKI.
