@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 10 April 2025                                           S. Hitz
+Expires: 12 April 2025                                           S. Hitz
                                                          Anapaya Systems
-                                                          7 October 2024
+                                                          9 October 2024
 
 
                         SCION Control-Plane PKI
@@ -58,7 +58,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 April 2025.
+   This Internet-Draft will expire on 12 April 2025.
 
 Copyright Notice
 
@@ -134,6 +134,7 @@ Table of Contents
         Phase 4: TRC Validation
    Change Log
      draft-dekater-scion-pki-07
+     draft-dekater-scion-pki-06
    Authors' Addresses
 
 1.  Introduction
@@ -2998,7 +2999,7 @@ draft-dekater-scion-pki-07
 
    Major changes:
 
-   *  Added overview of SCION components to Introduction section.
+   Minor changes:
 
    *  Added RFC2119 compliant terminology.
 
@@ -3012,14 +3013,20 @@ draft-dekater-scion-pki-07
 
    *  Added Certificate Specification.
 
+   *  Clarified relationship with RPKI.
+
+draft-dekater-scion-pki-06
+
+   Major changes:
+
+   *  Added overview of SCION components to Introduction section.
+
    Minor changes:
 
    *  General edits to make terminology consistent, remove duplication
       and rationalize text.
 
    *  Removed forward references.
-
-   *  Clarified relationship with RPKI.
 
 Authors' Addresses
 
