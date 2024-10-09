@@ -39,11 +39,11 @@ normative:
   RFC5652:
   RFC5758:
   RFC9217:
+
+informative:
   I-D.dekater-scion-controlplane:
   I-D.dekater-scion-dataplane:
   I-D.dekater-panrg-scion-overview:
-
-informative:
   RFC5398:
   RFC6996:
   BARRERA17: DOI.10.1145/3085591
@@ -112,7 +112,14 @@ SCION relies on three main components:
 
 *Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.dekater-scion-dataplane}}
 
-This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}} and deprecates {{I-D.dekater-panrg-scion-overview}}.
+This document describes the SCION PKI component used by the Control Plane.
+
+The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture.
+
+The following text is to be removed before publication:
+
+This document should be read in conjunction with {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}} and deprecates {{I-D.dekater-panrg-scion-overview}}.
+
 
 ## Terminology
 
