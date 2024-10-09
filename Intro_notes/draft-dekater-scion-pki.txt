@@ -2602,6 +2602,20 @@ Table of Contents
 
 7.1.  Normative References
 
+   [I-D.dekater-scion-controlplane]
+              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
+              Plane", Work in Progress, Internet-Draft, draft-dekater-
+              scion-controlplane-05, 21 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              scion-controlplane-05>.
+
+   [I-D.dekater-scion-dataplane]
+              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
+              Plane", Work in Progress, Internet-Draft, draft-dekater-
+              scion-dataplane-02, 8 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              scion-dataplane-02>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2656,20 +2670,6 @@ Table of Contents
               dekater-panrg-scion-overview-06, 7 May 2024,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
               panrg-scion-overview-06>.
-
-   [I-D.dekater-scion-controlplane]
-              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
-              Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-05, 21 July 2024,
-              <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-05>.
-
-   [I-D.dekater-scion-dataplane]
-              de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
-              Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-dataplane-02, 8 July 2024,
-              <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-02>.
 
    [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
               Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
