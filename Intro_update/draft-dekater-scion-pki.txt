@@ -2997,15 +2997,7 @@ Change Log
 
 draft-dekater-scion-pki-07
 
-   Major changes:
-
    Minor changes:
-
-   *  Added RFC2119 compliant terminology.
-
-   *  Added IANA Considerations.
-
-   *  Added Security Considerations.
 
    *  Added Ceremony & Deployment process.
 
@@ -3014,6 +3006,10 @@ draft-dekater-scion-pki-07
    *  Added Certificate Specification.
 
    *  Clarified relationship with RPKI.
+
+   *  Added this changelog
+
+   *  General text editing
 
 draft-dekater-scion-pki-06
 
@@ -3027,6 +3023,8 @@ draft-dekater-scion-pki-06
       and rationalize text.
 
    *  Removed forward references.
+
+   *  Added RFC2119 compliant terminology.
 
 Authors' Addresses
 
