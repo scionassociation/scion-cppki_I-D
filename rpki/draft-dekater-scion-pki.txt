@@ -591,9 +591,9 @@ Table of Contents
 
 2.1.2.  Control Plane Root Certificate
 
-   The private key of the Control Plane root is used to sign Control
-   Plane CA certificates.  Consequently, the public key of the Control
-   Plane Root certificate is used to verify Control Plane CA
+   The private key of the Control Plane root certificate is used to sign
+   Control Plane CA certificates.  Consequently, the public key of the
+   Control Plane Root certificate is used to verify Control Plane CA
    certificates, i.e. root certificates determine which ASes act as a CA
    in an ISD.
 
