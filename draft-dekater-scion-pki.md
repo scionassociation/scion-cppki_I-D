@@ -153,9 +153,6 @@ The SCION architecture was initially developed outside of the IETF by ETH Zurich
 Note (to be removed before publication): this document, together with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}, deprecates {{I-D.dekater-panrg-scion-overview}}.
 
 
-The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. The aim of this document is to describe existing implementations and operational deployments, and to introduce new concepts that can potentially address particular problems with the current Internet architecture.
-
-
 ## Terminology
 
 **Control Plane PKI (CP-PKI)**: The control plane PKI is the public-key infrastructure upon which SCION's control plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
