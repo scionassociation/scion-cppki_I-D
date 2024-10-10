@@ -21,11 +21,11 @@ Abstract
    a path-aware, inter-domain network architecture where the Control
    Plane PKI handles cryptographic material and lays the foundation for
    the authentication procedures in SCION.  It is used by SCION's
-   control plane to authenticate and verify path information, and builds
+   Control Plane to authenticate and verify path information, and builds
    the basis for SCION's trust model based on Isolation Domains.
 
-   This document describes the trust model behind the SCION's control
-   plane PKI, including specifications of the different types of
+   This document describes the trust model behind the SCION's Control
+   Plane PKI, including specifications of the different types of
    certificates and the Trust Root Configuration.  It also specifies how
    to deploy the Control Plane PKI infrastructure.
 
@@ -178,7 +178,7 @@ Table of Contents
    the trust roots and provide connectivity to other ISDs.  This is the
    basis of the public key infrastructure which the SCION Control Plane
    relies upon for the authentication of messages that is used for the
-   SCION control plane.
+   SCION Control Plane.
 
    _Control Plane_ - performs inter-domain routing by discovering and
    securely disseminating path information between ASes.  The core ASes
@@ -213,7 +213,7 @@ Table of Contents
 1.1.  Terminology
 
    *Control Plane PKI (CP-PKI)*: The control plane PKI is the public-key
-   infrastructure upon which SCION's control plane relies for the
+   infrastructure upon which SCION's Control Plane relies for the
    authentication of messages.  It is a set of policies, roles, and
    procedures that are used to manage trust root configurations (TRCs)
    and certificates.
@@ -502,8 +502,8 @@ Table of Contents
    The Control Plane PKI can be seen as a function that transforms
    potential distrust among different parties into a mutually accepted
    trust contract including a trust update and reset policy as well as
-   certificates used for authentication procedures in SCION's control
-   plane.
+   certificates used for authentication procedures in SCION's Control
+   Plane.
 
    For the function to work, it is not necessary that the ASes of the
    ISD all trust each other.  However, all ASes MUST trust the ISD's
@@ -691,7 +691,7 @@ Table of Contents
       One important difference between both certificate types lies in
       their validity period: A SCION Control Plane root certificate has
       a RECOMMENDED maximum validity period of one year, whereas the
-      RECOMMENDED maximum validity period of a SCION control plane CA
+      RECOMMENDED maximum validity period of a SCION Control Plane CA
       certificate is 11 days.  This is because a root certificate is
       part of the TRC of an ISD, which itself also has a RECOMMENDED
       maximum validity period of one year (see Table 2 below).  This
@@ -700,7 +700,7 @@ Table of Contents
 
       The SCION root private key and public key/certificate are used to
       sign and verify the Control Plane CA certificates, respectively.
-      The Pontrol plane CA certificates are explicitly NOT part of the
+      The control plane CA certificates are explicitly NOT part of the
       TRC, for reasons of security.  The Control Plane CA certificates
       are used to verify the Control Plane AS certificates, which in
       turn are used to verify control plane messages.  Routing is made
@@ -1181,10 +1181,10 @@ Table of Contents
    extension, as defined in Section 4.2.1.12 of [RFC5280]:
 
    *  id-kp-serverAuth: If set, the public key can be used for SCION
-      control plane server authentication.
+      Control Plane server authentication.
 
    *  id-kp-clientAuth: If set, the public key can be used for SCION
-      control plane client authentication.
+      Control Plane client authentication.
 
    *  id-kp-timeStamping: If set, the public key can be used for the
       verification of timestamps.
@@ -1197,7 +1197,7 @@ Table of Contents
    see Section 3.1.2.2.11.
 
    The specifications of the extKeyUsage extension differ per SCION
-   control plane PKI certificate type.  The next table provides an
+   Control Plane PKI certificate type.  The next table provides an
    overview of the specifications per certificate type.
 
    +==================+==========+=========+===========+===============+
@@ -1298,7 +1298,7 @@ Table of Contents
       certification path.
 
    The settings of the basicConstraints extension differ for each SCION
-   control plane PKI certificate type.  The next table shows the
+   Control Plane PKI certificate type.  The next table shows the
    specifications per certificate type.
 
    +===================+==========+============+=========+============+
@@ -1906,7 +1906,7 @@ Table of Contents
 
 3.1.4.   Certification Path - Trust Anchor Pool
 
-   The certification path of a Control Plane AS certificate starts in a
+   The certification path of a Control PlaneAS certificate starts in a
    Control Plane root certificate.  The Control Plane root certificate
    for a given ISD is distributed via the TRC.
 
