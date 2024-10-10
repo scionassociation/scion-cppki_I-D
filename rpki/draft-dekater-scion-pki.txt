@@ -601,11 +601,11 @@ Table of Contents
    certificates.  That is, issuer and subject of the certificate are the
    same entity, and the public key in the root certificate can be used
    to verify the root certificate's signature.  The public key of the
-   Control Plane root and proof of ownership of the private key are
-   embedded in the TRC of an ISD, via the self-signed Control Plane root
-   certificate.  This facilitates the bootstrapping of trust within an
-   ISD, and marks the Control Plane root certificates as the starting
-   point of an ISD's certificate verification path.
+   Control Plane root certificate and proof of ownership of the private
+   key are embedded in the TRC of an ISD, via the self-signed Control
+   Plane root certificate.  This facilitates the bootstrapping of trust
+   within an ISD, and marks the Control Plane root certificates as the
+   starting point of an ISD's certificate verification path.
 
    The RECOMMENDED *maximum validity period* of a Control Plane root
    certificate is 1 year.
