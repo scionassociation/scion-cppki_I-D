@@ -121,6 +121,7 @@ Table of Contents
      7.1.  Normative References
      7.2.  Informative References
    Acknowledgments
+   Deployment Testing: SCIONLab
    Appendix A.  Signing Ceremony Initial TRC
       Ceremony Participants
      Ceremony Preparations
@@ -184,16 +185,32 @@ Table of Contents
    _Control Plane_ - performs inter-domain routing by discovering and
    securely disseminating path information between ASes.  The core ASes
    use Path-segment Construction Beacons (PCBs) to explore intra-ISD
-   paths, or to explore paths across different ISDs.  See [I-D.scion-cp]
+   paths, or to explore paths across different ISDs.  See
+   [I-D.dekater-scion-controlplane]
 
    _Data Plane_ - carries out secure packet forwarding between SCION-
    enabled ASes over paths selected by endpoints.  A SCION border router
    reuses existing intra-domain infrastructure to communicate to other
    SCION routers or SCION endpoints within its AS.  See
-   [I-D.scion-dataplane]
+   [I-D.dekater-scion-dataplane]
 
    This document describes the SCION PKI component used by the Control
-   Plane.
+   Plane.  It should be read in conjunction with the other components
+   [I-D.dekater-scion-controlplane] and [I-D.dekater-scion-dataplane].
+
+   The SCION architecture was initially developed outside of the IETF by
+   ETH Zurich with significant contributions from Anapaya Systems.  It
+   is deployed in the Swiss finance sector to provide resilient
+   connectivity between financial institutions.  The aim of this
+   document is to document the existing protocol specification as
+   deployed, and to introduce new concepts that can potentially be
+   further improved to address particular problems with the current
+   Internet architecture.
+
+   Note (to be removed before publication): this document, together with
+   the other components [I-D.dekater-scion-controlplane] and
+   [I-D.dekater-scion-dataplane], deprecates
+   [I-D.dekater-panrg-scion-overview].
 
    The SCION architecture was initially developed outside of the IETF by
    ETH Zurich with significant contributions from Anapaya Systems.  The
@@ -2561,8 +2578,9 @@ Table of Contents
    corresponding PKI messaging thus only occurs when the control plane
    is already communicating, these requests to obtain cryptographic
    material are not prone to additional denial of service attacks.  We
-   therefore refer to [I-D.scion-cp] for a more detailed description of
-   DoS vulnerabilities of control-plane messages.
+   therefore refer to [I-D.dekater-scion-controlplane] for a more
+   detailed description of DoS vulnerabilities of control-plane
+   messages.
 
    For certificate renewal, on the other hand, this does not apply.
    Denial of Service on the CA infrastructure or on the communication
@@ -2594,15 +2612,19 @@ Table of Contents
 
 7.1.  Normative References
 
-   [I-D.scion-cp]
+   [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
-              Plane", 2023, <https://datatracker.ietf.org/doc/draft-
-              dekater-scion-controlplane/>.
+              Plane", Work in Progress, Internet-Draft, draft-dekater-
+              scion-controlplane-05, 21 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              scion-controlplane-05>.
 
-   [I-D.scion-dataplane]
+   [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Data
-              Plane", 2023, <https://datatracker.ietf.org/doc/draft-
-              dekater-scion-dataplane/>.
+              Plane", Work in Progress, Internet-Draft, draft-dekater-
+              scion-dataplane-02, 8 July 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              scion-dataplane-02>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -2652,6 +2674,13 @@ Table of Contents
               ISBN 978-3-031-05287-3, 2022,
               <https://doi.org/10.1007/978-3-031-05288-0>.
 
+   [I-D.dekater-panrg-scion-overview]
+              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
+              Overview", Work in Progress, Internet-Draft, draft-
+              dekater-panrg-scion-overview-06, 7 May 2024,
+              <https://datatracker.ietf.org/doc/html/draft-dekater-
+              panrg-scion-overview-06>.
+
    [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
               Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
               December 2008, <https://www.rfc-editor.org/rfc/rfc5398>.
@@ -2659,6 +2688,11 @@ Table of Contents
    [RFC6996]  Mitchell, J., "Autonomous System (AS) Reservation for
               Private Use", BCP 6, RFC 6996, DOI 10.17487/RFC6996, July
               2013, <https://www.rfc-editor.org/rfc/rfc6996>.
+
+   [SCIONLAB] Kown, J., García-Pardo, J., Legner, M., Wirz, F., Frei,
+              M., Hausheer, D., and A. Perrig, "SCIONLAB - A Next-
+              Generation Internet Testbed", 2020,
+              <https://ieeexplore.ieee.org/abstract/document/9259355>.
 
 Acknowledgments
 
@@ -2671,6 +2705,16 @@ Acknowledgments
    documentation about the CP PKI, as well as to the authors of
    [CHUAT22] - the book is an important source of input and inspiration
    for this draft.
+
+Deployment Testing: SCIONLab
+
+   SCIONLab is a global research network that is available to test the
+   SCION architecture.  You can create and use your ASes using your own
+   computation resources which allows you to gain real-world experience
+   of deploying and managing a SCION network.
+
+   More information can be found on the SCIONLab website and in the
+   [SCIONLAB] paper.
 
 Appendix A.  Signing Ceremony Initial TRC
 
