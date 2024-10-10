@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-08T00:20:03.924390+00:00",
+  "timestamp": "2024-10-10T00:20:10.869310+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -126,7 +126,7 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2024-07-26T22:57:58Z",
+      "updatedAt": "2024-10-08T09:42:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -139,9 +139,9 @@
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "@jiceatscion @matzf  do you think this could be addressed?",
+          "body": "@jiceatscion @matzf  do you think this could be addressed? Text in the draft comes from the scionproto docs, it was added in https://github.com/scionproto/scion/pull/3742 \r\n\r\n@oncilla @scrye could you help address this?",
           "createdAt": "2024-07-04T08:06:15Z",
-          "updatedAt": "2024-07-04T08:24:47Z"
+          "updatedAt": "2024-10-08T09:42:42Z"
         }
       ]
     },
@@ -257,13 +257,15 @@
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
-      "assignees": [],
-      "labels": [
-        "Prio 2"
+      "assignees": [
+        "oncilla"
       ],
-      "body": "Points to be reviewed: \r\n- `5.`  Security Considerations\r\n- `1.4.2.`  Substitutes to Certificate Revocation\r\n\r\n\r\nLinks: \r\n\r\n- [Diff](https://author-tools.ietf.org/api/iddiff?doc_1=draft-dekater-scion-pki-04&url_2=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt) -04 (09.23) / current version",
+      "labels": [
+        "Prio 1"
+      ],
+      "body": "Points to be reviewed: \r\n- `5.`  Security Considerations\r\n- `1.4.2.`  Substitutes to Certificate Revocation\r\n- https://github.com/scionassociation/scion-cppki_I-D/issues/28\r\n\r\n\r\nLinks: \r\n\r\n- [Diff](https://author-tools.ietf.org/api/iddiff?doc_1=draft-dekater-scion-pki-04&url_2=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt) -04 (09.23) / current version",
       "createdAt": "2024-07-23T05:00:13Z",
-      "updatedAt": "2024-10-07T16:16:13Z",
+      "updatedAt": "2024-10-09T18:03:31Z",
       "closedAt": null,
       "comments": [
         {
@@ -279,6 +281,13 @@
           "body": "> A trust reset is only required in the case the number of\t\r\n \t      compromised keys at the same time is greater or equal than the\t\r\n \t      TRC's quorum (see Section 3.1.2.2.7).\r\n \t \r\nand a invalid update has been produced and distributed in the network. I think if the compromise is noticed early enough and an Update is issued and distributed in the network, then there is nothing an attacker can do anymore. Nodes in the SCION network store all the TRCs they have seen, and history cannot be rewriten.\r\n\r\n\r\n",
           "createdAt": "2024-10-07T16:16:11Z",
           "updatedAt": "2024-10-07T16:16:11Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Right, I had a look at the two changes and I agree with you. I added your changes in https://github.com/scionassociation/scion-cppki_I-D/pull/46 , let me know if this is clear enough. \r\n\r\nAre you done with reviewing the draft? \r\n\r\nWe also have https://github.com/scionassociation/scion-cppki_I-D/issues/28 , I'm looking for some ASN.1 experts to have a look :) Would you mind having a look?",
+          "createdAt": "2024-10-09T18:03:07Z",
+          "updatedAt": "2024-10-09T18:03:31Z"
         }
       ]
     },
@@ -328,6 +337,25 @@
       "body": "",
       "createdAt": "2024-10-03T14:55:50Z",
       "updatedAt": "2024-10-03T14:55:51Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 45,
+      "id": "I_kwDOH386tM6Zkwxv",
+      "title": "Figures are too large",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/45",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "Prio 3",
+        "editorial"
+      ],
+      "body": "- [ ] Figure 2\r\n- [ ] Figure 3 \r\n- [ ] Pseudocode in 3.1.4.1.   TRC Selection For Trust Anchor Pool\r\n- [ ] Others ??\r\n",
+      "createdAt": "2024-10-09T17:44:08Z",
+      "updatedAt": "2024-10-09T17:46:07Z",
       "closedAt": null,
       "comments": []
     }
@@ -1951,26 +1979,42 @@
       "id": "PR_kwDOH386tM56QO0Y",
       "title": "Fixed definition",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/41",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-09-03T11:54:52Z",
-      "updatedAt": "2024-09-03T11:54:52Z",
+      "updatedAt": "2024-10-09T17:26:29Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "knmeynell-patch-1",
       "headRefOid": "e9c01735c561723c9d02ad3272ece56cb8c9f3d3",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-10-09T17:26:25Z",
+      "mergedAt": "2024-10-09T17:26:25Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "25ff315387c9f2375c6964bb3963d3c2d01008cf"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6MiLiP",
+          "commit": {
+            "abbreviatedOid": "e9c0173"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-09T17:25:30Z",
+          "updatedAt": "2024-10-09T17:25:30Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 43,
@@ -1982,15 +2026,130 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "Resolves #42 ",
       "createdAt": "2024-10-03T18:12:01Z",
-      "updatedAt": "2024-10-07T12:39:31Z",
+      "updatedAt": "2024-10-09T17:38:04Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Intro_update",
-      "headRefOid": "7a982cc4a9461afedc341ebe39bbfcbebcc533a2",
+      "headRefOid": "d6c6f4285878c61bbf0693bb5e92e97f29a05937",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6MiQAh",
+          "commit": {
+            "abbreviatedOid": "4b20e03"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T17:35:01Z",
+          "updatedAt": "2024-10-09T17:35:05Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "Where did we add these?  Wasn't this a while ago (before the ISE submission)?\r\n```suggestion\r\n```",
+              "createdAt": "2024-10-09T17:35:01Z",
+              "updatedAt": "2024-10-09T17:35:05Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6MiROL",
+          "commit": {
+            "abbreviatedOid": "4b20e03"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2024-10-09T17:37:40Z",
+          "updatedAt": "2024-10-09T17:37:40Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "The Ceremony & Deployment process was updated since the ISE submission. I don't remember when the other stuff was added.",
+              "createdAt": "2024-10-09T17:37:40Z",
+              "updatedAt": "2024-10-09T17:37:40Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 44,
+      "id": "PR_kwDOH386tM59-SIj",
+      "title": "Deprecates draft-dekater-panrg-scion-overview",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/44",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-10-08T16:16:21Z",
+      "updatedAt": "2024-10-09T18:55:18Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Intro_notes",
+      "headRefOid": "7911a79d7813f76d86b7b69bee3b013b6d4bbe68",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Which specific wording are we talking about that needs aligning?",
+          "createdAt": "2024-10-09T17:23:16Z",
+          "updatedAt": "2024-10-09T17:23:16Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6MiGff",
+          "commit": {
+            "abbreviatedOid": "e7c5717"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "Can you align wording with https://github.com/scionassociation/scion-dp_I-D/pull/69 ? ",
+          "createdAt": "2024-10-09T17:14:31Z",
+          "updatedAt": "2024-10-09T17:14:31Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 46,
+      "id": "PR_kwDOH386tM5-HRDd",
+      "title": "anapaya feedback",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/46",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #38 ",
+      "createdAt": "2024-10-09T18:00:29Z",
+      "updatedAt": "2024-10-09T18:00:29Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "25ff315387c9f2375c6964bb3963d3c2d01008cf",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "anapaya-review",
+      "headRefOid": "bfeebcd54ea65ecb397fab84836339a8733a9fb0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
