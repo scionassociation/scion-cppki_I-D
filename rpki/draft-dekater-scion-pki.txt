@@ -210,13 +210,6 @@ Table of Contents
    [I-D.dekater-scion-dataplane], deprecates
    [I-D.dekater-panrg-scion-overview].
 
-   The SCION architecture was initially developed outside of the IETF by
-   ETH Zurich with significant contributions from Anapaya Systems.  The
-   aim of this document is to describe existing implementations and
-   operational deployments, and to introduce new concepts that can
-   potentially address particular problems with the current Internet
-   architecture.
-
 1.1.  Terminology
 
    *Control Plane PKI (CP-PKI)*: The control plane PKI is the public-key
