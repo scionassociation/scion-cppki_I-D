@@ -145,6 +145,9 @@ SCION relies on three main components:
 
 This document describes the SCION PKI component used by the Control Plane.
 
+The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. The aim of this document is to describe existing implementations and operational deployments, and to introduce new concepts that can potentially address particular problems with the current Internet architecture.
+
+
 ## Terminology
 
 **Control-Plane PKI (CP-PKI)**: The control-plane PKI is the public-key infrastructure upon which SCION's control plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
@@ -1552,3 +1555,31 @@ Phase 3 concludes after all voting representatives have cast their votes.
 In Phase 4, all voting representatives share the signed TRC with the ceremony administrator. This happens again over the data exchange device, which goes from one voter to the next. Each voting representative copies the TRC payload signed with the voter's private keys from their own machine onto the data exchange device. The last voter returns the device to the ceremony administrator, who assembles the final TRC by aggregating the payload data with the votes (signatures) cast by the voting representatives.
 
 The signed TRC is validated by inspecting its contents on the monitor and verifying the signatures based on the exchanged certificates in Phase 1. The ceremony administrator then shares the signed TRC with all participants. Each of them MUST then inspect it once more, and verify it based on the certificates exchanged in Phase 1. At this point, the ceremony is completed. All participants have the signed TRC, and can use it to distribute the trust anchors for their ISD.
+
+
+# Change Log
+{:numbered="false"}
+
+Changes made to drafts since ISE submission. This section is to be removed before publication.
+
+## draft-dekater-scion-pki-07
+{:numbered="false"}
+
+Minor changes:
+
+- Clarified relationship with RPKI.
+- Added this changelog
+- General text editing
+
+## draft-dekater-scion-pki-06
+{:numbered="false"}
+
+Major changes:
+
+- Added overview of SCION components to Introduction section.
+
+Minor changes:
+
+- General edits to make terminology consistent, remove duplication and rationalize text.
+- Removed forward references.
+- Added RFC2119 compliant terminology.
