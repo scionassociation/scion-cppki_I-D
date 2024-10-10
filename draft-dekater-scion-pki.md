@@ -34,47 +34,16 @@ author:
      email: hitz@anapaya.net
 
 normative:
+  I-D.dekater-scion-controlplane:
+  I-D.dekater-scion-dataplane:
   RFC5280:
   RFC5480:
   RFC5652:
   RFC5758:
   RFC9217:
-  I-D.scion-cp:
-    title: SCION Control Plane
-    date: 2023
-    target: https://datatracker.ietf.org/doc/draft-dekater-scion-controlplane/
-    author:
-      -
-        ins: C. de Kater
-        name: Corine de Kater
-        org: SCION Association
-      -
-        ins: N. Rustignoli
-        name: Nicola Rustignoli
-        org: SCION Association
-      -
-        ins: S. Hitz
-        name: Samuel Hitz
-        org: Anapaya Systems
-  I-D.scion-dataplane:
-    title: SCION Data Plane
-    date: 2023
-    target: https://datatracker.ietf.org/doc/draft-dekater-scion-dataplane/
-    author:
-      -
-        ins: C. de Kater
-        name: Corine de Kater
-        org: SCION Association
-      -
-        ins: N. Rustignoli
-        name: Nicola Rustignoli
-        org: SCION Association
-      -
-        ins: S. Hitz
-        name: Samuel Hitz
-        org: Anapaya Systems
 
 informative:
+  I-D.dekater-panrg-scion-overview:
   RFC5398:
   RFC6996:
   BARRERA17: DOI.10.1145/3085591
@@ -113,6 +82,39 @@ informative:
         ins: A. Perrig
         name: Adrian Perrig
         org: ETH Zuerich
+  SCIONLAB:
+    title: SCIONLAB - A Next-Generation Internet Testbed
+    date: 2020
+    target: https://ieeexplore.ieee.org/abstract/document/9259355
+    author:
+      -
+        ins: J. Kown
+        name: Jonghoon Kwon
+        org: ETH Zuerich
+      -
+        ins: J. García-Pardo
+        name: Juan A. García-Pardo
+        org: ETH Zuerich
+      -
+        ins: M. Legner
+        name: Markus Legner
+        org: ETH Zuerich
+      -
+        ins: F. Wirz
+        name: François Wirz
+        org: ETH Zuerich
+      -
+        ins: M. Frei
+        name: Matthias Frei
+        org: ETH Zuerich
+      -
+        ins: D. Hausheer
+        name: David Hausheer
+        org: Otto von Guericke University Magdeburg
+      -
+        ins: A. Perrig
+        name: Adrian Perrig
+        org: ETH Zuerich
 
 --- abstract
 
@@ -139,11 +141,16 @@ SCION relies on three main components:
 
 *PKI* - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called *Isolation Domains (ISDs)*. All ASes in an ISD agree on a set of trust roots called the *Trust Root Configuration (TRC)* which is a collection of signed root certificates in X.509 v3 format {{RFC5280}}. The ISD is governed by a set of *core ASes* which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure which the SCION control plane relies upon for the authentication of messages that is used for the SCION control plane.
 
-*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See {{I-D.scion-cp}}
+*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See {{I-D.dekater-scion-controlplane}}
 
-*Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.scion-dataplane}}
+*Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.dekater-scion-dataplane}}
 
-This document describes the SCION PKI component used by the Control Plane.
+This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}.
+
+The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture.
+
+Note (to be removed before publication): this document, together with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}, deprecates {{I-D.dekater-panrg-scion-overview}}.
+
 
 The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. The aim of this document is to describe existing implementations and operational deployments, and to introduce new concepts that can potentially address particular problems with the current Internet architecture.
 
@@ -1364,7 +1371,7 @@ As described in [](#substitutes-to-revocation), there is no revocation in the CP
 As described previously, the SCION's control-plane PKI lays the foundation for the authentication procedures in SCION. It provides each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control-plane messages - every AS and endpoint can verify all control-plane messages by following the certificate chain.
 
 The relying party MUST be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
-As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.scion-cp}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+As the corresponding PKI messaging thus only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We therefore refer to {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control-plane messages.
 
 For certificate renewal, on the other hand, this does not apply.
 Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA, could be used by an attacker to prevent victim ASes from renewing their certificates, halting the path discovery process.
@@ -1389,6 +1396,14 @@ The SCION AS and ISD number are SCION-specific numbers. They are currently alloc
 {:numbered="false"}
 
 Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+
+
+# Deployment Testing: SCIONLab
+{:numbered="false"}
+
+SCIONLab is a global research network that is available to test the SCION architecture. You can create and use your ASes using your own computation resources which allows you to gain real-world experience of deploying and managing a SCION network.
+
+More information can be found on the SCIONLab website and in the {{SCIONLAB}} paper.
 
 
 # Appendix A. Signing Ceremony Initial TRC {#initial-ceremony}
