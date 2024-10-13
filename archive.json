@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-10T00:20:10.869310+00:00",
+  "timestamp": "2024-10-13T00:22:03.550051+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -308,8 +308,8 @@
       ],
       "body": "Add a couple of sentences to clarify relationship to RPKI\r\n\r\n>Date: \tTue, 6 Aug 2024 23:44:57 +0000\r\nFrom: \tMichael McBride [<michael.mcbride@futurewei.com>](mailto:michael.mcbride@futurewei.com)\r\nTo: \t[rfc-ise@rfc-editor.org](mailto:rfc-ise@rfc-editor.org) [<rfc-ise@rfc-editor.org>](mailto:rfc-ise@rfc-editor.org)\r\nCC: \t'Mike McBride' [<mmcbride7@gmail.com>](mailto:mmcbride7@gmail.com)F. How else can the document be improved?\r\n \r\n> I\u2019m a believer. It\u2019s a good set of solutions. Using a PKI is a good solution. As is the current RPKI and ROA\u2019s. It might also be helpful, in the scion control plan pki document, to at least acknowledge RPKI. RPKI is widely used now and it could be helpful to understand how scions use of PKI would be similar and different. In the long run it would give operators a more comfortable understanding since most now use RPKI.  \r\nWe could add a couple of sentences about this. We have some text in the now expired [draft-rustignoli-panrg-scion-components](https://www.ietf.org/archive/id/draft-rustignoli-panrg-scion-components-03.t): \r\n\r\n\r\n\r\nWe have some text in the now expired [draft-rustignoli-panrg-scion-components](https://www.ietf.org/archive/id/draft-rustignoli-panrg-scion-components-03.t): \r\n```\r\n   The above-mentioned decoupling also implies that SCION does not\r\n   provide, by design, IP prefix origin validation, which is currently\r\n   provided by RPKI [RFC8210].  As prefix origin validation is outside\r\n   of SCION's scope, IP-to-SCION's coexistence mechanisms (SIAM, SBAS)\r\n   later discussed in Section 3.1 build on top of RPKI for IP origin\r\n   attestation.\r\n   ... \r\n   These properties would be lost if SCION were to rely on an existing\r\n   PKI (i.e., the web PKI, the RPKI, ...).  For example, if SCION were\r\n   to use the RPKI instead of the CP-PKI, its control plane would lack\r\n   the trust model required to support Isolation Domains.  This is\r\n   because RPKI's trust model follows the same structure as the IP\r\n   allocation hierarchy, where the five RIRs represent the trust roots.\r\n```",
       "createdAt": "2024-08-07T16:23:50Z",
-      "updatedAt": "2024-08-13T15:09:12Z",
-      "closedAt": "2024-08-13T15:09:12Z",
+      "updatedAt": "2024-10-10T15:53:11Z",
+      "closedAt": "2024-10-10T15:53:11Z",
       "comments": [
         {
           "author": "knmeynell",
@@ -325,7 +325,7 @@
       "id": "I_kwDOH386tM6Y19G1",
       "title": "Add changelog in appendix",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/42",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -336,8 +336,8 @@
       ],
       "body": "",
       "createdAt": "2024-10-03T14:55:50Z",
-      "updatedAt": "2024-10-03T14:55:51Z",
-      "closedAt": null,
+      "updatedAt": "2024-10-10T13:58:00Z",
+      "closedAt": "2024-10-10T13:58:00Z",
       "comments": []
     },
     {
@@ -1953,26 +1953,55 @@
       "id": "PR_kwDOH386tM54PcT8",
       "title": "Added reference to RPKI & wording pass",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/40",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #39 \r\nContributes to #36 ",
       "createdAt": "2024-08-13T14:27:01Z",
-      "updatedAt": "2024-08-30T13:46:38Z",
+      "updatedAt": "2024-10-10T15:53:15Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
+      "baseRefOid": "32fe3bd7aea5d19c54e99e92d6f77617fab5c69c",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "rpki",
-      "headRefOid": "b47ffdc19dad1ce08e06c54abf13d1e2292ef246",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "cad0e5ffae5694bc09e3cf273c7f98701f5885ca",
+      "closedAt": "2024-10-10T15:53:10Z",
+      "mergedAt": "2024-10-10T15:53:10Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "5027ceb1cb3e640bac593c603e29c86dc793afc9"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6MsuvF",
+          "commit": {
+            "abbreviatedOid": "3c0ffff"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "Looks good, only two things: \r\n* I left two minor wording changes\r\n* can you double check capitalization? I capitalized a bit of control plane in [1d5bcc6](https://github.com/scionassociation/scion-cppki_I-D/pull/40/commits/1d5bcc6fe580f69ae0a5e687910f85e68bdfc82f) but there might be more instances",
+          "createdAt": "2024-10-10T14:20:13Z",
+          "updatedAt": "2024-10-10T14:45:10Z",
+          "comments": [
+            {
+              "originalPosition": 191,
+              "body": "```suggestion\r\nThe private key of the Control Plane root certificate is used to sign Control Plane CA certificates. Consequently, the public key of the Control Plane Root certificate is used to verify Control Plane CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.\r\n```",
+              "createdAt": "2024-10-10T14:20:13Z",
+              "updatedAt": "2024-10-10T14:45:10Z"
+            },
+            {
+              "originalPosition": 194,
+              "body": "```suggestion\r\nIn X.509 terms, Control Plane root certificates are *self-signed* CA certificates. That is, issuer and subject of the certificate are the same entity, and the public key in the root certificate can be used to verify the root certificate's signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.\r\n```",
+              "createdAt": "2024-10-10T14:21:27Z",
+              "updatedAt": "2024-10-10T14:45:10Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 41,
@@ -2021,24 +2050,26 @@
       "id": "PR_kwDOH386tM59iQ_3",
       "title": "Updated Intro and added Change Log",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/43",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #42 ",
       "createdAt": "2024-10-03T18:12:01Z",
-      "updatedAt": "2024-10-09T17:38:04Z",
+      "updatedAt": "2024-10-10T13:57:59Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Intro_update",
       "headRefOid": "d6c6f4285878c61bbf0693bb5e92e97f29a05937",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-10-10T13:57:59Z",
+      "mergedAt": "2024-10-10T13:57:59Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "8a235d6fac4859a70dbb5b6354f3dee8b3cb4fc0"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2080,32 +2111,47 @@
               "updatedAt": "2024-10-09T17:37:40Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6Msaro",
+          "commit": {
+            "abbreviatedOid": "d6c6f42"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-10T13:57:50Z",
+          "updatedAt": "2024-10-10T13:57:50Z",
+          "comments": []
         }
       ]
     },
     {
       "number": 44,
       "id": "PR_kwDOH386tM59-SIj",
-      "title": "Deprecates draft-dekater-panrg-scion-overview",
+      "title": "Deprecate overview draft, add ref to scionlab",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/44",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-10-08T16:16:21Z",
-      "updatedAt": "2024-10-09T18:55:18Z",
+      "updatedAt": "2024-10-10T14:01:51Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Intro_notes",
       "headRefOid": "7911a79d7813f76d86b7b69bee3b013b6d4bbe68",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2024-10-10T14:01:47Z",
+      "mergedAt": "2024-10-10T14:01:47Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "32fe3bd7aea5d19c54e99e92d6f77617fab5c69c"
+      },
       "comments": [
         {
           "author": "knmeynell",
@@ -2113,6 +2159,13 @@
           "body": "Which specific wording are we talking about that needs aligning?",
           "createdAt": "2024-10-09T17:23:16Z",
           "updatedAt": "2024-10-09T17:23:16Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> Which specific wording are we talking about that needs aligning?\r\n\r\nThe one you took. Thanks!",
+          "createdAt": "2024-10-10T13:59:21Z",
+          "updatedAt": "2024-10-10T13:59:21Z"
         }
       ],
       "reviews": [
@@ -2127,6 +2180,19 @@
           "body": "Can you align wording with https://github.com/scionassociation/scion-dp_I-D/pull/69 ? ",
           "createdAt": "2024-10-09T17:14:31Z",
           "updatedAt": "2024-10-09T17:14:31Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM6Mse_Y",
+          "commit": {
+            "abbreviatedOid": "7911a79"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-10T14:01:14Z",
+          "updatedAt": "2024-10-10T14:01:14Z",
           "comments": []
         }
       ]
@@ -2143,7 +2209,7 @@
       "labels": [],
       "body": "Resolves #38 ",
       "createdAt": "2024-10-09T18:00:29Z",
-      "updatedAt": "2024-10-09T18:00:29Z",
+      "updatedAt": "2024-10-10T16:04:01Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "25ff315387c9f2375c6964bb3963d3c2d01008cf",
@@ -2155,7 +2221,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6Mt0Ua",
+          "commit": {
+            "abbreviatedOid": "bfeebcd"
+          },
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-10T16:04:01Z",
+          "updatedAt": "2024-10-10T16:04:01Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
