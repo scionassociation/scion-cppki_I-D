@@ -1376,7 +1376,7 @@ In SCION there is no central authority that could "switch off" an ISD as each re
 This section deals with possible recovery from the compromises discussed in the previous paragraph.
 As described in [](#substitutes-to-revocation), there is no revocation in the Control Plane PKI.
 
-- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). Note that this is a sensitive TRC update, as the certificate related to the compromised private key MUST be replaced with an entirely new certificate (and not just changed). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)) and a invalid update has been produced and distributed in the network.
+- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)) and a invalid update has been produced and distributed in the network.
 - At CA level: If the private key related to a CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
 - At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
 
