@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 13 April 2025                                           S. Hitz
+Expires: 19 April 2025                                           S. Hitz
                                                          Anapaya Systems
-                                                         10 October 2024
+                                                         16 October 2024
 
 
                         SCION Control Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 13 April 2025.
+   This Internet-Draft will expire on 19 April 2025.
 
 Copyright Notice
 
@@ -2507,12 +2507,10 @@ Table of Contents
 
    *  At TRC level: If any of the root keys or voting keys contained in
       the TRC are compromised, the TRC MUST be updated as described in
-      Section 3.1.5.  Note that this is a sensitive TRC update, as the
-      certificate related to the compromised private key MUST be
-      replaced with an entirely new certificate (and not just changed).
-      A trust reset is only required in the case the number of
-      compromised keys at the same time is greater or equal than the
-      TRC's quorum (see Section 3.1.2.2.7).
+      Section 3.1.5.  A trust reset is only required in the case the
+      number of compromised keys at the same time is greater or equal
+      than the TRC's quorum (see Section 3.1.2.2.7) and a invalid update
+      has been produced and distributed in the network.
 
    *  At CA level: If the private key related to a CA certificate is
       compromised, the impacted CA AS MUST obtain a new CA certificate
