@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-15T00:20:41.036389+00:00",
+  "timestamp": "2024-10-17T00:20:25.777376+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -225,7 +225,7 @@
       "id": "I_kwDOH386tM6OtUlC",
       "title": "General review - Remove forward references",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/36",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -235,10 +235,10 @@
         "Prio 2",
         "editorial"
       ],
-      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45\r\n\r\nTODO: \r\n- [ ] @knmeynell update terminology and de-hyphenate as in https://github.com/scionassociation/scion-dp_I-D/pull/51\r\n- [ ] Add development note: https://github.com/scionassociation/scion-dp_I-D/issues/48\r\n- [ ] @nicorusti general re-read through the draft\r\n",
+      "body": "```  \r\nThe exact binaries that are required are described in a separate document.\r\n```\r\n\r\nTwin issues: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/58\r\n- https://github.com/scionassociation/scion-dp_I-D/issues/45\r\n\r\nTODO: \r\n- [x] @knmeynell update terminology and de-hyphenate as in https://github.com/scionassociation/scion-dp_I-D/pull/51\r\n- [x] Add development note: https://github.com/scionassociation/scion-dp_I-D/issues/48\r\n- [x] @nicorusti general re-read through the draft\r\n",
       "createdAt": "2024-07-07T22:20:01Z",
-      "updatedAt": "2024-08-28T15:18:03Z",
-      "closedAt": null,
+      "updatedAt": "2024-10-16T20:59:33Z",
+      "closedAt": "2024-10-16T20:59:33Z",
       "comments": [
         {
           "author": "knmeynell",
@@ -2202,24 +2202,26 @@
       "id": "PR_kwDOH386tM5-HRDd",
       "title": "anapaya feedback",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/46",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #38 ",
+      "body": "Contributes to #38 ",
       "createdAt": "2024-10-09T18:00:29Z",
-      "updatedAt": "2024-10-10T16:04:01Z",
+      "updatedAt": "2024-10-16T20:58:41Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "25ff315387c9f2375c6964bb3963d3c2d01008cf",
+      "baseRefOid": "5027ceb1cb3e640bac593c603e29c86dc793afc9",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "anapaya-review",
-      "headRefOid": "bfeebcd54ea65ecb397fab84836339a8733a9fb0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b3e7f10a87f2d1a2f13d442ca5c8afa3d623dac2",
+      "closedAt": "2024-10-16T20:58:38Z",
+      "mergedAt": "2024-10-16T20:58:38Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "fcdfd7e01e9589af375ad97977b5b82254c6c004"
+      },
       "comments": [],
       "reviews": [
         {
