@@ -2067,7 +2067,7 @@ TRC
 <p id="section-2.2.1.2.1-4">The following points apply when setting the attribute value of the <code>ISD-AS number</code> attribute:<a href="#section-2.2.1.2.1-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2.1.2.1-5.1">
-                  <p id="section-2.2.1.2.1-5.1.1">The string representation <span class="bcp14">MUST</span> follow the canonical formatting defined in <a href="https://github.com/scionproto/scion/wiki/ISD-and-AS-numbering">ISD and AS numbering</a>.<a href="#section-2.2.1.2.1-5.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-2.2.1.2.1-5.1.1">The string representation <span class="bcp14">MUST</span> follow the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "Addressing".<a href="#section-2.2.1.2.1-5.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-2.2.1.2.1-5.2">
                   <p id="section-2.2.1.2.1-5.2.1">The canonical string representation uses a dash separator between the ISD and AS numbers.<a href="#section-2.2.1.2.1-5.2.1" class="pilcrow">¶</a></p>
@@ -2486,9 +2486,9 @@ TRC
         <h3 id="name-trc-specification">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-trc-specification" class="section-name selfRef">TRC Specification</a>
         </h3>
-<p id="section-3.1-1">The TRC is a signed collection of <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> envelope.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">The TRC is a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> envelope.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC, a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1-3">This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T <a href="https://handle.itu.int/11.1002/1000/14468">X.680</a> syntax.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1-3">This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T <span>[<a href="#X.680" class="cite xref">X.680</a>]</span> syntax.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <div id="trc-states">
 <section id="section-3.1.1">
           <h4 id="name-trc-types-and-states">
@@ -2617,7 +2617,7 @@ TRC
 </pre><a href="#section-3.1.2.1-2" class="pilcrow">¶</a>
 </div>
 <p id="section-3.1.2.1-3">The <code>TRCPayload</code> sequence contains the identifying information of a TRC as well as policy information for TRC updates. Furthermore, it defines the list of certificates that build the trust anchor of the ISD.<a href="#section-3.1.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.1.2.1-4">For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) <a href="https://handle.itu.int/11.1002/1000/14472">X.690</a>. For more details, see <a href="#signed-format" class="auto internal xref">Section 3.1.3</a>.<a href="#section-3.1.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-3.1.2.1-4">For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) <span>[<a href="#X.690" class="cite xref">X.690</a>]</span>. For more details, see <a href="#signed-format" class="auto internal xref">Section 3.1.3</a>.<a href="#section-3.1.2.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trc-fields">
@@ -2735,7 +2735,7 @@ The following simple example illustrates how to specify the ID of the TRCs in an
               </h6>
 <p id="section-3.1.2.2.3-1">The <code>validity</code> field defines the validity period of the TRC. This is the period of time during which the TRC is in the "valid" state. The <code>notBefore</code> and <code>notAfter</code> attributes of the <code>validity</code> field specify the lower and upper bound of the time interval during which a TRC can be active.<a href="#section-3.1.2.2.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2.3-2"><strong>Note:</strong> An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see <a href="#trc-states" class="auto internal xref">Section 3.1.1</a>.<a href="#section-3.1.2.2.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.2.2.3-3">The <code>validity</code> field consists of a sequence of two dates, as defined in section 7.2. of <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a>.<a href="#section-3.1.2.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.2.2.3-3">The <code>validity</code> field consists of a sequence of two dates, as defined in section 7.2. of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>.<a href="#section-3.1.2.2.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2.3-4">In addition to this standard definition, the following constraint applies to the <code>validity</code> field of the TRC:<a href="#section-3.1.2.2.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1.2.2.3-5.1">
@@ -3422,7 +3422,7 @@ In every path segment, all ASes <span class="bcp14">MUST</span> reference the la
               <p id="section-4.2.2-5.4.1">After selecting a certificate chain to verify the control plane messages, the relying party <span class="bcp14">MUST</span> verify the certificate chain, by:<a href="#section-4.2.2-5.4.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2.2-5.4.2.1">
-                  <p id="section-4.2.2-5.4.2.1.1">Executing the regular X.509 verification procedure. For details, see <a href="https://handle.itu.int/11.1002/1000/13031">X.509</a>.<a href="#section-4.2.2-5.4.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.4.2.1.1">Executing the regular X.509 verification procedure. For details, see <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>.<a href="#section-4.2.2-5.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-4.2.2-5.4.2.2">
                   <p id="section-4.2.2-5.4.2.2.1">Checking that<a href="#section-4.2.2-5.4.2.2.1" class="pilcrow">¶</a></p>
@@ -3559,7 +3559,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see <a href="https://docs.anapaya.net/en/latest/resources/isd-as-assignments/">Anapaya ISD AS assignments</a>). This task is currently being transitioned from Anapaya to the SCION Association.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-2">The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see <span>[<a href="#ISD-AS-assignments" class="cite xref">ISD-AS-assignments</a>]</span>). This task is currently being transitioned from Anapaya to the SCION Association.<a href="#section-6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -3580,6 +3580,10 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <dt id="I-D.dekater-scion-dataplane">[I-D.dekater-scion-dataplane]</dt>
         <dd>
 <span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-02</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-02">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-02</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ISD-AS-assignments">[ISD-AS-assignments]</dt>
+        <dd>
+<span class="refTitle">"SCION ISD and AS Assignments"</span>, <time datetime="2024" class="refDate">2024</time>, <span>&lt;<a href="https://docs.anapaya.net/en/latest/resources/isd-as-assignments/">https://docs.anapaya.net/en/latest/resources/isd-as-assignments/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -3613,9 +3617,17 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
         <dd>
 <span class="refTitle">"ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"</span>, <time datetime="2016-01" class="refDate">January 2016</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/13031">https://handle.itu.int/11.1002/1000/13031</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="X.680">[X.680]</dt>
+        <dd>
+<span class="refTitle">"ITU-T X.680 (02/2021) | Information technology - Abstract Syntax Notation One (ASN.1): Specification of basic notation"</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/14468">https://handle.itu.int/11.1002/1000/14468</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="X.690">[X.690]</dt>
+        <dd>
+<span class="refTitle">"ITU-T X.690 (02/2021) | Information technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/14472">https://handle.itu.int/11.1002/1000/14472</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="X9.62">[X9.62]</dt>
       <dd>
-<span class="refTitle">"Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"</span>, <time datetime="1998" class="refDate">1998</time>. </dd>
+<span class="refTitle">"ANSI X9.62-1998 | Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"</span>, <time datetime="1998" class="refDate">1998</time>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
