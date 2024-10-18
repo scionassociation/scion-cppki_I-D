@@ -2064,24 +2064,9 @@ TRC
 <p id="section-2.2.1.2.1-2">where <code>id-scion</code> specifies the root SCION object identifier (OID).<a href="#section-2.2.1.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.2.1.2.1-3"><strong>Note</strong>: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
                 <code>id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}</code><a href="#section-2.2.1.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.1.2.1-4">The following points apply when setting the attribute value of the <code>ISD-AS number</code> attribute:<a href="#section-2.2.1.2.1-4" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-2.2.1.2.1-5.1">
-                  <p id="section-2.2.1.2.1-5.1.1">The string representation <span class="bcp14">MUST</span> follow the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "Addressing".<a href="#section-2.2.1.2.1-5.1.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-2.2.1.2.1-5.2">
-                  <p id="section-2.2.1.2.1-5.2.1">The canonical string representation uses a dash separator between the ISD and AS numbers.<a href="#section-2.2.1.2.1-5.2.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-2.2.1.2.1-5.3">
-                  <p id="section-2.2.1.2.1-5.3.1">The ISD numbers are formatted as decimal.<a href="#section-2.2.1.2.1-5.3.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-2.2.1.2.1-5.4">
-                  <p id="section-2.2.1.2.1-5.4.1">The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: <code>1:0:0</code> to <code>ffff:ffff:ffff</code>.<a href="#section-2.2.1.2.1-5.4.1" class="pilcrow">¶</a></p>
-</li>
-              </ul>
-<p id="section-2.2.1.2.1-6"><strong>Example:</strong> AS <code>ff00:0:110</code> in ISD <code>1</code> is formatted as <code>1-ff00:0:110</code>.<a href="#section-2.2.1.2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.2.1.2.1-7">The <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> be present exactly once in the distinguished name of the certificate issuer or owner, specified in the <code>issuer</code> or <code>subject</code> field respectively. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates whose <code>issuer</code> and <code>subject</code> fields do not include the ISD-AS number at all, or include it more than once.<a href="#section-2.2.1.2.1-7" class="pilcrow">¶</a></p>
-<p id="section-2.2.1.2.1-8"><strong>Note</strong>: Voting certificates are not required to include the <code>ISD-AS number</code> attribute in their distinguished name.<a href="#section-2.2.1.2.1-8" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.2.1-4">The string representation of the <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> follow the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "Text Representation".<a href="#section-2.2.1.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.2.1-5">The <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> be present exactly once in the distinguished name of the certificate issuer or owner, specified in the <code>issuer</code> or <code>subject</code> field respectively. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates whose <code>issuer</code> and <code>subject</code> fields do not include the ISD-AS number at all, or include it more than once.<a href="#section-2.2.1.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.2.1-6"><strong>Note</strong>: Voting certificates are not required to include the <code>ISD-AS number</code> attribute in their distinguished name.<a href="#section-2.2.1.2.1-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3944,7 +3929,7 @@ The participants of the Signing Ceremony fulfill different roles:<a href="#appen
             <p id="appendix-D.1-2.3.1">General text editing<a href="#appendix-D.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-2.4">
-            <p id="appendix-D.1-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS<a href="#appendix-D.1-2.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
