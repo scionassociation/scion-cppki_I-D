@@ -2576,11 +2576,6 @@ Table of Contents
               <https://datatracker.ietf.org/doc/html/draft-dekater-
               scion-dataplane-02>.
 
-   [ISD-AS-assignments]
-              "SCION ISD and AS Assignments", 2024,
-              <https://docs.anapaya.net/en/latest/resources/isd-as-
-              assignments/>.
-
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2655,6 +2650,11 @@ Table of Contents
               dekater-panrg-scion-overview-06, 7 May 2024,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
               panrg-scion-overview-06>.
+
+   [ISD-AS-assignments]
+              "SCION ISD and AS Assignments", 2024,
+              <https://docs.anapaya.net/en/latest/resources/isd-as-
+              assignments/>.
 
    [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
               Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
@@ -3026,6 +3026,8 @@ draft-dekater-scion-pki-07
    *  Added this changelog
 
    *  General text editing
+
+   *  References: fixed ITU, ANSI, Assigned ISD-AS
 
 draft-dekater-scion-pki-06
 
