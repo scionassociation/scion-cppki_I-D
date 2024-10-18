@@ -41,6 +41,14 @@ normative:
   RFC5652:
   RFC5758:
   RFC9217:
+  X.509:
+    title: "ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"
+    date: 10/2016
+    target: https://handle.itu.int/11.1002/1000/13031
+  X9.62:
+    title: "Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"
+    date: 1998
+
 
 informative:
   I-D.dekater-panrg-scion-overview:
@@ -497,7 +505,7 @@ Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates,
 
 ### Basic Fields: SCION-Specific Constraints and Conditions
 
-The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and [X509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and {{X.509}} clause 7.2.
 
 `TBSCertificate` sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:
 
@@ -544,7 +552,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 #### `signature` Field - Additional Information {#certsign}
 
-For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in [X962](https://webstore.ansi.org/standards/ascx9/ansix9621998)) although this may be extended in future.
+For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in {{X9.62}}) although this may be extended in future.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
@@ -597,7 +605,7 @@ The `ISD-AS number` attribute MUST be present exactly once in the distinguished 
 
 ### Extensions {#exts}
 
-{{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in [X509](https://handle.itu.int/11.1002/1000/13031) (10/2016) are clause 7.2 and clause 9, respectively.
+{{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2 and clause 9, respectively.
 
 Currently, the following extensions are relevant for SCION:
 
@@ -613,7 +621,7 @@ The following sections describe the SCION-specifics in regard to these extension
 
 The `authorityKeyIdentifier` extension identifies the public key corresponding to the private key used to sign a certificate.
 
-For the syntax and definition of the `authorityKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.1, and [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.1.
+For the syntax and definition of the `authorityKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.1, and {{X.509}}, clause 9.2.2.1.
 
 The `authorityKeyIdentifier` extension provides three attributes to specify the public key:
 
@@ -631,13 +639,13 @@ This extension MUST always be non-critical. However, SCION implementations MUST 
 
 The `subjectKeyIdentifier` extension identifies certificates that contain a particular public key. It can be used, for example, by control plane messages to identify which certificate to use for verification. The extension allows for overlapping control plane CA keys, for example during updates.
 
-For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.2, and [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.2.
+For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.2, and {{X.509}}, clause 9.2.2.2.
 
 This extension MUST always be non-critical. However, SCION implementations MUST error out if the extension is not present.
 
 #### `keyUsage` Extension {#key-usage-ext}
 
-The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. For the syntax and definition of the `keyUsage` extension, see {{RFC5280}}, section 4.2.1.3, and [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.3.
+The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. For the syntax and definition of the `keyUsage` extension, see {{RFC5280}}, section 4.2.1.3, and {{X.509}}, clause 9.2.2.3.
 
 The attributes of the `keyUsage` extension define possible ways of using the public key. The attributes have the following meaning in SCION:
 
@@ -673,7 +681,7 @@ Each Control Plane PKI certificate type uses the public key differently, and con
 
 #### `extKeyUsage` Extension {#ext-key-usage-ext}
 
-The `extKeyUsage` extension specifies additional usages of the public key in the certificate. For the syntax and definition of the `extKeyUsage` extension, see [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.4.
+The `extKeyUsage` extension specifies additional usages of the public key in the certificate. For the syntax and definition of the `extKeyUsage` extension, see {{X.509}}, clause 9.2.2.4.
 
 SCION uses the following attributes of the Extended Key Usage extension, as defined in Section 4.2.1.12 of {{RFC5280}}:
 
@@ -712,7 +720,7 @@ where `id-scion` specifies the root SCION object identifier (OID).
 
 #### `basicConstraints` Extension {#basic-constr-ext}
 
-The `basicConstraints` extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the `basicConstraints` extension, see [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.4.2.1.
+The `basicConstraints` extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the `basicConstraints` extension, see {{X.509}}, clause 9.4.2.1.
 
 The `basicConstraints` extension includes the following attributes relevant for SCION:
 
