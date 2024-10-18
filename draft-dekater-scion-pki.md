@@ -41,9 +41,29 @@ normative:
   RFC5652:
   RFC5758:
   RFC9217:
+  X.509:
+    title: "ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"
+    date: 10/2016
+    target: https://handle.itu.int/11.1002/1000/13031
+  X.680:
+    title: "ITU-T X.680 (02/2021) | Information technology - Abstract Syntax Notation One (ASN.1): Specification of basic notation"
+    date: 02/2021
+    target: https://handle.itu.int/11.1002/1000/14468
+  X.690:
+    title: "ITU-T X.690 (02/2021) | Information technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"
+    date: 02/2021
+    target: https://handle.itu.int/11.1002/1000/14472
+  X9.62:
+    title: "ANSI X9.62-1998 | Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"
+    date: 1998
+
 
 informative:
   I-D.dekater-panrg-scion-overview:
+  ISD-AS-assignments:
+    title: "SCION ISD and AS Assignments"
+    date: 2024
+    target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
   RFC5398:
   RFC6996:
   RFC8210:
@@ -497,7 +517,7 @@ Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates,
 
 ### Basic Fields: SCION-Specific Constraints and Conditions
 
-The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and [X509](https://handle.itu.int/11.1002/1000/13031), clause 7.2.
+The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and {{X.509}} clause 7.2.
 
 `TBSCertificate` sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:
 
@@ -544,7 +564,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 #### `signature` Field - Additional Information {#certsign}
 
-For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in [X962](https://webstore.ansi.org/standards/ascx9/ansix9621998)) although this may be extended in future.
+For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in {{X9.62}}) although this may be extended in future.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
@@ -581,14 +601,8 @@ where `id-scion` specifies the root SCION object identifier (OID).
 **Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
-The following points apply when setting the attribute value of the `ISD-AS number` attribute:
+The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation". The canonical string formatting of AS numbers in the AS range (0, 2<sup>32-1</sup>) MUST use the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, MUST use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
 
-- The string representation MUST follow the canonical formatting defined in [ISD and AS numbering](https://github.com/scionproto/scion/wiki/ISD-and-AS-numbering).
-- The canonical string representation uses a dash separator between the ISD and AS numbers.
-- The ISD numbers are formatted as decimal.
-- The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
-
-**Example:** AS `ff00:0:110` in ISD `1` is formatted as `1-ff00:0:110`.
 
 The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
@@ -597,7 +611,7 @@ The `ISD-AS number` attribute MUST be present exactly once in the distinguished 
 
 ### Extensions {#exts}
 
-{{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in [X509](https://handle.itu.int/11.1002/1000/13031) (10/2016) are clause 7.2 and clause 9, respectively.
+{{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2 and clause 9, respectively.
 
 Currently, the following extensions are relevant for SCION:
 
@@ -613,7 +627,7 @@ The following sections describe the SCION-specifics in regard to these extension
 
 The `authorityKeyIdentifier` extension identifies the public key corresponding to the private key used to sign a certificate.
 
-For the syntax and definition of the `authorityKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.1, and [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.1.
+For the syntax and definition of the `authorityKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.1, and {{X.509}}, clause 9.2.2.1.
 
 The `authorityKeyIdentifier` extension provides three attributes to specify the public key:
 
@@ -631,13 +645,13 @@ This extension MUST always be non-critical. However, SCION implementations MUST 
 
 The `subjectKeyIdentifier` extension identifies certificates that contain a particular public key. It can be used, for example, by control plane messages to identify which certificate to use for verification. The extension allows for overlapping control plane CA keys, for example during updates.
 
-For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.2, and [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.2.
+For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.2, and {{X.509}}, clause 9.2.2.2.
 
 This extension MUST always be non-critical. However, SCION implementations MUST error out if the extension is not present.
 
 #### `keyUsage` Extension {#key-usage-ext}
 
-The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. For the syntax and definition of the `keyUsage` extension, see {{RFC5280}}, section 4.2.1.3, and [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.3.
+The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. For the syntax and definition of the `keyUsage` extension, see {{RFC5280}}, section 4.2.1.3, and {{X.509}}, clause 9.2.2.3.
 
 The attributes of the `keyUsage` extension define possible ways of using the public key. The attributes have the following meaning in SCION:
 
@@ -673,7 +687,7 @@ Each Control Plane PKI certificate type uses the public key differently, and con
 
 #### `extKeyUsage` Extension {#ext-key-usage-ext}
 
-The `extKeyUsage` extension specifies additional usages of the public key in the certificate. For the syntax and definition of the `extKeyUsage` extension, see [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.2.2.4.
+The `extKeyUsage` extension specifies additional usages of the public key in the certificate. For the syntax and definition of the `extKeyUsage` extension, see {{X.509}}, clause 9.2.2.4.
 
 SCION uses the following attributes of the Extended Key Usage extension, as defined in Section 4.2.1.12 of {{RFC5280}}:
 
@@ -712,7 +726,7 @@ where `id-scion` specifies the root SCION object identifier (OID).
 
 #### `basicConstraints` Extension {#basic-constr-ext}
 
-The `basicConstraints` extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the `basicConstraints` extension, see [X509](https://handle.itu.int/11.1002/1000/13031), clause 9.4.2.1.
+The `basicConstraints` extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the `basicConstraints` extension, see {{X.509}}, clause 9.4.2.1.
 
 The `basicConstraints` extension includes the following attributes relevant for SCION:
 
@@ -742,11 +756,11 @@ The initial TRC of an ISD is signed during a signing ceremony and then distribut
 
 ## TRC Specification {#trc-spec}
 
-The TRC is a signed collection of [X.509](https://handle.itu.int/11.1002/1000/13031) v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) {{RFC5652}} envelope.
+The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) {{RFC5652}} envelope.
 
 The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC, a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.
 
-This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T [X.680](https://handle.itu.int/11.1002/1000/14468) syntax.
+This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T {{X.680}} syntax.
 
 
 ### TRC Types and States {#trc-states}
@@ -855,7 +869,7 @@ The following code block shows the format of a TRC specification file (the paylo
 
 The `TRCPayload` sequence contains the identifying information of a TRC as well as policy information for TRC updates. Furthermore, it defines the list of certificates that build the trust anchor of the ISD.
 
-For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) [X.690](https://handle.itu.int/11.1002/1000/14472). For more details, see [](#signed-format).
+For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}. For more details, see [](#signed-format).
 
 
 #### TRC Fields
@@ -912,7 +926,7 @@ The `validity` field defines the validity period of the TRC. This is the period 
 
 **Note:** An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
-The `validity` field consists of a sequence of two dates, as defined in section 7.2. of [X.509](https://handle.itu.int/11.1002/1000/13031).
+The `validity` field consists of a sequence of two dates, as defined in section 7.2. of {{X.509}}.
 
 In addition to this standard definition, the following constraint applies to the `validity` field of the TRC:
 
@@ -1327,7 +1341,7 @@ To verify a control plane message, the relying party MUST perform the following 
    - The subject key identifier of the AS certificate MUST match the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
    - The AS certificate MUST be valid at verification time. Normally, this will be the current time. In special cases, e.g., auditing, the time can be set to the past to check if the message was verifiable at the given time.
 4. After selecting a certificate chain to verify the control plane messages, the relying party MUST verify the certificate chain, by:
-   - Executing the regular X.509 verification procedure. For details, see [X.509](https://handle.itu.int/11.1002/1000/13031).
+   - Executing the regular X.509 verification procedure. For details, see {{X.509}}.
    - Checking that
       - all subjects of the certificates in the chain carry the same ISD number (see also [](#isd-as-nr),
       - each certificate is of the correct type (see also [](#overview)), and
@@ -1400,7 +1414,7 @@ For certificate renewal, on the other hand, this does not apply. Denial of Servi
 
 This document has no IANA actions.
 
-The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see [Anapaya ISD AS assignments](https://docs.anapaya.net/en/latest/resources/isd-as-assignments/)). This task is currently being transitioned from Anapaya to the SCION Association.
+The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments}}). This task is currently being transitioned from Anapaya to the SCION Association.
 
 
 --- back
@@ -1598,6 +1612,7 @@ Minor changes:
 - Clarified relationship with RPKI.
 - Added this changelog
 - General text editing
+- References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft
 
 ## draft-dekater-scion-pki-06
 {:numbered="false"}
