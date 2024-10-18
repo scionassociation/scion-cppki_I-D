@@ -36,6 +36,10 @@ author:
 normative:
   I-D.dekater-scion-controlplane:
   I-D.dekater-scion-dataplane:
+  ISD-AS-assignments:
+    title: "SCION ISD and AS Assignments"
+    date: 2024
+    target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
   RFC5280:
   RFC5480:
   RFC5652:
@@ -45,8 +49,16 @@ normative:
     title: "ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"
     date: 10/2016
     target: https://handle.itu.int/11.1002/1000/13031
+  X.680:
+    title: "ITU-T X.680 (02/2021) | Information technology - Abstract Syntax Notation One (ASN.1): Specification of basic notation"
+    date: 02/2021
+    target: https://handle.itu.int/11.1002/1000/14468
+  X.690:
+    title: "ITU-T X.690 (02/2021) | Information technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"
+    date: 02/2021
+    target: https://handle.itu.int/11.1002/1000/14472
   X9.62:
-    title: "Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"
+    title: "ANSI X9.62-1998 | Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"
     date: 1998
 
 
@@ -591,7 +603,7 @@ where `id-scion` specifies the root SCION object identifier (OID).
 
 The following points apply when setting the attribute value of the `ISD-AS number` attribute:
 
-- The string representation MUST follow the canonical formatting defined in [ISD and AS numbering](https://github.com/scionproto/scion/wiki/ISD-and-AS-numbering).
+- The string representation MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}} section "Addressing".
 - The canonical string representation uses a dash separator between the ISD and AS numbers.
 - The ISD numbers are formatted as decimal.
 - The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
@@ -750,11 +762,11 @@ The initial TRC of an ISD is signed during a signing ceremony and then distribut
 
 ## TRC Specification {#trc-spec}
 
-The TRC is a signed collection of [X.509](https://handle.itu.int/11.1002/1000/13031) v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) {{RFC5652}} envelope.
+The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) {{RFC5652}} envelope.
 
 The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC, a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.
 
-This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T [X.680](https://handle.itu.int/11.1002/1000/14468) syntax.
+This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T {{X.680}} syntax.
 
 
 ### TRC Types and States {#trc-states}
@@ -863,7 +875,7 @@ The following code block shows the format of a TRC specification file (the paylo
 
 The `TRCPayload` sequence contains the identifying information of a TRC as well as policy information for TRC updates. Furthermore, it defines the list of certificates that build the trust anchor of the ISD.
 
-For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) [X.690](https://handle.itu.int/11.1002/1000/14472). For more details, see [](#signed-format).
+For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}. For more details, see [](#signed-format).
 
 
 #### TRC Fields
@@ -920,7 +932,7 @@ The `validity` field defines the validity period of the TRC. This is the period 
 
 **Note:** An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
-The `validity` field consists of a sequence of two dates, as defined in section 7.2. of [X.509](https://handle.itu.int/11.1002/1000/13031).
+The `validity` field consists of a sequence of two dates, as defined in section 7.2. of {{X.509}}.
 
 In addition to this standard definition, the following constraint applies to the `validity` field of the TRC:
 
@@ -1335,7 +1347,7 @@ To verify a control plane message, the relying party MUST perform the following 
    - The subject key identifier of the AS certificate MUST match the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
    - The AS certificate MUST be valid at verification time. Normally, this will be the current time. In special cases, e.g., auditing, the time can be set to the past to check if the message was verifiable at the given time.
 4. After selecting a certificate chain to verify the control plane messages, the relying party MUST verify the certificate chain, by:
-   - Executing the regular X.509 verification procedure. For details, see [X.509](https://handle.itu.int/11.1002/1000/13031).
+   - Executing the regular X.509 verification procedure. For details, see {{X.509}}.
    - Checking that
       - all subjects of the certificates in the chain carry the same ISD number (see also [](#isd-as-nr),
       - each certificate is of the correct type (see also [](#overview)), and
@@ -1408,7 +1420,7 @@ For certificate renewal, on the other hand, this does not apply. Denial of Servi
 
 This document has no IANA actions.
 
-The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see [Anapaya ISD AS assignments](https://docs.anapaya.net/en/latest/resources/isd-as-assignments/)). This task is currently being transitioned from Anapaya to the SCION Association.
+The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments}}). This task is currently being transitioned from Anapaya to the SCION Association.
 
 
 --- back
