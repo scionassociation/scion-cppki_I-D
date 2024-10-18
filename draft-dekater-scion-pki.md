@@ -36,10 +36,6 @@ author:
 normative:
   I-D.dekater-scion-controlplane:
   I-D.dekater-scion-dataplane:
-  ISD-AS-assignments:
-    title: "SCION ISD and AS Assignments"
-    date: 2024
-    target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
   RFC5280:
   RFC5480:
   RFC5652:
@@ -64,6 +60,10 @@ normative:
 
 informative:
   I-D.dekater-panrg-scion-overview:
+  ISD-AS-assignments:
+    title: "SCION ISD and AS Assignments"
+    date: 2024
+    target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
   RFC5398:
   RFC6996:
   RFC8210:
@@ -1618,6 +1618,7 @@ Minor changes:
 - Clarified relationship with RPKI.
 - Added this changelog
 - General text editing
+- References: fixed ITU, ANSI, Assigned ISD-AS
 
 ## draft-dekater-scion-pki-06
 {:numbered="false"}
