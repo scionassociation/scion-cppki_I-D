@@ -601,14 +601,8 @@ where `id-scion` specifies the root SCION object identifier (OID).
 **Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
-The following points apply when setting the attribute value of the `ISD-AS number` attribute:
+The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}} section "Text Representation".
 
-- The string representation MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}} section "Addressing".
-- The canonical string representation uses a dash separator between the ISD and AS numbers.
-- The ISD numbers are formatted as decimal.
-- The canonical string formatting of AS numbers in the BGP AS range (0, 2<sup>32-1</sup>) is the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
-
-**Example:** AS `ff00:0:110` in ISD `1` is formatted as `1-ff00:0:110`.
 
 The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
@@ -1618,7 +1612,7 @@ Minor changes:
 - Clarified relationship with RPKI.
 - Added this changelog
 - General text editing
-- References: fixed ITU, ANSI, Assigned ISD-AS
+- References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft
 
 ## draft-dekater-scion-pki-06
 {:numbered="false"}
