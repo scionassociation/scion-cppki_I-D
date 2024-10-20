@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-10-17T00:20:25.777376+00:00",
+  "timestamp": "2024-10-20T00:22:32.510980+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -254,7 +254,7 @@
       "id": "I_kwDOH386tM6Qf0aq",
       "title": "Anapaya review",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/38",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -265,8 +265,8 @@
       ],
       "body": "Points to be reviewed: \r\n- `5.`  Security Considerations\r\n- `1.4.2.`  Substitutes to Certificate Revocation\r\n- https://github.com/scionassociation/scion-cppki_I-D/issues/28\r\n\r\n\r\nLinks: \r\n\r\n- [Diff](https://author-tools.ietf.org/api/iddiff?doc_1=draft-dekater-scion-pki-04&url_2=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt) -04 (09.23) / current version",
       "createdAt": "2024-07-23T05:00:13Z",
-      "updatedAt": "2024-10-09T18:03:31Z",
-      "closedAt": null,
+      "updatedAt": "2024-10-17T17:24:44Z",
+      "closedAt": "2024-10-17T17:24:44Z",
       "comments": [
         {
           "author": "oncilla",
@@ -2057,7 +2057,7 @@
       "labels": [],
       "body": "Resolves #42 ",
       "createdAt": "2024-10-03T18:12:01Z",
-      "updatedAt": "2024-10-10T13:57:59Z",
+      "updatedAt": "2024-10-18T14:29:06Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "2eba126bbfb2cab6eef1794ed4f369b30e00db19",
@@ -2235,6 +2235,48 @@
           "body": "",
           "createdAt": "2024-10-10T16:04:01Z",
           "updatedAt": "2024-10-10T16:04:01Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 47,
+      "id": "PR_kwDOH386tM5_Fixo",
+      "title": "References: ISD assignments, ITU, ANSI, ISD-AS text representation",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/47",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Contributes to #36 ",
+      "createdAt": "2024-10-18T10:36:45Z",
+      "updatedAt": "2024-10-18T12:10:53Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "fcdfd7e01e9589af375ad97977b5b82254c6c004",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "small-corrections",
+      "headRefOid": "ed043f3916911f92aa6059facc23fd066f009815",
+      "closedAt": "2024-10-18T12:10:09Z",
+      "mergedAt": "2024-10-18T12:10:09Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "180b7b51bc007327fe115f4b0e742ef2053069b7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6Nu9x0",
+          "commit": {
+            "abbreviatedOid": "ed043f3"
+          },
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-10-18T12:05:41Z",
+          "updatedAt": "2024-10-18T12:05:41Z",
           "comments": []
         }
       ]
