@@ -1856,69 +1856,65 @@ TRC
 <p id="section-2.1.6-5">(1) Multiple signatures and certificates of each type <span class="bcp14">MAY</span> be included in a TRC.<br>
 (2) Recommended maximum validity period.<br>
 (3) A validity of 11 days with 4 days overlap between two CA certificates is <span class="bcp14">RECOMMENDED</span> to enable the best possible operational procedures when performing a CA certificate rollover.<a href="#section-2.1.6-5" class="pilcrow">¶</a></p>
-<p id="section-2.1.6-6"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC, and the relationship between a TRC and the five types of certificates.<a href="#section-2.1.6-6" class="pilcrow">¶</a></p>
+<p id="section-2.1.6-6"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.<a href="#section-2.1.6-6" class="pilcrow">¶</a></p>
 <span id="name-trc-update-chain-and-the-di"></span><div id="_figure-2">
 <figure id="figure-2">
             <div class="alignLeft art-text artwork" id="section-2.1.6-7.1">
 <pre>
-+-------------------+                           +-------------------+
-|       TRC 1       +--------------------------&gt;|       TRC 2       |
-|  (base/initial)   |                           |  (regular update) |
-+---------+---------+                           +---------+---------+
-          |                                               |
-          v                                               v
-+----------------------------------------+
-|+--------------------------------------+|
-||- Version       - Core ASes           ||
-||- ID            - Description         ||
-||- Validity      - No Trust Reset      ||
-||- Grace Period  - Voting Quorum       ||
-||- ..                                  ||      |
-|+--------------------------------------+|      |
-|+------------------++------------------+|      |+------------------+
-||      Votes       ||  Regular Voting  ||      ||      Votes       |
-|| (cert. indices)  ||   Certificates   ||      || (cert. indices)  |
-||                  ||                  ||      ||                  |
-||                  ||+-----+ +-----+   ||      ||                  |
-||      (empty)     ||| (1) | | (2) |   ||      ||    (1),(2)..     |
-||                  |||C    | |C    | ..||      ||                  |
-||                  ||| reg | | reg |   ||      ||                  |
-|+------------------+|+--+--+ +--+--+   ||      |+------------------+
-|+------------------+|   |       |      ||      |+------------------+
-||                  ||   |       +------++---+  ||                  |
-||                  ||   +--------------++-+ |  ||                  |
-||    Signatures    |+------------------+| | |  ||    Signatures    |
-||                  |+------------------+| | |  ||                  |
-||+----------------+|| Sensitive Voting || | |  ||+----------------+|
-|||73 A9 4E AO 0D..|||    Certificates  || | +-&gt;|||48 AE E4 80 DB..||
-||+----------------+||+-----+ +-----+   || |    ||+----------------+|
-||+----------------+||| (3) | | (4) |   || |    ||+----------------+|
-|||53 B7 7C 98 56..||||C    | |C    |   || +---&gt;|||7E BC 75 98 25..||
-||+----------------+||| sens| | sens| ..||      ||+----------------+|
-||        ..        ||+-----+ +-----+   ||      ||        ..        |
-|+------------------++------------------+|      |+------------------+
-|+--------------------------------------+|      |+---------------------
-||         CP Root Certificates         ||      || CP Root Certificates
-||                                      ||      ||
-|| +-----+ +-----+ +-----+ +-----+      ||      || +-----+ +-----+
-|| | (5) | | (6) | | (7) | | (8) |      ||      || | (5) | | (6) |
-|| |C    | |C    | |C    | |C    |      ||      || |C    | |C    |
-|| | root| | root| | root| | root| ..   ||      || | root| | root|
-|| +-----+ +--+--+ +-----+ +--+--+      ||      || +-----+ +--+--+
-|+------------+---------------+---------+|      |+------------+--------
-+-------------+---------------+----------+      +-------------+--------
-              |               |                               |
-              v               v                               v
-     +-----------+         +-----------+            +-----------+
-     |   CP CA   |         |   CP CA   |            |   CP CA   |
-     |Certificate|         |Certificate|            |Certificate|
-     +-----+-----+         +-----+-----+            +-+-------+-+
-           |                     |                    |       |
-           v                     v                    v       v
-     +-----------+         +-----------+    +-----------+ +-----------+
-     |   CP AS   |         |   CP AS   |    |   CP AS   | |   CP AS   |
-     |Certificate|         |Certificate|    |Certificate| |Certificate|
-     +-----------+         +-----------+    +-----------+ +-----------+
++--------------------------------------------+
+|                   TRC 1                    |
+|               (base/initial)               |
+|+------------------------------------------+|
+|| - Version          - Core ASes           ||
+|| - ID               - Description         ||
+|| - Validity         - No Trust Reset      ||
+|| - Grace Period     - Voting Quorum       ||
+|| - ...                                    ||
+|+------------------------------------------+|
+|+--------------------++--------------------+|
+||        Votes       ||   Regular Voting   ||
+||  (cert. indices)   ||    Certificates    ||
+||                    ||                    ||
+||                    || +-----+ +-----+    ||
+||       (empty)      || | (1) | | (2) |    ||
+||                    || |C    | |C    | ...||
+||                    || | reg | | reg |    ||
+|+--------------------+| +-----+ +-----+    ||
+|+--------------------+|                    ||
+||                    ||                    ||
+||                    ||                    ||
+||     Signatures     |+--------------------+|
+||                    |+--------------------+|
+||+------------------+||  Sensitive Voting  ||
+||| 73 A9 4E AO 0D...|||    Certificates    ||
+||+------------------+|| +-----+ +-----+    ||
+||+------------------+|| | (3) | | (4) |    ||
+||| 53 B7 7C 98 56...||| |C    | |C    |    ||
+||+------------------+|| | sens| | sens| ...||
+||        ...         || +-----+ +-----+    ||
+|+--------------------++--------------------+|
+|+------------------------------------------+|
+||          CP Root Certificates            ||
+||                                          ||
+|| +-----+ +-----+ +-----+ +-----+          ||
+|| | (5) | | (6) | | (7) | | (8) |          ||
+|| |C    | |C    | |C    | |C    |          ||
+|| | root| | root| | root| | root| ...      ||
+|| +-----+ +--+--+ +-----+ +--+--+          ||
+|+------------+---------------+-------------+|
++-------------+---------------+--------------+
+              |               |
+              v               v
+     +-----------+         +-----------+
+     |   CP CA   |         |   CP CA   |
+     |Certificate|         |Certificate|
+     +-----+-----+         +-----+-----+
+           |                     |
+           v                     v
+     +-----------+         +-----------+
+     |   CP AS   |         |   CP AS   |
+     |Certificate|         |Certificate|
+     +-----------+         +-----------+
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
