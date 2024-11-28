@@ -1060,29 +1060,33 @@ The selection of the right set of TRCs to build the trust anchor pool depends on
 The selection algorithm for building the trust anchor pool is described in pseudo-python code below.
 
 ~~~~python
-    def select_trust_anchors(trcs: Dict[(int,int), TRC], verification_time: int) -> Set[RootCert]:
+    def select_trust_anchors(trcs: Dict[(int,int), TRC], \
+    verification_time: int) -> Set[RootCert]:
         """
         Args:
-            trcs: The dictionary mapping (serial number, base number) to the TRC for a given ISD.
+            trcs: The dictionary mapping (serial number, base number) \
+            to the TRC for a given ISD.
             verification_time: The time of verification.
 
         Returns:
             The set of CP Root certificates that act as trust anchors.
         """
-        # Find highest base number that has a TRC with a validity period
-        # starting before verification time.
+        # Find highest base number that has a TRC with validity period
+		# starting before verification time.
         base_nr = 1
-        for trc in trcs.values():
-            if trc.id.base_nr > base_nr and trc.validity.not_before <= verification_time:
+        for trc in trcs.values()
+            if trc.id.base_nr > base_nr and trc.validity.not_before \
+            <= verification_time:
                 base_nr = trc.id.base_nr
 
-        # Find TRC with highest serial number with the given base number and a
-        # validity period starting before verification time.
+        # Find TRC with highest serial number with given base number
+        # and a validity period starting before verification time.
         serial_nr = 1
         for trc in trcs[isd].values():
             if trc.id.base_nr != base_nr:
                 continue
-            if trc.id.serial_nr > serial_nr and trc.validity.not_before <= verification_time:
+            if trc.id.serial_nr > serial_nr and \
+            trc.validity.not_before <= verification_time:
                 serial_nr = trc.id.serial_nr
 
         candidate = trcs[(serial_nr, base_nr)]
@@ -1092,22 +1096,26 @@ The selection algorithm for building the trust anchor pool is described in pseud
         if not candidate.validity.contains(verification_time):
             return set()
 
-        # If the grace period has passed, only the certificates in that TRCs
-        # may be used as trust anchors.
-        if candidate.validity.not_before + candidate.grace_period < verification_time:
+        # If the grace period has passed, only the certificates in 
+        # that TRC may be used as trust anchors.
+        if candidate.validity.not_before + candidate.grace_period \
+        < verification_time:
             return collect_trust_anchors(candidate)
 
         predecessor = trcs.get((serial_nr-1, base_nr))
-        if not predecessor or predecessor.validity.not_after < verification_time:
+        if not predecessor or predecessor.validity.not_after < \
+        verification_time:
             return collect_trust_anchors(candidate)
 
-        return collect_trust_anchors(candidate) | collect_trust_anchors(predecessor)
+        return collect_trust_anchors(candidate) | \
+        collect_trust_anchors(predecessor)
 
 
     def collect_trust_anchors(trc: TRC) -> Set[RootCert]:
         """
         Args:
-            trc: A TRC from which the CP Root Certificates shall be extracted.
+            trc: A TRC from which the CP Root Certificates shall \
+            be extracted.
 
         Returns:
             The set of CP Root certificates that act as trust anchors.
