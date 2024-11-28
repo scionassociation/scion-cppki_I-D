@@ -1064,15 +1064,15 @@ The selection algorithm for building the trust anchor pool is described in pseud
     verification_time: int) -> Set[RootCert]:
         """
         Args:
-            trcs: The dictionary mapping (serial number, base number) \
-            to the TRC for a given ISD.
+            trcs: The dictionary mapping (serial number, \
+            base number) to the TRC for a given ISD.
             verification_time: The time of verification.
 
         Returns:
-            The set of CP Root certificates that act as trust anchors.
+            The set of CP Root certificates acting as trust anchors.
         """
-        # Find highest base number that has a TRC with validity period
-        # starting before verification time.
+        # Find highest base number that has a TRC with validity
+        # period starting before verification time.
         base_nr = 1
         for trc in trcs.values()
             if trc.id.base_nr > base_nr and trc.validity.not_before \
@@ -1096,7 +1096,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
         if not candidate.validity.contains(verification_time):
             return set()
 
-        # If the grace period has passed, only the certificates in 
+        # If the grace period has passed, only the certificates in
         # that TRC may be used as trust anchors.
         if candidate.validity.not_before + candidate.grace_period \
         < verification_time:
