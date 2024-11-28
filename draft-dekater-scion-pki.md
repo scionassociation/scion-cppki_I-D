@@ -1072,7 +1072,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
             The set of CP Root certificates that act as trust anchors.
         """
         # Find highest base number that has a TRC with validity period
-		# starting before verification time.
+        # starting before verification time.
         base_nr = 1
         for trc in trcs.values()
             if trc.id.base_nr > base_nr and trc.validity.not_before \
