@@ -1047,7 +1047,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 30 May 2025</td>
+<td class="center">Expires 1 June 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1060,12 +1060,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-11-26" class="published">26 November 2024</time>
+<time datetime="2024-11-28" class="published">28 November 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-05-30">30 May 2025</time></dd>
+<dd class="expires"><time datetime="2025-06-01">1 June 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1119,7 +1119,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 May 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2977,29 +2977,33 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <p id="section-3.1.4.1-2">The selection algorithm for building the trust anchor pool is described in pseudo-python code below.<a href="#section-3.1.4.1-2" class="pilcrow">¶</a></p>
 <div class="breakable lang-python sourcecode" id="section-3.1.4.1-3">
 <pre>
-    def select_trust_anchors(trcs: Dict[(int,int), TRC], verification_time: int) -&gt; Set[RootCert]:
+    def select_trust_anchors(trcs: Dict[(int,int), TRC], \
+    verification_time: int) -&gt; Set[RootCert]:
         """
         Args:
-            trcs: The dictionary mapping (serial number, base number) to the TRC for a given ISD.
+            trcs: The dictionary mapping (serial number, \
+            base number) to the TRC for a given ISD.
             verification_time: The time of verification.
 
         Returns:
-            The set of CP Root certificates that act as trust anchors.
+            The set of CP Root certificates acting as trust anchors.
         """
-        # Find highest base number that has a TRC with a validity period
-        # starting before verification time.
+        # Find highest base number that has a TRC with validity
+        # period starting before verification time.
         base_nr = 1
-        for trc in trcs.values():
-            if trc.id.base_nr &gt; base_nr and trc.validity.not_before &lt;= verification_time:
+        for trc in trcs.values()
+            if trc.id.base_nr &gt; base_nr and trc.validity.not_before \
+            &lt;= verification_time:
                 base_nr = trc.id.base_nr
 
-        # Find TRC with highest serial number with the given base number and a
-        # validity period starting before verification time.
+        # Find TRC with highest serial number with given base number
+        # and a validity period starting before verification time.
         serial_nr = 1
         for trc in trcs[isd].values():
             if trc.id.base_nr != base_nr:
                 continue
-            if trc.id.serial_nr &gt; serial_nr and trc.validity.not_before &lt;= verification_time:
+            if trc.id.serial_nr &gt; serial_nr and \
+            trc.validity.not_before &lt;= verification_time:
                 serial_nr = trc.id.serial_nr
 
         candidate = trcs[(serial_nr, base_nr)]
@@ -3009,22 +3013,26 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
         if not candidate.validity.contains(verification_time):
             return set()
 
-        # If the grace period has passed, only the certificates in that TRCs
-        # may be used as trust anchors.
-        if candidate.validity.not_before + candidate.grace_period &lt; verification_time:
+        # If the grace period has passed, only the certificates in
+        # that TRC may be used as trust anchors.
+        if candidate.validity.not_before + candidate.grace_period \
+        &lt; verification_time:
             return collect_trust_anchors(candidate)
 
         predecessor = trcs.get((serial_nr-1, base_nr))
-        if not predecessor or predecessor.validity.not_after &lt; verification_time:
+        if not predecessor or predecessor.validity.not_after &lt; \
+        verification_time:
             return collect_trust_anchors(candidate)
 
-        return collect_trust_anchors(candidate) | collect_trust_anchors(predecessor)
+        return collect_trust_anchors(candidate) | \
+        collect_trust_anchors(predecessor)
 
 
     def collect_trust_anchors(trc: TRC) -&gt; Set[RootCert]:
         """
         Args:
-            trc: A TRC from which the CP Root Certificates shall be extracted.
+            trc: A TRC from which the CP Root Certificates shall \
+            be extracted.
 
         Returns:
             The set of CP Root certificates that act as trust anchors.
