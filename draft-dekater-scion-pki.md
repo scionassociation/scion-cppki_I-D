@@ -1114,7 +1114,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
             be extracted.
 
         Returns:
-            The set of CP Root certificates that act as trust anchors.
+            The set of CP Root certificates acting as trust anchors.
         """
         roots = set()
         for cert in trc.certificates:
