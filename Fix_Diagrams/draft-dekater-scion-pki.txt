@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 14 June 2025                                            S. Hitz
+Expires: 23 June 2025                                            S. Hitz
                                                          Anapaya Systems
-                                                        11 December 2024
+                                                        20 December 2024
 
 
                         SCION Control Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 14 June 2025.
+   This Internet-Draft will expire on 23 June 2025.
 
 Copyright Notice
 
@@ -1933,7 +1933,7 @@ Table of Contents
                be extracted.
 
            Returns:
-               The set of CP Root certificates that act as trust anchors.
+               The set of CP Root certificates acting as trust anchors.
            """
            roots = set()
            for cert in trc.certificates:
