@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-19T00:21:53.779333+00:00",
+  "timestamp": "2024-12-22T00:22:46.250811+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -2321,13 +2321,13 @@
       "labels": [],
       "body": "TRC diagram simplified and reduced to 72 characters width. Figure 3 was identical and superfluous so has been replaced with a reference to the revised Figure 2.\r\n\r\nResolves #45 ",
       "createdAt": "2024-11-26T17:46:29Z",
-      "updatedAt": "2024-12-11T15:04:49Z",
+      "updatedAt": "2024-12-20T07:27:03Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "180b7b51bc007327fe115f4b0e742ef2053069b7",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Fix_Diagrams",
-      "headRefOid": "9bda7642b8e68ac441ad5b6fdf2d142107bcd148",
+      "headRefOid": "830fe16bb3fd5095c52bb9dffff7fe02e6c0dee9",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
