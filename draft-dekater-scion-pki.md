@@ -1562,6 +1562,12 @@ The signed TRC is validated by inspecting its contents on the monitor and verify
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
 
+## draft-dekater-scion-pki-08
+{:numbered="false"}
+
+- Fix oversized diagrams
+- Introduction text rewording
+
 ## draft-dekater-scion-pki-07
 {:numbered="false"}
 
