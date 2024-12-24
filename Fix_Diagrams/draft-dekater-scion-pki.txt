@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 23 June 2025                                            S. Hitz
+Expires: 27 June 2025                                            S. Hitz
                                                          Anapaya Systems
-                                                        20 December 2024
+                                                        24 December 2024
 
 
                         SCION Control Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 June 2025.
+   This Internet-Draft will expire on 27 June 2025.
 
 Copyright Notice
 
@@ -132,6 +132,7 @@ Table of Contents
        Phase 3: TRC Signing
         Phase 4: TRC Validation
    Change Log
+     draft-dekater-scion-pki-08
      draft-dekater-scion-pki-07
      draft-dekater-scion-pki-06
    Authors' Addresses
@@ -2523,9 +2524,9 @@ Table of Contents
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
               "SCION Data Plane", Work in Progress, Internet-Draft,
-              draft-dekater-scion-dataplane-03, 19 October 2024,
+              draft-dekater-scion-dataplane-04, 24 December 2024,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-03>.
+              scion-dataplane-04>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -2967,6 +2968,12 @@ Change Log
 
    Changes made to drafts since ISE submission.  This section is to be
    removed before publication.
+
+draft-dekater-scion-pki-08
+
+   *  Fix oversized diagrams
+
+   *  Introduction text rewording
 
 draft-dekater-scion-pki-07
 
