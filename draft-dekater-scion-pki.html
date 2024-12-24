@@ -12,20 +12,20 @@
        This document presents the trust concept and design of the SCION  Control Plane Public Key Infrastructure (CP-PKI) . SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture where the Control Plane PKI handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's Control Plane to authenticate and verify path information, and builds the basis for SCION's trust model based on Isolation Domains. 
        This document describes the trust model behind the SCION's Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure. 
     " name="description">
-<meta content="xml2rfc 3.23.2" name="generator">
+<meta content="xml2rfc 3.25.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.23.2
-    Python 3.12.7
+  xml2rfc 3.25.0
+    Python 3.12.8
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
-    lxml 4.9.4
+    lxml 5.3.0
     platformdirs 4.3.6
-    pycountry 22.3.5
-    PyYAML 6.0.1
+    pycountry 24.6.1
+    PyYAML 6.0.2
     requests 2.32.3
     setuptools 70.3.0
     wcwidth 0.2.13
@@ -164,31 +164,6 @@
 }
 
 @font-face {
-  font-family: 'Cabin Condensed';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-vietnamese.woff2') format('woff2');
-  unicode-range: U+0102-0103, U+0110-0111, U+1EA0-1EF9, U+20AB;
-}
-@font-face {
-  font-family: 'Cabin Condensed';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin-ext.woff2') format('woff2');
-  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-  font-family: 'Cabin Condensed';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: local('Cabin Condensed SemiBold'), local('CabinCondensed-SemiBold'), url('https://martinthomson.github.io/rfc-css/fonts/cabincondensed-semibold-latin.woff2') format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-@font-face {
   font-family: 'Oxygen Mono';
   font-style: normal;
   font-weight: 400;
@@ -205,6 +180,77 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: italic;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-italic-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic-ext.woff2') format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-cyrillic.woff2') format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-greek.woff2') format('woff2');
+  unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin-ext.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: 'Sofia Sans Semi Condensed';
+  font-style: normal;
+  font-weight: 1 1000;
+  src: url('https://martinthomson.github.io/rfc-css/fonts/sofiasanssemicondensed-regular-latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 :root {
   color-scheme: light dark;
   --background-color: #fff;
@@ -217,6 +263,7 @@
   --pilcrow-strong: #bbb;
   --small-font-size: 14.5px;
   --font-mono: 'Oxygen Mono', monospace;
+  --font-title: "Sofia Sans Semi Condensed", sans-serif;
   scrollbar-color: #bbb #eee;
 }
 body {
@@ -234,9 +281,15 @@ body {
 }
 
 /* headings */
+section {
+  clear: both;
+}
+.section-number {
+  padding-right: 0.5em;
+}
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Cabin Condensed", sans-serif;
-  font-weight: 600;
+  font-family: var(--font-title);
+  font-weight: 680;
   margin: 0.8em 0 0.3em;
   font-size-adjust: 0.5;
   color: var(--title-color);
@@ -265,6 +318,7 @@ h4, h5, h6 {
 /* general structure */
 .author {
   padding-bottom: 0.3em;
+  vertical-align: top;
 }
 #abstract+p {
   font-size: 18px;
@@ -342,25 +396,26 @@ svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
 ol, ul {
   padding: 0;
   margin: 0 0 0.5em 2em;
-}
-:is(ol, ul) :is(ol, ul) {
-  margin-left: 1em;
+  & :is(ol, ul) {
+    margin-left: 1em;
+  }
 }
 li {
   margin: 0 0 0.25em 0;
 }
-.ulCompact li {
-  margin: 0;
-}
 ul.empty, .ulEmpty {
   list-style-type: none;
-}
-ul.empty li, .ulEmpty li {
-  margin-top: 0.5em;
+  & li {
+    margin-top: 0.5em;
+  }
 }
 :is(ul, ol).compact, .ulCompact, .olCompact {
-  line-height: 1;
   margin: 0 0 0 2em;
+  & li {
+    margin: 0;
+    & :first-child { margin-top: 0; }
+    & :last-child { margin-bottom: 0; }
+  }
 }
 
 /* definition lists */
@@ -368,38 +423,39 @@ dl {
   clear: left;
   --indent: 3ch;
   /* --indent: attr(indent ch); not supported in any browser, but we can dream */
-}
-dl.olPercent {
-  --indent: 5ch;
+  &.olPercent {
+    --indent: 5ch;
+    & > dt {
+      min-width: calc(var(--indent) - 2ch);
+    }
+  }
+  &.olPercent > dt {
+    float: none;
+  }
+
+  dl > dd > & {
+    margin-top: 0.5em;
+    margin-bottom: 0;
+  }
 }
 dl > dt {
   float: left;
   margin-right: 2ch;
   min-width: 8ch;
 }
-dl.dlNewline > dt {
-  float: none;
-}
 dl > dd {
   margin-bottom: .8em;
   margin-left: var(--indent) !important; /* stupid element overrides */
   min-height: 2ex;
 }
-dl.olPercent > dt {
-  min-width: calc(var(--indent) - 2ch);
-}
 :is(dl.compact, .dlCompact) > dd {
   margin-bottom: 0;
-}
-:is(dl.compact, .dlCompact) > dd > :is(:first-child, .break:first-child + *) {
-  margin-top: 0;
-}
-:is(dl.compact, .dlCompact) > dd > :is(:last-child) {
-  margin-bottom: 0;
-}
-dl > dd > dl {
-  margin-top: 0.5em;
-  margin-bottom: 0;
+  & > :is(:first-child, .break:first-child + *) {
+    margin-top: 0;
+  }
+  & > :is(:last-child) {
+    margin-bottom: 0;
+  }
 }
 :is(dd, span).break {
   display: none;
@@ -463,6 +519,7 @@ figcaption, caption {
   font-style: italic;
   margin: 0.5em 1.5em;
   text-align: left;
+  caption-side: bottom;
 }
 @media screen {
   /* Auto-collapse boilerplate. */
@@ -480,7 +537,11 @@ figcaption, caption {
   }
   pre, svg {
     display: inline-block;
-    overflow-x: auto;
+    /* In the horizontal direction, sometimes people make over-sized figures.
+       Scrollbars for those is therefore necessary: auto adds them as necessary..
+       In the vertical direction, the line-height can combine with the font
+       asender/descender height to produce scrollbars: hidden avoids that. */
+    overflow: auto hidden;
   }
   pre {
     max-width: 100%;
@@ -517,6 +578,7 @@ cite {
 
 /* tables */
 table {
+  width: auto;
   max-width: 100%;
   margin: 0 0 1em;
   border-collapse: collapse;
@@ -531,6 +593,16 @@ table.center {
 table.left {
   margin-right: auto;
 }
+table .text-left {
+  text-align: left;
+}
+table .text-center {
+  text-align: center;
+}
+table .text-right {
+  text-align: right;
+}
+
 thead, tbody {
   border: 1px solid var(--line-color);
 }
@@ -561,9 +633,11 @@ a.pilcrow {
   margin-left: 3px;
   opacity: 0.2;
   user-select: none;
+  &[href] {
+    color: var(--pilcrow-weak);
+    &:hover { text-decoration: none; }
+  }
 }
-a.pilcrow[href] { color: var(--pilcrow-weak); }
-a.pilcrow[href]:hover { text-decoration: none; }
 @media not print {
   :hover > a.pilcrow {
     opacity: 1;
@@ -603,26 +677,28 @@ sub, sup {
   font-size: var(--small-font-size);
   line-height: 18px;
   --identifier-width: 15ch;
-}
-#identifiers dt {
-  width: var(--identifier-width);
-  min-width: var(--identifier-width);
-  clear: left;
-  float: left;
-  text-align: right;
-  margin-right: 1ch;
-}
-#identifiers dd {
-  margin: 0;
-  margin-left: calc(1em + var(--identifier-width)) !important;
-  min-width: 5em;
-}
-#identifiers .authors .author {
-  display: inline-block;
-  margin-right: 1.5em;
-}
-#identifiers .authors .org {
-  font-style: italic;
+  & dt {
+    width: var(--identifier-width);
+    min-width: var(--identifier-width);
+    clear: left;
+    float: left;
+    text-align: right;
+    margin-right: 1ch;
+  }
+  & dd {
+    margin: 0;
+    margin-left: calc(1em + var(--identifier-width)) !important;
+    min-width: 5em;
+  }
+  & .authors {
+    & .author {
+      display: inline-block;
+      margin-right: 1.5em;
+    }
+    & .org {
+      font-style: italic;
+    }
+  }
 }
 
 /* The prepared/rendered info at the very bottom of the page */
@@ -633,9 +709,6 @@ sub, sup {
   margin-top: 2em;
 }
 .docInfo .prepared {
-  float: left;
-}
-.docInfo .prepared {
   float: right;
 }
 
@@ -643,47 +716,48 @@ sub, sup {
 #toc {
   padding: 0.75em 0 2em 0;
   margin-bottom: 1em;
-}
-#toc nav ul {
-  margin: 0 0.5em 0 0;
-  padding: 0;
-  list-style: none;
-}
-#toc nav li {
-  line-height: 1.3em;
-  margin: 2px 0;
-  padding-left: 1.2em;
-  text-indent: -1.2em;
-}
-#toc a.xref {
-  white-space: normal;
-}
-/* references */
-.references dt {
-  text-align: right;
-  font-weight: bold;
-  min-width: 10ch;
-  margin-right: 1.5ch;
-}
-.references dt:target::before {
-  content: "⇒";
-  width: 15px;
-  margin: 0 10px 0 -25px;
-}
-.references dd {
-  margin-left: 12ch !important;
-  overflow: auto;
+
+  & nav {
+    & ul {
+      margin: 0 0.5em 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    & li {
+      line-height: 1.3em;
+      margin: 2px 0;
+      padding-left: 1.2em;
+      text-indent: -1.2em;
+    }
+  }
+  & a.xref {
+    white-space: normal;
+  }
 }
 
-.refInstance {
-  margin-bottom: 1.25em;
+.references {
+  & > dt {
+    text-align: right;
+    font-weight: bold;
+    min-width: 10ch;
+    margin-right: 1.5ch;
+    &:target::before {
+      content: "⇒";
+      margin: 0 10px 0 -25px;
+    }
+  }
+  & > dd {
+    margin-left: 12ch !important;
+    overflow: visible;
+    & .refInstance {
+      margin-bottom: 0.8em;
+    }
+    & .ascii {
+      margin-bottom: 0.25em;
+    }
+  }
 }
 
-.references .ascii {
-  margin-bottom: 0.25em;
-}
-
-/* index */
 #rfc\.index\.index + ul {
   margin-left: 0;
 }
@@ -691,21 +765,33 @@ sub, sup {
 /* authors */
 address.vcard {
   font-style: normal;
-  margin: 1em 0;
+  max-width: 20em;
+  margin: 1em auto 1em 0;
+
+  & .nameRole {
+    font-weight: 700;
+    margin-left: 0;
+  }
+  & .label {
+    margin: 0.5em 0;
+  }
+  & .type {
+    display: none;
+  }
+  & .alternative-contact {
+    margin: 0.5em 0 0.25em 0;
+  }
+  & .non-ascii {
+    margin: 0 0 0 2em;
+  }
+  & div.left {
+    text-align: left;
+  }
+  & div.right {
+    text-align: right;
+  }
 }
-address.vcard .nameRole {
-  font-weight: 700;
-  margin-left: 0;
-}
-address.vcard .label {
-  margin: 0.5em 0;
-}
-address.vcard .type {
-  display: none;
-}
-.alternative-contact {
-  margin: 1.5em 0 1em;
-}
+
 hr.addr {
   border-top: 1px dashed;
   margin: 0;
@@ -727,6 +813,7 @@ hr.addr {
   }
 }
 
+/* Comments */
 .rfcEditorRemove p:first-of-type {
   font-style: italic;
 }
@@ -737,7 +824,31 @@ hr.addr {
 .crefSource {
   font-style: italic;
 }
-/* alternative layout for smaller screens */
+
+@media screen {
+  #toc nav {
+    font-family: var(--font-title);
+    font-weight: 360;
+    & > ul { margin-bottom: 2em; }
+    & ul {
+      margin: 0 0 0 4px;
+      & :is(p, li) {
+        margin: 2px 0;
+      }
+    }
+  }
+  #toc a.toplink {
+    float: right;
+  }
+}
+@media not screen {
+  #toc a.toplink {
+    display: none;
+  }
+}
+
+
+/* TOC layout for smaller screens */
 @media screen and (max-width: 929px) {
   #toc {
     position: fixed;
@@ -748,9 +859,6 @@ hr.addr {
     margin: 0;
     border-bottom: 1px solid #ccc;
     opacity: 0.6;
-  }
-  #toc.active {
-      opacity: 1;
   }
   #toc h2 {
     margin: 0;
@@ -763,17 +871,17 @@ hr.addr {
     background-color: #444;
     color: white;
     cursor: pointer;
-  }
-  #toc h2::before { /* css hamburger */
-    float: right;
-    position: relative;
-    width: 1em;
-    height: 1px;
-    left: -164px;
-    margin: 8px 0 0 0;
-    background: white none repeat scroll 0 0;
-    box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
-    content: "";
+    &::before { /* css hamburger */
+      float: right;
+      position: relative;
+      width: 1em;
+      height: 1px;
+      left: -164px;
+      margin: 8px 0 0 0;
+      background: white none repeat scroll 0 0;
+      box-shadow: 0 4px 0 0 white, 0 8px 0 0 white;
+      content: "";
+    }
   }
   #toc nav {
     display: none;
@@ -784,14 +892,13 @@ hr.addr {
     height: calc(100vh - 48px);
     border-left: 1px solid #ddd;
   }
-  #toc.active nav {
-    display: block;
+  #toc.active {
+    opacity: 1;
+    & nav { display: block; }
   }
   /* Make the collapsed ToC header render white on gray also when it's a link */
   #toc h2 a,
-  #toc h2 a:link,
-  #toc h2 a:focus,
-  #toc h2 a:hover,
+  #toc h2 a:is(:link, :focus, :hover),
   #toc a.toplink,
   #toc a.toplink:hover {
     color: white;
@@ -799,11 +906,11 @@ hr.addr {
     text-decoration: none;
   }
   #toc a.toplink {
-    margin-top: 2px;
+    margin: 2px 0.5em 0;
   }
 }
 
-/* alternative layout for wide screens */
+/* TOC layout for wide screens */
 @media screen and (min-width: 930px) {
   body {
     padding-right: 360px;
@@ -832,20 +939,12 @@ hr.addr {
     overscroll-behavior: contain;
     scrollbar-width: thin;
   }
-  #toc nav > ul  {
-    margin-bottom: 2em;
-  }
-  #toc ul {
-    margin: 0 0 0 4px;
-    font-size: var(--small-font-size);
-  }
-  #toc ul :is(p, li) {
-    margin: 2px 0;
-    line-height: 22px;
-  }
   img { /* future proofing */
     max-width: 100%;
     height: auto;
+  }
+  #toc a.toplink {
+    margin: 8px 0.5em 0;
   }
 }
 
@@ -888,9 +987,6 @@ hr.addr {
   td {
     border-top: 1px solid #ddd;
   }
-  .toplink {
-    display: none;
-  }
 }
 
 @page :first {
@@ -913,82 +1009,6 @@ hr.addr {
   size: A4;
   margin-bottom: 45mm;
   padding-top: 20px;
-}
-
-/* Changes introduced to fix issues found during implementation */
-
-/* Separate body from document info even without intervening H1 */
-section {
-  clear: both;
-}
-
-/* Top align author divs, to avoid names without organization dropping level with org names */
-.author {
-  vertical-align: top;
-}
-
-/* Style section numbers with more space between number and title */
-.section-number {
-  padding-right: 0.5em;
-}
-
-/* Add styling for a link in the ToC that points to the top of the document */
-a.toplink {
-  float: right;
-  margin: 8px 0.5em 0;
-}
-
-/* Provide styling for table cell text alignment */
-table .text-left {
-  text-align: left;
-}
-table .text-center {
-  text-align: center;
-}
-table .text-right {
-  text-align: right;
-}
-
-/* Make the alternative author contact information look less like just another
-   author, and group it closer with the primary author contact information */
-.alternative-contact {
-  margin: 0.5em 0 0.25em 0;
-}
-address .non-ascii {
-  margin: 0 0 0 2em;
-}
-
-/* With it being possible to set tables with alignment
-  left, center, and right, { width: 100%; } does not make sense */
-table {
-  width: auto;
-}
-
-/* Avoid reference text that sits in a block with very wide left margin,
-   because of a long floating dt label.*/
-.references dd {
-  overflow: visible;
-}
-
-/* Control caption placement */
-caption {
-  caption-side: bottom;
-}
-
-/* Limit the width of the author address vcard, so names in right-to-left
-   script don't end up on the other side of the page. */
-
-address.vcard {
-  max-width: 20em;
-  margin-right: auto;
-}
-
-/* For address alignment dependent on LTR or RTL scripts */
-address div.left {
-  text-align: left;
-}
-address div.right {
-  text-align: right;
 }
 
 /* Dark mode. */
@@ -1027,11 +1047,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">October 2024</td>
+<td class="right">December 2024</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 21 April 2025</td>
+<td class="center">Expires 27 June 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1044,12 +1064,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2024-10-18" class="published">18 October 2024</time>
+<time datetime="2024-12-24" class="published">24 December 2024</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-04-21">21 April 2025</time></dd>
+<dd class="expires"><time datetime="2025-06-27">27 June 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1103,7 +1123,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 21 April 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 27 June 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1347,10 +1367,13 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.11.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
 </li>
             </ul>
 </li>
@@ -1369,7 +1392,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-1">SCION is a path-aware internetworking routing architecture as described in <span>[<a href="#RFC9217" class="cite xref">RFC9217</a>]</span>. It allows endpoints and applications to select paths across the network to use for traffic, based on trustworthy path properties. SCION is an inter-domain network architecture and is therefore not concerned with intra-domain forwarding.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">SCION has been developed with the following goals:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3"><em>Availability</em> - to provide highly available communication that can send traffic over paths with optimal or required characteristics, quickly handle inter-domain link or router failures (both on the last hop or anywhere along the path) and provide continuity in the presence of adversaries.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4"><em>Security</em> - to provide higher levels of trust in routing information in order to prevent IP prefix hijacking/leaks, denial-of-service and other attacks. Endpoints can decide the trust roots they wish to rely on, routing information can be unambiguously attributed to an AS, and packets are only forwarded along authorized path segments. A particular use case is to enable geofencing.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4"><em>Security</em> - to introduce a new approach to inter-domain path security that leverages path awareness in combination with a unique trust model. The goal is to provide higher levels of trust in routing information to prevent traffic hijacking, and enable users to decide where their data travels based on routing information that can be unambiguously attributed to an AS, ensuring that packets are only forwarded along authorized path segments. A particular use case is to enable geofencing.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><em>Scalability</em> - to improve the scalability of the inter-domain control plane and data plane, avoiding existing limitations related to convergence and forwarding table size. The advertising of path segments is separated into a beaconing process within each Isolation Domain (ISD) and between ISDs which incurs minimal overhead and resource requirements on routers.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">SCION relies on three main components:<a href="#section-1-6" class="pilcrow">¶</a></p>
 <p id="section-1-7"><em>PKI</em> - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called <em>Isolation Domains (ISDs)</em>. All ASes in an ISD agree on a set of trust roots called the <em>Trust Root Configuration (TRC)</em> which is a collection of signed root certificates in X.509 v3 format <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>. The ISD is governed by a set of <em>core ASes</em> which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure which the SCION Control Plane relies upon for the authentication of messages that is used for the SCION Control Plane.<a href="#section-1-7" class="pilcrow">¶</a></p>
@@ -1840,70 +1863,65 @@ TRC
 <p id="section-2.1.6-5">(1) Multiple signatures and certificates of each type <span class="bcp14">MAY</span> be included in a TRC.<br>
 (2) Recommended maximum validity period.<br>
 (3) A validity of 11 days with 4 days overlap between two CA certificates is <span class="bcp14">RECOMMENDED</span> to enable the best possible operational procedures when performing a CA certificate rollover.<a href="#section-2.1.6-5" class="pilcrow">¶</a></p>
-<p id="section-2.1.6-6"><a href="#_figure-2" class="auto internal xref">Figure 2</a> illustrates, at a high level, the relationship between a TRC and the five types of certificates.<a href="#section-2.1.6-6" class="pilcrow">¶</a></p>
+<p id="section-2.1.6-6"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.<a href="#section-2.1.6-6" class="pilcrow">¶</a></p>
 <span id="name-trc-update-chain-and-the-di"></span><div id="_figure-2">
 <figure id="figure-2">
             <div class="alignLeft art-text artwork" id="section-2.1.6-7.1">
 <pre>
-   +--------------------+     +--------------------+          +--------------+     +---------------+
-   |       TRC 1        +----&gt;|       TRC 2       -+------&gt;╳  |       TRC 3  +----&gt;|       TRC 4   |
-   |  (base, initial)   |     |  (regular update)  |          | (base, trust |     | (sensitive    |
-+--+--------------------+     +--------------------+------+   |     reset)   |     |     update)   |
-|                                                         |   +--------------+     +---------------+
-|                                                         |
-+--------------------------------------------+        +---+----------------------------------------+
-|             TRC 1 (base, initial)          |        |             TRC 2 (regular update)         |
-|+------------------------------------------+|        |+------------------------------------------+|
-||- Version       - Core ASes               ||        ||- Version       - Core ASes               ||
-||- ID            - Description             ||        ||- ID            - Description             ||
-||- Validity      - No Trust Reset          ||        ||- Validity      - No Trust Reset          ||
-||- Grace Period  - Voting Quorum           ||        ||- Grace Period  - Voting Quorum           ||
-||- ...                                     ||        ||- ...                                     ||
-|+------------------------------------------+|        |+------------------------------------------+|
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-||Votes (cert.indices)||   Regular Voting   ||        ||Votes (cert.indices)||   Regular Voting   ||
-||                    ||    Certificates    ||        ||                    ||    Certificates    ||
-||    (empty)         ||                    ||        ||    (1),(2)...      ||                    ||
-||                    ||+-----+ +-----+     ||        ||                    ||+-----+ +-----+     ||
-||                    ||| (1) | | (2) |     ||        ||                    ||| (1) | | (2) |     ||
-||                    |||C    | |C    | ... ||        ||                    |||C    | |C    | ... ||
-||                    ||| reg | | reg |     ||        ||                    ||| reg | | reg |     ||
-|+--------------------+|+--+--+ +--+--+     ||        |+--------------------+|+-----+ +-----+     ||
-|+--------------------+|   |       |        ||        |+--------------------+|                    ||
-||                    ||   |       +--------++-----+  ||                    ||                    ||
-||                    ||   +----------------++-+   |  ||                    ||                    ||
-||    Signatures      |+--------------------+| |   |  ||    Signatures      |+--------------------+|
-||                    |+--------------------+| |   |  ||                    |+--------------------+|
-||+------------------+|| Sensitive Voting   || |   |  ||+------------------+|| Sensitive Voting   ||
-|||73 A9 4E AO 0D ...|||    Certificates    || |   +--+&gt;|48 AE E4 80 DB ...|||    Certificates    ||
-||+------------------+||+-----+ +-----+     || |      ||+------------------+||+-----+ +-----+     ||
-||+------------------+||| (3) | | (4) |     || |      ||+------------------+||| (3) | | (4) |     ||
-|||53 B7 7C 98 56 ...||||C    | |C    |     || +------+&gt;|7E BC 75 98 25 ...||||C    | |C    |     ||
-||+------------------+||| sens| | sens| ... ||        ||+------------------+||| sens| | sens| ... ||
-||        ...         ||+-----+ +-----+     ||        ||        ...         ||+-----+ +-----+     ||
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-|+------------------------------------------+|        |+------------------------------------------+|
-||          CP Root Certificates            ||        ||          CP Root Certificates            ||
-||                                          ||        ||                                          ||
-|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
-|| | (5) | | (6) | | (7) | | (8) |          ||        || | (5) | | (6) | | (7) | | (8) |          ||
-|| |C    | |C    | |C    | |C    |          ||        || |C    | |C    | |C    | |C    |          ||
-|| | root| | root| | root| | root| .....    ||        || | root| | root| | root| | root| .....    ||
-|| +-----+ +--+--+ +-----+ +--+--+          ||        || +-----+ +--+--+ +-----+ +--+--+          ||
-|+------------+---------------+-------------+|        |+------------+---------------+-------------+|
-+-------------+---------------+--------------+        +-------------+---------------+--------------+
-              |               |                                     |               |
-    +---------v-+           +-v---------+                 +---------v-+           +-v---------+
-    |   CP CA   |           |   CP CA   |                 |   CP CA   |           |   CP CA   |
-    |Certificate|           |Certificate|                 |Certificate|           |Certificate|
-    +-----+-----+           +-----+-----+                 +-+-------+-+           +-----+-----+
-          |                       |                         |       |                   |
-          |                       |                         |       |                   |
-          v                       v                         v       v                   v
-    +-----------+           +-----------+          +-----------+ +-----------+        +-----------+
-    |   CP AS   |           |   CP AS   |          |   CP AS   | |   CP AS   |        |   CP AS   |
-    |Certificate|           |Certificate|          |Certificate| |Certificate|        |Certificate|
-    +-----------+           +-----------+          +-----------+ +-----------+        +-----------+
++--------------------------------------------+
+|                   TRC 1                    |
+|               (base/initial)               |
+|+------------------------------------------+|
+|| - Version          - Core ASes           ||
+|| - ID               - Description         ||
+|| - Validity         - No Trust Reset      ||
+|| - Grace Period     - Voting Quorum       ||
+|| - ...                                    ||
+|+------------------------------------------+|
+|+--------------------++--------------------+|
+||        Votes       ||   Regular Voting   ||
+||  (cert. indices)   ||    Certificates    ||
+||                    ||                    ||
+||                    || +-----+ +-----+    ||
+||       (empty)      || | (1) | | (2) |    ||
+||                    || |C    | |C    | ...||
+||                    || | reg | | reg |    ||
+|+--------------------+| +-----+ +-----+    ||
+|+--------------------+|                    ||
+||                    ||                    ||
+||                    ||                    ||
+||     Signatures     |+--------------------+|
+||                    |+--------------------+|
+||+------------------+||  Sensitive Voting  ||
+||| 73 A9 4E AO 0D...|||    Certificates    ||
+||+------------------+|| +-----+ +-----+    ||
+||+------------------+|| | (3) | | (4) |    ||
+||| 53 B7 7C 98 56...||| |C    | |C    |    ||
+||+------------------+|| | sens| | sens| ...||
+||        ...         || +-----+ +-----+    ||
+|+--------------------++--------------------+|
+|+------------------------------------------+|
+||          CP Root Certificates            ||
+||                                          ||
+|| +-----+ +-----+ +-----+ +-----+          ||
+|| | (5) | | (6) | | (7) | | (8) |          ||
+|| |C    | |C    | |C    | |C    |          ||
+|| | root| | root| | root| | root| ...      ||
+|| +-----+ +--+--+ +-----+ +--+--+          ||
+|+------------+---------------+-------------+|
++-------------+---------------+--------------+
+              |               |
+              v               v
+     +-----------+         +-----------+
+     |   CP CA   |         |   CP CA   |
+     |Certificate|         |Certificate|
+     +-----+-----+         +-----+-----+
+           |                     |
+           v                     v
+     +-----------+         +-----------+
+     |   CP AS   |         |   CP AS   |
+     |Certificate|         |Certificate|
+     +-----------+         +-----------+
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -2500,58 +2518,7 @@ TRC
               <p id="section-3.1.1-4.2.1">Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC, if it is still in its grace period (as defined in the <code>gracePeriod</code> field of the new TRC, see <a href="#grace" class="auto internal xref">Section 3.1.2.2.4</a>). No more than two TRCs can be active at the same time for any ISD.<a href="#section-3.1.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.1.1-5"><a href="#_figure-3" class="auto internal xref">Figure 3</a> shows the content of both a base/initial TRC and the first regularly-updated TRC based on the base TRC. All elements of the shown TRCs are specified in detail in the following subsections.<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
-<span id="name-the-trc-on-the-left-hand-si"></span><div id="_figure-3">
-<figure id="figure-3">
-            <div class="alignLeft art-text artwork" id="section-3.1.1-6.1">
-<pre>
-+--------------------------------------------+        +--------------------------------------------+
-|             TRC 1 (base, initial)          |        |             TRC 2 (regular update)         |
-|+------------------------------------------+|        |+------------------------------------------+|
-||- Version       - Core ASes               ||        ||- Version       - Core ASes               ||
-||- ID            - Description             ||        ||- ID            - Description             ||
-||- Validity      - No Trust Reset          ||        ||- Validity      - No Trust Reset          ||
-||- Grace Period  - Voting Quorum           ||        ||- Grace Period  - Voting Quorum           ||
-||- ...                                     ||        ||- ...                                     ||
-|+------------------------------------------+|        |+------------------------------------------+|
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-||Votes (cert.indices)||   Regular Voting   ||        ||Votes (cert.indices)||   Regular Voting   ||
-||                    ||    Certificates    ||        ||                    ||    Certificates    ||
-||    (empty)         ||                    ||        ||    (1),(2)...      ||                    ||
-||                    ||+-----+ +-----+     ||        ||                    ||+-----+ +-----+     ||
-||                    ||| (1) | | (2) |     ||        ||                    ||| (1) | | (2) |     ||
-||                    |||C    | |C    | ... ||        ||                    |||C    | |C    | ... ||
-||                    ||| reg | | reg |     ||        ||                    ||| reg | | reg |     ||
-|+--------------------+|+--+--+ +--+--+     ||        |+--------------------+|+-----+ +-----+     ||
-|+--------------------+|   |       |        ||        |+--------------------+|                    ||
-||                    ||   |       +--------++-----+  ||                    ||                    ||
-||                    ||   +----------------++-+   |  ||                    ||                    ||
-||    Signatures      |+--------------------+| |   |  ||    Signatures      |+--------------------+|
-||                    |+--------------------+| |   |  ||                    |+--------------------+|
-||+------------------+|| Sensitive Voting   || |   |  ||+------------------+|| Sensitive Voting   ||
-|||73 A9 4E AO 0D ...|||    Certificates    || |   +--+&gt;|48 AE E4 80 DB ...|||    Certificates    ||
-||+------------------+||+-----+ +-----+     || |      ||+------------------+||+-----+ +-----+     ||
-||+------------------+||| (3) | | (4) |     || |      ||+------------------+||| (3) | | (4) |     ||
-|||53 B7 7C 98 56 ...||||C    | |C    |     || +------+&gt;|7E BC 75 98 25 ...||||C    | |C    |     ||
-||+------------------+||| sens| | sens| ... ||        ||+------------------+||| sens| | sens| ... ||
-||        ...         ||+-----+ +-----+     ||        ||        ...         ||+-----+ +-----+     ||
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-|+------------------------------------------+|        |+------------------------------------------+|
-||          CP Root Certificates            ||        ||          CP Root Certificates            ||
-||                                          ||        ||                                          ||
-|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
-|| | (5) | | (6) | | (7) | | (8) |          ||        || | (5) | | (6) | | (7) | | (8) |          ||
-|| |C    | |C    | |C    | |C    |          ||        || |C    | |C    | |C    | |C    |          ||
-|| | root| | root| | root| | root| .....    ||        || | root| | root| | root| | root| .....    ||
-|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
-|+------------------------------------------+|        |+------------------------------------------+|
-+--------------------------------------------+        +--------------------------------------------+
-</pre>
-</div>
-<figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-the-trc-on-the-left-hand-si" class="selfRef">The TRC on the left-hand side is the initial base TRC. The TRC on the right is the product of the first regular update of the base TRC.</a>
-            </figcaption></figure>
-</div>
+<p id="section-3.1.1-5"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.<a href="#section-3.1.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trc-format">
@@ -3013,29 +2980,33 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <p id="section-3.1.4.1-2">The selection algorithm for building the trust anchor pool is described in pseudo-python code below.<a href="#section-3.1.4.1-2" class="pilcrow">¶</a></p>
 <div class="breakable lang-python sourcecode" id="section-3.1.4.1-3">
 <pre>
-    def select_trust_anchors(trcs: Dict[(int,int), TRC], verification_time: int) -&gt; Set[RootCert]:
+    def select_trust_anchors(trcs: Dict[(int,int), TRC], \
+    verification_time: int) -&gt; Set[RootCert]:
         """
         Args:
-            trcs: The dictionary mapping (serial number, base number) to the TRC for a given ISD.
+            trcs: The dictionary mapping (serial number, \
+            base number) to the TRC for a given ISD.
             verification_time: The time of verification.
 
         Returns:
-            The set of CP Root certificates that act as trust anchors.
+            The set of CP Root certificates acting as trust anchors.
         """
-        # Find highest base number that has a TRC with a validity period
-        # starting before verification time.
+        # Find highest base number that has a TRC with validity
+        # period starting before verification time.
         base_nr = 1
-        for trc in trcs.values():
-            if trc.id.base_nr &gt; base_nr and trc.validity.not_before &lt;= verification_time:
+        for trc in trcs.values()
+            if trc.id.base_nr &gt; base_nr and trc.validity.not_before \
+            &lt;= verification_time:
                 base_nr = trc.id.base_nr
 
-        # Find TRC with highest serial number with the given base number and a
-        # validity period starting before verification time.
+        # Find TRC with highest serial number with given base number
+        # and a validity period starting before verification time.
         serial_nr = 1
         for trc in trcs[isd].values():
             if trc.id.base_nr != base_nr:
                 continue
-            if trc.id.serial_nr &gt; serial_nr and trc.validity.not_before &lt;= verification_time:
+            if trc.id.serial_nr &gt; serial_nr and \
+            trc.validity.not_before &lt;= verification_time:
                 serial_nr = trc.id.serial_nr
 
         candidate = trcs[(serial_nr, base_nr)]
@@ -3045,25 +3016,29 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
         if not candidate.validity.contains(verification_time):
             return set()
 
-        # If the grace period has passed, only the certificates in that TRCs
-        # may be used as trust anchors.
-        if candidate.validity.not_before + candidate.grace_period &lt; verification_time:
+        # If the grace period has passed, only the certificates in
+        # that TRC may be used as trust anchors.
+        if candidate.validity.not_before + candidate.grace_period \
+        &lt; verification_time:
             return collect_trust_anchors(candidate)
 
         predecessor = trcs.get((serial_nr-1, base_nr))
-        if not predecessor or predecessor.validity.not_after &lt; verification_time:
+        if not predecessor or predecessor.validity.not_after &lt; \
+        verification_time:
             return collect_trust_anchors(candidate)
 
-        return collect_trust_anchors(candidate) | collect_trust_anchors(predecessor)
+        return collect_trust_anchors(candidate) | \
+        collect_trust_anchors(predecessor)
 
 
     def collect_trust_anchors(trc: TRC) -&gt; Set[RootCert]:
         """
         Args:
-            trc: A TRC from which the CP Root Certificates shall be extracted.
+            trc: A TRC from which the CP Root Certificates shall \
+            be extracted.
 
         Returns:
-            The set of CP Root certificates that act as trust anchors.
+            The set of CP Root certificates acting as trust anchors.
         """
         roots = set()
         for cert in trc.certificates:
@@ -3560,11 +3535,11 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <dl class="references">
 <dt id="I-D.dekater-scion-controlplane">[I-D.dekater-scion-controlplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-05</span>, <time datetime="2024-07-21" class="refDate">21 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-05">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-05</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-06</span>, <time datetime="2024-10-19" class="refDate">19 October 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-06">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.dekater-scion-dataplane">[I-D.dekater-scion-dataplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-02</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-02">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-02</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, <span class="refAuthor">Hugly, J.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-04</span>, <time datetime="2024-12-24" class="refDate">24 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-04">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-04</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -3912,49 +3887,64 @@ The participants of the Signing Ceremony fulfill different roles:<a href="#appen
 <a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
 <p id="appendix-D-1">Changes made to drafts since ISE submission. This section is to be removed before publication.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
-<div id="draft-dekater-scion-pki-07">
+<div id="draft-dekater-scion-pki-08">
 <section id="appendix-D.1">
+        <h3 id="name-draft-dekater-scion-pki-08">
+<a href="#name-draft-dekater-scion-pki-08" class="section-name selfRef">draft-dekater-scion-pki-08</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-D.1-1.1">
+            <p id="appendix-D.1-1.1.1">Fix oversized diagrams<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.2">
+            <p id="appendix-D.1-1.2.1">Introduction text rewording<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-dekater-scion-pki-07">
+<section id="appendix-D.2">
         <h3 id="name-draft-dekater-scion-pki-07">
 <a href="#name-draft-dekater-scion-pki-07" class="section-name selfRef">draft-dekater-scion-pki-07</a>
         </h3>
-<p id="appendix-D.1-1">Minor changes:<a href="#appendix-D.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.2-1">Minor changes:<a href="#appendix-D.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.1-2.1">
-            <p id="appendix-D.1-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.1-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.2-2.1">
+            <p id="appendix-D.2-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-2.2">
-            <p id="appendix-D.1-2.2.1">Added this changelog<a href="#appendix-D.1-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-2.2">
+            <p id="appendix-D.2-2.2.1">Added this changelog<a href="#appendix-D.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-2.3">
-            <p id="appendix-D.1-2.3.1">General text editing<a href="#appendix-D.1-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-2.3">
+            <p id="appendix-D.2-2.3.1">General text editing<a href="#appendix-D.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-2.4">
-            <p id="appendix-D.1-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.1-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-2.4">
+            <p id="appendix-D.2-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-06">
-<section id="appendix-D.2">
+<section id="appendix-D.3">
         <h3 id="name-draft-dekater-scion-pki-06">
 <a href="#name-draft-dekater-scion-pki-06" class="section-name selfRef">draft-dekater-scion-pki-06</a>
         </h3>
-<p id="appendix-D.2-1">Major changes:<a href="#appendix-D.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.3-1">Major changes:<a href="#appendix-D.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.2-2.1">
-            <p id="appendix-D.2-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.2-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.3-2.1">
+            <p id="appendix-D.3-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-D.2-3">Minor changes:<a href="#appendix-D.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-D.3-3">Minor changes:<a href="#appendix-D.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.2-4.1">
-            <p id="appendix-D.2-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.3-4.1">
+            <p id="appendix-D.3-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-4.2">
-            <p id="appendix-D.2-4.2.1">Removed forward references.<a href="#appendix-D.2-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-4.2">
+            <p id="appendix-D.3-4.2.1">Removed forward references.<a href="#appendix-D.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-4.3">
-            <p id="appendix-D.2-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.2-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-4.3">
+            <p id="appendix-D.3-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.3-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
