@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-24T00:20:43.828364+00:00",
+  "timestamp": "2024-12-26T00:20:41.940446+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -345,7 +345,7 @@
       "id": "I_kwDOH386tM6Zkwxv",
       "title": "Figures are too large",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/45",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -357,8 +357,8 @@
       ],
       "body": "- [ ] Figure 2\r\n- [ ] Figure 3  -- is it a duplicate of 2 - remove it\r\n- [ ] Pseudocode in 3.1.4.1.   TRC Selection For Trust Anchor Pool\r\n- [ ] Others ??\r\n",
       "createdAt": "2024-10-09T17:44:08Z",
-      "updatedAt": "2024-11-26T10:25:40Z",
-      "closedAt": null,
+      "updatedAt": "2024-12-24T12:50:01Z",
+      "closedAt": "2024-12-24T12:50:00Z",
       "comments": []
     }
   ],
@@ -2314,26 +2314,42 @@
       "id": "PR_kwDOH386tM6DOc6D",
       "title": "Reduce over-width diagrams",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/49",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "TRC diagram simplified and reduced to 72 characters width. Figure 3 was identical and superfluous so has been replaced with a reference to the revised Figure 2.\r\n\r\nResolves #45 ",
       "createdAt": "2024-11-26T17:46:29Z",
-      "updatedAt": "2024-12-20T07:27:03Z",
+      "updatedAt": "2024-12-24T12:50:00Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "180b7b51bc007327fe115f4b0e742ef2053069b7",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Fix_Diagrams",
-      "headRefOid": "830fe16bb3fd5095c52bb9dffff7fe02e6c0dee9",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "5ff341f5a4d60b39c51661824ed5e156230c0fd3",
+      "closedAt": "2024-12-24T12:49:59Z",
+      "mergedAt": "2024-12-24T12:49:59Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "25e39039b03748a7c4cf6bb47eb8a60ea8d28a53"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6WUZkC",
+          "commit": {
+            "abbreviatedOid": "5ff341f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-24T12:49:52Z",
+          "updatedAt": "2024-12-24T12:49:52Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
