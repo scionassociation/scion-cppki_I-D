@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 30 May 2025                                             S. Hitz
+Expires: 3 July 2025                                             S. Hitz
                                                          Anapaya Systems
-                                                        26 November 2024
+                                                        30 December 2024
 
 
                         SCION Control Plane PKI
@@ -56,7 +56,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 May 2025.
+   This Internet-Draft will expire on 3 July 2025.
 
 Copyright Notice
 
@@ -132,6 +132,7 @@ Table of Contents
        Phase 3: TRC Signing
         Phase 4: TRC Validation
    Change Log
+     draft-dekater-scion-pki-08
      draft-dekater-scion-pki-07
      draft-dekater-scion-pki-06
    Authors' Addresses
@@ -153,12 +154,14 @@ Table of Contents
    hop or anywhere along the path) and provide continuity in the
    presence of adversaries.
 
-   _Security_ - to provide higher levels of trust in routing information
-   in order to prevent IP prefix hijacking/leaks, denial-of-service and
-   other attacks.  Endpoints can decide the trust roots they wish to
-   rely on, routing information can be unambiguously attributed to an
-   AS, and packets are only forwarded along authorized path segments.  A
-   particular use case is to enable geofencing.
+   _Security_ - to introduce a new approach to inter-domain path
+   security that leverages path awareness in combination with a unique
+   trust model.  The goal is to provide higher levels of trust in
+   routing information to prevent traffic hijacking, and enable users to
+   decide where their data travels based on routing information that can
+   be unambiguously attributed to an AS, ensuring that packets are only
+   forwarded along authorized path segments.  A particular use case is
+   to enable geofencing.
 
    _Scalability_ - to improve the scalability of the inter-domain
    control plane and data plane, avoiding existing limitations related
@@ -203,8 +206,10 @@ Table of Contents
    document is to document the existing protocol specification as
    deployed, to encourage additional implementations, and to introduce
    new concepts that can potentially be further improved to address
-   particular problems with the current Internet architecture.  This is
-   not intended for publication as an Internet Standard.
+   particular problems with the current Internet architecture.  This
+   document is not an Internet Standards Track specification; it does
+   not have IETF consensus and it is published for informational
+   purposes.
 
    Note (to be removed before publication): this document, together with
    the other components [I-D.dekater-scion-controlplane] and
@@ -768,73 +773,70 @@ Table of Contents
    certificates is RECOMMENDED to enable the best possible operational
    procedures when performing a CA certificate rollover.
 
-   Figure 2 illustrates, at a high level, the relationship between a TRC
-   and the five types of certificates.
+   Figure 2 shows the content of a base/initial TRC, and the
+   relationship between a TRC and the five types of certificates.  The
+   initial signatures are replaced by those of the Regular Voting
+   Certificates with the first regular update to the base TRC.
 
-   +--------------------+     +--------------------+          +--------------+     +---------------+
-   |       TRC 1        +---->|       TRC 2       -+------>╳  |       TRC 3  +---->|       TRC 4   |
-   |  (base, initial)   |     |  (regular update)  |          | (base, trust |     | (sensitive    |
-+--+--------------------+     +--------------------+------+   |     reset)   |     |     update)   |
-|                                                         |   +--------------+     +---------------+
-|                                                         |
-+--------------------------------------------+        +---+----------------------------------------+
-|             TRC 1 (base, initial)          |        |             TRC 2 (regular update)         |
-|+------------------------------------------+|        |+------------------------------------------+|
-||- Version       - Core ASes               ||        ||- Version       - Core ASes               ||
-||- ID            - Description             ||        ||- ID            - Description             ||
-||- Validity      - No Trust Reset          ||        ||- Validity      - No Trust Reset          ||
-||- Grace Period  - Voting Quorum           ||        ||- Grace Period  - Voting Quorum           ||
-||- ...                                     ||        ||- ...                                     ||
-|+------------------------------------------+|        |+------------------------------------------+|
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-||Votes (cert.indices)||   Regular Voting   ||        ||Votes (cert.indices)||   Regular Voting   ||
-||                    ||    Certificates    ||        ||                    ||    Certificates    ||
-||    (empty)         ||                    ||        ||    (1),(2)...      ||                    ||
-||                    ||+-----+ +-----+     ||        ||                    ||+-----+ +-----+     ||
-||                    ||| (1) | | (2) |     ||        ||                    ||| (1) | | (2) |     ||
-||                    |||C    | |C    | ... ||        ||                    |||C    | |C    | ... ||
-||                    ||| reg | | reg |     ||        ||                    ||| reg | | reg |     ||
-|+--------------------+|+--+--+ +--+--+     ||        |+--------------------+|+-----+ +-----+     ||
-|+--------------------+|   |       |        ||        |+--------------------+|                    ||
-||                    ||   |       +--------++-----+  ||                    ||                    ||
-||                    ||   +----------------++-+   |  ||                    ||                    ||
-||    Signatures      |+--------------------+| |   |  ||    Signatures      |+--------------------+|
-||                    |+--------------------+| |   |  ||                    |+--------------------+|
-||+------------------+|| Sensitive Voting   || |   |  ||+------------------+|| Sensitive Voting   ||
-|||73 A9 4E AO 0D ...|||    Certificates    || |   +--+>|48 AE E4 80 DB ...|||    Certificates    ||
-||+------------------+||+-----+ +-----+     || |      ||+------------------+||+-----+ +-----+     ||
-||+------------------+||| (3) | | (4) |     || |      ||+------------------+||| (3) | | (4) |     ||
-|||53 B7 7C 98 56 ...||||C    | |C    |     || +------+>|7E BC 75 98 25 ...||||C    | |C    |     ||
-||+------------------+||| sens| | sens| ... ||        ||+------------------+||| sens| | sens| ... ||
-||        ...         ||+-----+ +-----+     ||        ||        ...         ||+-----+ +-----+     ||
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-|+------------------------------------------+|        |+------------------------------------------+|
-||          CP Root Certificates            ||        ||          CP Root Certificates            ||
-||                                          ||        ||                                          ||
-|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
-|| | (5) | | (6) | | (7) | | (8) |          ||        || | (5) | | (6) | | (7) | | (8) |          ||
-|| |C    | |C    | |C    | |C    |          ||        || |C    | |C    | |C    | |C    |          ||
-|| | root| | root| | root| | root| .....    ||        || | root| | root| | root| | root| .....    ||
-|| +-----+ +--+--+ +-----+ +--+--+          ||        || +-----+ +--+--+ +-----+ +--+--+          ||
-|+------------+---------------+-------------+|        |+------------+---------------+-------------+|
-+-------------+---------------+--------------+        +-------------+---------------+--------------+
-              |               |                                     |               |
-    +---------v-+           +-v---------+                 +---------v-+           +-v---------+
-    |   CP CA   |           |   CP CA   |                 |   CP CA   |           |   CP CA   |
-    |Certificate|           |Certificate|                 |Certificate|           |Certificate|
-    +-----+-----+           +-----+-----+                 +-+-------+-+           +-----+-----+
-          |                       |                         |       |                   |
-          |                       |                         |       |                   |
-          v                       v                         v       v                   v
-    +-----------+           +-----------+          +-----------+ +-----------+        +-----------+
-    |   CP AS   |           |   CP AS   |          |   CP AS   | |   CP AS   |        |   CP AS   |
-    |Certificate|           |Certificate|          |Certificate| |Certificate|        |Certificate|
-    +-----------+           +-----------+          +-----------+ +-----------+        +-----------+
+   +--------------------------------------------+
+   |                   TRC 1                    |
+   |               (base/initial)               |
+   |+------------------------------------------+|
+   || - Version          - Core ASes           ||
+   || - ID               - Description         ||
+   || - Validity         - No Trust Reset      ||
+   || - Grace Period     - Voting Quorum       ||
+   || - ...                                    ||
+   |+------------------------------------------+|
+   |+--------------------++--------------------+|
+   ||        Votes       ||   Regular Voting   ||
+   ||  (cert. indices)   ||    Certificates    ||
+   ||                    ||                    ||
+   ||                    || +-----+ +-----+    ||
+   ||       (empty)      || | (1) | | (2) |    ||
+   ||                    || |C    | |C    | ...||
+   ||                    || | reg | | reg |    ||
+   |+--------------------+| +-----+ +-----+    ||
+   |+--------------------+|                    ||
+   ||                    ||                    ||
+   ||                    ||                    ||
+   ||     Signatures     |+--------------------+|
+   ||                    |+--------------------+|
+   ||+------------------+||  Sensitive Voting  ||
+   ||| 73 A9 4E AO 0D...|||    Certificates    ||
+   ||+------------------+|| +-----+ +-----+    ||
+   ||+------------------+|| | (3) | | (4) |    ||
+   ||| 53 B7 7C 98 56...||| |C    | |C    |    ||
+   ||+------------------+|| | sens| | sens| ...||
+   ||        ...         || +-----+ +-----+    ||
+   |+--------------------++--------------------+|
+   |+------------------------------------------+|
+   ||          CP Root Certificates            ||
+   ||                                          ||
+   || +-----+ +-----+ +-----+ +-----+          ||
+   || | (5) | | (6) | | (7) | | (8) |          ||
+   || |C    | |C    | |C    | |C    |          ||
+   || | root| | root| | root| | root| ...      ||
+   || +-----+ +--+--+ +-----+ +--+--+          ||
+   |+------------+---------------+-------------+|
+   +-------------+---------------+--------------+
+                 |               |
+                 v               v
+        +-----------+         +-----------+
+        |   CP CA   |         |   CP CA   |
+        |Certificate|         |Certificate|
+        +-----+-----+         +-----+-----+
+              |                     |
+              v                     v
+        +-----------+         +-----------+
+        |   CP AS   |         |   CP AS   |
+        |Certificate|         |Certificate|
+        +-----------+         +-----------+
 
-   Figure 2: TRC update chain and the different types of associated
-   certificates.  Arrows show how signatures are verified; in other
-  words, they indicate that a public key contained in a certificate
-    or TRC can be used to verify the authenticity of another item.
+      Figure 2: TRC update chain and the different types of associated
+      certificates.  Arrows show how signatures are verified; in other
+     words, they indicate that a public key contained in a certificate
+       or TRC can be used to verify the authenticity of another item.
 
 2.2.  Certificate Specification
 
@@ -1382,55 +1384,9 @@ Table of Contents
       Section 3.1.2.2.4).  No more than two TRCs can be active at the
       same time for any ISD.
 
-   Figure 3 shows the content of both a base/initial TRC and the first
-   regularly-updated TRC based on the base TRC.  All elements of the
-   shown TRCs are specified in detail in the following subsections.
-
-+--------------------------------------------+        +--------------------------------------------+
-|             TRC 1 (base, initial)          |        |             TRC 2 (regular update)         |
-|+------------------------------------------+|        |+------------------------------------------+|
-||- Version       - Core ASes               ||        ||- Version       - Core ASes               ||
-||- ID            - Description             ||        ||- ID            - Description             ||
-||- Validity      - No Trust Reset          ||        ||- Validity      - No Trust Reset          ||
-||- Grace Period  - Voting Quorum           ||        ||- Grace Period  - Voting Quorum           ||
-||- ...                                     ||        ||- ...                                     ||
-|+------------------------------------------+|        |+------------------------------------------+|
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-||Votes (cert.indices)||   Regular Voting   ||        ||Votes (cert.indices)||   Regular Voting   ||
-||                    ||    Certificates    ||        ||                    ||    Certificates    ||
-||    (empty)         ||                    ||        ||    (1),(2)...      ||                    ||
-||                    ||+-----+ +-----+     ||        ||                    ||+-----+ +-----+     ||
-||                    ||| (1) | | (2) |     ||        ||                    ||| (1) | | (2) |     ||
-||                    |||C    | |C    | ... ||        ||                    |||C    | |C    | ... ||
-||                    ||| reg | | reg |     ||        ||                    ||| reg | | reg |     ||
-|+--------------------+|+--+--+ +--+--+     ||        |+--------------------+|+-----+ +-----+     ||
-|+--------------------+|   |       |        ||        |+--------------------+|                    ||
-||                    ||   |       +--------++-----+  ||                    ||                    ||
-||                    ||   +----------------++-+   |  ||                    ||                    ||
-||    Signatures      |+--------------------+| |   |  ||    Signatures      |+--------------------+|
-||                    |+--------------------+| |   |  ||                    |+--------------------+|
-||+------------------+|| Sensitive Voting   || |   |  ||+------------------+|| Sensitive Voting   ||
-|||73 A9 4E AO 0D ...|||    Certificates    || |   +--+>|48 AE E4 80 DB ...|||    Certificates    ||
-||+------------------+||+-----+ +-----+     || |      ||+------------------+||+-----+ +-----+     ||
-||+------------------+||| (3) | | (4) |     || |      ||+------------------+||| (3) | | (4) |     ||
-|||53 B7 7C 98 56 ...||||C    | |C    |     || +------+>|7E BC 75 98 25 ...||||C    | |C    |     ||
-||+------------------+||| sens| | sens| ... ||        ||+------------------+||| sens| | sens| ... ||
-||        ...         ||+-----+ +-----+     ||        ||        ...         ||+-----+ +-----+     ||
-|+--------------------++--------------------+|        |+--------------------++--------------------+|
-|+------------------------------------------+|        |+------------------------------------------+|
-||          CP Root Certificates            ||        ||          CP Root Certificates            ||
-||                                          ||        ||                                          ||
-|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
-|| | (5) | | (6) | | (7) | | (8) |          ||        || | (5) | | (6) | | (7) | | (8) |          ||
-|| |C    | |C    | |C    | |C    |          ||        || |C    | |C    | |C    | |C    |          ||
-|| | root| | root| | root| | root| .....    ||        || | root| | root| | root| | root| .....    ||
-|| +-----+ +-----+ +-----+ +-----+          ||        || +-----+ +-----+ +-----+ +-----+          ||
-|+------------------------------------------+|        |+------------------------------------------+|
-+--------------------------------------------+        +--------------------------------------------+
-
-   Figure 3: The TRC on the left-hand side is the initial base TRC.
-   The TRC on the right is the product of the first regular update
-                           of the base TRC.
+   Figure 2 shows the content of both a base/initial TRC, the changes
+   made with the first regular update to the base TRC.  All elements of
+   the TRC is detailed in the following subsections.
 
 3.1.2.   TRC Format
 
@@ -1923,29 +1879,33 @@ Table of Contents
    The selection algorithm for building the trust anchor pool is
    described in pseudo-python code below.
 
-       def select_trust_anchors(trcs: Dict[(int,int), TRC], verification_time: int) -> Set[RootCert]:
+       def select_trust_anchors(trcs: Dict[(int,int), TRC], \
+       verification_time: int) -> Set[RootCert]:
            """
            Args:
-               trcs: The dictionary mapping (serial number, base number) to the TRC for a given ISD.
+               trcs: The dictionary mapping (serial number, \
+               base number) to the TRC for a given ISD.
                verification_time: The time of verification.
 
            Returns:
-               The set of CP Root certificates that act as trust anchors.
+               The set of CP Root certificates acting as trust anchors.
            """
-           # Find highest base number that has a TRC with a validity period
-           # starting before verification time.
+           # Find highest base number that has a TRC with validity
+           # period starting before verification time.
            base_nr = 1
-           for trc in trcs.values():
-               if trc.id.base_nr > base_nr and trc.validity.not_before <= verification_time:
+           for trc in trcs.values()
+               if trc.id.base_nr > base_nr and trc.validity.not_before \
+               <= verification_time:
                    base_nr = trc.id.base_nr
 
-           # Find TRC with highest serial number with the given base number and a
-           # validity period starting before verification time.
+           # Find TRC with highest serial number with given base number
+           # and a validity period starting before verification time.
            serial_nr = 1
            for trc in trcs[isd].values():
                if trc.id.base_nr != base_nr:
                    continue
-               if trc.id.serial_nr > serial_nr and trc.validity.not_before <= verification_time:
+               if trc.id.serial_nr > serial_nr and \
+               trc.validity.not_before <= verification_time:
                    serial_nr = trc.id.serial_nr
 
            candidate = trcs[(serial_nr, base_nr)]
@@ -1955,25 +1915,29 @@ Table of Contents
            if not candidate.validity.contains(verification_time):
                return set()
 
-           # If the grace period has passed, only the certificates in that TRCs
-           # may be used as trust anchors.
-           if candidate.validity.not_before + candidate.grace_period < verification_time:
+           # If the grace period has passed, only the certificates in
+           # that TRC may be used as trust anchors.
+           if candidate.validity.not_before + candidate.grace_period \
+           < verification_time:
                return collect_trust_anchors(candidate)
 
            predecessor = trcs.get((serial_nr-1, base_nr))
-           if not predecessor or predecessor.validity.not_after < verification_time:
+           if not predecessor or predecessor.validity.not_after < \
+           verification_time:
                return collect_trust_anchors(candidate)
 
-           return collect_trust_anchors(candidate) | collect_trust_anchors(predecessor)
+           return collect_trust_anchors(candidate) | \
+           collect_trust_anchors(predecessor)
 
 
        def collect_trust_anchors(trc: TRC) -> Set[RootCert]:
            """
            Args:
-               trc: A TRC from which the CP Root Certificates shall be extracted.
+               trc: A TRC from which the CP Root Certificates shall \
+               be extracted.
 
            Returns:
-               The set of CP Root certificates that act as trust anchors.
+               The set of CP Root certificates acting as trust anchors.
            """
            roots = set()
            for cert in trc.certificates:
@@ -2556,16 +2520,16 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-06, 19 October 2024,
+              scion-controlplane-07, 24 December 2024,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-06>.
+              scion-controlplane-07>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
               "SCION Data Plane", Work in Progress, Internet-Draft,
-              draft-dekater-scion-dataplane-03, 19 October 2024,
+              draft-dekater-scion-dataplane-04, 24 December 2024,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-03>.
+              scion-dataplane-04>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -3007,6 +2971,12 @@ Change Log
 
    Changes made to drafts since ISE submission.  This section is to be
    removed before publication.
+
+draft-dekater-scion-pki-08
+
+   *  Fix oversized diagrams
+
+   *  Introduction text rewording
 
 draft-dekater-scion-pki-07
 
