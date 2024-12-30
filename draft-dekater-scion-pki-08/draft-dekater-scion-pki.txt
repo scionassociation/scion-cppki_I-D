@@ -2974,7 +2974,7 @@ Change Log
 
 draft-dekater-scion-pki-08
 
-   *  Fix oversized diagrams
+   *  Fix some oversized diagrams
 
    *  Introduction text rewording
 
