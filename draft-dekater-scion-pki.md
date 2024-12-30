@@ -1565,7 +1565,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-08
 {:numbered="false"}
 
-- Fix oversized diagrams
+- Fix some oversized diagrams
 - Introduction text rewording
 
 ## draft-dekater-scion-pki-07
