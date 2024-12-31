@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2024-12-29T00:23:06.687921+00:00",
+  "timestamp": "2024-12-31T00:20:40.071936+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -2288,26 +2288,42 @@
       "id": "PR_kwDOH386tM6DK9LU",
       "title": "Clarifies aim of document",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/48",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2024-11-26T11:08:41Z",
-      "updatedAt": "2024-11-26T11:08:42Z",
+      "updatedAt": "2024-12-30T11:43:33Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "180b7b51bc007327fe115f4b0e742ef2053069b7",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "this-is-not-a-standard",
-      "headRefOid": "86d575caeba59fbbca514b93fb81a68db25fc75a",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "960e07aac03d734400b3490e031fe063aec333ee",
+      "closedAt": "2024-12-30T11:43:24Z",
+      "mergedAt": "2024-12-30T11:43:24Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "82b39f10895e17775c61e3a91e214a42e5bdde32"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6Wh_SD",
+          "commit": {
+            "abbreviatedOid": "960e07a"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2024-12-30T11:42:24Z",
+          "updatedAt": "2024-12-30T11:42:24Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 49,
@@ -2350,6 +2366,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 50,
+      "id": "PR_kwDOH386tM6GbZQM",
+      "title": "dummy change",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/50",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2024-12-30T11:49:59Z",
+      "updatedAt": "2024-12-30T11:50:19Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "82b39f10895e17775c61e3a91e214a42e5bdde32",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "dummy_change",
+      "headRefOid": "59a547291d2516cfdb0c25eb7dd808f471c0536f",
+      "closedAt": "2024-12-30T11:50:15Z",
+      "mergedAt": "2024-12-30T11:50:15Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "657d2c6ea54f06e86efd9dfa057af99a368accb0"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
