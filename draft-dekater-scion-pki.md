@@ -143,6 +143,7 @@ This document presents the trust concept and design of the SCION *Control Plane 
 
 This document describes the trust model behind the SCION's Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure.
 
+This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet.
 
 --- middle
 
@@ -168,7 +169,11 @@ SCION relies on three main components:
 
 This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}.
 
+<<<<<<< Updated upstream
 The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, to encourage additional implementations, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture. This is not intended for publication as an Internet Standard.
+=======
+The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, to encourage interoperability among implementations, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture.
+>>>>>>> Stashed changes
 
 Note (to be removed before publication): this document, together with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}, deprecates {{I-D.dekater-panrg-scion-overview}}.
 
