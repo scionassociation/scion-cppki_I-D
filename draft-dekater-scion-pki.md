@@ -1402,7 +1402,7 @@ A Signing Ceremony is used to create the initial (first) Trust Root Configuratio
 
 The Signing Ceremony SHOULD include the following participants:
 
-- **Ceremony Administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes. 
+- **Ceremony Administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.
 
 - **Voting AS Representatives** - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.
 
@@ -1433,7 +1433,7 @@ In addition, each Certificate Issuer MUST create a control plane root private ke
 
 The location MUST provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.
 
-The Ceremony Administrator and Voting ASes MUST each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs, that has access to their own sensitive and regular voting private keys, and can compute the SHA-512 digest of the files. 
+The Ceremony Administrator and Voting ASes MUST each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs, that has access to their own sensitive and regular voting private keys, and can compute the SHA-512 digest of the files.
 
 The Ceremony Administrator MUST provide or be provided with a device to exchange data between the ceremony participants.
 
