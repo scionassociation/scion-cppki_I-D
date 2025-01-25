@@ -1453,7 +1453,7 @@ The signing process has four phases of data sharing, led by the Ceremony Adminis
 
 All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Issuers these are the Control Plane root certificates.
 
-Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy their private keys onto the data exchange device as this invalidates the security of the ceremony. 
+Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy their private keys onto the data exchange device as this invalidates the security of the ceremony.
 
 The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA256 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA512 hash value for the entire bundle. All hash values must be displayed to the participants.
 
@@ -1475,7 +1475,7 @@ Phase 2 concludes when all voting representatives confirm that the contents of t
 ### Phase 3: TRC Signing {#phase3}
 {:numbered="false"}
 
-Each voting representative attaches a signature created with their private voting keys to the TRC (payload file), using their own machine. This serves to prove possession of the private keys. 
+Each voting representative attaches a signature created with their private voting keys to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.
 
 Phase 3 concludes when all voting representatives have attached their signatures to the TRC.
 
@@ -1483,9 +1483,9 @@ Phase 3 concludes when all voting representatives have attached their signatures
 ### Phase 4: TRC Validation {#phase4}
 {:numbered="false"}
 
-All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The signed TRC is then shared with all the voting representatives who must again inspect the signatures. 
+All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The signed TRC is then shared with all the voting representatives who must again inspect the signatures.
 
-The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD. 
+The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.
 
 
 # Change Log
