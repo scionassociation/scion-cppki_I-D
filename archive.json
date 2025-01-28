@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-26T00:20:43.182428+00:00",
+  "timestamp": "2025-01-28T00:20:36.619658+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -359,6 +359,24 @@
       "createdAt": "2024-10-09T17:44:08Z",
       "updatedAt": "2024-12-24T12:50:01Z",
       "closedAt": "2024-12-24T12:50:00Z",
+      "comments": []
+    },
+    {
+      "number": 53,
+      "id": "I_kwDOH386tM6nk6G1",
+      "title": "Signing Ceremony",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/53",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [],
+      "body": "The current description of the Signing Ceremony has inconsistencies in the order of the process and duplicates text.",
+      "createdAt": "2025-01-26T11:19:11Z",
+      "updatedAt": "2025-01-26T11:19:13Z",
+      "closedAt": null,
       "comments": []
     }
   ],
