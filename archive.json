@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-01-30T00:19:57.851989+00:00",
+  "timestamp": "2025-02-06T00:20:45.315407+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -2462,6 +2462,34 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 54,
+      "id": "PR_kwDOH386tM6J9Iwj",
+      "title": "Update actions",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/54",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-02-04T08:38:08Z",
+      "updatedAt": "2025-02-04T08:38:17Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "657d2c6ea54f06e86efd9dfa057af99a368accb0",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "update-actions",
+      "headRefOid": "3d2f74b788196c832f506c0b82575bc0a4ae986b",
+      "closedAt": "2025-02-04T08:38:15Z",
+      "mergedAt": "2025-02-04T08:38:15Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "61980665961ba5c021157b910bea18db3c6a33f1"
+      },
       "comments": [],
       "reviews": []
     }
