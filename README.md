@@ -1,6 +1,6 @@
-# SCION Control-Plane PKI
+# SCION Control Plane PKI
 
-This is the working area for the individual Internet-Draft, "SCION Control-Plane PKI".
+This is the working area for the individual Internet-Draft, "SCION Control Plane PKI".
 
 * [Editor's Copy](https://scionassociation.github.io/scion-cppki_I-D/#go.draft-dekater-scion-pki.html)
 * [Datatracker Page](https://datatracker.ietf.org/doc/draft-dekater-scion-pki)
