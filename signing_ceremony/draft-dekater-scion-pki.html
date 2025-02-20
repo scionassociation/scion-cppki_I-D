@@ -2563,13 +2563,13 @@ TRC
 <p id="section-3.1.2.1-4">For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) <span>[<a href="#X.690" class="cite xref">X.690</a>]</span>. For more details, see <a href="#signed-format" class="auto internal xref">Section 3.1.3</a>.<a href="#section-3.1.2.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="trc-fields">
+<div id="trcfields">
 <section id="section-3.1.2.2">
             <h5 id="name-trc-fields">
 <a href="#section-3.1.2.2" class="section-number selfRef">3.1.2.2. </a><a href="#name-trc-fields" class="section-name selfRef">TRC Fields</a>
             </h5>
 <p id="section-3.1.2.2-1">This section describes the syntax and semantics of all TRC payload fields.<a href="#section-3.1.2.2-1" class="pilcrow">¶</a></p>
-<div id="version-field">
+<div id="field">
 <section id="section-3.1.2.2.1">
               <h6 id="name-version-field">
 <a href="#section-3.1.2.2.1" class="section-number selfRef">3.1.2.2.1. </a><a href="#name-version-field" class="section-name selfRef"><code>version</code> Field</a>
@@ -3662,7 +3662,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
             <p id="appendix-C.1-2.3.1"><strong>Witness(es)</strong> - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.<a href="#appendix-C.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.1-3"><strong>Note:</strong> The ISD members <span class="bcp14">MUST</span> decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony. It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.1-3"><strong>Note:</strong> The ISD members <span class="bcp14">MUST</span> decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and <span class="bcp14">MUST</span> have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ceremonyprep">
@@ -3691,7 +3691,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
             <p id="appendix-C.2-2.6.1">AS numbers of the Authoritative ASes, see <a href="#auth" class="auto internal xref">Section 3.1.2.2.9</a>;<a href="#appendix-C.2-2.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.2-2.7">
-            <p id="appendix-C.2-2.7.1">The description and list of Control Plane root certificates.<a href="#appendix-C.2-2.7.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.2-2.7.1">The list of Control Plane root certificates.<a href="#appendix-C.2-2.7.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="appendix-C.2-3">Each representative of a Voting AS <span class="bcp14">MUST</span> also create the following before the ceremony:<a href="#appendix-C.2-3" class="pilcrow">¶</a></p>
@@ -3703,7 +3703,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
             <p id="appendix-C.2-4.2.1">A regular voting private key and a certificate holding the corresponding public key.<a href="#appendix-C.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.2-5">In addition, each Certificate Issuer <span class="bcp14">MUST</span> create a control plane root private key and a certificate holding the corresponding public key. A representative of the Certificate Issuer need not be present at the ceremony as they do not need to sign the TRC, but they <span class="bcp14">MUST</span> provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance <span class="bcp14">MUST</span> cover the full TRC validity period.<a href="#appendix-C.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-5">In addition, each Certificate Authority <span class="bcp14">MUST</span> create a control plane root private key and a certificate holding the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they <span class="bcp14">MUST</span> provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance <span class="bcp14">MUST</span> cover the full TRC validity period.<a href="#appendix-C.2-5" class="pilcrow">¶</a></p>
 <p id="appendix-C.2-6">The location <span class="bcp14">MUST</span> provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.<a href="#appendix-C.2-6" class="pilcrow">¶</a></p>
 <p id="appendix-C.2-7">The Ceremony Administrator and Voting ASes <span class="bcp14">MUST</span> each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs, that has access to their own sensitive and regular voting private keys, and can compute the SHA-512 digest of the files.<a href="#appendix-C.2-7" class="pilcrow">¶</a></p>
 <p id="appendix-C.2-8">The Ceremony Administrator <span class="bcp14">MUST</span> provide or be provided with a device to exchange data between the ceremony participants.<a href="#appendix-C.2-8" class="pilcrow">¶</a></p>
@@ -3722,7 +3722,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
           <h4 id="name-phase-1-certificate-exchang">
 <a href="#name-phase-1-certificate-exchang" class="section-name selfRef">Phase 1: Certificate Exchange</a>
           </h4>
-<p id="appendix-C.3.1-1">All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Issuers these are the Control Plane root certificates.<a href="#appendix-C.3.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-1">All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.<a href="#appendix-C.3.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.1-2">Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy their private keys onto the data exchange device as this invalidates the security of the ceremony.<a href="#appendix-C.3.1-2" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.1-3">The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA256 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA512 hash value for the entire bundle. All hash values must be displayed to the participants.<a href="#appendix-C.3.1-3" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.1-4">The bundle <span class="bcp14">MUST</span> then be shared with all the representatives who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-C.3.1-4" class="pilcrow">¶</a></p>
@@ -3734,7 +3734,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
           <h4 id="name-phase-2-generation-of-the-t">
 <a href="#name-phase-2-generation-of-the-t" class="section-name selfRef">Phase 2: Generation of the TRC Payload</a>
           </h4>
-<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and the agreed ISD policy using a completed template with these values, see <a href="#ceremonyprep" class="auto internal xref">Appendix "Ceremony Preparations"</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and the <a href="#trcfields" class="auto internal xref">Section 3.1.2.2</a> completed in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix "Ceremony Preparations"</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.2-2">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to <a href="#trcpayload" class="auto internal xref">Section 3.1.2.1</a> and the SHA256 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.2-3">Phase 2 concludes when all voting representatives confirm that the contents of the TRC payload are correct.<a href="#appendix-C.3.2-3" class="pilcrow">¶</a></p>
 </section>

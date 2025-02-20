@@ -2681,13 +2681,16 @@ Appendix A.  Signing Ceremony Initial TRC
       Voting ASes.
 
    *Note:* The ISD members MUST decide on the roles of the Signing
-   Ceremony participants in advance of Signing Ceremony.  It is assumed
-   that all parties are trustworthy and issues encountered during the
-   Signing Ceremony may be assumed to be caused by honest mistakes and
-   not by malicious intent.  Hash comparison checks are included to
-   counter mistakes and so that every participant can ensure they are
-   operating on the same data, and the private keys of each participant
-   never leave their machine.
+   Ceremony participants in advance of Signing Ceremony, and MUST have
+   reached agreement about the Certificate Authority (CA) ASes (that
+   will also issue the root certificates).  It is assumed that all
+   parties are trustworthy and issues encountered during the Signing
+   Ceremony may be assumed to be caused by honest mistakes and not by
+   malicious intent.  Hash comparison checks are included to counter
+   mistakes and so that every participant can ensure they are operating
+   on the same data, and the private keys of each participant never
+   leave their machine.  The Ceremony Administrator does not have to be
+   entrusted with private keys.
 
 Ceremony Preparations
 
@@ -2708,7 +2711,7 @@ Ceremony Preparations
 
    *  AS numbers of the Authoritative ASes, see Section 3.1.2.2.9;
 
-   *  The description and list of Control Plane root certificates.
+   *  The list of Control Plane root certificates.
 
    Each representative of a Voting AS MUST also create the following
    before the ceremony:
@@ -2719,13 +2722,13 @@ Ceremony Preparations
    *  A regular voting private key and a certificate holding the
       corresponding public key.
 
-   In addition, each Certificate Issuer MUST create a control plane root
-   private key and a certificate holding the corresponding public key.
-   A representative of the Certificate Issuer need not be present at the
-   ceremony as they do not need to sign the TRC, but they MUST provide
-   their root certificate to be shared at the ceremony.  The validity
-   period of the certificates generated in advance MUST cover the full
-   TRC validity period.
+   In addition, each Certificate Authority MUST create a control plane
+   root private key and a certificate holding the corresponding public
+   key.  A representative of the Certificate Authority need not be
+   present at the ceremony as they do not need to sign the TRC, but they
+   MUST provide their root certificate to be shared at the ceremony.
+   The validity period of the certificates generated in advance MUST
+   cover the full TRC validity period.
 
    The location MUST provide electricity and power sockets for each
    participant, and should provide a monitor or projector that allows
@@ -2756,7 +2759,7 @@ Ceremony Preparations
    All parties share the certificates that must be part of the TRC with
    the Ceremony Administrator.  For the Voting ASes, these are the
    sensitive and the regular voting certificates, and for the
-   Certificate Issuers these are the Control Plane root certificates.
+   Certificate Authority these are the Control Plane root certificates.
 
    Each representative copies the requested certificates from their
    machine onto a data exchange device provided by the Ceremony
@@ -2787,8 +2790,8 @@ Ceremony Preparations
 Phase 2: Generation of the TRC Payload
 
    The Ceremony Administrator generates the TRC payload based on the
-   bundled certificates and the agreed ISD policy using a completed
-   template with these values, see Appendix "Ceremony Preparations".
+   bundled certificates and the Section 3.1.2.2 completed in accordance
+   with ISD policy, see Appendix "Ceremony Preparations".
 
    Once the voting representatives have verified the TRC data, the
    Ceremony Administrator computes the DER encoding of the data
