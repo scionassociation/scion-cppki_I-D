@@ -1440,7 +1440,7 @@ The Ceremony Administrator MUST provide or be provided with a device to exchange
 The Signing Ceremony should ideally include a procedure to verify that all devices are secure.
 
 
-## Ceremony Process {ceremonyprocess}
+## Ceremony Process {#ceremonyprocess}
 {:numbered="false"}
 
 The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
