@@ -1394,7 +1394,7 @@ More information can be found on the SCIONLab website and in the {{SCIONLAB}} pa
 # Appendix A. Signing Ceremony Initial TRC {#initial-ceremony}
 {:numbered="false"}
 
-A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is recommended to establish a procedure similar to the one described below:
+A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is RECOMMENDED to establish a procedure similar to the one described below:
 
 
 ## Ceremony Participants
