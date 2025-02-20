@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-18T00:20:43.579161+00:00",
+  "timestamp": "2025-02-20T00:20:47.376256+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -364,7 +364,7 @@
     {
       "number": 53,
       "id": "I_kwDOH386tM6nk6G1",
-      "title": "Signing Ceremony",
+      "title": "Signing Ceremony: make text concise",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/53",
       "state": "OPEN",
       "author": "knmeynell",
@@ -375,7 +375,23 @@
       "labels": [],
       "body": "The current description of the Signing Ceremony has inconsistencies in the order of the process and duplicates text.",
       "createdAt": "2025-01-26T11:19:11Z",
-      "updatedAt": "2025-01-26T11:19:13Z",
+      "updatedAt": "2025-02-18T10:23:39Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 55,
+      "id": "I_kwDOH386tM6qqZkH",
+      "title": "CAs: must they be an AS? Clarify and use consistent wording",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/55",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [ ] Clarify wether a CA MUST have its own AS or not.\n- [ ] Correct wording where we mention `CA AS`, `root AS.`, etc...",
+      "createdAt": "2025-02-19T12:49:01Z",
+      "updatedAt": "2025-02-19T12:49:30Z",
       "closedAt": null,
       "comments": []
     }
@@ -2418,26 +2434,42 @@
       "id": "PR_kwDOH386tM6H2NwY",
       "title": "This is not a standard",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/51",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-01-15T12:53:29Z",
-      "updatedAt": "2025-01-15T12:53:29Z",
+      "updatedAt": "2025-02-19T13:13:52Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "657d2c6ea54f06e86efd9dfa057af99a368accb0",
+      "baseRefOid": "61980665961ba5c021157b910bea18db3c6a33f1",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "this-is-not-a-standard",
-      "headRefOid": "5d2786d3028d8894e136e4f86814b07de6ba4c9e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "444fe61d1087e3bb96ab397bfdcd5d09d931781b",
+      "closedAt": "2025-02-19T13:13:49Z",
+      "mergedAt": "2025-02-19T13:13:49Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6ckRMC",
+          "commit": {
+            "abbreviatedOid": "444fe61"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-19T13:13:42Z",
+          "updatedAt": "2025-02-19T13:13:42Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 52,
@@ -2449,9 +2481,9 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "- Tweaks to abstract",
+      "body": "Resolves #53 ",
       "createdAt": "2025-01-25T14:30:44Z",
-      "updatedAt": "2025-01-25T14:34:59Z",
+      "updatedAt": "2025-02-19T12:00:43Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "657d2c6ea54f06e86efd9dfa057af99a368accb0",
@@ -2463,7 +2495,124 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6cVcaT",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "There are various aspects where clarity got lost while shrinking the text: \r\n\r\n- Keep terminology consistent and don't introduce new terms (CA ASes should be named as such and not certificate issuers)\r\n-  More clarity on some aspects (e.g. role of administrator, more references for TRC templates)",
+          "createdAt": "2025-02-18T09:03:44Z",
+          "updatedAt": "2025-02-19T11:59:48Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nA Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is RECOMMENDED to establish a procedure similar to the one described below:\r\n```",
+              "createdAt": "2025-02-18T09:03:44Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 32,
+              "body": "Here you lost the role of CA ASes, that was in the previous note. I'd leave it there",
+              "createdAt": "2025-02-18T09:09:04Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 131,
+              "body": "```suggestion\r\n##\u00a0Ceremony Process {#ceremonyprocess}\r\n```",
+              "createdAt": "2025-02-19T08:39:10Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 35,
+              "body": "> The Ceremony Administrator does not have to be entrusted with private keys \r\n\r\nWe could leave this one in IMHO ",
+              "createdAt": "2025-02-19T08:43:11Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 95,
+              "body": "> The description\r\n\r\nI don't think CP root certs have a description field, do they? Maybe you are referring to the distinguished name? ",
+              "createdAt": "2025-02-19T08:49:49Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 101,
+              "body": "> before the ceremony \r\n\r\nThis was not in the original version of the text. What is the point of a ceremony if some certs are created in advance? I would not be so prescriptive",
+              "createdAt": "2025-02-19T08:55:16Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 105,
+              "body": "```suggestion\r\n- A sensitive voting certificate and the corresponding private key.\r\n- A regular voting certificate and the corresponding private key.\r\n```",
+              "createdAt": "2025-02-19T08:57:31Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 115,
+              "body": "Why introduce a new wording \"certificate issuer\" and not leave CA ASes as it was before? \r\nWe always use CA AS, as defined in `2.1.3.  Control Plane CA Certificate`\r\n\r\nAlso, I would use the same notation as for voting ASes, e.g.:\r\n\r\n```\r\nEach representative of a CA AS MUST create the following keys and certificates:\r\n\r\n- A CP root certificate and the corresponding private key.\r\n```",
+              "createdAt": "2025-02-19T10:43:13Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 121,
+              "body": ">  that has access to their own sensitive and regular voting private keys \r\n\r\nThe ceremony administrator does not have a voting private key. Be careful as summarizing text can introduce inaccuracies ",
+              "createdAt": "2025-02-19T10:50:08Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 127,
+              "body": "```suggestion\r\nThe Signing Ceremony SHOULD include a procedure to verify that all devices are secure.\r\n```",
+              "createdAt": "2025-02-19T10:56:15Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 159,
+              "body": "```suggestion\r\nEach representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives MUST NOT copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.\r\n```",
+              "createdAt": "2025-02-19T11:00:17Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 165,
+              "body": "```suggestion\r\nThe bundle MUST then be shared via a data exchange device with all the representatives of the voting and CA ASes, who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.\r\n```",
+              "createdAt": "2025-02-19T11:03:10Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 115,
+              "body": "The old text also says \r\n\r\n> Representatives of CA ASes need not be present at the signing ceremony\r\n\r\nBut then it contraddicts itself in phase 1 of the ceremony: \r\n\r\n> The Ceremony Administrator now shares the bundle with the representatives of the voting and CA ASes.\r\n\r\nWe should resolve this contraddiction",
+              "createdAt": "2025-02-19T11:07:57Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 188,
+              "body": "There is no template specified in #ceremonyprep . However, even in the previous version of the text of phase 2, there was also no clear definition of this template. I think we have to work more on this. Maybe we could add a reference to `3.1.2.2.   TRC Fields` ?\r\n\r\nTHis is actually referred to what is described in slide 9 of [this presentation](https://datatracker.ietf.org/meeting/118/materials/slides-118-panrg-scion-deployment-experience-the-secure-swiss-finance-network-ssfn-00) by SIX: \r\n<img width=\"909\" alt=\"Screenshot 2025-02-19 at 12 20 10\" src=\"https://github.com/user-attachments/assets/ff6e430c-1e58-4eec-bcfb-a9f35a831618\" />\r\n\r\nThis is I think  a toml file like [this one](https://github.com/scionproto/scion/blob/ecb4eaa08a1ce7caf613b4da18f7ab2aecd04e46/scion-pki/conf/testdata/testcfg.toml#L8)\r\n\r\n",
+              "createdAt": "2025-02-19T11:14:04Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 191,
+              "body": "> the Ceremony Administrator computes the DER encoding of the data and \r\n\r\nMaybe we can add a reference to `TRC Schema `? \r\n\r\n```suggestion\r\nOnce the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to [](#trcpayload) and the SHA256 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.\r\n```",
+              "createdAt": "2025-02-19T11:47:33Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 201,
+              "body": "```suggestion\r\nEach voting representative attaches a signature created with their own private voting key to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.\r\n```",
+              "createdAt": "2025-02-19T11:48:34Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            },
+            {
+              "originalPosition": 211,
+              "body": "I'd mention the data exchange device \r\n\r\nI'd also clarify the role of the administrator: \r\n```suggestion\r\nAll voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The Ceremony Administrator then shares the assembled TRC with all participants who MUST again inspect the signatures and verify them based on the certificates exchanged in Phase 1.\r\n```",
+              "createdAt": "2025-02-19T11:56:53Z",
+              "updatedAt": "2025-02-19T11:59:48Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 54,
