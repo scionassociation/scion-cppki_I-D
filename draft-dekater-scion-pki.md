@@ -1475,7 +1475,7 @@ Phase 2 concludes when all voting representatives confirm that the contents of t
 ### Phase 3: TRC Signing {#phase3}
 {:numbered="false"}
 
-Each voting representative attaches a signature created with their private voting keys to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.
+Each voting representative attaches a signature created with their own private voting key to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.
 
 Phase 3 concludes when all voting representatives have attached their signatures to the TRC.
 
