@@ -1467,7 +1467,7 @@ Phase 1 concludes when every representative has confirmed the SHA256 sums are co
 
 The Ceremony Administrator generates the TRC payload based on the bundled certificates and the agreed ISD policy using a completed template with these values, see [](#ceremonyprep).
 
-Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data and the SHA256 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.
+Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to [](#trcpayload) and the SHA256 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.
 
 Phase 2 concludes when all voting representatives confirm that the contents of the TRC payload are correct.
 
