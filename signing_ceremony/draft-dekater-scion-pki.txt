@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 29 July 2025                                            S. Hitz
+Expires: 24 August 2025                                          S. Hitz
                                                          Anapaya Systems
-                                                         25 January 2025
+                                                        20 February 2025
 
 
                         SCION Control Plane PKI
@@ -28,6 +28,13 @@ Abstract
    Plane PKI, including specifications of the different types of
    certificates and the Trust Root Configuration.  It also specifies how
    to deploy the Control Plane PKI infrastructure.
+
+   This document contains new approaches to secure path aware
+   networking.  It is not an Internet Standard, has not received any
+   formal review of the IETF, nor was the work developed through the
+   rough consensus process.  The approaches offered in this work are
+   offered to the community for its consideration in the further
+   evolution of the Internet.
 
 About This Document
 
@@ -56,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 July 2025.
+   This Internet-Draft will expire on 24 August 2025.
 
 Copyright Notice
 
@@ -123,7 +130,7 @@ Table of Contents
    Appendix A.  Signing Ceremony Initial TRC
       Ceremony Participants
      Ceremony Preparations
-      Ceremony Process {ceremonyprocess}
+      Ceremony Process
         Phase 1: Certificate Exchange
        Phase 2: Generation of the TRC Payload
        Phase 3: TRC Signing
@@ -201,12 +208,9 @@ Table of Contents
    is deployed in the Swiss finance sector to provide resilient
    connectivity between financial institutions.  The aim of this
    document is to document the existing protocol specification as
-   deployed, to encourage additional implementations, and to introduce
-   new concepts that can potentially be further improved to address
-   particular problems with the current Internet architecture.  This
-   document is not an Internet Standards Track specification; it does
-   not have IETF consensus and it is published for informational
-   purposes.
+   deployed, to encourage interoperability among implementations, and to
+   introduce new concepts that can potentially be further improved to
+   address particular problems with the current Internet architecture.
 
    Note (to be removed before publication): this document, together with
    the other components [I-D.dekater-scion-controlplane] and
@@ -2652,7 +2656,7 @@ Appendix A.  Signing Ceremony Initial TRC
 
    A Signing Ceremony is used to create the initial (first) Trust Root
    Configuration of an ISD.  Each ISD may decide how to conduct this
-   ceremony, but it is recommended to establish a procedure similar to
+   ceremony, but it is RECOMMENDED to establish a procedure similar to
    the one described below:
 
  Ceremony Participants
@@ -2738,7 +2742,7 @@ Ceremony Preparations
    The Signing Ceremony should ideally include a procedure to verify
    that all devices are secure.
 
- Ceremony Process {ceremonyprocess}
+ Ceremony Process
 
    The number of Voting ASes present at the Signing Ceremony must be
    equal to or larger than the specified voting quorum.
@@ -2787,12 +2791,12 @@ Phase 2: Generation of the TRC Payload
    template with these values, see Appendix "Ceremony Preparations".
 
    Once the voting representatives have verified the TRC data, the
-   Ceremony Administrator computes the DER encoding of the data and the
-   SHA256 hash value of the TRC payload file.  The TRC payload file is
-   then shared with the voting representatives via the data exchange
-   device who verify the TRC payload hash value by computing this on
-   their machine and checking it matches the one displayed by the
-   Ceremony Administrator.
+   Ceremony Administrator computes the DER encoding of the data
+   according to Section 3.1.2.1 and the SHA256 hash value of the TRC
+   payload file.  The TRC payload file is then shared with the voting
+   representatives via the data exchange device who verify the TRC
+   payload hash value by computing this on their machine and checking it
+   matches the one displayed by the Ceremony Administrator.
 
    Phase 2 concludes when all voting representatives confirm that the
    contents of the TRC payload are correct.
@@ -2800,7 +2804,7 @@ Phase 2: Generation of the TRC Payload
 Phase 3: TRC Signing
 
    Each voting representative attaches a signature created with their
-   private voting keys to the TRC (payload file), using their own
+   own private voting key to the TRC (payload file), using their own
    machine.  This serves to prove possession of the private keys.
 
    Phase 3 concludes when all voting representatives have attached their
@@ -2813,8 +2817,9 @@ Phase 3: TRC Signing
    the Ceremony Administrator.  The Ceremony Administrator assembles the
    final TRC by aggregating the payload data and verifying the
    signatures based on the certificates exchanged during Phase 1.  The
-   signed TRC is then shared with all the voting representatives who
-   must again inspect the signatures.
+   Ceremony Administrator then shares the assembled TRC with all
+   participants who MUST again inspect the signatures and verify them
+   based on the certificates exchanged in Phase 1.
 
    The Signing Ceremony is completed once when every voting
    representative confirms that the signatures match.  All participants

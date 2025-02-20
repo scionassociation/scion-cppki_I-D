@@ -11,13 +11,14 @@
 <meta content="
        This document presents the trust concept and design of the SCION  Control Plane Public Key Infrastructure (CP-PKI) . SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture where the Control Plane PKI handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's Control Plane to authenticate and verify path information, and provisions SCION's trust model based on Isolation Domains. 
        This document describes the trust model behind the SCION Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure. 
+       This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet. 
     " name="description">
-<meta content="xml2rfc 3.25.0" name="generator">
+<meta content="xml2rfc 3.27.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.25.0
-    Python 3.12.8
+  xml2rfc 3.27.0
+    Python 3.12.9
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -438,7 +439,7 @@ dl {
     margin-bottom: 0;
   }
 }
-dl > dt {
+dl:not(.dlNewline) > dt {
   float: left;
   margin-right: 2ch;
   min-width: 8ch;
@@ -1047,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">January 2025</td>
+<td class="right">February 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 29 July 2025</td>
+<td class="center">Expires 24 August 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-01-25" class="published">25 January 2025</time>
+<time datetime="2025-02-20" class="published">20 February 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-07-29">29 July 2025</time></dd>
+<dd class="expires"><time datetime="2025-08-24">24 August 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1092,6 +1093,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
 <p id="section-abstract-1">This document presents the trust concept and design of the SCION <em>Control Plane Public Key Infrastructure (CP-PKI)</em>. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture where the Control Plane PKI handles cryptographic material and lays the foundation for the authentication procedures in SCION. It is used by SCION's Control Plane to authenticate and verify path information, and provisions SCION's trust model based on Isolation Domains.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This document describes the trust model behind the SCION Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <section class="note rfcEditorRemove" id="section-note.1">
       <h2 id="name-about-this-document">
@@ -1123,7 +1125,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 29 July 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 24 August 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1334,7 +1336,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.10.2.2.1"><a href="#appendix-C.2" class="auto internal xref"></a><a href="#name-ceremony-preparations" class="internal xref">Ceremony Preparations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
-                <p id="section-toc.1-1.10.2.3.1"><a href="#appendix-C.3" class="auto internal xref"></a><a href="#name-ceremony-process-ceremonypr" class="internal xref">Ceremony Process {ceremonyprocess}</a></p>
+                <p id="section-toc.1-1.10.2.3.1"><a href="#appendix-C.3" class="auto internal xref"></a><a href="#name-ceremony-process" class="internal xref">Ceremony Process</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.1">
                     <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#appendix-C.3.1" class="auto internal xref"></a><a href="#name-phase-1-certificate-exchang" class="internal xref">Phase 1: Certificate Exchange</a></p>
@@ -1388,7 +1390,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-8"><em>Control Plane</em> - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span><a href="#section-1-8" class="pilcrow">¶</a></p>
 <p id="section-1-9"><em>Data Plane</em> - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span><a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with the other components <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> and <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span>.<a href="#section-1-10" class="pilcrow">¶</a></p>
-<p id="section-1-11">The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, to encourage additional implementations, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture. This document is not an Internet Standards Track specification; it does not have IETF consensus and it is published for informational purposes.<a href="#section-1-11" class="pilcrow">¶</a></p>
+<p id="section-1-11">The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, to encourage interoperability among implementations, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture.<a href="#section-1-11" class="pilcrow">¶</a></p>
 <p id="section-1-12">Note (to be removed before publication): this document, together with the other components <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> and <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span>, deprecates <span>[<a href="#I-D.dekater-panrg-scion-overview" class="cite xref">I-D.dekater-panrg-scion-overview</a>]</span>.<a href="#section-1-12" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-1.1">
@@ -3642,7 +3644,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
       <h2 id="name-appendix-a-signing-ceremony">
 <a href="#name-appendix-a-signing-ceremony" class="section-name selfRef">Appendix A. Signing Ceremony Initial TRC</a>
       </h2>
-<p id="appendix-C-1">A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is recommended to establish a procedure similar to the one described below:<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-1">A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is <span class="bcp14">RECOMMENDED</span> to establish a procedure similar to the one described below:<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <div id="ceremony-participants">
 <section id="appendix-C.1">
         <h3 id="name-ceremony-participants">
@@ -3708,10 +3710,10 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <p id="appendix-C.2-9">The Signing Ceremony should ideally include a procedure to verify that all devices are secure.<a href="#appendix-C.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="ceremony-process-ceremonyprocess">
+<div id="ceremonyprocess">
 <section id="appendix-C.3">
-        <h3 id="name-ceremony-process-ceremonypr">
-<a href="#name-ceremony-process-ceremonypr" class="section-name selfRef">Ceremony Process {ceremonyprocess}</a>
+        <h3 id="name-ceremony-process">
+<a href="#name-ceremony-process" class="section-name selfRef">Ceremony Process</a>
         </h3>
 <p id="appendix-C.3-1">The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.<a href="#appendix-C.3-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3-2">The signing process has four phases of data sharing, led by the Ceremony Administrator who provides instructions to the other participants:<a href="#appendix-C.3-2" class="pilcrow">¶</a></p>
@@ -3733,7 +3735,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <a href="#name-phase-2-generation-of-the-t" class="section-name selfRef">Phase 2: Generation of the TRC Payload</a>
           </h4>
 <p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and the agreed ISD policy using a completed template with these values, see <a href="#ceremonyprep" class="auto internal xref">Appendix "Ceremony Preparations"</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.2-2">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data and the SHA256 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.2-2">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to <a href="#trcpayload" class="auto internal xref">Section 3.1.2.1</a> and the SHA256 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.2-3">Phase 2 concludes when all voting representatives confirm that the contents of the TRC payload are correct.<a href="#appendix-C.3.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3742,7 +3744,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
           <h4 id="name-phase-3-trc-signing">
 <a href="#name-phase-3-trc-signing" class="section-name selfRef">Phase 3: TRC Signing</a>
           </h4>
-<p id="appendix-C.3.3-1">Each voting representative attaches a signature created with their private voting keys to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.<a href="#appendix-C.3.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.3-1">Each voting representative attaches a signature created with their own private voting key to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.<a href="#appendix-C.3.3-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.3-2">Phase 3 concludes when all voting representatives have attached their signatures to the TRC.<a href="#appendix-C.3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3751,7 +3753,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
           <h4 id="name-phase-4-trc-validation">
 <a href="#name-phase-4-trc-validation" class="section-name selfRef">Phase 4: TRC Validation</a>
           </h4>
-<p id="appendix-C.3.4-1">All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The signed TRC is then shared with all the voting representatives who must again inspect the signatures.<a href="#appendix-C.3.4-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.4-1">All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The Ceremony Administrator then shares the assembled TRC with all participants who <span class="bcp14">MUST</span> again inspect the signatures and verify them based on the certificates exchanged in Phase 1.<a href="#appendix-C.3.4-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.4-2">The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.<a href="#appendix-C.3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
