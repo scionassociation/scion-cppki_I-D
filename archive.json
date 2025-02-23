@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-20T00:20:47.376256+00:00",
+  "timestamp": "2025-02-23T00:22:45.069482+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -373,9 +373,9 @@
         "knmeynell"
       ],
       "labels": [],
-      "body": "The current description of the Signing Ceremony has inconsistencies in the order of the process and duplicates text.",
+      "body": "The current description of the Signing Ceremony has inconsistencies in the order of the process and duplicates text.\n\nThere is more material about the ceremony here: https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-builder.html ",
       "createdAt": "2025-01-26T11:19:11Z",
-      "updatedAt": "2025-02-18T10:23:39Z",
+      "updatedAt": "2025-02-20T12:52:30Z",
       "closedAt": null,
       "comments": []
     },
@@ -388,12 +388,51 @@
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
-      "labels": [],
-      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [ ] Clarify wether a CA MUST have its own AS or not.\n- [ ] Correct wording where we mention `CA AS`, `root AS.`, etc...",
+      "labels": [
+        "question"
+      ],
+      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [ ] Clarify wether a CA MUST have its own AS or not.\n- [ ] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [ ] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
       "createdAt": "2025-02-19T12:49:01Z",
-      "updatedAt": "2025-02-19T12:49:30Z",
+      "updatedAt": "2025-02-21T09:11:21Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@oncilla wrote on Slack\n> Q: MUST a CA have its own AS? \nA: Yes. A CA must have an ISD-AS number assigned, and it must be present in the certificate \n\nThis is because `2.2.1.2.1.  ISD-AS number Attribute` is part of the cert. We shoudl clarify in the text that this is the case and why (e.g. is the AS field in a cert used by the CP to request that cert?)\n\n> Q: Is there a 1:1 relationship between CP root and CA certificates? In other words, MUST every CA certificate have a corresponding Root certificate in the TRC?\nA: In practice this is the case, and also the intention. I don't think it is currently enforced. I would also not prescribe it in the spec. This feels like something that the ISD governance should decide\n\n\n ",
+          "createdAt": "2025-02-21T09:11:09Z",
+          "updatedAt": "2025-02-21T09:11:21Z"
+        }
+      ]
+    },
+    {
+      "number": 56,
+      "id": "I_kwDOH386tM6q2du2",
+      "title": "TRC discovery: active discovery",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/56",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti",
+        "jiceatscion"
+      ],
+      "labels": [
+        "question"
+      ],
+      "body": "Shall we mention [Active Discovery](https://docs.scion.org/en/latest/cryptography/interactions.html#active-discovery) in `4.1.2.1.   TRC Update Discovery`? Right now we only mention beaconing and path lookups.\n\n@jiceatscion is it actively used?",
+      "createdAt": "2025-02-20T14:54:28Z",
+      "updatedAt": "2025-02-21T11:20:51Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "\n> [@jiceatscion](https://github.com/jiceatscion) is it actively used?\n\nYes, as far as I know. Fetching TRCs explicitly is part of the API and there are a number of uses of this API in the daemon and control service components. Querying for the latest version is also supported since: https://github.com/scionproto/scion/pull/4601",
+          "createdAt": "2025-02-21T11:15:21Z",
+          "updatedAt": "2025-02-21T11:20:51Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -2481,15 +2520,15 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #53 ",
+      "body": "Resolves #53 \r\nDatatracker [diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/signing_ceremony/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-01-25T14:30:44Z",
-      "updatedAt": "2025-02-19T12:00:43Z",
+      "updatedAt": "2025-02-21T19:24:55Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "657d2c6ea54f06e86efd9dfa057af99a368accb0",
+      "baseRefOid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "signing_ceremony",
-      "headRefOid": "c40243ea5de35b7b7f014009d58b5386bb34fbb1",
+      "headRefOid": "15cabe87ff5485c91ba147d470bcf0c9be305dfb",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2609,6 +2648,146 @@
               "body": "I'd mention the data exchange device \r\n\r\nI'd also clarify the role of the administrator: \r\n```suggestion\r\nAll voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The Ceremony Administrator then shares the assembled TRC with all participants who MUST again inspect the signatures and verify them based on the certificates exchanged in Phase 1.\r\n```",
               "createdAt": "2025-02-19T11:56:53Z",
               "updatedAt": "2025-02-19T11:59:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6czn5g",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-20T18:15:12Z",
+          "updatedAt": "2025-02-20T18:15:12Z",
+          "comments": [
+            {
+              "originalPosition": 35,
+              "body": "Okay",
+              "createdAt": "2025-02-20T18:15:12Z",
+              "updatedAt": "2025-02-20T18:15:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6czqhV",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-20T18:20:16Z",
+          "updatedAt": "2025-02-20T18:20:16Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "I added this back.",
+              "createdAt": "2025-02-20T18:20:16Z",
+              "updatedAt": "2025-02-20T18:20:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6czr3y",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-20T18:22:56Z",
+          "updatedAt": "2025-02-20T18:22:56Z",
+          "comments": [
+            {
+              "originalPosition": 95,
+              "body": "This was probably taken from the original text. I've just changed this to _The list of Control Plane root certificates._ for now.",
+              "createdAt": "2025-02-20T18:22:56Z",
+              "updatedAt": "2025-02-20T18:39:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6czvff",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-20T18:30:05Z",
+          "updatedAt": "2025-02-20T18:30:05Z",
+          "comments": [
+            {
+              "originalPosition": 115,
+              "body": "I'm not sure I see where the contradiction is.",
+              "createdAt": "2025-02-20T18:30:05Z",
+              "updatedAt": "2025-02-20T18:30:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6cz0kc",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-20T18:38:22Z",
+          "updatedAt": "2025-02-20T18:38:22Z",
+          "comments": [
+            {
+              "originalPosition": 188,
+              "body": "I've changed this to _The Ceremony Administrator generates the TRC payload based on the bundled certificates and the TRC fields completed in accordance with ISD policy_ ...",
+              "createdAt": "2025-02-20T18:38:22Z",
+              "updatedAt": "2025-02-20T18:38:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6c_y4b",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-21T18:56:12Z",
+          "updatedAt": "2025-02-21T18:56:12Z",
+          "comments": [
+            {
+              "originalPosition": 115,
+              "body": "If Representatives of CA ASes need not be present, then the Ceremony Administrator cannot share the bundle with them",
+              "createdAt": "2025-02-21T18:56:12Z",
+              "updatedAt": "2025-02-21T18:56:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6dAAEw",
+          "commit": {
+            "abbreviatedOid": "c40243e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-21T19:24:54Z",
+          "updatedAt": "2025-02-21T19:24:55Z",
+          "comments": [
+            {
+              "originalPosition": 115,
+              "body": "Does the bundle need to be shared with them at all, if they don't have to be present? Does the following work?\r\n\r\n_The Ceremony Administrator now shares the bundle with the representatives of the voting ASes._",
+              "createdAt": "2025-02-21T19:24:54Z",
+              "updatedAt": "2025-02-21T19:24:55Z"
             }
           ]
         }
