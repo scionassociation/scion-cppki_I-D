@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-23T00:22:45.069482+00:00",
+  "timestamp": "2025-02-25T00:23:27.279583+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -387,21 +387,23 @@
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
-      "assignees": [],
+      "assignees": [
+        "knmeynell"
+      ],
       "labels": [
         "question"
       ],
-      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [ ] Clarify wether a CA MUST have its own AS or not.\n- [ ] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [ ] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
+      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [x] Clarify wether a CA MUST have its own AS or not.\n- [ ] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [ ] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
       "createdAt": "2025-02-19T12:49:01Z",
-      "updatedAt": "2025-02-21T09:11:21Z",
+      "updatedAt": "2025-02-24T07:51:30Z",
       "closedAt": null,
       "comments": [
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "@oncilla wrote on Slack\n> Q: MUST a CA have its own AS? \nA: Yes. A CA must have an ISD-AS number assigned, and it must be present in the certificate \n\nThis is because `2.2.1.2.1.  ISD-AS number Attribute` is part of the cert. We shoudl clarify in the text that this is the case and why (e.g. is the AS field in a cert used by the CP to request that cert?)\n\n> Q: Is there a 1:1 relationship between CP root and CA certificates? In other words, MUST every CA certificate have a corresponding Root certificate in the TRC?\nA: In practice this is the case, and also the intention. I don't think it is currently enforced. I would also not prescribe it in the spec. This feels like something that the ISD governance should decide\n\n\n ",
+          "body": "@oncilla wrote on [Slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1740057971050929?thread_ts=1740057439.410749&cid=C8ADA9CEP)\n> Q: MUST a CA have its own AS? \nA: Yes. A CA must have an ISD-AS number assigned, and it must be present in the certificate \n\nThis is because `2.2.1.2.1.  ISD-AS number Attribute` is part of the cert. We shoudl clarify in the text that this is the case and why (e.g. is the AS field in a cert used by the CP to request that cert?)\n\n> Q: Is there a 1:1 relationship between CP root and CA certificates? In other words, MUST every CA certificate have a corresponding Root certificate in the TRC?\nA: In practice this is the case, and also the intention. I don't think it is currently enforced. I would also not prescribe it in the spec. This feels like something that the ISD governance should decide\n\n\n ",
           "createdAt": "2025-02-21T09:11:09Z",
-          "updatedAt": "2025-02-21T09:11:21Z"
+          "updatedAt": "2025-02-24T07:51:30Z"
         }
       ]
     },
@@ -422,7 +424,7 @@
       ],
       "body": "Shall we mention [Active Discovery](https://docs.scion.org/en/latest/cryptography/interactions.html#active-discovery) in `4.1.2.1.   TRC Update Discovery`? Right now we only mention beaconing and path lookups.\n\n@jiceatscion is it actively used?",
       "createdAt": "2025-02-20T14:54:28Z",
-      "updatedAt": "2025-02-21T11:20:51Z",
+      "updatedAt": "2025-02-24T08:06:52Z",
       "closedAt": null,
       "comments": [
         {
@@ -431,6 +433,13 @@
           "body": "\n> [@jiceatscion](https://github.com/jiceatscion) is it actively used?\n\nYes, as far as I know. Fetching TRCs explicitly is part of the API and there are a number of uses of this API in the daemon and control service components. Querying for the latest version is also supported since: https://github.com/scionproto/scion/pull/4601",
           "createdAt": "2025-02-21T11:15:21Z",
           "updatedAt": "2025-02-21T11:20:51Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Can you add a short paragraph about it?",
+          "createdAt": "2025-02-24T08:06:51Z",
+          "updatedAt": "2025-02-24T08:06:51Z"
         }
       ]
     }
