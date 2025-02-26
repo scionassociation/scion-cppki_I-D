@@ -1422,7 +1422,7 @@ The participants MUST decide in advance on the physical location of the Signing 
 - Voting quorum for the TRC, see [](#quorum);
 - AS numbers of the Core ASes, see [](#core);
 - AS numbers of the Authoritative ASes, see [](#auth);
-- The list of Control Plane root certificates.
+- The list of Control Plane Root Certificates.
 
 Each representative of a Voting AS MUST also create the following before the ceremony:
 
