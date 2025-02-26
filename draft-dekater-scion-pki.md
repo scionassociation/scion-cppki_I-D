@@ -695,7 +695,7 @@ Additionally, the Extended Key Usage extension sequence MAY include the SCION-sp
 
 The specifications of the `extKeyUsage` extension differ per SCION Control Plane PKI certificate type. The next table provides an overview of the specifications per certificate type.
 
-| Certificate Type               | Root                   | CA           	                | AS                    | Voting (regular and sensitive)    |
+| Certificate Type               | Root                   | CA                              | AS                    | Voting (regular and sensitive)    |
 | ------------------------------ | ---------------------- | ----------------------------- | --------------------- | --------------------------------- |
 | *Attribute:*                   |                        |                               |                       |                                   |
 | `extKeyUsage` extension itself | MUST be present        | MAY be present (not required) | MUST be present       | MUST be present                   |
@@ -1256,6 +1256,9 @@ The TRC version is announced in the beaconing process. Each AS MUST announce wha
 
 - *Path Lookup*<br>
 In every path segment, all ASes MUST reference the latest TRC of their ISD. Therefore, when resolving paths, every relying party will notice TRC updates, even remote ones.<br>
+
+- *Active Discovery*<br>
+Any TRC can be obtained at any time from the sender of the information being secured by it; either in a specific version or in its latest available version. The protocol ensuring the necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Full Control Service gRPC API".
 
 **Note:** The above mechanism only works when there is an active communication between the relying party and the ISD in question.
 
