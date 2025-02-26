@@ -1457,7 +1457,7 @@ Each representative copies the requested certificates from their machine onto a 
 
 The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA256 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA512 hash value for the entire bundle. All hash values must be displayed to the participants.
 
-The bundle MUST then be shared with all the representatives who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
+The Ceremony Administrator MUST then share the bundle with the representatives of the voting ASes who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
 
 Phase 1 concludes when every representative has confirmed the SHA256 sums are correct. If there is any mismatch then this phase MUST be repeated.
 
