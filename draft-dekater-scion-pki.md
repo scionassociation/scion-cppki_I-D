@@ -583,9 +583,9 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 **Important:** SCION implementations MUST include support for P-256, P-384, and P-521.
 
 
-#### `issuer` Field - Additional Information {#issuer}
+#### `` Field - Additional Information {#}
 
-The `issuer` field contains the distinguished name (DN) of the CA that created the certificate. {{RFC5280}}, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`. See [](#isd-as-nr).
+The `` field contains the distinguished name (DN) of the CA that created the certificate. {{RFC5280}}, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`. See [](#isd-as-nr).
 
 ##### `ISD-AS number` Attribute {#isd-as-nr}
 
@@ -602,8 +602,9 @@ The string representation of the `ISD-AS number` attribute MUST follow the text 
 
 The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
-**Note**: CA certificates MUST include an ISD-AS number in their distinguished name. Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
+CA certificates MUST include an ISD-AS number in their distinguished name so the control plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies. 
 
+**Note**: Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
 ### Extensions {#exts}
 
