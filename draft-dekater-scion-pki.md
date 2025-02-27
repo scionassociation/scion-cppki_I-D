@@ -602,7 +602,7 @@ The string representation of the `ISD-AS number` attribute MUST follow the text 
 
 The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
-**Note**: Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
+**Note**: CA certificates MUST include an ISD-AS number in their distinguished name. Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
 
 ### Extensions {#exts}
