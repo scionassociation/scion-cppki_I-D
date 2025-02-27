@@ -1434,11 +1434,11 @@ In addition, each Certificate Authority MUST create a control plane root private
 
 The location MUST provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.
 
-The Ceremony Administrator and Voting ASes MUST each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs, that has access to their own sensitive and regular voting private keys, and can compute the SHA-512 digest of the files.
+The Ceremony Administrator and Voting ASes MUST each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.
 
 The Ceremony Administrator MUST provide or be provided with a device to exchange data between the ceremony participants.
 
-The Signing Ceremony should ideally include a procedure to verify that all devices are secure.
+The Signing Ceremony SHOULD include a procedure to verify that all devices are secure.
 
 
 ## Ceremony Process {#ceremonyprocess}
@@ -1454,7 +1454,7 @@ The signing process has four phases of data sharing, led by the Ceremony Adminis
 
 All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.
 
-Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy their private keys onto the data exchange device as this invalidates the security of the ceremony.
+Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives MUST NOT copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.
 
 The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA256 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA512 hash value for the entire bundle. All hash values must be displayed to the participants.
 
