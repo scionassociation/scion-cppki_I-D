@@ -1358,13 +1358,16 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.11.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
+                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
-                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
+                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#appendix-D.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
 </li>
             </ul>
 </li>
@@ -3726,7 +3729,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <p id="appendix-C.3.1-1">All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.<a href="#appendix-C.3.1-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.1-2">Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives <span class="bcp14">MUST NOT</span> copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.<a href="#appendix-C.3.1-2" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.1-3">The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA256 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA512 hash value for the entire bundle. All hash values must be displayed to the participants.<a href="#appendix-C.3.1-3" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-4">The Ceremony Administrator <span class="bcp14">MUST</span> then share the bundle with the representatives of the voting ASes who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-C.3.1-4" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-4">The Ceremony Administrator <span class="bcp14">MUST</span> then share the bundle with the representatives of the voting ASes who <span class="bcp14">MUST</span> validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-C.3.1-4" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.1-5">Phase 1 concludes when every representative has confirmed the SHA256 sums are correct. If there is any mismatch then this phase <span class="bcp14">MUST</span> be repeated.<a href="#appendix-C.3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3768,64 +3771,79 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
 <p id="appendix-D-1">Changes made to drafts since ISE submission. This section is to be removed before publication.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
-<div id="draft-dekater-scion-pki-08">
+<div id="draft-dekater-scion-pki-09">
 <section id="appendix-D.1">
+        <h3 id="name-draft-dekater-scion-pki-09">
+<a href="#name-draft-dekater-scion-pki-09" class="section-name selfRef">draft-dekater-scion-pki-09</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-D.1-1.1">
+            <p id="appendix-D.1-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.2">
+            <p id="appendix-D.1-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-dekater-scion-pki-08">
+<section id="appendix-D.2">
         <h3 id="name-draft-dekater-scion-pki-08">
 <a href="#name-draft-dekater-scion-pki-08" class="section-name selfRef">draft-dekater-scion-pki-08</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.1-1.1">
-            <p id="appendix-D.1-1.1.1">Fix some oversized diagrams<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.2-1.1">
+            <p id="appendix-D.2-1.1.1">Fix some oversized diagrams<a href="#appendix-D.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.2">
-            <p id="appendix-D.1-1.2.1">Introduction text rewording<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.2">
+            <p id="appendix-D.2-1.2.1">Introduction text rewording<a href="#appendix-D.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-07">
-<section id="appendix-D.2">
+<section id="appendix-D.3">
         <h3 id="name-draft-dekater-scion-pki-07">
 <a href="#name-draft-dekater-scion-pki-07" class="section-name selfRef">draft-dekater-scion-pki-07</a>
         </h3>
-<p id="appendix-D.2-1">Minor changes:<a href="#appendix-D.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.3-1">Minor changes:<a href="#appendix-D.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.2-2.1">
-            <p id="appendix-D.2-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.2-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.3-2.1">
+            <p id="appendix-D.3-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.3-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-2.2">
-            <p id="appendix-D.2-2.2.1">Added this changelog<a href="#appendix-D.2-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-2.2">
+            <p id="appendix-D.3-2.2.1">Added this changelog<a href="#appendix-D.3-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-2.3">
-            <p id="appendix-D.2-2.3.1">General text editing<a href="#appendix-D.2-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-2.3">
+            <p id="appendix-D.3-2.3.1">General text editing<a href="#appendix-D.3-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-2.4">
-            <p id="appendix-D.2-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.2-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-2.4">
+            <p id="appendix-D.3-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-06">
-<section id="appendix-D.3">
+<section id="appendix-D.4">
         <h3 id="name-draft-dekater-scion-pki-06">
 <a href="#name-draft-dekater-scion-pki-06" class="section-name selfRef">draft-dekater-scion-pki-06</a>
         </h3>
-<p id="appendix-D.3-1">Major changes:<a href="#appendix-D.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.4-1">Major changes:<a href="#appendix-D.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.3-2.1">
-            <p id="appendix-D.3-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.3-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.4-2.1">
+            <p id="appendix-D.4-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-D.3-3">Minor changes:<a href="#appendix-D.3-3" class="pilcrow">¶</a></p>
+<p id="appendix-D.4-3">Minor changes:<a href="#appendix-D.4-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.3-4.1">
-            <p id="appendix-D.3-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.3-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.4-4.1">
+            <p id="appendix-D.4-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.4-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-4.2">
-            <p id="appendix-D.3-4.2.1">Removed forward references.<a href="#appendix-D.3-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-4.2">
+            <p id="appendix-D.4-4.2.1">Removed forward references.<a href="#appendix-D.4-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-4.3">
-            <p id="appendix-D.3-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.3-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-4.3">
+            <p id="appendix-D.4-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.4-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

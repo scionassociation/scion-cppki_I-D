@@ -136,6 +136,7 @@ Table of Contents
        Phase 3: TRC Signing
         Phase 4: TRC Validation
    Change Log
+     draft-dekater-scion-pki-09
      draft-dekater-scion-pki-08
      draft-dekater-scion-pki-07
      draft-dekater-scion-pki-06
@@ -2784,7 +2785,7 @@ Ceremony Preparations
    values must be displayed to the participants.
 
    The Ceremony Administrator MUST then share the bundle with the
-   representatives of the voting ASes who must validate on their machine
+   representatives of the voting ASes who MUST validate on their machine
    that the hash value of their certificates and that of the bundled
    certificates is the same as displayed by the Ceremony Administrator.
 
@@ -2837,6 +2838,12 @@ Change Log
 
    Changes made to drafts since ISE submission.  This section is to be
    removed before publication.
+
+draft-dekater-scion-pki-09
+
+   *  Signing ceremony and introduction - improved text
+
+   *  Clarified why a CA must have an ISD-AS number assigned
 
 draft-dekater-scion-pki-08
 
