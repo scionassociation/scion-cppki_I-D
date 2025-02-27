@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-25T00:23:27.279583+00:00",
+  "timestamp": "2025-02-27T00:21:23.020470+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -393,9 +393,9 @@
       "labels": [
         "question"
       ],
-      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [x] Clarify wether a CA MUST have its own AS or not.\n- [ ] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [ ] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
+      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [x] Clarify wether a CA MUST have its own AS or not.\n- [x] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [ ] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
       "createdAt": "2025-02-19T12:49:01Z",
-      "updatedAt": "2025-02-24T07:51:30Z",
+      "updatedAt": "2025-02-26T04:13:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -404,6 +404,13 @@
           "body": "@oncilla wrote on [Slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1740057971050929?thread_ts=1740057439.410749&cid=C8ADA9CEP)\n> Q: MUST a CA have its own AS? \nA: Yes. A CA must have an ISD-AS number assigned, and it must be present in the certificate \n\nThis is because `2.2.1.2.1.  ISD-AS number Attribute` is part of the cert. We shoudl clarify in the text that this is the case and why (e.g. is the AS field in a cert used by the CP to request that cert?)\n\n> Q: Is there a 1:1 relationship between CP root and CA certificates? In other words, MUST every CA certificate have a corresponding Root certificate in the TRC?\nA: In practice this is the case, and also the intention. I don't think it is currently enforced. I would also not prescribe it in the spec. This feels like something that the ISD governance should decide\n\n\n ",
           "createdAt": "2025-02-21T09:11:09Z",
           "updatedAt": "2025-02-24T07:51:30Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I'm not quite clear on where and how to clarify that a CA certificate must include an ISD-AS number. Could this go in the note as follows:\n\n_**Note**: Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name. CA certificates must include an ISD-AS number in their distinguished name._ ",
+          "createdAt": "2025-02-26T04:13:45Z",
+          "updatedAt": "2025-02-26T04:13:45Z"
         }
       ]
     },
@@ -2531,13 +2538,13 @@
       "labels": [],
       "body": "Resolves #53 \r\nDatatracker [diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/signing_ceremony/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-01-25T14:30:44Z",
-      "updatedAt": "2025-02-21T19:24:55Z",
+      "updatedAt": "2025-02-26T03:57:16Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "signing_ceremony",
-      "headRefOid": "15cabe87ff5485c91ba147d470bcf0c9be305dfb",
+      "headRefOid": "c4bd4cde6f4bdfee8ae0f307ada011c9dc52dba4",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -2827,6 +2834,32 @@
       "mergeCommit": {
         "oid": "61980665961ba5c021157b910bea18db3c6a33f1"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 57,
+      "id": "PR_kwDOH386tM6MrZXL",
+      "title": "trc: describe possibilty of explicit TRC query via CS grpc",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/57",
+      "state": "OPEN",
+      "author": "jiceatscion",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "fixes: #56 ",
+      "createdAt": "2025-02-26T17:01:05Z",
+      "updatedAt": "2025-02-26T17:01:06Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "active_disco",
+      "headRefOid": "dc4d66f7600646586b615ed1570e8a2e70c60370",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
