@@ -1007,9 +1007,12 @@ Table of Contents
    fields do not include the ISD-AS number at all, or include it more
    than once.
 
-   *Note*: CA certificates MUST include an ISD-AS number in their
-   distinguished name.  Voting certificates are not required to include
-   the ISD-AS number attribute in their distinguished name.
+   CA certificates MUST include an ISD-AS number in their distinguished
+   name so the control plane knows from which AS to retrieve the
+   certificate, thereby avoiding circular dependencies.
+
+   *Note*: Voting certificates are not required to include the ISD-AS
+   number attribute in their distinguished name.
 
 2.2.2.  Extensions
 
