@@ -1502,6 +1502,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 - Signing ceremony and introduction - improved text
 - Clarified why a CA must have an ISD-AS number assigned
+- Mention Active Discovery as a TRC discovery mechanism
 
 ## draft-dekater-scion-pki-08
 {:numbered="false"}
