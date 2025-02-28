@@ -1261,7 +1261,7 @@ In every path segment, all ASes MUST reference the latest TRC of their ISD. Ther
 - *Active Discovery*<br>
 Any TRC can be obtained at any time from the sender of the information it secures; either in a specific version or in its latest available version. The necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Control Service gRPC API - Trust Material".
 
-**Note:** The last two mechanisms above only work when there is an active communication between the relying party and the ISD in question.
+**Note:** The last two mechanisms above only work when there is active communication between the relying party and the ISD in question.
 
 
 
