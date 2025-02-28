@@ -2853,6 +2853,8 @@ draft-dekater-scion-pki-09
 
    *  Clarified why a CA must have an ISD-AS number assigned
 
+   *  Mention Active Discovery as a TRC discovery mechanism
+
 draft-dekater-scion-pki-08
 
    *  Fix some oversized diagrams
