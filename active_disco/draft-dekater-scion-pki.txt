@@ -2257,7 +2257,7 @@ Table of Contents
       described in [I-D.dekater-scion-controlplane], section "Control
       Service gRPC API - Trust Material".
 
-   *Note:* The last two mechanisms above only work when there is active
+   *Note:* The first two mechanisms above only work when there is active
    communication between the relying party and the ISD in question.
 
 4.2.   Signing and Verifying Control Plane Messages
