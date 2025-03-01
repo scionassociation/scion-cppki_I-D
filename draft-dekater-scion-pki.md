@@ -696,7 +696,7 @@ Additionally, the Extended Key Usage extension sequence MAY include the SCION-sp
 
 The specifications of the `extKeyUsage` extension differ per SCION Control Plane PKI certificate type. The next table provides an overview of the specifications per certificate type.
 
-| Certificate Type               | Root                   | CA           	                | AS                    | Voting (regular and sensitive)    |
+| Certificate Type               | Root                   | CA                              | AS                    | Voting (regular and sensitive)    |
 | ------------------------------ | ---------------------- | ----------------------------- | --------------------- | --------------------------------- |
 | *Attribute:*                   |                        |                               |                       |                                   |
 | `extKeyUsage` extension itself | MUST be present        | MAY be present (not required) | MUST be present       | MUST be present                   |
@@ -1258,7 +1258,10 @@ The TRC version is announced in the beaconing process. Each AS MUST announce wha
 - *Path Lookup*<br>
 In every path segment, all ASes MUST reference the latest TRC of their ISD. Therefore, when resolving paths, every relying party will notice TRC updates, even remote ones.<br>
 
-**Note:** The above mechanism only works when there is an active communication between the relying party and the ISD in question.
+- *Active Discovery*<br>
+Any TRC can be obtained at any time from the sender of the information it secures; either in a specific version or in its latest available version. The necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Control Service gRPC API - Trust Material".
+
+**Note:** The first two mechanisms above only work when there is active communication between the relying party and the ISD in question.
 
 
 
@@ -1499,6 +1502,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 - Signing ceremony and introduction - improved text
 - Clarified why a CA must have an ISD-AS number assigned
+- Mention Active Discovery as a TRC discovery mechanism
 
 ## draft-dekater-scion-pki-08
 {:numbered="false"}
