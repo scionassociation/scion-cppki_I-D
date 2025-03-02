@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-02-27T00:21:23.020470+00:00",
+  "timestamp": "2025-03-02T00:23:05.331022+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -366,7 +366,7 @@
       "id": "I_kwDOH386tM6nk6G1",
       "title": "Signing Ceremony: make text concise",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/53",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -375,16 +375,16 @@
       "labels": [],
       "body": "The current description of the Signing Ceremony has inconsistencies in the order of the process and duplicates text.\n\nThere is more material about the ceremony here: https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-builder.html ",
       "createdAt": "2025-01-26T11:19:11Z",
-      "updatedAt": "2025-02-20T12:52:30Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-27T23:51:57Z",
+      "closedAt": "2025-02-27T23:51:57Z",
       "comments": []
     },
     {
       "number": 55,
       "id": "I_kwDOH386tM6qqZkH",
-      "title": "CAs: must they be an AS? Clarify and use consistent wording",
+      "title": "CAs: clarify why they must have an AS and use consistent wording",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/55",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -393,10 +393,10 @@
       "labels": [
         "question"
       ],
-      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [x] Clarify wether a CA MUST have its own AS or not.\n- [x] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [ ] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
+      "body": "We sometime mention CAs alone, and sometimes we mention CA ASes. \n\n- [x] Clarify wether a CA MUST have its own AS or not.\n- [x] Correct wording where we mention `CA AS`, `root AS.`, etc...\n- [x] Is there a 1:1 relationship between CP root and CA certificates?  In other words, MUST every CA certificate have a corresponding Root certificate in the TRC? --> Adapt draft accordingly (ceremony and general text)",
       "createdAt": "2025-02-19T12:49:01Z",
-      "updatedAt": "2025-02-26T04:13:46Z",
-      "closedAt": null,
+      "updatedAt": "2025-02-27T23:51:57Z",
+      "closedAt": "2025-02-27T23:51:57Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -419,7 +419,7 @@
       "id": "I_kwDOH386tM6q2du2",
       "title": "TRC discovery: active discovery",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/56",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -431,8 +431,8 @@
       ],
       "body": "Shall we mention [Active Discovery](https://docs.scion.org/en/latest/cryptography/interactions.html#active-discovery) in `4.1.2.1.   TRC Update Discovery`? Right now we only mention beaconing and path lookups.\n\n@jiceatscion is it actively used?",
       "createdAt": "2025-02-20T14:54:28Z",
-      "updatedAt": "2025-02-24T08:06:52Z",
-      "closedAt": null,
+      "updatedAt": "2025-03-01T12:30:56Z",
+      "closedAt": "2025-03-01T12:30:55Z",
       "comments": [
         {
           "author": "jiceatscion",
@@ -2531,24 +2531,26 @@
       "id": "PR_kwDOH386tM6I-0x6",
       "title": "Rationalised Signing Ceremony description",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/52",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #53 \r\nDatatracker [diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/signing_ceremony/draft-dekater-scion-pki.txt)",
+      "body": "Resolves #53 \r\nResolves #55 \r\nDatatracker [diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/signing_ceremony/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-01-25T14:30:44Z",
-      "updatedAt": "2025-02-26T03:57:16Z",
+      "updatedAt": "2025-02-27T23:51:56Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "signing_ceremony",
-      "headRefOid": "c4bd4cde6f4bdfee8ae0f307ada011c9dc52dba4",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "1951fd2e64ba73f3e79aa3ff49f4f2d39db83042",
+      "closedAt": "2025-02-27T23:51:56Z",
+      "mergedAt": "2025-02-27T23:51:56Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "b795f7ea2fe240c3d59926f484efb4309ee88010"
+      },
       "comments": [],
       "reviews": [
         {
@@ -2806,6 +2808,19 @@
               "updatedAt": "2025-02-21T19:24:55Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6d6b_q",
+          "commit": {
+            "abbreviatedOid": "f0ace62"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-02-27T23:47:13Z",
+          "updatedAt": "2025-02-27T23:47:13Z",
+          "comments": []
         }
       ]
     },
@@ -2842,26 +2857,182 @@
       "id": "PR_kwDOH386tM6MrZXL",
       "title": "trc: describe possibilty of explicit TRC query via CS grpc",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/57",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "jiceatscion",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "fixes: #56 ",
       "createdAt": "2025-02-26T17:01:05Z",
-      "updatedAt": "2025-02-26T17:01:06Z",
+      "updatedAt": "2025-03-01T12:30:58Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a",
+      "baseRefOid": "b795f7ea2fe240c3d59926f484efb4309ee88010",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "active_disco",
-      "headRefOid": "dc4d66f7600646586b615ed1570e8a2e70c60370",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "2bd36e36c2279074c1f07a93a8aa18735250e062",
+      "closedAt": "2025-03-01T12:30:54Z",
+      "mergedAt": "2025-03-01T12:30:54Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "6b3df40b070d5e80249222f377e5acf265e3aa78"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6d6h6o",
+          "commit": {
+            "abbreviatedOid": "c30d3e8"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "@jiceatscion do you like my tiny wording changes? ",
+          "createdAt": "2025-02-28T00:06:51Z",
+          "updatedAt": "2025-02-28T00:06:51Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM6d8eMF",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T06:34:20Z",
+          "updatedAt": "2025-02-28T06:34:20Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Propose slight rewording - The last two mechanisms above only work when there is _active_ communication between the relying party and the ISD in question.",
+              "createdAt": "2025-02-28T06:34:20Z",
+              "updatedAt": "2025-02-28T06:34:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6d9JoN",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T08:16:06Z",
+          "updatedAt": "2025-02-28T08:16:06Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\n**Note:** The last two mechanisms above only work when there is active communication between the relying party and the ISD in question.\r\n```",
+              "createdAt": "2025-02-28T08:16:06Z",
+              "updatedAt": "2025-02-28T08:16:06Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6d-Udc",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T10:27:41Z",
+          "updatedAt": "2025-02-28T10:27:42Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "I actually changed the note again: the *FIRST TWO* mechanisms above...\r\nThe last one is precisely to cover the lack of active communication.\r\n",
+              "createdAt": "2025-02-28T10:27:41Z",
+              "updatedAt": "2025-02-28T10:27:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6d-aUo",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T10:38:25Z",
+          "updatedAt": "2025-02-28T10:38:25Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Ok, therefore the old note was wrong? (it only referred to path lookup)\r\n> **Note:** The above mechanism only works when there is an active communication between the relying party and the ISD in question.\r\n\r\nIt somehow depends on what you define as active communication\r\n\r\n",
+              "createdAt": "2025-02-28T10:38:25Z",
+              "updatedAt": "2025-02-28T10:38:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6d-bzS",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T10:41:14Z",
+          "updatedAt": "2025-02-28T10:41:14Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Also, what is a 'specific version' of a TRC and why would you need it? Wouldn't you always want the latest version, unless there was some sort of broken rollover? ",
+              "createdAt": "2025-02-28T10:41:14Z",
+              "updatedAt": "2025-02-28T10:41:30Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6d-kSd",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "jiceatscion",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-02-28T10:57:53Z",
+          "updatedAt": "2025-02-28T10:57:53Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "The API offers both: get a specific version, or get whatever the latest is. I have no idea why a specific version would be desirable. I can imagine some forensic activity; such as checking an old piece of data in its original context?\r\n\r\n",
+              "createdAt": "2025-02-28T10:57:53Z",
+              "updatedAt": "2025-02-28T10:57:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6eGHfL",
+          "commit": {
+            "abbreviatedOid": "1851db2"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-03-01T12:30:31Z",
+          "updatedAt": "2025-03-01T12:30:31Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "For the record: if an AS is offline for an extended period of time, it might need to retrieve the whole chain of TRCs. This is why (I think) this is needed",
+              "createdAt": "2025-03-01T12:30:31Z",
+              "updatedAt": "2025-03-01T12:30:31Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
