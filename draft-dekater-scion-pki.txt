@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 2 September 2025                                        S. Hitz
+Expires: 4 September 2025                                        S. Hitz
                                                          Anapaya Systems
-                                                            1 March 2025
+                                                            3 March 2025
 
 
                         SCION Control Plane PKI
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 September 2025.
+   This Internet-Draft will expire on 4 September 2025.
 
 Copyright Notice
 
@@ -102,19 +102,19 @@ Table of Contents
        2.2.2.  Extensions
    3.  Trust Root Configuration Specification
      3.1.  TRC Specification
-       3.1.1.   TRC Types and States
-       3.1.2.   TRC Format
-       3.1.3.   TRC Signature Syntax
-       3.1.4.   Certification Path - Trust Anchor Pool
-       3.1.5.   TRC Updates
+       3.1.1.  TRC Types and States
+       3.1.2.  TRC Format
+       3.1.3.  TRC Signature Syntax
+       3.1.4.  Certification Path - Trust Anchor Pool
+       3.1.5.  TRC Updates
      3.2.  Initial TRC Signing Ceremony
    4.  Deploying the CP PKI - Specifications
      4.1.  Deploying a TRC
-       4.1.1.   Base TRC
-       4.1.2.   TRC Update
+       4.1.1.  Base TRC
+       4.1.2.  TRC Update
      4.2.   Signing and Verifying Control Plane Messages
-       4.2.1.   Signing a Control Plane Message
-       4.2.2.   Verifying a Control Plane Message
+       4.2.1.  Signing a Control Plane Message
+       4.2.2.  Verifying a Control Plane Message
      4.3.  Creating a New Control Plane AS Certificate
    5.  Security Considerations
      5.1.  Dependency on Certificates
@@ -131,10 +131,10 @@ Table of Contents
       Ceremony Participants
      Ceremony Preparations
       Ceremony Process
-        Phase 1: Certificate Exchange
+       Phase 1: Certificate Exchange
        Phase 2: Generation of the TRC Payload
        Phase 3: TRC Signing
-        Phase 4: TRC Validation
+       Phase 4: TRC Validation
    Change Log
      draft-dekater-scion-pki-09
      draft-dekater-scion-pki-08
@@ -1359,7 +1359,7 @@ Table of Contents
    This section specifies the TRC including format definitions and
    dpayload fields.  The section uses the ITU-T [X.680] syntax.
 
-3.1.1.   TRC Types and States
+3.1.1.  TRC Types and States
 
    The following types of TRCs exist:
 
@@ -1394,13 +1394,13 @@ Table of Contents
    made with the first regular update to the base TRC.  All elements of
    the TRC is detailed in the following subsections.
 
-3.1.2.   TRC Format
+3.1.2.  TRC Format
 
    The TRC defines the roots of trust of an ISD and is the basis of the
    ISD's Control Plane PKI.  It holds the root and voting certificates
    of the ISD and defines the ISD's trust policy.
 
-3.1.2.1.   TRC Schema
+3.1.2.1.  TRC Schema
 
    The following code block shows the format of a TRC specification file
    (the payload schema):
@@ -1446,19 +1446,19 @@ Table of Contents
    using ASN.1 distinguished encoding rules (DER) [X.690].  For more
    details, see Section 3.1.3.
 
-3.1.2.2.   TRC Fields
+3.1.2.2.  TRC Fields
 
    This section describes the syntax and semantics of all TRC payload
    fields.
 
-3.1.2.2.1.   version Field
+3.1.2.2.1.  version Field
 
    The version field describes the version of the TRC format
    specification.
 
    Currently, the version MUST always be "v1".
 
-3.1.2.2.2.   iD Field
+3.1.2.2.2.  iD Field
 
    The iD field specifies the unique identifier of the TRC.
 
@@ -1536,7 +1536,7 @@ Table of Contents
 
                  Table 7: ID of TRCs in TRC update chain
 
-3.1.2.2.3.   validity Field
+3.1.2.2.3.  validity Field
 
    The validity field defines the validity period of the TRC.  This is
    the period of time during which the TRC is in the "valid" state.  The
@@ -1560,7 +1560,7 @@ Table of Contents
       "99991231235959Z" generalized time value, and verifiers MUST error
       out when encountering such a TRC.
 
-3.1.2.2.4.   gracePeriod Field
+3.1.2.2.4.  gracePeriod Field
 
    The gracePeriod field of a TRC specifies the period of time during
    which the predecessor TRC can still be considered active (the "grace
@@ -1589,7 +1589,7 @@ Table of Contents
    might expire before the corresponding AS can fetch an updated version
    from its CA.
 
-3.1.2.2.5.   noTrustReset Boolean
+3.1.2.2.5.  noTrustReset Boolean
 
    The noTrustReset Boolean specifies whether a trust reset is forbidden
    by the ISD.  Within a TRC update chain, this value MUST NOT be
@@ -1633,7 +1633,7 @@ Table of Contents
    the same payload, but different voting signature sets.  This would
    violate the requirement of uniqueness of a TRC.
 
-3.1.2.2.7.   votingQuorum Field
+3.1.2.2.7.  votingQuorum Field
 
    The votingQuorum field defines the number of necessary votes on a
    successor TRC to make it verifiable.
@@ -1641,7 +1641,7 @@ Table of Contents
    A voting quorum greater than one will prevent a single entity from
    creating a malicious TRC update.
 
-3.1.2.2.8.   coreASes Field
+3.1.2.2.8.  coreASes Field
 
    The coreASes field contains the AS numbers of the core ASes in this
    ISD.
@@ -1650,7 +1650,7 @@ Table of Contents
    numbers.  That is, each AS number MUST appear only once in the
    coreASes field.
 
-3.1.2.2.8.1.   Revoking or Assigning Core Status
+3.1.2.2.8.1.  Revoking or Assigning Core Status
 
    *  To revoke the core status of a given AS, remove the respective AS
       number from the sequence of AS numbers in the coreASes field.
@@ -1661,7 +1661,7 @@ Table of Contents
    *Important:* Revoking or assigning the core status of/to an AS always
    requires a (sensitive) TRC update.
 
-3.1.2.2.9.   authoritativeASes Field
+3.1.2.2.9.  authoritativeASes Field
 
    The authoritativeASes field contains the AS numbers of the
    authoritative ASes in this ISD.
@@ -1677,7 +1677,7 @@ Table of Contents
       authoritative AS numbers.  That is, each AS number MUST NOT appear
       more than once in the authoritativeASes field.
 
-3.1.2.2.9.1.   Revoking or Assigning Authoritative Status
+3.1.2.2.9.1.  Revoking or Assigning Authoritative Status
 
    *  To revoke the authoritative status of a given AS, remove the
       respective AS number from the sequence of AS numbers in the
@@ -1690,7 +1690,7 @@ Table of Contents
    *Important:* Revoking or assigning the authoritative status of/to an
    AS always requires a (sensitive) TRC update.
 
-3.1.2.2.10.   description Field
+3.1.2.2.10.  description Field
 
    The description field contains a UTF-8 encoded string that describes
    the ISD.
@@ -1765,7 +1765,7 @@ Table of Contents
       _regular_ voting certificates specified in the TRC's certificates
       field.
 
-3.1.3.   TRC Signature Syntax
+3.1.3.  TRC Signature Syntax
 
    A TRC contains policy information about an ISD and acts as a
    distribution mechanism for the trust anchors of that ISD.
@@ -1824,7 +1824,7 @@ Table of Contents
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
 
-3.1.3.2.   TRC Equality
+3.1.3.2.  TRC Equality
 
    The signer information in the signed TRC is part of an unordered set,
    as per [RFC5652].  This implies that the signer information can be
@@ -1847,7 +1847,7 @@ Table of Contents
       currently valid TRC payload, and, in case of a TRC update, the
       predecessor payload.
 
-3.1.4.   Certification Path - Trust Anchor Pool
+3.1.4.  Certification Path - Trust Anchor Pool
 
    The certification path of a Control PlaneAS certificate starts in a
    Control Plane root certificate.  The Control Plane root certificate
@@ -1873,7 +1873,7 @@ Table of Contents
    process fails.  For more details, see 4.2 "Signing and Verifying
    Control Plane Messages" Section 4.2.
 
-3.1.4.1.   TRC Selection For Trust Anchor Pool
+3.1.4.1.  TRC Selection For Trust Anchor Pool
 
    The selection of the right set of TRCs to build the trust anchor pool
    depends on the time of verification.  The trust anchor pool is
@@ -1952,7 +1952,7 @@ Table of Contents
                roots.add(cert)
            return roots
 
-3.1.5.   TRC Updates
+3.1.5.  TRC Updates
 
    All non-base TRCs of an ISD are updates of the ISD's base TRC(s).
    The TRC update chain consists of regular and sensitive TRC updates,
@@ -1968,7 +1968,7 @@ Table of Contents
    a TRC update, a relying party MUST perform a couple of checks which
    are also listed.
 
-3.1.5.1.   Changed or New Certificates
+3.1.5.1.  Changed or New Certificates
 
    In the context of a TRC update,
 
@@ -1987,7 +1987,7 @@ Table of Contents
    freshly included voting entity agrees with the contents of the TRC it
    is now part of.
 
-3.1.5.2.   Update Rules - Overview
+3.1.5.2.  Update Rules - Overview
 
    The following table gives an overview of the types of TRC update as
    well as the rules that must apply in regard to the updated TRC's
@@ -2044,7 +2044,7 @@ Table of Contents
 
        Table 8: Overview of the update types and corresponding rules
 
-3.1.5.3.   General Update Rules
+3.1.5.3.  General Update Rules
 
    The following rules MUST hold for each updated TRC, independent of
    the update type:
@@ -2070,7 +2070,7 @@ Table of Contents
       corresponds to the number of indices in the votes field of the
       updated TRC.
 
-3.1.5.4.   Regular TRC Update
+3.1.5.4.  Regular TRC Update
 
    A regular TRC update is a periodic re-issuance of the TRC where the
    entities and policies listed in the TRC remain unchanged.
@@ -2113,7 +2113,7 @@ Table of Contents
       _regular_ voting certificate in the certificates field of the
       predecessor TRC.
 
-3.1.5.5.   Sensitive TRC Update
+3.1.5.5.  Sensitive TRC Update
 
    If a TRC update does not qualify as a regular update, it is
    considered a sensitive update.
@@ -2124,7 +2124,7 @@ Table of Contents
       _sensitive_ voting certificate in the certificates field of the
       predecessor TRC.
 
-3.1.5.6.   Signing a TRC Update
+3.1.5.6.  Signing a TRC Update
 
    As described above, a set of voters MUST cast votes on the updated
    TRC to make it verifiable.  The votingQuorum field of the predecessor
@@ -2152,7 +2152,7 @@ Table of Contents
    both regular and sensitive keys online and perform both updates
    automatically.
 
-3.1.5.7.   TRC Update Verification
+3.1.5.7.  TRC Update Verification
 
    To verify a TRC update, the relying party MUST perform the following
    checks:
@@ -2202,21 +2202,21 @@ Table of Contents
 
 4.1.  Deploying a TRC
 
-4.1.1.   Base TRC
+4.1.1.  Base TRC
 
    Base TRCs are trust anchors and thus axiomatically trusted.  All ASes
    within an ISD MUST be pre-loaded with the currently valid base-
    version TRC of their own ISD.  For all specifications regarding the
    creation and distribution of initial/base TRCs, see Section 3.2.
 
-4.1.2.   TRC Update
+4.1.2.  TRC Update
 
    All non-base TRCs of an ISD are updates of the ISD's base TRC(s).
    The TRC update chain consists of regular and sensitive TRC updates.
    The specifications and rules that apply to updating a TRC are
    described in Section 3.1.5.
 
-4.1.2.1.   TRC Update Discovery
+4.1.2.1.  TRC Update Discovery
 
    Relying parties MUST have at least one valid TRC available.  Relying
    parties MUST discover TRC updates within the grace period defined in
@@ -2273,7 +2273,7 @@ Table of Contents
    The following sections specify the requirements that apply to the
    signing and verification of control plane messages.
 
-4.2.1.   Signing a Control Plane Message
+4.2.1.  Signing a Control Plane Message
 
    An AS signs control plane messages with the private key that
    corresponds to the (valid) AS' certificate.
@@ -2298,7 +2298,7 @@ Table of Contents
    *  Timestamp: For many messages, the time at which it was signed is
       useful information to ensure freshness.
 
-4.2.2.   Verifying a Control Plane Message
+4.2.2.  Verifying a Control Plane Message
 
    When the relying party receives a control plane message they want to
    verify, the relying party first needs to identify the certificate
@@ -2533,9 +2533,9 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-07, 24 December 2024,
+              scion-controlplane-08, 3 March 2025,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-07>.
+              scion-controlplane-08>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
@@ -2767,7 +2767,7 @@ Ceremony Preparations
    Ceremony Administrator who provides instructions to the other
    participants:
 
- Phase 1: Certificate Exchange
+Phase 1: Certificate Exchange
 
    All parties share the certificates that must be part of the TRC with
    the Ceremony Administrator.  For the Voting ASes, these are the
@@ -2826,7 +2826,7 @@ Phase 3: TRC Signing
    Phase 3 concludes when all voting representatives have attached their
    signatures to the TRC.
 
- Phase 4: TRC Validation
+Phase 4: TRC Validation
 
    All voting representatives copy the TRC payload signed with their
    private voting keys to the data exchange device and return this to
@@ -2853,6 +2853,9 @@ draft-dekater-scion-pki-09
    *  Clarified why a CA must have an ISD-AS number assigned
 
    *  Mention Active Discovery as a TRC discovery mechanism
+
+   *  Abstract: mention goal and that document is not an Internet
+      Standard
 
 draft-dekater-scion-pki-08
 
