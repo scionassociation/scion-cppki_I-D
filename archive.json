@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-03-02T00:23:05.331022+00:00",
+  "timestamp": "2025-03-04T00:21:30.685400+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -126,7 +126,7 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2024-10-08T09:42:42Z",
+      "updatedAt": "2025-03-03T12:49:19Z",
       "closedAt": null,
       "comments": [
         {
@@ -142,6 +142,13 @@
           "body": "@jiceatscion @matzf  do you think this could be addressed? Text in the draft comes from the scionproto docs, it was added in https://github.com/scionproto/scion/pull/3742 \r\n\r\n@oncilla @scrye could you help address this?",
           "createdAt": "2024-07-04T08:06:15Z",
           "updatedAt": "2024-10-08T09:42:42Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "I discussed this with JC and he is not sure wether this is needed/beneficial for the draft.",
+          "createdAt": "2025-03-03T12:49:18Z",
+          "updatedAt": "2025-03-03T12:49:18Z"
         }
       ]
     },
@@ -3033,6 +3040,34 @@
           ]
         }
       ]
+    },
+    {
+      "number": 58,
+      "id": "PR_kwDOH386tM6NLkQx",
+      "title": "Remove tabs before paragraph headings, update changelog",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/58",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-03-03T16:51:30Z",
+      "updatedAt": "2025-03-03T16:54:07Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "6b3df40b070d5e80249222f377e5acf265e3aa78",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "polish",
+      "headRefOid": "ccd829b70c6aecbcb899442457cc67b1a659d160",
+      "closedAt": "2025-03-03T16:54:03Z",
+      "mergedAt": "2025-03-03T16:54:03Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "c28e3cc1bdb51986ebf4c664452e88370505e78b"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
