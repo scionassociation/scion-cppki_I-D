@@ -500,6 +500,70 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 ~~~~
 {: #figure-2 title="TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item."}
 
+<figure>
+  <name>TRC</name>
+  <artset>
+    <artwork type="ascii-art">
+      <![CDATA[
+~~~~
+┌──────────────────────────────────────────────┐
+│                    TRC 1                     │
+│                (base/initial)                │
+│┌────────────────────────────────────────────┐│
+││- Version            - Core ASes            ││
+││- ID                 - Description          ││
+││- Validity           - No Trust Reset       ││
+││- Grace Period       - Quorum               ││
+││- ...                                       ││
+│└────────────────────────────────────────────┘│
+│┌─────────────────────┐┌─────────────────────┐│
+││        Votes        ││   Regular Voting    ││
+││(certificate indices)││    Certificates     ││
+││                     ││                     ││
+││       (empty)       ││ ┌─────┐ ┌─────┐     ││
+││                     ││ │ (1) │ │ (2) │     ││
+│└─────────────────────┘│ │  C  │ │  C  │ ... ││
+│┌─────────────────────┐│ │ reg │ │ reg │     ││
+││                     ││ └─────┘ └─────┘     ││
+││     Signatures      │└─────────────────────┘│
+││                     │┌─────────────────────┐│
+││┌───────────────────┐││  Sensitive Voting   ││
+│││ 73 A9 4E A0 0D... │││    Certificates     ││
+││└───────────────────┘││                     ││
+││┌───────────────────┐││ ┌─────┐ ┌─────┐     ││
+│││ 53 B7 7C 98 56... │││ │ (3) │ │ (4) │     ││
+││└───────────────────┘││ │  C  │ │  C  │ ... ││
+││         ...         ││ │sens │ │sens │     ││
+││                     ││ └─────┘ └─────┘     ││
+│└─────────────────────┘└─────────────────────┘│
+│┌────────────────────────────────────────────┐│
+││            CP Root Certificates            ││
+││                                            ││
+││     ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        ││
+││     │ (5) │ │ (6) │ │ (7) │ │ (8) │        ││
+││     │  C  │ │  C  │ │  C  │ │  C  │ ...    ││
+││     │root │ │root │ │root │ │root │        ││
+││     └──┬──┘ └─────┘ └─────┘ └──┬──┘        ││
+│└────────┼───────────────────────┼───────────┘│
+└─────────┼───────────────────────┼────────────┘
+          │                       │
+          ▼                       ▼
+   ┌─────────────┐         ┌─────────────┐
+   │    CP CA    │         │    CP CA    │
+   │ Certificate │         │ Certificate │
+   └──────┬──────┘         └──────┬──────┘
+          │                       │
+          ▼                       ▼
+   ┌─────────────┐         ┌─────────────┐
+   │    CP AS    │         │    CP AS    │
+   │ Certificate │         │ Certificate │
+   └─────────────┘         └─────────────┘
+~~~~
+      ]]>
+    </artwork>
+  </artset>
+</figure>
+
 
 ## Certificate Specification
 
