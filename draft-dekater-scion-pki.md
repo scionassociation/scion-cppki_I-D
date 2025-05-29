@@ -449,10 +449,10 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 │                    TRC 1                     │
 │                (base/initial)                │
 │┌────────────────────────────────────────────┐│
-││- Version           - Core ASes             ││
-││- ID                - Description           ││
-││- Validity          - No Trust Reset        ││
-││- Grace Period      - Quorum                ││
+││- Version            - Core ASes            ││
+││- ID                 - Description          ││
+││- Validity           - No Trust Reset       ││
+││- Grace Period       - Quorum               ││
 ││- ...                                       ││
 │└────────────────────────────────────────────┘│
 │┌─────────────────────┐┌─────────────────────┐│
