@@ -265,7 +265,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
                │┌───────────────────────────────────┐│
 ┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
 │  TRC 1   │   ││- ID            - Description      ││   │          │
-│(Base TRC)├─▶ ││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
+│(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
 │          │   ││- Grace Period  - Voting Quorum    ││   │          │
 └──────────┘   ││- ...                              ││   └──────────┘
                │└───────────────────────────────────┘│
