@@ -445,7 +445,7 @@ Table of Contents
                   │┌───────────────────────────────────┐│
    ┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
    │  TRC 1   │   ││- ID            - Description      ││   │          │
-   │(Base TRC)├─▶ ││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
+   │(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
    │          │   ││- Grace Period  - Voting Quorum    ││   │          │
    └──────────┘   ││- ...                              ││   └──────────┘
                   │└───────────────────────────────────┘│
