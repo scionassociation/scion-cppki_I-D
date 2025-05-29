@@ -500,14 +500,6 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 ~~~~
 {: #figure-2 title="TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item."}
 
-<figure>
-  <name>TRC</name>
-  <artset>
-    <artwork type="svg" name="images/figure2.svg">
-    </artwork>
-  </artset>
-</figure>
-
 
 ## Certificate Specification
 
