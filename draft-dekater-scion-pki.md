@@ -259,42 +259,39 @@ The Control Plane PKI does not explicitly support certificate revocation. Instea
 The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a view of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
 
 ~~~~
-                                    TRC 2
+                                TRC 2
 
-               +--------------------------------------+
-               |+------------------------------------+|
-               ||- Version       - Core ASes         ||
-+--------+     ||- ID            - Description       ||    +--------+
-| TRC 1  |     ||- Validity      - No Trust Reset    ||    | TRC 3  |
-| (Base  |---->||- Grace Period  - Voting Quorum     ||--->|        |
-|  TRC)  |     ||- ...                               ||    |        |
-+--------+     |+------------------------------------+|    +--------+
-               |+----------------+  +----------------+|
-               || Regular Voting |  |Sensitive Voting||
-               ||  Certificate   |  |  Certificate   ||
-               |+----------------+  +----------------+|
-               |+----------------+  +----------------+|
-               ||     Votes      |  |   Signatures   ||
-               |+----------------+  +----------------+|
-               |+------------------------------------+|
-               ||        CP Root Certificates        ||
-               |+----------+-------------+-----------+|
-               |           |             |            |
-               +-----------+-------------+------------+
-                           |             |
-                           |             |
-                           v             v
-                 +-----------+         +-----------+
-                 |   CP CA   |         |   CP CA   |
-                 |Certificate|         |Certificate|
-                 +-+-------+-+         +-----+-----+
-                   |       |                 |
-                   |       |                 |
-                   v       v                 v
-          +-----------+ +-----------+      +-----------+
-          |   CP AS   | |   CP AS   |      |   CP AS   |
-          |Certificate| |Certificate|      |Certificate|
-          +-----------+ +-----------+      +-----------+
+               ┌─────────────────────────────────────┐
+               │┌───────────────────────────────────┐│
+┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
+│  TRC 1   │   ││- ID            - Description      ││   │          │
+│(Base TRC)├─▶ ││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
+│          │   ││- Grace Period  - Voting Quorum    ││   │          │
+└──────────┘   ││- ...                              ││   └──────────┘
+               │└───────────────────────────────────┘│
+               │┌────────────────┐ ┌────────────────┐│
+               ││ Regular Voting │ │Sensitive Voting││
+               ││  Certificate   │ │  Certificate   ││
+               │└────────────────┘ └────────────────┘│
+               │┌────────────────┐ ┌────────────────┐│
+               ││     Votes      │ │   Signatures   ││
+               │└────────────────┘ └────────────────┘│
+               │┌───────────────────────────────────┐│
+               ││       CP Root Certificates        ││
+               │└──────┬─────────────────────┬──────┘│
+               └───────┼─────────────────────┼───────┘
+                       │                     │
+                       ▼                     ▼
+                 ┌───────────┐         ┌───────────┐
+                 │   CP CA   │         │   CP CA   │
+                 │Certificate│         │Certificate│
+                 └─┬───────┬─┘         └─────┬─────┘
+                   │       │                 │
+                   ▼       ▼                 ▼
+          ┌───────────┐ ┌───────────┐  ┌───────────┐
+          │   CP AS   │ │   CP AS   │  │   CP AS   │
+          │Certificate│ │Certificate│  │Certificate│
+          └───────────┘ └───────────┘  └───────────┘
 ~~~~
 {: #figure-1 title="Chain of trust within an ISD"}
 
@@ -448,60 +445,58 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 {{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
 
 ~~~~
-+--------------------------------------------+
-|                   TRC 1                    |
-|               (base/initial)               |
-|+------------------------------------------+|
-|| - Version          - Core ASes           ||
-|| - ID               - Description         ||
-|| - Validity         - No Trust Reset      ||
-|| - Grace Period     - Voting Quorum       ||
-|| - ...                                    ||
-|+------------------------------------------+|
-|+--------------------++--------------------+|
-||        Votes       ||   Regular Voting   ||
-||  (cert. indices)   ||    Certificates    ||
-||                    ||                    ||
-||                    || +-----+ +-----+    ||
-||       (empty)      || | (1) | | (2) |    ||
-||                    || |C    | |C    | ...||
-||                    || | reg | | reg |    ||
-|+--------------------+| +-----+ +-----+    ||
-|+--------------------+|                    ||
-||                    ||                    ||
-||                    ||                    ||
-||     Signatures     |+--------------------+|
-||                    |+--------------------+|
-||+------------------+||  Sensitive Voting  ||
-||| 73 A9 4E AO 0D...|||    Certificates    ||
-||+------------------+|| +-----+ +-----+    ||
-||+------------------+|| | (3) | | (4) |    ||
-||| 53 B7 7C 98 56...||| |C    | |C    |    ||
-||+------------------+|| | sens| | sens| ...||
-||        ...         || +-----+ +-----+    ||
-|+--------------------++--------------------+|
-|+------------------------------------------+|
-||          CP Root Certificates            ||
-||                                          ||
-|| +-----+ +-----+ +-----+ +-----+          ||
-|| | (5) | | (6) | | (7) | | (8) |          ||
-|| |C    | |C    | |C    | |C    |          ||
-|| | root| | root| | root| | root| ...      ||
-|| +-----+ +--+--+ +-----+ +--+--+          ||
-|+------------+---------------+-------------+|
-+-------------+---------------+--------------+
-              |               |
-              v               v
-     +-----------+         +-----------+
-     |   CP CA   |         |   CP CA   |
-     |Certificate|         |Certificate|
-     +-----+-----+         +-----+-----+
-           |                     |
-           v                     v
-     +-----------+         +-----------+
-     |   CP AS   |         |   CP AS   |
-     |Certificate|         |Certificate|
-     +-----------+         +-----------+
+┌──────────────────────────────────────────────┐
+│                    TRC 1                     │
+│                (base/initial)                │
+│┌────────────────────────────────────────────┐│
+││- Version           - Core ASes             ││
+││- ID                - Description           ││
+││- Validity          - No Trust Reset        ││
+││- Grace Period      - Quorum                ││
+││- ...                                       ││
+│└────────────────────────────────────────────┘│
+│┌─────────────────────┐┌─────────────────────┐│
+││        Votes        ││   Regular Voting    ││
+││(certificate indices)││    Certificates     ││
+││                     ││                     ││
+││       (empty)       ││ ┌─────┐ ┌─────┐     ││
+││                     ││ │ (1) │ │ (2) │     ││
+│└─────────────────────┘│ │  C  │ │  C  │ ... ││
+│┌─────────────────────┐│ │ reg │ │ reg │     ││
+││                     ││ └─────┘ └─────┘     ││
+││     Signatures      │└─────────────────────┘│
+││                     │┌─────────────────────┐│
+││┌───────────────────┐││  Sensitive Voting   ││
+│││ 73 A9 4E A0 0D... │││    Certificates     ││
+││└───────────────────┘││                     ││
+││┌───────────────────┐││ ┌─────┐ ┌─────┐     ││
+│││ 53 B7 7C 98 56... │││ │ (3) │ │ (4) │     ││
+││└───────────────────┘││ │  C  │ │  C  │ ... ││
+││         ...         ││ │sens │ │sens │     ││
+││                     ││ └─────┘ └─────┘     ││
+│└─────────────────────┘└─────────────────────┘│
+│┌────────────────────────────────────────────┐│
+││            CP Root Certificates            ││
+││                                            ││
+││     ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        ││
+││     │ (5) │ │ (6) │ │ (7) │ │ (8) │        ││
+││     │  C  │ │  C  │ │  C  │ │  C  │ ...    ││
+││     │root │ │root │ │root │ │root │        ││
+││     └──┬──┘ └─────┘ └─────┘ └──┬──┘        ││
+│└────────┼───────────────────────┼───────────┘│
+└─────────┼───────────────────────┼────────────┘
+          │                       │
+          ▼                       ▼
+   ┌─────────────┐         ┌─────────────┐
+   │    CP CA    │         │    CP CA    │
+   │ Certificate │         │ Certificate │
+   └──────┬──────┘         └──────┬──────┘
+          │                       │
+          ▼                       ▼
+   ┌─────────────┐         ┌─────────────┐
+   │    CP AS    │         │    CP AS    │
+   │ Certificate │         │ Certificate │
+   └─────────────┘         └─────────────┘
 ~~~~
 {: #figure-2 title="TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item."}
 
