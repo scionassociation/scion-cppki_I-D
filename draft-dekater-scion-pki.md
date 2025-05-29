@@ -503,7 +503,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 <figure>
   <name>TRC</name>
   <artset>
-    <artwork type="svg" name="figure2.svg">
+    <artwork type="svg" name="images/figure2.svg">
     </artwork>
   </artset>
 </figure>
