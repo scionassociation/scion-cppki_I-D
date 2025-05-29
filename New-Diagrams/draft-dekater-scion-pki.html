@@ -13,18 +13,18 @@
        This document describes the trust model behind the SCION Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure. 
        This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet. 
     " name="description">
-<meta content="xml2rfc 3.28.0" name="generator">
+<meta content="xml2rfc 3.28.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.0
-    Python 3.12.9
+  xml2rfc 3.28.1
+    Python 3.12.10
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
+    Jinja2 3.1.6
     lxml 5.3.0
-    platformdirs 4.3.6
+    platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.3
@@ -1048,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">March 2025</td>
+<td class="right">May 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 4 September 2025</td>
+<td class="center">Expires 30 November 2025</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-03-03" class="published">3 March 2025</time>
+<time datetime="2025-05-29" class="published">29 May 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-09-04">4 September 2025</time></dd>
+<dd class="expires"><time datetime="2025-11-30">30 November 2025</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1125,7 +1125,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 4 September 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 November 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1500,42 +1500,39 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <figure id="figure-1">
           <div class="alignLeft art-text artwork" id="section-1.5-2.1">
 <pre>
-                                    TRC 2
+                                TRC 2
 
-               +--------------------------------------+
-               |+------------------------------------+|
-               ||- Version       - Core ASes         ||
-+--------+     ||- ID            - Description       ||    +--------+
-| TRC 1  |     ||- Validity      - No Trust Reset    ||    | TRC 3  |
-| (Base  |----&gt;||- Grace Period  - Voting Quorum     ||---&gt;|        |
-|  TRC)  |     ||- ...                               ||    |        |
-+--------+     |+------------------------------------+|    +--------+
-               |+----------------+  +----------------+|
-               || Regular Voting |  |Sensitive Voting||
-               ||  Certificate   |  |  Certificate   ||
-               |+----------------+  +----------------+|
-               |+----------------+  +----------------+|
-               ||     Votes      |  |   Signatures   ||
-               |+----------------+  +----------------+|
-               |+------------------------------------+|
-               ||        CP Root Certificates        ||
-               |+----------+-------------+-----------+|
-               |           |             |            |
-               +-----------+-------------+------------+
-                           |             |
-                           |             |
-                           v             v
-                 +-----------+         +-----------+
-                 |   CP CA   |         |   CP CA   |
-                 |Certificate|         |Certificate|
-                 +-+-------+-+         +-----+-----+
-                   |       |                 |
-                   |       |                 |
-                   v       v                 v
-          +-----------+ +-----------+      +-----------+
-          |   CP AS   | |   CP AS   |      |   CP AS   |
-          |Certificate| |Certificate|      |Certificate|
-          +-----------+ +-----------+      +-----------+
+               ┌─────────────────────────────────────┐
+               │┌───────────────────────────────────┐│
+┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
+│  TRC 1   │   ││- ID            - Description      ││   │          │
+│(Base TRC)├─▶ ││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
+│          │   ││- Grace Period  - Voting Quorum    ││   │          │
+└──────────┘   ││- ...                              ││   └──────────┘
+               │└───────────────────────────────────┘│
+               │┌────────────────┐ ┌────────────────┐│
+               ││ Regular Voting │ │Sensitive Voting││
+               ││  Certificate   │ │  Certificate   ││
+               │└────────────────┘ └────────────────┘│
+               │┌────────────────┐ ┌────────────────┐│
+               ││     Votes      │ │   Signatures   ││
+               │└────────────────┘ └────────────────┘│
+               │┌───────────────────────────────────┐│
+               ││       CP Root Certificates        ││
+               │└──────┬─────────────────────┬──────┘│
+               └───────┼─────────────────────┼───────┘
+                       │                     │
+                       ▼                     ▼
+                 ┌───────────┐         ┌───────────┐
+                 │   CP CA   │         │   CP CA   │
+                 │Certificate│         │Certificate│
+                 └─┬───────┬─┘         └─────┬─────┘
+                   │       │                 │
+                   ▼       ▼                 ▼
+          ┌───────────┐ ┌───────────┐  ┌───────────┐
+          │   CP AS   │ │   CP AS   │  │   CP AS   │
+          │Certificate│ │Certificate│  │Certificate│
+          └───────────┘ └───────────┘  └───────────┘
 </pre>
 </div>
 <figcaption><a href="#figure-1" class="selfRef">Figure 1</a>:
@@ -1862,60 +1859,58 @@ TRC
 <figure id="figure-2">
             <div class="alignLeft art-text artwork" id="section-2.1.6-7.1">
 <pre>
-+--------------------------------------------+
-|                   TRC 1                    |
-|               (base/initial)               |
-|+------------------------------------------+|
-|| - Version          - Core ASes           ||
-|| - ID               - Description         ||
-|| - Validity         - No Trust Reset      ||
-|| - Grace Period     - Voting Quorum       ||
-|| - ...                                    ||
-|+------------------------------------------+|
-|+--------------------++--------------------+|
-||        Votes       ||   Regular Voting   ||
-||  (cert. indices)   ||    Certificates    ||
-||                    ||                    ||
-||                    || +-----+ +-----+    ||
-||       (empty)      || | (1) | | (2) |    ||
-||                    || |C    | |C    | ...||
-||                    || | reg | | reg |    ||
-|+--------------------+| +-----+ +-----+    ||
-|+--------------------+|                    ||
-||                    ||                    ||
-||                    ||                    ||
-||     Signatures     |+--------------------+|
-||                    |+--------------------+|
-||+------------------+||  Sensitive Voting  ||
-||| 73 A9 4E AO 0D...|||    Certificates    ||
-||+------------------+|| +-----+ +-----+    ||
-||+------------------+|| | (3) | | (4) |    ||
-||| 53 B7 7C 98 56...||| |C    | |C    |    ||
-||+------------------+|| | sens| | sens| ...||
-||        ...         || +-----+ +-----+    ||
-|+--------------------++--------------------+|
-|+------------------------------------------+|
-||          CP Root Certificates            ||
-||                                          ||
-|| +-----+ +-----+ +-----+ +-----+          ||
-|| | (5) | | (6) | | (7) | | (8) |          ||
-|| |C    | |C    | |C    | |C    |          ||
-|| | root| | root| | root| | root| ...      ||
-|| +-----+ +--+--+ +-----+ +--+--+          ||
-|+------------+---------------+-------------+|
-+-------------+---------------+--------------+
-              |               |
-              v               v
-     +-----------+         +-----------+
-     |   CP CA   |         |   CP CA   |
-     |Certificate|         |Certificate|
-     +-----+-----+         +-----+-----+
-           |                     |
-           v                     v
-     +-----------+         +-----------+
-     |   CP AS   |         |   CP AS   |
-     |Certificate|         |Certificate|
-     +-----------+         +-----------+
+┌──────────────────────────────────────────────┐
+│                    TRC 1                     │
+│                (base/initial)                │
+│┌────────────────────────────────────────────┐│
+││- Version           - Core ASes             ││
+││- ID                - Description           ││
+││- Validity          - No Trust Reset        ││
+││- Grace Period      - Quorum                ││
+││- ...                                       ││
+│└────────────────────────────────────────────┘│
+│┌─────────────────────┐┌─────────────────────┐│
+││        Votes        ││   Regular Voting    ││
+││(certificate indices)││    Certificates     ││
+││                     ││                     ││
+││       (empty)       ││ ┌─────┐ ┌─────┐     ││
+││                     ││ │ (1) │ │ (2) │     ││
+│└─────────────────────┘│ │  C  │ │  C  │ ... ││
+│┌─────────────────────┐│ │ reg │ │ reg │     ││
+││                     ││ └─────┘ └─────┘     ││
+││     Signatures      │└─────────────────────┘│
+││                     │┌─────────────────────┐│
+││┌───────────────────┐││  Sensitive Voting   ││
+│││ 73 A9 4E A0 0D... │││    Certificates     ││
+││└───────────────────┘││                     ││
+││┌───────────────────┐││ ┌─────┐ ┌─────┐     ││
+│││ 53 B7 7C 98 56... │││ │ (3) │ │ (4) │     ││
+││└───────────────────┘││ │  C  │ │  C  │ ... ││
+││         ...         ││ │sens │ │sens │     ││
+││                     ││ └─────┘ └─────┘     ││
+│└─────────────────────┘└─────────────────────┘│
+│┌────────────────────────────────────────────┐│
+││            CP Root Certificates            ││
+││                                            ││
+││     ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        ││
+││     │ (5) │ │ (6) │ │ (7) │ │ (8) │        ││
+││     │  C  │ │  C  │ │  C  │ │  C  │ ...    ││
+││     │root │ │root │ │root │ │root │        ││
+││     └──┬──┘ └─────┘ └─────┘ └──┬──┘        ││
+│└────────┼───────────────────────┼───────────┘│
+└─────────┼───────────────────────┼────────────┘
+          │                       │
+          ▼                       ▼
+   ┌─────────────┐         ┌─────────────┐
+   │    CP CA    │         │    CP CA    │
+   │ Certificate │         │ Certificate │
+   └──────┬──────┘         └──────┬──────┘
+          │                       │
+          ▼                       ▼
+   ┌─────────────┐         ┌─────────────┐
+   │    CP AS    │         │    CP AS    │
+   │ Certificate │         │ Certificate │
+   └─────────────┘         └─────────────┘
 </pre>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
@@ -3538,7 +3533,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <dd class="break"></dd>
 <dt id="I-D.dekater-scion-dataplane">[I-D.dekater-scion-dataplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, <span class="refAuthor">Hugly, J.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-04</span>, <time datetime="2024-12-24" class="refDate">24 December 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-04">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-04</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, <span class="refAuthor">Hugly, J.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-05</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-05">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-05</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
