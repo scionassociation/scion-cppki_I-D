@@ -258,7 +258,7 @@ The Control Plane PKI does not explicitly support certificate revocation. Instea
 
 The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a view of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
 
-{{< figure src="./images/figure1.svg" >}}
+![Wibble](./images/figure.svg "Figure 1")
 
  ~~~~
                                  TRC 2
