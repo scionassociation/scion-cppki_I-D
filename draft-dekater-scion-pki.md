@@ -261,17 +261,6 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 <figure>
   <name>Figure 1</name>
   <artset>
-    <artwork type="svg" name="images/figure1.svg">
-      <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 71 40">
-        <g>
-          <title>Layer 1</title>
-          <rect x="4.5" y="6.5" width="61.0" height="27.0" stroke="black" stroke-width="1.0" stroke-linecap="square" stroke-linejoin="miter" fill="none" />
-          <text x="33.883" text-anchor="middle" y="26.559">
-            <tspan fill="black" font-size="13.0">A box</tspan>
-          </text>
-        </g>
-      </svg>
-    </artwork>
     <artwork type="ascii-art" name="images/figure1.txt">
       <![CDATA[
  ~~~~
