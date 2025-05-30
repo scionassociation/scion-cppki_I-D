@@ -258,11 +258,8 @@ The Control Plane PKI does not explicitly support certificate revocation. Instea
 
 The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a view of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
 
-<figure>
-  <name>Figure 1</name>
-  <artset>
-    <artwork type="ascii-art" name="images/figure1.txt">
-      <![CDATA[
+{{< figure src="figure1.svg" >}}
+
  ~~~~
                                  TRC 2
 
@@ -298,11 +295,6 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
            │Certificate│ │Certificate│  │Certificate│
            └───────────┘ └───────────┘  └───────────┘
  ~~~~
-      ]]>
-    </artwork>
-  </artset>
-</figure>
-
 {: #figure-1 title="Chain of trust within an ISD"}
 
 All certificates used in the Control plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key.
