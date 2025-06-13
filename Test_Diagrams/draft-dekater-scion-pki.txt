@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 1 December 2025                                         S. Hitz
+Expires: 15 December 2025                                        S. Hitz
                                                          Anapaya Systems
-                                                             30 May 2025
+                                                            13 June 2025
 
 
                         SCION Control Plane PKI
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 December 2025.
+   This Internet-Draft will expire on 15 December 2025.
 
 Copyright Notice
 
@@ -435,40 +435,46 @@ Table of Contents
 
 1.5.  Overview of Certificates, Keys, and Roles
 
-   The base TRC constitutes the root of trust within an ISD.  Figure 1
-   provides a view of the trust chain within an ISD, based on its TRC.
-   For detailed descriptions, please refer to Section 2 and Section 3.
+   The base TRC constitutes the root of trust within an ISD.  provides a
+   view of the trust chain within an ISD, based on its TRC.  For
+   detailed descriptions, please refer to Section 2 and Section 3.
+   Figure 1
 
-   ~~~~ TRC 2
+                                   TRC 2
 
-            ┌─────────────────────────────────────┐
-            │┌───────────────────────────────────┐│  ┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐  │  TRC 1   │   ││- ID            - Description      ││   │          │  │(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │  │          │   ││- Grace Period  - Voting Quorum    ││   │          │  └──────────┘   ││- ...                              ││   └──────────┘
-            │└───────────────────────────────────┘│
-            │┌────────────────┐ ┌────────────────┐│
-            ││ Regular Voting │ │Sensitive Voting││
-            ││  Certificate   │ │  Certificate   ││
-            │└────────────────┘ └────────────────┘│
-            │┌────────────────┐ ┌────────────────┐│
-            ││     Votes      │ │   Signatures   ││
-            │└────────────────┘ └────────────────┘│
-            │┌───────────────────────────────────┐│
-            ││       CP Root Certificates        ││
-            │└──────┬─────────────────────┬──────┘│
-            └───────┼─────────────────────┼───────┘
-                    │                     │
-                    ▼                     ▼
-              ┌───────────┐         ┌───────────┐
-              │   CP CA   │         │   CP CA   │
-              │Certificate│         │Certificate│
-              └─┬───────┬─┘         └─────┬─────┘
-                │       │                 │
-                ▼       ▼                 ▼
-       ┌───────────┐ ┌───────────┐  ┌───────────┐
-       │   CP AS   │ │   CP AS   │  │   CP AS   │
-       │Certificate│ │Certificate│  │Certificate│
-       └───────────┘ └───────────┘  └───────────┘  ~~~~
+                  ┌─────────────────────────────────────┐
+                  │┌───────────────────────────────────┐│
+   ┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
+   │  TRC 1   │   ││- ID            - Description      ││   │          │
+   │(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
+   │          │   ││- Grace Period  - Voting Quorum    ││   │          │
+   └──────────┘   ││- ...                              ││   └──────────┘
+                  │└───────────────────────────────────┘│
+                  │┌────────────────┐ ┌────────────────┐│
+                  ││ Regular Voting │ │Sensitive Voting││
+                  ││  Certificate   │ │  Certificate   ││
+                  │└────────────────┘ └────────────────┘│
+                  │┌────────────────┐ ┌────────────────┐│
+                  ││     Votes      │ │   Signatures   ││
+                  │└────────────────┘ └────────────────┘│
+                  │┌───────────────────────────────────┐│
+                  ││       CP Root Certificates        ││
+                  │└──────┬─────────────────────┬──────┘│
+                  └───────┼─────────────────────┼───────┘
+                          │                     │
+                          ▼                     ▼
+                    ┌───────────┐         ┌───────────┐
+                    │   CP CA   │         │   CP CA   │
+                    │Certificate│         │Certificate│
+                    └─┬───────┬─┘         └─────┬─────┘
+                      │       │                 │
+                      ▼       ▼                 ▼
+             ┌───────────┐ ┌───────────┐  ┌───────────┐
+             │   CP AS   │ │   CP AS   │  │   CP AS   │
+             │Certificate│ │Certificate│  │Certificate│
+             └───────────┘ └───────────┘  └───────────┘
 
-                Figure 1: Chain of trust within an ISD
+                  Figure 1: Chain of trust within an ISD
 
    All certificates used in the Control plane PKI are in X.509 v3 format
    [RFC5280] and additionally the TRC contains self-signed certificates
