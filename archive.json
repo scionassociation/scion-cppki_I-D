@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-01T00:30:03.882962+00:00",
+  "timestamp": "2025-06-15T00:27:21.201252+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -477,6 +477,32 @@
       "updatedAt": "2025-04-03T06:12:16Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 62,
+      "id": "I_kwDOH386tM67H37O",
+      "title": "Security considerations - TRC bootstrapping and TOFU",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/62",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "question"
+      ],
+      "body": "- [ ] Clarify if we need to mention the impact of TOFU in the security considerations of the PKI (or the CP), in relation to the dissemination of PKI material\n\n\nFrom the CP draft review by Alvaro\n```\n654 1.6.  Bootstrapping ability\n...\n687   *Note:* For a detailed description of a TRC and more information on\n688   the availability of certificates and TRCs, see the SCION Control-\n689   Plane PKI [I-D.dekater-scion-pki].\n```\n> I haven't read I-D.dekater-scion-pki in detail...but given that the TRC\nis ISD-specific a new node in an ISD will, by definition, not have it when\nit first boots up.  I assume the attack vectors, etc. are detailed in\nI-D.dekater-scion-pki.\n",
+      "createdAt": "2025-06-12T08:49:35Z",
+      "updatedAt": "2025-06-12T12:05:14Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Discussion with team. We could mention in security considerations that endpoints need to be mindful about where they fetch TRCs from. The scion book v2 might have a section about this that could act as a starting point",
+          "createdAt": "2025-06-12T12:05:14Z",
+          "updatedAt": "2025-06-12T12:05:14Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -3102,44 +3128,66 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-05-29T13:49:30Z",
-      "updatedAt": "2025-05-29T14:42:15Z",
+      "updatedAt": "2025-06-13T13:49:26Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "c28e3cc1bdb51986ebf4c664452e88370505e78b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "New-Diagrams",
-      "headRefOid": "d05addd6a2d2572ba704a55edc88462489c1b53b",
+      "headRefOid": "fcca70d69f5ad13d3cfb7010e88d19d8ad551aae",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6uVqMo",
+          "commit": {
+            "abbreviatedOid": "7644dcd"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "I fixed the SVGs. However, why in the second figure only there is no `voting`? I would leave it..\r\n \r\n If you change it, can you then re-run the figure through svgcheck (e.g. `svgcheck --repair -o images/figure2.svg images/figure2.svg`).\r\n \r\n \r\n \r\n \r\n\r\n<img width=\"997\" alt=\"Screenshot 2025-06-13 at 15 46 31\" src=\"https://github.com/user-attachments/assets/4b051c1c-cd0e-458c-a790-06f863703dcd\" />\r\n",
+          "createdAt": "2025-06-13T13:49:26Z",
+          "updatedAt": "2025-06-13T13:49:26Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 61,
       "id": "PR_kwDOH386tM6YPPqO",
       "title": "Test diagrams",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/61",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "To be closed -",
       "createdAt": "2025-05-30T08:48:35Z",
-      "updatedAt": "2025-05-30T09:25:52Z",
+      "updatedAt": "2025-06-13T13:24:14Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "c28e3cc1bdb51986ebf4c664452e88370505e78b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Test_Diagrams",
-      "headRefOid": "b3b7881e8f39fc0763888166b5cc86ba08a4747c",
-      "closedAt": null,
+      "headRefOid": "8f47294af657e6d020ae20e8a28200626148f9ce",
+      "closedAt": "2025-06-13T13:24:13Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Closing. How to add SVGs is documented [here](https://github.com/scionassociation/standards/blob/main/README.md).",
+          "createdAt": "2025-06-13T13:24:14Z",
+          "updatedAt": "2025-06-13T13:24:14Z"
+        }
+      ],
       "reviews": []
     }
   ]
