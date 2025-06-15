@@ -263,9 +263,8 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 <artset>
 <artwork type="svg" src="images/chain-of-trust-within-isd.svg"/>
 <artwork type="ascii-art">
-                                TRC 2
-
                ┌─────────────────────────────────────┐
+               │                TRC 2                │
                │┌───────────────────────────────────┐│
 ┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
 │  TRC 1   │   ││- ID            - Description      ││   │          │
