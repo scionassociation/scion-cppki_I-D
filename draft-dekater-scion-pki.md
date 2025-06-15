@@ -261,7 +261,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 <figure anchor="_figure-1">
 <name>Chain of trust within an ISD</name>
 <artset>
-<artwork type="svg" src="images/figure1.svg"/>
+<artwork type="svg" src="images/chain-of-trust-within-isd.svg"/>
 <artwork type="ascii-art">
                                 TRC 2
 
@@ -452,7 +452,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 <figure anchor="_figure-2">
 <name>TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.</name>
 <artset>
-<artwork type="svg" src="images/figure2.svg"/>
+<artwork type="svg" src="images/trc-update-chain.svg"/>
 <artwork type="ascii-art">
 ┌──────────────────────────────────────────────┐
 │                    TRC 1                     │
