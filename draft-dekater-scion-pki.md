@@ -453,6 +453,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 <artset>
 <artwork type="svg" src="images/trc-update-chain.svg"/>
 <artwork type="ascii-art">
+<pre>
 ┌──────────────────────────────────────────────┐
 │                    TRC 1                     │
 │                (base/initial)                │
@@ -505,6 +506,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
    │    CP AS    │         │    CP AS    │
    │ Certificate │         │ Certificate │
    └─────────────┘         └─────────────┘
+</pre>
 </artwork>
 </artset>
 </figure>
