@@ -461,7 +461,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 ││- Version            - Core ASes            ││
 ││- ID                 - Description          ││
 ││- Validity           - No Trust Reset       ││
-││- Grace Period       - Quorum               ││
+││- Grace Period       - Voting Quorum        ││
 ││- ...                                       ││
 │└────────────────────────────────────────────┘│
 │┌─────────────────────┐┌─────────────────────┐│
