@@ -263,38 +263,40 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 <artset>
 <artwork type="svg" src="images/chain-of-trust-within-isd.svg"/>
 <artwork type="ascii-art">
-               ┌─────────────────────────────────────┐
-               │                TRC 2                │
-               │┌───────────────────────────────────┐│
-┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
-│  TRC 1   │   ││- ID            - Description      ││   │          │
-│(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
-│          │   ││- Grace Period  - Voting Quorum    ││   │          │
-└──────────┘   ││- ...                              ││   └──────────┘
-               │└───────────────────────────────────┘│
-               │┌────────────────┐ ┌────────────────┐│
-               ││ Regular Voting │ │Sensitive Voting││
-               ││  Certificate   │ │  Certificate   ││
-               │└────────────────┘ └────────────────┘│
-               │┌────────────────┐ ┌────────────────┐│
-               ││     Votes      │ │   Signatures   ││
-               │└────────────────┘ └────────────────┘│
-               │┌───────────────────────────────────┐│
-               ││       CP Root Certificates        ││
-               │└──────┬─────────────────────┬──────┘│
-               └───────│─────────────────────│───────┘
-                       │                     │
-                       ▼                     ▼
-                 ┌───────────┐         ┌───────────┐
-                 │   CP CA   │         │   CP CA   │
-                 │Certificate│         │Certificate│
-                 └─┬───────┬─┘         └─────┬─────┘
-                   │       │                 │
-                   ▼       ▼                 ▼
-          ┌───────────┐ ┌───────────┐  ┌───────────┐
-          │   CP AS   │ │   CP AS   │  │   CP AS   │
-          │Certificate│ │Certificate│  │Certificate│
-          └───────────┘ └───────────┘  └───────────┘
+
+               +-------------------------------------+
+               |                TRC 2                |
+               |+-----------------------------------+|
++----------+   ||- Version       - Core ASes        ||   +----------+
+|  TRC 1   |   ||- ID            - Description      ||   |          |
+|(Base TRC)|-->||- Validity      - No Trust Reset   ||-->|  TRC 3   |
+|          |   ||- Grace Period  - Voting Quorum    ||   |          |
++----------+   ||- ...                              ||   +----------+
+               |+-----------------------------------+|
+               |+----------------+ +----------------+|
+               || Regular Voting | |Sensitive Voting||
+               ||  Certificate   | |  Certificate   ||
+               |+----------------+ +----------------+|
+               |+----------------+ +----------------+|
+               ||     Votes      | |   Signatures   ||
+               |+----------------+ +----------------+|
+               |+-----------------------------------+|
+               |│       CP Root Certificates        │|
+               |+------+---------------------+------+|
+               +-------|---------------------|-------+
+                       |                     |
+                       v                     v
+                 +-----------+         +-----------+
+                 |   CP CA   |         |   CP CA   |
+                 |Certificate|         |Certificate|
+                 +-+-------+-+         +-----+-----+
+                   |       |                 |
+                   v       v                 v
+          +-----------+ +-----------+  +-----------+
+          |   CP AS   | |   CP AS   |  |   CP AS   |
+          |Certificate| |Certificate|  |Certificate|
+          +-----------+ +-----------+  +-----------+
+
 </artwork>
 </artset>
 </figure>
