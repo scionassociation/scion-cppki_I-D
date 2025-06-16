@@ -439,38 +439,38 @@ Table of Contents
    provides a view of the trust chain within an ISD, based on its TRC.
    For detailed descriptions, please refer to Section 2 and Section 3.
 
-                  ┌─────────────────────────────────────┐
-                  │                TRC 2                │
-                  │┌───────────────────────────────────┐│
-   ┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
-   │  TRC 1   │   ││- ID            - Description      ││   │          │
-   │(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
-   │          │   ││- Grace Period  - Voting Quorum    ││   │          │
-   └──────────┘   ││- ...                              ││   └──────────┘
-                  │└───────────────────────────────────┘│
-                  │┌────────────────┐ ┌────────────────┐│
-                  ││ Regular Voting │ │Sensitive Voting││
-                  ││  Certificate   │ │  Certificate   ││
-                  │└────────────────┘ └────────────────┘│
-                  │┌────────────────┐ ┌────────────────┐│
-                  ││     Votes      │ │   Signatures   ││
-                  │└────────────────┘ └────────────────┘│
-                  │┌───────────────────────────────────┐│
-                  ││       CP Root Certificates        ││
-                  │└──────┬─────────────────────┬──────┘│
-                  └───────│─────────────────────│───────┘
-                          │                     │
-                          ▼                     ▼
-                    ┌───────────┐         ┌───────────┐
-                    │   CP CA   │         │   CP CA   │
-                    │Certificate│         │Certificate│
-                    └─┬───────┬─┘         └─────┬─────┘
-                      │       │                 │
-                      ▼       ▼                 ▼
-             ┌───────────┐ ┌───────────┐  ┌───────────┐
-             │   CP AS   │ │   CP AS   │  │   CP AS   │
-             │Certificate│ │Certificate│  │Certificate│
-             └───────────┘ └───────────┘  └───────────┘
+                  +-------------------------------------+
+                  |                TRC 2                |
+                  |+-----------------------------------+|
+   +----------+   ||- Version       - Core ASes        ||   +----------+
+   |  TRC 1   |   ||- ID            - Description      ||   |          |
+   |(Base TRC)|-->||- Validity      - No Trust Reset   ||-->|  TRC 3   |
+   |          |   ||- Grace Period  - Voting Quorum    ||   |          |
+   +----------+   ||- ...                              ||   +----------+
+                  |+-----------------------------------+|
+                  |+----------------+ +----------------+|
+                  || Regular Voting | |Sensitive Voting||
+                  ||  Certificate   | |  Certificate   ||
+                  |+----------------+ +----------------+|
+                  |+----------------+ +----------------+|
+                  ||     Votes      | |   Signatures   ||
+                  |+----------------+ +----------------+|
+                  |+-----------------------------------+|
+                  |│       CP Root Certificates        │|
+                  |+------+---------------------+------+|
+                  +-------|---------------------|-------+
+                          |                     |
+                          v                     v
+                    +-----------+         +-----------+
+                    |   CP CA   |         |   CP CA   |
+                    |Certificate|         |Certificate|
+                    +-+-------+-+         +-----+-----+
+                      |       |                 |
+                      v       v                 v
+             +-----------+ +-----------+  +-----------+
+             |   CP AS   | |   CP AS   |  |   CP AS   |
+             |Certificate| |Certificate|  |Certificate|
+             +-----------+ +-----------+  +-----------+
 
                    Figure 1: Chain of trust within an ISD
 
