@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-15T00:27:21.201252+00:00",
+  "timestamp": "2025-06-17T00:24:26.745520+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -462,7 +462,7 @@
       "id": "I_kwDOH386tM6w7uz7",
       "title": "Add SVG figures",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/59",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -474,9 +474,17 @@
       ],
       "body": "> One immediate piece of feedback \u2014 it sure would be nice if the figures were rendered more nicely, if it doesn\u2019t represent too much work for the authors.[*] It\u2019s amazing how much the modest effort returns in terms of document readability. I have the zeal of a convert, having adopted aasvg for the most recent iteration of [https://datatracker.ietf.org/doc/draft-ietf-idr-entropy-label/](https://urldefense.com/v3/__https://datatracker.ietf.org/doc/draft-ietf-idr-entropy-label/__;!!NEt6yMaO-gk!G9jt_GrlROPQcce-a5BfIgC_anQAMdJx3JN2ZsDAx4hOBvKhPemxMCY9phG6sqjMkzktzQTzYHMlVrjUGw$). I\u2019d say the conversion took less than an afternoon\u2019s work. I fed a couple of the figures from the SCION doc into aasvg and while they don\u2019t compile out of the box, it\u2019s evident it wouldn\u2019t be that hard to make the necessary changes. This isn\u2019t a demand, just a suggestion.",
       "createdAt": "2025-04-03T06:12:16Z",
-      "updatedAt": "2025-04-03T06:12:16Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-06-16T06:58:32Z",
+      "closedAt": "2025-06-16T06:58:31Z",
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "SVG images have been added. ",
+          "createdAt": "2025-06-16T06:58:27Z",
+          "updatedAt": "2025-06-16T06:58:27Z"
+        }
+      ]
     },
     {
       "number": 62,
@@ -3121,24 +3129,26 @@
       "id": "PR_kwDOH386tM6YIJXp",
       "title": "Updated diagrams",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/60",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-05-29T13:49:30Z",
-      "updatedAt": "2025-06-13T13:49:26Z",
+      "updatedAt": "2025-06-16T01:57:44Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "c28e3cc1bdb51986ebf4c664452e88370505e78b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "New-Diagrams",
-      "headRefOid": "fcca70d69f5ad13d3cfb7010e88d19d8ad551aae",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "b887a1248cf56884b55a50e7fc34385631cacaa8",
+      "closedAt": "2025-06-16T01:57:43Z",
+      "mergedAt": "2025-06-16T01:57:43Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "1ef83dd5670ef197ca7dbf34aadade337e64bd5f"
+      },
       "comments": [],
       "reviews": [
         {
@@ -3152,6 +3162,19 @@
           "body": "I fixed the SVGs. However, why in the second figure only there is no `voting`? I would leave it..\r\n \r\n If you change it, can you then re-run the figure through svgcheck (e.g. `svgcheck --repair -o images/figure2.svg images/figure2.svg`).\r\n \r\n \r\n \r\n \r\n\r\n<img width=\"997\" alt=\"Screenshot 2025-06-13 at 15 46 31\" src=\"https://github.com/user-attachments/assets/4b051c1c-cd0e-458c-a790-06f863703dcd\" />\r\n",
           "createdAt": "2025-06-13T13:49:26Z",
           "updatedAt": "2025-06-13T13:49:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM6uqalo",
+          "commit": {
+            "abbreviatedOid": "b887a12"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "LGTM, feel free to merge and resolve",
+          "createdAt": "2025-06-15T22:38:41Z",
+          "updatedAt": "2025-06-15T22:38:41Z",
           "comments": []
         }
       ]
@@ -3188,6 +3211,32 @@
           "updatedAt": "2025-06-13T13:24:14Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 63,
+      "id": "PR_kwDOH386tM6aoOdL",
+      "title": "Updated ASCII figures",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/63",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-06-16T02:04:19Z",
+      "updatedAt": "2025-06-16T10:00:02Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "1ef83dd5670ef197ca7dbf34aadade337e64bd5f",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Updated-ASCII",
+      "headRefOid": "f1a29592553cddc6d6c34e944c6c2072d87afd99",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
       "reviews": []
     }
   ]
