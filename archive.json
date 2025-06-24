@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-17T00:24:26.745520+00:00",
+  "timestamp": "2025-06-24T00:24:36.173353+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -511,6 +511,28 @@
           "updatedAt": "2025-06-12T12:05:14Z"
         }
       ]
+    },
+    {
+      "number": 64,
+      "id": "I_kwDOH386tM683A_x",
+      "title": "Clarify automated certificate renewal",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/64",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "romshark",
+        "nicorusti"
+      ],
+      "labels": [
+        "question",
+        "Prio 2"
+      ],
+      "body": "Doubt triggered by [4791#](https://github.com/scionproto/scion/pull/4791#). \nThe PKI draft currently says: \n> Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure.\n\nHowever, in the CP draft there is no description of any interfaces for certificate renewal. We should either change wording, or clarify automated renewal.\n\n- [ ] Are there any missing RPC definitions?\n- [ ] Are there any other missing interfaces that need to be specified?\n",
+      "createdAt": "2025-06-23T15:05:35Z",
+      "updatedAt": "2025-06-23T15:15:57Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
