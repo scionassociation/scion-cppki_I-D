@@ -263,6 +263,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 <artset>
 <artwork type="svg" src="images/chain-of-trust-within-isd.svg"/>
 <artwork type="ascii-art">
+
                ┌─────────────────────────────────────┐
                │                TRC 2                │
                │┌───────────────────────────────────┐│
@@ -295,6 +296,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
           │   CP AS   │ │   CP AS   │  │   CP AS   │
           │Certificate│ │Certificate│  │Certificate│
           └───────────┘ └───────────┘  └───────────┘
+
 </artwork>
 </artset>
 </figure>
@@ -453,6 +455,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 <artset>
 <artwork type="svg" src="images/trc-update-chain.svg"/>
 <artwork type="ascii-art">
+
 ┌──────────────────────────────────────────────┐
 │                    TRC 1                     │
 │                (base/initial)                │
@@ -492,7 +495,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 ││     │root │ │root │ │root │ │root │        ││
 ││     └──┬──┘ └─────┘ └─────┘ └──┬──┘        ││
 │└────────│───────────────────────│───────────┘│
-└─────────┼───────────────────────┼────────────┘
+└─────────│───────────────────────│────────────┘
           │                       │
           ▼                       ▼
    ┌─────────────┐         ┌─────────────┐
@@ -505,6 +508,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
    │    CP AS    │         │    CP AS    │
    │ Certificate │         │ Certificate │
    └─────────────┘         └─────────────┘
+
 </artwork>
 </artset>
 </figure>
