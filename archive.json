@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-24T00:24:36.173353+00:00",
+  "timestamp": "2025-06-26T00:24:37.570304+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -515,7 +515,7 @@
     {
       "number": 64,
       "id": "I_kwDOH386tM683A_x",
-      "title": "Clarify automated certificate renewal",
+      "title": "Clarify automated certificate renewal and consider moving gRPC trust material definitions from CP to PKI draft ",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/64",
       "state": "OPEN",
       "author": "nicorusti",
@@ -530,9 +530,38 @@
       ],
       "body": "Doubt triggered by [4791#](https://github.com/scionproto/scion/pull/4791#). \nThe PKI draft currently says: \n> Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure.\n\nHowever, in the CP draft there is no description of any interfaces for certificate renewal. We should either change wording, or clarify automated renewal.\n\n- [ ] Are there any missing RPC definitions?\n- [ ] Are there any other missing interfaces that need to be specified?\n",
       "createdAt": "2025-06-23T15:05:35Z",
-      "updatedAt": "2025-06-23T15:15:57Z",
+      "updatedAt": "2025-06-25T13:24:35Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "RPC is defined here https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto\n\nIt is important to note that this is not the only way too achieve renewal. E.e.g there can be setups where renewal is managed through an out-of-band mechanism.\n\nIn the end, it boils down to the contract that the subscriber has with the CA (and potential secondary CAs)\n\nIn practice, all public ISDs have leveraged this mechanism so far",
+          "createdAt": "2025-06-24T05:58:14Z",
+          "updatedAt": "2025-06-24T05:58:14Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Thanks a lot for the clarification. It could make sense to include this in the draft. Right now we have this in the CP appendix  (tracked in https://github.com/scionassociation/scion-cp_I-D/issues/96 )",
+          "createdAt": "2025-06-24T14:30:14Z",
+          "updatedAt": "2025-06-24T14:30:14Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "I think we could make  the following changes: \n- [ ]  add renewal [protobuf messages](https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto) to section `4.3.  Creating a New Control Plane AS Certificate`.\n   - [ ]  rename the section to \"Creation and renewal of Control Plane AS Certificates\". Mention certificates MAY also be renewed out of band.\n   - [ ] Explain how a CSR is authenticated in case of renewal\n- [ ] Move \"Trust Material representation\" to the PKI draft (Practically, changes done in https://github.com/scionassociation/scion-cp_I-D/pull/99/files). A good place could be adding a section  4.1. , before  `Deploying a TRC`]\n   - [ ] Do we need to specify how addressing works for these certificate requests? \n   - [ ] Add cross-reference in 3.1.4 where it says ` the relying party MUST query the originator of the message for the missing material`\n   - [ ] Update reference `Control Service gRPC API - Trust Material` in 4.1.2.1.  TRC Update Discovery\n   - [ ] Update reference in CP [2.3.1. ](https://www.ietf.org/archive/id/draft-dekater-scion-controlplane-08.html#section-2.3.1)[Reception of PCBs](https://www.ietf.org/archive/id/draft-dekater-scion-controlplane-08.html#name-reception-of-pcbs)  from figure to explicitly mentioning `TRCRequest ` to avoid this confusion by the reader (from Alvaro)\n      > [] If the Control Service doesn't have the relevant TRC(s) and certificate(s), are the PCBs considered invalid?  Or is the intent that when the information is received, the validity can be checked?  IOW, should the PCB be discarded (and then wait for the periodic update)...OR...should it be stored until the TRC/certificate information is received?\n   - [ ]  Update any other references\n",
+          "createdAt": "2025-06-24T14:55:36Z",
+          "updatedAt": "2025-06-25T13:24:35Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> RPC is defined here https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto\n\n@oncilla what kind of addressing do these RPCs use? Do they use service addressing? Otherwise, how do they determine the address of the CA where to send the request? I guess we would need to clarify this in the draft too",
+          "createdAt": "2025-06-24T15:21:20Z",
+          "updatedAt": "2025-06-24T15:21:20Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -3240,17 +3269,59 @@
       "id": "PR_kwDOH386tM6aoOdL",
       "title": "Updated ASCII figures",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/63",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-06-16T02:04:19Z",
-      "updatedAt": "2025-06-16T10:00:02Z",
+      "updatedAt": "2025-06-24T13:14:43Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "1ef83dd5670ef197ca7dbf34aadade337e64bd5f",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Updated-ASCII",
+      "headRefOid": "f1a29592553cddc6d6c34e944c6c2072d87afd99",
+      "closedAt": "2025-06-24T13:14:43Z",
+      "mergedAt": "2025-06-24T13:14:43Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "4a16dfbab61efd81dea19851a2ffab8099ddbb88"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6wDzzO",
+          "commit": {
+            "abbreviatedOid": "f1a2959"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-24T13:14:18Z",
+          "updatedAt": "2025-06-24T13:14:18Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 65,
+      "id": "PR_kwDOH386tM6b5nPG",
+      "title": "Minor tweaks",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/65",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-06-24T16:31:11Z",
+      "updatedAt": "2025-06-24T16:31:12Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "4a16dfbab61efd81dea19851a2ffab8099ddbb88",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Updated-ASCII",
       "headRefOid": "f1a29592553cddc6d6c34e944c6c2072d87afd99",
