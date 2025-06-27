@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 26 December 2025                                        S. Hitz
+Expires: 29 December 2025                                        S. Hitz
                                                          Anapaya Systems
-                                                            24 June 2025
+                                                            27 June 2025
 
 
                         SCION Control Plane PKI
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 December 2025.
+   This Internet-Draft will expire on 29 December 2025.
 
 Copyright Notice
 
@@ -136,6 +136,7 @@ Table of Contents
        Phase 3: TRC Signing
        Phase 4: TRC Validation
    Change Log
+     draft-dekater-scion-pki-10
      draft-dekater-scion-pki-09
      draft-dekater-scion-pki-08
      draft-dekater-scion-pki-07
@@ -524,30 +525,9 @@ Table of Contents
    update a TRC.  They MUST also bring the required keys and
    certificates, the so-called root and voting keys/certificates.
 
-   During the ceremony, the trusted parties decide about the number of
-   the ISD.  This MUST be an integer in the inclusive range between 64
-   and 4094.  The next table shows the current allocation of ISD numbers
-   in SCION:
-
-        +========+================================================+
-        | ISD    | Description                                    |
-        +========+================================================+
-        | 0      | The wildcard ISD.                              |
-        +--------+------------------------------------------------+
-        | 1 - 15 | Reserved for documentation and sample code     |
-        |        | (analogous to [RFC5398].                       |
-        +--------+------------------------------------------------+
-        | 16 -   | Private use (analogous to [RFC6996]).  Can be  |
-        | 63     | used for testing and private deployments.      |
-        +--------+------------------------------------------------+
-        | 64 -   | Public ISDs.  Should be allocated in ascending |
-        | 4094   | order, without gaps and "vanity" numbers.      |
-        +--------+------------------------------------------------+
-        | 4095 - | Reserved for future use.                       |
-        | 65535  |                                                |
-        +--------+------------------------------------------------+
-
-                      Table 1: ISD Number Allocations
+   The trusted parties require an ISD number, whose numbering scheme is
+   described in [I-D.dekater-scion-controlplane] section ISD Numbers,
+   and allocation in [ISD-AS-assignments].
 
 1.6.2.  Output
 
@@ -698,7 +678,7 @@ Table of Contents
       RECOMMENDED maximum validity period of a SCION Control Plane CA
       certificate is 11 days.  This is because a root certificate is
       part of the TRC of an ISD, which itself also has a RECOMMENDED
-      maximum validity period of one year (see Table 2 below).  This
+      maximum validity period of one year (see Table 1 below).  This
       ensures that the TRC need not be updated all the time and is thus
       relatively stable.
 
@@ -715,7 +695,7 @@ Table of Contents
 
 2.1.6.  Certificates - Formal Overview
 
-   Table 2 and Table 3 below provide an overview of the different types
+   Table 1 and Table 2 below provide an overview of the different types
    of key pairs and certificates in the control plane PKI.
 
    +======================+==============+============================+
@@ -732,7 +712,7 @@ Table of Contents
    | CP AS key            | K_AS         | CP messages, path segments |
    +----------------------+--------------+----------------------------+
 
-                            Table 2: Key chain
+                            Table 1: Key chain
 
    (1) K_x = PK_x + SK_x, where x = certificate type, PK_x = public key,
    and SK_x = private key
@@ -762,7 +742,7 @@ Table of Contents
    | certificate  |          |            |                 |          |
    +--------------+----------+------------+-----------------+----------+
 
-                           Table 3: Certificates
+                           Table 2: Certificates
 
    (1) Multiple signatures and certificates of each type MAY be included
    in a TRC.
@@ -1151,7 +1131,7 @@ Table of Contents
     |                  |       |         |         | NOT be set       |
     +------------------+-------+---------+---------+------------------+
 
-     Table 4: keyUsage extension - Specifications per certificate type
+     Table 3: keyUsage extension - Specifications per certificate type
 
    (1) The root certificate SHOULD NOT be used to verify control plane
    messages.
@@ -1240,7 +1220,7 @@ Table of Contents
    |                  |          |         |           |2.2.2.4.1      |
    +------------------+----------+---------+-----------+---------------+
 
-    Table 5: extKeyUsage extension - Specifications per certificate type
+    Table 4: extKeyUsage extension - Specifications per certificate type
 
 2.2.2.4.1.  SCION-Specific Attributes
 
@@ -1319,7 +1299,7 @@ Table of Contents
    |                   |          |            |absent.  | absent.    |
    +-------------------+----------+------------+---------+------------+
 
-         Table 6: basicConstraints extension - Specifications per
+         Table 5: basicConstraints extension - Specifications per
                              certificate type
 
    (1) Control Plane CAs can only issue end-entity certificates.
@@ -1528,7 +1508,7 @@ Table of Contents
    | And so on |                 |                                    |
    +-----------+-----------------+------------------------------------+
 
-                 Table 7: ID of TRCs in TRC update chain
+                 Table 6: ID of TRCs in TRC update chain
 
 3.1.2.2.3.  validity Field
 
@@ -2036,7 +2016,7 @@ Table of Contents
    |           |                    |              | TRC               |
    +-----------+--------------------+--------------+-------------------+
 
-       Table 8: Overview of the update types and corresponding rules
+       Table 7: Overview of the update types and corresponding rules
 
 3.1.5.3.  General Update Rules
 
@@ -2514,11 +2494,11 @@ Table of Contents
 
    This document has no IANA actions.
 
-   The SCION AS and ISD number are SCION-specific numbers.  They are
+   The ISD and SCION AS number are SCION-specific numbers.  They are
    currently allocated by Anapaya Systems, a provider of SCION-based
-   networking software and solutions (see [ISD-AS-assignments]).  This
-   task is currently being transitioned from Anapaya to the SCION
-   Association.
+   networking software and solutions (see [ISD-AS-assignments-Anapaya]).
+   This task is being transitioned from Anapaya to the SCION Association
+   (see [ISD-AS-assignments]).
 
 7.  References
 
@@ -2614,7 +2594,10 @@ Table of Contents
               panrg-scion-overview-06>.
 
    [ISD-AS-assignments]
-              "SCION ISD and AS Assignments", 2024,
+              "SCION Registry", 2025, <http://scion.org/registry/>.
+
+   [ISD-AS-assignments-Anapaya]
+              "SCION ISD and AS Assignments", 2025,
               <https://docs.anapaya.net/en/latest/resources/isd-as-
               assignments/>.
 
@@ -2839,6 +2822,13 @@ Change Log
 
    Changes made to drafts since ISE submission.  This section is to be
    removed before publication.
+
+draft-dekater-scion-pki-10
+
+   *  removed ISD assignment table and replaced to reference in control-
+      plane draft
+
+   *  Updated number assignment reference
 
 draft-dekater-scion-pki-09
 
