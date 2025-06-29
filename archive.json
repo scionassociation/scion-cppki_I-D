@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-26T00:24:37.570304+00:00",
+  "timestamp": "2025-06-29T00:27:52.942354+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -560,6 +560,52 @@
           "body": "> RPC is defined here https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto\n\n@oncilla what kind of addressing do these RPCs use? Do they use service addressing? Otherwise, how do they determine the address of the CA where to send the request? I guess we would need to clarify this in the draft too",
           "createdAt": "2025-06-24T15:21:20Z",
           "updatedAt": "2025-06-24T15:21:20Z"
+        }
+      ]
+    },
+    {
+      "number": 66,
+      "id": "I_kwDOH386tM69g-Ld",
+      "title": "PKI scalability",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/66",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "question",
+        "Prio 3"
+      ],
+      "body": "DO we need to mention something about PKI scalability?\n\n#### Feedback Alvaro on CP: \n```\n...\n2060\t3.3.1.  Intra-ISD Beaconing\n...\n2100\t   If the same AS has 1000 child links, the propagation of the beacons\n2101\t   will require signing one new AS entry for each of the propagated PCBs\n2102\t   for each link (at most 50 per link), i.e. at most 50000 signatures\n2103\t   per propagation event.  The total bandwidth for the propagation of\n2104\t   these PCBs for all 1000 child links would, be roughly around 25 MB/s\n2105\t   which is manageable with even modest consumer hardware.\n```\n[] Yes, the bw is manageable.  The signature verification may be the bottleneck (considering similar behavior in BGPSec), is that correct?",
+      "createdAt": "2025-06-26T15:38:43Z",
+      "updatedAt": "2025-06-26T15:38:43Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 67,
+      "id": "I_kwDOH386tM69ubjq",
+      "title": "Nits",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/67",
+      "state": "CLOSED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [
+        "Prio 3",
+        "editorial"
+      ],
+      "body": "- [x] Some fields have `::`, is it expected?",
+      "createdAt": "2025-06-27T14:37:10Z",
+      "updatedAt": "2025-06-27T15:12:28Z",
+      "closedAt": "2025-06-27T15:12:28Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Yes it is, e.g. see [x.509](https://datatracker.ietf.org/doc/html/rfc5280) ",
+          "createdAt": "2025-06-27T15:12:28Z",
+          "updatedAt": "2025-06-27T15:12:28Z"
         }
       ]
     }
@@ -3331,6 +3377,48 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 68,
+      "id": "PR_kwDOH386tM6ccWD7",
+      "title": "Remove duplicate ISD assignment table",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/68",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves one point in: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/112",
+      "createdAt": "2025-06-27T15:02:07Z",
+      "updatedAt": "2025-06-27T16:12:13Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "4a16dfbab61efd81dea19851a2ffab8099ddbb88",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "remove-ISD-table",
+      "headRefOid": "37f0396f835927ead4c25fb0f366c0506a089ea8",
+      "closedAt": "2025-06-27T16:12:04Z",
+      "mergedAt": "2025-06-27T16:12:03Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "b8219bc068c753e2ceaee04b9bc7421c1c987a26"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6w2ruq",
+          "commit": {
+            "abbreviatedOid": "37f0396"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-06-27T16:11:50Z",
+          "updatedAt": "2025-06-27T16:11:50Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
