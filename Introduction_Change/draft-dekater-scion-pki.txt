@@ -186,7 +186,7 @@ Table of Contents
    The ISD is governed by a set of _core ASes_ which typically manage
    the trust roots and provide connectivity to other ISDs.  This is the
    basis of the public key infrastructure used for the authentication of
-   messages used by the SCION Control Plane.  Wibble
+   messages used by the SCION Control Plane.
 
    _Control Plane_ - performs inter-domain routing by discovering and
    securely disseminating path information between ASes.  The core ASes
