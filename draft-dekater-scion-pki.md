@@ -860,17 +860,17 @@ A TRC where the base number is equal to the serial number is a base TRC. The ini
 If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain SHOULD be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.
 
 **Example**<br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 16*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
+The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
 
 | Update      | TRC ID              | Remarks                                          |
 |-------------+---------------------+--------------------------------------------------|
-| Initial     | ISD16-B01-S01       |                                                  |
-| Regular     | ISD16-B01-S02       | Only the serial number is incremented.           |
-| Regular     | ISD16-B01-S03       | Only the serial number is incremented.           |
-| Sensitive   | ISD16-B01-S04       | Only the serial number is incremented.           |
-| Trust reset | ISD16-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
-| Regular     | ISD16-B05-S06       | Only the serial number is incremented.           |
-| Regular     | ISD16-B05-S07       | Only the serial number is incremented.           |
+| Initial     | ISD15-B01-S01       |                                                  |
+| Regular     | ISD15-B01-S02       | Only the serial number is incremented.           |
+| Regular     | ISD15-B01-S03       | Only the serial number is incremented.           |
+| Sensitive   | ISD15-B01-S04       | Only the serial number is incremented.           |
+| Trust reset | ISD15-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
+| Regular     | ISD15-B05-S06       | Only the serial number is incremented.           |
+| Regular     | ISD15-B05-S07       | Only the serial number is incremented.           |
 | And so on   |                     |                                                  |
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
