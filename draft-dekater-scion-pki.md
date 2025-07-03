@@ -60,10 +60,14 @@ normative:
 
 informative:
   I-D.dekater-panrg-scion-overview:
-  ISD-AS-assignments:
+  ISD-AS-assignments-Anapaya:
     title: "SCION ISD and AS Assignments"
-    date: 2024
+    date: 2025
     target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
+  ISD-AS-assignments:
+    title: "SCION Registry"
+    date: 2025
+    target: http://scion.org/registry/
   RFC5398:
   RFC6996:
   RFC8210:
@@ -263,6 +267,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 <artset>
 <artwork type="svg" src="images/chain-of-trust-within-isd.svg"/>
 <artwork type="ascii-art">
+
                ┌─────────────────────────────────────┐
                │                TRC 2                │
                │┌───────────────────────────────────┐│
@@ -295,6 +300,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
           │   CP AS   │ │   CP AS   │  │   CP AS   │
           │Certificate│ │Certificate│  │Certificate│
           └───────────┘ └───────────┘  └───────────┘
+
 </artwork>
 </artset>
 </figure>
@@ -319,16 +325,7 @@ For the function to work, it is not necessary that the ASes of the ISD all trust
 
 Prior to the ceremony, the trusted parties MUST decide about the validity period of the TRC as well as the number of votes required to update a TRC. They MUST also bring the required keys and certificates, the so-called root and voting keys/certificates.
 
-During the ceremony, the trusted parties decide about the number of the ISD. This MUST be an integer in the inclusive range between 64 and 4094. The next table shows the current allocation of ISD numbers in SCION:
-
-| ISD               | Description                                                                              |
-|-------------------+------------------------------------------------------------------------------------------|
-| 0                 | The wildcard ISD.                                                                        |
-| 1 - 15            | Reserved for documentation and sample code (analogous to {{RFC5398}}.                    |
-| 16 - 63           | Private use (analogous to {{RFC6996}}). Can be used for testing and private deployments. |
-| 64 - 4094         | Public ISDs. Should be allocated in ascending order, without gaps and "vanity" numbers.  |
-| 4095 - 65535      | Reserved for future use.                                                                 |
-{: #table-1 title="ISD Number Allocations"}
+The trusted parties require an ISD number, whose numbering scheme is described in {{I-D.dekater-scion-controlplane}} section `ISD Numbers`, and allocation in {{ISD-AS-assignments}}.
 
 
 ### Output
@@ -411,7 +408,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 
 > Both SCION Control Plane root certificates and Control Plane CA certificates are in fact CA certificates. That is, they can both be used to verify other certificates.
 >
-> One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a RECOMMENDED maximum validity period of one year, whereas the RECOMMENDED maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a RECOMMENDED maximum validity period of one year (see Table 2 below). This ensures that the TRC need not be updated all the time and is thus relatively stable.
+> One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a RECOMMENDED maximum validity period of one year, whereas the RECOMMENDED maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a RECOMMENDED maximum validity period of one year (see {{table-2}} below). This ensures that the TRC need not be updated all the time and is thus relatively stable.
 >
 > The SCION root private key and public key/certificate are used to sign and verify the Control Plane CA certificates, respectively. The control plane CA certificates are explicitly NOT part of the TRC, for reasons of security. The Control Plane CA certificates are used to verify the Control Plane AS certificates, which in turn are used to verify control plane messages. Routing is made more secure if both the SCION Control Plane CA and AS certificates can be renewed on a very regular basis. If the control plane CA and AS certificates were part of the TRC, then the TRC would have to be updated constantly, which is undesirable.
 
@@ -453,6 +450,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 <artset>
 <artwork type="svg" src="images/trc-update-chain.svg"/>
 <artwork type="ascii-art">
+
 ┌──────────────────────────────────────────────┐
 │                    TRC 1                     │
 │                (base/initial)                │
@@ -492,7 +490,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 ││     │root │ │root │ │root │ │root │        ││
 ││     └──┬──┘ └─────┘ └─────┘ └──┬──┘        ││
 │└────────│───────────────────────│───────────┘│
-└─────────┼───────────────────────┼────────────┘
+└─────────│───────────────────────│────────────┘
           │                       │
           ▼                       ▼
    ┌─────────────┐         ┌─────────────┐
@@ -505,6 +503,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
    │    CP AS    │         │    CP AS    │
    │ Certificate │         │ Certificate │
    └─────────────┘         └─────────────┘
+
 </artwork>
 </artset>
 </figure>
@@ -1381,7 +1380,7 @@ For certificate renewal, on the other hand, this does not apply. Denial of Servi
 
 This document has no IANA actions.
 
-The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments}}). This task is currently being transitioned from Anapaya to the SCION Association.
+The ISD and SCION AS number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments-Anapaya}}). This task is being transitioned from Anapaya to the SCION Association (see {{ISD-AS-assignments}}).
 
 
 --- back
@@ -1500,6 +1499,12 @@ The Signing Ceremony is completed once when every voting representative confirms
 {:numbered="false"}
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
+
+## draft-dekater-scion-pki-10
+{:numbered="false"}
+
+- removed ISD assignment table and replaced to reference in control-plane draft
+- Updated number assignment reference
 
 ## draft-dekater-scion-pki-09
 {:numbered="false"}
