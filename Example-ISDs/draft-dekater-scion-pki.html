@@ -4807,7 +4807,7 @@ TRC
 <p id="section-3.1.2.2.2-6">A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and <span class="bcp14">MUST</span> have a serial number of 1 and a base number of 1. With every TRC update, the serial number <span class="bcp14">MUST</span> be incremented by one. This facilitates uniquely identifying the predecessor and successor TRC in an update chain.<a href="#section-3.1.2.2.2-6" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2.2-7">If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain <span class="bcp14">SHOULD</span> be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.<a href="#section-3.1.2.2.2-7" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2.2-8"><strong>Example</strong><br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for <em>ISD 16</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.1.2.2.2-8" class="pilcrow">¶</a></p>
+The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for <em>ISD 15</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.1.2.2.2-8" class="pilcrow">¶</a></p>
 <span id="name-id-of-trcs-in-trc-update-ch"></span><div id="_table-7">
 <table class="center" id="table-6">
                 <caption>
@@ -4824,37 +4824,37 @@ The following simple example illustrates how to specify the ID of the TRCs in an
                 <tbody>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Initial</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-B01-S01</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S01</td>
                     <td class="text-left" rowspan="1" colspan="1"> </td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-B01-S02</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S02</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-B01-S03</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S03</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Sensitive</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-B01-S04</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S04</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Trust reset</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-<strong>B05</strong>-S05</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-<strong>B05</strong>-S05</td>
                     <td class="text-left" rowspan="1" colspan="1">A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-B05-S06</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B05-S06</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD16-B05-S07</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B05-S07</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
