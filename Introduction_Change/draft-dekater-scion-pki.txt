@@ -191,8 +191,7 @@ Table of Contents
    _Control Plane_ - performs inter-domain routing by discovering and
    securely disseminating path information between ASes.  The core ASes
    use Path-segment Construction Beacons (PCBs) to explore intra-ISD
-   paths, or to explore paths across different ISDs.  See
-   [I-D.dekater-scion-controlplane]
+   paths, or to explore paths across different ISDs.
 
    _Data Plane_ - carries out secure packet forwarding between SCION-
    enabled ASes over paths selected by endpoints.  A SCION border router
