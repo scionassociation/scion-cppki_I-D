@@ -966,8 +966,8 @@ Table of Contents
 
    The string representation of the ISD-AS number attribute MUST follow
    the text representation defined in [I-D.dekater-scion-controlplane],
-   section "Text Representation", where the lower 32-bit AS numbers are
-   represented in decimal notation, and higher ones in hexadecimal
+   section "Text Representation" where AS numbers in the lower 32-bit
+   range are represented in decimal notation, and others in hexadecimal
    notation.
 
    The ISD-AS number attribute MUST be present exactly once in the
