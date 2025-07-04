@@ -60,10 +60,14 @@ normative:
 
 informative:
   I-D.dekater-panrg-scion-overview:
-  ISD-AS-assignments:
+  ISD-AS-assignments-Anapaya:
     title: "SCION ISD and AS Assignments"
-    date: 2024
+    date: 2025
     target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
+  ISD-AS-assignments:
+    title: "SCION Registry"
+    date: 2025
+    target: http://scion.org/registry/
   RFC5398:
   RFC6996:
   RFC8210:
@@ -161,11 +165,11 @@ SCION has been developed with the following goals:
 
 SCION relies on three main components:
 
-*PKI* - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called *Isolation Domains (ISDs)*. All ASes in an ISD agree on a set of trust roots called the *Trust Root Configuration (TRC)* which is a collection of signed root certificates in X.509 v3 format {{RFC5280}}. The ISD is governed by a set of *core ASes* which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure which the SCION Control Plane relies upon for the authentication of messages that is used for the SCION Control Plane.
+*PKI* - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called *Isolation Domains (ISDs)*. All ASes in an ISD agree on a set of trust roots called the *Trust Root Configuration (TRC)* which is a collection of signed root certificates in X.509 v3 format {{RFC5280}}. The ISD is governed by a set of *core ASes* which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure used for the authentication of messages used by the SCION Control Plane.
 
-*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See {{I-D.dekater-scion-controlplane}}
+*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs.
 
-*Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.dekater-scion-dataplane}}
+*Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS.
 
 This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}.
 
@@ -321,16 +325,7 @@ For the function to work, it is not necessary that the ASes of the ISD all trust
 
 Prior to the ceremony, the trusted parties MUST decide about the validity period of the TRC as well as the number of votes required to update a TRC. They MUST also bring the required keys and certificates, the so-called root and voting keys/certificates.
 
-During the ceremony, the trusted parties decide about the number of the ISD. This MUST be an integer in the inclusive range between 64 and 4094. The next table shows the current allocation of ISD numbers in SCION:
-
-| ISD               | Description                                                                              |
-|-------------------+------------------------------------------------------------------------------------------|
-| 0                 | The wildcard ISD.                                                                        |
-| 1 - 15            | Reserved for documentation and sample code (analogous to {{RFC5398}}.                    |
-| 16 - 63           | Private use (analogous to {{RFC6996}}). Can be used for testing and private deployments. |
-| 64 - 4094         | Public ISDs. Should be allocated in ascending order, without gaps and "vanity" numbers.  |
-| 4095 - 65535      | Reserved for future use.                                                                 |
-{: #table-1 title="ISD Number Allocations"}
+The trusted parties require an ISD number, whose numbering scheme is described in {{I-D.dekater-scion-controlplane}} section `ISD Numbers`, and allocation in {{ISD-AS-assignments}}.
 
 
 ### Output
@@ -413,7 +408,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 
 > Both SCION Control Plane root certificates and Control Plane CA certificates are in fact CA certificates. That is, they can both be used to verify other certificates.
 >
-> One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a RECOMMENDED maximum validity period of one year, whereas the RECOMMENDED maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a RECOMMENDED maximum validity period of one year (see Table 2 below). This ensures that the TRC need not be updated all the time and is thus relatively stable.
+> One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a RECOMMENDED maximum validity period of one year, whereas the RECOMMENDED maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a RECOMMENDED maximum validity period of one year (see {{table-2}} below). This ensures that the TRC need not be updated all the time and is thus relatively stable.
 >
 > The SCION root private key and public key/certificate are used to sign and verify the Control Plane CA certificates, respectively. The control plane CA certificates are explicitly NOT part of the TRC, for reasons of security. The Control Plane CA certificates are used to verify the Control Plane AS certificates, which in turn are used to verify control plane messages. Routing is made more secure if both the SCION Control Plane CA and AS certificates can be renewed on a very regular basis. If the control plane CA and AS certificates were part of the TRC, then the TRC would have to be updated constantly, which is undesirable.
 
@@ -865,17 +860,17 @@ A TRC where the base number is equal to the serial number is a base TRC. The ini
 If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain SHOULD be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.
 
 **Example**<br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 74*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
+The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
 
 | Update      | TRC ID              | Remarks                                          |
 |-------------+---------------------+--------------------------------------------------|
-| Initial     | ISD74-B01-S01       |                                                  |
-| Regular     | ISD74-B01-S02       | Only the serial number is incremented.           |
-| Regular     | ISD74-B01-S03       | Only the serial number is incremented.           |
-| Sensitive   | ISD74-B01-S04       | Only the serial number is incremented.           |
-| Trust reset | ISD74-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
-| Regular     | ISD74-B05-S06       | Only the serial number is incremented.           |
-| Regular     | ISD74-B05-S07       | Only the serial number is incremented.           |
+| Initial     | ISD15-B01-S01       |                                                  |
+| Regular     | ISD15-B01-S02       | Only the serial number is incremented.           |
+| Regular     | ISD15-B01-S03       | Only the serial number is incremented.           |
+| Sensitive   | ISD15-B01-S04       | Only the serial number is incremented.           |
+| Trust reset | ISD15-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
+| Regular     | ISD15-B05-S06       | Only the serial number is incremented.           |
+| Regular     | ISD15-B05-S07       | Only the serial number is incremented.           |
 | And so on   |                     |                                                  |
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
@@ -1385,7 +1380,7 @@ For certificate renewal, on the other hand, this does not apply. Denial of Servi
 
 This document has no IANA actions.
 
-The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments}}). This task is currently being transitioned from Anapaya to the SCION Association.
+The ISD and SCION AS number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments-Anapaya}}). This task is being transitioned from Anapaya to the SCION Association (see {{ISD-AS-assignments}}).
 
 
 --- back
@@ -1504,6 +1499,12 @@ The Signing Ceremony is completed once when every voting representative confirms
 {:numbered="false"}
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
+
+## draft-dekater-scion-pki-10
+{:numbered="false"}
+
+- removed ISD assignment table and replaced to reference in control-plane draft
+- Updated number assignment reference
 
 ## draft-dekater-scion-pki-09
 {:numbered="false"}
