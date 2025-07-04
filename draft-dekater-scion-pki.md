@@ -600,7 +600,7 @@ where `id-scion` specifies the root SCION object identifier (OID).
 **Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
-The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation". The canonical string formatting of AS numbers in the AS range (0, 2<sup>32-1</sup>) MUST use the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, MUST use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
+The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation", where the lower 32-bit AS numbers are represented in decimal notation, and higher ones in hexadecimal notation.
 
 
 The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
