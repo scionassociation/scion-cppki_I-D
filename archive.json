@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-06-29T00:27:52.942354+00:00",
+  "timestamp": "2025-07-06T00:27:27.778884+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -608,6 +608,79 @@
           "updatedAt": "2025-06-27T15:12:28Z"
         }
       ]
+    },
+    {
+      "number": 69,
+      "id": "I_kwDOH386tM6-pkuY",
+      "title": "Use example ranges in examples",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/69",
+      "state": "CLOSED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [
+        "Prio 2",
+        "editorial"
+      ],
+      "body": "- [x] Use an ISD in the example range (`1 - 15 `) for example below \n- [x] Check any other occurrences in examples in all other drafts\n\n```\n *Example*\n   The following simple example illustrates how to specify the ID of the\n   TRCs in an TRC update chain for _ISD 74_. The IDs are given in a\n   human-readable notation, where Bxx is the base number, and Sxx the\n   serial number.\n\n   +===========+=================+====================================+\n   | Update    | TRC ID          | Remarks                            |\n   +===========+=================+====================================+\n   | Initial   | ISD74-B01-S01   |                                    |\n   +-----------+-----------------+------------------------------------+\n   | Regular   | ISD74-B01-S02   | Only the serial number is          |\n   |           |                 | incremented.                       |\n   +-----------+-----------------+------------------------------------+\n   | Regular   | ISD74-B01-S03   | Only the serial number is          |\n   |           |                 | incremented.                       |\n   +-----------+-----------------+------------------------------------+\n   | Sensitive | ISD74-B01-S04   | Only the serial number is          |\n   |           |                 | incremented.                       |\n   +-----------+-----------------+------------------------------------+\n   | Trust     | ISD74-*B05*-S05 | A trust reset includes the         |\n   | reset     |                 | creation of a new base TRC.  The   |\n   |           |                 | new base number follows the serial |\n   |           |                 | number \"04\" of the latest TRC      |\n   |           |                 | resulting from a non-compromised   |\n   |           |                 | TRC update for this ISD.           |\n   +-----------+-----------------+------------------------------------+\n   | Regular   | ISD74-B05-S06   | Only the serial number is          |\n   |           |                 | incremented.                       |\n   +-----------+-----------------+------------------------------------+\n   | Regular   | ISD74-B05-S07   | Only the serial number is          |\n   |           |                 | incremented.                       |\n   +-----------+-----------------+------------------------------------+\n   | And so on |                 |                                    |\n   +-----------+-----------------+------------------------------------+\n```",
+      "createdAt": "2025-07-03T08:42:37Z",
+      "updatedAt": "2025-07-04T11:52:34Z",
+      "closedAt": "2025-07-04T11:52:33Z",
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "There are some places in the DP draft (and one place in the CP draft) that use references to ISDs and ASNs outside of the example ranges. These can be changed but it might compromise understanding and readability. For example, the example range for SCION ASes lies in the upper 32-bits and these addresses should be notated in hex. However, these addresses will then be difficult to fit in the diagrams (and even more so if they're written in decimal). ",
+          "createdAt": "2025-07-03T15:26:09Z",
+          "updatedAt": "2025-07-03T15:26:09Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "What are these other examples? How hard it is to change them?\n\ne.g. I see figure 8 in the DP, and everywhere else we use AS 1, 2,  etc..\n```\n                      +-----------------+\n                      |    ISD Core     |\n     .--.    .--.     |  .--.     .--.  |     .--.    .--.\n    (AS 3)--(AS 4)----|-(AS 1)---(AS 2)-|----(AS 5)--(AS 6)\n     `--'    `--'     |  `--'     `--'  |     `--'    `--'\n                      +-----------------+\n```",
+          "createdAt": "2025-07-03T15:59:52Z",
+          "updatedAt": "2025-07-03T16:04:01Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Data Plane:\n\nFigure 8 \"Path Construction Example\" - difficult to add decimal or hex addresses\nFigure 18 \"Sample Topology\" - could perhaps add AS hex addresses with a bit of re-drawing\n\nControl Plane:\n\nFigure 1 \"SCION Links\" - uses AS A, B, C etc... - maybe this is okay\nFigures 2-4 \"PCB Propagation\" use AS V, W, X, Y, Z\nFigure 5 \"Possible path segments\" uses AS X, Y, Z\nFigure 32-34 \"Topology\" use AS A, B, C, D, E, F, G\n\n",
+          "createdAt": "2025-07-03T16:24:25Z",
+          "updatedAt": "2025-07-03T16:24:25Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I've updated the Data Plane figures with example AS ranges. It's impractical (due to space) and arguably unnecessary (as the AS examples use alphanumeric representations rather than addresses) for the Control Plane figures. \n\nI'll update the SVG versions when we're happy with the changes.",
+          "createdAt": "2025-07-03T21:04:49Z",
+          "updatedAt": "2025-07-03T21:06:02Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Thanks, resolving this issue. For the CP, I've opened https://github.com/scionassociation/scion-cp_I-D/issues/127 ",
+          "createdAt": "2025-07-04T11:52:33Z",
+          "updatedAt": "2025-07-04T11:52:33Z"
+        }
+      ]
+    },
+    {
+      "number": 71,
+      "id": "I_kwDOH386tM6-tzSr",
+      "title": "Check use of decimal AS number usage in TRC schema",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/71",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "The following code block shows the format of a TRC specification file (the payload schema):\n\n~~~~\n   TRCPayload  ::=  SEQUENCE {\n       version   TRCFormatVersion,\n       iD        TRCID,\n       validity  Validity,\n\n       gracePeriod   INTEGER,\n       noTrustReset  BOOLEAN DEFAULT FALSE,\n       votes         SEQUENCE OF INTEGER (SIZE (1..255)),\n\n       votingQuorum  INTEGER (1..255),\n\n       coreASes           SEQUENCE OF ASN,\n       authoritativeASes  SEQUENCE OF ASN,\n       description        UTF8String (SIZE (0..1024)),\n\n       certificates       SEQUENCE OF Certificate }\n\n   TRCFormatVersion  ::=  INTEGER { v1(0) }\n\n   TRCID  ::=  SEQUENCE {\n       iSD           ISD,\n       serialNumber  INTEGER (1..MAX),\n       baseNumber    INTEGER (1..MAX) }\n\n   ISD  ::=  INTEGER (1..65535)\n\n   Validity  ::=  SEQUENCE {\n       notBefore  Time,\n       notAfter   Time }\n\n   ASN  ::=  INTEGER (1..281474976710655)\n~~~~\n",
+      "createdAt": "2025-07-03T14:53:18Z",
+      "updatedAt": "2025-07-03T14:53:18Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -3357,25 +3430,33 @@
       "id": "PR_kwDOH386tM6b5nPG",
       "title": "Minor tweaks",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/65",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2025-06-24T16:31:11Z",
-      "updatedAt": "2025-06-24T16:31:12Z",
+      "updatedAt": "2025-07-04T11:36:29Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "4a16dfbab61efd81dea19851a2ffab8099ddbb88",
+      "baseRefOid": "656701a82b074adf13c518ad27b384ff59507453",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Updated-ASCII",
-      "headRefOid": "f1a29592553cddc6d6c34e944c6c2072d87afd99",
-      "closedAt": null,
+      "headRefOid": "8655f79c46cbb5afaf087c19a16cfffbed64f86a",
+      "closedAt": "2025-07-04T11:36:19Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "These commits were already merged as part of #36 ",
+          "createdAt": "2025-07-04T11:36:19Z",
+          "updatedAt": "2025-07-04T11:36:19Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -3416,6 +3497,199 @@
           "body": "",
           "createdAt": "2025-06-27T16:11:50Z",
           "updatedAt": "2025-06-27T16:11:50Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 70,
+      "id": "PR_kwDOH386tM6dSK_D",
+      "title": "Example ISDs",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/70",
+      "state": "MERGED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "COntributes to #69 ",
+      "createdAt": "2025-07-03T14:47:43Z",
+      "updatedAt": "2025-07-03T16:18:39Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "b8219bc068c753e2ceaee04b9bc7421c1c987a26",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Example-ISDs",
+      "headRefOid": "114cc722d6aec84a772b17a5cbdcd8d7efd1408f",
+      "closedAt": "2025-07-03T16:18:39Z",
+      "mergedAt": "2025-07-03T16:18:39Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "c6b973c7098be4e9c9397df916ce694a8387c599"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6x2Hl4",
+          "commit": {
+            "abbreviatedOid": "668dbe6"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T15:59:00Z",
+          "updatedAt": "2025-07-03T15:59:00Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM6x2S3M",
+          "commit": {
+            "abbreviatedOid": "668dbe6"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "ISD 16 is outside of the documentation range : \r\n\r\n```\r\n  | 1 - 15       | Reserved for documentation and sample code     |\r\n     |              | (analogous to [RFC5398]).   \r\n ```",
+          "createdAt": "2025-07-03T16:16:04Z",
+          "updatedAt": "2025-07-03T16:16:04Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM6x2T9e",
+          "commit": {
+            "abbreviatedOid": "114cc72"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T16:17:55Z",
+          "updatedAt": "2025-07-03T16:17:55Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 72,
+      "id": "PR_kwDOH386tM6dS859",
+      "title": "Introduction Change",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/72",
+      "state": "MERGED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Match wording in DP draft https://github.com/scionassociation/scion-dp_I-D/pull/96 ",
+      "createdAt": "2025-07-03T16:03:57Z",
+      "updatedAt": "2025-07-03T16:39:52Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "b8219bc068c753e2ceaee04b9bc7421c1c987a26",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Introduction_Change",
+      "headRefOid": "a56470274a8d3ffe2f40973b616fbf6c99676d77",
+      "closedAt": "2025-07-03T16:39:49Z",
+      "mergedAt": "2025-07-03T16:39:49Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "656701a82b074adf13c518ad27b384ff59507453"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6x2j87",
+          "commit": {
+            "abbreviatedOid": "a564702"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-03T16:39:30Z",
+          "updatedAt": "2025-07-03T16:39:30Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 73,
+      "id": "PR_kwDOH386tM6dbC3M",
+      "title": "Removed ISD_AS text representation details and refer to CP draft",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/73",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves: \r\n- https://github.com/scionassociation/scion-cp_I-D/issues/112",
+      "createdAt": "2025-07-04T11:10:18Z",
+      "updatedAt": "2025-07-04T12:53:20Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "656701a82b074adf13c518ad27b384ff59507453",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "AS-text-representation",
+      "headRefOid": "63680fc7e1e648ed113952542943566104a00b86",
+      "closedAt": "2025-07-04T12:53:12Z",
+      "mergedAt": "2025-07-04T12:53:12Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "4866ce303b8db785d46e622cb576f8813ce9844e"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Applied your suggestion, feel free to merge",
+          "createdAt": "2025-07-04T11:34:01Z",
+          "updatedAt": "2025-07-04T11:34:01Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM6yBcvy",
+          "commit": {
+            "abbreviatedOid": "d6824b8"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "Suggest\r\n\r\n'The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section \"Text Representation\" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.'",
+          "createdAt": "2025-07-04T11:15:26Z",
+          "updatedAt": "2025-07-04T11:15:26Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM6yBqgv",
+          "commit": {
+            "abbreviatedOid": "d6824b8"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-07-04T11:30:47Z",
+          "updatedAt": "2025-07-04T11:30:48Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "```suggestion\r\nThe string representation of the ISD-AS number attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section \"Text Representation\" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.\r\n```",
+              "createdAt": "2025-07-04T11:30:47Z",
+              "updatedAt": "2025-07-04T11:30:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM6yC92Y",
+          "commit": {
+            "abbreviatedOid": "63680fc"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-07-04T12:52:54Z",
+          "updatedAt": "2025-07-04T12:52:54Z",
           "comments": []
         }
       ]
