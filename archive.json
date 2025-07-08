@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-06T00:27:27.778884+00:00",
+  "timestamp": "2025-07-08T00:24:34.291528+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -462,7 +462,7 @@
       "id": "I_kwDOH386tM6w7uz7",
       "title": "Add SVG figures",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/59",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -474,8 +474,8 @@
       ],
       "body": "> One immediate piece of feedback \u2014 it sure would be nice if the figures were rendered more nicely, if it doesn\u2019t represent too much work for the authors.[*] It\u2019s amazing how much the modest effort returns in terms of document readability. I have the zeal of a convert, having adopted aasvg for the most recent iteration of [https://datatracker.ietf.org/doc/draft-ietf-idr-entropy-label/](https://urldefense.com/v3/__https://datatracker.ietf.org/doc/draft-ietf-idr-entropy-label/__;!!NEt6yMaO-gk!G9jt_GrlROPQcce-a5BfIgC_anQAMdJx3JN2ZsDAx4hOBvKhPemxMCY9phG6sqjMkzktzQTzYHMlVrjUGw$). I\u2019d say the conversion took less than an afternoon\u2019s work. I fed a couple of the figures from the SCION doc into aasvg and while they don\u2019t compile out of the box, it\u2019s evident it wouldn\u2019t be that hard to make the necessary changes. This isn\u2019t a demand, just a suggestion.",
       "createdAt": "2025-04-03T06:12:16Z",
-      "updatedAt": "2025-06-16T06:58:32Z",
-      "closedAt": "2025-06-16T06:58:31Z",
+      "updatedAt": "2025-07-07T18:52:26Z",
+      "closedAt": null,
       "comments": [
         {
           "author": "knmeynell",
@@ -483,6 +483,13 @@
           "body": "SVG images have been added. ",
           "createdAt": "2025-06-16T06:58:27Z",
           "updatedAt": "2025-06-16T06:58:27Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Reopening because I was not able to submit external svgs. We need to find a way to get the tooling to submit them.",
+          "createdAt": "2025-07-07T18:52:26Z",
+          "updatedAt": "2025-07-07T18:52:26Z"
         }
       ]
     },
@@ -678,9 +685,17 @@
       "labels": [],
       "body": "The following code block shows the format of a TRC specification file (the payload schema):\n\n~~~~\n   TRCPayload  ::=  SEQUENCE {\n       version   TRCFormatVersion,\n       iD        TRCID,\n       validity  Validity,\n\n       gracePeriod   INTEGER,\n       noTrustReset  BOOLEAN DEFAULT FALSE,\n       votes         SEQUENCE OF INTEGER (SIZE (1..255)),\n\n       votingQuorum  INTEGER (1..255),\n\n       coreASes           SEQUENCE OF ASN,\n       authoritativeASes  SEQUENCE OF ASN,\n       description        UTF8String (SIZE (0..1024)),\n\n       certificates       SEQUENCE OF Certificate }\n\n   TRCFormatVersion  ::=  INTEGER { v1(0) }\n\n   TRCID  ::=  SEQUENCE {\n       iSD           ISD,\n       serialNumber  INTEGER (1..MAX),\n       baseNumber    INTEGER (1..MAX) }\n\n   ISD  ::=  INTEGER (1..65535)\n\n   Validity  ::=  SEQUENCE {\n       notBefore  Time,\n       notAfter   Time }\n\n   ASN  ::=  INTEGER (1..281474976710655)\n~~~~\n",
       "createdAt": "2025-07-03T14:53:18Z",
-      "updatedAt": "2025-07-03T14:53:18Z",
+      "updatedAt": "2025-07-07T13:50:41Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "The number is itself an int, so I think it makes sense that there it is written as 281474976710655, because this is encoded using DER X690",
+          "createdAt": "2025-07-07T13:50:41Z",
+          "updatedAt": "2025-07-07T13:50:41Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -3693,6 +3708,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 74,
+      "id": "PR_kwDOH386tM6dyhqk",
+      "title": "changelog",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/74",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-07-07T16:08:58Z",
+      "updatedAt": "2025-07-07T16:14:30Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "4866ce303b8db785d46e622cb576f8813ce9844e",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "changelog",
+      "headRefOid": "3c3745b00c87f9e38ebe8f953bc99a66e2617617",
+      "closedAt": "2025-07-07T16:14:27Z",
+      "mergedAt": "2025-07-07T16:14:27Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "03f7ebc258c281c699567b59f28b7997f0f99f3a"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
