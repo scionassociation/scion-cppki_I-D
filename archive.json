@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-07-08T00:24:34.291528+00:00",
+  "timestamp": "2025-07-17T00:26:09.867809+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -678,15 +678,15 @@
       "id": "I_kwDOH386tM6-tzSr",
       "title": "Check use of decimal AS number usage in TRC schema",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/71",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "The following code block shows the format of a TRC specification file (the payload schema):\n\n~~~~\n   TRCPayload  ::=  SEQUENCE {\n       version   TRCFormatVersion,\n       iD        TRCID,\n       validity  Validity,\n\n       gracePeriod   INTEGER,\n       noTrustReset  BOOLEAN DEFAULT FALSE,\n       votes         SEQUENCE OF INTEGER (SIZE (1..255)),\n\n       votingQuorum  INTEGER (1..255),\n\n       coreASes           SEQUENCE OF ASN,\n       authoritativeASes  SEQUENCE OF ASN,\n       description        UTF8String (SIZE (0..1024)),\n\n       certificates       SEQUENCE OF Certificate }\n\n   TRCFormatVersion  ::=  INTEGER { v1(0) }\n\n   TRCID  ::=  SEQUENCE {\n       iSD           ISD,\n       serialNumber  INTEGER (1..MAX),\n       baseNumber    INTEGER (1..MAX) }\n\n   ISD  ::=  INTEGER (1..65535)\n\n   Validity  ::=  SEQUENCE {\n       notBefore  Time,\n       notAfter   Time }\n\n   ASN  ::=  INTEGER (1..281474976710655)\n~~~~\n",
       "createdAt": "2025-07-03T14:53:18Z",
-      "updatedAt": "2025-07-07T13:50:41Z",
-      "closedAt": null,
+      "updatedAt": "2025-07-16T09:02:29Z",
+      "closedAt": "2025-07-16T09:02:29Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -694,6 +694,20 @@
           "body": "The number is itself an int, so I think it makes sense that there it is written as 281474976710655, because this is encoded using DER X690",
           "createdAt": "2025-07-07T13:50:41Z",
           "updatedAt": "2025-07-07T13:50:41Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "So I think nothing needs to be changed here then?",
+          "createdAt": "2025-07-15T02:14:24Z",
+          "updatedAt": "2025-07-15T02:14:24Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "No",
+          "createdAt": "2025-07-16T09:02:29Z",
+          "updatedAt": "2025-07-16T09:02:29Z"
         }
       ]
     }
