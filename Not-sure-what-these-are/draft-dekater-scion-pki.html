@@ -13,12 +13,12 @@
        This document describes the trust model behind the SCION Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure. 
        This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet. 
     " name="description">
-<meta content="xml2rfc 3.28.1" name="generator">
+<meta content="xml2rfc 3.29.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.1
-    Python 3.12.10
+  xml2rfc 3.29.0
+    Python 3.12.11
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -27,7 +27,7 @@
     platformdirs 4.3.8
     pycountry 24.6.1
     PyYAML 6.0.2
-    requests 2.32.3
+    requests 2.32.4
     setuptools 80.9.0
     wcwidth 0.2.13
 -->
@@ -1048,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">June 2025</td>
+<td class="right">July 2025</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 17 December 2025</td>
+<td class="center">Expires 19 January 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1065,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2025-06-15" class="published">15 June 2025</time>
+<time datetime="2025-07-18" class="published">18 July 2025</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2025-12-17">17 December 2025</time></dd>
+<dd class="expires"><time datetime="2026-01-19">19 January 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1125,7 +1125,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 17 December 2025.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 January 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1358,16 +1358,19 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.11.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
+                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-10" class="internal xref">draft-dekater-scion-pki-10</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
+                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
-                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
-                <p id="section-toc.1-1.11.2.4.1"><a href="#appendix-D.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
+                <p id="section-toc.1-1.11.2.4.1"><a href="#appendix-D.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#appendix-D.5" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
 </li>
             </ul>
 </li>
@@ -1389,9 +1392,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1-4"><em>Security</em> - to introduce a new approach to inter-domain path security that leverages path awareness in combination with a unique trust model. The goal is to provide higher levels of trust in routing information to prevent traffic hijacking, and enable users to decide where their data travels based on routing information that can be unambiguously attributed to an AS, ensuring that packets are only forwarded along authorized path segments. A particular use case is to enable geofencing.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><em>Scalability</em> - to improve the scalability of the inter-domain control plane and data plane, avoiding existing limitations related to convergence and forwarding table size. The advertising of path segments is separated into a beaconing process within each Isolation Domain (ISD) and between ISDs which incurs minimal overhead and resource requirements on routers.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <p id="section-1-6">SCION relies on three main components:<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7"><em>PKI</em> - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called <em>Isolation Domains (ISDs)</em>. All ASes in an ISD agree on a set of trust roots called the <em>Trust Root Configuration (TRC)</em> which is a collection of signed root certificates in X.509 v3 format <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>. The ISD is governed by a set of <em>core ASes</em> which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure which the SCION Control Plane relies upon for the authentication of messages that is used for the SCION Control Plane.<a href="#section-1-7" class="pilcrow">¶</a></p>
-<p id="section-1-8"><em>Control Plane</em> - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span><a href="#section-1-8" class="pilcrow">¶</a></p>
-<p id="section-1-9"><em>Data Plane</em> - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span><a href="#section-1-9" class="pilcrow">¶</a></p>
+<p id="section-1-7"><em>PKI</em> - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called <em>Isolation Domains (ISDs)</em>. All ASes in an ISD agree on a set of trust roots called the <em>Trust Root Configuration (TRC)</em> which is a collection of signed root certificates in X.509 v3 format <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>. The ISD is governed by a set of <em>core ASes</em> which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure used for the authentication of messages used by the SCION Control Plane.<a href="#section-1-7" class="pilcrow">¶</a></p>
+<p id="section-1-8"><em>Control Plane</em> - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs.<a href="#section-1-8" class="pilcrow">¶</a></p>
+<p id="section-1-9"><em>Data Plane</em> - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS.<a href="#section-1-9" class="pilcrow">¶</a></p>
 <p id="section-1-10">This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with the other components <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> and <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span>.<a href="#section-1-10" class="pilcrow">¶</a></p>
 <p id="section-1-11">The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, to encourage interoperability among implementations, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture.<a href="#section-1-11" class="pilcrow">¶</a></p>
 <p id="section-1-12">Note (to be removed before publication): this document, together with the other components <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> and <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span>, deprecates <span>[<a href="#I-D.dekater-panrg-scion-overview" class="cite xref">I-D.dekater-panrg-scion-overview</a>]</span>.<a href="#section-1-12" class="pilcrow">¶</a></p>
@@ -2457,43 +2460,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <a href="#section-1.6.1" class="section-number selfRef">1.6.1. </a><a href="#name-input" class="section-name selfRef">Input</a>
           </h4>
 <p id="section-1.6.1-1">Prior to the ceremony, the trusted parties <span class="bcp14">MUST</span> decide about the validity period of the TRC as well as the number of votes required to update a TRC. They <span class="bcp14">MUST</span> also bring the required keys and certificates, the so-called root and voting keys/certificates.<a href="#section-1.6.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.6.1-2">During the ceremony, the trusted parties decide about the number of the ISD. This <span class="bcp14">MUST</span> be an integer in the inclusive range between 64 and 4094. The next table shows the current allocation of ISD numbers in SCION:<a href="#section-1.6.1-2" class="pilcrow">¶</a></p>
-<span id="name-isd-number-allocations"></span><div id="_table-1">
-<table class="center" id="table-1">
-            <caption>
-<a href="#table-1" class="selfRef">Table 1</a>:
-<a href="#name-isd-number-allocations" class="selfRef">ISD Number Allocations</a>
-            </caption>
-<thead>
-              <tr>
-                <th class="text-left" rowspan="1" colspan="1">ISD</th>
-                <th class="text-left" rowspan="1" colspan="1">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">0</td>
-                <td class="text-left" rowspan="1" colspan="1">The wildcard ISD.</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">1 - 15</td>
-                <td class="text-left" rowspan="1" colspan="1">Reserved for documentation and sample code (analogous to <span>[<a href="#RFC5398" class="cite xref">RFC5398</a>]</span>.</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">16 - 63</td>
-                <td class="text-left" rowspan="1" colspan="1">Private use (analogous to <span>[<a href="#RFC6996" class="cite xref">RFC6996</a>]</span>). Can be used for testing and private deployments.</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">64 - 4094</td>
-                <td class="text-left" rowspan="1" colspan="1">Public ISDs. Should be allocated in ascending order, without gaps and "vanity" numbers.</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">4095 - 65535</td>
-                <td class="text-left" rowspan="1" colspan="1">Reserved for future use.</td>
-              </tr>
-            </tbody>
-          </table>
-</div>
+<p id="section-1.6.1-2">The trusted parties require an ISD number, whose numbering scheme is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section <code>ISD Numbers</code>, and allocation in <span>[<a href="#ISD-AS-assignments" class="cite xref">ISD-AS-assignments</a>]</span>.<a href="#section-1.6.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="output">
@@ -2600,7 +2567,7 @@ TRC
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-2.1.5.2-4.1">
                 <p id="section-2.1.5.2-4.1.1">Both SCION Control Plane root certificates and Control Plane CA certificates are in fact CA certificates. That is, they can both be used to verify other certificates.<a href="#section-2.1.5.2-4.1.1" class="pilcrow">¶</a></p>
-<p id="section-2.1.5.2-4.1.2">One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a <span class="bcp14">RECOMMENDED</span> maximum validity period of one year, whereas the <span class="bcp14">RECOMMENDED</span> maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a <span class="bcp14">RECOMMENDED</span> maximum validity period of one year (see Table 2 below). This ensures that the TRC need not be updated all the time and is thus relatively stable.<a href="#section-2.1.5.2-4.1.2" class="pilcrow">¶</a></p>
+<p id="section-2.1.5.2-4.1.2">One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a <span class="bcp14">RECOMMENDED</span> maximum validity period of one year, whereas the <span class="bcp14">RECOMMENDED</span> maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a <span class="bcp14">RECOMMENDED</span> maximum validity period of one year (see <a href="#_table-2" class="auto internal xref">Table 1</a> below). This ensures that the TRC need not be updated all the time and is thus relatively stable.<a href="#section-2.1.5.2-4.1.2" class="pilcrow">¶</a></p>
 <p id="section-2.1.5.2-4.1.3">The SCION root private key and public key/certificate are used to sign and verify the Control Plane CA certificates, respectively. The control plane CA certificates are explicitly NOT part of the TRC, for reasons of security. The Control Plane CA certificates are used to verify the Control Plane AS certificates, which in turn are used to verify control plane messages. Routing is made more secure if both the SCION Control Plane CA and AS certificates can be renewed on a very regular basis. If the control plane CA and AS certificates were part of the TRC, then the TRC would have to be updated constantly, which is undesirable.<a href="#section-2.1.5.2-4.1.3" class="pilcrow">¶</a></p>
 </li>
             </ul>
@@ -2613,11 +2580,11 @@ TRC
           <h4 id="name-certificates-formal-overvie">
 <a href="#section-2.1.6" class="section-number selfRef">2.1.6. </a><a href="#name-certificates-formal-overvie" class="section-name selfRef">Certificates - Formal Overview</a>
           </h4>
-<p id="section-2.1.6-1"><a href="#_table-2" class="auto internal xref">Table 2</a> and <a href="#_table-3" class="auto internal xref">Table 3</a> below provide an overview of the different types of key pairs and certificates in the control plane PKI.<a href="#section-2.1.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.1.6-1"><a href="#_table-2" class="auto internal xref">Table 1</a> and <a href="#_table-3" class="auto internal xref">Table 2</a> below provide an overview of the different types of key pairs and certificates in the control plane PKI.<a href="#section-2.1.6-1" class="pilcrow">¶</a></p>
 <span id="name-key-chain"></span><div id="_table-2">
-<table class="center" id="table-2">
+<table class="center" id="table-1">
             <caption>
-<a href="#table-2" class="selfRef">Table 2</a>:
+<a href="#table-1" class="selfRef">Table 1</a>:
 <a href="#name-key-chain" class="selfRef">Key chain</a>
             </caption>
 <thead>
@@ -2663,9 +2630,9 @@ TRC
 </div>
 <p id="section-2.1.6-3">(1)  K<sub>x</sub> = PK<sub>x</sub> + SK<sub>x</sub>, where x = certificate type, PK<sub>x</sub> = public key, and SK<sub>x</sub> = private key<a href="#section-2.1.6-3" class="pilcrow">¶</a></p>
 <span id="name-certificates"></span><div id="_table-3">
-<table class="center" id="table-3">
+<table class="center" id="table-2">
             <caption>
-<a href="#table-3" class="selfRef">Table 3</a>:
+<a href="#table-2" class="selfRef">Table 2</a>:
 <a href="#name-certificates" class="selfRef">Certificates</a>
             </caption>
 <thead>
@@ -3000,7 +2967,7 @@ TRC
                   <path d="M 48.892578 514.335938 L 48.892578 513.412109 L 55.729980 513.412109 L 55.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 55.892578 514.335938 L 55.892578 513.412109 L 62.729980 513.412109 L 62.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 62.892578 514.335938 L 62.892578 513.412109 L 69.729980 513.412109 L 69.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
-                  <path d="M 73.738281 514.335938 L 73.738281 520.319336 L 72.878906 520.319336 L 72.878906 514.335938 L 69.892578 514.335938 L 69.892578 513.412109 L 72.878906 513.412109 L 72.878906 506.300781 L 73.738281 506.300781 L 73.738281 513.412109 L 76.729980 513.412109 L 76.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
+                  <path d="M 72.878906 520.319336 L 72.878906 506.300781 L 73.738281 506.300781 L 73.738281 520.319336 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 76.892578 514.335938 L 76.892578 513.412109 L 83.729980 513.412109 L 83.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 83.892578 514.335938 L 83.892578 513.412109 L 90.729980 513.412109 L 90.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 90.892578 514.335938 L 90.892578 513.412109 L 97.729980 513.412109 L 97.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
@@ -3024,7 +2991,7 @@ TRC
                   <path d="M 216.892578 514.335938 L 216.892578 513.412109 L 223.729980 513.412109 L 223.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 223.892578 514.335938 L 223.892578 513.412109 L 230.729980 513.412109 L 230.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 230.892578 514.335938 L 230.892578 513.412109 L 237.729980 513.412109 L 237.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
-                  <path d="M 241.738281 514.335938 L 241.738281 520.319336 L 240.878906 520.319336 L 240.878906 514.335938 L 237.892578 514.335938 L 237.892578 513.412109 L 240.878906 513.412109 L 240.878906 506.300781 L 241.738281 506.300781 L 241.738281 513.412109 L 244.729980 513.412109 L 244.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
+                  <path d="M 240.878906 520.319336 L 240.878906 506.300781 L 241.738281 506.300781 L 241.738281 520.319336 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 244.892578 514.335938 L 244.892578 513.412109 L 251.729980 513.412109 L 251.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 251.892578 514.335938 L 251.892578 513.412109 L 258.729980 513.412109 L 258.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
                   <path d="M 258.892578 514.335938 L 258.892578 513.412109 L 265.729980 513.412109 L 265.729980 514.335938 Z " fill="black" fill-opacity="1.000000"></path>
@@ -4301,7 +4268,7 @@ TRC
 <p id="section-2.2.1.2.1-2">where <code>id-scion</code> specifies the root SCION object identifier (OID).<a href="#section-2.2.1.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.2.1.2.1-3"><strong>Note</strong>: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
                 <code>id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}</code><a href="#section-2.2.1.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.2.1.2.1-4">The string representation of the <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> follow the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation". The canonical string formatting of AS numbers in the AS range (0, 2<sup>32-1</sup>) <span class="bcp14">MUST</span> use the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, <span class="bcp14">MUST</span> use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: <code>1:0:0</code> to <code>ffff:ffff:ffff</code>.<a href="#section-2.2.1.2.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.2.1.2.1-4">The string representation of the ISD-AS number attribute <span class="bcp14">MUST</span> follow the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.<a href="#section-2.2.1.2.1-4" class="pilcrow">¶</a></p>
 <p id="section-2.2.1.2.1-5">The <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> be present exactly once in the distinguished name of the certificate issuer or owner, specified in the <code>issuer</code> or <code>subject</code> field respectively. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates whose <code>issuer</code> and <code>subject</code> fields do not include the ISD-AS number at all, or include it more than once.<a href="#section-2.2.1.2.1-5" class="pilcrow">¶</a></p>
 <p id="section-2.2.1.2.1-6">CA certificates <span class="bcp14">MUST</span> include an ISD-AS number in their distinguished name so the control plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.<a href="#section-2.2.1.2.1-6" class="pilcrow">¶</a></p>
 <p id="section-2.2.1.2.1-7"><strong>Note</strong>: Voting certificates are not required to include the <code>ISD-AS number</code> attribute in their distinguished name.<a href="#section-2.2.1.2.1-7" class="pilcrow">¶</a></p>
@@ -4411,9 +4378,9 @@ TRC
 <p id="section-2.2.2.3-6"><strong>Note</strong>: If a certificate extension is marked "critical", the public key in the certificate <span class="bcp14">SHOULD</span> only be used for the purpose set in the critical extension.<a href="#section-2.2.2.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.2.2.3-7">Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the <code>keyUsage</code> extension differently. The next table shows the specifications per certificate type.<a href="#section-2.2.2.3-7" class="pilcrow">¶</a></p>
 <span id="name-keyusage-extension-specific"></span><div id="_table-4">
-<table class="center" id="table-4">
+<table class="center" id="table-3">
               <caption>
-<a href="#table-4" class="selfRef">Table 4</a>:
+<a href="#table-3" class="selfRef">Table 3</a>:
 <a href="#name-keyusage-extension-specific" class="selfRef">keyUsage extension - Specifications per certificate type</a>
               </caption>
 <thead>
@@ -4499,9 +4466,9 @@ TRC
 <p id="section-2.2.2.4-4">Additionally, the Extended Key Usage extension sequence <span class="bcp14">MAY</span> include the SCION-specific attributes <code>id-kp-root</code>, <code>id-kp-regular</code>, and <code>id-kp-sensitive</code>. These attributes are used in the TRC setup, to distinguish root certificates, regular voting certificates, and sensitive voting certificates from each other. For more information, see <a href="#cert" class="auto internal xref">Section 3.1.2.2.11</a>.<a href="#section-2.2.2.4-4" class="pilcrow">¶</a></p>
 <p id="section-2.2.2.4-5">The specifications of the <code>extKeyUsage</code> extension differ per SCION Control Plane PKI certificate type. The next table provides an overview of the specifications per certificate type.<a href="#section-2.2.2.4-5" class="pilcrow">¶</a></p>
 <span id="name-extkeyusage-extension-speci"></span><div id="_table-5">
-<table class="center" id="table-5">
+<table class="center" id="table-4">
               <caption>
-<a href="#table-5" class="selfRef">Table 5</a>:
+<a href="#table-4" class="selfRef">Table 4</a>:
 <a href="#name-extkeyusage-extension-speci" class="selfRef">extKeyUsage extension - Specifications per certificate type</a>
               </caption>
 <thead>
@@ -4627,9 +4594,9 @@ TRC
             </ul>
 <p id="section-2.2.2.5-4">The settings of the <code>basicConstraints</code> extension differ for each SCION Control Plane PKI certificate type. The next table shows the specifications per certificate type.<a href="#section-2.2.2.5-4" class="pilcrow">¶</a></p>
 <span id="name-basicconstraints-extension-"></span><div id="_table-6">
-<table class="center" id="table-6">
+<table class="center" id="table-5">
               <caption>
-<a href="#table-6" class="selfRef">Table 6</a>:
+<a href="#table-5" class="selfRef">Table 5</a>:
 <a href="#name-basicconstraints-extension-" class="selfRef">basicConstraints extension - Specifications per certificate type</a>
               </caption>
 <thead>
@@ -4840,11 +4807,11 @@ TRC
 <p id="section-3.1.2.2.2-6">A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and <span class="bcp14">MUST</span> have a serial number of 1 and a base number of 1. With every TRC update, the serial number <span class="bcp14">MUST</span> be incremented by one. This facilitates uniquely identifying the predecessor and successor TRC in an update chain.<a href="#section-3.1.2.2.2-6" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2.2-7">If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain <span class="bcp14">SHOULD</span> be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.<a href="#section-3.1.2.2.2-7" class="pilcrow">¶</a></p>
 <p id="section-3.1.2.2.2-8"><strong>Example</strong><br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for <em>ISD 74</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.1.2.2.2-8" class="pilcrow">¶</a></p>
+The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for <em>ISD 15</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.1.2.2.2-8" class="pilcrow">¶</a></p>
 <span id="name-id-of-trcs-in-trc-update-ch"></span><div id="_table-7">
-<table class="center" id="table-7">
+<table class="center" id="table-6">
                 <caption>
-<a href="#table-7" class="selfRef">Table 7</a>:
+<a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-id-of-trcs-in-trc-update-ch" class="selfRef">ID of TRCs in TRC update chain</a>
                 </caption>
 <thead>
@@ -4857,37 +4824,37 @@ The following simple example illustrates how to specify the ID of the TRCs in an
                 <tbody>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Initial</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-B01-S01</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S01</td>
                     <td class="text-left" rowspan="1" colspan="1"> </td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-B01-S02</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S02</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-B01-S03</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S03</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Sensitive</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-B01-S04</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S04</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Trust reset</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-<strong>B05</strong>-S05</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-<strong>B05</strong>-S05</td>
                     <td class="text-left" rowspan="1" colspan="1">A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-B05-S06</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B05-S06</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
                     <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                    <td class="text-left" rowspan="1" colspan="1">ISD74-B05-S07</td>
+                    <td class="text-left" rowspan="1" colspan="1">ISD15-B05-S07</td>
                     <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                   </tr>
                   <tr>
@@ -5304,9 +5271,9 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <p id="section-3.1.5.2-1">The following table gives an overview of the types of TRC update as well as the rules that must apply in regard to the updated TRC's payload information.<a href="#section-3.1.5.2-1" class="pilcrow">¶</a></p>
 <p id="section-3.1.5.2-2">The sections that follow provide more detailed descriptions of each rule.<a href="#section-3.1.5.2-2" class="pilcrow">¶</a></p>
 <span id="name-overview-of-the-update-type"></span><div id="_table-8">
-<table class="center" id="table-8">
+<table class="center" id="table-7">
               <caption>
-<a href="#table-8" class="selfRef">Table 8</a>:
+<a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-overview-of-the-update-type" class="selfRef">Overview of the update types and corresponding rules</a>
               </caption>
 <thead>
@@ -5743,7 +5710,7 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-6-1">This document has no IANA actions.<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">The SCION AS and ISD number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see <span>[<a href="#ISD-AS-assignments" class="cite xref">ISD-AS-assignments</a>]</span>). This task is currently being transitioned from Anapaya to the SCION Association.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-2">The ISD and SCION AS number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see <span>[<a href="#ISD-AS-assignments-Anapaya" class="cite xref">ISD-AS-assignments-Anapaya</a>]</span>). This task is being transitioned from Anapaya to the SCION Association (see <span>[<a href="#ISD-AS-assignments" class="cite xref">ISD-AS-assignments</a>]</span>).<a href="#section-6-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="sec-combined-references">
@@ -5759,11 +5726,11 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <dl class="references">
 <dt id="I-D.dekater-scion-controlplane">[I-D.dekater-scion-controlplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-08</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-08">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-08</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-09</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-09">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-09</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.dekater-scion-dataplane">[I-D.dekater-scion-dataplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, <span class="refAuthor">Hugly, J.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-05</span>, <time datetime="2025-03-03" class="refDate">3 March 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-05">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-05</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, <span class="refAuthor">Hugly, J.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Data Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-dataplane-06</span>, <time datetime="2025-07-07" class="refDate">7 July 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-06">https://datatracker.ietf.org/doc/html/draft-dekater-scion-dataplane-06</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
@@ -5832,7 +5799,11 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <dd class="break"></dd>
 <dt id="ISD-AS-assignments">[ISD-AS-assignments]</dt>
         <dd>
-<span class="refTitle">"SCION ISD and AS Assignments"</span>, <time datetime="2024" class="refDate">2024</time>, <span>&lt;<a href="https://docs.anapaya.net/en/latest/resources/isd-as-assignments/">https://docs.anapaya.net/en/latest/resources/isd-as-assignments/</a>&gt;</span>. </dd>
+<span class="refTitle">"SCION Registry"</span>, <time datetime="2025" class="refDate">2025</time>, <span>&lt;<a href="http://scion.org/registry/">http://scion.org/registry/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="ISD-AS-assignments-Anapaya">[ISD-AS-assignments-Anapaya]</dt>
+        <dd>
+<span class="refTitle">"SCION ISD and AS Assignments"</span>, <time datetime="2025" class="refDate">2025</time>, <span>&lt;<a href="https://docs.anapaya.net/en/latest/resources/isd-as-assignments/">https://docs.anapaya.net/en/latest/resources/isd-as-assignments/</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5398">[RFC5398]</dt>
         <dd>
@@ -6000,85 +5971,103 @@ As the corresponding PKI messaging thus only occurs when the control plane is al
 <a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
 <p id="appendix-D-1">Changes made to drafts since ISE submission. This section is to be removed before publication.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
-<div id="draft-dekater-scion-pki-09">
+<div id="draft-dekater-scion-pki-10">
 <section id="appendix-D.1">
+        <h3 id="name-draft-dekater-scion-pki-10">
+<a href="#name-draft-dekater-scion-pki-10" class="section-name selfRef">draft-dekater-scion-pki-10</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-D.1-1.1">
+            <p id="appendix-D.1-1.1.1">removed ISD assignment table and replaced to reference in control-plane draft<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.2">
+            <p id="appendix-D.1-1.2.1">Updated number assignment reference<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.3">
+            <p id="appendix-D.1-1.3.1">Figures: add SVG version<a href="#appendix-D.1-1.3.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-dekater-scion-pki-09">
+<section id="appendix-D.2">
         <h3 id="name-draft-dekater-scion-pki-09">
 <a href="#name-draft-dekater-scion-pki-09" class="section-name selfRef">draft-dekater-scion-pki-09</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.1-1.1">
-            <p id="appendix-D.1-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.2-1.1">
+            <p id="appendix-D.2-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-D.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.2">
-            <p id="appendix-D.1-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.2">
+            <p id="appendix-D.2-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-D.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.3">
-            <p id="appendix-D.1-1.3.1">Mention Active Discovery as a TRC discovery mechanism<a href="#appendix-D.1-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.3">
+            <p id="appendix-D.2-1.3.1">Mention Active Discovery as a TRC discovery mechanism<a href="#appendix-D.2-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.4">
-            <p id="appendix-D.1-1.4.1">Abstract: mention goal and that document is not an Internet Standard<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.4">
+            <p id="appendix-D.2-1.4.1">Abstract: mention goal and that document is not an Internet Standard<a href="#appendix-D.2-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-08">
-<section id="appendix-D.2">
+<section id="appendix-D.3">
         <h3 id="name-draft-dekater-scion-pki-08">
 <a href="#name-draft-dekater-scion-pki-08" class="section-name selfRef">draft-dekater-scion-pki-08</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.2-1.1">
-            <p id="appendix-D.2-1.1.1">Fix some oversized diagrams<a href="#appendix-D.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.3-1.1">
+            <p id="appendix-D.3-1.1.1">Fix some oversized diagrams<a href="#appendix-D.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.2">
-            <p id="appendix-D.2-1.2.1">Introduction text rewording<a href="#appendix-D.2-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-1.2">
+            <p id="appendix-D.3-1.2.1">Introduction text rewording<a href="#appendix-D.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-07">
-<section id="appendix-D.3">
+<section id="appendix-D.4">
         <h3 id="name-draft-dekater-scion-pki-07">
 <a href="#name-draft-dekater-scion-pki-07" class="section-name selfRef">draft-dekater-scion-pki-07</a>
         </h3>
-<p id="appendix-D.3-1">Minor changes:<a href="#appendix-D.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.4-1">Minor changes:<a href="#appendix-D.4-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.3-2.1">
-            <p id="appendix-D.3-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.3-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.4-2.1">
+            <p id="appendix-D.4-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.4-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-2.2">
-            <p id="appendix-D.3-2.2.1">Added this changelog<a href="#appendix-D.3-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-2.2">
+            <p id="appendix-D.4-2.2.1">Added this changelog<a href="#appendix-D.4-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-2.3">
-            <p id="appendix-D.3-2.3.1">General text editing<a href="#appendix-D.3-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-2.3">
+            <p id="appendix-D.4-2.3.1">General text editing<a href="#appendix-D.4-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-2.4">
-            <p id="appendix-D.3-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.3-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-2.4">
+            <p id="appendix-D.4-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.4-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-06">
-<section id="appendix-D.4">
+<section id="appendix-D.5">
         <h3 id="name-draft-dekater-scion-pki-06">
 <a href="#name-draft-dekater-scion-pki-06" class="section-name selfRef">draft-dekater-scion-pki-06</a>
         </h3>
-<p id="appendix-D.4-1">Major changes:<a href="#appendix-D.4-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.5-1">Major changes:<a href="#appendix-D.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.4-2.1">
-            <p id="appendix-D.4-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.4-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.5-2.1">
+            <p id="appendix-D.5-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-D.4-3">Minor changes:<a href="#appendix-D.4-3" class="pilcrow">¶</a></p>
+<p id="appendix-D.5-3">Minor changes:<a href="#appendix-D.5-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.4-4.1">
-            <p id="appendix-D.4-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.4-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.5-4.1">
+            <p id="appendix-D.5-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.5-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.4-4.2">
-            <p id="appendix-D.4-4.2.1">Removed forward references.<a href="#appendix-D.4-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.5-4.2">
+            <p id="appendix-D.5-4.2.1">Removed forward references.<a href="#appendix-D.5-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.4-4.3">
-            <p id="appendix-D.4-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.4-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.5-4.3">
+            <p id="appendix-D.5-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.5-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
