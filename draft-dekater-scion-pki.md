@@ -165,11 +165,11 @@ SCION has been developed with the following goals:
 
 SCION relies on three main components:
 
-*PKI* - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called *Isolation Domains (ISDs)*. All ASes in an ISD agree on a set of trust roots called the *Trust Root Configuration (TRC)* which is a collection of signed root certificates in X.509 v3 format {{RFC5280}}. The ISD is governed by a set of *core ASes* which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure which the SCION Control Plane relies upon for the authentication of messages that is used for the SCION Control Plane.
+*PKI* - To achieve scalability and trust, SCION organizes existing ASes into logical groups of independent routing planes called *Isolation Domains (ISDs)*. All ASes in an ISD agree on a set of trust roots called the *Trust Root Configuration (TRC)* which is a collection of signed root certificates in X.509 v3 format {{RFC5280}}. The ISD is governed by a set of *core ASes* which typically manage the trust roots and provide connectivity to other ISDs. This is the basis of the public key infrastructure used for the authentication of messages used by the SCION Control Plane.
 
-*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs. See {{I-D.dekater-scion-controlplane}}
+*Control Plane* - performs inter-domain routing by discovering and securely disseminating path information between ASes. The core ASes use Path-segment Construction Beacons (PCBs) to explore intra-ISD paths, or to explore paths across different ISDs.
 
-*Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS. See {{I-D.dekater-scion-dataplane}}
+*Data Plane* - carries out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. A SCION border router reuses existing intra-domain infrastructure to communicate to other SCION routers or SCION endpoints within its AS.
 
 This document describes the SCION PKI component used by the Control Plane. It should be read in conjunction with the other components {{I-D.dekater-scion-controlplane}} and {{I-D.dekater-scion-dataplane}}.
 
@@ -600,7 +600,7 @@ where `id-scion` specifies the root SCION object identifier (OID).
 **Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
-The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation". The canonical string formatting of AS numbers in the AS range (0, 2<sup>32-1</sup>) MUST use the decimal form. Larger AS numbers, i.e., from 2<sup>32</sup> to 2<sup>48-1</sup>, MUST use a 16-bit, colon-separated, lower-case, hex encoding with leading zeros omitted: `1:0:0` to `ffff:ffff:ffff`.
+The string representation of the ISD-AS number attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
 
 The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
@@ -860,17 +860,17 @@ A TRC where the base number is equal to the serial number is a base TRC. The ini
 If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain SHOULD be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.
 
 **Example**<br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 74*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
+The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
 
 | Update      | TRC ID              | Remarks                                          |
 |-------------+---------------------+--------------------------------------------------|
-| Initial     | ISD74-B01-S01       |                                                  |
-| Regular     | ISD74-B01-S02       | Only the serial number is incremented.           |
-| Regular     | ISD74-B01-S03       | Only the serial number is incremented.           |
-| Sensitive   | ISD74-B01-S04       | Only the serial number is incremented.           |
-| Trust reset | ISD74-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
-| Regular     | ISD74-B05-S06       | Only the serial number is incremented.           |
-| Regular     | ISD74-B05-S07       | Only the serial number is incremented.           |
+| Initial     | ISD15-B01-S01       |                                                  |
+| Regular     | ISD15-B01-S02       | Only the serial number is incremented.           |
+| Regular     | ISD15-B01-S03       | Only the serial number is incremented.           |
+| Sensitive   | ISD15-B01-S04       | Only the serial number is incremented.           |
+| Trust reset | ISD15-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
+| Regular     | ISD15-B05-S06       | Only the serial number is incremented.           |
+| Regular     | ISD15-B05-S07       | Only the serial number is incremented.           |
 | And so on   |                     |                                                  |
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
@@ -1505,6 +1505,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 - removed ISD assignment table and replaced to reference in control-plane draft
 - Updated number assignment reference
+- Figures: add SVG version
 
 ## draft-dekater-scion-pki-09
 {:numbered="false"}
