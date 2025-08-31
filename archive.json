@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-03T00:29:23.915563+00:00",
+  "timestamp": "2025-08-31T00:25:23.134038+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -34,7 +34,7 @@
       "color": "0E8A16"
     },
     {
-      "name": "design",
+      "name": "needs-discussion",
       "description": "",
       "color": "1d76db"
     },
@@ -42,6 +42,11 @@
       "name": "editorial",
       "description": "",
       "color": "9855E2"
+    },
+    {
+      "name": "out-of-scope",
+      "description": "",
+      "color": "c5def5"
     }
   ],
   "issues": [
@@ -115,18 +120,16 @@
       "title": "ASN.1 Module for new types",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/28",
       "state": "OPEN",
-      "author": "jiceatscion",
+      "author": "jiceathome",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [
-        "jiceatscion"
-      ],
+      "assignees": [],
       "labels": [
         "enhancement",
         "Prio 3"
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2025-03-03T12:49:19Z",
+      "updatedAt": "2025-08-28T09:06:22Z",
       "closedAt": null,
       "comments": [
         {
@@ -501,13 +504,16 @@
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
-      "assignees": [],
+      "assignees": [
+        "nicorusti",
+        "knmeynell"
+      ],
       "labels": [
         "question"
       ],
       "body": "- [ ] Clarify if we need to mention the impact of TOFU in the security considerations of the PKI (or the CP), in relation to the dissemination of PKI material\n\n\nFrom the CP draft review by Alvaro\n```\n654 1.6.  Bootstrapping ability\n...\n687   *Note:* For a detailed description of a TRC and more information on\n688   the availability of certificates and TRCs, see the SCION Control-\n689   Plane PKI [I-D.dekater-scion-pki].\n```\n> I haven't read I-D.dekater-scion-pki in detail...but given that the TRC\nis ISD-specific a new node in an ISD will, by definition, not have it when\nit first boots up.  I assume the attack vectors, etc. are detailed in\nI-D.dekater-scion-pki.\n",
       "createdAt": "2025-06-12T08:49:35Z",
-      "updatedAt": "2025-06-12T12:05:14Z",
+      "updatedAt": "2025-08-28T09:10:02Z",
       "closedAt": null,
       "comments": [
         {
@@ -522,14 +528,14 @@
     {
       "number": 64,
       "id": "I_kwDOH386tM683A_x",
-      "title": "Clarify automated certificate renewal and consider moving gRPC trust material definitions from CP to PKI draft ",
+      "title": "Clarify automated certificate renewal and consider moving protobuf trust material definitions from CP to PKI draft ",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/64",
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
-        "romshark",
-        "nicorusti"
+        "nicorusti",
+        "knmeynell"
       ],
       "labels": [
         "question",
@@ -537,7 +543,7 @@
       ],
       "body": "Doubt triggered by [4791#](https://github.com/scionproto/scion/pull/4791#). \nThe PKI draft currently says: \n> Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure.\n\nHowever, in the CP draft there is no description of any interfaces for certificate renewal. We should either change wording, or clarify automated renewal.\n\n- [ ] Are there any missing RPC definitions?\n- [ ] Are there any other missing interfaces that need to be specified?\n",
       "createdAt": "2025-06-23T15:05:35Z",
-      "updatedAt": "2025-06-25T13:24:35Z",
+      "updatedAt": "2025-08-28T09:49:57Z",
       "closedAt": null,
       "comments": [
         {
@@ -557,9 +563,9 @@
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "I think we could make  the following changes: \n- [ ]  add renewal [protobuf messages](https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto) to section `4.3.  Creating a New Control Plane AS Certificate`.\n   - [ ]  rename the section to \"Creation and renewal of Control Plane AS Certificates\". Mention certificates MAY also be renewed out of band.\n   - [ ] Explain how a CSR is authenticated in case of renewal\n- [ ] Move \"Trust Material representation\" to the PKI draft (Practically, changes done in https://github.com/scionassociation/scion-cp_I-D/pull/99/files). A good place could be adding a section  4.1. , before  `Deploying a TRC`]\n   - [ ] Do we need to specify how addressing works for these certificate requests? \n   - [ ] Add cross-reference in 3.1.4 where it says ` the relying party MUST query the originator of the message for the missing material`\n   - [ ] Update reference `Control Service gRPC API - Trust Material` in 4.1.2.1.  TRC Update Discovery\n   - [ ] Update reference in CP [2.3.1. ](https://www.ietf.org/archive/id/draft-dekater-scion-controlplane-08.html#section-2.3.1)[Reception of PCBs](https://www.ietf.org/archive/id/draft-dekater-scion-controlplane-08.html#name-reception-of-pcbs)  from figure to explicitly mentioning `TRCRequest ` to avoid this confusion by the reader (from Alvaro)\n      > [] If the Control Service doesn't have the relevant TRC(s) and certificate(s), are the PCBs considered invalid?  Or is the intent that when the information is received, the validity can be checked?  IOW, should the PCB be discarded (and then wait for the periodic update)...OR...should it be stored until the TRC/certificate information is received?\n   - [ ]  Update any other references\n",
+          "body": "I think we could make  the following changes: \n- [ ]  add renewal [protobuf messages](https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto) to section `4.3.  Creating a New Control Plane AS Certificate`.\n   - [ ]  rename the section to \"Creation and renewal of Control Plane AS Certificates\". Mention certificates MAY also be renewed out of band.\n   - [ ] Explain how a CSR is authenticated in case of renewal\n- [ ] Move `Figure 30: Control Service gRPC API` to the PKI draft (Practically, changes done in https://github.com/scionassociation/scion-cp_I-D/pull/99/files). A good place could be adding a section  4.1. , before  `Deploying a TRC`]\n   - [ ] Do we need to specify how addressing works for these certificate requests? \n   - [ ] Add cross-reference in 3.1.4 where it says ` the relying party MUST query the originator of the message for the missing material`\n   - [ ] Update reference `Control Service gRPC API - Trust Material` in 4.1.2.1.  TRC Update Discovery\n   - [ ] Update reference in CP [2.3.1. ](https://www.ietf.org/archive/id/draft-dekater-scion-controlplane-08.html#section-2.3.1)[Reception of PCBs](https://www.ietf.org/archive/id/draft-dekater-scion-controlplane-08.html#name-reception-of-pcbs)  from figure to explicitly mentioning `TRCRequest ` to avoid this confusion by the reader (from Alvaro)\n      > [] If the Control Service doesn't have the relevant TRC(s) and certificate(s), are the PCBs considered invalid?  Or is the intent that when the information is received, the validity can be checked?  IOW, should the PCB be discarded (and then wait for the periodic update)...OR...should it be stored until the TRC/certificate information is received?\n   - [ ]  Update any other references\n",
           "createdAt": "2025-06-24T14:55:36Z",
-          "updatedAt": "2025-06-25T13:24:35Z"
+          "updatedAt": "2025-08-28T09:49:57Z"
         },
         {
           "author": "nicorusti",
@@ -567,6 +573,13 @@
           "body": "> RPC is defined here https://github.com/scionproto/scion/blob/master/proto/control_plane/v1/renewal.proto\n\n@oncilla what kind of addressing do these RPCs use? Do they use service addressing? Otherwise, how do they determine the address of the CA where to send the request? I guess we would need to clarify this in the draft too",
           "createdAt": "2025-06-24T15:21:20Z",
           "updatedAt": "2025-06-24T15:21:20Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Observation from Ramon Keller related to this issue (libc):\n\nSee \"Section 4.3\"\n\nAccording to the current definition, only the AS certificate is returned by the CA. However, given that the Control Place CA certificate is renewed approximately every 7\u20138 days, a new Control Place CA certificate can be expected with roughly every third AS certificate renewal. The draft does not specify how the updated CA certificate is to be disseminated, leaving this behavior to the implementation.\n\nReturning the Control Place CA certificate together with the CP AS certificate is one solution. The other option would be to provide and support the AIA extension in the certificates, but AIA is certainly not the most efficient solution.\n\nThis is already described in the CP draft in  Figure 30: Control Service gRPC API - Trust Material representation.",
+          "createdAt": "2025-08-28T09:49:21Z",
+          "updatedAt": "2025-08-28T09:49:21Z"
         }
       ]
     },
@@ -585,9 +598,24 @@
       ],
       "body": "DO we need to mention something about PKI scalability?\n\n#### Feedback Alvaro on CP: \n```\n...\n2060\t3.3.1.  Intra-ISD Beaconing\n...\n2100\t   If the same AS has 1000 child links, the propagation of the beacons\n2101\t   will require signing one new AS entry for each of the propagated PCBs\n2102\t   for each link (at most 50 per link), i.e. at most 50000 signatures\n2103\t   per propagation event.  The total bandwidth for the propagation of\n2104\t   these PCBs for all 1000 child links would, be roughly around 25 MB/s\n2105\t   which is manageable with even modest consumer hardware.\n```\n[] Yes, the bw is manageable.  The signature verification may be the bottleneck (considering similar behavior in BGPSec), is that correct?",
       "createdAt": "2025-06-26T15:38:43Z",
-      "updatedAt": "2025-06-26T15:38:43Z",
+      "updatedAt": "2025-08-28T09:33:28Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1 Trust Model\"\n\nEach ISD has to implement more than one CP-PKI to adhere to the goal of having no single point of failure in the control plane. Smaller ISDs therefore have to bear high operational costs if they have to operate several PKIs on their own.\n\nIn order to reduce costs, it must be possible and explicitly desired that trust centres that operate CP-PKIs can offer their services to multiple ISDs. (Multi-tenant wise.)",
+          "createdAt": "2025-08-28T09:31:33Z",
+          "updatedAt": "2025-08-28T09:31:33Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "TODO: add a sentence like \"signing PCBs might become a bottleneck from a computation point of view, therefore it is recommended to deploy multiple PKI instances.\". This could  CP draft in `3.3.1.  Intra-ISD Beaconing` or maybe the PKI draft.",
+          "createdAt": "2025-08-28T09:33:28Z",
+          "updatedAt": "2025-08-28T09:33:28Z"
+        }
+      ]
     },
     {
       "number": 67,
@@ -719,11 +747,15 @@
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
-      "labels": [],
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [
+        "needs-discussion"
+      ],
       "body": "Ramon Keller (libC) observation:\n\nOnly the following three SECP curves are allowed: secp256r1, secp384r1, secp521r1.\n\nThe exclusion of other standardized and widely deployed elliptic curves has not been substantiated in the current document. Even if the NIST curves are significantly more efficient, it is conceivable that their origin could be an obstacle for certain SCION networks and that other curves would be preferred. ",
       "createdAt": "2025-08-01T16:03:43Z",
-      "updatedAt": "2025-08-01T16:03:43Z",
+      "updatedAt": "2025-08-28T09:56:32Z",
       "closedAt": null,
       "comments": []
     },
@@ -735,59 +767,67 @@
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "knmeynell"
+      ],
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.5 Overview of Certificates, Keys and Roles\"\n\nSelf-Signed certificates just add some identity information to a public key for easier identification. They do not increase security unless their public key is verified explicitly upon each use because an attacker can easily falsify any self-signed certificate with every detail of the original, including the signature applied with the fake private key. In this section, a cross reference to the TRC Ceremony could be added, where the public keys of the voting certificates must explicitly be verified. ",
       "createdAt": "2025-08-01T16:06:49Z",
-      "updatedAt": "2025-08-01T16:06:49Z",
+      "updatedAt": "2025-08-28T09:38:28Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 78,
       "id": "I_kwDOH386tM7DxFTE",
-      "title": "Certificate Structure",
+      "title": "SCION Certificate Specification deviates from permitted data types for individual RDN attributes",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/78",
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "romshark"
+      ],
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"2.2.1. Basic Fields: SCION-Specific Constraints and Conditions\"\n\nIssuer and Subject DN - The SCION Certificate Specification Standard is based on [RFC5280] and [X.509], but deviates from the permitted data types for individual RDN attributes. While the general X.509 standard, as described in ITU-T X.520, prescribes the data type PrintableString for countryName and serialNumber, SCION generally requires UTF-8 coding. Such contradictions to the standard can lead to complications in various contexts, such as directory services and their schemas.\n\nValidity - The draft states that GeneralizedTime is not permitted and must be rejected, allowing only UTCTime. However, this appears to conflict with RFC 5280, which mandates the use of GeneralizedTime for dates on or after the year 2050.\n\n\n",
       "createdAt": "2025-08-01T16:08:06Z",
-      "updatedAt": "2025-08-01T16:08:06Z",
+      "updatedAt": "2025-08-28T12:15:20Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 79,
       "id": "I_kwDOH386tM7DxGQX",
-      "title": "Certificate Structure",
+      "title": "Signing TRCs using EKU does not align with semantics of timestamping",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/79",
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "romshark"
+      ],
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"2.2.2 Extensions\"\n\nThe Root CA certificates must contain the timestamping OID in its extended key usage extension but must not set the digitalSignature flag in the key usage extension. It is understood that the root CA certificate must include an additional key usage beyond keyCertSign to support TRC signing, but requirement to include the Extended Key Usage (EKU) OID for timestamping raises questions.\n\nAccording to RFC 5280, the EKU extension is intended for End Entity certificates, and the act of signing TRCs does not align with the original semantics of timestamping. It is unclear why this functionality is not based on the digitalSignature key usage alone.",
       "createdAt": "2025-08-01T16:09:25Z",
-      "updatedAt": "2025-08-01T16:09:25Z",
+      "updatedAt": "2025-08-28T12:17:07Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 80,
       "id": "I_kwDOH386tM7DxOsB",
-      "title": "SCION-Specific Rules",
+      "title": "Mandating that certificates be retrieved from TRC payload limits interoperability with existing CMS libraries",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/80",
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "needs-discussion"
+      ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1.3.1\"\n\nRequiring the Certificates field in the CMS SignedData structure to be empty, and instead mandating that certificates be retrieved from the Certificates field of the TRC payload, significantly limits interoperability with existing CMS libraries. Most CMS implementations expect the signing certificate to be present within the Certificates field of the SignedData structure. As a result, signature verification logic would need to be re-implemented, or the parsed CMS structure would need to be modified by injecting the certificates from the TRC payload into the Certificates field\u2014despite this field not being part of the signed data\u2014solely to satisfy library expectations.",
       "createdAt": "2025-08-01T16:19:40Z",
-      "updatedAt": "2025-08-01T16:19:40Z",
+      "updatedAt": "2025-08-28T12:46:31Z",
       "closedAt": null,
       "comments": []
     },
@@ -796,16 +836,24 @@
       "id": "I_kwDOH386tM7DxQBU",
       "title": "Creation of a new AS certificate",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/81",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 4.3\"\n\nAccording to the current definition, only the AS certificate is returned by the CA. However, given that the Control Place CA certificate is renewed approximately every 7\u20138 days, a new Control Place CA certificate can be expected with roughly every third AS certificate renewal. The draft does not specify how the updated CA certificate is to be disseminated, leaving this behavior to the implementation.\n\nReturning the Control Place CA certificate together with the CP AS certificate is one solution. The other option would be to provide and support the AIA extension in the certificates, but AIA is certainly not the most efficient solution.\n",
       "createdAt": "2025-08-01T16:21:29Z",
-      "updatedAt": "2025-08-01T16:21:29Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-08-28T09:48:41Z",
+      "closedAt": "2025-08-28T09:48:41Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "This is already described in the CP draft in ` Figure 30: Control Service gRPC API - Trust Material representation`. Moving this to the PKI draft is already being done in #64 ",
+          "createdAt": "2025-08-28T09:46:09Z",
+          "updatedAt": "2025-08-28T09:48:38Z"
+        }
+      ]
     },
     {
       "number": 82,
@@ -815,11 +863,13 @@
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
-      "assignees": [],
+      "assignees": [
+        "knmeynell"
+      ],
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1\"\n\nThe draft just refers to CMS RFC5652 - which is correct - but wouldn't it make sense to directly refer to CMS Signed Data (Section 5. ff)?",
       "createdAt": "2025-08-01T16:22:20Z",
-      "updatedAt": "2025-08-01T16:22:20Z",
+      "updatedAt": "2025-08-28T09:52:09Z",
       "closedAt": null,
       "comments": []
     },
@@ -832,10 +882,12 @@
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "needs-discussion"
+      ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1 Trust Model\"\n\nIf ISDs are free to federate with other ISDs / Trust communities, how can it be ensured there is no degradation in each link from one ISD to the other, so that in the end ISDs are linked to each other which would never directly mutually accept their trust bases.\n\nDoes it make sense to specify the Levels of Trust in a certain way in order to recognise such situations? That each ISD commits to a uniform trust level or certain implementation provisions and also declares this to other ISDs? This would ensure that approximately the same security level is implemented within a network of ISDs and that appropriate measures can be taken at transitions to other, lower levels. Do the mechanisms of the TRC policies already provide for this?",
       "createdAt": "2025-08-01T16:24:27Z",
-      "updatedAt": "2025-08-01T16:24:27Z",
+      "updatedAt": "2025-08-28T09:53:09Z",
       "closedAt": null,
       "comments": []
     },
@@ -844,16 +896,24 @@
       "id": "I_kwDOH386tM7DxSB2",
       "title": "Scalability and cost effectiveness",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/84",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1 Trust Model\"\n\nEach ISD has to implement more than one CP-PKI to adhere to the goal of having no single point of failure in the control plane. Smaller ISDs therefore have to bear high operational costs if they have to operate several PKIs on their own.\n\nIn order to reduce costs, it must be possible and explicitly desired that trust centres that operate CP-PKIs can offer their services to multiple ISDs. (Multi-tenant wise.)\n\n",
       "createdAt": "2025-08-01T16:25:12Z",
-      "updatedAt": "2025-08-01T16:25:12Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-08-28T09:31:46Z",
+      "closedAt": "2025-08-28T09:31:46Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Duplicate of #66 ",
+          "createdAt": "2025-08-28T09:31:46Z",
+          "updatedAt": "2025-08-28T09:31:46Z"
+        }
+      ]
     },
     {
       "number": 85,
@@ -864,26 +924,31 @@
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "needs-discussion"
+      ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.4.2\"\n\nCertificate revocation is described as unreliable and compensated for with the concept of short-lived certificates. Instead of withdrawing certificates that are no longer trustworthy, certificates that are still valid are reissued again and again.\n\nWith a certificate validity period of three days and a grace period of approx. 1.5 days, the entire stock of valid certificates is renewed every 1.5 days. This places extremely high demands on the reliability of a CP-PKI and therefore also a high load on the CP-PKI systems. Although no comparison to loads on streaming portals, this concept is certainly not energy-efficient.\n\nThis load increases linearly with the growth of ASes within an ISD, and it will probably be the large, general-purpose ISDs that are orientated towards a lower trust level and cannot afford the financial or human resources to operate a highly available CP-PKI. Could the criticality of CP-PKI become a disabler of SCION technology?\n\nSCION delegates authorization to the CP-PKI, but certificates should only be used to authenticate. Currently, whoever possesses an AS Certificate is enabled to communicate but this keeps the discussed attack window open.\n\nDoes SCION implement other mechanisms to exclude malicious participants? Something like a PCB-blocking, decided and issued by the core ASes as such an incident is reported to them? What are the consequences to leaf nodes attached to any blocked / not re-certified node in general?\n",
       "createdAt": "2025-08-01T16:27:29Z",
-      "updatedAt": "2025-08-01T16:27:29Z",
+      "updatedAt": "2025-08-28T09:53:59Z",
       "closedAt": null,
       "comments": []
     },
     {
       "number": 86,
       "id": "I_kwDOH386tM7DxUE8",
-      "title": "Control Plane Certificates",
+      "title": "CA certificates - evaluate use of link certificates",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/86",
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
-      "labels": [],
+      "labels": [
+        "needs-discussion",
+        "out-of-scope"
+      ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Sections 2.1.2, 2.1.3 & 2.1.4\"\n\nRoot Certificates (added to the TRC) are recommended to be valid for just one year only. This requires that a Root CA is replaced by its successor every year in a TRC ceremony. (Sensitive TRC update).\n\nWould it be conceivable to introduce the concept of link certificates to transfer the trust from one root CA to another in order to reduce the effort involved in sensitive TRC updates?\n\nConcept taken from ICAO Doc 9303 part12:\n\nA specific link certificate is signed by the Root CA key which is to be decommissioned. The public key contained within the link certificate is the one of the new root key. The link certificate technically looks like a certificate issued to a sub-CA, but it is used differently. It has a shorter lifetime and must not be used to sign any other certificates. It is solely used to transfer the trust from the old root key to the new key. The old key confirms the rise of the new one.\n\nThe current strategy to let the CA sign the new TRC with the old CA key also works, but it requires a TRC update. On the other hand, link certificates would not require a TRC update, but the clients would need to maintain the list of link certificates from the root in the TRC down to the current CA certificate which also introduces some complexity.\n",
       "createdAt": "2025-08-01T16:28:57Z",
-      "updatedAt": "2025-08-01T16:28:57Z",
+      "updatedAt": "2025-08-28T09:56:02Z",
       "closedAt": null,
       "comments": []
     },
