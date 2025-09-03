@@ -567,9 +567,7 @@ For security reasons, SCION uses a custom list of acceptable signature algorithm
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
-**Important:** SCION implementations MUST reject cryptographic algorithms not found in this list.
-
-The only accepted curves for ECDSA are:
+SCION implementations MUST include support for the following ECDSA curves:
 
 - NIST P-256 (NISTFIPS186-4, section D.1.2.3) (named `secp256r1` in {{RFC5480}})
 - NIST P-384 (NISTFIPS186-4, section D.1.2.4) (named `secp384r1` in {{RFC5480}})
@@ -582,9 +580,6 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-256, for a P-256 signing key
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
-
-**Important:** SCION implementations MUST include support for P-256, P-384, and P-521.
-
 
 #### `issuer` Field - Additional Information {#issuer}
 
