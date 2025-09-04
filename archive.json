@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-08-31T00:25:23.134038+00:00",
+  "timestamp": "2025-09-04T00:21:40.227879+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -755,16 +755,31 @@
       ],
       "body": "Ramon Keller (libC) observation:\n\nOnly the following three SECP curves are allowed: secp256r1, secp384r1, secp521r1.\n\nThe exclusion of other standardized and widely deployed elliptic curves has not been substantiated in the current document. Even if the NIST curves are significantly more efficient, it is conceivable that their origin could be an obstacle for certain SCION networks and that other curves would be preferred. ",
       "createdAt": "2025-08-01T16:03:43Z",
-      "updatedAt": "2025-08-28T09:56:32Z",
+      "updatedAt": "2025-09-03T12:15:26Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "TODO: \n- [ ] @romshark @katyatitkova how much effort would it be to add support for quantum-safe chiphers in scionproto (https://github.com/scionproto/scion/issues/4829)\n- Mentions other curves may be used \n- Drop requirement to support quantum-non safe ciphers (pending discussion)\n\n\n",
+          "createdAt": "2025-09-03T11:29:16Z",
+          "updatedAt": "2025-09-03T11:30:00Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The existing text already mentioned the possibility of adding other curves in future. I've therefore modified it to say only that the NIST curves must be supported, but leaving the possibility open for others to be added.",
+          "createdAt": "2025-09-03T12:15:26Z",
+          "updatedAt": "2025-09-03T12:15:26Z"
+        }
+      ]
     },
     {
       "number": 77,
       "id": "I_kwDOH386tM7DxEXe",
       "title": "Self-Signed Voting Certificates",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/77",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -773,8 +788,8 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.5 Overview of Certificates, Keys and Roles\"\n\nSelf-Signed certificates just add some identity information to a public key for easier identification. They do not increase security unless their public key is verified explicitly upon each use because an attacker can easily falsify any self-signed certificate with every detail of the original, including the signature applied with the fake private key. In this section, a cross reference to the TRC Ceremony could be added, where the public keys of the voting certificates must explicitly be verified. ",
       "createdAt": "2025-08-01T16:06:49Z",
-      "updatedAt": "2025-08-28T09:38:28Z",
-      "closedAt": null,
+      "updatedAt": "2025-09-03T12:30:02Z",
+      "closedAt": "2025-09-03T12:30:02Z",
       "comments": []
     },
     {
@@ -869,27 +884,44 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1\"\n\nThe draft just refers to CMS RFC5652 - which is correct - but wouldn't it make sense to directly refer to CMS Signed Data (Section 5. ff)?",
       "createdAt": "2025-08-01T16:22:20Z",
-      "updatedAt": "2025-08-28T09:52:09Z",
+      "updatedAt": "2025-09-03T12:41:28Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I've clarified the reference and also made the text more concise. ",
+          "createdAt": "2025-09-03T12:41:28Z",
+          "updatedAt": "2025-09-03T12:41:28Z"
+        }
+      ]
     },
     {
       "number": 83,
       "id": "I_kwDOH386tM7DxRn9",
-      "title": "Trust Agility",
+      "title": "Levels of Trust",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/83",
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [
-        "needs-discussion"
+        "needs-discussion",
+        "out-of-scope"
       ],
-      "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1 Trust Model\"\n\nIf ISDs are free to federate with other ISDs / Trust communities, how can it be ensured there is no degradation in each link from one ISD to the other, so that in the end ISDs are linked to each other which would never directly mutually accept their trust bases.\n\nDoes it make sense to specify the Levels of Trust in a certain way in order to recognise such situations? That each ISD commits to a uniform trust level or certain implementation provisions and also declares this to other ISDs? This would ensure that approximately the same security level is implemented within a network of ISDs and that appropriate measures can be taken at transitions to other, lower levels. Do the mechanisms of the TRC policies already provide for this?",
+      "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.3 Trust Model\"\n\nIf ISDs are free to federate with other ISDs / Trust communities, how can it be ensured there is no degradation in each link from one ISD to the other, so that in the end ISDs are linked to each other which would never directly mutually accept their trust bases.\n\nDoes it make sense to specify the Levels of Trust in a certain way in order to recognise such situations? That each ISD commits to a uniform trust level or certain implementation provisions and also declares this to other ISDs? This would ensure that approximately the same security level is implemented within a network of ISDs and that appropriate measures can be taken at transitions to other, lower levels. Do the mechanisms of the TRC policies already provide for this?",
       "createdAt": "2025-08-01T16:24:27Z",
-      "updatedAt": "2025-08-28T09:53:09Z",
+      "updatedAt": "2025-09-03T13:43:32Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Questions to be discussed: \n- Should the draft mention/recommend other blocking mechanisms?  \u000bExample: PCB-blocking at core ASes upon path registration\n\n- Were any mechanisms implemented/deployed?\n",
+          "createdAt": "2025-09-03T13:43:32Z",
+          "updatedAt": "2025-09-03T13:43:32Z"
+        }
+      ]
     },
     {
       "number": 84,
@@ -964,9 +996,17 @@
       "labels": [],
       "body": "Observations from Ramon Keller (libc):\n\n**AS Certificate creation:**\n\nInitial AS certificates are still described as to be submitted out of band. Is there any progress of the process in this respect since the SSFN implementation?\n\n**Short certificate lifetime:**\n\nThe SCION draft still recommends very short lifetimes for Root CA and Issuing CA certificates of 1 year or 11 days (!), respectively. Renewal in such short lifetimes will kill any operations team running certain commercial products. These products are sold in conjunction with HSM and much longer certificate lifetimes than those that were e.g. implemented for SSFN. Anybody wanting to implement the recommended lifetimes needs to look for a capable solution.\n\n**Control Plane AS Certificates:**\n\nThe recommended validity of 3 days is fair, but then the initialization processes must be stable and effective. Could SIX provide any experience based feedback on how much the end users relied on a longer duration for initial AS certificates when onboarding to SSFN?\n\n**Processes**\n\nThe draft talks a lot about the technical elements of a CP-PKI, but not much about processes the PKI operators have to implement. or the regulations.\n\n**Cost of Ownership**\n\nThe range extends from simple technical systems focussing on stable network communication at affordable costs to highly secure environments that place great value on reliable network communication in combination with a high level of data protection. Those with higher security requirements should be willing to bear the higher security costs through secure processes, but only those with technical requirements should be exempt from additional costs as far as possible.\n\n**High availability in CAs**\n\n1. Must the CAs of an ISD offer backup CA services to all the other PKIs in the ISD?\n2. What if a single PKI fails to operate?\n3. To cope with this single point of failure, it should be specified that the subscribers could quickly switch over to one of the other PKIs to be able to renew their certificates on time.\n4. How is the subscriber database synchronized among the different backup CAs, as without a specification the SCION world will face incompatible implementation-specific approaches.",
       "createdAt": "2025-08-01T16:32:42Z",
-      "updatedAt": "2025-08-01T16:32:42Z",
+      "updatedAt": "2025-09-03T14:09:03Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "On the last point, we now say in section `5.2.  Denial of Service Attacks` \n\n```\n  *  ISDs usually rely on multiple CAs\n```\n\nWe could write something like operational considerations, maybe in another section.",
+          "createdAt": "2025-09-03T14:09:03Z",
+          "updatedAt": "2025-09-03T14:09:03Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -4028,6 +4068,84 @@
       "headRefName": "Not-sure-what-these-are",
       "headRefOid": "cf40a862edf610d9dfc4815181bc58f41c8d6e13",
       "closedAt": "2025-07-18T10:21:07Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 88,
+      "id": "PR_kwDOH386tM6mo2QC",
+      "title": "Post quantum crypto",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/88",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-09-03T12:13:59Z",
+      "updatedAt": "2025-09-03T12:14:00Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "03f7ebc258c281c699567b59f28b7997f0f99f3a",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Post-Quantum-Crypto",
+      "headRefOid": "f974140f142ad69f23ad04f3c3893e149eff592f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 89,
+      "id": "PR_kwDOH386tM6mo42b",
+      "title": "Self signed certificates",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/89",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-09-03T12:17:42Z",
+      "updatedAt": "2025-09-03T12:28:59Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "03f7ebc258c281c699567b59f28b7997f0f99f3a",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Self-Signed-Certificates",
+      "headRefOid": "efd9b96002538cd8845de3745a4ed84fbea6e2ac",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 90,
+      "id": "PR_kwDOH386tM6mpD3y",
+      "title": "TRC configuration specification",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/90",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-09-03T12:31:46Z",
+      "updatedAt": "2025-09-03T12:40:53Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "03f7ebc258c281c699567b59f28b7997f0f99f3a",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "TRC-Configuration-Specification",
+      "headRefOid": "a3b8b427f8d16da0568608b83063a27a668eb228",
+      "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
