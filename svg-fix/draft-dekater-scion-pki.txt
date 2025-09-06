@@ -437,9 +437,8 @@ Table of Contents
    provides a view of the trust chain within an ISD, based on its TRC.
    For detailed descriptions, please refer to Section 2 and Section 3.
 
-                                     TRC 2
-
                 +----------------------------------------+
+                |                 TRC 2                  |
                 | +------------------------------------+ |
                 | |- Version       - Core ASes         | |
  +--------+     | |- ID            - Description       | |    +--------+
