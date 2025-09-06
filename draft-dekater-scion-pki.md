@@ -1500,6 +1500,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 - removed ISD assignment table and replaced to reference in control-plane draft
 - Updated number assignment reference
+- Signatures: mention that other algorithms that ECDSA may be used in the future
 - Figures: add SVG version
 
 ## draft-dekater-scion-pki-09
