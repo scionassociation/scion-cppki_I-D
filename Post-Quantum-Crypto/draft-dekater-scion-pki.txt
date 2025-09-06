@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 7 March 2026                                            S. Hitz
+Expires: 10 March 2026                                           S. Hitz
                                                          Anapaya Systems
-                                                        3 September 2025
+                                                        6 September 2025
 
 
                         SCION Control Plane PKI
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 March 2026.
+   This Internet-Draft will expire on 10 March 2026.
 
 Copyright Notice
 
@@ -906,16 +906,15 @@ Table of Contents
 
 2.2.1.1.  signature Field - Additional Information
 
-   For security reasons, SCION uses a custom list of acceptable
-   signature algorithms which is specified in the signature field.  The
-   list currently only contains the ECDSA signature algorithm (defined
-   in [X9.62]) although this may be extended in future.
+   The signature field contains information about the signature
+   algorithm.  Current implementations use the ECDSA signature algorithm
+   defined in [X9.62].
 
    The Object Identifiers (OIDs) for ECDSA are defined as ecdsa-with-
    SHA256, ecdsa-with-SHA384, and ecdsa-with-SHA512 in [RFC5758].
 
-   SCION implementations MUST include support for the following ECDSA
-   curves:
+   SCION implementations MUST include support for the ECDSA curves
+   below.  Other algorithms or curves MAY be used in the future.
 
    *  NIST P-256 (NISTFIPS186-4, section D.1.2.3) (named secp256r1 in
       [RFC5480])
@@ -2819,6 +2818,9 @@ draft-dekater-scion-pki-10
       plane draft
 
    *  Updated number assignment reference
+
+   *  Signatures: mention that other algorithms that ECDSA may be used
+      in the future
 
    *  Figures: add SVG version
 
