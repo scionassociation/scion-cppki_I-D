@@ -563,13 +563,11 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 #### `signature` Field - Additional Information {#certsign}
 
-For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in {{X9.62}}) although this may be extended in future.
+The `signature` field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
-**Important:** SCION implementations MUST reject cryptographic algorithms not found in this list.
-
-The only accepted curves for ECDSA are:
+SCION implementations MUST include support for the ECDSA curves below. Other algorithms or curves MAY be used in the future.
 
 - NIST P-256 (NISTFIPS186-4, section D.1.2.3) (named `secp256r1` in {{RFC5480}})
 - NIST P-384 (NISTFIPS186-4, section D.1.2.4) (named `secp384r1` in {{RFC5480}})
@@ -582,9 +580,6 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-256, for a P-256 signing key
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
-
-**Important:** SCION implementations MUST include support for P-256, P-384, and P-521.
-
 
 #### `issuer` Field - Additional Information {#issuer}
 
@@ -1505,6 +1500,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 - removed ISD assignment table and replaced to reference in control-plane draft
 - Updated number assignment reference
+- Signatures: mention that other algorithms that ECDSA may be used in the future
 - Figures: add SVG version
 
 ## draft-dekater-scion-pki-09
