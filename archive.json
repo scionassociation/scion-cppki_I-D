@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-07T00:24:37.296400+00:00",
+  "timestamp": "2025-09-16T00:21:57.341674+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -755,15 +755,15 @@
       ],
       "body": "Ramon Keller (libC) observation:\n\nOnly the following three SECP curves are allowed: secp256r1, secp384r1, secp521r1.\n\nThe exclusion of other standardized and widely deployed elliptic curves has not been substantiated in the current document. Even if the NIST curves are significantly more efficient, it is conceivable that their origin could be an obstacle for certain SCION networks and that other curves would be preferred. ",
       "createdAt": "2025-08-01T16:03:43Z",
-      "updatedAt": "2025-09-06T10:16:00Z",
+      "updatedAt": "2025-09-15T15:52:41Z",
       "closedAt": "2025-09-06T10:16:00Z",
       "comments": [
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "TODO: \n- [ ] @romshark @katyatitkova how much effort would it be to add support for quantum-safe chiphers in scionproto (https://github.com/scionproto/scion/issues/4829)\n- Mentions other curves may be used \n- Drop requirement to support quantum-non safe ciphers (pending discussion)\n\n\n",
+          "body": "TODO: \n- [ ] @romshark @katyatitkova how much effort would it be to add support for quantum-safe chiphers in scionproto (https://github.com/scionproto/scion/issues/4829)\n- [x] Mentions other curves may be used \n- [x] Drop requirement to support quantum-non safe ciphers (pending discussion)\n\n\n",
           "createdAt": "2025-09-03T11:29:16Z",
-          "updatedAt": "2025-09-03T11:30:00Z"
+          "updatedAt": "2025-09-15T15:52:41Z"
         },
         {
           "author": "knmeynell",
