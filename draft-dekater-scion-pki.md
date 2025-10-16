@@ -262,48 +262,49 @@ The Control Plane PKI does not explicitly support certificate revocation. Instea
 
 The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides a view of the trust chain within an ISD, based on its TRC. For detailed descriptions, please refer to [](#cert-specs) and [](#trc-specification).
 
-<figure anchor="_figure-1">
-<name>Chain of trust within an ISD</name>
-<artset>
-<artwork type="svg" src="images/chain-of-trust-within-isd.svg"/>
-<artwork type="ascii-art">
+~~~aasvg
 
-               ┌─────────────────────────────────────┐
-               │                TRC 2                │
-               │┌───────────────────────────────────┐│
-┌──────────┐   ││- Version       - Core ASes        ││   ┌──────────┐
-│  TRC 1   │   ││- ID            - Description      ││   │          │
-│(Base TRC)├──▶││- Validity      - No Trust Reset   │├──▶│  TRC 3   │
-│          │   ││- Grace Period  - Voting Quorum    ││   │          │
-└──────────┘   ││- ...                              ││   └──────────┘
-               │└───────────────────────────────────┘│
-               │┌────────────────┐ ┌────────────────┐│
-               ││ Regular Voting │ │Sensitive Voting││
-               ││  Certificate   │ │  Certificate   ││
-               │└────────────────┘ └────────────────┘│
-               │┌────────────────┐ ┌────────────────┐│
-               ││     Votes      │ │   Signatures   ││
-               │└────────────────┘ └────────────────┘│
-               │┌───────────────────────────────────┐│
-               ││       CP Root Certificates        ││
-               │└──────┬─────────────────────┬──────┘│
-               └───────│─────────────────────│───────┘
-                       │                     │
-                       ▼                     ▼
-                 ┌───────────┐         ┌───────────┐
-                 │   CP CA   │         │   CP CA   │
-                 │Certificate│         │Certificate│
-                 └─┬───────┬─┘         └─────┬─────┘
-                   │       │                 │
-                   ▼       ▼                 ▼
-          ┌───────────┐ ┌───────────┐  ┌───────────┐
-          │   CP AS   │ │   CP AS   │  │   CP AS   │
-          │Certificate│ │Certificate│  │Certificate│
-          └───────────┘ └───────────┘  └───────────┘
+               +----------------------------------------+
+               |                 TRC 2                  |
+               | +------------------------------------+ |
+               | |- Version       - Core ASes         | |
++--------+     | |- ID            - Description       | |    +--------+
+| TRC 1  |     | |- Validity      - No Trust Reset    | |    | TRC 3  |
+| (Base  |---->| |- Grace Period  - Voting Quorum     | |--->|        |
+|  TRC)  |     | |- ...                               | |    |        |
++--------+     | +------------------------------------+ |    +--------+
+               |                                        |
+               | +----------------+  +----------------+ |
+               | | Regular Voting |  |Sensitive Voting| |
+               | |  Certificate   |  |  Certificate   | |
+               | +----------------+  +----------------+ |
+               |                                        |
+               | +----------------+  +----------------+ |
+               | |     Votes      |  |   Signatures   | |
+               | +----------------+  +----------------+ |
+               |                                        |
+               | +------------------------------------+ |
+               | |        CP Root Certificates        | |
+               | +------+---------------------+-------+ |
+               |        |                     |         |
+               +----------------------------------------+
+                        |                     |
+                        |                     |
+                        v                     v
+                  +-----------+         +-----------+
+                  |   CP CA   |         |   CP CA   |
+                  |Certificate|         |Certificate|
+                  +-+-------+-+         +-----+-----+
+                    |       |                 |
+                    |       |                 |
+                    v       v                 v
+           +-----------+ +-----------+  +-----------+
+           |   CP AS   | |   CP AS   |  |   CP AS   |
+           |Certificate| |Certificate|  |Certificate|
+           +-----------+ +-----------+  +-----------+
 
-</artwork>
-</artset>
-</figure>
+~~~~
+{: #figure-1 title="Chain of trust within an ISD"}
 
 All certificates used in the Control plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key.
 
@@ -445,69 +446,64 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 
 {{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
 
-<figure anchor="_figure-2">
-<name>TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.</name>
-<artset>
-<artwork type="svg" src="images/trc-update-chain.svg"/>
-<artwork type="ascii-art">
+~~~aasvg
++----------------------------------------------+
+|                    TRC 1                     |
+|                (base/initial)                |
+| +------------------------------------------+ |
+| | - Version          - Core ASes           | |
+| | - ID               - Description         | |
+| | - Validity         - No Trust Reset      | |
+| | - Grace Period     - Voting Quorum       | |
+| | - ...                                    | |
+| +------------------------------------------+ |
+|                                              |	
+| +-------------------+ +--------------------+ |
+| |        Votes      | |   Regular Voting   | |
+| |  (cert. indices)  | |    Certificates    | |
+| |                   | |  +-----+ +-----+   | |
+| |       (empty)     | |  | (1) | | (2) |   | |
+| |                   | |  |  C  | |  C  |   | |
+| |                   | |  | reg | | reg |   | |
+| |                   | |  +-----+ +-----+   | |
+| +-------------------+ +--------------------+ |
+|                                              |
+| +--------------------+ +-------------------+ |
+| |     Signatures     | | Sensitive Voting  | |
+| | +----------------+ | |    Certificates   | |
+| | | 73 A9 4E AO ...| | |                   | |
+| | +----------------+ | | +-----+ +-----+   | |
+| |         ...        | | | (3) | | (4) |   | |
+| | +----------------+ | | |  C  | |  C  |   | |
+| | | 53 B7 7C 98 ...| | | | sens| | sens|   | |
+| | +----------------+ | | +-----+ +-----+   | |
+| +--------------------+ +-------------------+ |
+|                                              |	
+| +------------------------------------------+ |
+| |          CP Root Certificates            | |
+| |                                          | |
+| | +-----+ +-----+ +-----+ +-----+          | |
+| | | (5) | | (6) | | (7) | | (8) |          | |
+| | |  C  | |  C  | |  C  | |  C  |          | |
+| | | root| | root| | root| | root| ...      | |
+| | +-----+ +--+--+ +-----+ +--+--+          | |
+| +------------+---------------+-------------+ |
++--------------+---------------+---------------+
+               |               |
+               v               v
+      +-----------+         +-----------+
+      |   CP CA   |         |   CP CA   |
+      |Certificate|         |Certificate|
+      +-----+-----+         +-----+-----+
+            |                     |
+            v                     v
+      +-----------+         +-----------+
+      |   CP AS   |         |   CP AS   |
+      |Certificate|         |Certificate|
+      +-----------+         +-----------+
 
-┌──────────────────────────────────────────────┐
-│                    TRC 1                     │
-│                (base/initial)                │
-│┌────────────────────────────────────────────┐│
-││- Version            - Core ASes            ││
-││- ID                 - Description          ││
-││- Validity           - No Trust Reset       ││
-││- Grace Period       - Voting Quorum        ││
-││- ...                                       ││
-│└────────────────────────────────────────────┘│
-│┌─────────────────────┐┌─────────────────────┐│
-││        Votes        ││   Regular Voting    ││
-││(certificate indices)││    Certificates     ││
-││                     ││                     ││
-││       (empty)       ││ ┌─────┐ ┌─────┐     ││
-││                     ││ │ (1) │ │ (2) │     ││
-│└─────────────────────┘│ │  C  │ │  C  │ ... ││
-│┌─────────────────────┐│ │ reg │ │ reg │     ││
-││                     ││ └─────┘ └─────┘     ││
-││     Signatures      │└─────────────────────┘│
-││                     │┌─────────────────────┐│
-││┌───────────────────┐││  Sensitive Voting   ││
-│││ 73 A9 4E A0 0D... │││    Certificates     ││
-││└───────────────────┘││                     ││
-││┌───────────────────┐││ ┌─────┐ ┌─────┐     ││
-│││ 53 B7 7C 98 56... │││ │ (3) │ │ (4) │     ││
-││└───────────────────┘││ │  C  │ │  C  │ ... ││
-││         ...         ││ │sens │ │sens │     ││
-││                     ││ └─────┘ └─────┘     ││
-│└─────────────────────┘└─────────────────────┘│
-│┌────────────────────────────────────────────┐│
-││            CP Root Certificates            ││
-││                                            ││
-││     ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐        ││
-││     │ (5) │ │ (6) │ │ (7) │ │ (8) │        ││
-││     │  C  │ │  C  │ │  C  │ │  C  │ ...    ││
-││     │root │ │root │ │root │ │root │        ││
-││     └──┬──┘ └─────┘ └─────┘ └──┬──┘        ││
-│└────────│───────────────────────│───────────┘│
-└─────────│───────────────────────│────────────┘
-          │                       │
-          ▼                       ▼
-   ┌─────────────┐         ┌─────────────┐
-   │    CP CA    │         │    CP CA    │
-   │ Certificate │         │ Certificate │
-   └──────┬──────┘         └──────┬──────┘
-          │                       │
-          ▼                       ▼
-   ┌─────────────┐         ┌─────────────┐
-   │    CP AS    │         │    CP AS    │
-   │ Certificate │         │ Certificate │
-   └─────────────┘         └─────────────┘
-
-</artwork>
-</artset>
-</figure>
-
+~~~~
+{: #figure-2 title="TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item."}
 
 ## Certificate Specification
 
@@ -563,13 +559,11 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 #### `signature` Field - Additional Information {#certsign}
 
-For security reasons, SCION uses a custom list of acceptable signature algorithms which is specified in the `signature` field. The list currently only contains the ECDSA signature algorithm (defined in {{X9.62}}) although this may be extended in future.
+The `signature` field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
-**Important:** SCION implementations MUST reject cryptographic algorithms not found in this list.
-
-The only accepted curves for ECDSA are:
+SCION implementations MUST include support for the ECDSA curves below. Other algorithms or curves MAY be used in the future.
 
 - NIST P-256 (NISTFIPS186-4, section D.1.2.3) (named `secp256r1` in {{RFC5480}})
 - NIST P-384 (NISTFIPS186-4, section D.1.2.4) (named `secp384r1` in {{RFC5480}})
@@ -582,9 +576,6 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-256, for a P-256 signing key
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
-
-**Important:** SCION implementations MUST include support for P-256, P-384, and P-521.
-
 
 #### `issuer` Field - Additional Information {#issuer}
 
@@ -1505,6 +1496,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 
 - removed ISD assignment table and replaced to reference in control-plane draft
 - Updated number assignment reference
+- Signatures: mention that other algorithms that ECDSA may be used in the future
 - Figures: add SVG version
 
 ## draft-dekater-scion-pki-09
