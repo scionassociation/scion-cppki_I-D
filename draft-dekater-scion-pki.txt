@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 10 March 2026                                           S. Hitz
+Expires: 19 April 2026                                           S. Hitz
                                                          Anapaya Systems
-                                                        6 September 2025
+                                                         16 October 2025
 
 
                         SCION Control Plane PKI
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 March 2026.
+   This Internet-Draft will expire on 19 April 2026.
 
 Copyright Notice
 
@@ -2225,8 +2225,8 @@ Table of Contents
       Any TRC can be obtained at any time from the sender of the
       information it secures; either in a specific version or in its
       latest available version.  The necessary query and response is
-      described in [I-D.dekater-scion-controlplane], section "Control
-      Service gRPC API - Trust Material".
+      described in [I-D.dekater-scion-controlplane], section
+      "Distribution of Cryptographic Material".
 
    *Note:* The first two mechanisms above only work when there is active
    communication between the relying party and the ISD in question.
