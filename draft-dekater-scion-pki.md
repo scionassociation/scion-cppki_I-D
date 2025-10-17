@@ -1010,9 +1010,6 @@ That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST
 A TRC contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD.
 
 Each TRC is digitally signed and the syntax used to sign and encapsulate the TRC payload is the Cryptographic Message Syntax (CMS) as defined in Section 5 of {{RFC5652}}. The signed TRC payload is encapsulated in a CMS `ContentInfo` element as defined in Section 3 of {{RFC5652}}.
-
-For detailed information on the general syntax definitions of the Cryptographic Message Syntax, see sections 3 and 5 of {{RFC5652}}.
-
 #### SCION-specific rules
 
 SCION implementations MUST fulfil the following additional rules, as well as the general syntax rules specified in {{RFC5652}}:
