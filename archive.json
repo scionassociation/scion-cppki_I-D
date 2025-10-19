@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-09-16T00:21:57.341674+00:00",
+  "timestamp": "2025-10-19T00:26:03.194377+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -4167,13 +4167,13 @@
       "labels": [],
       "body": "Resolves #82 ",
       "createdAt": "2025-09-03T12:31:46Z",
-      "updatedAt": "2025-09-04T08:31:27Z",
+      "updatedAt": "2025-10-17T13:41:34Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "03f7ebc258c281c699567b59f28b7997f0f99f3a",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "TRC-Configuration-Specification",
-      "headRefOid": "a3b8b427f8d16da0568608b83063a27a668eb228",
+      "headRefOid": "80b51cbd147d32aeb94030ed89e2214d768ce133",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -4275,6 +4275,82 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 92,
+      "id": "PR_kwDOH386tM6uFQyM",
+      "title": "Stashed changes",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/92",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Found these stashed changes - not sure if these were previously added to another branch ",
+      "createdAt": "2025-10-16T13:02:21Z",
+      "updatedAt": "2025-10-16T15:49:16Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "307d3b656e946ebed39028de41ef57da768fdf67",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Stashed-changes",
+      "headRefOid": "3055d1101c6afbc20d9ebce7c3747ebe2e6bdf40",
+      "closedAt": "2025-10-16T15:49:16Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Yes, they were already merged. ",
+          "createdAt": "2025-10-16T15:49:16Z",
+          "updatedAt": "2025-10-16T15:49:16Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 93,
+      "id": "PR_kwDOH386tM6uFVe9",
+      "title": "gRPC reference update",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/93",
+      "state": "MERGED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves https://github.com/scionassociation/scion-cp_I-D/issues/96",
+      "createdAt": "2025-10-16T13:08:44Z",
+      "updatedAt": "2025-10-16T15:42:17Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "307d3b656e946ebed39028de41ef57da768fdf67",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "gRPC-Reference-update",
+      "headRefOid": "6bd461d6f7aebb839210ddcab94aa8aed2fb9a6a",
+      "closedAt": "2025-10-16T15:42:13Z",
+      "mergedAt": "2025-10-16T15:42:13Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "cbbd1ec76e418c5b6fd606dc6a64ddc63e6d5643"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7HagX_",
+          "commit": {
+            "abbreviatedOid": "6bd461d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-10-16T15:41:25Z",
+          "updatedAt": "2025-10-16T15:41:25Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
