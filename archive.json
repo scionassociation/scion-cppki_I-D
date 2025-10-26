@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-19T00:26:03.194377+00:00",
+  "timestamp": "2025-10-26T00:25:16.811804+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1007,6 +1007,24 @@
           "updatedAt": "2025-09-03T14:09:03Z"
         }
       ]
+    },
+    {
+      "number": 94,
+      "id": "I_kwDOH386tM7TTs20",
+      "title": "Intro:  clarify in the abstract and earlier intro what the pki is securing (e.g., the control plane).",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/94",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [],
+      "body": "As reported by Eliot",
+      "createdAt": "2025-10-23T15:14:48Z",
+      "updatedAt": "2025-10-23T15:14:55Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
