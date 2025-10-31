@@ -184,7 +184,7 @@ Note (to be removed before publication): this document, together with the other 
 
 **Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider or organization can constitute an AS.
 
-**Isolation Domain (ISD)**: In SCION, Autonomous Systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction). A possible model is for ISDs to be formed along national boundaries or federations of nations.
+**Isolation Domain (ISD)**: In SCION, Autonomous Systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction).
 
 **Core AS**: Each isolation domain (ISD) is administered by a set of distinguished autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process known as "beaconing".
 
