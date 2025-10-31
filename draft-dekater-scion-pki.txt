@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 19 April 2026                                           S. Hitz
+Expires: 4 May 2026                                              S. Hitz
                                                          Anapaya Systems
-                                                         16 October 2025
+                                                         31 October 2025
 
 
                         SCION Control Plane PKI
@@ -63,7 +63,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 April 2026.
+   This Internet-Draft will expire on 4 May 2026.
 
 Copyright Notice
 
@@ -231,9 +231,7 @@ Table of Contents
    *Isolation Domain (ISD)*: In SCION, Autonomous Systems (ASes) are
    organized into logical groups called isolation domains or ISDs.  Each
    ISD consists of ASes that span an area with a uniform trust
-   environment (i.e., a common jurisdiction).  A possible model is for
-   ISDs to be formed along national boundaries or federations of
-   nations.
+   environment (i.e., a common jurisdiction).
 
    *Core AS*: Each isolation domain (ISD) is administered by a set of
    distinguished autonomous systems (ASes) called core ASes, which are
@@ -2504,16 +2502,16 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-09, 7 July 2025,
+              scion-controlplane-10, 20 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-09>.
+              scion-controlplane-10>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
               "SCION Data Plane", Work in Progress, Internet-Draft,
-              draft-dekater-scion-dataplane-06, 7 July 2025,
+              draft-dekater-scion-dataplane-07, 20 October 2025,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-06>.
+              scion-dataplane-07>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
