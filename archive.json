@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-10-30T00:24:28.943401+00:00",
+  "timestamp": "2025-11-02T00:25:43.213424+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1031,15 +1031,15 @@
       "id": "I_kwDOH386tM7Ui1L1",
       "title": "Brian Trammell's review PKI",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/95",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "The SCION Control Plane PKI draft defines the trust architecture that underpins the entire SCION system. It establishes a framework for authenticating control plane messages and path information through a novel, domain-based trust model. It specifies the cryptographic underpinnings constituting ISDs and the trust relationships within them. A Trust Root Configuration (TRC) acts as the trust anchor for an ISD, containing the root certificates needed to validate a hierarchy of CA and AS certificates, as well as the policies for its own evolution through regular and sensitive updates.\n\n_KM - I don't think anything needs to be done with the above._\n",
+      "body": "The SCION Control Plane PKI draft defines the trust architecture that underpins the entire SCION system. It establishes a framework for authenticating control plane messages and path information through a novel, domain-based trust model. It specifies the cryptographic underpinnings constituting ISDs and the trust relationships within them. A Trust Root Configuration (TRC) acts as the trust anchor for an ISD, containing the root certificates needed to validate a hierarchy of CA and AS certificates, as well as the policies for its own evolution through regular and sensitive updates.\n\n_KM - I don't think anything needs to be done with the above._\n\n- [ ] Remove this from PKI \" A possible model is for\n   ISDs to be formed along national boundaries or federations of\n   nations.\"\n",
       "createdAt": "2025-10-29T13:08:01Z",
-      "updatedAt": "2025-10-29T14:26:19Z",
-      "closedAt": null,
+      "updatedAt": "2025-10-31T12:57:36Z",
+      "closedAt": "2025-10-31T12:57:36Z",
       "comments": []
     }
   ],
@@ -4385,6 +4385,34 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 96,
+      "id": "PR_kwDOH386tM6w1DJO",
+      "title": "ISD - update definition in glossary",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/96",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #95",
+      "createdAt": "2025-10-31T12:57:01Z",
+      "updatedAt": "2025-10-31T12:57:35Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "cbbd1ec76e418c5b6fd606dc6a64ddc63e6d5643",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "brian-review",
+      "headRefOid": "987be91247effdf5cb1be58e54eebddad4f5f128",
+      "closedAt": "2025-10-31T12:57:35Z",
+      "mergedAt": "2025-10-31T12:57:35Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "2cb39357dc986ded818dd095cab5282e4f3cddf3"
+      },
+      "comments": [],
+      "reviews": []
     }
   ]
 }
