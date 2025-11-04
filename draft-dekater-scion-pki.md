@@ -223,7 +223,7 @@ Thus, there is a need for a trust architecture that supports meaningful trust ro
 
 - Trust agility (see further below);
 - Resilience to single root of trust compromise;
-- Multilateral governance; and
+- Multi-party governance; and
 - Support for policy versioning and updates.
 
 Ideally, the trust architecture allows parties that mutually trust each other to form their own trust "union" or "domain", and to freely decide whether to trust other trust unions (domains) outside their own trust bubble.
