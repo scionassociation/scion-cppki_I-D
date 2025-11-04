@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 4 May 2026                                              S. Hitz
+Expires: 8 May 2026                                              S. Hitz
                                                          Anapaya Systems
-                                                         31 October 2025
+                                                         4 November 2025
 
 
                         SCION Control Plane PKI
@@ -19,10 +19,11 @@ Abstract
    _Control Plane Public Key Infrastructure (CP-PKI)_. SCION
    (Scalability, Control, and Isolation On Next-generation networks) is
    a path-aware, inter-domain network architecture where the Control
-   Plane PKI handles cryptographic material and lays the foundation for
-   the authentication procedures in SCION.  It is used by SCION's
-   Control Plane to authenticate and verify path information, and
-   provisions SCION's trust model based on Isolation Domains.
+   Plane PKI handles cryptographic material and is the foundation of the
+   authentication procedures in SCION.  It is used by SCION's Control
+   Plane ([I-D.dekater-scion-controlplane]) to authenticate and verify
+   path information, and provisions SCION's trust model based on
+   Isolation Domains.
 
    This document describes the trust model behind the SCION Control
    Plane PKI, including specifications of the different types of
@@ -63,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 4 May 2026.
+   This Internet-Draft will expire on 8 May 2026.
 
 Copyright Notice
 
@@ -325,7 +326,7 @@ Table of Contents
 
    *  Resilience to single root of trust compromise;
 
-   *  Multilateral governance; and
+   *  Multi-party governance; and
 
    *  Support for policy versioning and updates.
 
@@ -2502,16 +2503,16 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-10, 20 October 2025,
+              scion-controlplane-11, 2 November 2025,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-10>.
+              scion-controlplane-11>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
               "SCION Data Plane", Work in Progress, Internet-Draft,
-              draft-dekater-scion-dataplane-07, 20 October 2025,
+              draft-dekater-scion-dataplane-08, 2 November 2025,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-07>.
+              scion-dataplane-08>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
