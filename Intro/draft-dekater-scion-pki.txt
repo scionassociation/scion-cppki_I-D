@@ -325,7 +325,7 @@ Table of Contents
 
    *  Resilience to single root of trust compromise;
 
-   *  Multilateral governance; and
+   *  Multi-party governance; and
 
    *  Support for policy versioning and updates.
 
