@@ -143,7 +143,7 @@ informative:
 
 --- abstract
 
-This document presents the trust concept and design of the SCION *Control Plane Public Key Infrastructure (CP-PKI)*. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture where the Control Plane PKI handles cryptographic material and is the foundation of the authentication procedures in SCION. It is used by SCION's Control Plane to authenticate and verify path information, and provisions SCION's trust model based on Isolation Domains.
+This document presents the trust concept and design of the SCION *Control Plane Public Key Infrastructure (CP-PKI)*. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture where the Control Plane PKI handles cryptographic material and is the foundation of the authentication procedures in SCION. It is used by SCION's Control Plane ({{I-D.dekater-scion-controlplane}}) to authenticate and verify path information, and provisions SCION's trust model based on Isolation Domains.
 
 This document describes the trust model behind the SCION Control Plane PKI, including specifications of the different types of certificates and the Trust Root Configuration. It also specifies how to deploy the Control Plane PKI infrastructure.
 
