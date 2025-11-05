@@ -2675,7 +2675,7 @@ TRC
         <h3 id="name-trc-specification">
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-trc-specification" class="section-name selfRef">TRC Specification</a>
         </h3>
-<p id="section-3.1-1">The TRC is a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS  signed-data (<span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> section 5).<a href="#section-3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.1-1">The TRC is a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded as CMS  signed-data (<span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> section 5).<a href="#section-3.1-1" class="pilcrow">¶</a></p>
 <p id="section-3.1-2">The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC, a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.1-3">This section specifies the TRC including format definitions and dpayload fields. The section uses the ITU-T <span>[<a href="#X.680" class="cite xref">X.680</a>]</span> syntax.<a href="#section-3.1-3" class="pilcrow">¶</a></p>
 <div id="trc-states">

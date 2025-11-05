@@ -1316,7 +1316,7 @@ Table of Contents
 3.1.  TRC Specification
 
    The TRC is a signed collection of [X.509] v3 certificates.
-   Additionally, the TRC contains ISD-specific policies encoded in CMS
+   Additionally, the TRC contains ISD-specific policies encoded as CMS
    signed-data ([RFC5652] section 5).
 
    The TRC's certificates collection consists of a set of control plane
