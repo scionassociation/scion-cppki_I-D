@@ -747,7 +747,7 @@ The initial TRC of an ISD is signed during a signing ceremony and then distribut
 
 ## TRC Specification {#trc-spec}
 
-The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS  signed-data ({{RFC5652}} section 5).
+The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded as CMS  signed-data ({{RFC5652}} section 5).
 
 The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC, a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.
 
