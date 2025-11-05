@@ -747,7 +747,7 @@ The initial TRC of an ISD is signed during a signing ceremony and then distribut
 
 ## TRC Specification {#trc-spec}
 
-The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in a Cryptographic Message Syntax (CMS) {{RFC5652}} envelope.
+The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS  signed-data ({{RFC5652}} section 5).
 
 The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC, a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.
 
@@ -1000,9 +1000,8 @@ That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST
 
 A TRC contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD.
 
-Each TRC is digitally signed and the syntax used to sign and encapsulate the TRC payload is the Cryptographic Message Syntax (CMS) as defined in {{RFC5652}}. The signed TRC payload is of the CMS signed-data content type, as defined in Section 5 of {{RFC5652}}, and encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
+Each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
 
-For detailed information on the general syntax definitions of the Cryptographic Message Syntax, see sections 3 and 5 of {{RFC5652}}.
 
 #### SCION-specific rules
 
@@ -1018,7 +1017,7 @@ SCION implementations MUST fulfil the following additional rules, as well as the
    - The type of signer identifier chosen here MUST be `IssuerAndSerialNumber`.
 - `SignerInfo` sequence:
    - The `version` field MUST be set to "1". This is because SCION uses the `IssuerAndSerialNumber` type of signer identifier (see also Section 5.3 of {{RFC5652}}).
-   - The algorithm specified in the `signatureAlgorithm` field MUST be one of the algorithms supported by SCION (for details, see [signature Field - Additional Information](#certsign)).
+   - The algorithm specified in the `signatureAlgorithm` field MUST be one of the algorithms supported by SCION . For details, see [signature Field - Additional Information](#certsign).
    - The `digestAlgorithm` is determined by the algorithm specified in the `signatureAlgorithm` field.
 
 
