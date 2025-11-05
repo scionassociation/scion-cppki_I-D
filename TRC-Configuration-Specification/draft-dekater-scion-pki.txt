@@ -1784,8 +1784,8 @@ Table of Contents
          also Section 5.3 of [RFC5652]).
 
       -  The algorithm specified in the signatureAlgorithm field MUST be
-         one of the algorithms supported by SCION (for details, see
-         signature Field - Additional Information (Section 2.2.1.1)).
+         one of the algorithms supported by SCION . For details, see
+         signature Field - Additional Information (Section 2.2.1.1).
 
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
