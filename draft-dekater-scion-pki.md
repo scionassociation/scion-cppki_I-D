@@ -246,7 +246,7 @@ As previously mentioned, the Control Plane PKI is organized at an ISD level wher
 
 ### Updates and Trust Resets {#trust-reset}
 
-There are two types of TRC updates: regular and sensitive. A **regular TRC update** is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a **sensitive TRC update** is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases the base TRC remains unchanged.
+There are two types of TRC updates: regular and sensitive (see [](#update)). A **regular TRC update** is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a **sensitive TRC update** is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases the base TRC remains unchanged.
 
 If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy). In this case, a new base TRC is created.
 
