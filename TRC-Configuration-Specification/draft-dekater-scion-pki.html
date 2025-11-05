@@ -3072,69 +3072,75 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <a href="#section-3.1.3" class="section-number selfRef">3.1.3. </a><a href="#name-trc-signature-syntax" class="section-name selfRef">TRC Signature Syntax</a>
           </h4>
 <p id="section-3.1.3-1">A TRC contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD.<a href="#section-3.1.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.3-2">Each TRC is digitally signed and the syntax used to sign and encapsulate the TRC payload is the Cryptographic Message Syntax (CMS) as defined in Section 5 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>. The signed TRC payload is encapsulated in a CMS <code>ContentInfo</code> element as defined in Section 3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>.
-#### SCION-specific rules<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.3-3">SCION implementations <span class="bcp14">MUST</span> fulfil the following additional rules, as well as the general syntax rules specified in <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>:<a href="#section-3.1.3-3" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3-4.1">
-              <p id="section-3.1.3-4.1.1"><code>EncapsulatedContentInfo</code> sequence:<a href="#section-3.1.3-4.1.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3-4.1.2.1">
-                  <p id="section-3.1.3-4.1.2.1.1">The <code>eContentType</code> field <span class="bcp14">MUST</span> be set to "id-data".<a href="#section-3.1.3-4.1.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-3.1.3-4.1.2.2">
-                  <p id="section-3.1.3-4.1.2.2.1">The content of the <code>eContent</code> field <span class="bcp14">MUST</span> be the DER-encoded TRC payload. This has the benefit that the format is backwards compatible with PKCS #7, as described in Section 5.2.1 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>.<a href="#section-3.1.3-4.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              </ul>
-</li>
-            <li class="normal" id="section-3.1.3-4.2">
-              <p id="section-3.1.3-4.2.1"><code>SignedData</code> sequence:<a href="#section-3.1.3-4.2.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3-4.2.2.1">
-                  <p id="section-3.1.3-4.2.2.1.1">The <code>certificates</code> field <span class="bcp14">MUST</span> be left empty. The certificate pool used to verify a TRC update is already specified in the <code>certificates</code> field of the predecessor TRC's payload (see also <a href="#cert" class="auto internal xref">Section 3.1.2.2.11</a>).<a href="#section-3.1.3-4.2.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-3.1.3-4.2.2.2">
-                  <p id="section-3.1.3-4.2.2.2.1">The <code>version</code> field <span class="bcp14">MUST</span> be set to "1". This is because SCION uses the "id-data" content type to encapsulate content info, and does not specify any certificate in the <code>SignedData</code> sequence (see also Section 5.1 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>).<a href="#section-3.1.3-4.2.2.2.1" class="pilcrow">¶</a></p>
-</li>
-              </ul>
-</li>
-            <li class="normal" id="section-3.1.3-4.3">
-              <p id="section-3.1.3-4.3.1"><code>SignerIdentifier</code> choice:<a href="#section-3.1.3-4.3.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3-4.3.2.1">
-                  <p id="section-3.1.3-4.3.2.1.1">The type of signer identifier chosen here <span class="bcp14">MUST</span> be <code>IssuerAndSerialNumber</code>.<a href="#section-3.1.3-4.3.2.1.1" class="pilcrow">¶</a></p>
-</li>
-              </ul>
-</li>
-            <li class="normal" id="section-3.1.3-4.4">
-              <p id="section-3.1.3-4.4.1"><code>SignerInfo</code> sequence:<a href="#section-3.1.3-4.4.1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.1.3-4.4.2.1">
-                  <p id="section-3.1.3-4.4.2.1.1">The <code>version</code> field <span class="bcp14">MUST</span> be set to "1". This is because SCION uses the <code>IssuerAndSerialNumber</code> type of signer identifier (see also Section 5.3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>).<a href="#section-3.1.3-4.4.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-3.1.3-4.4.2.2">
-                  <p id="section-3.1.3-4.4.2.2.1">The algorithm specified in the <code>signatureAlgorithm</code> field <span class="bcp14">MUST</span> be one of the algorithms supported by SCION (for details, see <span><a href="#certsign" class="internal xref">signature Field - Additional Information</a> (<a href="#certsign" class="auto internal xref">Section 2.2.1.1</a>)</span>).<a href="#section-3.1.3-4.4.2.2.1" class="pilcrow">¶</a></p>
-</li>
-                <li class="normal" id="section-3.1.3-4.4.2.3">
-                  <p id="section-3.1.3-4.4.2.3.1">The <code>digestAlgorithm</code> is determined by the algorithm specified in the <code>signatureAlgorithm</code> field.<a href="#section-3.1.3-4.4.2.3.1" class="pilcrow">¶</a></p>
-</li>
-              </ul>
-</li>
-          </ul>
-<div id="trc-equality">
+<p id="section-3.1.3-2">Each TRC is digitally signed and the syntax used to sign and encapsulate the TRC payload is the Cryptographic Message Syntax (CMS) as defined in Section 5 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>. The signed TRC payload is encapsulated in a CMS <code>ContentInfo</code> element as defined in Section 3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>.<a href="#section-3.1.3-2" class="pilcrow">¶</a></p>
+<div id="scion-specific-rules">
 <section id="section-3.1.3.1">
-            <h5 id="name-trc-equality">
-<a href="#section-3.1.3.1" class="section-number selfRef">3.1.3.1. </a><a href="#name-trc-equality" class="section-name selfRef">TRC Equality</a>
+            <h5 id="name-scion-specific-rules">
+<a href="#section-3.1.3.1" class="section-number selfRef">3.1.3.1. </a><a href="#name-scion-specific-rules" class="section-name selfRef">SCION-specific rules</a>
             </h5>
-<p id="section-3.1.3.1-1">The signer information in the signed TRC is part of an unordered set, as per <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>. This implies that the signer information can be reordered without affecting verification, although certain operations require TRCs to be equal im accordance with the following definition:<a href="#section-3.1.3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1.3.1-2"><strong>Two TRCs are equal, if and only if their payloads are byte equal.</strong><a href="#section-3.1.3.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.1.3.1-3">Two TRCs with byte equal payloads can be considered as equal because the TRC payload exactly defines which signatures must be attached in the signed TRC:<a href="#section-3.1.3.1-3" class="pilcrow">¶</a></p>
+<p id="section-3.1.3.1-1">SCION implementations <span class="bcp14">MUST</span> fulfil the following additional rules, as well as the general syntax rules specified in <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>:<a href="#section-3.1.3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.1.3.1-4.1">
-                <p id="section-3.1.3.1-4.1.1">The <span class="bcp14">REQUIRED</span> signatures from voting certificates are explicitly mentioned in the <code>votes</code> field of the payload: If index "i" is part of the <code>votes</code> field, then the voting certificate at position i in the <code>certificates</code> sequence of the predecessor TRC casted a vote on the successor TRC. See also <a href="#votes" class="auto internal xref">Section 3.1.2.2.6</a>.<a href="#section-3.1.3.1-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.1.3.1-2.1">
+                <p id="section-3.1.3.1-2.1.1"><code>EncapsulatedContentInfo</code> sequence:<a href="#section-3.1.3.1-2.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.3.1-2.1.2.1">
+                    <p id="section-3.1.3.1-2.1.2.1.1">The <code>eContentType</code> field <span class="bcp14">MUST</span> be set to "id-data".<a href="#section-3.1.3.1-2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.1.3.1-4.2">
-                <p id="section-3.1.3.1-4.2.1">The <span class="bcp14">REQUIRED</span> signatures for new certificates are implied by the currently valid TRC payload, and, in case of a TRC update, the predecessor payload.<a href="#section-3.1.3.1-4.2.1" class="pilcrow">¶</a></p>
+                  <li class="normal" id="section-3.1.3.1-2.1.2.2">
+                    <p id="section-3.1.3.1-2.1.2.2.1">The content of the <code>eContent</code> field <span class="bcp14">MUST</span> be the DER-encoded TRC payload. This has the benefit that the format is backwards compatible with PKCS #7, as described in Section 5.2.1 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>.<a href="#section-3.1.3.1-2.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="section-3.1.3.1-2.2">
+                <p id="section-3.1.3.1-2.2.1"><code>SignedData</code> sequence:<a href="#section-3.1.3.1-2.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.3.1-2.2.2.1">
+                    <p id="section-3.1.3.1-2.2.2.1.1">The <code>certificates</code> field <span class="bcp14">MUST</span> be left empty. The certificate pool used to verify a TRC update is already specified in the <code>certificates</code> field of the predecessor TRC's payload (see also <a href="#cert" class="auto internal xref">Section 3.1.2.2.11</a>).<a href="#section-3.1.3.1-2.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="section-3.1.3.1-2.2.2.2">
+                    <p id="section-3.1.3.1-2.2.2.2.1">The <code>version</code> field <span class="bcp14">MUST</span> be set to "1". This is because SCION uses the "id-data" content type to encapsulate content info, and does not specify any certificate in the <code>SignedData</code> sequence (see also Section 5.1 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>).<a href="#section-3.1.3.1-2.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="section-3.1.3.1-2.3">
+                <p id="section-3.1.3.1-2.3.1"><code>SignerIdentifier</code> choice:<a href="#section-3.1.3.1-2.3.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.3.1-2.3.2.1">
+                    <p id="section-3.1.3.1-2.3.2.1.1">The type of signer identifier chosen here <span class="bcp14">MUST</span> be <code>IssuerAndSerialNumber</code>.<a href="#section-3.1.3.1-2.3.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+              <li class="normal" id="section-3.1.3.1-2.4">
+                <p id="section-3.1.3.1-2.4.1"><code>SignerInfo</code> sequence:<a href="#section-3.1.3.1-2.4.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.3.1-2.4.2.1">
+                    <p id="section-3.1.3.1-2.4.2.1.1">The <code>version</code> field <span class="bcp14">MUST</span> be set to "1". This is because SCION uses the <code>IssuerAndSerialNumber</code> type of signer identifier (see also Section 5.3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>).<a href="#section-3.1.3.1-2.4.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="section-3.1.3.1-2.4.2.2">
+                    <p id="section-3.1.3.1-2.4.2.2.1">The algorithm specified in the <code>signatureAlgorithm</code> field <span class="bcp14">MUST</span> be one of the algorithms supported by SCION (for details, see <span><a href="#certsign" class="internal xref">signature Field - Additional Information</a> (<a href="#certsign" class="auto internal xref">Section 2.2.1.1</a>)</span>).<a href="#section-3.1.3.1-2.4.2.2.1" class="pilcrow">¶</a></p>
+</li>
+                  <li class="normal" id="section-3.1.3.1-2.4.2.3">
+                    <p id="section-3.1.3.1-2.4.2.3.1">The <code>digestAlgorithm</code> is determined by the algorithm specified in the <code>signatureAlgorithm</code> field.<a href="#section-3.1.3.1-2.4.2.3.1" class="pilcrow">¶</a></p>
+</li>
+                </ul>
+</li>
+            </ul>
+</section>
+</div>
+<div id="trc-equality">
+<section id="section-3.1.3.2">
+            <h5 id="name-trc-equality">
+<a href="#section-3.1.3.2" class="section-number selfRef">3.1.3.2. </a><a href="#name-trc-equality" class="section-name selfRef">TRC Equality</a>
+            </h5>
+<p id="section-3.1.3.2-1">The signer information in the signed TRC is part of an unordered set, as per <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>. This implies that the signer information can be reordered without affecting verification, although certain operations require TRCs to be equal im accordance with the following definition:<a href="#section-3.1.3.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.1.3.2-2"><strong>Two TRCs are equal, if and only if their payloads are byte equal.</strong><a href="#section-3.1.3.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.1.3.2-3">Two TRCs with byte equal payloads can be considered as equal because the TRC payload exactly defines which signatures must be attached in the signed TRC:<a href="#section-3.1.3.2-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.1.3.2-4.1">
+                <p id="section-3.1.3.2-4.1.1">The <span class="bcp14">REQUIRED</span> signatures from voting certificates are explicitly mentioned in the <code>votes</code> field of the payload: If index "i" is part of the <code>votes</code> field, then the voting certificate at position i in the <code>certificates</code> sequence of the predecessor TRC casted a vote on the successor TRC. See also <a href="#votes" class="auto internal xref">Section 3.1.2.2.6</a>.<a href="#section-3.1.3.2-4.1.1" class="pilcrow">¶</a></p>
+</li>
+              <li class="normal" id="section-3.1.3.2-4.2">
+                <p id="section-3.1.3.2-4.2.1">The <span class="bcp14">REQUIRED</span> signatures for new certificates are implied by the currently valid TRC payload, and, in case of a TRC update, the predecessor payload.<a href="#section-3.1.3.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
 </section>

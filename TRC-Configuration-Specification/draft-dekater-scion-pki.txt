@@ -1744,7 +1744,9 @@ Table of Contents
    encapsulate the TRC payload is the Cryptographic Message Syntax (CMS)
    as defined in Section 5 of [RFC5652].  The signed TRC payload is
    encapsulated in a CMS ContentInfo element as defined in Section 3 of
-   [RFC5652]. #### SCION-specific rules
+   [RFC5652].
+
+3.1.3.1.  SCION-specific rules
 
    SCION implementations MUST fulfil the following additional rules, as
    well as the general syntax rules specified in [RFC5652]:
@@ -1788,7 +1790,7 @@ Table of Contents
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
 
-3.1.3.1.  TRC Equality
+3.1.3.2.  TRC Equality
 
    The signer information in the signed TRC is part of an unordered set,
    as per [RFC5652].  This implies that the signer information can be
