@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-02T00:25:43.213424+00:00",
+  "timestamp": "2025-11-06T00:24:21.722663+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -742,7 +742,7 @@
     {
       "number": 76,
       "id": "I_kwDOH386tM7DxB5V",
-      "title": "Post Quantum Cryptography",
+      "title": "Post Quantum Cryptography & Crypto agility",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/76",
       "state": "CLOSED",
       "author": "knmeynell",
@@ -755,7 +755,7 @@
       ],
       "body": "Ramon Keller (libC) observation:\n\nOnly the following three SECP curves are allowed: secp256r1, secp384r1, secp521r1.\n\nThe exclusion of other standardized and widely deployed elliptic curves has not been substantiated in the current document. Even if the NIST curves are significantly more efficient, it is conceivable that their origin could be an obstacle for certain SCION networks and that other curves would be preferred. ",
       "createdAt": "2025-08-01T16:03:43Z",
-      "updatedAt": "2025-09-15T15:52:41Z",
+      "updatedAt": "2025-11-05T12:27:44Z",
       "closedAt": "2025-09-06T10:16:00Z",
       "comments": [
         {
@@ -779,7 +779,7 @@
       "id": "I_kwDOH386tM7DxEXe",
       "title": "Self-Signed Voting Certificates",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/77",
-      "state": "CLOSED",
+      "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -788,8 +788,8 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.5 Overview of Certificates, Keys and Roles\"\n\nSelf-Signed certificates just add some identity information to a public key for easier identification. They do not increase security unless their public key is verified explicitly upon each use because an attacker can easily falsify any self-signed certificate with every detail of the original, including the signature applied with the fake private key. In this section, a cross reference to the TRC Ceremony could be added, where the public keys of the voting certificates must explicitly be verified. ",
       "createdAt": "2025-08-01T16:06:49Z",
-      "updatedAt": "2025-09-03T12:30:02Z",
-      "closedAt": "2025-09-03T12:30:02Z",
+      "updatedAt": "2025-11-05T20:35:17Z",
+      "closedAt": null,
       "comments": []
     },
     {
@@ -875,7 +875,7 @@
       "id": "I_kwDOH386tM7DxQcB",
       "title": "Trust Root Configuration Specification",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/82",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -884,8 +884,8 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1\"\n\nThe draft just refers to CMS RFC5652 - which is correct - but wouldn't it make sense to directly refer to CMS Signed Data (Section 5. ff)?",
       "createdAt": "2025-08-01T16:22:20Z",
-      "updatedAt": "2025-09-03T12:41:28Z",
-      "closedAt": null,
+      "updatedAt": "2025-11-05T20:22:57Z",
+      "closedAt": "2025-11-05T20:22:57Z",
       "comments": [
         {
           "author": "knmeynell",
@@ -1013,7 +1013,7 @@
       "id": "I_kwDOH386tM7TTs20",
       "title": "Intro:  clarify in the abstract and earlier intro what the pki is securing (e.g., the control plane).",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/94",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1022,9 +1022,17 @@
       "labels": [],
       "body": "As reported by Eliot",
       "createdAt": "2025-10-23T15:14:48Z",
-      "updatedAt": "2025-10-23T15:14:55Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-11-04T22:45:41Z",
+      "closedAt": "2025-11-04T22:45:41Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Just add a reference",
+          "createdAt": "2025-11-04T22:35:36Z",
+          "updatedAt": "2025-11-04T22:35:36Z"
+        }
+      ]
     },
     {
       "number": 95,
@@ -1040,6 +1048,139 @@
       "createdAt": "2025-10-29T13:08:01Z",
       "updatedAt": "2025-10-31T12:57:36Z",
       "closedAt": "2025-10-31T12:57:36Z",
+      "comments": []
+    },
+    {
+      "number": 97,
+      "id": "I_kwDOH386tM7Vx_ks",
+      "title": "Intro: add reference to what PKI is used for",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/97",
+      "state": "CLOSED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Abstract/Intro: add direct reference to what this document secures.. (CP/DP). It is now too late in the text.\n\n\n   This document presents the trust concept and design of the SCION\n   _Control Plane Public Key Infrastructure (CP-PKI)_. SCION\n   (Scalability, Control, and Isolation On Next-generation networks) is\n   a path-aware, inter-domain network architecture where the Control\n   Plane PKI handles cryptographic material and lays the foundation for\n   the authentication procedures in SCION.  It is used by SCION's\n   Control Plane to authenticate and verify path information, and\n   provisions SCION's trust model based on Isolation Domains.\n\n   This document describes the trust model behind the SCION Control\n   Plane PKI, including specifications of the different types of\n   certificates and the Trust Root Configuration.  It also specifies how\n   to deploy the Control Plane PKI infrastructure.\n\n   This document contains new approaches to secure path aware\n   networking.  It is not an Internet Standard, has not received any\n   formal review of the IETF, nor was the work developed through the\n   rough consensus process.  The approaches offered in this work are\n   offered to the community for its consideration in the further\n   evolution of the Internet.",
+      "createdAt": "2025-11-04T13:42:42Z",
+      "updatedAt": "2025-11-04T22:35:19Z",
+      "closedAt": "2025-11-04T22:35:19Z",
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "To me, the text already clearly and adequately explains the purpose of the PKI. ",
+          "createdAt": "2025-11-04T14:36:18Z",
+          "updatedAt": "2025-11-04T14:36:18Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "I think we can immediately add the fererence to [[I-D.dekater-scion-controlplane](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#I-D.dekater-scion-controlplane)] ",
+          "createdAt": "2025-11-04T22:33:42Z",
+          "updatedAt": "2025-11-04T22:33:42Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Duplicate of #94 ",
+          "createdAt": "2025-11-04T22:35:19Z",
+          "updatedAt": "2025-11-04T22:35:19Z"
+        }
+      ]
+    },
+    {
+      "number": 98,
+      "id": "I_kwDOH386tM7VyYLc",
+      "title": "Clarify Process for Cryptographic Algorithms",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/98",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "nicorusti",
+        "knmeynell"
+      ],
+      "labels": [],
+      "body": "From Brian Trammell...\n\nIn section 2.2.1.1, should the process by which new algorithms may be added to or removed from the MTI set be defined or at least alluded to? One of the reasons that nation-state-based isolation is interesting to some governments is that it would allow the unrestricted use within the ISD of ciphersuites that have been developed and are under the control of (slash presumably can be broken by) that state's national security service; what happens if a nationally-oriented ISD chooses to ignore the MTI here and use only their",
+      "createdAt": "2025-11-04T14:05:11Z",
+      "updatedAt": "2025-11-05T12:27:57Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "I think a previous reviewer asked us to add the possibility of new algorithms in this section. (#76 )\n\nHow would we define the approval process for new algorithms, and would this compromise SCION's claimed cyber-agility at the end of the day? ",
+          "createdAt": "2025-11-04T15:22:32Z",
+          "updatedAt": "2025-11-05T12:27:57Z"
+        }
+      ]
+    },
+    {
+      "number": 99,
+      "id": "I_kwDOH386tM7VyZh4",
+      "title": "Forward reference to Voting Certificates",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/99",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [],
+      "body": "From Brian Trammell...\n\nI'd appreciate a forward reference (to section 3.1.5) where the distinction between \"regular\" and \"sensitive\" voting certificates is first introduced in section 1.4; I was convinced I'd missed something at first.",
+      "createdAt": "2025-11-04T14:06:21Z",
+      "updatedAt": "2025-11-05T21:26:26Z",
+      "closedAt": "2025-11-05T21:26:26Z",
+      "comments": []
+    },
+    {
+      "number": 100,
+      "id": "I_kwDOH386tM7Vybgn",
+      "title": "Rephrase use 'Multinational'",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/100",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "From Brian Trammell...\n\nSection 1.3: note that in an Internet governance context, \"multilateral\" has a connotation of \"among governments\" and is often used in contrast with \"multistakeholder\", meaning \"among stakeholders of various types\". Using it here unless \"among governments in a mandatory, treaty based process a la ITU-T / UN\" is what you mean is likely to cause discussions that will generate more heat than light.\n",
+      "createdAt": "2025-11-04T14:08:08Z",
+      "updatedAt": "2025-11-04T22:45:40Z",
+      "closedAt": "2025-11-04T22:45:40Z",
+      "comments": []
+    },
+    {
+      "number": 101,
+      "id": "I_kwDOH386tM7VyfMj",
+      "title": "Brian Trammell's PKI review",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/101",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Brian Trammell's comments...\n\nThe SCION Control Plane PKI draft (PKI; draft-dekater-scion-pki-10) defines the trust architecture that underpins the entire SCION system. It establishes a framework for authenticating control plane messages and path information through a novel, domain-based trust model. It specifies the cryptographic underpinnings constituting ISDs and the trust relationships within them. A Trust Root Configuration (TRC) acts as the trust anchor for an ISD, containing the root certificates needed to validate a hierarchy of CA and AS certificates, as well as the policies for its own evolution through regular and sensitive updates.\n\nThis approach provides what the document calls \"trust agility,\" allowing different parts of the network to operate under distinct, self-contained trust environments, a significant departure from the global, monolithic trust models of the web PKI. Instead of traditional certificate revocation lists, the CP-PKI relies on relatively short-lived certificates and TRC updates to manage compromised keys. The PKI is the foundation upon which the SCION Control Plane (CP) builds its secure beaconing and path discovery mechanisms, and by extension, provides the trust necessary for the Data Plane (DP) to forward packets along authenticated paths.\n\nThe document is well put together (aside from a few nits) and explains the functionality of the PKI well. The questions I have mainly concern the operational consequences of the certificate management periods at each level of the hierarchy down from the TRC: the grace and overlap periods seem from first principles to be sufficient to manage availability risk due to higher-frequency key rotation, but it would be interesting to see how this plays out in reality (I can't really think of a way to analyze this except in production, or with a questionably-applicable simulation).\n\nFurther \"out there\", I'd also be interested in exploring how the PKI itself could be incrementally applied to routing security with the existing interdomain control plane (this idea is inchoate enough that I can't really seriously elaborate it further in the context of a review).\n\n_KM - I think these are philosophical questions._",
+      "createdAt": "2025-11-04T14:11:31Z",
+      "updatedAt": "2025-11-04T14:11:31Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 105,
+      "id": "I_kwDOH386tM7WJW6R",
+      "title": "Singing ceremony - verify alignment with current scionproto docs and Anapaya",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/105",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "knmeynell"
+      ],
+      "labels": [],
+      "body": "The TRC ceremony docs were revamped in 2024 in https://github.com/scionproto/scion/pull/4615 . \nDoes the draft still match what is in various pages in the [scionproto docs](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html) and on the [Anapaya docs](https://learn.anapaya.net/docs/academy/cookbook/cppki-bootstrapping/)?\n@knmeynell could you compare?\n\nSome missing info I see: \n\n- [ ] [Voting certs - ISD](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html#regular-voting)  - Is the ISD-AS field compulsory or optional? And should it be verified during the ceremony?\n   > Docs: \nThe ISD-AS configuration field is optional, but should be provided if the party has an AS identifier, the ISD number must match with the TRC this certificate will be used in.\n  > Draft: \nThe ISD-AS number attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the issuer or subject field respectively.\n",
+      "createdAt": "2025-11-05T20:58:17Z",
+      "updatedAt": "2025-11-05T21:15:44Z",
+      "closedAt": null,
       "comments": []
     }
   ],
@@ -4173,45 +4314,74 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "Resolves #77 ",
       "createdAt": "2025-09-03T12:17:42Z",
-      "updatedAt": "2025-09-03T12:28:59Z",
+      "updatedAt": "2025-11-05T20:51:26Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "03f7ebc258c281c699567b59f28b7997f0f99f3a",
+      "baseRefOid": "f88b1b95d894f1cf347d7a01148abf4027cf9b73",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Self-Signed-Certificates",
-      "headRefOid": "efd9b96002538cd8845de3745a4ed84fbea6e2ac",
+      "headRefOid": "077951fa99ce82240516aea01c93cccd10c92d70",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7MGgz_",
+          "commit": {
+            "abbreviatedOid": "077951f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2025-11-05T20:36:55Z",
+          "updatedAt": "2025-11-05T20:51:26Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "I don't think we now describe where self-signed voting certs are verified in the ceremony section. If we add thhe cross-reference as Ramon suggest, then we should add that text and then refer to that specific subsection.\r\nRight now we have this text:\r\n> The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate).  ",
+              "createdAt": "2025-11-05T20:36:55Z",
+              "updatedAt": "2025-11-05T20:51:26Z"
+            },
+            {
+              "originalPosition": 5,
+              "body": "I think that the checks during the ceremony should be extended. Specifically, I think it should be checked that the `issuer` and  `subject` fields of each voting certificates coincide with the actual holder of the cert (e.g. the representative of that org). I don't think we say it anywhere. \r\nThis is my intuition and it should be 4 eye checked ([Slack discussion](https://scionproto.slack.com/archives/C8ADA9CEP/p1762375862848949)) ",
+              "createdAt": "2025-11-05T20:44:12Z",
+              "updatedAt": "2025-11-05T20:51:26Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 90,
       "id": "PR_kwDOH386tM6mpD3y",
       "title": "TRC configuration specification",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/90",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #82 ",
       "createdAt": "2025-09-03T12:31:46Z",
-      "updatedAt": "2025-10-17T13:41:34Z",
+      "updatedAt": "2025-11-05T20:23:02Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "03f7ebc258c281c699567b59f28b7997f0f99f3a",
+      "baseRefOid": "f88b1b95d894f1cf347d7a01148abf4027cf9b73",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "TRC-Configuration-Specification",
-      "headRefOid": "80b51cbd147d32aeb94030ed89e2214d768ce133",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a3de779706fa2e8db69276bfabd581ae79d2cbf5",
+      "closedAt": "2025-11-05T20:22:56Z",
+      "mergedAt": "2025-11-05T20:22:56Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "c4b6ed415ca91654ae27375187c4394ad6a567a5"
+      },
       "comments": [],
       "reviews": [
         {
@@ -4277,6 +4447,57 @@
               "body": "Each TRC is digitally signed and the syntax used to sign and encapsulate the TRC payload is the Cryptographic Message Syntax (CMS) as defined in [[RFC5652]]. The signed TRC payload is of the CMS signed-data content type (see Section 5 of [[RFC5652]), and **is** encapsulated in a CMS ContentInfo element (see Section 3 of [[RFC5652]).\r\n\r\n---> remove this paragraph as it's superfluous.\r\nFor detailed information on the general syntax definitions of the Cryptographic Message Syntax, see sections 3 and 5 of [[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)].[\u00b6](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-3.1.3-3)",
               "createdAt": "2025-09-04T08:31:27Z",
               "updatedAt": "2025-09-04T08:31:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7LqNAr",
+          "commit": {
+            "abbreviatedOid": "80b51cb"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Okay",
+          "createdAt": "2025-11-04T14:41:14Z",
+          "updatedAt": "2025-11-04T14:41:14Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM7L82Oh",
+          "commit": {
+            "abbreviatedOid": "a3de779"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "@knmeynell Ramon's point referred to another line (750), in an earlier section, not to the section we were working on.  I reworded the section below, and I also edited wording in line 750. \r\nWhat do you think? Can you double check and merge if good? \r\n",
+          "createdAt": "2025-11-05T12:35:07Z",
+          "updatedAt": "2025-11-05T20:10:14Z",
+          "comments": [
+            {
+              "originalPosition": 8,
+              "body": "Do we need to refer to the `SignedData` type defined in section  [5.1](https://www.rfc-editor.org/rfc/rfc5652.html#section-5.1) instead?  This needs further investigation",
+              "createdAt": "2025-11-05T12:35:07Z",
+              "updatedAt": "2025-11-05T20:10:14Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "Source of this is https://docs.scion.org/en/latest/cryptography/trc.html \r\n",
+              "createdAt": "2025-11-05T12:52:02Z",
+              "updatedAt": "2025-11-05T20:10:14Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "This got then changed in here https://github.com/scionassociation/scion-cppki_I-D/pull/40/files",
+              "createdAt": "2025-11-05T19:52:48Z",
+              "updatedAt": "2025-11-05T20:10:14Z"
+            },
+            {
+              "originalPosition": 8,
+              "body": "I left a reference to `signed-data content type` as it is in rfc5652 section 5. \r\n",
+              "createdAt": "2025-11-05T20:07:03Z",
+              "updatedAt": "2025-11-05T20:10:14Z"
             }
           ]
         }
@@ -4413,6 +4634,124 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 102,
+      "id": "PR_kwDOH386tM6xbx9A",
+      "title": "Probably old commits",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/102",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-11-04T14:27:00Z",
+      "updatedAt": "2025-11-04T14:43:45Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "2cb39357dc986ded818dd095cab5282e4f3cddf3",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Probably-Old-Commits",
+      "headRefOid": "f20fd33b12803fd83f358080e2d0e1a93560dd29",
+      "closedAt": "2025-11-04T14:43:33Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "There were no changes in this PR",
+          "createdAt": "2025-11-04T14:43:45Z",
+          "updatedAt": "2025-11-04T14:43:45Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 103,
+      "id": "PR_kwDOH386tM6xb4uO",
+      "title": "Clarifies Intro",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/103",
+      "state": "MERGED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #100 \r\nResolves #94",
+      "createdAt": "2025-11-04T14:35:33Z",
+      "updatedAt": "2025-11-04T22:45:43Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "2cb39357dc986ded818dd095cab5282e4f3cddf3",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Intro",
+      "headRefOid": "3b3df6961c0e0ae1d4b63477bc97ef2403df1f43",
+      "closedAt": "2025-11-04T22:45:40Z",
+      "mergedAt": "2025-11-04T22:45:39Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "f88b1b95d894f1cf347d7a01148abf4027cf9b73"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7Lx8Jk",
+          "commit": {
+            "abbreviatedOid": "3b3df69"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-11-04T22:45:19Z",
+          "updatedAt": "2025-11-04T22:45:19Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 104,
+      "id": "PR_kwDOH386tM6xcUi9",
+      "title": "Forward reference to voting certificates",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/104",
+      "state": "MERGED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #99 ",
+      "createdAt": "2025-11-04T15:08:11Z",
+      "updatedAt": "2025-11-05T21:26:27Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "f88b1b95d894f1cf347d7a01148abf4027cf9b73",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Forward-Reference-to-Voting-Certificates",
+      "headRefOid": "5a67a920014029695397a051c0cc0ab382e547b8",
+      "closedAt": "2025-11-05T21:26:25Z",
+      "mergedAt": "2025-11-05T21:26:25Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7MHfHR",
+          "commit": {
+            "abbreviatedOid": "5a67a92"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-11-05T21:26:20Z",
+          "updatedAt": "2025-11-05T21:26:20Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
