@@ -593,12 +593,11 @@ where `id-scion` specifies the root SCION object identifier (OID).
 
 The string representation of the ISD-AS number attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
+Voting AS and CA certificates MUST include the `ISD-AS number` attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
-The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
+For CA certificates, the inclusion of the `ISD-AS number`ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies. 
 
-CA certificates MUST include an ISD-AS number in their distinguished name so the control plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.
-
-**Note**: Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
+Voting-only certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
 ### Extensions {#exts}
 
@@ -1035,7 +1034,7 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 
 ### Certification Path - Trust Anchor Pool
 
-The certification path of a  Control PlaneAS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
+The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
 
 However, AS certificates and the corresponding signing CA certificates are **not** part of the TRC, but bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
 
