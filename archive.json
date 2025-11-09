@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-06T00:24:21.722663+00:00",
+  "timestamp": "2025-11-09T00:26:19.229576+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1177,10 +1177,41 @@
         "knmeynell"
       ],
       "labels": [],
-      "body": "The TRC ceremony docs were revamped in 2024 in https://github.com/scionproto/scion/pull/4615 . \nDoes the draft still match what is in various pages in the [scionproto docs](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html) and on the [Anapaya docs](https://learn.anapaya.net/docs/academy/cookbook/cppki-bootstrapping/)?\n@knmeynell could you compare?\n\nSome missing info I see: \n\n- [ ] [Voting certs - ISD](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html#regular-voting)  - Is the ISD-AS field compulsory or optional? And should it be verified during the ceremony?\n   > Docs: \nThe ISD-AS configuration field is optional, but should be provided if the party has an AS identifier, the ISD number must match with the TRC this certificate will be used in.\n  > Draft: \nThe ISD-AS number attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the issuer or subject field respectively.\n",
+      "body": "The TRC ceremony docs were revamped in 2024 in https://github.com/scionproto/scion/pull/4615 . \nDoes the draft still match what is in various pages in the [scionproto docs](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html) and on the [Anapaya docs](https://learn.anapaya.net/docs/academy/cookbook/cppki-bootstrapping/)?\n@knmeynell could you compare?\n\nSome missing info I see: \n\n   > Docs: \nThe ISD-AS configuration field is optional, but should be provided if the party has an AS identifier, the ISD number must match with the TRC this certificate will be used in.\n  > Draft: \nThe ISD-AS number attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the issuer or subject field respectively.\n",
       "createdAt": "2025-11-05T20:58:17Z",
-      "updatedAt": "2025-11-05T21:15:44Z",
+      "updatedAt": "2025-11-06T14:04:24Z",
       "closedAt": null,
+      "comments": [
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "What would be the reason the ISD-AS number would not be specified? ",
+          "createdAt": "2025-11-06T13:05:12Z",
+          "updatedAt": "2025-11-06T13:05:29Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "The Signing Ceremony in the draft seems aligned with the description at https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony.html, but I think it was originally taken from there anyway. However I've made the following changes:\n\n- Changed SHA256 (sic) to SHA-512 (as per the SCION docs)\n- Added specific references to self-signed certificates, although I think that was implied already\n- Clarified which certificate fields need to be checked/verified during the signing ceremony. I've put this step in Phase 2 (as suggested by Dominik), although I'd have thought this would make more sense in Phase 1. ",
+          "createdAt": "2025-11-06T14:04:24Z",
+          "updatedAt": "2025-11-06T14:04:24Z"
+        }
+      ]
+    },
+    {
+      "number": 107,
+      "id": "I_kwDOH386tM7WUs84",
+      "title": "[Voting certs - ISD](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html#regular-voting)  - Is the ISD-AS field compulsory or optional? And should it be verified during the ceremony?",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/107",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2025-11-06T13:04:02Z",
+      "updatedAt": "2025-11-06T13:59:41Z",
+      "closedAt": "2025-11-06T13:59:41Z",
       "comments": []
     }
   ],
@@ -4316,7 +4347,7 @@
       "labels": [],
       "body": "Resolves #77 ",
       "createdAt": "2025-09-03T12:17:42Z",
-      "updatedAt": "2025-11-05T20:51:26Z",
+      "updatedAt": "2025-11-06T14:46:17Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "f88b1b95d894f1cf347d7a01148abf4027cf9b73",
@@ -4327,7 +4358,22 @@
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> We could amend the addition about the Voting AS certificates as follows...\r\n\r\nOk, bu then we also have to amend the signing ceremony section (I don't have time to look at it in depth now)",
+          "createdAt": "2025-11-06T14:38:31Z",
+          "updatedAt": "2025-11-06T14:38:31Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "This has already been proposed as an amendment to the Signing Ceremony (in Phase 2).\r\n",
+          "createdAt": "2025-11-06T14:46:17Z",
+          "updatedAt": "2025-11-06T14:46:17Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH386tM7MGgz_",
@@ -4354,6 +4400,19 @@
               "updatedAt": "2025-11-05T20:51:26Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7MRcD-",
+          "commit": {
+            "abbreviatedOid": "077951f"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "We could amend the addition about the Voting AS certificates as follows...\r\n\r\nThe issuer and subject fields along with the public keys of Voting AS certificates must therefore be explicitly verified during the [Signing Ceremony](#initial-ceremony)",
+          "createdAt": "2025-11-06T09:21:50Z",
+          "updatedAt": "2025-11-06T09:22:25Z",
+          "comments": []
         }
       ]
     },
@@ -4752,6 +4811,58 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 106,
+      "id": "PR_kwDOH386tM6x464I",
+      "title": "Signing ceremony",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/106",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #105 ",
+      "createdAt": "2025-11-06T12:28:48Z",
+      "updatedAt": "2025-11-06T14:37:31Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Singing-Ceremony",
+      "headRefOid": "ab66b1ff4ab4403ab1fcde7fac7bede1d7cbd25c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 108,
+      "id": "PR_kwDOH386tM6x7lcB",
+      "title": "Clarification of ISD-AS usage",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/108",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Clarified when the ISD-AS attribute should be used in a certificate. ",
+      "createdAt": "2025-11-06T15:44:56Z",
+      "updatedAt": "2025-11-06T15:45:51Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "ISD-AS",
+      "headRefOid": "ff0158137b2b4e8bc948d93627015bffbce04f55",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
