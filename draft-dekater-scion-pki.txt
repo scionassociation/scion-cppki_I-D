@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 9 May 2026                                              S. Hitz
+Expires: 16 May 2026                                             S. Hitz
                                                          Anapaya Systems
-                                                         5 November 2025
+                                                        12 November 2025
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 May 2026.
+   This Internet-Draft will expire on 16 May 2026.
 
 Copyright Notice
 
@@ -477,12 +477,15 @@ Table of Contents
 
                  Figure 1: Chain of trust within an ISD
 
-   All certificates used in the Control plane PKI are in X.509 v3 format
+   All certificates used in the Control Plane PKI are in X.509 v3 format
    [RFC5280] and additionally the TRC contains self-signed certificates
    instead of plain public keys.  Self-signed certificates have the
    following advantages over plain public keys: (1) They make the
    binding between name and public key explicit; and (2) the binding is
-   signed to prove possession of the corresponding private key.
+   signed to prove possession of the corresponding private key.  The
+   public keys of Voting AS certificates must therefore be explicitly
+   verified during the Signing Ceremony (Appendix "Appendix A.  Signing
+   Ceremony Initial TRC").
 
    All ASes in SCION have the task to sign and verify control plane
    messages.  However, certain ASes have additional roles:
