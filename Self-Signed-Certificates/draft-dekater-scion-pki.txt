@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 9 May 2026                                              S. Hitz
+Expires: 16 May 2026                                             S. Hitz
                                                          Anapaya Systems
-                                                         5 November 2025
+                                                        12 November 2025
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 9 May 2026.
+   This Internet-Draft will expire on 16 May 2026.
 
 Copyright Notice
 
@@ -393,12 +393,12 @@ Table of Contents
 
 1.4.1.  Updates and Trust Resets
 
-   There are two types of TRC updates: regular and sensitive.  A
-   *regular TRC update* is a periodic re-issuance of the TRC where the
-   entities and policies listed in the TRC remain unchanged, whereas a
-   *sensitive TRC update* is an update that modifies critical aspects of
-   the TRC, such as the set of core ASes.  In both cases the base TRC
-   remains unchanged.
+   There are two types of TRC updates: regular and sensitive (see
+   Section 3.1.5).  A *regular TRC update* is a periodic re-issuance of
+   the TRC where the entities and policies listed in the TRC remain
+   unchanged, whereas a *sensitive TRC update* is an update that
+   modifies critical aspects of the TRC, such as the set of core ASes.
+   In both cases the base TRC remains unchanged.
 
    If the ISD's TRC has been compromised, it is necessary for an ISD to
    re-establish the trust root.  This is possible with a process called
@@ -1319,8 +1319,8 @@ Table of Contents
 3.1.  TRC Specification
 
    The TRC is a signed collection of [X.509] v3 certificates.
-   Additionally, the TRC contains ISD-specific policies encoded in a
-   Cryptographic Message Syntax (CMS) [RFC5652] envelope.
+   Additionally, the TRC contains ISD-specific policies encoded in CMS
+   signed-data ([RFC5652] section 5).
 
    The TRC's certificates collection consists of a set of control plane
    root certificates which build the root of the certification chain for
@@ -1743,15 +1743,10 @@ Table of Contents
    A TRC contains policy information about an ISD and acts as a
    distribution mechanism for the trust anchors of that ISD.
 
-   Each TRC is digitally signed and the syntax used to sign and
-   encapsulate the TRC payload is the Cryptographic Message Syntax (CMS)
-   as defined in [RFC5652].  The signed TRC payload is of the CMS
-   signed-data content type, as defined in Section 5 of [RFC5652], and
-   encapsulated in a CMS ContentInfo element, as defined in Section 3 of
-   [RFC5652].
-
-   For detailed information on the general syntax definitions of the
-   Cryptographic Message Syntax, see sections 3 and 5 of [RFC5652].
+   Each TRC is digitally signed using the Cryptographic Message Syntax
+   (CMS).  The signed TRC payload uses the CMS signed-data content type
+   as specified in Section 5 of [RFC5652], and is encapsulated in a CMS
+   ContentInfo element, as defined in Section 3 of [RFC5652].
 
 3.1.3.1.  SCION-specific rules
 
@@ -1791,8 +1786,8 @@ Table of Contents
          also Section 5.3 of [RFC5652]).
 
       -  The algorithm specified in the signatureAlgorithm field MUST be
-         one of the algorithms supported by SCION (for details, see
-         signature Field - Additional Information (Section 2.2.1.1)).
+         one of the algorithms supported by SCION . For details, see
+         signature Field - Additional Information (Section 2.2.1.1).
 
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
