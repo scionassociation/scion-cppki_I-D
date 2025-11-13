@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-09T00:26:19.229576+00:00",
+  "timestamp": "2025-11-13T00:24:18.805952+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -779,7 +779,7 @@
       "id": "I_kwDOH386tM7DxEXe",
       "title": "Self-Signed Voting Certificates",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/77",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -788,8 +788,8 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.5 Overview of Certificates, Keys and Roles\"\n\nSelf-Signed certificates just add some identity information to a public key for easier identification. They do not increase security unless their public key is verified explicitly upon each use because an attacker can easily falsify any self-signed certificate with every detail of the original, including the signature applied with the fake private key. In this section, a cross reference to the TRC Ceremony could be added, where the public keys of the voting certificates must explicitly be verified. ",
       "createdAt": "2025-08-01T16:06:49Z",
-      "updatedAt": "2025-11-05T20:35:17Z",
-      "closedAt": null,
+      "updatedAt": "2025-11-12T09:11:38Z",
+      "closedAt": "2025-11-12T09:11:38Z",
       "comments": []
     },
     {
@@ -4340,24 +4340,26 @@
       "id": "PR_kwDOH386tM6mo42b",
       "title": "Self signed certificates",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/89",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #77 ",
       "createdAt": "2025-09-03T12:17:42Z",
-      "updatedAt": "2025-11-06T14:46:17Z",
+      "updatedAt": "2025-11-12T09:11:40Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "f88b1b95d894f1cf347d7a01148abf4027cf9b73",
+      "baseRefOid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Self-Signed-Certificates",
-      "headRefOid": "077951fa99ce82240516aea01c93cccd10c92d70",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "6f9f2a1b5756398316f14c18d5dcea57333bcefc",
+      "closedAt": "2025-11-12T09:11:38Z",
+      "mergedAt": "2025-11-12T09:11:37Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "1ad695d631b137b0419c0e42577bbf31b8dea104"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -4369,9 +4371,9 @@
         {
           "author": "knmeynell",
           "authorAssociation": "CONTRIBUTOR",
-          "body": "This has already been proposed as an amendment to the Signing Ceremony (in Phase 2).\r\n",
+          "body": "This has already been proposed as an amendment to the Signing Ceremony (in Phase 2). in #106 \r\n",
           "createdAt": "2025-11-06T14:46:17Z",
-          "updatedAt": "2025-11-06T14:46:17Z"
+          "updatedAt": "2025-11-12T09:07:25Z"
         }
       ],
       "reviews": [
@@ -4412,6 +4414,52 @@
           "body": "We could amend the addition about the Voting AS certificates as follows...\r\n\r\nThe issuer and subject fields along with the public keys of Voting AS certificates must therefore be explicitly verified during the [Signing Ceremony](#initial-ceremony)",
           "createdAt": "2025-11-06T09:21:50Z",
           "updatedAt": "2025-11-06T09:22:25Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM7NlBI5",
+          "commit": {
+            "abbreviatedOid": "077951f"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "Okay",
+          "createdAt": "2025-11-11T16:59:41Z",
+          "updatedAt": "2025-11-11T16:59:41Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM7NxwIf",
+          "commit": {
+            "abbreviatedOid": "077951f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-11-12T09:09:40Z",
+          "updatedAt": "2025-11-12T09:09:40Z",
+          "comments": [
+            {
+              "originalPosition": 5,
+              "body": "Resolved in #106 ",
+              "createdAt": "2025-11-12T09:09:40Z",
+              "updatedAt": "2025-11-12T09:09:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7NxwZk",
+          "commit": {
+            "abbreviatedOid": "6f9f2a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-11-12T09:09:52Z",
+          "updatedAt": "2025-11-12T09:09:52Z",
           "comments": []
         }
       ]
