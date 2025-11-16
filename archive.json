@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-13T00:24:18.805952+00:00",
+  "timestamp": "2025-11-16T00:26:17.510838+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -4896,9 +4896,9 @@
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Clarified when the ISD-AS attribute should be used in a certificate. ",
+      "body": "Resolves #105\r\nClarified when the ISD-AS attribute should be used in a certificate. ",
       "createdAt": "2025-11-06T15:44:56Z",
-      "updatedAt": "2025-11-06T15:45:51Z",
+      "updatedAt": "2025-11-14T09:35:19Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4",
