@@ -306,7 +306,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~~
 {: #figure-1 title="Chain of trust within an ISD"}
 
-All certificates used in the Control plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key.
+All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the [Signing Ceremony](#initial-ceremony).
 
 All ASes in SCION have the task to sign and verify control plane messages. However, certain ASes have additional roles:
 
@@ -591,14 +591,13 @@ where `id-scion` specifies the root SCION object identifier (OID).
 **Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
-The string representation of the ISD-AS number attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
+Voting AS and CA certificates MUST include the `ISD-AS number` attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
-The `ISD-AS number` attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
+For CA certificates, the inclusion of the `ISD-AS number` ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.
 
-CA certificates MUST include an ISD-AS number in their distinguished name so the control plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.
-
-**Note**: Voting certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
+Voting-only certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
 ### Extensions {#exts}
 
@@ -1035,7 +1034,7 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 
 ### Certification Path - Trust Anchor Pool
 
-The certification path of a  Control PlaneAS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
+The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
 
 However, AS certificates and the corresponding signing CA certificates are **not** part of the TRC, but bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
 
@@ -1469,7 +1468,7 @@ For each bundled certificate, the voting representatives MUST then verify the ce
 
 - `issuer`
 - `subject`
-- `validity
+- `validity`
 - `signature`
 
 Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to [](#trcpayload) and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.
@@ -1497,6 +1496,11 @@ The Signing Ceremony is completed once when every voting representative confirms
 {:numbered="false"}
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
+
+## draft-dekater-scion-pki-11
+{:numbered="false"}
+
+- Signing ceremony: minor updates to align with current process
 
 ## draft-dekater-scion-pki-10
 {:numbered="false"}
