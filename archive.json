@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-16T00:26:17.510838+00:00",
+  "timestamp": "2025-11-18T00:24:27.718178+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1170,7 +1170,7 @@
       "id": "I_kwDOH386tM7WJW6R",
       "title": "Singing ceremony - verify alignment with current scionproto docs and Anapaya",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/105",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1179,8 +1179,8 @@
       "labels": [],
       "body": "The TRC ceremony docs were revamped in 2024 in https://github.com/scionproto/scion/pull/4615 . \nDoes the draft still match what is in various pages in the [scionproto docs](https://docs.scion.org/en/latest/cryptography/trc-signing-ceremony-preparations.html) and on the [Anapaya docs](https://learn.anapaya.net/docs/academy/cookbook/cppki-bootstrapping/)?\n@knmeynell could you compare?\n\nSome missing info I see: \n\n   > Docs: \nThe ISD-AS configuration field is optional, but should be provided if the party has an AS identifier, the ISD number must match with the TRC this certificate will be used in.\n  > Draft: \nThe ISD-AS number attribute MUST be present exactly once in the distinguished name of the certificate issuer or owner, specified in the issuer or subject field respectively.\n",
       "createdAt": "2025-11-05T20:58:17Z",
-      "updatedAt": "2025-11-06T14:04:24Z",
-      "closedAt": null,
+      "updatedAt": "2025-11-17T08:36:09Z",
+      "closedAt": "2025-11-17T08:36:09Z",
       "comments": [
         {
           "author": "knmeynell",
@@ -4865,25 +4865,33 @@
       "id": "PR_kwDOH386tM6x464I",
       "title": "Signing ceremony",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/106",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves #105 ",
       "createdAt": "2025-11-06T12:28:48Z",
-      "updatedAt": "2025-11-06T14:37:31Z",
+      "updatedAt": "2025-11-17T08:42:07Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4",
+      "baseRefOid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Singing-Ceremony",
-      "headRefOid": "ab66b1ff4ab4403ab1fcde7fac7bede1d7cbd25c",
-      "closedAt": null,
+      "headRefOid": "ea7b20308319758db5492d6246cb48a1da4b3cdc",
+      "closedAt": "2025-11-17T08:42:06Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Already merged in #108 ",
+          "createdAt": "2025-11-17T08:42:06Z",
+          "updatedAt": "2025-11-17T08:42:06Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -4891,26 +4899,55 @@
       "id": "PR_kwDOH386tM6x7lcB",
       "title": "Clarification of ISD-AS usage",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/108",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #105\r\nClarified when the ISD-AS attribute should be used in a certificate. ",
+      "body": "Resolves #105\r\nResolves #107\r\nClarified when the ISD-AS attribute should be used in a certificate. ",
       "createdAt": "2025-11-06T15:44:56Z",
-      "updatedAt": "2025-11-14T09:35:19Z",
+      "updatedAt": "2025-11-17T08:36:13Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "4bf55ffe0e02372167e74539c02fb8a7630b2ec4",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "ISD-AS",
-      "headRefOid": "ff0158137b2b4e8bc948d93627015bffbce04f55",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "efb23b9435fb4ccccb4a682f93be9f66ec02b9ac",
+      "closedAt": "2025-11-17T08:36:08Z",
+      "mergedAt": "2025-11-17T08:36:08Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7MlZKC",
+          "commit": {
+            "abbreviatedOid": "efb23b9"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "I had a quick look and it looks good at a first sight, however I want to look at the changes one more time. Let's talk before merging",
+          "createdAt": "2025-11-07T08:57:17Z",
+          "updatedAt": "2025-11-16T21:13:18Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "Why did this change? Was it changed when the ceremony documents were updated? \r\n(not that it makes much of a difference tough.. it is just a hash)",
+              "createdAt": "2025-11-07T08:57:17Z",
+              "updatedAt": "2025-11-16T21:13:18Z"
+            },
+            {
+              "originalPosition": 57,
+              "body": "Discussed with Kevin, it was updated by Anapaya in the docs. We can leave it with SHA512",
+              "createdAt": "2025-11-14T09:34:01Z",
+              "updatedAt": "2025-11-16T21:13:18Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
