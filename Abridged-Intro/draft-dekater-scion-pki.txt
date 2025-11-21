@@ -178,7 +178,6 @@ Table of Contents
    deployed, to encourage interoperability among implementations, and to
    introduce new concepts that can potentially be further improved to
    address particular problems with the current Internet architecture.
-   Deliberate error introduced.
 
 1.1.  Terminology
 
