@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-11-18T00:24:27.718178+00:00",
+  "timestamp": "2025-11-23T00:28:05.532108+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -4948,6 +4948,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 109,
+      "id": "PR_kwDOH386tM60mv0o",
+      "title": "Abridged Intro",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/109",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Abridges and aligns Intro with Data Plane Draft\r\nResolves https://github.com/scionassociation/scion-dp_I-D/issues/119 ",
+      "createdAt": "2025-11-20T14:10:56Z",
+      "updatedAt": "2025-11-21T14:41:11Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Abridged-Intro",
+      "headRefOid": "bc86145975177e9fc49b1f728a18f12d390f391d",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
