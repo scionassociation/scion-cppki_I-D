@@ -2582,7 +2582,7 @@ Table of Contents
 Acknowledgments
 
    Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
-   Prado (ETH Zurich), Russ Housley (IETF)and Kevin Meynell (SCION
+   Prado (ETH Zurich), Russ Housley (IETF) and Kevin Meynell (SCION
    Association) for reviewing this document.  We are also very grateful
    to Adrian Perrig (ETH Zurich), for providing guidance and feedback
    about each aspect of SCION.  Finally, we are indebted to the SCION
