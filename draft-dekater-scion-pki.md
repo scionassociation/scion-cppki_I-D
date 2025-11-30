@@ -172,9 +172,9 @@ The SCION architecture was initially developed outside of the IETF by ETH Zurich
 
 **Control Plane PKI (CP-PKI)**: The control plane PKI is the public-key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
 
-**Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider or organization can constitute an AS.
+**Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider, company, or university can constitute an AS. Although SCION ASes have a similar role to BGP ASes, they have a different address scheme and serve as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.
 
-**Isolation Domain (ISD)**: In SCION, Autonomous Systems (ASes) are organized into logical groups called isolation domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (i.e., a common jurisdiction).
+**Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
 **Core AS**: Each isolation domain (ISD) is administered by a set of distinguished autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process known as "beaconing".
 
@@ -218,7 +218,7 @@ Thus, there is a need for a trust architecture that supports meaningful trust ro
 
 Ideally, the trust architecture allows parties that mutually trust each other to form their own trust "union" or "domain", and to freely decide whether to trust other trust unions (domains) outside their own trust bubble.
 
-To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of ASes that share a uniform trust environment (i.e. a common jurisdiction).
+To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
 An ISD is administered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core; these are the **core ASes**. The set of core and voting ASes can, but do not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
@@ -1367,7 +1367,7 @@ The ISD and SCION AS number are SCION-specific numbers. They are currently alloc
 # Acknowledgments
 {:numbered="false"}
 
-Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF)and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
 
 # Deployment Testing: SCIONLab
