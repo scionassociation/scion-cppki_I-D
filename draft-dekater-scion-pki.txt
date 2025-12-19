@@ -187,14 +187,19 @@ Table of Contents
    procedures that are used to manage trust root configurations (TRCs)
    and certificates.
 
-   *Autonomous System (AS)*: An autonomous system is a network under a
-   common administrative control.  For example, the network of an
-   Internet service provider or organization can constitute an AS.
+   *SCION Autonomous System (AS)*: A SCION Autonomous System is a
+   network under a common administrative control.  For example, the
+   network of a SCION service provider, company, or university can
+   constitute an AS.  While functionally similar to a BGP AS, a SCION AS
+   operates within an Isolation Domain (ISD), it utilizes a different
+   address scheme and serves as a locator in the addressing of end
+   hosts.  References to ASes throughout this document refer to SCION
+   ASes.
 
-   *Isolation Domain (ISD)*: In SCION, Autonomous Systems (ASes) are
-   organized into logical groups called isolation domains or ISDs.  Each
-   ISD consists of ASes that span an area with a uniform trust
-   environment (i.e., a common jurisdiction).
+   *Isolation Domain (ISD)*: SCION ASes are organized into logical
+   groups called Isolation Domains or ISDs.  Each ISD consists of ASes
+   that span an area with a uniform trust environment (e.g. a common
+   jurisdiction).
 
    *Core AS*: Each isolation domain (ISD) is administered by a set of
    distinguished autonomous systems (ASes) called core ASes, which are
@@ -301,8 +306,8 @@ Table of Contents
    domain networking, SCION introduces the concept of *Isolation
    Domains*. An Isolation Domain (ISD) is a building block for achieving
    high availability, scalability, and support for heterogeneous trust.
-   It consists of a logical grouping of ASes that share a uniform trust
-   environment (i.e. a common jurisdiction).
+   It consists of a logical grouping of SCION ASes that share a uniform
+   trust environment (i.e. a common jurisdiction).
 
    An ISD is administered by one or multiple ASes, called the *voting
    ASes*. Furthermore, each ISD has a set of ASes that form the ISD
@@ -2578,14 +2583,14 @@ Table of Contents
 Acknowledgments
 
    Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
-   Prado (ETH Zurich) and Russ Housley (IETF) for reviewing this
-   document.  We are also very grateful to Adrian Perrig (ETH Zurich),
-   for providing guidance and feedback about each aspect of SCION.
-   Finally, we are indebted to the SCION development teams of Anapaya
-   and ETH Zurich, for their practical knowledge and for the
-   documentation about the CP PKI, as well as to the authors of
-   [CHUAT22] - the book is an important source of input and inspiration
-   for this draft.
+   Prado (ETH Zurich), Russ Housley (IETF) and Kevin Meynell (SCION
+   Association) for reviewing this document.  We are also very grateful
+   to Adrian Perrig (ETH Zurich), for providing guidance and feedback
+   about each aspect of SCION.  Finally, we are indebted to the SCION
+   development teams of Anapaya and ETH Zurich, for their practical
+   knowledge and for the documentation about the CP PKI, as well as to
+   the authors of [CHUAT22] - the book is an important source of input
+   and inspiration for this draft.
 
 Deployment Testing: SCIONLab
 
@@ -2796,6 +2801,12 @@ Change Log
 draft-dekater-scion-pki-11
 
    *  Signing ceremony: minor updates to align with current process
+
+   *  Clarify distinction between SCION ASes and BGP ASes through the
+      text.
+
+   *  Intro: remove duplicated motivation and component description and
+      add a reference to the same text in -controlplane
 
 draft-dekater-scion-pki-10
 
