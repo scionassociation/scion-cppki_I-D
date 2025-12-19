@@ -2802,6 +2802,12 @@ draft-dekater-scion-pki-11
 
    *  Signing ceremony: minor updates to align with current process
 
+   *  Clarify distinction between SCION ASes and BGP ASes through the
+      text.
+
+   *  Intro: remove duplicated motivation and component description and
+      add a reference to the same text in -controlplane
+
 draft-dekater-scion-pki-10
 
    *  removed ISD assignment table and replaced to reference in control-
