@@ -1491,6 +1491,8 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Signing ceremony: minor updates to align with current process
+- Clarify distinction between SCION ASes and BGP ASes through the text.
+- Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
 
 ## draft-dekater-scion-pki-10
 {:numbered="false"}
