@@ -172,7 +172,7 @@ The SCION architecture was initially developed outside of the IETF by ETH Zurich
 
 **Control Plane PKI (CP-PKI)**: The control plane PKI is the public-key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
 
-**Autonomous System (AS)**: An autonomous system is a network under a common administrative control. For example, the network of an Internet service provider, company, or university can constitute an AS. Although SCION ASes have a similar role to BGP ASes, they have a different address scheme and serve as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.
+**SCION Autonomous System (AS)**: A SCION Autonomous System is a network under a common administrative control. For example, the network of a SCION service provider, company, or university can constitute an AS. While functionally similar to a BGP AS, a SCION AS operates within an Isolation Domain (ISD), it utilizes a different address scheme and serves as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.
 
 **Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
