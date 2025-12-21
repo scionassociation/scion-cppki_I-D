@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-02T00:25:03.665600+00:00",
+  "timestamp": "2025-12-21T00:28:09.978505+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -970,7 +970,7 @@
       "id": "I_kwDOH386tM7DxUE8",
       "title": "CA certificates - evaluate use of link certificates",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/86",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -980,9 +980,17 @@
       ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Sections 2.1.2, 2.1.3 & 2.1.4\"\n\nRoot Certificates (added to the TRC) are recommended to be valid for just one year only. This requires that a Root CA is replaced by its successor every year in a TRC ceremony. (Sensitive TRC update).\n\nWould it be conceivable to introduce the concept of link certificates to transfer the trust from one root CA to another in order to reduce the effort involved in sensitive TRC updates?\n\nConcept taken from ICAO Doc 9303 part12:\n\nA specific link certificate is signed by the Root CA key which is to be decommissioned. The public key contained within the link certificate is the one of the new root key. The link certificate technically looks like a certificate issued to a sub-CA, but it is used differently. It has a shorter lifetime and must not be used to sign any other certificates. It is solely used to transfer the trust from the old root key to the new key. The old key confirms the rise of the new one.\n\nThe current strategy to let the CA sign the new TRC with the old CA key also works, but it requires a TRC update. On the other hand, link certificates would not require a TRC update, but the clients would need to maintain the list of link certificates from the root in the TRC down to the current CA certificate which also introduces some complexity.\n",
       "createdAt": "2025-08-01T16:28:57Z",
-      "updatedAt": "2025-08-28T09:56:02Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-12-19T17:11:58Z",
+      "closedAt": "2025-12-19T17:11:58Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "This is for future protocol evolution. It was discussed with the TC but it won't be possible to add this into the draft, which discusses the current implementation.",
+          "createdAt": "2025-12-19T17:11:58Z",
+          "updatedAt": "2025-12-19T17:11:58Z"
+        }
+      ]
     },
     {
       "number": 87,
@@ -4952,48 +4960,106 @@
     {
       "number": 109,
       "id": "PR_kwDOH386tM60mv0o",
-      "title": "Abridged Intro",
+      "title": "Abridged Intro to reference to motivation in controlplane",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/109",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Abridges and aligns Intro with Data Plane Draft\r\nResolves https://github.com/scionassociation/scion-dp_I-D/issues/119 ",
       "createdAt": "2025-11-20T14:10:56Z",
-      "updatedAt": "2025-11-21T14:41:11Z",
+      "updatedAt": "2025-12-19T16:51:15Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Abridged-Intro",
       "headRefOid": "bc86145975177e9fc49b1f728a18f12d390f391d",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2025-12-19T16:51:14Z",
+      "mergedAt": "2025-12-19T16:51:14Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "108d63491714f9ec61f6b223eecf914594c84d22"
+      },
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7WiaMI",
+          "commit": {
+            "abbreviatedOid": "bc86145"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-19T16:51:09Z",
+          "updatedAt": "2025-12-19T16:51:09Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 110,
       "id": "PR_kwDOH386tM62MqSu",
-      "title": "Terminology clarifications",
+      "title": "Terminology: Clarify use of Use of \"AS\" & Internet",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/110",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "Resolves https://github.com/scionassociation/scion-cp_I-D/issues/167 ",
       "createdAt": "2025-11-30T18:38:02Z",
-      "updatedAt": "2025-11-30T18:50:31Z",
+      "updatedAt": "2025-12-19T17:00:30Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6",
+      "baseRefOid": "108d63491714f9ec61f6b223eecf914594c84d22",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Terminology-Clarifications",
-      "headRefOid": "888b684b00ec61e30e654c00e7a4fa50040643cc",
+      "headRefOid": "8537270f12bff2b51e0b9e08f6c930d07c1086f4",
+      "closedAt": "2025-12-19T17:00:26Z",
+      "mergedAt": "2025-12-19T17:00:26Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7Wigon",
+          "commit": {
+            "abbreviatedOid": "8537270"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-19T17:00:21Z",
+          "updatedAt": "2025-12-19T17:00:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 111,
+      "id": "PR_kwDOH386tM653E2a",
+      "title": "acknowledgements",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/111",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #101\r\nResolves #87",
+      "createdAt": "2025-12-19T17:15:42Z",
+      "updatedAt": "2025-12-19T17:15:42Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "ops-considerations",
+      "headRefOid": "21e907e8c9867b1faaa67105b720f7e562e112f7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
