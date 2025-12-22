@@ -159,7 +159,7 @@ SCION relies on three main components:
 
 *PKI* - providing cryptographic material within an unique trust model. It is described in this document.
 
-*Control Plane* -  performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
+*Control Plane* - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
 
 *Data Plane* - carrying out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. It is described in {{I-D.dekater-scion-dataplane}}.
 
