@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-21T00:28:09.978505+00:00",
+  "timestamp": "2025-12-23T00:25:43.479843+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5053,13 +5053,13 @@
       "labels": [],
       "body": "Resolves #101\r\nResolves #87",
       "createdAt": "2025-12-19T17:15:42Z",
-      "updatedAt": "2025-12-19T17:15:42Z",
+      "updatedAt": "2025-12-22T09:06:06Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "ops-considerations",
-      "headRefOid": "21e907e8c9867b1faaa67105b720f7e562e112f7",
+      "headRefOid": "bd430e1a62f03819f272e9245af536c171b45197",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
