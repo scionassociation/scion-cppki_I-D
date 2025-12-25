@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-23T00:25:43.479843+00:00",
+  "timestamp": "2025-12-25T00:25:56.314097+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5044,7 +5044,7 @@
     {
       "number": 111,
       "id": "PR_kwDOH386tM653E2a",
-      "title": "acknowledgements",
+      "title": "Deployment Considerations",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/111",
       "state": "OPEN",
       "author": "nicorusti",
@@ -5053,7 +5053,7 @@
       "labels": [],
       "body": "Resolves #101\r\nResolves #87",
       "createdAt": "2025-12-19T17:15:42Z",
-      "updatedAt": "2025-12-22T09:06:06Z",
+      "updatedAt": "2025-12-23T16:28:51Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
