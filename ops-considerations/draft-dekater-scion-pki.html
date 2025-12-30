@@ -1292,6 +1292,9 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
                 <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-pki-availability" class="internal xref">PKI availability</a></p>
 </li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-processes" class="internal xref">Processes</a></p>
+</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.6">
@@ -3643,6 +3646,21 @@ It is therefore recommended to deploy multiple, independent CAs within an ISD th
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
+<div id="processes">
+<section id="section-5.2">
+        <h3 id="name-processes">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-processes" class="section-name selfRef">Processes</a>
+        </h3>
+<p id="section-5.2-1">An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
+  - roles and responsibilities
+  - processes
+  - admission criteria
+  - protection measures for keys (e.g., use of HSMs)
+  - actions in case of compromise or regulations breach
+  - governance structure<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-2">This drafts describes a typical TRC signing ceremony in <a href="#initial-ceremony" class="auto internal xref">Appendix "Appendix A. Signing Ceremony Initial TRC"</a>, further processes are outside of the scope of this document.<a href="#section-5.2-2" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 <div id="security-considerations">
@@ -3684,7 +3702,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
               <p id="section-6.1.1-2.2.1">At CA level: If the private key related to a CA certificate is compromised, the impacted CA AS <span class="bcp14">MUST</span> obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.3">
-              <p id="section-6.1.1-2.3.1">At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-2.3.1">At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>

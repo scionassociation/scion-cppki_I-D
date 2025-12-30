@@ -119,6 +119,7 @@ Table of Contents
      4.3.  Creating a New Control Plane AS Certificate
    5.  Deployment Considerations
      5.1.  PKI availability
+     5.2.  Processes
    6.  Security Considerations
      6.1.  Compromise of an ISD
        6.1.1.  Recovery from Compromise
@@ -2352,6 +2353,19 @@ Table of Contents
    be able to quickly switch over to a backup CA to renew their
    certificates in time.
 
+5.2.  Processes
+
+   An ISD is governed by voting ASes.  In existing deployments, voting
+   ASes may produce a regulations document to facilitate operations.
+   Such document typically describes: - roles and responsibilities -
+   processes - admission criteria - protection measures for keys (e.g.,
+   use of HSMs) - actions in case of compromise or regulations breach -
+   governance structure
+
+   This drafts describes a typical TRC signing ceremony in
+   Appendix "Appendix A.  Signing Ceremony Initial TRC", further
+   processes are outside of the scope of this document.
+
 6.  Security Considerations
 
    SCION fundamentally differs from a global monopolistic trust model as
@@ -2420,7 +2434,7 @@ Table of Contents
 
    *  At AS level: In the event of a key compromise of a (non-core) AS,
       the impacted AS needs to obtain a new certificate from its CA.
-      This process will vary depending on internal issuance protocols.
+      This process will vary depending on internal issuance processes.
 
 6.2.  Denial of Service Attacks
 
