@@ -553,13 +553,15 @@ The `signature` field contains information about the signature algorithm. Curren
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
-SCION implementations MUST include support for the ECDSA curves below. Other algorithms or curves MAY be used in the future.
+SCION implementations MUST include support for the ECDSA curves below.
 
 - NIST P-256 (NISTFIPS186-4, section D.1.2.3) (named `secp256r1` in {{RFC5480}})
 - NIST P-384 (NISTFIPS186-4, section D.1.2.4) (named `secp384r1` in {{RFC5480}})
 - NIST P-521 (NISTFIPS186-4, section D.1.2.5) (named `secp521r1` in {{RFC5480}})
 
 The OIDs for the above curves are specified in section 2.1.1.1 of {{RFC5480}}.
+
+Other algorithms or curves MAY be employed. Implementations deviating from the mandatory set generally lose the guarantee of global interoperability. Such configurations are suitable primarily for isolated ISDs that do not require external interconnection. Future protocol versions may update the set of mandatory-to-implement algorithms.
 
 The appropriate hash size to use when producing a signature with an ECDSA key is:
 
@@ -1491,6 +1493,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Signing ceremony: minor updates to align with current process
+- Signature field: clarify process and implications of using other algorithms or curves
 - Clarify distinction between SCION ASes and BGP ASes through the text.
 - Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
 
