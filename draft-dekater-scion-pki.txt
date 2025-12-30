@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 22 June 2026                                            S. Hitz
+Expires: 3 July 2026                                             S. Hitz
                                                          Anapaya Systems
-                                                        19 December 2025
+                                                        30 December 2025
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 June 2026.
+   This Internet-Draft will expire on 3 July 2026.
 
 Copyright Notice
 
@@ -122,6 +122,7 @@ Table of Contents
        5.1.1.  Compromise of an ISD
        5.1.2.  Recovery from Compromise
      5.2.  Denial of Service Attacks
+     5.3.  TRC Distribution
    6.  IANA Considerations
    7.  References
      7.1.  Normative References
@@ -2451,6 +2452,19 @@ Table of Contents
    *  ISDs could create policies and processes to renew certificates
       out-of-band
 
+5.3.  TRC Distribution
+
+   Base TRCs act as an ISD root of trust (see Section 1.4).
+
+   If an endpoint retrieves the initial TRC in-band (e.g., from a local
+   control service or a resolution server) without prior validation, it
+   effectively operates under a "Trust on First Use" (TOFU) assumption.
+   Care should therefore be taken in trusting the TRC source.
+
+   Should an AS be provisioned with a malicious TRC, it would not be
+   able to communicate to other ASes in the affected ISD, limiting
+   impact of a malicious TRC.
+
 6.  IANA Considerations
 
    This document has no IANA actions.
@@ -2807,6 +2821,8 @@ draft-dekater-scion-pki-11
 
    *  Intro: remove duplicated motivation and component description and
       add a reference to the same text in -controlplane
+
+   *  Security considerations: new section on TRC Distribution
 
 draft-dekater-scion-pki-10
 
