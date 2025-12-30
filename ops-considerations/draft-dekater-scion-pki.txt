@@ -2345,10 +2345,12 @@ Table of Contents
    The Control Plane PKI relies on short-lived certificates as an
    alternative to revocation, as described in Section 1.4.2.  AS
    certificates typically have a validity of days (see Table 2), except
-   the first issued AS certificate.  Should an AS not be able to renew
-   certificates, it would be cut off from the network.  It is therefore
-   recommended to deploy multiple, independent CAs within an ISD that
-   can issue certificates to all member ASes.
+   for the first issued AS certificate.  Should an AS not be able to
+   renew certificates, it would be cut off from the network.  It is
+   therefore recommended to deploy multiple, independent CAs within an
+   ISD that can issue certificates to all member ASes.  ASes should then
+   be able to quickly switch over to a backup CA to renew their
+   certificates in time.
 
 6.  Security Considerations
 
