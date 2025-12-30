@@ -1248,7 +1248,6 @@ SCION requires that control plane messages are signed. The main purpose of the C
 
 The following sections specify the requirements that apply to the signing and verification of control plane messages.
 
-
 ### Signing a Control Plane Message
 
 An AS signs control plane messages with the private key that corresponds to the (valid) AS' certificate.
@@ -1308,9 +1307,11 @@ When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as 
 
 ## PKI availability
 
-The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except the first issued AS certificate.
+The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except for the first issued AS certificate.
 Should an AS not be able to renew certificates, it would be cut off from the network.
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes.
+ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
+
 
 # Security Considerations
 
