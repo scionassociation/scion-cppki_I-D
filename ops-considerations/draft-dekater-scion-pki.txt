@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 25 June 2026                                            S. Hitz
+Expires: 3 July 2026                                             S. Hitz
                                                          Anapaya Systems
-                                                        22 December 2025
+                                                        30 December 2025
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 25 June 2026.
+   This Internet-Draft will expire on 3 July 2026.
 
 Copyright Notice
 
@@ -117,15 +117,16 @@ Table of Contents
        4.2.1.  Signing a Control Plane Message
        4.2.2.  Verifying a Control Plane Message
      4.3.  Creating a New Control Plane AS Certificate
-   5.  Security Considerations
-     5.1.  Dependency on Certificates
-       5.1.1.  Compromise of an ISD
-       5.1.2.  Recovery from Compromise
-     5.2.  Denial of Service Attacks
-   6.  IANA Considerations
-   7.  References
-     7.1.  Normative References
-     7.2.  Informative References
+   5.  Deployment Considerations
+     5.1.  PKI availability
+   6.  Security Considerations
+     6.1.  Compromise of an ISD
+       6.1.1.  Recovery from Compromise
+     6.2.  Denial of Service Attacks
+   7.  IANA Considerations
+   8.  References
+     8.1.  Normative References
+     8.2.  Informative References
    Acknowledgments
    Deployment Testing: SCIONLab
    Appendix A.  Signing Ceremony Initial TRC
@@ -718,7 +719,9 @@ Table of Contents
 
    (1) Multiple signatures and certificates of each type MAY be included
    in a TRC.
-   (2) Recommended maximum validity period.
+   (2) Recommended maximum validity period.  Note that initial AS
+   certificates may have a longer validity (e.g. 10-30 days) to allow
+   for enough time for deployment.
    (3) A validity of 11 days with 4 days overlap between two CA
    certificates is RECOMMENDED to enable the best possible operational
    procedures when performing a CA certificate rollover.
@@ -2335,24 +2338,19 @@ Table of Contents
    certificate renewals MAY be automated and can leverage the control
    plane communication infrastructure.
 
-5.  Security Considerations
+5.  Deployment Considerations
 
-   The goal of SCION is to provide a secure inter-domain network
-   architecture, therefore this section focuses on _inter_-AS security
-   considerations.  All _intra_-AS trust- and security aspects are out
-   of scope.
+5.1.  PKI availability
 
-5.1.  Dependency on Certificates
+   The Control Plane PKI relies on short-lived certificates as an
+   alternative to revocation, as described in Section 1.4.2.  AS
+   certificates typically have a validity of days (see Table 2), except
+   the first issued AS certificate.  Should an AS not be able to renew
+   certificates, it would be cut off from the network.  It is therefore
+   recommended to deploy multiple, independent CAs within an ISD that
+   can issue certificates to all member ASes.
 
-   In PKIs, CAs have both the responsibility and power to issue and
-   revoke certificates.  A compromised or misbehaving CA could refuse to
-   issue certificates to legitimate entities and/or issue illegitimate
-   certificates to allow impersonation of another entity.  In the
-   context of the Control Plane PKI, refusing to issue or renew a
-   certificate to an AS will ultimately cut that AS off from the
-   network, turning the Control Plane PKI into a potential network kill
-   switch, so within each ISD there are usually multiple independent
-   CAs.
+6.  Security Considerations
 
    SCION fundamentally differs from a global monopolistic trust model as
    each ISD manages its own trust roots instead of a single global
@@ -2362,7 +2360,11 @@ Table of Contents
    However, each ISD is still susceptible to compromises that could
    affect or halt other components (control plane and forwarding).
 
-5.1.1.  Compromise of an ISD
+   This section discussed implication of such trust architecture,
+   covering _inter_-AS security considerations.  All _intra_-AS trust-
+   and security aspects are out of scope.
+
+6.1.  Compromise of an ISD
 
    In SCION there is no central authority that could "switch off" an ISD
    as each relies on its own independent trust roots.  Each AS within an
@@ -2382,7 +2384,10 @@ Table of Contents
       to sign the AS certificates and all ASes within an ISD obtain
       certificates directly from the CAs.  If one of the CA’s keys is
       compromised, an adversary could issue illegitimate AS
-      certificates, which may be used in further attacks.
+      certificates, which may be used to impersonate ASes in further
+      attacks.  A compromised or misbehaving CA could also refuse to
+      issue certificates to legitimate ASes, cutting them off the
+      network if no alternative redundant CA is available.
 
    *  At AS level: Each AS within an ISD signs control plane messages
       with their AS private key.  If the keys of an AS are compromised
@@ -2391,7 +2396,7 @@ Table of Contents
       means that the adversary can manipulate the PCBs and propagate
       them to neighboring ASes or register/store them as path segments.
 
-5.1.2.  Recovery from Compromise
+6.1.1.  Recovery from Compromise
 
    This section deals with possible recovery from the compromises
    discussed in the previous paragraph.  As described in Section 1.4.2,
@@ -2415,7 +2420,7 @@ Table of Contents
       the impacted AS needs to obtain a new certificate from its CA.
       This process will vary depending on internal issuance protocols.
 
-5.2.  Denial of Service Attacks
+6.2.  Denial of Service Attacks
 
    The Control Plane PKI lays the foundation for the authentication
    procedures in SCION by providing each AS within a specific ISD with a
@@ -2451,19 +2456,17 @@ Table of Contents
    *  ISDs could create policies and processes to renew certificates
       out-of-band
 
-6.  IANA Considerations
+7.  IANA Considerations
 
    This document has no IANA actions.
 
    The ISD and SCION AS number are SCION-specific numbers.  They are
-   currently allocated by Anapaya Systems, a provider of SCION-based
-   networking software and solutions (see [ISD-AS-assignments-Anapaya]).
-   This task is being transitioned from Anapaya to the SCION Association
-   (see [ISD-AS-assignments]).
+   currently allocated by the SCION Association (see
+   [ISD-AS-assignments]).
 
-7.  References
+8.  References
 
-7.1.  Normative References
+8.1.  Normative References
 
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
@@ -2533,7 +2536,7 @@ Table of Contents
               Financial Services Industry: The Elliptic Curve Digital
               Signature Algorithm", 1998.
 
-7.2.  Informative References
+8.2.  Informative References
 
    [BARRERA17]
               Barrera, D., Chuat, L., Perrig, A., Reischuk, R., and P.
@@ -2547,20 +2550,8 @@ Table of Contents
               ISBN 978-3-031-05287-3, 2022,
               <https://doi.org/10.1007/978-3-031-05288-0>.
 
-   [I-D.dekater-panrg-scion-overview]
-              de Kater, C., Rustignoli, N., and A. Perrig, "SCION
-              Overview", Work in Progress, Internet-Draft, draft-
-              dekater-panrg-scion-overview-06, 7 May 2024,
-              <https://datatracker.ietf.org/doc/html/draft-dekater-
-              panrg-scion-overview-06>.
-
    [ISD-AS-assignments]
-              "SCION Registry", 2025, <http://scion.org/registry/>.
-
-   [ISD-AS-assignments-Anapaya]
-              "SCION ISD and AS Assignments", 2025,
-              <https://docs.anapaya.net/en/latest/resources/isd-as-
-              assignments/>.
+              "SCION Registry", 2026, <http://scion.org/registry/>.
 
    [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
               Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
@@ -2808,6 +2799,16 @@ draft-dekater-scion-pki-11
 
    *  Intro: remove duplicated motivation and component description and
       add a reference to the same text in -controlplane
+
+   *  CLarify that initial AS certificates may have a longer validity to
+      allow enough time for deployment
+
+   *  Security considerations: move and reword section "Dependency on
+      Certificates" to new section "Deployment Considerations"
+
+   *  Remove informative reference to I-D.dekater-panrg-scion-overview
+      and to Anapaya's ISD assignments, since they are taken over by
+      SCION Association in 2026
 
 draft-dekater-scion-pki-10
 
