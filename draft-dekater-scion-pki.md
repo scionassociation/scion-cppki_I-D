@@ -1312,6 +1312,17 @@ Should an AS not be able to renew certificates, it would be cut off from the net
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
+## Processes
+
+An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
+  - roles and responsibilities
+  - processes
+  - admission criteria
+  - protection measures for keys (e.g., use of HSMs)
+  - actions in case of compromise or regulations breach
+  - governance structure
+
+  This drafts describes a typical TRC signing ceremony in [](#initial-ceremony), further processes are outside of the scope of this document.
 
 # Security Considerations
 
@@ -1335,7 +1346,7 @@ As described in [](#substitutes-to-revocation), there is no revocation in the Co
 
 - At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)) and a invalid update has been produced and distributed in the network.
 - At CA level: If the private key related to a CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
-- At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
+- At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
 
 
 ## Denial of Service Attacks
