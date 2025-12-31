@@ -1030,7 +1030,7 @@ However, AS certificates and the corresponding signing CA certificates are **not
 
 The following section explains how to build a trust anchor pool.
 
-**Note:** Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material, such as certificates, to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material. If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
+**Note:** Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material, such as certificates, to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
 
 
 #### TRC Selection For Trust Anchor Pool {#trc-selection}
@@ -1307,7 +1307,7 @@ The steps REQUIRED to create a new AS certificate are the following:
 3. The CA uses its CA key and the CSR to create the new AS certificate.
 4. The CA sends the AS certificate back to the AS.
 
-When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure.
+When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
 
 
 # Security Considerations
