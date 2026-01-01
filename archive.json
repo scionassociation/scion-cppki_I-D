@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2025-12-25T00:25:56.314097+00:00",
+  "timestamp": "2026-01-01T00:29:48.241433+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -119,7 +119,7 @@
       "id": "I_kwDOH386tM57aRFd",
       "title": "ASN.1 Module for new types",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/28",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jiceathome",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -129,8 +129,8 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2025-08-28T09:06:22Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-30T17:31:06Z",
+      "closedAt": "2025-12-30T17:31:06Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -588,7 +588,7 @@
       "id": "I_kwDOH386tM69g-Ld",
       "title": "PKI scalability",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/66",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
@@ -598,8 +598,8 @@
       ],
       "body": "DO we need to mention something about PKI scalability?\n\n#### Feedback Alvaro on CP: \n```\n...\n2060\t3.3.1.  Intra-ISD Beaconing\n...\n2100\t   If the same AS has 1000 child links, the propagation of the beacons\n2101\t   will require signing one new AS entry for each of the propagated PCBs\n2102\t   for each link (at most 50 per link), i.e. at most 50000 signatures\n2103\t   per propagation event.  The total bandwidth for the propagation of\n2104\t   these PCBs for all 1000 child links would, be roughly around 25 MB/s\n2105\t   which is manageable with even modest consumer hardware.\n```\n[] Yes, the bw is manageable.  The signature verification may be the bottleneck (considering similar behavior in BGPSec), is that correct?",
       "createdAt": "2025-06-26T15:38:43Z",
-      "updatedAt": "2025-08-28T09:33:28Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-30T16:26:14Z",
+      "closedAt": "2025-12-30T16:26:14Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -614,6 +614,13 @@
           "body": "TODO: add a sentence like \"signing PCBs might become a bottleneck from a computation point of view, therefore it is recommended to deploy multiple PKI instances.\". This could  CP draft in `3.3.1.  Intra-ISD Beaconing` or maybe the PKI draft.",
           "createdAt": "2025-08-28T09:33:28Z",
           "updatedAt": "2025-08-28T09:33:28Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "We already added this wording in the CP draft: \n> For much  larger, more highly connected ASes, the path discovery tasks of the\n   Control Service can be distributed over many instances in order to\n   increase the PCB throughput.\n\nResolving",
+          "createdAt": "2025-12-30T16:26:14Z",
+          "updatedAt": "2025-12-30T16:26:14Z"
         }
       ]
     },
@@ -833,7 +840,7 @@
       "id": "I_kwDOH386tM7DxOsB",
       "title": "Mandating that certificates be retrieved from TRC payload limits interoperability with existing CMS libraries",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/80",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -842,9 +849,17 @@
       ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 3.1.3.1\"\n```\n   *  SignedData sequence:\n\n      -  The certificates field MUST be left empty.  The certificate\n         pool used to verify a TRC update is already specified in the\n         certificates field of the predecessor TRC's payload (see also\n         Section 3.1.2.2.11).\n```\n\nRequiring the Certificates field in the CMS `SignedData` structure to be empty, and instead mandating that certificates be retrieved from the Certificates field of the TRC payload, significantly limits interoperability with existing CMS libraries. Most CMS implementations expect the signing certificate to be present within the Certificates field of the SignedData structure. As a result, signature verification logic would need to be re-implemented, or the parsed CMS structure would need to be modified by injecting the certificates from the TRC payload into the Certificates field\u2014despite this field not being part of the signed data\u2014solely to satisfy library expectations.",
       "createdAt": "2025-08-01T16:19:40Z",
-      "updatedAt": "2025-09-04T05:43:22Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-12-30T16:22:00Z",
+      "closedAt": "2025-12-30T16:22:00Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Future protocol implementation topic, so not a fit for the draft. Closing and taking note of this. ",
+          "createdAt": "2025-12-30T16:22:00Z",
+          "updatedAt": "2025-12-30T16:22:00Z"
+        }
+      ]
     },
     {
       "number": 81,
@@ -901,7 +916,7 @@
       "id": "I_kwDOH386tM7DxRn9",
       "title": "Levels of Trust",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/83",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -911,8 +926,8 @@
       ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.3 Trust Model\"\n\nIf ISDs are free to federate with other ISDs / Trust communities, how can it be ensured there is no degradation in each link from one ISD to the other, so that in the end ISDs are linked to each other which would never directly mutually accept their trust bases.\n\nDoes it make sense to specify the Levels of Trust in a certain way in order to recognise such situations? That each ISD commits to a uniform trust level or certain implementation provisions and also declares this to other ISDs? This would ensure that approximately the same security level is implemented within a network of ISDs and that appropriate measures can be taken at transitions to other, lower levels. Do the mechanisms of the TRC policies already provide for this?",
       "createdAt": "2025-08-01T16:24:27Z",
-      "updatedAt": "2025-09-03T13:43:32Z",
-      "closedAt": null,
+      "updatedAt": "2025-12-30T16:13:54Z",
+      "closedAt": "2025-12-30T16:13:54Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -920,6 +935,13 @@
           "body": "Questions to be discussed: \n- Should the draft mention/recommend other blocking mechanisms?  \u000bExample: PCB-blocking at core ASes upon path registration\n\n- Were any mechanisms implemented/deployed?\n",
           "createdAt": "2025-09-03T13:43:32Z",
           "updatedAt": "2025-09-03T13:43:32Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "This is an idea for future protocol evolution. Closing the issue here but saving the idea.",
+          "createdAt": "2025-12-30T16:13:54Z",
+          "updatedAt": "2025-12-30T16:13:54Z"
         }
       ]
     },
@@ -952,7 +974,7 @@
       "id": "I_kwDOH386tM7DxTTd",
       "title": "Substitution to Certificate Revocation",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/85",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -961,9 +983,24 @@
       ],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"Section 1.4.2\"\n\nCertificate revocation is described as unreliable and compensated for with the concept of short-lived certificates. Instead of withdrawing certificates that are no longer trustworthy, certificates that are still valid are reissued again and again.\n\nWith a certificate validity period of three days and a grace period of approx. 1.5 days, the entire stock of valid certificates is renewed every 1.5 days. This places extremely high demands on the reliability of a CP-PKI and therefore also a high load on the CP-PKI systems. Although no comparison to loads on streaming portals, this concept is certainly not energy-efficient.\n\nThis load increases linearly with the growth of ASes within an ISD, and it will probably be the large, general-purpose ISDs that are orientated towards a lower trust level and cannot afford the financial or human resources to operate a highly available CP-PKI. Could the criticality of CP-PKI become a disabler of SCION technology?\n\nSCION delegates authorization to the CP-PKI, but certificates should only be used to authenticate. Currently, whoever possesses an AS Certificate is enabled to communicate but this keeps the discussed attack window open.\n\nDoes SCION implement other mechanisms to exclude malicious participants? Something like a PCB-blocking, decided and issued by the core ASes as such an incident is reported to them? What are the consequences to leaf nodes attached to any blocked / not re-certified node in general?\n",
       "createdAt": "2025-08-01T16:27:29Z",
-      "updatedAt": "2025-08-28T09:53:59Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2025-12-30T16:12:43Z",
+      "closedAt": "2025-12-30T16:06:26Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "AFAIK there are no other mechanisms implemented. I'll resolve this and save this as a consideration for future work",
+          "createdAt": "2025-12-30T16:06:26Z",
+          "updatedAt": "2025-12-30T16:06:26Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "P.S. Based on the discussion in our September TC, we already explain why we don't have revocation in paragraph ### Substitutes to Certificate Revocation . ",
+          "createdAt": "2025-12-30T16:12:43Z",
+          "updatedAt": "2025-12-30T16:12:43Z"
+        }
+      ]
     },
     {
       "number": 86,
@@ -1111,7 +1148,7 @@
       "labels": [],
       "body": "From Brian Trammell...\n\nIn section 2.2.1.1, should the process by which new algorithms may be added to or removed from the MTI set be defined or at least alluded to? One of the reasons that nation-state-based isolation is interesting to some governments is that it would allow the unrestricted use within the ISD of ciphersuites that have been developed and are under the control of (slash presumably can be broken by) that state's national security service; what happens if a nationally-oriented ISD chooses to ignore the MTI here and use only their",
       "createdAt": "2025-11-04T14:05:11Z",
-      "updatedAt": "2025-11-05T12:27:57Z",
+      "updatedAt": "2025-12-30T15:56:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -1120,6 +1157,13 @@
           "body": "I think a previous reviewer asked us to add the possibility of new algorithms in this section. (#76 )\n\nHow would we define the approval process for new algorithms, and would this compromise SCION's claimed cyber-agility at the end of the day? ",
           "createdAt": "2025-11-04T15:22:32Z",
           "updatedAt": "2025-11-05T12:27:57Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "The current BCP on this is [RFC7696](https://datatracker.ietf.org/doc/html/rfc7696#section-2.2). It says: \n\n> It is highly desirable to make this change\n   without updating the base protocol specification.  To achieve this\n   goal, it is RECOMMENDED that the base protocol specification includes\n   a reference to a companion algorithms document, allowing the update\n   of one document without necessarily requiring an update to the other.\n\nSo I think we should write something as Brian recommends. We need to keep in mind we want to have a set of mandatory to implement algorithms for the sake of interop.\n\nHow do others do it? RPKI is a proposed standard track document, and it deals with it in [rfc6916](https://datatracker.ietf.org/doc/html/rfc6916) by recommending that a new RFC is published.\n\n> When a migration of the RPKI\n   algorithm suite is needed, the first step MUST be an update of\n   [[RFC6485](https://datatracker.ietf.org/doc/html/rfc6485)] to define the new algorithm suite.  \n\nWe cannot do the same as we are an independent submission. Some ideas: \n- Versioning for the control plane API (and therefore for the related PKI algorithms)? (also discussed in https://github.com/scionassociation/scion-cp_I-D/issues/171 ). However, this is not implemented, so this is should not be in the draft\n- We add an external reference? (e.g. to docs.scion.org?) \n- We just add a sentence explaining \"you could also use other algorithms at your own risk. If you do so, you may not interconnect with other ISDs supporting the mandatory to implement set. Future protocol iterations may update the list of mandatory algorithms.\"\n\nI think the last one is the easier/most likely. What do you think @knmeynell ?\n\n",
+          "createdAt": "2025-12-30T15:55:51Z",
+          "updatedAt": "2025-12-30T15:56:39Z"
         }
       ]
     },
@@ -5051,21 +5095,158 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #101\r\nResolves #87",
+      "body": "Resolves #101\r\nResolves #87\r\n\r\n[Diff with Main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/ops-considerations/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-12-19T17:15:42Z",
-      "updatedAt": "2025-12-23T16:28:51Z",
+      "updatedAt": "2025-12-30T15:26:35Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "ops-considerations",
-      "headRefOid": "bd430e1a62f03819f272e9245af536c171b45197",
+      "headRefOid": "a9f0723b44d7b3ea78c781b88b90f6bac1f5555f",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Asking for feedback to Sam and Fritz",
+          "createdAt": "2025-12-30T15:26:35Z",
+          "updatedAt": "2025-12-30T15:26:35Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 112,
+      "id": "PR_kwDOH386tM66_ktN",
+      "title": "Clarify Process for Cryptographic Algorithms",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/112",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #98 \r\n\r\n@knmeynell please review but do not merge yet.",
+      "createdAt": "2025-12-30T16:04:37Z",
+      "updatedAt": "2025-12-31T03:15:37Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "crypto-mti-set",
+      "headRefOid": "2c7dc8de82540e4696d7d6c448ffb99d4640f131",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7Xxu33",
+          "commit": {
+            "abbreviatedOid": "2c7dc8d"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2025-12-31T03:15:27Z",
+          "updatedAt": "2025-12-31T03:15:37Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "Suggest:\r\n\r\nOther algorithms or curves MAY be employed. Implementations deviating from the mandatory set generally lose the guarantee of global interoperability and are suitable primarily for isolated ISDs that do not require external interconnection. Future protocol versions may update the set of mandatory algorithms.",
+              "createdAt": "2025-12-31T03:15:27Z",
+              "updatedAt": "2025-12-31T03:15:37Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 113,
+      "id": "PR_kwDOH386tM67AMSt",
+      "title": "Add cross reference to renewal of crypto material section in CP draft",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/113",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Contributes to https://github.com/scionassociation/scion-cp_I-D/issues/172 ",
+      "createdAt": "2025-12-30T17:22:45Z",
+      "updatedAt": "2025-12-31T03:12:43Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "cert-renewal",
+      "headRefOid": "dfcacfb68b854b0fd1069d50bc7ccc1cc683104b",
+      "closedAt": "2025-12-31T03:12:38Z",
+      "mergedAt": "2025-12-31T03:12:38Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "6351fd212b5911ff687db7e01a4fca4efb9b3584"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7XxuO1",
+          "commit": {
+            "abbreviatedOid": "dfcacfb"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-31T03:12:27Z",
+          "updatedAt": "2025-12-31T03:12:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 114,
+      "id": "PR_kwDOH386tM67AgLt",
+      "title": "Security considerations: TRC distribution",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/114",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #62 \r\n\r\n@knmeynell please review but do not merge yet",
+      "createdAt": "2025-12-30T18:16:39Z",
+      "updatedAt": "2025-12-31T03:11:42Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "tofu",
+      "headRefOid": "5519af574be0f0503e2472dc156bdafcdeab33bd",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7Xxt2x",
+          "commit": {
+            "abbreviatedOid": "5519af5"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2025-12-31T03:11:42Z",
+          "updatedAt": "2025-12-31T03:11:42Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
