@@ -215,7 +215,7 @@ Ideally, the trust architecture allows parties that mutually trust each other to
 
 To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
-An ISD is administered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core; these are the **core ASes**. The set of core and voting ASes can, but do not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
+An ISD is governed by one or multiple ASes, known as the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **core ASes**. The set of core and voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on digital certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and policies governing the number of signatures required for performing different types of actions. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
@@ -1315,14 +1315,15 @@ ASes should then be able to quickly switch over to a backup CA to renew their ce
 ## Processes
 
 An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
-  - roles and responsibilities
-  - processes
-  - admission criteria
-  - protection measures for keys (e.g., use of HSMs)
-  - actions in case of compromise or regulations breach
-  - governance structure
 
-  This drafts describes a typical TRC signing ceremony in [](#initial-ceremony), further processes are outside of the scope of this document.
+  - governance structure
+  - roles and responsibilities
+  - admission criteria
+  - processes
+  - protection measures for keys (e.g. use of HSMs)
+  - actions in case of compromise or regulations breach
+
+  This draft describes a typical TRC signing ceremony in [](#initial-ceremony), further processes are outside of the scope of this document.
 
 # Security Considerations
 
