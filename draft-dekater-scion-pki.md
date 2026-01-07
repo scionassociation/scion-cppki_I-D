@@ -59,14 +59,9 @@ normative:
 
 
 informative:
-  I-D.dekater-panrg-scion-overview:
-  ISD-AS-assignments-Anapaya:
-    title: "SCION ISD and AS Assignments"
-    date: 2025
-    target: https://docs.anapaya.net/en/latest/resources/isd-as-assignments/
   ISD-AS-assignments:
     title: "SCION Registry"
-    date: 2025
+    date: 2026
     target: http://scion.org/registry/
   RFC5398:
   RFC6996:
@@ -159,7 +154,7 @@ SCION relies on three main components:
 
 *PKI* - providing cryptographic material within an unique trust model. It is described in this document.
 
-*Control Plane* -  performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
+*Control Plane* - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
 
 *Data Plane* - carrying out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. It is described in {{I-D.dekater-scion-dataplane}}.
 
@@ -220,7 +215,7 @@ Ideally, the trust architecture allows parties that mutually trust each other to
 
 To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block for achieving high availability, scalability, and support for heterogeneous trust. It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
-An ISD is administered by one or multiple ASes, called the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core; these are the **core ASes**. The set of core and voting ASes can, but do not necessarily have to, overlap. It is governed by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the ISD core, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
+An ISD is governed by one or multiple ASes, known as the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **core ASes**. The set of core and voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on digital certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and policies governing the number of signatures required for performing different types of actions. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
@@ -431,7 +426,7 @@ The RECOMMENDED **maximum validity period** of a sensitive voting certificate is
 {: #table-3 title="Certificates"}
 
 (1) Multiple signatures and certificates of each type MAY be included in a TRC.<br>
-(2) Recommended maximum validity period.<br>
+(2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
 (3) A validity of 11 days with 4 days overlap between two CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a CA certificate rollover.
 
 {{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
@@ -1253,7 +1248,6 @@ SCION requires that control plane messages are signed. The main purpose of the C
 
 The following sections specify the requirements that apply to the signing and verification of control plane messages.
 
-
 ### Signing a Control Plane Message
 
 An AS signs control plane messages with the private key that corresponds to the (valid) AS' certificate.
@@ -1309,17 +1303,33 @@ The steps REQUIRED to create a new AS certificate are the following:
 
 When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
 
+# Deployment Considerations
+
+## PKI availability
+
+The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except for the first issued AS certificate.
+Should an AS not be able to renew certificates, it would be cut off from the network.
+It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes.
+ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
+
+## Processes
+
+An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
+
+  - governance structure
+  - roles and responsibilities
+  - admission criteria
+  - processes
+  - protection measures for keys (e.g. use of HSMs)
+  - actions in case of compromise or regulations breach
+
+  This draft describes a typical TRC signing ceremony in [](#initial-ceremony), further processes are outside of the scope of this document.
 
 # Security Considerations
 
-The goal of SCION is to provide a secure inter-domain network architecture, therefore this section focuses on *inter*-AS security considerations. All *intra*-AS trust- and security aspects are out of scope.
-
-
-## Dependency on Certificates
-
-In PKIs, CAs have both the responsibility and power to issue and revoke certificates. A compromised or misbehaving CA could refuse to issue certificates to legitimate entities and/or issue illegitimate certificates to allow impersonation of another entity. In the context of the Control Plane PKI, refusing to issue or renew a certificate to an AS will ultimately cut that AS off from the network, turning the Control Plane PKI into a potential network kill switch, so within each ISD there are usually multiple independent CAs.
-
 SCION fundamentally differs from a global monopolistic trust model as each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, each ISD is still susceptible to compromises that could affect or halt other components (control plane and forwarding).
+
+This section discussed implication of such trust architecture, covering *inter*-AS security considerations. All *intra*-AS trust- and security aspects are out of scope.
 
 
 ### Compromise of an ISD
@@ -1327,7 +1337,7 @@ SCION fundamentally differs from a global monopolistic trust model as each ISD m
 In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependant on its ISD's PKI for its functioning, although the following compromises are potentially possible:
 
 - At TRC level: The private root keys of the root certificates contained in an TRC are used to sign CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously  perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC - the higher the quorum, the more unlikely a malicious update will be.
-- At CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used in further attacks.
+- At CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates, which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.
 - At AS level: Each AS within an ISD signs control plane messages with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control plane messages including Path Construction Beacons (PCBs). This means that the adversary can manipulate the PCBs and propagate them to neighboring ASes or register/store them as path segments.
 
 
@@ -1337,7 +1347,7 @@ As described in [](#substitutes-to-revocation), there is no revocation in the Co
 
 - At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised  keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)) and a invalid update has been produced and distributed in the network.
 - At CA level: If the private key related to a CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
-- At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance protocols.
+- At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
 
 
 ## Denial of Service Attacks
@@ -1359,7 +1369,7 @@ For certificate renewal, on the other hand, this does not apply. Denial of Servi
 
 This document has no IANA actions.
 
-The ISD and SCION AS number are SCION-specific numbers. They are currently allocated by Anapaya Systems, a provider of SCION-based networking software and solutions (see {{ISD-AS-assignments-Anapaya}}). This task is being transitioned from Anapaya to the SCION Association (see {{ISD-AS-assignments}}).
+The ISD and SCION AS number are SCION-specific numbers. They are currently allocated by the SCION Association (see {{ISD-AS-assignments}}).
 
 
 --- back
@@ -1367,7 +1377,7 @@ The ISD and SCION AS number are SCION-specific numbers. They are currently alloc
 # Acknowledgments
 {:numbered="false"}
 
-Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google), Ramon Keller (LibC Technologies) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
 
 # Deployment Testing: SCIONLab
@@ -1493,6 +1503,9 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Signing ceremony: minor updates to align with current process
 - Clarify distinction between SCION ASes and BGP ASes through the text.
 - Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
+- CLarify that initial AS certificates may have a longer validity to allow enough time for deployment
+- Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"
+- Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026
 
 ## draft-dekater-scion-pki-10
 {:numbered="false"}
