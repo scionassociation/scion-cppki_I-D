@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-01T00:29:48.241433+00:00",
+  "timestamp": "2026-01-08T00:27:09.286985+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5097,13 +5097,13 @@
       "labels": [],
       "body": "Resolves #101\r\nResolves #87\r\n\r\n[Diff with Main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/ops-considerations/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-12-19T17:15:42Z",
-      "updatedAt": "2025-12-30T15:26:35Z",
+      "updatedAt": "2026-01-07T05:01:16Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "ops-considerations",
-      "headRefOid": "a9f0723b44d7b3ea78c781b88b90f6bac1f5555f",
+      "headRefOid": "c647903821248be1cbd76fad6efa204ff92f84c5",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5247,6 +5247,32 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 115,
+      "id": "PR_kwDOH386tM671adV",
+      "title": "Rewording & Corrections",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/115",
+      "state": "CLOSED",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-07T04:49:01Z",
+      "updatedAt": "2026-01-07T05:01:34Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "6351fd212b5911ff687db7e01a4fca4efb9b3584",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Rewording-&-Corrections",
+      "headRefOid": "596b63f0f65a98fdae03a897bf283adb6091f028",
+      "closedAt": "2026-01-07T05:01:34Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
