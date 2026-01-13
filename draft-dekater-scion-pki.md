@@ -224,7 +224,7 @@ The TRC also provides *trust agility*, that is it enables users to select the tr
 The need for trust agility also means that SCION does not by design provide IP prefix origin validation as provided by RPKI {{RFC8210}}. RPKI's trust model is currently reliant on the trust roots provided by the five Regional Internet Registries, and therefore outside of the governance of an ISD.
 
 
-## Trust Relations within an Isolation Domain
+## Trust Relations within an Isolation Domain {#trust-relations}
 
 As previously mentioned, the Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates, which are used to sign CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called **base TRC** constitutes the ISD's trust anchor which is signed during a signing ceremony by the voting ASes and then distributed throughout the ISD.
 
@@ -1363,6 +1363,13 @@ For certificate renewal, on the other hand, this does not apply. Denial of Servi
 - ISDs usually rely on multiple CAs
 - ISDs could create policies and processes to renew certificates out-of-band
 
+## TRC Distribution
+
+Base TRCs act as an ISD root of trust (see [](#trust-relations)).
+
+If an endpoint retrieves the initial TRC in-band (e.g., from a local control service or a resolution server) without prior validation, it effectively operates under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.
+
+Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, limiting impact of a malicious TRC.
 
 
 # IANA Considerations
@@ -1505,7 +1512,9 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
 - CLarify that initial AS certificates may have a longer validity to allow enough time for deployment
 - Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"
+- Security considerations: new section on TRC Distribution
 - Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026
+
 
 ## draft-dekater-scion-pki-10
 {:numbered="false"}
