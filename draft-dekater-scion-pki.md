@@ -63,8 +63,6 @@ informative:
     title: "SCION Registry"
     date: 2026
     target: http://scion.org/registry/
-  RFC5398:
-  RFC6996:
   RFC8210:
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
@@ -165,7 +163,7 @@ The SCION architecture was initially developed outside of the IETF by ETH Zurich
 
 ## Terminology
 
-**Control Plane PKI (CP-PKI)**: The control plane PKI is the public-key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
+**Control Plane PKI (CP-PKI)**: The control plane PKI is the public key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
 
 **SCION Autonomous System (AS)**: A SCION Autonomous System is a network under a common administrative control. For example, the network of a SCION service provider, company, or university can constitute an AS. While functionally similar to a BGP AS, a SCION AS operates within an Isolation Domain (ISD), it utilizes a different address scheme and serves as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.
 
@@ -548,13 +546,15 @@ The `signature` field contains information about the signature algorithm. Curren
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
-SCION implementations MUST include support for the ECDSA curves below. Other algorithms or curves MAY be used in the future.
+SCION implementations MUST include support for the ECDSA curves below.
 
 - NIST P-256 (NISTFIPS186-4, section D.1.2.3) (named `secp256r1` in {{RFC5480}})
 - NIST P-384 (NISTFIPS186-4, section D.1.2.4) (named `secp384r1` in {{RFC5480}})
 - NIST P-521 (NISTFIPS186-4, section D.1.2.5) (named `secp521r1` in {{RFC5480}})
 
 The OIDs for the above curves are specified in section 2.1.1.1 of {{RFC5480}}.
+
+Other algorithms or curves MAY be employed. Implementations deviating from the mandatory set generally lose the guarantee of global interoperability and are suitable primarily for isolated ISDs that do not require external interconnection. Future protocol versions may update the set of mandatory algorithms.
 
 The appropriate hash size to use when producing a signature with an ECDSA key is:
 
@@ -1508,12 +1508,13 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Signing ceremony: minor updates to align with current process
+- Signature field: clarify implications of using other algorithms or curves and mention mti set may be updated in future protocol iterations
 - Clarify distinction between SCION ASes and BGP ASes through the text.
 - Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
-- CLarify that initial AS certificates may have a longer validity to allow enough time for deployment
+- Clarify that initial AS certificates may have a longer validity to allow enough time for deployment
 - Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"
 - Security considerations: new section on TRC Distribution
-- Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026
+- Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.
 
 
 ## draft-dekater-scion-pki-10
