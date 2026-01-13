@@ -556,7 +556,7 @@ SCION implementations MUST include support for the ECDSA curves below.
 
 The OIDs for the above curves are specified in section 2.1.1.1 of {{RFC5480}}.
 
-Other algorithms or curves MAY be employed. Implementations deviating from the mandatory set generally lose the guarantee of global interoperability. Such configurations are suitable primarily for isolated ISDs that do not require external interconnection. Future protocol versions may update the set of mandatory-to-implement algorithms.
+Other algorithms or curves MAY be employed. Implementations deviating from the mandatory set generally lose the guarantee of global interoperability and are suitable primarily for isolated ISDs that do not require external interconnection. Future protocol versions may update the set of mandatory algorithms.
 
 The appropriate hash size to use when producing a signature with an ECDSA key is:
 
