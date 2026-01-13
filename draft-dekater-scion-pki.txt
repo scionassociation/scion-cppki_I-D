@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 16 July 2026                                            S. Hitz
+Expires: 17 July 2026                                            S. Hitz
                                                          Anapaya Systems
-                                                         12 January 2026
+                                                         13 January 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 16 July 2026.
+   This Internet-Draft will expire on 17 July 2026.
 
 Copyright Notice
 
@@ -124,6 +124,7 @@ Table of Contents
      6.1.  Compromise of an ISD
        6.1.1.  Recovery from Compromise
      6.2.  Denial of Service Attacks
+     6.3.  TRC Distribution
    7.  IANA Considerations
    8.  References
      8.1.  Normative References
@@ -2486,6 +2487,19 @@ Table of Contents
    *  ISDs could create policies and processes to renew certificates
       out-of-band
 
+6.3.  TRC Distribution
+
+   Base TRCs act as an ISD root of trust (see Section 1.4).
+
+   If an endpoint retrieves the initial TRC in-band (e.g., from a local
+   control service or a resolution server) without prior validation, it
+   effectively operates under a "Trust on First Use" (TOFU) assumption.
+   Care should therefore be taken in trusting the TRC source.
+
+   Should an AS be provisioned with a malicious TRC, it would not be
+   able to communicate to other ASes in the affected ISD, limiting
+   impact of a malicious TRC.
+
 7.  IANA Considerations
 
    This document has no IANA actions.
@@ -2835,6 +2849,8 @@ draft-dekater-scion-pki-11
 
    *  Security considerations: move and reword section "Dependency on
       Certificates" to new section "Deployment Considerations"
+
+   *  Security considerations: new section on TRC Distribution
 
    *  Remove informative reference to I-D.dekater-panrg-scion-overview
       and to Anapaya's ISD assignments, since they are taken over by
