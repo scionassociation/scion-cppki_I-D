@@ -2603,14 +2603,6 @@ Table of Contents
    [ISD-AS-assignments]
               "SCION Registry", 2026, <http://scion.org/registry/>.
 
-   [RFC5398]  Huston, G., "Autonomous System (AS) Number Reservation for
-              Documentation Use", RFC 5398, DOI 10.17487/RFC5398,
-              December 2008, <https://www.rfc-editor.org/rfc/rfc5398>.
-
-   [RFC6996]  Mitchell, J., "Autonomous System (AS) Reservation for
-              Private Use", BCP 6, RFC 6996, DOI 10.17487/RFC6996, July
-              2013, <https://www.rfc-editor.org/rfc/rfc6996>.
-
    [RFC8210]  Bush, R. and R. Austein, "The Resource Public Key
               Infrastructure (RPKI) to Router Protocol, Version 1",
               RFC 8210, DOI 10.17487/RFC8210, September 2017,
@@ -2844,8 +2836,9 @@ draft-dekater-scion-pki-11
 
    *  Signing ceremony: minor updates to align with current process
 
-   *  Signature field: clarify process and implications of using other
-      algorithms or curves
+   *  Signature field: clarify implications of using other algorithms or
+      curves and mention mti set may be updated in future protocol
+      iterations
 
    *  Clarify distinction between SCION ASes and BGP ASes through the
       text.
@@ -2853,7 +2846,7 @@ draft-dekater-scion-pki-11
    *  Intro: remove duplicated motivation and component description and
       add a reference to the same text in -controlplane
 
-   *  CLarify that initial AS certificates may have a longer validity to
+   *  Clarify that initial AS certificates may have a longer validity to
       allow enough time for deployment
 
    *  Security considerations: move and reword section "Dependency on
@@ -2863,7 +2856,8 @@ draft-dekater-scion-pki-11
 
    *  Remove informative reference to I-D.dekater-panrg-scion-overview
       and to Anapaya's ISD assignments, since they are taken over by
-      SCION Association in 2026
+      SCION Association in 2026.  Remove unused references to RFC5398
+      and RFC6996.
 
 draft-dekater-scion-pki-10
 
