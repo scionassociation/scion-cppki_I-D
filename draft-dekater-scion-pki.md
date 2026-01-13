@@ -63,8 +63,6 @@ informative:
     title: "SCION Registry"
     date: 2026
     target: http://scion.org/registry/
-  RFC5398:
-  RFC6996:
   RFC8210:
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
@@ -1510,13 +1508,13 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Signing ceremony: minor updates to align with current process
-- Signature field: clarify process and implications of using other algorithms or curves
+- Signature field: clarify implications of using other algorithms or curves and mention mti set may be updated in future protocol iterations
 - Clarify distinction between SCION ASes and BGP ASes through the text.
 - Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
-- CLarify that initial AS certificates may have a longer validity to allow enough time for deployment
+- Clarify that initial AS certificates may have a longer validity to allow enough time for deployment
 - Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"
 - Security considerations: new section on TRC Distribution
-- Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026
+- Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.
 
 
 ## draft-dekater-scion-pki-10
