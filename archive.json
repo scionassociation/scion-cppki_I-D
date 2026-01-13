@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-08T00:27:09.286985+00:00",
+  "timestamp": "2026-01-13T00:22:55.169200+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1034,15 +1034,15 @@
       "id": "I_kwDOH386tM7DxWdO",
       "title": "Operational Considerations",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/87",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Observations from Ramon Keller (libc):\n\n**AS Certificate creation:**\n\nInitial AS certificates are still described as to be submitted out of band. Is there any progress of the process in this respect since the SSFN implementation?\n\n**Short certificate lifetime:**\n\nThe SCION draft still recommends very short lifetimes for Root CA and Issuing CA certificates of 1 year or 11 days (!), respectively. Renewal in such short lifetimes will kill any operations team running certain commercial products. These products are sold in conjunction with HSM and much longer certificate lifetimes than those that were e.g. implemented for SSFN. Anybody wanting to implement the recommended lifetimes needs to look for a capable solution.\n\n**Control Plane AS Certificates:**\n\nThe recommended validity of 3 days is fair, but then the initialization processes must be stable and effective. Could SIX provide any experience based feedback on how much the end users relied on a longer duration for initial AS certificates when onboarding to SSFN?\n\n**Processes**\n\nThe draft talks a lot about the technical elements of a CP-PKI, but not much about processes the PKI operators have to implement. or the regulations.\n\n**Cost of Ownership**\n\nThe range extends from simple technical systems focussing on stable network communication at affordable costs to highly secure environments that place great value on reliable network communication in combination with a high level of data protection. Those with higher security requirements should be willing to bear the higher security costs through secure processes, but only those with technical requirements should be exempt from additional costs as far as possible.\n\n**High availability in CAs**\n\n1. Must the CAs of an ISD offer backup CA services to all the other PKIs in the ISD?\n2. What if a single PKI fails to operate?\n3. To cope with this single point of failure, it should be specified that the subscribers could quickly switch over to one of the other PKIs to be able to renew their certificates on time.\n4. How is the subscriber database synchronized among the different backup CAs, as without a specification the SCION world will face incompatible implementation-specific approaches.",
       "createdAt": "2025-08-01T16:32:42Z",
-      "updatedAt": "2025-09-03T14:09:03Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-12T10:40:29Z",
+      "closedAt": "2026-01-12T10:40:29Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1206,15 +1206,15 @@
       "id": "I_kwDOH386tM7VyfMj",
       "title": "Brian Trammell's PKI review",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/101",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Brian Trammell's comments...\n\nThe SCION Control Plane PKI draft (PKI; draft-dekater-scion-pki-10) defines the trust architecture that underpins the entire SCION system. It establishes a framework for authenticating control plane messages and path information through a novel, domain-based trust model. It specifies the cryptographic underpinnings constituting ISDs and the trust relationships within them. A Trust Root Configuration (TRC) acts as the trust anchor for an ISD, containing the root certificates needed to validate a hierarchy of CA and AS certificates, as well as the policies for its own evolution through regular and sensitive updates.\n\nThis approach provides what the document calls \"trust agility,\" allowing different parts of the network to operate under distinct, self-contained trust environments, a significant departure from the global, monolithic trust models of the web PKI. Instead of traditional certificate revocation lists, the CP-PKI relies on relatively short-lived certificates and TRC updates to manage compromised keys. The PKI is the foundation upon which the SCION Control Plane (CP) builds its secure beaconing and path discovery mechanisms, and by extension, provides the trust necessary for the Data Plane (DP) to forward packets along authenticated paths.\n\nThe document is well put together (aside from a few nits) and explains the functionality of the PKI well. The questions I have mainly concern the operational consequences of the certificate management periods at each level of the hierarchy down from the TRC: the grace and overlap periods seem from first principles to be sufficient to manage availability risk due to higher-frequency key rotation, but it would be interesting to see how this plays out in reality (I can't really think of a way to analyze this except in production, or with a questionably-applicable simulation).\n\nFurther \"out there\", I'd also be interested in exploring how the PKI itself could be incrementally applied to routing security with the existing interdomain control plane (this idea is inchoate enough that I can't really seriously elaborate it further in the context of a review).\n\n_KM - I think these are philosophical questions._",
       "createdAt": "2025-11-04T14:11:31Z",
-      "updatedAt": "2025-11-04T14:11:31Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-12T10:40:29Z",
+      "closedAt": "2026-01-12T10:40:29Z",
       "comments": []
     },
     {
@@ -5090,24 +5090,26 @@
       "id": "PR_kwDOH386tM653E2a",
       "title": "Deployment Considerations",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/111",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #101\r\nResolves #87\r\n\r\n[Diff with Main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/ops-considerations/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-12-19T17:15:42Z",
-      "updatedAt": "2026-01-07T05:01:16Z",
+      "updatedAt": "2026-01-12T10:41:24Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "ops-considerations",
       "headRefOid": "c647903821248be1cbd76fad6efa204ff92f84c5",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-01-12T10:40:28Z",
+      "mergedAt": "2026-01-12T10:40:28Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "72721fcacb58bc6757309984e40998bc47c951ae"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -5115,9 +5117,30 @@
           "body": "Asking for feedback to Sam and Fritz",
           "createdAt": "2025-12-30T15:26:35Z",
           "updatedAt": "2025-12-30T15:26:35Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@knmeynell can you read it through, double check my changes and if ok  just merge it?\r\n",
+          "createdAt": "2026-01-12T10:33:48Z",
+          "updatedAt": "2026-01-12T10:33:48Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7ZkGAq",
+          "commit": {
+            "abbreviatedOid": "c647903"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-01-12T10:38:42Z",
+          "updatedAt": "2026-01-12T10:38:42Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 112,
