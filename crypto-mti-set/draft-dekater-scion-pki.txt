@@ -184,7 +184,7 @@ Table of Contents
 
 1.1.  Terminology
 
-   *Control Plane PKI (CP-PKI)*: The control plane PKI is the public-key
+   *Control Plane PKI (CP-PKI)*: The control plane PKI is the public key
    infrastructure upon which SCION's Control Plane relies for the
    authentication of messages.  It is a set of policies, roles, and
    procedures that are used to manage trust root configurations (TRCs)
