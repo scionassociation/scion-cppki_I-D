@@ -913,10 +913,9 @@ Table of Contents
 
    Other algorithms or curves MAY be employed.  Implementations
    deviating from the mandatory set generally lose the guarantee of
-   global interoperability.  Such configurations are suitable primarily
-   for isolated ISDs that do not require external interconnection.
-   Future protocol versions may update the set of mandatory-to-implement
-   algorithms.
+   global interoperability and are suitable primarily for isolated ISDs
+   that do not require external interconnection.  Future protocol
+   versions may update the set of mandatory algorithms.
 
    The appropriate hash size to use when producing a signature with an
    ECDSA key is:
