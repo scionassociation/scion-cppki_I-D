@@ -511,13 +511,12 @@ The described fields of the Control Plane PKI certificates are relevant for each
   - **SCION constraints**:
 
     - This field MUST be non-empty.
-    - SCION implementations MUST ONLY use the “UTF8String” value type for all attributes (including the SCION-specific attribute `ISD-AS number`).
 
   - **Additional conditions and remarks**: All SCION implementations MUST support the additional SCION-specific attribute `ISD-AS number`. For details, see [](#issuer) and [](#isd-as-nr).
 
 - `validity` field: Defines the validity period of the certificate.
 
-  - **SCION constraints**: All certificates MUST have a well-defined expiration date. Certificates with a generalized time value are not valid and MUST be rejected.
+  - **SCION constraints**: All certificates MUST have a well-defined expiration date.
   - **Additional conditions and remarks**: SCION recommends a specific maximum validity period for each type of certificate. For details, see [](#formal). SCION implementations SHOULD adopt these values.
 
 - `subject` field: Defines the entity that owns the certificate.
@@ -525,7 +524,6 @@ The described fields of the Control Plane PKI certificates are relevant for each
   - **SCION constraints**:
 
     - This field MUST be non-empty.
-    - SCION implementations MUST ONLY use the “UTF8String” value type for all attributes (including the SCION-specific attribute `ISD-AS number`).
 
   - **Additional conditions and remarks**: The `subject` field is specified in the same way as the `issuer` field. For details, see [](#issuer) and [](#isd-as-nr).
 
@@ -1512,6 +1510,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Clarify distinction between SCION ASes and BGP ASes through the text.
 - Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane
 - Clarify that initial AS certificates may have a longer validity to allow enough time for deployment
+- "SCION-Specific Constraints and Conditions" section: drop requirement to use "UTF8String" for all fields, allow use of GeneralizedTime to align with RFC5280
 - Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"
 - Security considerations: new section on TRC Distribution
 - Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.
