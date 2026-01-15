@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-13T00:22:55.169200+00:00",
+  "timestamp": "2026-01-15T00:24:22.895084+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -501,7 +501,7 @@
       "id": "I_kwDOH386tM67H37O",
       "title": "Security considerations - TRC bootstrapping and TOFU",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/62",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -511,10 +511,10 @@
       "labels": [
         "question"
       ],
-      "body": "- [ ] Clarify if we need to mention the impact of TOFU in the security considerations of the PKI (or the CP), in relation to the dissemination of PKI material\n\n\nFrom the CP draft review by Alvaro\n```\n654 1.6.  Bootstrapping ability\n...\n687   *Note:* For a detailed description of a TRC and more information on\n688   the availability of certificates and TRCs, see the SCION Control-\n689   Plane PKI [I-D.dekater-scion-pki].\n```\n> I haven't read I-D.dekater-scion-pki in detail...but given that the TRC\nis ISD-specific a new node in an ISD will, by definition, not have it when\nit first boots up.  I assume the attack vectors, etc. are detailed in\nI-D.dekater-scion-pki.\n",
+      "body": "- [x] Clarify if we need to mention the impact of TOFU in the security considerations of the PKI (or the CP), in relation to the dissemination of PKI material\n\n\nFrom the CP draft review by Alvaro\n```\n654 1.6.  Bootstrapping ability\n...\n687   *Note:* For a detailed description of a TRC and more information on\n688   the availability of certificates and TRCs, see the SCION Control-\n689   Plane PKI [I-D.dekater-scion-pki].\n```\n> I haven't read I-D.dekater-scion-pki in detail...but given that the TRC\nis ISD-specific a new node in an ISD will, by definition, not have it when\nit first boots up.  I assume the attack vectors, etc. are detailed in\nI-D.dekater-scion-pki.\n",
       "createdAt": "2025-06-12T08:49:35Z",
-      "updatedAt": "2025-08-28T09:10:02Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-13T11:21:27Z",
+      "closedAt": "2026-01-13T11:21:27Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -813,9 +813,31 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"2.2.1. Basic Fields: SCION-Specific Constraints and Conditions\"\n\nIssuer and Subject DN - The SCION Certificate Specification Standard is based on [RFC5280] and [X.509], but deviates from the permitted data types for individual RDN attributes. While the general X.509 standard, as described in ITU-T X.520, prescribes the data type PrintableString for countryName and serialNumber, SCION generally requires UTF-8 coding. Such contradictions to the standard can lead to complications in various contexts, such as directory services and their schemas.\n\nValidity - The draft states that GeneralizedTime is not permitted and must be rejected, allowing only UTCTime. However, this appears to conflict with RFC 5280, which mandates the use of GeneralizedTime for dates on or after the year 2050.\n\n\n",
       "createdAt": "2025-08-01T16:08:06Z",
-      "updatedAt": "2025-08-28T12:15:20Z",
+      "updatedAt": "2026-01-14T13:54:55Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "On the first point (PrintableString v.s. UTF8), if this is how it is implemented, then we cannot change the draft. \n\nOn the second point, validity, @oncilla do you have any ideas?",
+          "createdAt": "2026-01-13T12:54:35Z",
+          "updatedAt": "2026-01-13T12:54:35Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "> On the first point (PrintableString v.s. UTF8), if this is how it is implemented, then we cannot change the draft.\n\nWe use the Go implementation. I don't think prescribing UTF8 is required or desirable. We were probably a bit to ambitious to restrict this. In fact in reality we are using printablestring for country code:\n\n<img width=\"582\" height=\"57\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bbcac0e2-0869-4407-a178-b665cba8bca5\" />\n\n\n> On the second point, validity, @oncilla do you have any ideas?\n\nAgain, we are to restrictive. We should drop this requirement, and just follow RFC 5280.\n\n",
+          "createdAt": "2026-01-14T10:04:43Z",
+          "updatedAt": "2026-01-14T10:04:43Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Thank you, can you have a look at #116 \n\nAnd how about this? I think this one should stay there\n> - All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use the \"99991231235959Z\" generalized time value, and verifiers MUST error out when encountering such a TRC.\n",
+          "createdAt": "2026-01-14T13:54:37Z",
+          "updatedAt": "2026-01-14T13:54:55Z"
+        }
+      ]
     },
     {
       "number": 79,
@@ -831,9 +853,31 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"2.2.2 Extensions\"\n\nThe Root CA certificates must contain the timestamping OID in its extended key usage extension but must not set the digitalSignature flag in the key usage extension. It is understood that the root CA certificate must include an additional key usage beyond keyCertSign to support TRC signing, but requirement to include the Extended Key Usage (EKU) OID for timestamping raises questions.\n\nAccording to RFC 5280, the EKU extension is intended for End Entity certificates, and the act of signing TRCs does not align with the original semantics of timestamping. It is unclear why this functionality is not based on the digitalSignature key usage alone.",
       "createdAt": "2025-08-01T16:09:25Z",
-      "updatedAt": "2025-08-28T12:17:07Z",
+      "updatedAt": "2026-01-14T16:35:58Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": ">  It is unclear why this functionality is not based on the digitalSignature key usage alone. \n\nIf this is something that is already implemented, then we cannot change it in the draft . However, some thoughts on his comments would be welcome",
+          "createdAt": "2026-01-13T12:57:05Z",
+          "updatedAt": "2026-01-13T12:57:05Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "I think Ramon is correct. This was a misunderstanding of that EKU extension, at it makes using root certificates for TLS annoying. However, it is currently in the implementation, and we cannot change it immediately without breaking things.\n\nIf we want to change this, it needs careful planning and execution. But I think long-term it would be worth it!",
+          "createdAt": "2026-01-14T10:06:59Z",
+          "updatedAt": "2026-01-14T10:06:59Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Thank you! I see this is already discussed in https://github.com/scionproto/scion/issues/4664\nI agree with you that we should not change the draft if this is not yet implemented and rolled out. In similar situations, we sometimes wrote explicitly in the draft wether something is not ideal and should be changed in the future.\n\n\nSo can you confirm that the wording in[ 2.2.2.4.  extKeyUsage Extension ](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-extkeyusage-extension )is ok to leave as it is? Based on [this comment](https://github.com/scionproto/scion/issues/4664#issuecomment-2669008370) you wrote a while ago, I feel we are missing a MUST for CA certificates:\n\n>  The id-kp-root and id-kp-timeStamping purpose must be set \n\nOr is this something not yet implemented? \n\nCurrent wording:\n```\n  SCION uses the following attributes of the Extended Key Usage\n   extension, as defined in Section 4.2.1.12 of [RFC5280]:\n\n   *  id-kp-serverAuth: If set, the public key can be used for SCION\n      Control Plane server authentication.\n\n   *  id-kp-clientAuth: If set, the public key can be used for SCION\n      Control Plane client authentication.\n\n   *  id-kp-timeStamping: If set, the public key can be used for the\n      verification of timestamps.\n\n Additionally, the Extended Key Usage extension sequence MAY include\n   the SCION-specific attributes id-kp-root, id-kp-regular, and id-kp-\n   sensitive.  These attributes are used in the TRC setup, to\n   distinguish root certificates, regular voting certificates, and\n   sensitive voting certificates from each other.  For more information,\n   see Section 3.1.2.2.11.\n\n   The specifications of the extKeyUsage extension differ per SCION\n   Control Plane PKI certificate type.  The next table provides an\n   overview of the specifications per certificate type.\n\n   +==================+==========+=========+===========+===============+\n   |Certificate Type  |Root      |CA       |AS         |Voting (regular|\n   |                  |          |         |           |and sensitive) |\n   +==================+==========+=========+===========+===============+\n   |_Attribute:_      |          |         |           |               |\n   +------------------+----------+---------+-----------+---------------+\n   |extKeyUsage       |MUST be   |MAY be   |MUST be    |MUST be present|\n   |extension itself  |present   |present  |present    |               |\n   |                  |          |(not     |           |               |\n   |                  |          |required)|           |               |\n   +------------------+----------+---------+-----------+---------------+\n   |id-kp-serverAuth  |MUST NOT  |MUST NOT |MUST be    |MUST NOT be    |\n   |                  |be        |be       |included,  |included       |\n   |                  |included  |included |if the     |               |\n   |                  |          |         |certificate|               |\n   |                  |          |         |is used on |               |\n   |                  |          |         |the server-|               |\n   |                  |          |         |side of a  |               |\n   |                  |          |         |control    |               |\n   |                  |          |         |plane TLS  |               |\n   |                  |          |         |session.   |               |\n   +------------------+----------+---------+-----------+---------------+\n   |id-kp-clientAuth  |MUST NOT  |MUST NOT |MUST be    |MUST NOT be    |\n   |                  |be        |be       |included,  |included       |\n   |                  |included  |included |if the     |               |\n   |                  |          |         |certificate|               |\n   |                  |          |         |is used on |               |\n   |                  |          |         |the client-|               |\n   |                  |          |         |side of a  |               |\n   |                  |          |         |control    |               |\n   |                  |          |         |plane TLS  |               |\n   |                  |          |         |session.   |               |\n   +------------------+----------+---------+-----------+---------------+\n   |id-kp-timeStamping|MUST be   |         |MUST be    |MUST be        |\n   |                  |included  |         |included   |included       |\n   +------------------+----------+---------+-----------+---------------+\n   |SCION-specific    |id-kp-root|         |           |Regular voting |\n   |                  |MUST be   |         |           |cert: id-kp-   |\n   |                  |included. |         |           |regular MUST be|\n   |                  |For       |         |           |included.  For |\n   |                  |details,  |         |           |details, see   |\n   |                  |see       |         |           |Section        |\n   |                  |Section   |         |           |2.2.2.4.1      |\n   |                  |2.2.2.4.1 |         |           |Sensitive      |\n   |                  |          |         |           |voting cert:   |\n   |                  |          |         |           |id-kp-sensitive|\n   |                  |          |         |           |MUST be        |\n   |                  |          |         |           |included.  For |\n   |                  |          |         |           |details, see   |\n   |                  |          |         |           |Section        |\n   |                  |          |         |           |2.2.2.4.1      |\n   +------------------+----------+---------+-----------+---------------+\n\n    Table 4: extKeyUsage extension - Specifications per certificate type\n```",
+          "createdAt": "2026-01-14T16:29:11Z",
+          "updatedAt": "2026-01-14T16:35:58Z"
+        }
+      ]
     },
     {
       "number": 80,
@@ -1138,7 +1182,7 @@
       "id": "I_kwDOH386tM7VyYLc",
       "title": "Clarify Process for Cryptographic Algorithms",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/98",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -1148,8 +1192,8 @@
       "labels": [],
       "body": "From Brian Trammell...\n\nIn section 2.2.1.1, should the process by which new algorithms may be added to or removed from the MTI set be defined or at least alluded to? One of the reasons that nation-state-based isolation is interesting to some governments is that it would allow the unrestricted use within the ISD of ciphersuites that have been developed and are under the control of (slash presumably can be broken by) that state's national security service; what happens if a nationally-oriented ISD chooses to ignore the MTI here and use only their",
       "createdAt": "2025-11-04T14:05:11Z",
-      "updatedAt": "2025-12-30T15:56:39Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-13T12:19:52Z",
+      "closedAt": "2026-01-13T12:19:52Z",
       "comments": [
         {
           "author": "knmeynell",
@@ -5147,24 +5191,26 @@
       "id": "PR_kwDOH386tM66_ktN",
       "title": "Clarify Process for Cryptographic Algorithms",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/112",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #98 \r\n\r\n@knmeynell please review but do not merge yet.",
       "createdAt": "2025-12-30T16:04:37Z",
-      "updatedAt": "2025-12-31T03:15:37Z",
+      "updatedAt": "2026-01-13T12:19:55Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
+      "baseRefOid": "c186b5f744d9c3ad3a20354d77d8933ea4fc7534",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "crypto-mti-set",
-      "headRefOid": "2c7dc8de82540e4696d7d6c448ffb99d4640f131",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "14387be91dc261b01f9bcb94286e740d250a0b72",
+      "closedAt": "2026-01-13T12:19:51Z",
+      "mergedAt": "2026-01-13T12:19:51Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a32e540959e8a9ba1341bd657a181c37bf8477d2"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5184,6 +5230,26 @@
               "body": "Suggest:\r\n\r\nOther algorithms or curves MAY be employed. Implementations deviating from the mandatory set generally lose the guarantee of global interoperability and are suitable primarily for isolated ISDs that do not require external interconnection. Future protocol versions may update the set of mandatory algorithms.",
               "createdAt": "2025-12-31T03:15:27Z",
               "updatedAt": "2025-12-31T03:15:37Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7Z4hWn",
+          "commit": {
+            "abbreviatedOid": "2c7dc8d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-13T12:12:52Z",
+          "updatedAt": "2026-01-13T12:12:52Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "added your wording",
+              "createdAt": "2026-01-13T12:12:52Z",
+              "updatedAt": "2026-01-13T12:12:52Z"
             }
           ]
         }
@@ -5236,24 +5302,26 @@
       "id": "PR_kwDOH386tM67AgLt",
       "title": "Security considerations: TRC distribution",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/114",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #62 \r\n\r\n@knmeynell please review but do not merge yet",
       "createdAt": "2025-12-30T18:16:39Z",
-      "updatedAt": "2025-12-31T03:11:42Z",
+      "updatedAt": "2026-01-13T11:21:29Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "849c48a02c5b0638bff26f6b53c43d9ce1689ea8",
+      "baseRefOid": "72721fcacb58bc6757309984e40998bc47c951ae",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "tofu",
-      "headRefOid": "5519af574be0f0503e2472dc156bdafcdeab33bd",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "78942b3f16143c92e97e2c7db804a744daf7da1a",
+      "closedAt": "2026-01-13T11:21:26Z",
+      "mergedAt": "2026-01-13T11:21:26Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "c186b5f744d9c3ad3a20354d77d8933ea4fc7534"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5291,6 +5359,79 @@
       "headRefName": "Rewording-&-Corrections",
       "headRefOid": "596b63f0f65a98fdae03a897bf283adb6091f028",
       "closedAt": "2026-01-07T05:01:34Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 116,
+      "id": "PR_kwDOH386tM69KW80",
+      "title": "loosen up certificate constraints to align with RFC5280",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/116",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #78",
+      "createdAt": "2026-01-14T13:54:18Z",
+      "updatedAt": "2026-01-14T13:55:35Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a32e540959e8a9ba1341bd657a181c37bf8477d2",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "scion-cert-constraints",
+      "headRefOid": "223e0b56e104b21ec5f4c9074a9cc7ec24427509",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7aNC2o",
+          "commit": {
+            "abbreviatedOid": "223e0b5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-14T13:55:35Z",
+          "updatedAt": "2026-01-14T13:55:35Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Maybe what should be here is that the GeneralizedTime value  99991231235959Z MUST not be used?",
+              "createdAt": "2026-01-14T13:55:35Z",
+              "updatedAt": "2026-01-14T13:55:35Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 117,
+      "id": "PR_kwDOH386tM69Qdeq",
+      "title": "Minor rewordings and typo corrections",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/117",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-01-14T22:16:10Z",
+      "updatedAt": "2026-01-14T22:16:11Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a32e540959e8a9ba1341bd657a181c37bf8477d2",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Final-polish",
+      "headRefOid": "f71b7eb7d63dda1aa3e6c6ca4fba53e0ec74cbeb",
+      "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
