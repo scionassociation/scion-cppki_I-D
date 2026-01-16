@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 17 July 2026                                            S. Hitz
+Expires: 20 July 2026                                            S. Hitz
                                                          Anapaya Systems
-                                                         13 January 2026
+                                                         16 January 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 July 2026.
+   This Internet-Draft will expire on 20 July 2026.
 
 Copyright Notice
 
@@ -1199,6 +1199,12 @@ Table of Contents
    +------------------+----------+---------+-----------+---------------+
 
     Table 4: extKeyUsage extension - Specifications per certificate type
+
+   *Note*: the use of extKeyUsage in Root certificates renders them
+   incompatible with standard TLS handshakes according to [RFC5280],
+   because the id-kp-serverAuth attribute is not set.  While current
+   implementations follow what described in this document, the use of
+   extKeyUsage should be revised in future protocol iterations.
 
 2.2.2.4.1.  SCION-Specific Attributes
 
