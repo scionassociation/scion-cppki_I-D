@@ -516,7 +516,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 - `validity` field: Defines the validity period of the certificate.
 
-  - **SCION constraints**: All certificates MUST have a well-defined expiration date.
+  - **SCION constraints**: All certificates MUST have a well-defined expiration date. GeneralizedTime value 99991231235959Z MUST not be used.
   - **Additional conditions and remarks**: SCION recommends a specific maximum validity period for each type of certificate. For details, see [](#formal). SCION implementations SHOULD adopt these values.
 
 - `subject` field: Defines the entity that owns the certificate.
