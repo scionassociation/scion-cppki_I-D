@@ -516,7 +516,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 
 - `validity` field: Defines the validity period of the certificate.
 
-  - **SCION constraints**: All certificates MUST have a well-defined expiration date. GeneralizedTime value 99991231235959Z MUST not be used.
+  - **SCION constraints**: All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST not be used.
   - **Additional conditions and remarks**: SCION recommends a specific maximum validity period for each type of certificate. For details, see [](#formal). SCION implementations SHOULD adopt these values.
 
 - `subject` field: Defines the entity that owns the certificate.
@@ -858,7 +858,7 @@ The `validity` field consists of a sequence of two dates, as defined in section 
 
 In addition to this standard definition, the following constraint applies to the `validity` field of the TRC:
 
-- All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use the "99991231235959Z" generalized time value, and verifiers MUST error out when encountering such a TRC.
+- All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST error out when encountering such a TRC.
 
 
 ##### `gracePeriod` Field {#grace}
