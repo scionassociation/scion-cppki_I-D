@@ -3640,7 +3640,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 <a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-pki-availability" class="section-name selfRef">PKI availability</a>
         </h3>
 <p id="section-5.1-1">The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>. AS certificates typically have a validity of days (see <a href="#_table-3" class="auto internal xref">Table 2</a>), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
-<p id="section-5.1-2">It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes.
+<p id="section-5.1-2">It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>

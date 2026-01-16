@@ -2358,9 +2358,10 @@ Table of Contents
    renew certificates, it would be cut off from the network.
 
    It is therefore recommended to deploy multiple, independent CAs
-   within an ISD that can issue certificates to all member ASes.  ASes
-   should then be able to quickly switch over to a backup CA to renew
-   their certificates in time.
+   within an ISD that can issue certificates to all member ASes and
+   sustain the appropriate certificate renewal load.  ASes should then
+   be able to quickly switch over to a backup CA to renew their
+   certificates in time.
 
 5.2.  Processes
 
