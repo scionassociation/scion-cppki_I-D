@@ -1204,7 +1204,7 @@ Table of Contents
    incompatible with standard TLS handshakes according to [RFC5280],
    because the id-kp-serverAuth attribute is not set.  While current
    implementations follow what described in this document, the use of
-   ``extKeyUsage` should be revised in future protocol iterations.
+   extKeyUsage should be revised in future protocol iterations.
 
 2.2.2.4.1.  SCION-Specific Attributes
 
