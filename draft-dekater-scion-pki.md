@@ -1308,7 +1308,7 @@ When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as 
 
 The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.
 
-It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes.
+It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
 ## Processes
