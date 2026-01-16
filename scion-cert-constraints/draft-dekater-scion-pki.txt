@@ -26,8 +26,8 @@ Abstract
    Isolation Domains.
 
    This document describes the trust model behind the SCION Control
-   Plane PKI, including specifications of the different types of
-   certificates and the Trust Root Configuration.  It also specifies how
+   Plane PKI, including the specifications of the different types of
+   certificates and the Trust Root Configuration.  It also describes how
    to deploy the Control Plane PKI infrastructure.
 
    This document contains new approaches to secure path aware
@@ -204,10 +204,11 @@ Table of Contents
    that span an area with a uniform trust environment (e.g. a common
    jurisdiction).
 
-   *Core AS*: Each isolation domain (ISD) is administered by a set of
-   distinguished autonomous systems (ASes) called core ASes, which are
-   responsible for initiating the path discovery and path construction
-   process known as "beaconing".
+   *Core AS*: Each Isolation Domain (ISD) is administered by a set of
+   distinguished SCION autonomous systems (ASes) called core ASes, which
+   are responsible for initiating the path discovery and path
+   construction process (called "beaconing" in SCION).  Each ISD MUST
+   have at least one Core AS.
 
    *Trust Root Configuration (TRC)*: A Trust Root Configuration or TRC
    is a signed collection of certificates pertaining to an isolation
@@ -301,9 +302,8 @@ Table of Contents
    *  Support for policy versioning and updates.
 
    Ideally, the trust architecture allows parties that mutually trust
-   each other to form their own trust "union" or "domain", and to freely
-   decide whether to trust other trust unions (domains) outside their
-   own trust bubble.
+   each other to form their own trust domain, and to freely decide
+   whether to trust other trust domains outside their own trust bubble.
 
    To fulfill the above requirements, which in fact apply well to inter-
    domain networking, SCION introduces the concept of *Isolation
@@ -335,7 +335,7 @@ Table of Contents
    authentication within SCION.  Additionally, TRC versioning is used to
    efficiently revoke compromised roots of trust.
 
-   The TRC also provides _trust agility_, that is it enables users to
+   The TRC also provides _trust agility_ - that is it enables users to
    select the trust roots used to initiate certificate validation.  This
    implies that users are free to choose an ISD they believe maintains a
    uncompromised set of trust roots.  ISD members can also decide
@@ -354,7 +354,7 @@ Table of Contents
    As previously mentioned, the Control Plane PKI is organized at an ISD
    level whereby each ISD can independently specify its own Trust Root
    Configuration (TRC) and build its own verification chain.  Each TRC
-   consists of a collection of signed root certificates, which are used
+   consists of a collection of signed root certificates which are used
    to sign CA certificates, which are in turn used to sign AS
    certificates.  The TRC also includes ISD policies that specify, for
    example, the TRC's usage, validity, and future updates.  The so-
@@ -462,9 +462,9 @@ Table of Contents
    messages.  However, certain ASes have additional roles:
 
    *  *Core ASes*: Core ASes are a distinct set of ASes in the SCION
-      Control Plane.  For each ISD, the core ASes are listed in the TRC.
-      Each core AS in an ISD has links to other core ASes (in the same
-      or in different ISDs).
+      Control Plane.  For each ISD, the core ASes are listed in the TRC
+      and each core AS has links to the other core ASes (in the same or
+      in different ISDs).
 
    *  *Certification authorities (CAs)*: CAs are responsible for issuing
       AS certificates to other ASes and/or themselves.
@@ -482,17 +482,17 @@ Table of Contents
 
    The Control Plane PKI can be seen as a function that transforms
    potential distrust among different parties into a mutually accepted
-   trust contract including a trust update and reset policy as well as
-   certificates used for authentication procedures in SCION's Control
-   Plane.
+   trust contract.  This includes a trust update and reset policy as
+   well as certificates used for authentication procedures in SCION's
+   Control Plane.
 
-   For the function to work, it is not necessary that the ASes of the
-   ISD all trust each other.  However, all ASes MUST trust the ISD's
-   core ASes, authoritative ASes, voting ASes, as well as its CA(s).
-   These trusted parties negotiate the ISD trust contract in a
-   "bootstrapping of trust" ceremony, where cryptographic material is
-   exchanged and the ISD's trust anchor (the initial Trust Root
-   Configuration) is created and signed.
+   For this to work, it is not necessary that all the ASes of the ISD
+   trust each other.  However, all ASes MUST trust the ISD's core ASes,
+   authoritative ASes, voting ASes, as well as its CA(s).  These trusted
+   parties negotiate the ISD trust contract in a "bootstrapping of
+   trust" ceremony where cryptographic material is exchanged and the
+   ISD's trust anchor (the initial Trust Root Configuration) is created
+   and signed.
 
 1.6.1.  Input
 
@@ -501,7 +501,7 @@ Table of Contents
    update a TRC.  They MUST also bring the required keys and
    certificates, the so-called root and voting keys/certificates.
 
-   The trusted parties require an ISD number, whose numbering scheme is
+   The trusted parties require an ISD number whose numbering scheme is
    described in [I-D.dekater-scion-controlplane] section ISD Numbers,
    and allocation in [ISD-AS-assignments].
 
@@ -509,8 +509,8 @@ Table of Contents
 
    The output of the bootstrapping of trust ceremony, or the trust
    "function", are the ISD's initial Trust Root Configuration as well as
-   mutually trusted and accepted CA and AS certificates - the latter are
-   used to verify control plane messages.  Together with the ISD's
+   mutually trusted and accepted CA and AS certificates - the latter
+   being used to verify control plane messages.  Together with the ISD's
    control plane root certificates, the CA and AS certificates build the
    ISD's trust and verification chain.
 
@@ -598,7 +598,7 @@ Table of Contents
    certificates holding the corresponding AS public key are required to
    verify control plane messages.
 
-   In X.509 terms, Control Plane AS certificates are end-entity
+   In X.509 terms, Control Plane AS certificates are end entity
    certificates.  That is, they cannot be used to verify other
    certificates.
 
@@ -614,7 +614,7 @@ Table of Contents
    certificates.
 
    Regular and sensitive voting certificates are used to verify regular
-   and sensitive TRC updates, respectively, and are embedded in the TRC.
+   and sensitive TRC updates respectively, and are embedded in the TRC.
 
 2.1.5.1.  Regular Voting Certificate
 
@@ -1128,10 +1128,10 @@ Table of Contents
 
    Additionally, the Extended Key Usage extension sequence MAY include
    the SCION-specific attributes id-kp-root, id-kp-regular, and id-kp-
-   sensitive.  These attributes are used in the TRC setup, to
-   distinguish root certificates, regular voting certificates, and
-   sensitive voting certificates from each other.  For more information,
-   see Section 3.1.2.2.11.
+   sensitive.  These attributes are used in the TRC setup to distinguish
+   root certificates, regular voting certificates, and sensitive voting
+   certificates from each other.  For more information, see
+   Section 3.1.2.2.11.
 
    The specifications of the extKeyUsage extension differ per SCION
    Control Plane PKI certificate type.  The next table provides an
@@ -1192,6 +1192,12 @@ Table of Contents
 
     Table 4: extKeyUsage extension - Specifications per certificate type
 
+   *Note*: the use of extKeyUsage in Root certificates renders them
+   incompatible with standard TLS handshakes according to [RFC5280],
+   because the id-kp-serverAuth attribute is not set.  While current
+   implementations follow what described in this document, the use of
+   extKeyUsage should be revised in future protocol iterations.
+
 2.2.2.4.1.  SCION-Specific Attributes
 
    The id-kp-root, id-kp-regular, and id-kp-sensitive attributes MUST be
@@ -1226,7 +1232,7 @@ Table of Contents
       a CA.  If yes, this attribute MUST be set to TRUE.
 
    *  pathLenConstraint attribute: This attribute is only relevant if
-      the cA attribute is set to TRUE.  It specifies the maximum number
+      the cA attribute is set to TRUE and specifies the maximum number
       of CA certificates that may follow this CA certificate in the
       certification chain.  Value "0" means that this CA may only issue
       end-entity certificates, but no CA certificates.  If the attribute
@@ -1285,7 +1291,7 @@ Table of Contents
 
    The initial TRC of an ISD is signed during a signing ceremony and
    then distributed throughout the ISD.  This signing ceremony follows
-   specific rules; Section 3.2 describes these rules.
+   specific rules which are described in Section 3.2.
 
 3.1.  TRC Specification
 
@@ -1296,12 +1302,12 @@ Table of Contents
    The TRC's certificates collection consists of a set of control plane
    root certificates which build the root of the certification chain for
    the AS certificates in an ISD.  The other certificates in the TRC are
-   solely used for signing the next TRC, a process called "voting".  The
+   solely used for signing the next TRC; a process called "voting".  The
    verification of a new TRC thus depends on the policies and voting
    certificates defined in the previous TRC.
 
    This section specifies the TRC including format definitions and
-   dpayload fields.  The section uses the ITU-T [X.680] syntax.
+   payload fields.  The section uses the ITU-T [X.680] syntax.
 
 3.1.1.  TRC Types and States
 
@@ -1329,7 +1335,7 @@ Table of Contents
 
    *  Active: An active TRC is a valid TRC that can be used for
       verifying certificate signatures.  This is either the latest TRC
-      or the predecessor TRC, if it is still in its grace period (as
+      or the predecessor TRC if it is still in its grace period (as
       defined in the gracePeriod field of the new TRC, see
       Section 3.1.2.2.4).  No more than two TRCs can be active at the
       same time for any ISD.
@@ -1432,9 +1438,9 @@ Table of Contents
    A TRC where the base number is equal to the serial number is a base
    TRC.  The initial TRC is a special case of a base TRC and MUST have a
    serial number of 1 and a base number of 1.  With every TRC update,
-   the serial number MUST be incremented by one.  This facilitates
-   uniquely identifying the predecessor and successor TRC in an update
-   chain.
+   the serial number MUST be incremented by one which facilitates the
+   unique identification of the predecessor and successor TRC in an
+   update chain.
 
    If a trust reset is necessary, a new base TRC is announced in order
    to start a new and clean TRC update chain.  The base number of this
@@ -1482,7 +1488,7 @@ Table of Contents
 
 3.1.2.2.3.  validity Field
 
-   The validity field defines the validity period of the TRC.  This is
+   The validity field defines the validity period of the TRC, which is
    the period of time during which the TRC is in the "valid" state.  The
    notBefore and notAfter attributes of the validity field specify the
    lower and upper bound of the time interval during which a TRC can be
@@ -1538,7 +1544,7 @@ Table of Contents
    The noTrustReset Boolean specifies whether a trust reset is forbidden
    by the ISD.  Within a TRC update chain, this value MUST NOT be
    changed by a regular or sensitive update.  However, it is possible to
-   change the noTrustReset value in the event of a trust reset, where a
+   change the noTrustReset value in the event of a trust reset where a
    new base TRC is created.
 
    The noTrustReset field is OPTIONAL and defaults to FALSE.
@@ -1551,7 +1557,7 @@ Table of Contents
 
    *Note:* A trust reset represents a special use case where a new base
    TRC is created.  It therefore differs from a TRC update (regular or
-   sensitive), as the signatures in the new base TRC cannot be verified
+   sensitive) as the signatures in the new base TRC cannot be verified
    with the certificates contained in the predecessor TRC.  Instead, a
    trust reset base TRC must be axiomatically trusted, similarly to how
    the initial TRC is trusted.
@@ -1741,8 +1747,8 @@ Table of Contents
          Section 3.1.2.2.11).
 
       -  The version field MUST be set to "1".  This is because SCION
-         uses the "id-data" content type to encapsulate content info,
-         and does not specify any certificate in the SignedData sequence
+         uses the "id-data" content type to encapsulate content info and
+         does not specify any certificate in the SignedData sequence
          (see also Section 5.1 of [RFC5652]).
 
    *  SignerIdentifier choice:
@@ -1768,7 +1774,7 @@ Table of Contents
    The signer information in the signed TRC is part of an unordered set,
    as per [RFC5652].  This implies that the signer information can be
    reordered without affecting verification, although certain operations
-   require TRCs to be equal im accordance with the following definition:
+   require TRCs to be equal in accordance with the following definition:
 
    *Two TRCs are equal, if and only if their payloads are byte equal.*
 
@@ -1793,11 +1799,11 @@ Table of Contents
    for a given ISD is distributed via the TRC.
 
    However, AS certificates and the corresponding signing CA
-   certificates are *not* part of the TRC, but bundled into certificate
-   chains and distributed separately from the corresponding TRC.  This
-   separation makes it possible to extend the validity period of the
-   root certificate, and to update the corresponding TRC without having
-   to modify the certificate chain.  To be able to validate a
+   certificates are *not* part of the TRC, but are bundled into
+   certificate chains and distributed separately from the corresponding
+   TRC.  This separation makes it possible to extend the validity period
+   of the root certificate, and to update the corresponding TRC without
+   having to modify the certificate chain.  To be able to validate a
    certification path, each AS builds a collection of root certificates
    from the latest TRC of the relevant ISD.
 
@@ -1805,7 +1811,7 @@ Table of Contents
 
    *Note:* Any entity sending information that is secured by the Control
    Plane PKI, such as control plane messages, MUST be able to provide
-   all the necessary trust material, such as certificates, to verify
+   all the necessary trust material including certificates to verify
    said information.  If any cryptographic material is missing in the
    process, the relying party MUST query the originator of the message
    for the missing material through the control plane API described in
@@ -1818,10 +1824,10 @@ Table of Contents
 
    The selection of the right set of TRCs to build the trust anchor pool
    depends on the time of verification.  The trust anchor pool is
-   usually used to verify control plane messages and this case, the time
-   of verification is the current time.  However, if the trust anchor
-   pool will be used for auditing, the time of verification is the point
-   in time to check whether a given signature was verifiable.
+   usually used to verify control plane messages and in this case, the
+   time of verification is the current time.  However, if the trust
+   anchor pool will be used for auditing, the time of verification is
+   the point in time to check whether a given signature was verifiable.
 
    The selection algorithm for building the trust anchor pool is
    described in pseudo-python code below.
@@ -1913,13 +1919,13 @@ Table of Contents
 
    In the context of a TRC update,
 
-   *  A certificate is _changing_, if the certificate is part of the
+   *  A certificate is _changing_ if the certificate is part of the
       certificates sequence in the predecessor TRC, but no longer part
       of the certificates sequence in the updated TRC.  Instead, the
       certificates sequence of the updated TRC holds another certificate
       of the _same type_ and with the _same distinguished name_.
 
-   *  A certificate is _new_, if there is *no* certificate of the same
+   *  A certificate is _new_ if there is *no* certificate of the same
       type and distinguished name at all in the certificates sequence of
       the predecessor TRC.
 
@@ -2016,7 +2022,7 @@ Table of Contents
    A regular TRC update is a periodic re-issuance of the TRC where the
    entities and policies listed in the TRC remain unchanged.
 
-   A TRC update qualifies as a regular update, if the following rules
+   A TRC update qualifies as a regular update if the following rules
    apply in regard to the TRC's payload information.
 
    *  The settings of the following fields in the updated TRC MUST
@@ -2031,7 +2037,7 @@ Table of Contents
 
       -  The number of sensitive and regular voting certificates as well
          as Control Plane root certificates included in the certificates
-         field, and their distinguished names.
+         field and their distinguished names.
 
       -  The set of sensitive voting certificates specified in the
          certificates field.
@@ -2077,21 +2083,20 @@ Table of Contents
    updated TRC, the corresponding voting representatives MUST also sign
    the updated TRC in order to show that they have access to the private
    keys listed in these fresh certificates.  This is called "showing
-   proof-of-possession", and done by signing the TRC with the respective
-   private key.  For the distinction between changed and new
+   proof-of-possession" and is done by signing the TRC with the
+   respective private key.  For the distinction between changed and new
    certificates in a TRC update, see Section 3.1.5.1.
 
    It is up to the ISD members to decide how the "casting a vote"
-   procedure for updated TRCs will take place.  Some ISDs will make a
-   distinction between regular and sensitive updates.  These ISDs divide
-   the regular and sensitive signing keys in different security classes
-   and act accordingly, e.g. they keep the regular key in an online
-   vault while the sensitive key would be stored offline.  This way, the
-   regular TRC update would lend itself to being automated (since the
-   keys are accessible online) whereas the sensitive one would require
-   manual actions to access the offline key.  However, other ISDs keep
-   both regular and sensitive keys online and perform both updates
-   automatically.
+   procedure for updated TRCs will take place.  Some ISDs make a
+   distinction between regular and sensitive updates by dividing the
+   regular and sensitive signing keys in different security classes,
+   e.g. they keep the regular key in an online vault while the sensitive
+   key would be stored offline.  This way, the regular TRC update would
+   lend itself to being automated (since the keys are accessible online)
+   whereas the sensitive one would require manual actions to access the
+   offline key.  Other ISDs keep both regular and sensitive keys online
+   and perform both updates automatically.
 
 3.1.5.7.  TRC Update Verification
 
@@ -2124,17 +2129,17 @@ Table of Contents
 
    The very first base TRC of an ISD - called the initial TRC - is a
    special case of the base TRC where the number of the ISD is chosen.
-   The initial TRC MUST be signed during a special signing ceremony -
+   The initial TRC MUST be signed during a special signing ceremony and
    all voting representatives of the initial TRC need to take part in
-   this signing ceremony to sign this and exchange their public keys.
-   Following this, all entities within an ISD can obtain the TRC by
-   means of a secure offline or online mechanism.
+   this to sign the TRC and exchange their public keys.  Following this,
+   all entities within an ISD can obtain the TRC by means of a secure
+   offline or online mechanism.
 
    Appendix "Appendix A.  Signing Ceremony Initial TRC" describes a
    possible procedure for the signing ceremony of an ISD's initial TRC.
-   It is in principle up to the initial members of an ISD how to
-   organize the signing ceremony.  However, it is recommended having a
-   process in line with the ceremony described in the Appendix.
+   Whilst it is up to the initial members of an ISD how to organize the
+   signing ceremony, it recommended to implement a process in line with
+   the ceremony described in the Appendix.
 
 4.  Deploying the CP PKI - Specifications
 
@@ -2161,7 +2166,7 @@ Table of Contents
 
    Relying parties MUST have at least one valid TRC available.  Relying
    parties MUST discover TRC updates within the grace period defined in
-   the updated TRC.  They SHOULD discover TRC updates in a matter of
+   the updated TRC, and SHOULD discover TRC updates in a matter of
    minutes to hours.  Additionally, the following requirement MUST be
    satisfied:
 
@@ -2251,8 +2256,8 @@ Table of Contents
    messages.
 
    A certificate chain is verified against the Control Plane root
-   certificate, although the the root certificate is bunded with the TRC
-   and *not* in the chain.  This makes it possible to extend the
+   certificate, although the the root certificate is bundled with the
+   TRC and *not* in the chain.  This makes it possible to extend the
    validity period of the root certificate and update the corresponding
    TRC without having to modify the certificate chain.
 
@@ -2285,14 +2290,13 @@ Table of Contents
           the subject key identifier in the signature metadata.  See
           also Section 2.2.2.2.
 
-       *  The AS certificate MUST be valid at verification time.
-          Normally, this will be the current time.  In special cases,
-          e.g., auditing, the time can be set to the past to check if
-          the message was verifiable at the given time.
+       *  The AS certificate MUST be valid at verification time, which
+          will normally be the current time.  In special cases, e.g.
+          auditing, the time can be set to the past to check if the
+          message was verifiable at the given time.
 
    4.  After selecting a certificate chain to verify the control plane
-       messages, the relying party MUST verify the certificate chain,
-       by:
+       messages, the relying party MUST verify the certificate chain by:
 
        *  Executing the regular X.509 verification procedure.  For
           details, see [X.509].
@@ -2309,7 +2313,7 @@ Table of Contents
              certificate validity period.
 
    5.  If the verification of the certificate chain was successful, the
-       relying party can now verify the control plane messages, with the
+       relying party can now verify the control plane messages with the
        root certificates from the certificate chain.
 
    If any cryptographic material is missing in the process, the relying
@@ -2351,11 +2355,12 @@ Table of Contents
    alternative to revocation, as described in Section 1.4.2.  AS
    certificates typically have a validity of days (see Table 2), except
    for the first issued AS certificate.  Should an AS not be able to
-   renew certificates, it would be cut off from the network.  It is
-   therefore recommended to deploy multiple, independent CAs within an
-   ISD that can issue certificates to all member ASes.  ASes should then
-   be able to quickly switch over to a backup CA to renew their
-   certificates in time.
+   renew certificates, it would be cut off from the network.
+
+   It is therefore recommended to deploy multiple, independent CAs
+   within an ISD that can issue certificates to all member ASes.  ASes
+   should then be able to quickly switch over to a backup CA to renew
+   their certificates in time.
 
 5.2.  Processes
 
@@ -2375,9 +2380,9 @@ Table of Contents
 
    *  actions in case of compromise or regulations breach
 
-   This draft describes a typical TRC signing ceremony in
-   Appendix "Appendix A.  Signing Ceremony Initial TRC", further
-   processes are outside of the scope of this document.
+   This document describes a typical TRC signing ceremony in
+   Appendix "Appendix A.  Signing Ceremony Initial TRC", but further
+   processes are out-of-scope.
 
 6.  Security Considerations
 
@@ -2397,7 +2402,7 @@ Table of Contents
 
    In SCION there is no central authority that could "switch off" an ISD
    as each relies on its own independent trust roots.  Each AS within an
-   ISD is therefore dependant on its ISD's PKI for its functioning,
+   ISD is therefore dependent on its ISD's PKI for its functioning,
    although the following compromises are potentially possible:
 
    *  At TRC level: The private root keys of the root certificates
@@ -2406,17 +2411,17 @@ Table of Contents
       illegitimate CA certificates which may be used in further attacks.
       To maliciously perform a TRC update, an attacker would need to
       compromise multiple voting keys, the number of which is dependent
-      on the voting quorum set in the TRC - the higher the quorum, the
+      on the voting quorum set in the TRC.  The higher the quorum, the
       more unlikely a malicious update will be.
 
    *  At CA level: The private keys of an ISD's CA certificates are used
       to sign the AS certificates and all ASes within an ISD obtain
       certificates directly from the CAs.  If one of the CA’s keys is
-      compromised, an adversary could issue illegitimate AS
-      certificates, which may be used to impersonate ASes in further
-      attacks.  A compromised or misbehaving CA could also refuse to
-      issue certificates to legitimate ASes, cutting them off the
-      network if no alternative redundant CA is available.
+      compromised, an adversary could issue illegitimate AS certificates
+      which may be used to impersonate ASes in further attacks.  A
+      compromised or misbehaving CA could also refuse to issue
+      certificates to legitimate ASes, cutting them off the network if
+      no alternative redundant CA is available.
 
    *  At AS level: Each AS within an ISD signs control plane messages
       with their AS private key.  If the keys of an AS are compromised
@@ -2435,8 +2440,8 @@ Table of Contents
       the TRC are compromised, the TRC MUST be updated as described in
       Section 3.1.5.  A trust reset is only required in the case the
       number of compromised keys at the same time is greater or equal
-      than the TRC's quorum (see Section 3.1.2.2.7) and a invalid update
-      has been produced and distributed in the network.
+      than the TRC's quorum (see Section 3.1.2.2.7), and a invalid
+      update has been produced and distributed in the network.
 
    *  At CA level: If the private key related to a CA certificate is
       compromised, the impacted CA AS MUST obtain a new CA certificate
@@ -2463,19 +2468,20 @@ Table of Contents
    path construction beacon during path exploration or a path segment
    during a path lookup) always has all the cryptographic material to
    verify it.  Thus, the receiver can always immediately obtain all the
-   cryptographic material from the message originator.  As the
-   corresponding PKI messaging thus only occurs when the control plane
+   cryptographic material from the message originator.
+
+   As the corresponding PKI messaging only occurs when the control plane
    is already communicating, these requests to obtain cryptographic
    material are not prone to additional denial of service attacks.  We
-   therefore refer to [I-D.dekater-scion-controlplane] for a more
-   detailed description of DoS vulnerabilities of control-plane
-   messages.
+   refer to [I-D.dekater-scion-controlplane] for a more detailed
+   description of DoS vulnerabilities of control-plane messages.
 
-   For certificate renewal, on the other hand, this does not apply.
+   On the other hand, this does not apply for certificate renewal.
    Denial of Service on the CA infrastructure or on the communication
    links from the individual ASes to the CA could be used by an attacker
-   to prevent victim ASes from renewing their certificates, halting the
-   path discovery process.  This risk can be mitigated in multiple ways:
+   to prevent victim ASes from renewing their certificates and halting
+   the path discovery process.  This risk can be mitigated in multiple
+   ways:
 
    *  CAs only need to be accessible from ASes within the ISD, reducing
       the potential DoS attack surface
@@ -2489,14 +2495,14 @@ Table of Contents
 
    Base TRCs act as an ISD root of trust (see Section 1.4).
 
-   If an endpoint retrieves the initial TRC in-band (e.g., from a local
+   If an endpoint retrieves the initial TRC in-band (e.g. from a local
    control service or a resolution server) without prior validation, it
    effectively operates under a "Trust on First Use" (TOFU) assumption.
    Care should therefore be taken in trusting the TRC source.
 
    Should an AS be provisioned with a malicious TRC, it would not be
-   able to communicate to other ASes in the affected ISD, limiting
-   impact of a malicious TRC.
+   able to communicate to other ASes in the affected ISD, thereby
+   limiting impact of a malicious TRC.
 
 7.  IANA Considerations
 
