@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 18 July 2026                                            S. Hitz
+Expires: 20 July 2026                                            S. Hitz
                                                          Anapaya Systems
-                                                         14 January 2026
+                                                         16 January 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 July 2026.
+   This Internet-Draft will expire on 20 July 2026.
 
 Copyright Notice
 
@@ -2258,8 +2258,8 @@ Table of Contents
    messages.
 
    A certificate chain is verified against the Control Plane root
-   certificate, although the the root certificate is bunded with the TRC
-   and *not* in the chain.  This makes it possible to extend the
+   certificate, although the the root certificate is bundled with the
+   TRC and *not* in the chain.  This makes it possible to extend the
    validity period of the root certificate and update the corresponding
    TRC without having to modify the certificate chain.
 
@@ -2404,7 +2404,7 @@ Table of Contents
 
    In SCION there is no central authority that could "switch off" an ISD
    as each relies on its own independent trust roots.  Each AS within an
-   ISD is therefore dependant on its ISD's PKI for its functioning,
+   ISD is therefore dependent on its ISD's PKI for its functioning,
    although the following compromises are potentially possible:
 
    *  At TRC level: The private root keys of the root certificates
