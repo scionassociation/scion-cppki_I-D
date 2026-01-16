@@ -684,6 +684,7 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 | SCION-specific                 | `id-kp-root` MUST be included. For details, see [](#specatt) |     |     | Regular voting cert: `id-kp-regular` MUST be included. For details, see [](#specatt)<br> Sensitive voting cert: `id-kp-sensitive` MUST be included. For details, see [](#specatt) |
 {: #table-5 title="extKeyUsage extension - Specifications per certificate type"}
 
+**Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
 
 ##### SCION-Specific Attributes {#specatt}
 
