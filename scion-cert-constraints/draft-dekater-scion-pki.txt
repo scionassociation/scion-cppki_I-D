@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 18 July 2026                                            S. Hitz
+Expires: 20 July 2026                                            S. Hitz
                                                          Anapaya Systems
-                                                         14 January 2026
+                                                         16 January 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 July 2026.
+   This Internet-Draft will expire on 20 July 2026.
 
 Copyright Notice
 
@@ -845,7 +845,8 @@ Table of Contents
    *  validity field: Defines the validity period of the certificate.
 
       -  *SCION constraints*: All certificates MUST have a well-defined
-         expiration date.
+         expiration date.  GeneralizedTime value "99991231235959Z" MUST
+         not be used.
 
       -  *Additional conditions and remarks*: SCION recommends a
          specific maximum validity period for each type of certificate.
@@ -1499,9 +1500,9 @@ Table of Contents
    applies to the validity field of the TRC:
 
    *  All TRCs MUST have a well-defined expiration date.  SCION
-      implementations MUST NOT create TRCs that use the
-      "99991231235959Z" generalized time value, and verifiers MUST error
-      out when encountering such a TRC.
+      implementations MUST NOT create TRCs that use GeneralizedTime
+      value "99991231235959Z", and verifiers MUST error out when
+      encountering such a TRC.
 
 3.1.2.2.4.  gracePeriod Field
 
