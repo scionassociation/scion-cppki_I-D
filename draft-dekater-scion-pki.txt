@@ -837,10 +837,6 @@ Table of Contents
 
          o  This field MUST be non-empty.
 
-         o  SCION implementations MUST ONLY use the “UTF8String” value
-            type for all attributes (including the SCION-specific
-            attribute ISD-AS number).
-
       -  *Additional conditions and remarks*: All SCION implementations
          MUST support the additional SCION-specific attribute ISD-AS
          number.  For details, see Section 2.2.1.2 and
@@ -849,8 +845,8 @@ Table of Contents
    *  validity field: Defines the validity period of the certificate.
 
       -  *SCION constraints*: All certificates MUST have a well-defined
-         expiration date.  Certificates with a generalized time value
-         are not valid and MUST be rejected.
+         expiration date.  GeneralizedTime value "99991231235959Z" MUST
+         not be used.
 
       -  *Additional conditions and remarks*: SCION recommends a
          specific maximum validity period for each type of certificate.
@@ -862,10 +858,6 @@ Table of Contents
       -  *SCION constraints*:
 
          o  This field MUST be non-empty.
-
-         o  SCION implementations MUST ONLY use the “UTF8String” value
-            type for all attributes (including the SCION-specific
-            attribute ISD-AS number).
 
       -  *Additional conditions and remarks*: The subject field is
          specified in the same way as the issuer field.  For details,
@@ -1514,9 +1506,9 @@ Table of Contents
    applies to the validity field of the TRC:
 
    *  All TRCs MUST have a well-defined expiration date.  SCION
-      implementations MUST NOT create TRCs that use the
-      "99991231235959Z" generalized time value, and verifiers MUST error
-      out when encountering such a TRC.
+      implementations MUST NOT create TRCs that use GeneralizedTime
+      value "99991231235959Z", and verifiers MUST error out when
+      encountering such a TRC.
 
 3.1.2.2.4.  gracePeriod Field
 
@@ -2854,6 +2846,10 @@ draft-dekater-scion-pki-11
 
    *  Clarify that initial AS certificates may have a longer validity to
       allow enough time for deployment
+
+   *  "SCION-Specific Constraints and Conditions" section: drop
+      requirement to use "UTF8String" for all fields, allow use of
+      GeneralizedTime to align with RFC5280
 
    *  Security considerations: move and reword section "Dependency on
       Certificates" to new section "Deployment Considerations"

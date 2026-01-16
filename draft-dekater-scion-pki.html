@@ -2168,9 +2168,6 @@ TRC
 <li class="normal" id="section-2.2.1-3.4.2.1.2.1">
                       <p id="section-2.2.1-3.4.2.1.2.1.1">This field <span class="bcp14">MUST</span> be non-empty.<a href="#section-2.2.1-3.4.2.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-                    <li class="normal" id="section-2.2.1-3.4.2.1.2.2">
-                      <p id="section-2.2.1-3.4.2.1.2.2.1">SCION implementations <span class="bcp14">MUST</span> ONLY use the “UTF8String” value type for all attributes (including the SCION-specific attribute <code>ISD-AS number</code>).<a href="#section-2.2.1-3.4.2.1.2.2.1" class="pilcrow">¶</a></p>
-</li>
                   </ul>
 </li>
                 <li class="normal" id="section-2.2.1-3.4.2.2">
@@ -2182,7 +2179,7 @@ TRC
               <p id="section-2.2.1-3.5.1"><code>validity</code> field: Defines the validity period of the certificate.<a href="#section-2.2.1-3.5.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.2.1-3.5.2.1">
-                  <p id="section-2.2.1-3.5.2.1.1"><strong>SCION constraints</strong>: All certificates <span class="bcp14">MUST</span> have a well-defined expiration date. Certificates with a generalized time value are not valid and <span class="bcp14">MUST</span> be rejected.<a href="#section-2.2.1-3.5.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-2.2.1-3.5.2.1.1"><strong>SCION constraints</strong>: All certificates <span class="bcp14">MUST</span> have a well-defined expiration date. GeneralizedTime value "99991231235959Z" <span class="bcp14">MUST</span> not be used.<a href="#section-2.2.1-3.5.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-2.2.1-3.5.2.2">
                   <p id="section-2.2.1-3.5.2.2.1"><strong>Additional conditions and remarks</strong>: SCION recommends a specific maximum validity period for each type of certificate. For details, see <a href="#formal" class="auto internal xref">Section 2.1.6</a>. SCION implementations <span class="bcp14">SHOULD</span> adopt these values.<a href="#section-2.2.1-3.5.2.2.1" class="pilcrow">¶</a></p>
@@ -2197,9 +2194,6 @@ TRC
 <ul class="normal">
 <li class="normal" id="section-2.2.1-3.6.2.1.2.1">
                       <p id="section-2.2.1-3.6.2.1.2.1.1">This field <span class="bcp14">MUST</span> be non-empty.<a href="#section-2.2.1-3.6.2.1.2.1.1" class="pilcrow">¶</a></p>
-</li>
-                    <li class="normal" id="section-2.2.1-3.6.2.1.2.2">
-                      <p id="section-2.2.1-3.6.2.1.2.2.1">SCION implementations <span class="bcp14">MUST</span> ONLY use the “UTF8String” value type for all attributes (including the SCION-specific attribute <code>ISD-AS number</code>).<a href="#section-2.2.1-3.6.2.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
                   </ul>
 </li>
@@ -2888,7 +2882,7 @@ The following simple example illustrates how to specify the ID of the TRCs in an
 <p id="section-3.1.2.2.3-4">In addition to this standard definition, the following constraint applies to the <code>validity</code> field of the TRC:<a href="#section-3.1.2.2.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.1.2.2.3-5.1">
-                  <p id="section-3.1.2.2.3-5.1.1">All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SCION implementations <span class="bcp14">MUST NOT</span> create TRCs that use the "99991231235959Z" generalized time value, and verifiers <span class="bcp14">MUST</span> error out when encountering such a TRC.<a href="#section-3.1.2.2.3-5.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-3.1.2.2.3-5.1.1">All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SCION implementations <span class="bcp14">MUST NOT</span> create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers <span class="bcp14">MUST</span> error out when encountering such a TRC.<a href="#section-3.1.2.2.3-5.1.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </section>
@@ -4052,13 +4046,16 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
             <p id="appendix-D.1-1.5.1">Clarify that initial AS certificates may have a longer validity to allow enough time for deployment<a href="#appendix-D.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.6">
-            <p id="appendix-D.1-1.6.1">Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"<a href="#appendix-D.1-1.6.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.6.1">"SCION-Specific Constraints and Conditions" section: drop requirement to use "UTF8String" for all fields, allow use of GeneralizedTime to align with RFC5280<a href="#appendix-D.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.7">
-            <p id="appendix-D.1-1.7.1">Security considerations: new section on TRC Distribution<a href="#appendix-D.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.7.1">Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"<a href="#appendix-D.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.8">
-            <p id="appendix-D.1-1.8.1">Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.<a href="#appendix-D.1-1.8.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.8.1">Security considerations: new section on TRC Distribution<a href="#appendix-D.1-1.8.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.9">
+            <p id="appendix-D.1-1.9.1">Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.<a href="#appendix-D.1-1.9.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
