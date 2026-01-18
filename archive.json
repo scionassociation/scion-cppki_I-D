@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-15T00:24:22.895084+00:00",
+  "timestamp": "2026-01-18T00:29:14.105756+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -804,7 +804,7 @@
       "id": "I_kwDOH386tM7DxFTE",
       "title": "SCION Certificate Specification deviates from permitted data types for individual RDN attributes",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/78",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -813,8 +813,8 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"2.2.1. Basic Fields: SCION-Specific Constraints and Conditions\"\n\nIssuer and Subject DN - The SCION Certificate Specification Standard is based on [RFC5280] and [X.509], but deviates from the permitted data types for individual RDN attributes. While the general X.509 standard, as described in ITU-T X.520, prescribes the data type PrintableString for countryName and serialNumber, SCION generally requires UTF-8 coding. Such contradictions to the standard can lead to complications in various contexts, such as directory services and their schemas.\n\nValidity - The draft states that GeneralizedTime is not permitted and must be rejected, allowing only UTCTime. However, this appears to conflict with RFC 5280, which mandates the use of GeneralizedTime for dates on or after the year 2050.\n\n\n",
       "createdAt": "2025-08-01T16:08:06Z",
-      "updatedAt": "2026-01-14T13:54:55Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-16T14:15:48Z",
+      "closedAt": "2026-01-16T14:15:48Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -844,7 +844,7 @@
       "id": "I_kwDOH386tM7DxGQX",
       "title": "Signing TRCs using EKU does not align with semantics of timestamping",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/79",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [
@@ -853,8 +853,8 @@
       "labels": [],
       "body": "Observation from Ramon Keller (libc):\n\nSee \"2.2.2 Extensions\"\n\nThe Root CA certificates must contain the timestamping OID in its extended key usage extension but must not set the digitalSignature flag in the key usage extension. It is understood that the root CA certificate must include an additional key usage beyond keyCertSign to support TRC signing, but requirement to include the Extended Key Usage (EKU) OID for timestamping raises questions.\n\nAccording to RFC 5280, the EKU extension is intended for End Entity certificates, and the act of signing TRCs does not align with the original semantics of timestamping. It is unclear why this functionality is not based on the digitalSignature key usage alone.",
       "createdAt": "2025-08-01T16:09:25Z",
-      "updatedAt": "2026-01-14T16:35:58Z",
-      "closedAt": null,
+      "updatedAt": "2026-01-16T12:53:23Z",
+      "closedAt": "2026-01-16T12:53:23Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1085,7 +1085,7 @@
       "labels": [],
       "body": "Observations from Ramon Keller (libc):\n\n**AS Certificate creation:**\n\nInitial AS certificates are still described as to be submitted out of band. Is there any progress of the process in this respect since the SSFN implementation?\n\n**Short certificate lifetime:**\n\nThe SCION draft still recommends very short lifetimes for Root CA and Issuing CA certificates of 1 year or 11 days (!), respectively. Renewal in such short lifetimes will kill any operations team running certain commercial products. These products are sold in conjunction with HSM and much longer certificate lifetimes than those that were e.g. implemented for SSFN. Anybody wanting to implement the recommended lifetimes needs to look for a capable solution.\n\n**Control Plane AS Certificates:**\n\nThe recommended validity of 3 days is fair, but then the initialization processes must be stable and effective. Could SIX provide any experience based feedback on how much the end users relied on a longer duration for initial AS certificates when onboarding to SSFN?\n\n**Processes**\n\nThe draft talks a lot about the technical elements of a CP-PKI, but not much about processes the PKI operators have to implement. or the regulations.\n\n**Cost of Ownership**\n\nThe range extends from simple technical systems focussing on stable network communication at affordable costs to highly secure environments that place great value on reliable network communication in combination with a high level of data protection. Those with higher security requirements should be willing to bear the higher security costs through secure processes, but only those with technical requirements should be exempt from additional costs as far as possible.\n\n**High availability in CAs**\n\n1. Must the CAs of an ISD offer backup CA services to all the other PKIs in the ISD?\n2. What if a single PKI fails to operate?\n3. To cope with this single point of failure, it should be specified that the subscribers could quickly switch over to one of the other PKIs to be able to renew their certificates on time.\n4. How is the subscriber database synchronized among the different backup CAs, as without a specification the SCION world will face incompatible implementation-specific approaches.",
       "createdAt": "2025-08-01T16:32:42Z",
-      "updatedAt": "2026-01-12T10:40:29Z",
+      "updatedAt": "2026-01-16T13:39:50Z",
       "closedAt": "2026-01-12T10:40:29Z",
       "comments": [
         {
@@ -1094,6 +1094,13 @@
           "body": "On the last point, we now say in section `5.2.  Denial of Service Attacks` \n\n```\n  *  ISDs usually rely on multiple CAs\n```\n\nWe could write something like operational considerations, maybe in another section.",
           "createdAt": "2025-09-03T14:09:03Z",
           "updatedAt": "2025-09-03T14:09:03Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "On this point, from out TC#9 discussion: \n> How is the subscriber database synchronized among the different backup CAs, as without a specification the SCION world will face incompatible implementation-specific approaches.\n \n\nFrom Sam: \n> If somebody comes along with a valid certificate right then you can issue another one. So what we don't have a subscriber database what what there is there is a more like a block list if somebody gets excluded that you know the primary or the that all CS know if you want to exclude a certain as that this as is prevented from renewing its certificate within the 3 days.",
+          "createdAt": "2026-01-16T13:39:50Z",
+          "updatedAt": "2026-01-16T13:39:50Z"
         }
       ]
     },
@@ -5370,24 +5377,26 @@
       "id": "PR_kwDOH386tM69KW80",
       "title": "loosen up certificate constraints to align with RFC5280",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/116",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #78",
       "createdAt": "2026-01-14T13:54:18Z",
-      "updatedAt": "2026-01-14T13:55:35Z",
+      "updatedAt": "2026-01-16T14:15:47Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "a32e540959e8a9ba1341bd657a181c37bf8477d2",
+      "baseRefOid": "86e0b687857e568cc9953bda4c071bc6838aad68",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "scion-cert-constraints",
-      "headRefOid": "223e0b56e104b21ec5f4c9074a9cc7ec24427509",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "43ca516de3bef1bf48a1f1ea7445217270f1a498",
+      "closedAt": "2026-01-16T14:15:47Z",
+      "mergedAt": "2026-01-16T14:15:47Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "c4856d40db526f524d17685031cb295ca2768216"
+      },
       "comments": [],
       "reviews": [
         {
@@ -5409,32 +5418,159 @@
               "updatedAt": "2026-01-14T13:55:35Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7ayzKa",
+          "commit": {
+            "abbreviatedOid": "223e0b5"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-01-16T12:56:07Z",
+          "updatedAt": "2026-01-16T12:56:07Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM7az-QP",
+          "commit": {
+            "abbreviatedOid": "223e0b5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-01-16T14:08:11Z",
+          "updatedAt": "2026-01-16T14:08:11Z",
+          "comments": [
+            {
+              "originalPosition": 10,
+              "body": "Done",
+              "createdAt": "2026-01-16T14:08:11Z",
+              "updatedAt": "2026-01-16T14:08:11Z"
+            }
+          ]
         }
       ]
     },
     {
       "number": 117,
       "id": "PR_kwDOH386tM69Qdeq",
-      "title": "Minor rewordings and typo corrections",
+      "title": "Review Kevin - Minor rewordings and typo corrections",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/117",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "",
+      "body": "[wdiff with main](https://author-tools.ietf.org/239192b8-0566-48be-84f1-f83c62c47a8c)",
       "createdAt": "2026-01-14T22:16:10Z",
-      "updatedAt": "2026-01-14T22:16:11Z",
+      "updatedAt": "2026-01-16T13:30:14Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a32e540959e8a9ba1341bd657a181c37bf8477d2",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Final-polish",
-      "headRefOid": "f71b7eb7d63dda1aa3e6c6ca4fba53e0ec74cbeb",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "c97027be8e6b0b36fff9a73984fa8df257c4abb6",
+      "closedAt": "2026-01-16T13:30:10Z",
+      "mergedAt": "2026-01-16T13:30:10Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "86e0b687857e568cc9953bda4c071bc6838aad68"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7azQ2e",
+          "commit": {
+            "abbreviatedOid": "c97027b"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-01-16T13:30:03Z",
+          "updatedAt": "2026-01-16T13:30:03Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 118,
+      "id": "PR_kwDOH386tM69nF92",
+      "title": "discourage use of extKeyUsage in future protocol iterations",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/118",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #79 \r\nRelates to: https://github.com/scionproto/scion/issues/4664 \r\n\r\n",
+      "createdAt": "2026-01-16T12:43:24Z",
+      "updatedAt": "2026-01-16T12:53:42Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a32e540959e8a9ba1341bd657a181c37bf8477d2",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "extended-key-usage-extension",
+      "headRefOid": "10cf6d3b63bd31963ff69cc790ce2cb8041ed3d2",
+      "closedAt": "2026-01-16T12:53:22Z",
+      "mergedAt": "2026-01-16T12:53:22Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "f891e43bd40e01f58fa20578ce92647a63ce2476"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@oncilla reviewed this on [slack](https://scionproto.slack.com/archives/C07EDUQSE6L/p1768567809278539?thread_ts=1768567573.027949&cid=C07EDUQSE6L)",
+          "createdAt": "2026-01-16T12:52:36Z",
+          "updatedAt": "2026-01-16T12:52:36Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7ayxBd",
+          "commit": {
+            "abbreviatedOid": "10cf6d3"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-01-16T12:53:16Z",
+          "updatedAt": "2026-01-16T12:53:17Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 119,
+      "id": "PR_kwDOH386tM69nv-2",
+      "title": "Mention CAs should support the appropriate renewal load",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/119",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Contribute one missing point to #87",
+      "createdAt": "2026-01-16T13:40:10Z",
+      "updatedAt": "2026-01-17T10:35:35Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "86e0b687857e568cc9953bda4c071bc6838aad68",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "deployment-ca-load",
+      "headRefOid": "b73bed4d1312a9c35e392c720b54c597da3caf13",
+      "closedAt": "2026-01-16T14:23:16Z",
+      "mergedAt": "2026-01-16T14:23:16Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "5f2c892c13b6fd1750554f7bbd4fe8473478c241"
+      },
       "comments": [],
       "reviews": []
     }
