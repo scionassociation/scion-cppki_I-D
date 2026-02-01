@@ -1381,12 +1381,6 @@ The ISD and SCION AS number are SCION-specific numbers. They are currently alloc
 
 --- back
 
-# Acknowledgments
-{:numbered="false"}
-
-Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google), Ramon Keller (LibC Technologies) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
-
-
 # Deployment Testing: SCIONLab
 {:numbered="false"}
 
@@ -1562,3 +1556,10 @@ Minor changes:
 - General edits to make terminology consistent, remove duplication and rationalize text.
 - Removed forward references.
 - Added RFC2119 compliant terminology.
+
+
+# Acknowledgments
+{:numbered="false"}
+
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google), Ramon Keller (LibC Technologies) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+
