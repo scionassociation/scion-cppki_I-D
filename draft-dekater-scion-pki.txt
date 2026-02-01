@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 20 July 2026                                            S. Hitz
+Expires: 5 August 2026                                           S. Hitz
                                                          Anapaya Systems
-                                                         16 January 2026
+                                                         1 February 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 July 2026.
+   This Internet-Draft will expire on 5 August 2026.
 
 Copyright Notice
 
@@ -129,7 +129,6 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
-   Acknowledgments
    Deployment Testing: SCIONLab
    Appendix A.  Signing Ceremony Initial TRC
       Ceremony Participants
@@ -146,6 +145,7 @@ Table of Contents
      draft-dekater-scion-pki-08
      draft-dekater-scion-pki-07
      draft-dekater-scion-pki-06
+   Acknowledgments
    Authors' Addresses
 
 1.  Introduction
@@ -2520,9 +2520,9 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-13, 4 December 2025,
+              scion-controlplane-14, 16 January 2026,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-13>.
+              scion-controlplane-14>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
@@ -2611,19 +2611,6 @@ Table of Contents
               M., Hausheer, D., and A. Perrig, "SCIONLAB - A Next-
               Generation Internet Testbed", 2020,
               <https://ieeexplore.ieee.org/abstract/document/9259355>.
-
-Acknowledgments
-
-   Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
-   Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google),
-   Ramon Keller (LibC Technologies) and Kevin Meynell (SCION
-   Association) for reviewing this document.  We are also very grateful
-   to Adrian Perrig (ETH Zurich), for providing guidance and feedback
-   about each aspect of SCION.  Finally, we are indebted to the SCION
-   development teams of Anapaya and ETH Zurich, for their practical
-   knowledge and for the documentation about the CP PKI, as well as to
-   the authors of [CHUAT22] - the book is an important source of input
-   and inspiration for this draft.
 
 Deployment Testing: SCIONLab
 
@@ -2918,6 +2905,19 @@ draft-dekater-scion-pki-06
    *  Removed forward references.
 
    *  Added RFC2119 compliant terminology.
+
+Acknowledgments
+
+   Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
+   Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google),
+   Ramon Keller (LibC Technologies) and Kevin Meynell (SCION
+   Association) for reviewing this document.  We are also very grateful
+   to Adrian Perrig (ETH Zurich), for providing guidance and feedback
+   about each aspect of SCION.  Finally, we are indebted to the SCION
+   development teams of Anapaya and ETH Zurich, for their practical
+   knowledge and for the documentation about the CP PKI, as well as to
+   the authors of [CHUAT22] - the book is an important source of input
+   and inspiration for this draft.
 
 Authors' Addresses
 

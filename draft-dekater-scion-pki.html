@@ -28,7 +28,7 @@
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.32.5
-    wcwidth 0.2.14
+    wcwidth 0.3.0
 -->
 <link href="draft-dekater-scion-pki.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -569,6 +569,7 @@ aside, blockquote {
 }
 blockquote {
   margin: 1em 0;
+  border-left: 2px var(--pilcrow-strong) solid;
 }
 cite {
   display: block;
@@ -639,7 +640,7 @@ a.pilcrow {
   }
 }
 @media not print {
-  :hover > a.pilcrow {
+  :hover > a.pilcrow, a.pilcrow:focus {
     opacity: 1;
   }
   a.pilcrow[href]:hover {
@@ -1047,11 +1048,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">January 2026</td>
+<td class="right">February 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 20 July 2026</td>
+<td class="center">Expires 5 August 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1065,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-01-16" class="published">16 January 2026</time>
+<time datetime="2026-02-01" class="published">1 February 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-07-20">20 July 2026</time></dd>
+<dd class="expires"><time datetime="2026-08-05">5 August 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1125,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 20 July 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 5 August 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1331,61 +1332,61 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
-            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
+            <p id="section-toc.1-1.9.1"><a href="#appendix-A" class="auto internal xref"></a><a href="#name-deployment-testing-scionlab" class="internal xref">Deployment Testing: SCIONLab</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10">
-            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-deployment-testing-scionlab" class="internal xref">Deployment Testing: SCIONLab</a></p>
-</li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
-            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-appendix-a-signing-ceremony" class="internal xref">Appendix A. Signing Ceremony Initial TRC</a></p>
+            <p id="section-toc.1-1.10.1"><a href="#appendix-B" class="auto internal xref"></a><a href="#name-appendix-a-signing-ceremony" class="internal xref">Appendix A. Signing Ceremony Initial TRC</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
-                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-C.1" class="auto internal xref"></a><a href="#name-ceremony-participants" class="internal xref">Ceremony Participants</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.1">
+                <p id="section-toc.1-1.10.2.1.1"><a href="#appendix-B.1" class="auto internal xref"></a><a href="#name-ceremony-participants" class="internal xref">Ceremony Participants</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
-                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-C.2" class="auto internal xref"></a><a href="#name-ceremony-preparations" class="internal xref">Ceremony Preparations</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.2">
+                <p id="section-toc.1-1.10.2.2.1"><a href="#appendix-B.2" class="auto internal xref"></a><a href="#name-ceremony-preparations" class="internal xref">Ceremony Preparations</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
-                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-C.3" class="auto internal xref"></a><a href="#name-ceremony-process" class="internal xref">Ceremony Process</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3">
+                <p id="section-toc.1-1.10.2.3.1"><a href="#appendix-B.3" class="auto internal xref"></a><a href="#name-ceremony-process" class="internal xref">Ceremony Process</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3.2.1">
-                    <p id="section-toc.1-1.11.2.3.2.1.1"><a href="#appendix-C.3.1" class="auto internal xref"></a><a href="#name-phase-1-certificate-exchang" class="internal xref">Phase 1: Certificate Exchange</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.1">
+                    <p id="section-toc.1-1.10.2.3.2.1.1"><a href="#appendix-B.3.1" class="auto internal xref"></a><a href="#name-phase-1-certificate-exchang" class="internal xref">Phase 1: Certificate Exchange</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3.2.2">
-                    <p id="section-toc.1-1.11.2.3.2.2.1"><a href="#appendix-C.3.2" class="auto internal xref"></a><a href="#name-phase-2-generation-of-the-t" class="internal xref">Phase 2: Generation of the TRC Payload</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.2">
+                    <p id="section-toc.1-1.10.2.3.2.2.1"><a href="#appendix-B.3.2" class="auto internal xref"></a><a href="#name-phase-2-generation-of-the-t" class="internal xref">Phase 2: Generation of the TRC Payload</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3.2.3">
-                    <p id="section-toc.1-1.11.2.3.2.3.1"><a href="#appendix-C.3.3" class="auto internal xref"></a><a href="#name-phase-3-trc-signing" class="internal xref">Phase 3: TRC Signing</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.3">
+                    <p id="section-toc.1-1.10.2.3.2.3.1"><a href="#appendix-B.3.3" class="auto internal xref"></a><a href="#name-phase-3-trc-signing" class="internal xref">Phase 3: TRC Signing</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3.2.4">
-                    <p id="section-toc.1-1.11.2.3.2.4.1"><a href="#appendix-C.3.4" class="auto internal xref"></a><a href="#name-phase-4-trc-validation" class="internal xref">Phase 4: TRC Validation</a></p>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.10.2.3.2.4">
+                    <p id="section-toc.1-1.10.2.3.2.4.1"><a href="#appendix-B.3.4" class="auto internal xref"></a><a href="#name-phase-4-trc-validation" class="internal xref">Phase 4: TRC Validation</a></p>
 </li>
                 </ul>
 </li>
             </ul>
 </li>
-          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
-            <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11">
+            <p id="section-toc.1-1.11.1"><a href="#appendix-C" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
 <ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-11" class="internal xref">draft-dekater-scion-pki-11</a></p>
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.1">
+                <p id="section-toc.1-1.11.2.1.1"><a href="#appendix-C.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-11" class="internal xref">draft-dekater-scion-pki-11</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
-                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-10" class="internal xref">draft-dekater-scion-pki-10</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.2">
+                <p id="section-toc.1-1.11.2.2.1"><a href="#appendix-C.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-10" class="internal xref">draft-dekater-scion-pki-10</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
-                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.3">
+                <p id="section-toc.1-1.11.2.3.1"><a href="#appendix-C.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.4">
-                <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-D.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.4">
+                <p id="section-toc.1-1.11.2.4.1"><a href="#appendix-C.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.5">
-                <p id="section-toc.1-1.12.2.5.1"><a href="#appendix-D.5" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.5">
+                <p id="section-toc.1-1.11.2.5.1"><a href="#appendix-C.5" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.6">
-                <p id="section-toc.1-1.12.2.6.1"><a href="#appendix-D.6" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.11.2.6">
+                <p id="section-toc.1-1.11.2.6.1"><a href="#appendix-C.6" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
 </li>
             </ul>
+</li>
+          <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12">
+            <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-acknowledgments" class="internal xref">Acknowledgments</a></p>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.13">
             <p id="section-toc.1-1.13.1"><a href="#appendix-E" class="auto internal xref"></a><a href="#name-authors-addresses" class="internal xref">Authors' Addresses</a></p>
@@ -3777,7 +3778,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <dl class="references">
 <dt id="I-D.dekater-scion-controlplane">[I-D.dekater-scion-controlplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-13</span>, <time datetime="2025-12-04" class="refDate">4 December 2025</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-13">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-13</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-14</span>, <time datetime="2026-01-16" class="refDate">16 January 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-14">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-14</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.dekater-scion-dataplane">[I-D.dekater-scion-dataplane]</dt>
         <dd>
@@ -3861,157 +3862,149 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 </div>
 </section>
 </div>
-<div id="acknowledgments">
-<section id="appendix-A">
-      <h2 id="name-acknowledgments">
-<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
-      </h2>
-<p id="appendix-A-1">Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google), Ramon Keller (LibC Technologies) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of <span>[<a href="#CHUAT22" class="cite xref">CHUAT22</a>]</span> - the book is an important source of input and inspiration for this draft.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 <div id="deployment-testing-scionlab">
-<section id="appendix-B">
+<section id="appendix-A">
       <h2 id="name-deployment-testing-scionlab">
 <a href="#name-deployment-testing-scionlab" class="section-name selfRef">Deployment Testing: SCIONLab</a>
       </h2>
-<p id="appendix-B-1">SCIONLab is a global research network that is available to test the SCION architecture. You can create and use your ASes using your own computation resources which allows you to gain real-world experience of deploying and managing a SCION network.<a href="#appendix-B-1" class="pilcrow">¶</a></p>
-<p id="appendix-B-2">More information can be found on the SCIONLab website and in the <span>[<a href="#SCIONLAB" class="cite xref">SCIONLAB</a>]</span> paper.<a href="#appendix-B-2" class="pilcrow">¶</a></p>
+<p id="appendix-A-1">SCIONLab is a global research network that is available to test the SCION architecture. You can create and use your ASes using your own computation resources which allows you to gain real-world experience of deploying and managing a SCION network.<a href="#appendix-A-1" class="pilcrow">¶</a></p>
+<p id="appendix-A-2">More information can be found on the SCIONLab website and in the <span>[<a href="#SCIONLAB" class="cite xref">SCIONLAB</a>]</span> paper.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="initial-ceremony">
-<section id="appendix-C">
+<section id="appendix-B">
       <h2 id="name-appendix-a-signing-ceremony">
 <a href="#name-appendix-a-signing-ceremony" class="section-name selfRef">Appendix A. Signing Ceremony Initial TRC</a>
       </h2>
-<p id="appendix-C-1">A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is <span class="bcp14">RECOMMENDED</span> to establish a procedure similar to the one described below:<a href="#appendix-C-1" class="pilcrow">¶</a></p>
+<p id="appendix-B-1">A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is <span class="bcp14">RECOMMENDED</span> to establish a procedure similar to the one described below:<a href="#appendix-B-1" class="pilcrow">¶</a></p>
 <div id="ceremony-participants">
-<section id="appendix-C.1">
+<section id="appendix-B.1">
         <h3 id="name-ceremony-participants">
 <a href="#name-ceremony-participants" class="section-name selfRef">Ceremony Participants</a>
         </h3>
-<p id="appendix-C.1-1">The Signing Ceremony <span class="bcp14">SHOULD</span> include the following participants:<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-1">The Signing Ceremony <span class="bcp14">SHOULD</span> include the following participants:<a href="#appendix-B.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C.1-2.1">
-            <p id="appendix-C.1-2.1.1"><strong>Ceremony Administrator</strong> - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.<a href="#appendix-C.1-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B.1-2.1">
+            <p id="appendix-B.1-2.1.1"><strong>Ceremony Administrator</strong> - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.<a href="#appendix-B.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.1-2.2">
-            <p id="appendix-C.1-2.2.1"><strong>Voting AS Representatives</strong> - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.<a href="#appendix-C.1-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.1-2.2">
+            <p id="appendix-B.1-2.2.1"><strong>Voting AS Representatives</strong> - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.<a href="#appendix-B.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.1-2.3">
-            <p id="appendix-C.1-2.3.1"><strong>Witness(es)</strong> - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.<a href="#appendix-C.1-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.1-2.3">
+            <p id="appendix-B.1-2.3.1"><strong>Witness(es)</strong> - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.<a href="#appendix-B.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.1-3"><strong>Note:</strong> The ISD members <span class="bcp14">MUST</span> decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and <span class="bcp14">MUST</span> have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-B.1-3"><strong>Note:</strong> The ISD members <span class="bcp14">MUST</span> decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and <span class="bcp14">MUST</span> have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-B.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ceremonyprep">
-<section id="appendix-C.2">
+<section id="appendix-B.2">
         <h3 id="name-ceremony-preparations">
 <a href="#name-ceremony-preparations" class="section-name selfRef">Ceremony Preparations</a>
         </h3>
-<p id="appendix-C.2-1">The participants <span class="bcp14">MUST</span> decide in advance on the physical location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:<a href="#appendix-C.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-1">The participants <span class="bcp14">MUST</span> decide in advance on the physical location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:<a href="#appendix-B.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C.2-2.1">
-            <p id="appendix-C.2-2.1.1">ISD number - usually obtained from the SCION registry, see <a href="#id" class="auto internal xref">Section 3.1.2.2.2</a>;<a href="#appendix-C.2-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B.2-2.1">
+            <p id="appendix-B.2-2.1.1">ISD number - usually obtained from the SCION registry, see <a href="#id" class="auto internal xref">Section 3.1.2.2.2</a>;<a href="#appendix-B.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.2">
-            <p id="appendix-C.2-2.2.1">The description of the TRC, see <a href="#description" class="auto internal xref">Section 3.1.2.2.10</a>;<a href="#appendix-C.2-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.2">
+            <p id="appendix-B.2-2.2.1">The description of the TRC, see <a href="#description" class="auto internal xref">Section 3.1.2.2.10</a>;<a href="#appendix-B.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.3">
-            <p id="appendix-C.2-2.3.1">Validity period of the TRC, see <a href="#validity" class="auto internal xref">Section 3.1.2.2.3</a>;<a href="#appendix-C.2-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.3">
+            <p id="appendix-B.2-2.3.1">Validity period of the TRC, see <a href="#validity" class="auto internal xref">Section 3.1.2.2.3</a>;<a href="#appendix-B.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.4">
-            <p id="appendix-C.2-2.4.1">Grace period of the TRC (except for Base TRCs);<a href="#appendix-C.2-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.4">
+            <p id="appendix-B.2-2.4.1">Grace period of the TRC (except for Base TRCs);<a href="#appendix-B.2-2.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.5">
-            <p id="appendix-C.2-2.5.1">Voting quorum for the TRC, see <a href="#quorum" class="auto internal xref">Section 3.1.2.2.7</a>;<a href="#appendix-C.2-2.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.5">
+            <p id="appendix-B.2-2.5.1">Voting quorum for the TRC, see <a href="#quorum" class="auto internal xref">Section 3.1.2.2.7</a>;<a href="#appendix-B.2-2.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.6">
-            <p id="appendix-C.2-2.6.1">AS numbers of the Core ASes, see <a href="#core" class="auto internal xref">Section 3.1.2.2.8</a>;<a href="#appendix-C.2-2.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.6">
+            <p id="appendix-B.2-2.6.1">AS numbers of the Core ASes, see <a href="#core" class="auto internal xref">Section 3.1.2.2.8</a>;<a href="#appendix-B.2-2.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.7">
-            <p id="appendix-C.2-2.7.1">AS numbers of the Authoritative ASes, see <a href="#auth" class="auto internal xref">Section 3.1.2.2.9</a>;<a href="#appendix-C.2-2.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.7">
+            <p id="appendix-B.2-2.7.1">AS numbers of the Authoritative ASes, see <a href="#auth" class="auto internal xref">Section 3.1.2.2.9</a>;<a href="#appendix-B.2-2.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-2.8">
-            <p id="appendix-C.2-2.8.1">The list of Control Plane Root Certificates.<a href="#appendix-C.2-2.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-2.8">
+            <p id="appendix-B.2-2.8.1">The list of Control Plane Root Certificates.<a href="#appendix-B.2-2.8.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.2-3">Each representative of a Voting AS <span class="bcp14">MUST</span> also create the following before the ceremony:<a href="#appendix-C.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-3">Each representative of a Voting AS <span class="bcp14">MUST</span> also create the following before the ceremony:<a href="#appendix-B.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C.2-4.1">
-            <p id="appendix-C.2-4.1.1">A sensitive voting private key and a self-signed certificate containing the corresponding public key.<a href="#appendix-C.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B.2-4.1">
+            <p id="appendix-B.2-4.1.1">A sensitive voting private key and a self-signed certificate containing the corresponding public key.<a href="#appendix-B.2-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-C.2-4.2">
-            <p id="appendix-C.2-4.2.1">A regular voting private key and a self-signed certificate containing the corresponding public key.<a href="#appendix-C.2-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-B.2-4.2">
+            <p id="appendix-B.2-4.2.1">A regular voting private key and a self-signed certificate containing the corresponding public key.<a href="#appendix-B.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.2-5">In addition, each Certificate Authority <span class="bcp14">MUST</span> create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they <span class="bcp14">MUST</span> provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance <span class="bcp14">MUST</span> cover the full TRC validity period.<a href="#appendix-C.2-5" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-6">The location <span class="bcp14">MUST</span> provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.<a href="#appendix-C.2-6" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-7">The Ceremony Administrator and Voting ASes <span class="bcp14">MUST</span> each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.<a href="#appendix-C.2-7" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-8">The Ceremony Administrator <span class="bcp14">MUST</span> provide or be provided with a device to exchange data between the ceremony participants.<a href="#appendix-C.2-8" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-9">The Signing Ceremony <span class="bcp14">SHOULD</span> include a procedure to verify that all devices are secure.<a href="#appendix-C.2-9" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-5">In addition, each Certificate Authority <span class="bcp14">MUST</span> create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they <span class="bcp14">MUST</span> provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance <span class="bcp14">MUST</span> cover the full TRC validity period.<a href="#appendix-B.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-6">The location <span class="bcp14">MUST</span> provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.<a href="#appendix-B.2-6" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-7">The Ceremony Administrator and Voting ASes <span class="bcp14">MUST</span> each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.<a href="#appendix-B.2-7" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-8">The Ceremony Administrator <span class="bcp14">MUST</span> provide or be provided with a device to exchange data between the ceremony participants.<a href="#appendix-B.2-8" class="pilcrow">¶</a></p>
+<p id="appendix-B.2-9">The Signing Ceremony <span class="bcp14">SHOULD</span> include a procedure to verify that all devices are secure.<a href="#appendix-B.2-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ceremonyprocess">
-<section id="appendix-C.3">
+<section id="appendix-B.3">
         <h3 id="name-ceremony-process">
 <a href="#name-ceremony-process" class="section-name selfRef">Ceremony Process</a>
         </h3>
-<p id="appendix-C.3-1">The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.<a href="#appendix-C.3-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3-2">The signing process has four phases of data sharing, led by the Ceremony Administrator who provides instructions to the other participants:<a href="#appendix-C.3-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-1">The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.<a href="#appendix-B.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3-2">The signing process has four phases of data sharing, led by the Ceremony Administrator who provides instructions to the other participants:<a href="#appendix-B.3-2" class="pilcrow">¶</a></p>
 <div id="phase1">
-<section id="appendix-C.3.1">
+<section id="appendix-B.3.1">
           <h4 id="name-phase-1-certificate-exchang">
 <a href="#name-phase-1-certificate-exchang" class="section-name selfRef">Phase 1: Certificate Exchange</a>
           </h4>
-<p id="appendix-C.3.1-1">All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.<a href="#appendix-C.3.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-2">Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives <span class="bcp14">MUST NOT</span> copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.<a href="#appendix-C.3.1-2" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-3">The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA-512 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA-512 hash value for the entire bundle. All hash values must be displayed to the participants.<a href="#appendix-C.3.1-3" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-4">The Ceremony Administrator <span class="bcp14">MUST</span> then share the bundle with the representatives of the voting ASes who <span class="bcp14">MUST</span> validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-C.3.1-4" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-5">Phase 1 concludes when every representative has confirmed the SHA-512 sums are correct. If there is any mismatch then this phase <span class="bcp14">MUST</span> be repeated.<a href="#appendix-C.3.1-5" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.1-1">All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.<a href="#appendix-B.3.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.1-2">Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives <span class="bcp14">MUST NOT</span> copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.<a href="#appendix-B.3.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.1-3">The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA-512 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA-512 hash value for the entire bundle. All hash values must be displayed to the participants.<a href="#appendix-B.3.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.1-4">The Ceremony Administrator <span class="bcp14">MUST</span> then share the bundle with the representatives of the voting ASes who <span class="bcp14">MUST</span> validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-B.3.1-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.1-5">Phase 1 concludes when every representative has confirmed the SHA-512 sums are correct. If there is any mismatch then this phase <span class="bcp14">MUST</span> be repeated.<a href="#appendix-B.3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="phase2">
-<section id="appendix-C.3.2">
+<section id="appendix-B.3.2">
           <h4 id="name-phase-2-generation-of-the-t">
 <a href="#name-phase-2-generation-of-the-t" class="section-name selfRef">Phase 2: Generation of the TRC Payload</a>
           </h4>
-<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and the <a href="#trcfields" class="auto internal xref">Section 3.1.2.2</a> completed in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix "Ceremony Preparations"</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.2-2">For each bundled certificate, the voting representatives <span class="bcp14">MUST</span> then verify the certificate type and that the following fields contain the correct information:<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and the <a href="#trcfields" class="auto internal xref">Section 3.1.2.2</a> completed in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix "Ceremony Preparations"</a>.<a href="#appendix-B.3.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.2-2">For each bundled certificate, the voting representatives <span class="bcp14">MUST</span> then verify the certificate type and that the following fields contain the correct information:<a href="#appendix-B.3.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-C.3.2-3.1">
-              <p id="appendix-C.3.2-3.1.1"><code>issuer</code><a href="#appendix-C.3.2-3.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-B.3.2-3.1">
+              <p id="appendix-B.3.2-3.1.1"><code>issuer</code><a href="#appendix-B.3.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C.3.2-3.2">
-              <p id="appendix-C.3.2-3.2.1"><code>subject</code><a href="#appendix-C.3.2-3.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B.3.2-3.2">
+              <p id="appendix-B.3.2-3.2.1"><code>subject</code><a href="#appendix-B.3.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C.3.2-3.3">
-              <p id="appendix-C.3.2-3.3.1"><code>validity</code><a href="#appendix-C.3.2-3.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B.3.2-3.3">
+              <p id="appendix-B.3.2-3.3.1"><code>validity</code><a href="#appendix-B.3.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="appendix-C.3.2-3.4">
-              <p id="appendix-C.3.2-3.4.1"><code>signature</code><a href="#appendix-C.3.2-3.4.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="appendix-B.3.2-3.4">
+              <p id="appendix-B.3.2-3.4.1"><code>signature</code><a href="#appendix-B.3.2-3.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="appendix-C.3.2-4">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to <a href="#trcpayload" class="auto internal xref">Section 3.1.2.1</a> and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.<a href="#appendix-C.3.2-4" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.2-5">Phase 2 concludes when all voting representatives confirm that the contents of the TRC payload are correct.<a href="#appendix-C.3.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.2-4">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to <a href="#trcpayload" class="auto internal xref">Section 3.1.2.1</a> and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.<a href="#appendix-B.3.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.2-5">Phase 2 concludes when all voting representatives confirm that the contents of the TRC payload are correct.<a href="#appendix-B.3.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="phase3">
-<section id="appendix-C.3.3">
+<section id="appendix-B.3.3">
           <h4 id="name-phase-3-trc-signing">
 <a href="#name-phase-3-trc-signing" class="section-name selfRef">Phase 3: TRC Signing</a>
           </h4>
-<p id="appendix-C.3.3-1">Each voting representative attaches a signature created with their own private voting key to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.<a href="#appendix-C.3.3-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.3-2">Phase 3 concludes when all voting representatives have attached their signatures to the TRC.<a href="#appendix-C.3.3-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.3-1">Each voting representative attaches a signature created with their own private voting key to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.<a href="#appendix-B.3.3-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.3-2">Phase 3 concludes when all voting representatives have attached their signatures to the TRC.<a href="#appendix-B.3.3-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="phase4">
-<section id="appendix-C.3.4">
+<section id="appendix-B.3.4">
           <h4 id="name-phase-4-trc-validation">
 <a href="#name-phase-4-trc-validation" class="section-name selfRef">Phase 4: TRC Validation</a>
           </h4>
-<p id="appendix-C.3.4-1">All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The Ceremony Administrator then shares the assembled TRC with all participants who <span class="bcp14">MUST</span> again inspect the signatures and verify them based on the certificates exchanged in Phase 1.<a href="#appendix-C.3.4-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.4-2">The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.<a href="#appendix-C.3.4-2" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.4-1">All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The Ceremony Administrator then shares the assembled TRC with all participants who <span class="bcp14">MUST</span> again inspect the signatures and verify them based on the certificates exchanged in Phase 1.<a href="#appendix-B.3.4-1" class="pilcrow">¶</a></p>
+<p id="appendix-B.3.4-2">The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.<a href="#appendix-B.3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -4019,151 +4012,159 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 </section>
 </div>
 <div id="change-log">
-<section id="appendix-D">
+<section id="appendix-C">
       <h2 id="name-change-log">
 <a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
-<p id="appendix-D-1">Changes made to drafts since ISE submission. This section is to be removed before publication.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-C-1">Changes made to drafts since ISE submission. This section is to be removed before publication.<a href="#appendix-C-1" class="pilcrow">¶</a></p>
 <div id="draft-dekater-scion-pki-11">
-<section id="appendix-D.1">
+<section id="appendix-C.1">
         <h3 id="name-draft-dekater-scion-pki-11">
 <a href="#name-draft-dekater-scion-pki-11" class="section-name selfRef">draft-dekater-scion-pki-11</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.1-1.1">
-            <p id="appendix-D.1-1.1.1">Signing ceremony: minor updates to align with current process<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.1-1.1">
+            <p id="appendix-C.1-1.1.1">Signing ceremony: minor updates to align with current process<a href="#appendix-C.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.2">
-            <p id="appendix-D.1-1.2.1">Signature field: clarify implications of using other algorithms or curves and mention mti set may be updated in future protocol iterations<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.2">
+            <p id="appendix-C.1-1.2.1">Signature field: clarify implications of using other algorithms or curves and mention mti set may be updated in future protocol iterations<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.3">
-            <p id="appendix-D.1-1.3.1">Clarify distinction between SCION ASes and BGP ASes through the text.<a href="#appendix-D.1-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.3">
+            <p id="appendix-C.1-1.3.1">Clarify distinction between SCION ASes and BGP ASes through the text.<a href="#appendix-C.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.4">
-            <p id="appendix-D.1-1.4.1">Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.4">
+            <p id="appendix-C.1-1.4.1">Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane<a href="#appendix-C.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.5">
-            <p id="appendix-D.1-1.5.1">Clarify that initial AS certificates may have a longer validity to allow enough time for deployment<a href="#appendix-D.1-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.5">
+            <p id="appendix-C.1-1.5.1">Clarify that initial AS certificates may have a longer validity to allow enough time for deployment<a href="#appendix-C.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.6">
-            <p id="appendix-D.1-1.6.1">"SCION-Specific Constraints and Conditions" section: drop requirement to use "UTF8String" for all fields, allow use of GeneralizedTime to align with RFC5280<a href="#appendix-D.1-1.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.6">
+            <p id="appendix-C.1-1.6.1">"SCION-Specific Constraints and Conditions" section: drop requirement to use "UTF8String" for all fields, allow use of GeneralizedTime to align with RFC5280<a href="#appendix-C.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.7">
-            <p id="appendix-D.1-1.7.1">Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"<a href="#appendix-D.1-1.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.7">
+            <p id="appendix-C.1-1.7.1">Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"<a href="#appendix-C.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.8">
-            <p id="appendix-D.1-1.8.1">Security considerations: new section on TRC Distribution<a href="#appendix-D.1-1.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.8">
+            <p id="appendix-C.1-1.8.1">Security considerations: new section on TRC Distribution<a href="#appendix-C.1-1.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.9">
-            <p id="appendix-D.1-1.9.1">Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.<a href="#appendix-D.1-1.9.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.1-1.9">
+            <p id="appendix-C.1-1.9.1">Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.<a href="#appendix-C.1-1.9.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-10">
-<section id="appendix-D.2">
+<section id="appendix-C.2">
         <h3 id="name-draft-dekater-scion-pki-10">
 <a href="#name-draft-dekater-scion-pki-10" class="section-name selfRef">draft-dekater-scion-pki-10</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.2-1.1">
-            <p id="appendix-D.2-1.1.1">removed ISD assignment table and replaced to reference in control-plane draft<a href="#appendix-D.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.2-1.1">
+            <p id="appendix-C.2-1.1.1">removed ISD assignment table and replaced to reference in control-plane draft<a href="#appendix-C.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.2">
-            <p id="appendix-D.2-1.2.1">Updated number assignment reference<a href="#appendix-D.2-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.2-1.2">
+            <p id="appendix-C.2-1.2.1">Updated number assignment reference<a href="#appendix-C.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.3">
-            <p id="appendix-D.2-1.3.1">Signatures: mention that other algorithms that ECDSA may be used in the future<a href="#appendix-D.2-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.2-1.3">
+            <p id="appendix-C.2-1.3.1">Signatures: mention that other algorithms that ECDSA may be used in the future<a href="#appendix-C.2-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.4">
-            <p id="appendix-D.2-1.4.1">Figures: add SVG version<a href="#appendix-D.2-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.2-1.4">
+            <p id="appendix-C.2-1.4.1">Figures: add SVG version<a href="#appendix-C.2-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-09">
-<section id="appendix-D.3">
+<section id="appendix-C.3">
         <h3 id="name-draft-dekater-scion-pki-09">
 <a href="#name-draft-dekater-scion-pki-09" class="section-name selfRef">draft-dekater-scion-pki-09</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.3-1.1">
-            <p id="appendix-D.3-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-D.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.3-1.1">
+            <p id="appendix-C.3-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-C.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.2">
-            <p id="appendix-D.3-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-D.3-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.3-1.2">
+            <p id="appendix-C.3-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-C.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.3">
-            <p id="appendix-D.3-1.3.1">Mention Active Discovery as a TRC discovery mechanism<a href="#appendix-D.3-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.3-1.3">
+            <p id="appendix-C.3-1.3.1">Mention Active Discovery as a TRC discovery mechanism<a href="#appendix-C.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.4">
-            <p id="appendix-D.3-1.4.1">Abstract: mention goal and that document is not an Internet Standard<a href="#appendix-D.3-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.3-1.4">
+            <p id="appendix-C.3-1.4.1">Abstract: mention goal and that document is not an Internet Standard<a href="#appendix-C.3-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-08">
-<section id="appendix-D.4">
+<section id="appendix-C.4">
         <h3 id="name-draft-dekater-scion-pki-08">
 <a href="#name-draft-dekater-scion-pki-08" class="section-name selfRef">draft-dekater-scion-pki-08</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.4-1.1">
-            <p id="appendix-D.4-1.1.1">Fix some oversized diagrams<a href="#appendix-D.4-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.4-1.1">
+            <p id="appendix-C.4-1.1.1">Fix some oversized diagrams<a href="#appendix-C.4-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.4-1.2">
-            <p id="appendix-D.4-1.2.1">Introduction text rewording<a href="#appendix-D.4-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.4-1.2">
+            <p id="appendix-C.4-1.2.1">Introduction text rewording<a href="#appendix-C.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-07">
-<section id="appendix-D.5">
+<section id="appendix-C.5">
         <h3 id="name-draft-dekater-scion-pki-07">
 <a href="#name-draft-dekater-scion-pki-07" class="section-name selfRef">draft-dekater-scion-pki-07</a>
         </h3>
-<p id="appendix-D.5-1">Minor changes:<a href="#appendix-D.5-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.5-1">Minor changes:<a href="#appendix-C.5-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.5-2.1">
-            <p id="appendix-D.5-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.5-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.5-2.1">
+            <p id="appendix-C.5-2.1.1">Clarified relationship with RPKI.<a href="#appendix-C.5-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.5-2.2">
-            <p id="appendix-D.5-2.2.1">Added this changelog<a href="#appendix-D.5-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.5-2.2">
+            <p id="appendix-C.5-2.2.1">Added this changelog<a href="#appendix-C.5-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.5-2.3">
-            <p id="appendix-D.5-2.3.1">General text editing<a href="#appendix-D.5-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.5-2.3">
+            <p id="appendix-C.5-2.3.1">General text editing<a href="#appendix-C.5-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.5-2.4">
-            <p id="appendix-D.5-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.5-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.5-2.4">
+            <p id="appendix-C.5-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-C.5-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-06">
-<section id="appendix-D.6">
+<section id="appendix-C.6">
         <h3 id="name-draft-dekater-scion-pki-06">
 <a href="#name-draft-dekater-scion-pki-06" class="section-name selfRef">draft-dekater-scion-pki-06</a>
         </h3>
-<p id="appendix-D.6-1">Major changes:<a href="#appendix-D.6-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.6-1">Major changes:<a href="#appendix-C.6-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.6-2.1">
-            <p id="appendix-D.6-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.6-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.6-2.1">
+            <p id="appendix-C.6-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-C.6-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-D.6-3">Minor changes:<a href="#appendix-D.6-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.6-3">Minor changes:<a href="#appendix-C.6-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.6-4.1">
-            <p id="appendix-D.6-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.6-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-C.6-4.1">
+            <p id="appendix-C.6-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-C.6-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.6-4.2">
-            <p id="appendix-D.6-4.2.1">Removed forward references.<a href="#appendix-D.6-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.6-4.2">
+            <p id="appendix-C.6-4.2.1">Removed forward references.<a href="#appendix-C.6-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.6-4.3">
-            <p id="appendix-D.6-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.6-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-C.6-4.3">
+            <p id="appendix-C.6-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-C.6-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
+</section>
+</div>
+<div id="acknowledgments">
+<section id="appendix-D">
+      <h2 id="name-acknowledgments">
+<a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
+      </h2>
+<p id="appendix-D-1">Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google), Ramon Keller (LibC Technologies) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of <span>[<a href="#CHUAT22" class="cite xref">CHUAT22</a>]</span> - the book is an important source of input and inspiration for this draft.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
