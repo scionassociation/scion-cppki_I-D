@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-01-18T00:29:14.105756+00:00",
+  "timestamp": "2026-02-03T00:33:17.901065+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5570,6 +5570,34 @@
       "mergedBy": "nicorusti",
       "mergeCommit": {
         "oid": "5f2c892c13b6fd1750554f7bbd4fe8473478c241"
+      },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 120,
+      "id": "PR_kwDOH386tM7Axe7q",
+      "title": "Move acknowledgements to the end",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/120",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "As requested by ISE",
+      "createdAt": "2026-02-01T23:01:37Z",
+      "updatedAt": "2026-02-01T23:05:04Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "5f2c892c13b6fd1750554f7bbd4fe8473478c241",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "ack_end",
+      "headRefOid": "81b87e5d0844a15f9d66508f328cfeb2fd7f313f",
+      "closedAt": "2026-02-01T23:05:00Z",
+      "mergedAt": "2026-02-01T23:05:00Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06"
       },
       "comments": [],
       "reviews": []
