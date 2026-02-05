@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-03T00:33:17.901065+00:00",
+  "timestamp": "2026-02-05T00:32:55.908848+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1315,6 +1315,24 @@
       "createdAt": "2025-11-06T13:04:02Z",
       "updatedAt": "2025-11-06T13:59:41Z",
       "closedAt": "2025-11-06T13:59:41Z",
+      "comments": []
+    },
+    {
+      "number": 121,
+      "id": "I_kwDOH386tM7oR2bi",
+      "title": "Time: mention CAs should keep time in sync",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/121",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti"
+      ],
+      "labels": [],
+      "body": "In https://github.com/scionassociation/scion-cp_I-D/issues/204 I reviewed time dependencies. It is critical that CAs issue certs with the right validity, therefore CAs must have a reliable time. We should mention it somewhere in the draft.\n\nThis could be in 4.3.  Creating a New Control Plane AS Certificate\n ",
+      "createdAt": "2026-02-04T15:03:38Z",
+      "updatedAt": "2026-02-04T15:05:53Z",
+      "closedAt": null,
       "comments": []
     }
   ],
