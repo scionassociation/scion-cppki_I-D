@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-05T00:32:55.908848+00:00",
+  "timestamp": "2026-02-08T00:41:16.014322+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1332,6 +1332,73 @@
       "body": "In https://github.com/scionassociation/scion-cp_I-D/issues/204 I reviewed time dependencies. It is critical that CAs issue certs with the right validity, therefore CAs must have a reliable time. We should mention it somewhere in the draft.\n\nThis could be in 4.3.  Creating a New Control Plane AS Certificate\n ",
       "createdAt": "2026-02-04T15:03:38Z",
       "updatedAt": "2026-02-04T15:05:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 122,
+      "id": "I_kwDOH386tM7o42qq",
+      "title": "Final review Nico",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/122",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti",
+        "knmeynell"
+      ],
+      "labels": [],
+      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [ ] Sections 2 and 3: reduce indents by removing one section\n- [ ] 3.1.4.1. TRC Selection For Trust Anchor Pool -> do we need python pseudo-code?\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [ ] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [ ] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 )\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] Review use of normative language. I feel we use it too much.\n- [ ] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned paper review",
+      "createdAt": "2026-02-06T15:13:34Z",
+      "updatedAt": "2026-02-06T15:59:44Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 124,
+      "id": "I_kwDOH386tM7o5U1X",
+      "title": "1.6. Trust as a Function --> move close to TRC ceremony?",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/124",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-02-06T15:47:45Z",
+      "updatedAt": "2026-02-06T15:47:45Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 125,
+      "id": "I_kwDOH386tM7o5r3C",
+      "title": "AlgorithmIdentifier: what if we use different algorithms?",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/125",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "> Additional conditions and remarks: As a consequence, the parameters field in the AlgorithmIdentifier sequence MUST NOT be used.\n\nWhat if we use a different algorithm? ",
+      "createdAt": "2026-02-06T16:12:30Z",
+      "updatedAt": "2026-02-06T16:12:30Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 126,
+      "id": "I_kwDOH386tM7o5xG6",
+      "title": "Clarify critical certificate extension",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/126",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "> **Note**: If a certificate extension is marked \"critical\", the public key in the certificate SHOULD only be used for the purpose set in the critical extension.\n\nWhy? Is it a reference to some other RFC?",
+      "createdAt": "2026-02-06T16:18:33Z",
+      "updatedAt": "2026-02-06T16:18:33Z",
       "closedAt": null,
       "comments": []
     }
@@ -5617,6 +5684,32 @@
       "mergeCommit": {
         "oid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06"
       },
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 123,
+      "id": "PR_kwDOH386tM7CBd6z",
+      "title": "Align terminology with -controlplane",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/123",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Contributes to #122 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-02-06T15:22:53Z",
+      "updatedAt": "2026-02-06T16:24:29Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "nic_review",
+      "headRefOid": "8af52bc55d136d755fc91381ec167828a783b5a7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
       "comments": [],
       "reviews": []
     }
