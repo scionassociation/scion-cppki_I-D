@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-02-08T00:41:16.014322+00:00",
+  "timestamp": "2026-02-10T00:38:29.270319+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5690,7 +5690,7 @@
     {
       "number": 123,
       "id": "PR_kwDOH386tM7CBd6z",
-      "title": "Align terminology with -controlplane",
+      "title": "Draft review Nico",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/123",
       "state": "OPEN",
       "author": "nicorusti",
@@ -5699,7 +5699,7 @@
       "labels": [],
       "body": "Contributes to #122 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-02-06T15:22:53Z",
-      "updatedAt": "2026-02-06T16:24:29Z",
+      "updatedAt": "2026-02-09T09:56:16Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
