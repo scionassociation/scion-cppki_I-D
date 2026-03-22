@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-19T00:34:23.141775+00:00",
+  "timestamp": "2026-03-22T00:35:00.207438+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -129,7 +129,7 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2026-03-18T01:34:51Z",
+      "updatedAt": "2026-03-19T14:53:25Z",
       "closedAt": null,
       "comments": [
         {
@@ -159,6 +159,13 @@
           "body": "We need to add this module: \n\n> When I looked at the document many months ago, I asked the authors to include a full ASN.1 module.  I see that the draft was updated, but there is still not a full ASN.1 module.\n",
           "createdAt": "2026-03-18T01:34:45Z",
           "updatedAt": "2026-03-18T01:34:45Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "The current text uses these ASN.1 definitions: \nhttps://docs.scion.org/en/latest/cryptography/trc.html#trc-format\nhttps://docs.scion.org/en/latest/cryptography/certificates.html#certificate-specification\n\nThey need some work to be turned into proper ASN.1 modules (e.g. like in https://datatracker.ietf.org/doc/html/rfc5280#appendix-A.1 )",
+          "createdAt": "2026-03-19T02:55:22Z",
+          "updatedAt": "2026-03-19T14:53:25Z"
         }
       ]
     },
@@ -3385,7 +3392,7 @@
       "labels": [],
       "body": "TRC diagram simplified and reduced to 72 characters width. Figure 3 was identical and superfluous so has been replaced with a reference to the revised Figure 2.\r\n\r\nResolves #45 ",
       "createdAt": "2024-11-26T17:46:29Z",
-      "updatedAt": "2024-12-24T12:50:00Z",
+      "updatedAt": "2026-03-19T02:52:11Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "180b7b51bc007327fe115f4b0e742ef2053069b7",
@@ -3497,7 +3504,7 @@
       "labels": [],
       "body": "Resolves #53 \r\nResolves #55 \r\nDatatracker [diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/signing_ceremony/draft-dekater-scion-pki.txt)",
       "createdAt": "2025-01-25T14:30:44Z",
-      "updatedAt": "2025-02-27T23:51:56Z",
+      "updatedAt": "2026-03-19T02:52:09Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "24a90cd68d4d0d70463eba08ab114f7bfcf23f3a",
@@ -4033,7 +4040,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2025-05-29T13:49:30Z",
-      "updatedAt": "2025-06-16T01:57:44Z",
+      "updatedAt": "2026-03-19T02:52:14Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "c28e3cc1bdb51986ebf4c664452e88370505e78b",
@@ -4088,7 +4095,7 @@
       "labels": [],
       "body": "To be closed -",
       "createdAt": "2025-05-30T08:48:35Z",
-      "updatedAt": "2025-06-13T13:24:14Z",
+      "updatedAt": "2026-03-19T02:52:13Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "c28e3cc1bdb51986ebf4c664452e88370505e78b",
@@ -4240,7 +4247,7 @@
       "labels": [],
       "body": "COntributes to #69 ",
       "createdAt": "2025-07-03T14:47:43Z",
-      "updatedAt": "2025-07-03T16:18:39Z",
+      "updatedAt": "2026-03-19T02:52:15Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "b8219bc068c753e2ceaee04b9bc7421c1c987a26",
@@ -4845,7 +4852,7 @@
       "labels": [],
       "body": "Found these stashed changes - not sure if these were previously added to another branch ",
       "createdAt": "2025-10-16T13:02:21Z",
-      "updatedAt": "2025-10-16T15:49:16Z",
+      "updatedAt": "2026-03-19T02:52:32Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "307d3b656e946ebed39028de41ef57da768fdf67",
@@ -4921,7 +4928,7 @@
       "labels": [],
       "body": "Resolves #95",
       "createdAt": "2025-10-31T12:57:01Z",
-      "updatedAt": "2025-10-31T12:57:35Z",
+      "updatedAt": "2026-03-19T02:51:59Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "cbbd1ec76e418c5b6fd606dc6a64ddc63e6d5643",
@@ -5067,7 +5074,7 @@
       "labels": [],
       "body": "Resolves #105 ",
       "createdAt": "2025-11-06T12:28:48Z",
-      "updatedAt": "2025-11-17T08:42:07Z",
+      "updatedAt": "2026-03-19T02:51:57Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6",
@@ -5156,7 +5163,7 @@
       "labels": [],
       "body": "Abridges and aligns Intro with Data Plane Draft\r\nResolves https://github.com/scionassociation/scion-dp_I-D/issues/119 ",
       "createdAt": "2025-11-20T14:10:56Z",
-      "updatedAt": "2025-12-19T16:51:15Z",
+      "updatedAt": "2026-03-19T02:52:30Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a4fa4628a2b9eadbc0e88053431dc884c0ad86a6",
@@ -5450,7 +5457,7 @@
       "labels": [],
       "body": "",
       "createdAt": "2026-01-07T04:49:01Z",
-      "updatedAt": "2026-01-07T05:01:34Z",
+      "updatedAt": "2026-03-19T02:52:27Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "6351fd212b5911ff687db7e01a4fca4efb9b3584",
@@ -5476,7 +5483,7 @@
       "labels": [],
       "body": "Resolves #78",
       "createdAt": "2026-01-14T13:54:18Z",
-      "updatedAt": "2026-01-16T14:15:47Z",
+      "updatedAt": "2026-03-19T02:51:55Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "86e0b687857e568cc9953bda4c071bc6838aad68",
@@ -5719,6 +5726,101 @@
       "mergeCommit": null,
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 127,
+      "id": "PR_kwDOH386tM7LvMG-",
+      "title": "Add asn.1 definitions",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/127",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #28 ",
+      "createdAt": "2026-03-19T03:52:27Z",
+      "updatedAt": "2026-03-19T14:47:59Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "asn-1",
+      "headRefOid": "75835a1347bec67a9c250bd182e4dcb9eb63609a",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "I tried to build an ASN.1 module for TRCs based on what is in [docs](https://docs.scion.org/en/latest/cryptography/trc.html#trc-payload-schema) and in the draft already, then use it to  verify that the SSFN & SSUN TRCs can somehow be verified. I used code generated by the ASN.1 compiler [asn1c](http://lionet.info/asn1c/asn1c-usage.html). I think what is on docs is outdated and that there are some differences.\r\n\r\n\r\nThis is what I did:\r\n\r\n1. Compile the ASN.1 module (note that I also had to feed PKIX1Explicit88 containing ASN.1 modules from RFC 3280\r\n```\r\nasn1c -pdu=TRCPayload ../PKIX1Explicit88.asn1 ../trc.asn1\r\nmake -f Makefile.am.sample\r\n```\r\n\r\n2. In the TRC, find the offset where CMS data is: Look at the output for an OCTET STRING that appears shortly after the pkcs7-data object identifier. It will have an offset number on the far left (for example, 60).\r\n```\r\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' ': sed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' ISD76-495dd7abbc765925299032679fc61b79.bundle | openssl asn1parse -inform PEM -strparse 60 -out ssun_trc.der -noout\r\n```\r\n3. Extract the payload using that offset \r\n```\r\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' SD76-495dd7abbc765925299032679fc61b79.bundle | openssl asn1parse -inform PEM -strparse 60 -out ssun_trc.der -noout\r\n```\r\n4. Check if the compiled ASN.1 module can verify the TRC content. Here I get stuck, likely because the ASN.1 module does not match the TRC\r\n```\r\n./progname -d  -iber -otext ../ssun_trc.der\r\nAD: Processing ../ssun_trc.der\r\nAD: Decoding 8192 bytes\r\nAD: decode(0) consumed 65+0b (8192), code 2\r\nAD: Clean up partially decoded structure\r\nAD: ofp 1, no=65, oo=0, dbl=0\r\n../ssun_trc.der: Decode failed past byte 65: Input processing error\r\n```\r\n\r\nLooking at the TRC content, I see a few things that maybe don't match the ASN.1 module (see comments). I got as far as this, I need support from someone more familiar with this.\r\n",
+          "createdAt": "2026-03-19T14:45:40Z",
+          "updatedAt": "2026-03-19T14:47:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7s-BWh",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-19T14:45:23Z",
+          "updatedAt": "2026-03-19T14:45:24Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I'm not sure about this section",
+              "createdAt": "2026-03-19T14:45:24Z",
+              "updatedAt": "2026-03-19T14:45:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7s-C6S",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-19T14:46:22Z",
+          "updatedAt": "2026-03-19T14:46:22Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "In the version on docs.scion.org, `Validity` his is defined, while it can perhaps be imported. ",
+              "createdAt": "2026-03-19T14:46:22Z",
+              "updatedAt": "2026-03-19T14:46:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7s-Dba",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-03-19T14:46:42Z",
+          "updatedAt": "2026-03-19T14:46:42Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "AS numbers in TRCs seems using a `PRINTABLESTRING` while the ASN.1 module uses `INTEGER (1..281474976710655)`\n",
+              "createdAt": "2026-03-19T14:46:42Z",
+              "updatedAt": "2026-03-19T14:46:42Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
