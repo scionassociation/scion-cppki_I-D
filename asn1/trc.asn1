@@ -19,7 +19,7 @@
        validity  Validity,
 
        gracePeriod   INTEGER,
-       noTrustReset  BOOLEAN DEFAULT FALSE,
+       noTrustReset  BOOLEAN,
        votes         SEQUENCE SIZE (1..255) OF INTEGER,
        votingQuorum  INTEGER (1..255),
        coreASes           SEQUENCE OF ASN,
@@ -35,8 +35,6 @@
        baseNumber    INTEGER (1..MAX) }
 
    ISD  ::=  INTEGER (1..65535)
+   ASN  ::=  PrintableString
 
-
-   ASN  ::=  INTEGER (1..281474976710655)
-
-     END
+   END
