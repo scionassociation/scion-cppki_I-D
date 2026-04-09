@@ -6,14 +6,21 @@
    DEFINITIONS EXPLICIT TAGS ::= 
    BEGIN
 
-    Validity ::= SEQUENCE {
+    IMPORTS
+      Certificate
+       FROM PKIX1Explicit88 { 
+           iso(1) identified-organization(3) dod(6) internet(1) 
+          security(5) mechanisms(5) pkix(7) id-mod(0) id-pkix1-explicit(18) 
+       };
+
+    TRCValidity ::= SEQUENCE {
       notBefore      GeneralizedTime,
       notAfter       GeneralizedTime  }
 
    TRCPayload  ::=  SEQUENCE {
        version   TRCFormatVersion,
        iD        TRCID,
-       validity  Validity,
+       validity  TRCValidity,
 
        gracePeriod   INTEGER,
        noTrustReset  BOOLEAN,
@@ -22,7 +29,7 @@
        coreASes           SEQUENCE OF ASN,
        authoritativeASes  SEQUENCE OF ASN,
        description        UTF8String (SIZE (0..1024)),
-       certificates       SEQUENCE OF ANY }
+       certificates       SEQUENCE OF Certificate }
 
    TRCFormatVersion  ::=  INTEGER { v1(0) }
 
