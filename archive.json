@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-03-22T00:35:00.207438+00:00",
+  "timestamp": "2026-04-09T00:31:52.672319+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5739,7 +5739,7 @@
       "labels": [],
       "body": "Resolves #28 ",
       "createdAt": "2026-03-19T03:52:27Z",
-      "updatedAt": "2026-03-19T14:47:59Z",
+      "updatedAt": "2026-04-08T08:42:48Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
@@ -5817,6 +5817,38 @@
               "body": "AS numbers in TRCs seems using a `PRINTABLESTRING` while the ASN.1 module uses `INTEGER (1..281474976710655)`\n",
               "createdAt": "2026-03-19T14:46:42Z",
               "updatedAt": "2026-03-19T14:46:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7y0KHb",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-04-08T08:24:29Z",
+          "updatedAt": "2026-04-08T08:42:48Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "I don't think we can import it.\n\nFor the TRC it is not a choice, but always GenerlizedTime to avoid the Y2050 problem.",
+              "createdAt": "2026-04-08T08:24:29Z",
+              "updatedAt": "2026-04-08T08:42:48Z"
+            },
+            {
+              "originalPosition": 40,
+              "body": "The TRC module is wrong, this is a PRINTABLESTRING unfortunately.",
+              "createdAt": "2026-04-08T08:25:32Z",
+              "updatedAt": "2026-04-08T08:42:48Z"
+            },
+            {
+              "originalPosition": 22,
+              "body": "This is different from the Go code.\n\nWe need to drop the DEFAULT FALSE, otherwise all current TRCs are invalid according to DER encoding (which prohibits including the value if it matches the default value.)\n",
+              "createdAt": "2026-04-08T08:42:36Z",
+              "updatedAt": "2026-04-08T08:42:48Z"
             }
           ]
         }
