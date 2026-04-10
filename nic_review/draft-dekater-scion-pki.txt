@@ -1054,26 +1054,29 @@ Table of Contents
    keyUsage extension differently.  The next table shows the
    specifications per certificate type.
 
-   +==================+============+============+==========+==========+
-   | Certificate Type | Root       | CA         | AS       | Voting   |
-   +==================+============+============+==========+==========+
-   | _Attribute:_     |            |            |          |          |
-   +------------------+------------+------------+----------+----------+
-   | keyUsage         | REQUIRED   | REQUIRED   | REQUIRED | OPTIONAL |
-   | extension itself |            |            |          |          |
-   +------------------+------------+------------+----------+----------+
-   | digitalSignature | MUST NOT   | MUST NOT   | REQUIRED | MUST NOT |
-   |                  | be set (1) | be set (2) |          | be set   |
-   +------------------+------------+------------+----------+----------+
-   | keyCertSign      | REQUIRED   | REQUIRED   | MUST NOT | MUST NOT |
-   |                  |            |            | be set   | be set   |
-   +------------------+------------+------------+----------+----------+
+    +==================+=============+==========+==========+==========+
+    | Certificate Type | Root        | CA       | AS       | Voting   |
+    +==================+=============+==========+==========+==========+
+    | _Attribute:_     |             |          |          |          |
+    +------------------+-------------+----------+----------+----------+
+    | keyUsage         | REQUIRED    | REQUIRED | REQUIRED | OPTIONAL |
+    | extension itself |             |          |          |          |
+    +------------------+-------------+----------+----------+----------+
+    | digitalSignature | MUST NOT be | MUST NOT | MUST be  | MUST NOT |
+    | bit              | asserted    | be       | asserted | be       |
+    |                  | (1)         | asserted |          | asserted |
+    |                  |             | (2)      |          |          |
+    +------------------+-------------+----------+----------+----------+
+    | keyCertSign bit  | MUST be     | MUST be  | MUST NOT | MUST NOT |
+    |                  | asserted    | asserted | be       | be       |
+    |                  |             |          | asserted | asserted |
+    +------------------+-------------+----------+----------+----------+
 
-    Table 3: keyUsage extension - Specifications per certificate type
+     Table 3: keyUsage extension - Specifications per certificate type
 
-   (1) The root certificate SHOULD NOT be used to verify control plane
+   (1) Root certificates SHOULD NOT be used to verify control plane
    messages.
-   (2) The CA certificate SHOULD NOT be used to verify control plane
+   (2) CA certificates SHOULD NOT be used to verify control plane
    messages.
 
 2.7.2.4.  extKeyUsage Extension
