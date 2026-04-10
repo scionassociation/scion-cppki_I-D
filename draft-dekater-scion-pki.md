@@ -640,7 +640,7 @@ Each Control Plane PKI certificate type uses the public key differently, and con
 | Certificate Type             | Root               | CA                  | AS              | Voting (regular and sensitive)    |
 | ---------------------------- | ------------------ | ------------------- | --------------- | --------------------------------- |
 | *Attribute:*                 |                    |                     |                 |                                   |
-| `keyUsage` extension itself  | MUST be present    | MUST be present     | MUST be present | MAY be present (but is not required) |
+| `keyUsage` extension itself  | REQUIRED    | REQUIRED     | REQUIRED | MAY be present (but is not required) |
 | `digitalSignature`           | MUST NOT be set (1)| MUST NOT be set (2) | MUST be set     | If the extension is present, the `digitalSignature` attribute MUST NOT be set |
 | `keyCertSign`                | MUST be set        | MUST be set         | MUST NOT be set | If the extension is present, the `keyCertSign` attribute MUST NOT be set|
 {: #table-4 title="keyUsage extension - Specifications per certificate type"}
@@ -666,10 +666,10 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 | Certificate Type               | Root                   | CA                              | AS                    | Voting (regular and sensitive)    |
 | ------------------------------ | ---------------------- | ----------------------------- | --------------------- | --------------------------------- |
 | *Attribute:*                   |                        |                               |                       |                                   |
-| `extKeyUsage` extension itself | MUST be present        | MAY be present (not required) | MUST be present       | MUST be present                   |
-| `id-kp-serverAuth`             | MUST NOT be included   | MUST NOT be included          | MUST be included, if the certificate is used on the server-side of a control plane TLS session. | MUST NOT be included |
-| `id-kp-clientAuth`             | MUST NOT be included   | MUST NOT be included          | MUST be included, if the certificate is used on the client-side of a control plane TLS session. | MUST NOT be included |
-| `id-kp-timeStamping`           | MUST be included       |                               | MUST be included      | MUST be included                  |
+| `extKeyUsage` extension itself | REQUIRED        | OPTIONAL | REQUIRED       | REQUIRED                   |
+| `id-kp-serverAuth`             | MUST NOT be present   | MUST NOT be present          | REQUIRED if the certificate is used on the server-side of a control plane TLS session. | MUST NOT be present |
+| `id-kp-clientAuth`             | MUST NOT be present   | MUST NOT be present          | REQUIRED if the certificate is used on the client-side of a control plane TLS session. | MUST NOT be present |
+| `id-kp-timeStamping`           | REQUIRED       |                               | REQUIRED      | REQUIRED                  |
 | SCION-specific                 | `id-kp-root` MUST be included. For details, see [](#specatt) |     |     | Regular voting cert: `id-kp-regular` MUST be included. For details, see [](#specatt)<br> Sensitive voting cert: `id-kp-sensitive` MUST be included. For details, see [](#specatt) |
 {: #table-5 title="extKeyUsage extension - Specifications per certificate type"}
 
@@ -685,7 +685,7 @@ The `id-kp-root`, `id-kp-regular`, and `id-kp-sensitive` attributes MUST be spec
 
 where `id-scion` specifies the root SCION object identifier (OID).
 
-**Note**: The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
+The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
 
@@ -703,7 +703,7 @@ The settings of the `basicConstraints` extension differ for each SCION Control P
 | Certificate Type                    | Root                   | CA                            | AS                            | Voting (regular and sensitive)    |
 | ----------------------------------- | ---------------------- | ----------------------------- | ----------------------------- | --------------------------------- |
 | *Attribute:*                        |                        |                               |                               |                                   |
-| `basicConstraints` extension itself | MUST be present        | MUST be present               | SHOULD NOT be present         | SHOULD NOT be present             |
+| `basicConstraints` extension itself | REQUIRED        | REQUIRED               | SHOULD NOT be present         | SHOULD NOT be present             |
 | `cA`                               | MUST be set to TRUE    | MUST be set to TRUE           | If the extension is present, this attribute MUST be set to FALSE | If the extension is present, this attribute MUST be set to FALSE |
 | `pathLenConstraint`                | SHOULD be set to "1", MUST be marked as "critical" | SHOULD be set to "0" (1), MUST be marked as "critical" | If the extension is present, this attribute MUST be absent. | If the extension is present, this attribute MUST be absent. |
 {: #table-6 title="basicConstraints extension - Specifications per certificate type"}
