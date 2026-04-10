@@ -380,7 +380,7 @@ The RECOMMENDED maximum validity period of a regular voting certificate is 1 yea
 
 ### Sensitive Voting Certificate
 
-Regular voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
+Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
 
 The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 years.
 
@@ -637,12 +637,12 @@ If present, the `keyUsage` extension's  `critical` attribute MUST be set to TRUE
 
 Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the `keyUsage` extension differently. The next table shows the specifications per certificate type.
 
-| Certificate Type             | Root               | CA                  | AS              | Voting (regular and sensitive)    |
-| ---------------------------- | ------------------ | ------------------- | --------------- | --------------------------------- |
-| *Attribute:*                 |                    |                     |                 |                                   |
-| `keyUsage` extension itself  | REQUIRED    | REQUIRED     | REQUIRED | MAY be present (but is not required) |
-| `digitalSignature`           | MUST NOT be set (1)| MUST NOT be set (2) | MUST be set     | If the extension is present, the `digitalSignature` attribute MUST NOT be set |
-| `keyCertSign`                | MUST be set        | MUST be set         | MUST NOT be set | If the extension is present, the `keyCertSign` attribute MUST NOT be set|
+| Certificate Type             | Root               | CA                  | AS              | Voting               |
+| ---------------------------- | ------------------ | ------------------- | --------------- | -------------------- |
+| *Attribute:*                 |                    |                     |                 |                      |
+| `keyUsage` extension itself  | REQUIRED           | REQUIRED            | REQUIRED        |  OPTIONAL            |
+| `digitalSignature`           | MUST NOT be set (1)| MUST NOT be set (2) | REQUIRED        | MUST NOT be set      |
+| `keyCertSign`                | REQUIRED           | REQUIRED            | MUST NOT be set |  MUST NOT be set     |
 {: #table-4 title="keyUsage extension - Specifications per certificate type"}
 
 (1) The root certificate SHOULD NOT be used to verify control plane messages.<br>
