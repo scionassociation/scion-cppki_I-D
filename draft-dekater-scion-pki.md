@@ -637,16 +637,16 @@ If present, the `keyUsage` extension's  `critical` attribute MUST be set to TRUE
 
 Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the `keyUsage` extension differently. The next table shows the specifications per certificate type.
 
-| Certificate Type             | Root               | CA                  | AS              | Voting               |
-| ---------------------------- | ------------------ | ------------------- | --------------- | -------------------- |
-| *Attribute:*                 |                    |                     |                 |                      |
-| `keyUsage` extension itself  | REQUIRED           | REQUIRED            | REQUIRED        |  OPTIONAL            |
-| `digitalSignature`           | MUST NOT be set (1)| MUST NOT be set (2) | REQUIRED        | MUST NOT be set      |
-| `keyCertSign`                | REQUIRED           | REQUIRED            | MUST NOT be set |  MUST NOT be set     |
+| Certificate Type             | Root                     | CA                        | AS                    | Voting               |
+| ---------------------------- | ------------------------ | ------------------------- | --------------------- | -------------------- |
+| *Attribute:*                 |                          |                           |                       |                      |
+| `keyUsage` extension itself  | REQUIRED                 | REQUIRED                  | REQUIRED              | OPTIONAL             |
+| `digitalSignature` bit       | MUST NOT be asserted (1) | MUST NOT be asserted (2)  | MUST be asserted      | MUST NOT be asserted |
+| `keyCertSign` bit            | MUST be asserted         | MUST be asserted          | MUST NOT be asserted  | MUST NOT be asserted |
 {: #table-4 title="keyUsage extension - Specifications per certificate type"}
 
-(1) The root certificate SHOULD NOT be used to verify control plane messages.<br>
-(2) The CA certificate SHOULD NOT be used to verify control plane messages.
+(1)  Root certificates SHOULD NOT be used to verify control plane messages.<br>
+(2)  CA certificates SHOULD NOT be used to verify control plane messages.
 
 
 #### `extKeyUsage` Extension {#ext-key-usage-ext}
