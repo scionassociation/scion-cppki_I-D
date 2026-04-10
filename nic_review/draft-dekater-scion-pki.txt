@@ -1117,8 +1117,8 @@ Table of Contents
    |extension itself  |          |        |           |               |
    +------------------+----------+--------+-----------+---------------+
    |id-kp-serverAuth  |MUST NOT  |MUST NOT|MUST be    |MUST NOT be    |
-   |                  |be        |be      |included if|included       |
-   |                  |included  |included|the        |               |
+   |                  |be        |be      |included,  |included       |
+   |                  |included  |included|if the     |               |
    |                  |          |        |certificate|               |
    |                  |          |        |is used on |               |
    |                  |          |        |the server-|               |
@@ -1128,8 +1128,8 @@ Table of Contents
    |                  |          |        |session.   |               |
    +------------------+----------+--------+-----------+---------------+
    |id-kp-clientAuth  |MUST NOT  |MUST NOT|MUST be    |MUST NOT be    |
-   |                  |be        |be      |included if|included       |
-   |                  |included  |included|the        |               |
+   |                  |be        |be      |included,  |included       |
+   |                  |included  |included|if the     |               |
    |                  |          |        |certificate|               |
    |                  |          |        |is used on |               |
    |                  |          |        |the client-|               |
@@ -1142,8 +1142,8 @@ Table of Contents
    |                  |included  |        |included   |included       |
    +------------------+----------+--------+-----------+---------------+
    |SCION-specific    |id-kp-root|        |           |Regular voting |
-   |(see              |MUST be   |        |           |cert: id-kp-   |
-   |Section 2.7.2.4.1 |included  |        |           |regular MUST be|
+   |attributes (see   |MUST be   |        |           |cert: id-kp-   |
+   |Section 2.7.2.4.1)|included  |        |           |regular MUST be|
    |                  |          |        |           |included.      |
    |                  |          |        |           |Sensitive      |
    |                  |          |        |           |voting cert:   |
