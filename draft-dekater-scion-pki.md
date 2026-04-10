@@ -582,7 +582,7 @@ Voting-only certificates are not required to include the `ISD-AS number` attribu
 
 {{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2 and clause 9, respectively.
 
-Currently, the following extensions are relevant for SCION:
+The following extensions are relevant for the SCION PKI:
 
 - `authorityKeyIdentifier`
 - `subjectKeyIdentifier`
@@ -631,7 +631,7 @@ Other attributes are not used.
 
 If a certificate’s public key is used to verify the signature of a control plane payload (`digitalSignature` attribute), it MUST be possible to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
-If present, the `keyUsage` extension SHOULD be marked as "critical". That is, the `critical` Boolean attribute of this extension MUST be set to TRUE (the default is FALSE).
+If present, the `keyUsage` extension's  `critical` attribute MUST be set to TRUE.
 
 **Note**: If a certificate extension is marked "critical", the public key in the certificate SHOULD only be used for the purpose set in the critical extension.
 
