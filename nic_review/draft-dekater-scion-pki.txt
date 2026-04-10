@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 10 August 2026                                          S. Hitz
+Expires: 12 October 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                         6 February 2026
+                                                           10 April 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 10 August 2026.
+   This Internet-Draft will expire on 12 October 2026.
 
 Copyright Notice
 
@@ -1055,30 +1055,30 @@ Table of Contents
    keyUsage extension differently.  The next table shows the
    specifications per certificate type.
 
-    +==================+=======+=========+=========+==================+
-    | Certificate Type |Root   | CA      | AS      | Voting (regular  |
-    |                  |       |         |         | and sensitive)   |
-    +==================+=======+=========+=========+==================+
-    | _Attribute:_     |       |         |         |                  |
-    +------------------+-------+---------+---------+------------------+
-    | keyUsage         |MUST be| MUST be | MUST be | MAY be present   |
-    | extension itself |present| present | present | (but is not      |
-    |                  |       |         |         | required)        |
-    +------------------+-------+---------+---------+------------------+
-    | digitalSignature |MUST   | MUST    | MUST be | If the extension |
-    |                  |NOT be | NOT be  | set     | is present, the  |
-    |                  |set (1)| set (2) |         | digitalSignature |
-    |                  |       |         |         | attribute MUST   |
-    |                  |       |         |         | NOT be set       |
-    +------------------+-------+---------+---------+------------------+
-    | keyCertSign      |MUST be| MUST be | MUST    | If the extension |
-    |                  |set    | set     | NOT be  | is present, the  |
-    |                  |       |         | set     | keyCertSign      |
-    |                  |       |         |         | attribute MUST   |
-    |                  |       |         |         | NOT be set       |
-    +------------------+-------+---------+---------+------------------+
+   +==================+========+========+==========+==================+
+   | Certificate Type |Root    |CA      | AS       | Voting (regular  |
+   |                  |        |        |          | and sensitive)   |
+   +==================+========+========+==========+==================+
+   | _Attribute:_     |        |        |          |                  |
+   +------------------+--------+--------+----------+------------------+
+   | keyUsage         |REQUIRED|REQUIRED| REQUIRED | MAY be present   |
+   | extension itself |        |        |          | (but is not      |
+   |                  |        |        |          | required)        |
+   +------------------+--------+--------+----------+------------------+
+   | digitalSignature |MUST NOT|MUST NOT| MUST be  | If the extension |
+   |                  |be set  |be set  | set      | is present, the  |
+   |                  |(1)     |(2)     |          | digitalSignature |
+   |                  |        |        |          | attribute MUST   |
+   |                  |        |        |          | NOT be set       |
+   +------------------+--------+--------+----------+------------------+
+   | keyCertSign      |MUST be |MUST be | MUST NOT | If the extension |
+   |                  |set     |set     | be set   | is present, the  |
+   |                  |        |        |          | keyCertSign      |
+   |                  |        |        |          | attribute MUST   |
+   |                  |        |        |          | NOT be set       |
+   +------------------+--------+--------+----------+------------------+
 
-     Table 3: keyUsage extension - Specifications per certificate type
+    Table 3: keyUsage extension - Specifications per certificate type
 
    (1) The root certificate SHOULD NOT be used to verify control plane
    messages.
@@ -1114,58 +1114,53 @@ Table of Contents
    Control Plane PKI certificate type.  The next table provides an
    overview of the specifications per certificate type.
 
-   +==================+==========+=========+===========+===============+
-   |Certificate Type  |Root      |CA       |AS         |Voting (regular|
-   |                  |          |         |           |and sensitive) |
-   +==================+==========+=========+===========+===============+
-   |_Attribute:_      |          |         |           |               |
-   +------------------+----------+---------+-----------+---------------+
-   |extKeyUsage       |MUST be   |MAY be   |MUST be    |MUST be present|
-   |extension itself  |present   |present  |present    |               |
-   |                  |          |(not     |           |               |
-   |                  |          |required)|           |               |
-   +------------------+----------+---------+-----------+---------------+
-   |id-kp-serverAuth  |MUST NOT  |MUST NOT |MUST be    |MUST NOT be    |
-   |                  |be        |be       |included,  |included       |
-   |                  |included  |included |if the     |               |
-   |                  |          |         |certificate|               |
-   |                  |          |         |is used on |               |
-   |                  |          |         |the server-|               |
-   |                  |          |         |side of a  |               |
-   |                  |          |         |control    |               |
-   |                  |          |         |plane TLS  |               |
-   |                  |          |         |session.   |               |
-   +------------------+----------+---------+-----------+---------------+
-   |id-kp-clientAuth  |MUST NOT  |MUST NOT |MUST be    |MUST NOT be    |
-   |                  |be        |be       |included,  |included       |
-   |                  |included  |included |if the     |               |
-   |                  |          |         |certificate|               |
-   |                  |          |         |is used on |               |
-   |                  |          |         |the client-|               |
-   |                  |          |         |side of a  |               |
-   |                  |          |         |control    |               |
-   |                  |          |         |plane TLS  |               |
-   |                  |          |         |session.   |               |
-   +------------------+----------+---------+-----------+---------------+
-   |id-kp-timeStamping|MUST be   |         |MUST be    |MUST be        |
-   |                  |included  |         |included   |included       |
-   +------------------+----------+---------+-----------+---------------+
-   |SCION-specific    |id-kp-root|         |           |Regular voting |
-   |                  |MUST be   |         |           |cert: id-kp-   |
-   |                  |included. |         |           |regular MUST be|
-   |                  |For       |         |           |included.  For |
-   |                  |details,  |         |           |details, see   |
-   |                  |see       |         |           |Section        |
-   |                  |Section   |         |           |2.7.2.4.1      |
-   |                  |2.7.2.4.1 |         |           |Sensitive      |
-   |                  |          |         |           |voting cert:   |
-   |                  |          |         |           |id-kp-sensitive|
-   |                  |          |         |           |MUST be        |
-   |                  |          |         |           |included.  For |
-   |                  |          |         |           |details, see   |
-   |                  |          |         |           |Section        |
-   |                  |          |         |           |2.7.2.4.1      |
-   +------------------+----------+---------+-----------+---------------+
+   +==================+==========+========+===========+================+
+   |Certificate Type  |Root      |CA      |AS         |Voting (regular |
+   |                  |          |        |           |and sensitive)  |
+   +==================+==========+========+===========+================+
+   |_Attribute:_      |          |        |           |                |
+   +------------------+----------+--------+-----------+----------------+
+   |extKeyUsage       |REQUIRED  |OPTIONAL|REQUIRED   |REQUIRED        |
+   |extension itself  |          |        |           |                |
+   +------------------+----------+--------+-----------+----------------+
+   |id-kp-serverAuth  |MUST NOT  |MUST NOT|REQUIRED if|MUST NOT be     |
+   |                  |be present|be      |the        |present         |
+   |                  |          |present |certificate|                |
+   |                  |          |        |is used on |                |
+   |                  |          |        |the server-|                |
+   |                  |          |        |side of a  |                |
+   |                  |          |        |control    |                |
+   |                  |          |        |plane TLS  |                |
+   |                  |          |        |session.   |                |
+   +------------------+----------+--------+-----------+----------------+
+   |id-kp-clientAuth  |MUST NOT  |MUST NOT|REQUIRED if|MUST NOT be     |
+   |                  |be present|be      |the        |present         |
+   |                  |          |present |certificate|                |
+   |                  |          |        |is used on |                |
+   |                  |          |        |the client-|                |
+   |                  |          |        |side of a  |                |
+   |                  |          |        |control    |                |
+   |                  |          |        |plane TLS  |                |
+   |                  |          |        |session.   |                |
+   +------------------+----------+--------+-----------+----------------+
+   |id-kp-timeStamping|REQUIRED  |        |REQUIRED   |REQUIRED        |
+   +------------------+----------+--------+-----------+----------------+
+   |SCION-specific    |id-kp-root|        |           |Regular voting  |
+   |                  |MUST be   |        |           |cert: id-kp-    |
+   |                  |included. |        |           |regular MUST be |
+   |                  |For       |        |           |included.  For  |
+   |                  |details,  |        |           |details, see    |
+   |                  |see       |        |           |Section         |
+   |                  |Section   |        |           |2.7.2.4.1       |
+   |                  |2.7.2.4.1 |        |           |Sensitive       |
+   |                  |          |        |           |voting cert:    |
+   |                  |          |        |           |id-kp-sensitive |
+   |                  |          |        |           |MUST be         |
+   |                  |          |        |           |included.  For  |
+   |                  |          |        |           |details, see    |
+   |                  |          |        |           |Section         |
+   |                  |          |        |           |2.7.2.4.1       |
+   +------------------+----------+--------+-----------+----------------+
 
     Table 4: extKeyUsage extension - Specifications per certificate type
 
@@ -1192,8 +1187,8 @@ Table of Contents
 
    where id-scion specifies the root SCION object identifier (OID).
 
-   *Note*: The root SCION object identifier (OID) for the SCION open-
-   source implementation is the IANA Private Enterprise Number '55324':
+   The root SCION object identifier (OID) for the SCION open-source
+   implementation is the IANA Private Enterprise Number '55324':
    id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}
 
 2.7.2.5.  basicConstraints Extension
@@ -1228,8 +1223,8 @@ Table of Contents
    +===================+==========+============+=========+============+
    | _Attribute:_      |          |            |         |            |
    +-------------------+----------+------------+---------+------------+
-   | basicConstraints  |MUST be   | MUST be    |SHOULD   | SHOULD NOT |
-   | extension itself  |present   | present    |NOT be   | be present |
+   | basicConstraints  |REQUIRED  | REQUIRED   |SHOULD   | SHOULD NOT |
+   | extension itself  |          |            |NOT be   | be present |
    |                   |          |            |present  |            |
    +-------------------+----------+------------+---------+------------+
    | cA                |MUST be   | MUST be    |If the   | If the     |
@@ -2497,16 +2492,16 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-15, 4 February 2026,
+              scion-controlplane-17, 2 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-15>.
+              scion-controlplane-17>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
               "SCION Data Plane", Work in Progress, Internet-Draft,
-              draft-dekater-scion-dataplane-11, 6 February 2026,
+              draft-dekater-scion-dataplane-14, 7 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-dataplane-11>.
+              scion-dataplane-14>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
