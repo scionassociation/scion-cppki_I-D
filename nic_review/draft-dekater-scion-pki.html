@@ -1779,7 +1779,7 @@ TRC
           <h4 id="name-sensitive-voting-certificat">
 <a href="#section-2.5.2" class="section-number selfRef">2.5.2. </a><a href="#name-sensitive-voting-certificat" class="section-name selfRef">Sensitive Voting Certificate</a>
           </h4>
-<p id="section-2.5.2-1">Regular voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.<a href="#section-2.5.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.5.2-1">Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.<a href="#section-2.5.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.5.2-2">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a sensitive voting certificate is 5 years.<a href="#section-2.5.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.5.2-3"><strong>Note</strong>:<a href="#section-2.5.2-3" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
@@ -2367,7 +2367,7 @@ TRC
                   <th class="text-left" rowspan="1" colspan="1">Root</th>
                   <th class="text-left" rowspan="1" colspan="1">CA</th>
                   <th class="text-left" rowspan="1" colspan="1">AS</th>
-                  <th class="text-left" rowspan="1" colspan="1">Voting (regular and sensitive)</th>
+                  <th class="text-left" rowspan="1" colspan="1">Voting</th>
                 </tr>
               </thead>
               <tbody>
@@ -2393,7 +2393,8 @@ TRC
                     <span class="bcp14">REQUIRED</span>
 </td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MAY</span> be present (but is not required)</td>
+                    <span class="bcp14">OPTIONAL</span>
+</td>
                 </tr>
                 <tr>
                   <td class="text-left" rowspan="1" colspan="1">
@@ -2404,20 +2405,25 @@ TRC
                   <td class="text-left" rowspan="1" colspan="1">
                     <span class="bcp14">MUST NOT</span> be set (2)</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST</span> be set</td>
-                  <td class="text-left" rowspan="1" colspan="1">If the extension is present, the <code>digitalSignature</code> attribute <span class="bcp14">MUST NOT</span> be set</td>
+                    <span class="bcp14">REQUIRED</span>
+</td>
+                  <td class="text-left" rowspan="1" colspan="1">
+                    <span class="bcp14">MUST NOT</span> be set</td>
                 </tr>
                 <tr>
                   <td class="text-left" rowspan="1" colspan="1">
                     <code>keyCertSign</code>
 </td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST</span> be set</td>
+                    <span class="bcp14">REQUIRED</span>
+</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST</span> be set</td>
+                    <span class="bcp14">REQUIRED</span>
+</td>
                   <td class="text-left" rowspan="1" colspan="1">
                     <span class="bcp14">MUST NOT</span> be set</td>
-                  <td class="text-left" rowspan="1" colspan="1">If the extension is present, the <code>keyCertSign</code> attribute <span class="bcp14">MUST NOT</span> be set</td>
+                  <td class="text-left" rowspan="1" colspan="1">
+                    <span class="bcp14">MUST NOT</span> be set</td>
                 </tr>
               </tbody>
             </table>

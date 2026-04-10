@@ -622,9 +622,9 @@ Table of Contents
 
 2.5.2.  Sensitive Voting Certificate
 
-   Regular voting certificates may be used to cast a vote in a sensitive
-   update.  In X.509 terms, sensitive voting certificates are self-
-   signed end-entity certificates.  This means that the issuer and
+   Sensitive voting certificates may be used to cast a vote in a
+   sensitive update.  In X.509 terms, sensitive voting certificates are
+   self-signed end-entity certificates.  This means that the issuer and
    subject of a sensitive voting certificate are the same entity, and
    the public key within the certificate can be used to verify the
    certificate's signature.  However, a sensitive voting certificate
@@ -1054,28 +1054,20 @@ Table of Contents
    keyUsage extension differently.  The next table shows the
    specifications per certificate type.
 
-   +==================+========+========+==========+==================+
-   | Certificate Type |Root    |CA      | AS       | Voting (regular  |
-   |                  |        |        |          | and sensitive)   |
-   +==================+========+========+==========+==================+
-   | _Attribute:_     |        |        |          |                  |
-   +------------------+--------+--------+----------+------------------+
-   | keyUsage         |REQUIRED|REQUIRED| REQUIRED | MAY be present   |
-   | extension itself |        |        |          | (but is not      |
-   |                  |        |        |          | required)        |
-   +------------------+--------+--------+----------+------------------+
-   | digitalSignature |MUST NOT|MUST NOT| MUST be  | If the extension |
-   |                  |be set  |be set  | set      | is present, the  |
-   |                  |(1)     |(2)     |          | digitalSignature |
-   |                  |        |        |          | attribute MUST   |
-   |                  |        |        |          | NOT be set       |
-   +------------------+--------+--------+----------+------------------+
-   | keyCertSign      |MUST be |MUST be | MUST NOT | If the extension |
-   |                  |set     |set     | be set   | is present, the  |
-   |                  |        |        |          | keyCertSign      |
-   |                  |        |        |          | attribute MUST   |
-   |                  |        |        |          | NOT be set       |
-   +------------------+--------+--------+----------+------------------+
+   +==================+============+============+==========+==========+
+   | Certificate Type | Root       | CA         | AS       | Voting   |
+   +==================+============+============+==========+==========+
+   | _Attribute:_     |            |            |          |          |
+   +------------------+------------+------------+----------+----------+
+   | keyUsage         | REQUIRED   | REQUIRED   | REQUIRED | OPTIONAL |
+   | extension itself |            |            |          |          |
+   +------------------+------------+------------+----------+----------+
+   | digitalSignature | MUST NOT   | MUST NOT   | REQUIRED | MUST NOT |
+   |                  | be set (1) | be set (2) |          | be set   |
+   +------------------+------------+------------+----------+----------+
+   | keyCertSign      | REQUIRED   | REQUIRED   | MUST NOT | MUST NOT |
+   |                  |            |            | be set   | be set   |
+   +------------------+------------+------------+----------+----------+
 
     Table 3: keyUsage extension - Specifications per certificate type
 
