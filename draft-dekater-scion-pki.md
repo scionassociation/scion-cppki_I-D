@@ -663,14 +663,14 @@ Additionally, the Extended Key Usage extension sequence MAY include the SCION-sp
 
 The specifications of the `extKeyUsage` extension differ per SCION Control Plane PKI certificate type. The next table provides an overview of the specifications per certificate type.
 
-| Certificate Type               | Root                   | CA                              | AS                    | Voting (regular and sensitive)    |
+| Certificate Type               | Root                   | CA                              | AS                    | Voting                     |
 | ------------------------------ | ---------------------- | ----------------------------- | --------------------- | --------------------------------- |
 | *Attribute:*                   |                        |                               |                       |                                   |
-| `extKeyUsage` extension itself | REQUIRED        | OPTIONAL | REQUIRED       | REQUIRED                   |
-| `id-kp-serverAuth`             | MUST NOT be present   | MUST NOT be present          | REQUIRED if the certificate is used on the server-side of a control plane TLS session. | MUST NOT be present |
-| `id-kp-clientAuth`             | MUST NOT be present   | MUST NOT be present          | REQUIRED if the certificate is used on the client-side of a control plane TLS session. | MUST NOT be present |
-| `id-kp-timeStamping`           | REQUIRED       |                               | REQUIRED      | REQUIRED                  |
-| SCION-specific                 | `id-kp-root` MUST be included. For details, see [](#specatt) |     |     | Regular voting cert: `id-kp-regular` MUST be included. For details, see [](#specatt)<br> Sensitive voting cert: `id-kp-sensitive` MUST be included. For details, see [](#specatt) |
+| `extKeyUsage` extension itself | REQUIRED               | OPTIONAL                      | REQUIRED              | REQUIRED                        |
+| `id-kp-serverAuth`             | MUST NOT be included   | MUST NOT be included          | MUST be included if the certificate is used on the server-side of a control plane TLS session. | MUST NOT be included |
+| `id-kp-clientAuth`             | MUST NOT be included   | MUST NOT be included          | MUST be included if the certificate is used on the client-side of a control plane TLS session. | MUST NOT be included |
+| `id-kp-timeStamping`           |  MUST be included      |                               | MUST be included      | MUST be included                  |
+| SCION-specific (see [](#specatt) | `id-kp-root` MUST be included |     |     | Regular voting cert: `id-kp-regular` MUST be included.<br> Sensitive voting cert: `id-kp-sensitive` MUST be included |
 {: #table-5 title="extKeyUsage extension - Specifications per certificate type"}
 
 **Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
