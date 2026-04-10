@@ -2282,7 +2282,7 @@ TRC
 <a href="#section-2.7.2" class="section-number selfRef">2.7.2. </a><a href="#name-extensions" class="section-name selfRef">Extensions</a>
           </h4>
 <p id="section-2.7.2-1"><span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, section 4.2.1, defines the syntax of the <code>Extensions</code> sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, section 4.2.1. The corresponding clauses in <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> are clause 7.2 and clause 9, respectively.<a href="#section-2.7.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.7.2-2">Currently, the following extensions are relevant for SCION:<a href="#section-2.7.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.7.2-2">The following extensions are relevant for the SCION PKI:<a href="#section-2.7.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.7.2-3.1">
               <p id="section-2.7.2-3.1.1"><code>authorityKeyIdentifier</code><a href="#section-2.7.2-3.1.1" class="pilcrow">¶</a></p>
@@ -2352,7 +2352,7 @@ TRC
             </ul>
 <p id="section-2.7.2.3-4">Other attributes are not used.<a href="#section-2.7.2.3-4" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.3-5">If a certificate’s public key is used to verify the signature of a control plane payload (<code>digitalSignature</code> attribute), it <span class="bcp14">MUST</span> be possible to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the <code>subjectKeyIdentifier</code> extension). For more information about the <code>subjectKeyIdentifier</code> extension (see <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2.2</a>).<a href="#section-2.7.2.3-5" class="pilcrow">¶</a></p>
-<p id="section-2.7.2.3-6">If present, the <code>keyUsage</code> extension <span class="bcp14">SHOULD</span> be marked as "critical". That is, the <code>critical</code> Boolean attribute of this extension <span class="bcp14">MUST</span> be set to TRUE (the default is FALSE).<a href="#section-2.7.2.3-6" class="pilcrow">¶</a></p>
+<p id="section-2.7.2.3-6">If present, the <code>keyUsage</code> extension's  <code>critical</code> attribute <span class="bcp14">MUST</span> be set to TRUE.<a href="#section-2.7.2.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.3-7"><strong>Note</strong>: If a certificate extension is marked "critical", the public key in the certificate <span class="bcp14">SHOULD</span> only be used for the purpose set in the critical extension.<a href="#section-2.7.2.3-7" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.3-8">Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the <code>keyUsage</code> extension differently. The next table shows the specifications per certificate type.<a href="#section-2.7.2.3-8" class="pilcrow">¶</a></p>
 <span id="name-keyusage-extension-specific"></span><div id="_table-4">
