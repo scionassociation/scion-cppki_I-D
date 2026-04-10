@@ -24,7 +24,7 @@
 
        gracePeriod   INTEGER,
        noTrustReset  BOOLEAN,
-       votes         SEQUENCE SIZE (1..255) OF INTEGER,
+       votes         SEQUENCE SIZE (0..255) OF INTEGER,
        votingQuorum  INTEGER (1..255),
        coreASes           SEQUENCE OF ASN,
        authoritativeASes  SEQUENCE OF ASN,
