@@ -1108,55 +1108,51 @@ Table of Contents
    Control Plane PKI certificate type.  The next table provides an
    overview of the specifications per certificate type.
 
-   +==================+==========+========+===========+================+
-   |Certificate Type  |Root      |CA      |AS         |Voting (regular |
-   |                  |          |        |           |and sensitive)  |
-   +==================+==========+========+===========+================+
-   |_Attribute:_      |          |        |           |                |
-   +------------------+----------+--------+-----------+----------------+
-   |extKeyUsage       |REQUIRED  |OPTIONAL|REQUIRED   |REQUIRED        |
-   |extension itself  |          |        |           |                |
-   +------------------+----------+--------+-----------+----------------+
-   |id-kp-serverAuth  |MUST NOT  |MUST NOT|REQUIRED if|MUST NOT be     |
-   |                  |be present|be      |the        |present         |
-   |                  |          |present |certificate|                |
-   |                  |          |        |is used on |                |
-   |                  |          |        |the server-|                |
-   |                  |          |        |side of a  |                |
-   |                  |          |        |control    |                |
-   |                  |          |        |plane TLS  |                |
-   |                  |          |        |session.   |                |
-   +------------------+----------+--------+-----------+----------------+
-   |id-kp-clientAuth  |MUST NOT  |MUST NOT|REQUIRED if|MUST NOT be     |
-   |                  |be present|be      |the        |present         |
-   |                  |          |present |certificate|                |
-   |                  |          |        |is used on |                |
-   |                  |          |        |the client-|                |
-   |                  |          |        |side of a  |                |
-   |                  |          |        |control    |                |
-   |                  |          |        |plane TLS  |                |
-   |                  |          |        |session.   |                |
-   +------------------+----------+--------+-----------+----------------+
-   |id-kp-timeStamping|REQUIRED  |        |REQUIRED   |REQUIRED        |
-   +------------------+----------+--------+-----------+----------------+
-   |SCION-specific    |id-kp-root|        |           |Regular voting  |
-   |                  |MUST be   |        |           |cert: id-kp-    |
-   |                  |included. |        |           |regular MUST be |
-   |                  |For       |        |           |included.  For  |
-   |                  |details,  |        |           |details, see    |
-   |                  |see       |        |           |Section         |
-   |                  |Section   |        |           |2.7.2.4.1       |
-   |                  |2.7.2.4.1 |        |           |Sensitive       |
-   |                  |          |        |           |voting cert:    |
-   |                  |          |        |           |id-kp-sensitive |
-   |                  |          |        |           |MUST be         |
-   |                  |          |        |           |included.  For  |
-   |                  |          |        |           |details, see    |
-   |                  |          |        |           |Section         |
-   |                  |          |        |           |2.7.2.4.1       |
-   +------------------+----------+--------+-----------+----------------+
+   +==================+==========+========+===========+===============+
+   |Certificate Type  |Root      |CA      |AS         |Voting         |
+   +==================+==========+========+===========+===============+
+   |_Attribute:_      |          |        |           |               |
+   +------------------+----------+--------+-----------+---------------+
+   |extKeyUsage       |REQUIRED  |OPTIONAL|REQUIRED   |REQUIRED       |
+   |extension itself  |          |        |           |               |
+   +------------------+----------+--------+-----------+---------------+
+   |id-kp-serverAuth  |MUST NOT  |MUST NOT|MUST be    |MUST NOT be    |
+   |                  |be        |be      |included if|included       |
+   |                  |included  |included|the        |               |
+   |                  |          |        |certificate|               |
+   |                  |          |        |is used on |               |
+   |                  |          |        |the server-|               |
+   |                  |          |        |side of a  |               |
+   |                  |          |        |control    |               |
+   |                  |          |        |plane TLS  |               |
+   |                  |          |        |session.   |               |
+   +------------------+----------+--------+-----------+---------------+
+   |id-kp-clientAuth  |MUST NOT  |MUST NOT|MUST be    |MUST NOT be    |
+   |                  |be        |be      |included if|included       |
+   |                  |included  |included|the        |               |
+   |                  |          |        |certificate|               |
+   |                  |          |        |is used on |               |
+   |                  |          |        |the client-|               |
+   |                  |          |        |side of a  |               |
+   |                  |          |        |control    |               |
+   |                  |          |        |plane TLS  |               |
+   |                  |          |        |session.   |               |
+   +------------------+----------+--------+-----------+---------------+
+   |id-kp-timeStamping|MUST be   |        |MUST be    |MUST be        |
+   |                  |included  |        |included   |included       |
+   +------------------+----------+--------+-----------+---------------+
+   |SCION-specific    |id-kp-root|        |           |Regular voting |
+   |(see              |MUST be   |        |           |cert: id-kp-   |
+   |Section 2.7.2.4.1 |included  |        |           |regular MUST be|
+   |                  |          |        |           |included.      |
+   |                  |          |        |           |Sensitive      |
+   |                  |          |        |           |voting cert:   |
+   |                  |          |        |           |id-kp-sensitive|
+   |                  |          |        |           |MUST be        |
+   |                  |          |        |           |included       |
+   +------------------+----------+--------+-----------+---------------+
 
-    Table 4: extKeyUsage extension - Specifications per certificate type
+   Table 4: extKeyUsage extension - Specifications per certificate type
 
    *Note*: the use of extKeyUsage in Root certificates renders them
    incompatible with standard TLS handshakes according to [RFC5280],

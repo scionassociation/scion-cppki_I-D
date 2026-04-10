@@ -2459,7 +2459,7 @@ TRC
                   <th class="text-left" rowspan="1" colspan="1">Root</th>
                   <th class="text-left" rowspan="1" colspan="1">CA</th>
                   <th class="text-left" rowspan="1" colspan="1">AS</th>
-                  <th class="text-left" rowspan="1" colspan="1">Voting (regular and sensitive)</th>
+                  <th class="text-left" rowspan="1" colspan="1">Voting</th>
                 </tr>
               </thead>
               <tbody>
@@ -2493,51 +2493,47 @@ TRC
                     <code>id-kp-serverAuth</code>
 </td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST NOT</span> be present</td>
+                    <span class="bcp14">MUST NOT</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST NOT</span> be present</td>
+                    <span class="bcp14">MUST NOT</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">REQUIRED</span> if the certificate is used on the server-side of a control plane TLS session.</td>
+                    <span class="bcp14">MUST</span> be included if the certificate is used on the server-side of a control plane TLS session.</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST NOT</span> be present</td>
+                    <span class="bcp14">MUST NOT</span> be included</td>
                 </tr>
                 <tr>
                   <td class="text-left" rowspan="1" colspan="1">
                     <code>id-kp-clientAuth</code>
 </td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST NOT</span> be present</td>
+                    <span class="bcp14">MUST NOT</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST NOT</span> be present</td>
+                    <span class="bcp14">MUST NOT</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">REQUIRED</span> if the certificate is used on the client-side of a control plane TLS session.</td>
+                    <span class="bcp14">MUST</span> be included if the certificate is used on the client-side of a control plane TLS session.</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">MUST NOT</span> be present</td>
+                    <span class="bcp14">MUST NOT</span> be included</td>
                 </tr>
                 <tr>
                   <td class="text-left" rowspan="1" colspan="1">
                     <code>id-kp-timeStamping</code>
 </td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">REQUIRED</span>
-</td>
+                    <span class="bcp14">MUST</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1"> </td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">REQUIRED</span>
-</td>
+                    <span class="bcp14">MUST</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <span class="bcp14">REQUIRED</span>
-</td>
+                    <span class="bcp14">MUST</span> be included</td>
                 </tr>
                 <tr>
-                  <td class="text-left" rowspan="1" colspan="1">SCION-specific</td>
+                  <td class="text-left" rowspan="1" colspan="1">SCION-specific (see <a href="#specatt" class="auto internal xref">Section 2.7.2.4.1</a>
+</td>
                   <td class="text-left" rowspan="1" colspan="1">
-                    <code>id-kp-root</code> <span class="bcp14">MUST</span> be included. For details, see <a href="#specatt" class="auto internal xref">Section 2.7.2.4.1</a>
-</td>
+                    <code>id-kp-root</code> <span class="bcp14">MUST</span> be included</td>
                   <td class="text-left" rowspan="1" colspan="1"> </td>
                   <td class="text-left" rowspan="1" colspan="1"> </td>
-                  <td class="text-left" rowspan="1" colspan="1">Regular voting cert: <code>id-kp-regular</code> <span class="bcp14">MUST</span> be included. For details, see <a href="#specatt" class="auto internal xref">Section 2.7.2.4.1</a><br> Sensitive voting cert: <code>id-kp-sensitive</code> <span class="bcp14">MUST</span> be included. For details, see <a href="#specatt" class="auto internal xref">Section 2.7.2.4.1</a>
-</td>
+                  <td class="text-left" rowspan="1" colspan="1">Regular voting cert: <code>id-kp-regular</code> <span class="bcp14">MUST</span> be included.<br> Sensitive voting cert: <code>id-kp-sensitive</code> <span class="bcp14">MUST</span> be included</td>
                 </tr>
               </tbody>
             </table>
