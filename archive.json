@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-09T00:31:52.672319+00:00",
+  "timestamp": "2026-04-12T00:41:17.385653+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -129,7 +129,7 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2026-03-19T14:53:25Z",
+      "updatedAt": "2026-04-10T15:49:46Z",
       "closedAt": null,
       "comments": [
         {
@@ -166,6 +166,13 @@
           "body": "The current text uses these ASN.1 definitions: \nhttps://docs.scion.org/en/latest/cryptography/trc.html#trc-format\nhttps://docs.scion.org/en/latest/cryptography/certificates.html#certificate-specification\n\nThey need some work to be turned into proper ASN.1 modules (e.g. like in https://datatracker.ietf.org/doc/html/rfc5280#appendix-A.1 )",
           "createdAt": "2026-03-19T02:55:22Z",
           "updatedAt": "2026-03-19T14:53:25Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "TODO for TRCs:\n- [ ] Write correct ASN.1 module for TRCs (check we follow best practices from [rfc6025](https://datatracker.ietf.org/doc/html/rfc6025#section-2.2))\n- [x] Use it to compile a decoder (e.g. with asn1c)\n- [ ] Successfully decode an old and a new TRC\n- [ ] Add ASN.1 module to draft\n- [ ] Clarify use of OID under our PEN v.s. PKIX Module Identifiers\n- [ ] Update text descriptions in the draft\n\n\nTODO for certs: \n- [ ] clarify need of ASN.1 module for scion-specific constraints \n- [ ] clarify `id-kp` name collisions with imports from x.509 and eventually replace with `id-scion-kp`",
+          "createdAt": "2026-04-10T11:50:33Z",
+          "updatedAt": "2026-04-10T15:49:46Z"
         }
       ]
     },
@@ -5713,39 +5720,60 @@
       "labels": [],
       "body": "Contributes to #122 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-02-06T15:22:53Z",
-      "updatedAt": "2026-02-09T09:56:16Z",
+      "updatedAt": "2026-04-10T18:36:31Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "nic_review",
-      "headRefOid": "8af52bc55d136d755fc91381ec167828a783b5a7",
+      "headRefOid": "d144b0f8bfbeaf8acd40e577850a90802dbd9b5f",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7z4JR5",
+          "commit": {
+            "abbreviatedOid": "774e67f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T18:02:02Z",
+          "updatedAt": "2026-04-10T18:02:02Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "@oncilla the draft's previous wording was very ambiguous about this (it included a MUST and a SHOULD). I think this is a MUST, correct? \n\nOr are there any cases where non-critical key usages are expected?",
+              "createdAt": "2026-04-10T18:02:02Z",
+              "updatedAt": "2026-04-10T18:02:02Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 127,
       "id": "PR_kwDOH386tM7LvMG-",
-      "title": "Add asn.1 definitions",
+      "title": "Add asn.1 module for TRCs",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/127",
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #28 ",
+      "body": "Contributes to #28 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio ",
       "createdAt": "2026-03-19T03:52:27Z",
-      "updatedAt": "2026-04-08T08:42:48Z",
+      "updatedAt": "2026-04-10T17:17:34Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "asn-1",
-      "headRefOid": "75835a1347bec67a9c250bd182e4dcb9eb63609a",
+      "headRefOid": "406a1f9d166df80beb3c05eeb2309ba0399dd4a7",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5754,9 +5782,23 @@
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "I tried to build an ASN.1 module for TRCs based on what is in [docs](https://docs.scion.org/en/latest/cryptography/trc.html#trc-payload-schema) and in the draft already, then use it to  verify that the SSFN & SSUN TRCs can somehow be verified. I used code generated by the ASN.1 compiler [asn1c](http://lionet.info/asn1c/asn1c-usage.html). I think what is on docs is outdated and that there are some differences.\r\n\r\n\r\nThis is what I did:\r\n\r\n1. Compile the ASN.1 module (note that I also had to feed PKIX1Explicit88 containing ASN.1 modules from RFC 3280\r\n```\r\nasn1c -pdu=TRCPayload ../PKIX1Explicit88.asn1 ../trc.asn1\r\nmake -f Makefile.am.sample\r\n```\r\n\r\n2. In the TRC, find the offset where CMS data is: Look at the output for an OCTET STRING that appears shortly after the pkcs7-data object identifier. It will have an offset number on the far left (for example, 60).\r\n```\r\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' ': sed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' ISD76-495dd7abbc765925299032679fc61b79.bundle | openssl asn1parse -inform PEM -strparse 60 -out ssun_trc.der -noout\r\n```\r\n3. Extract the payload using that offset \r\n```\r\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' SD76-495dd7abbc765925299032679fc61b79.bundle | openssl asn1parse -inform PEM -strparse 60 -out ssun_trc.der -noout\r\n```\r\n4. Check if the compiled ASN.1 module can verify the TRC content. Here I get stuck, likely because the ASN.1 module does not match the TRC\r\n```\r\n./progname -d  -iber -otext ../ssun_trc.der\r\nAD: Processing ../ssun_trc.der\r\nAD: Decoding 8192 bytes\r\nAD: decode(0) consumed 65+0b (8192), code 2\r\nAD: Clean up partially decoded structure\r\nAD: ofp 1, no=65, oo=0, dbl=0\r\n../ssun_trc.der: Decode failed past byte 65: Input processing error\r\n```\r\n\r\nLooking at the TRC content, I see a few things that maybe don't match the ASN.1 module (see comments). I got as far as this, I need support from someone more familiar with this.\r\n",
+          "body": "I tried to build an ASN.1 module for TRCs based on what is in [docs](https://docs.scion.org/en/latest/cryptography/trc.html#trc-payload-schema) and in the draft already, then use it to  verify that the SSFN & SSUN TRCs can somehow be verified. I used code generated by the ASN.1 compiler [asn1c](http://lionet.info/asn1c/asn1c-usage.html). I think what is on docs is outdated and that there are some differences.\r\n\r\n\r\nThis is what I did:\r\n\r\n1. Compile the ASN.1 module (note that I also had to feed [PKIX1Explicit88](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1) containing ASN.1 modules from ~RFC3280~ RFC5280\r\n```\r\nasn1c -pdu=TRCPayload ../PKIX1Explicit88.asn1 ../trc.asn1\r\nmake -f Makefile.am.sample\r\n```\r\n\r\n2. In the TRC, find the offset where CMS data is: Look at the output for an OCTET STRING that appears shortly after the pkcs7-data object identifier. It will have an offset number on the far left (for example, 60).\r\n```\r\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' ISD70-fd4b0d2abe1b4c54274f46eeb31d66cb.bundle| openssl asn1parse -inform PEM\r\n```\r\n3. Extract the payload using that offset \r\n```\r\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' SD76-495dd7abbc765925299032679fc61b79.bundle | openssl asn1parse -inform PEM -strparse 60 -out ssun_trc.der -noout\r\n```\r\n4. Check if the compiled ASN.1 module can verify the TRC content. Here I get stuck, likely because the ASN.1 module does not match the TRC\r\n```\r\n./progname -d  -iber -otext ../ssun_trc.der\r\nAD: Processing ../ssun_trc.der\r\nAD: Decoding 8192 bytes\r\nAD: decode(0) consumed 65+0b (8192), code 2\r\nAD: Clean up partially decoded structure\r\nAD: ofp 1, no=65, oo=0, dbl=0\r\n../ssun_trc.der: Decode failed past byte 65: Input processing error\r\n```\r\n\r\nLooking at the TRC content, I see a few things that maybe don't match the ASN.1 module (see comments). I got as far as this, I need support from someone more familiar with this.\r\n",
           "createdAt": "2026-03-19T14:45:40Z",
-          "updatedAt": "2026-03-19T14:47:59Z"
+          "updatedAt": "2026-04-10T16:10:44Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "I can now parse the TRC payload with a decoder based on the asn.1 module in  my last commit ([8788f3e](https://github.com/scionassociation/scion-cppki_I-D/pull/127/commits/8788f3e4693edecf6e949fe52842d8f936781ce5))\r\n\r\n<details>\r\n  <summary>Decoder output</summary>\r\n\r\n```\r\n~/scion/decoder$  asn1c -pdu=TRCPayload ../PKIX1Explicit88.asn1 ../trc.asn1\r\n~/scion/decoder$ make -f Makefile.am.sample\r\n~/scion/decoder$ ./progname -d  -iber -otext ../ssun_trc.der\r\nAD: Processing ../ssun_trc.der\r\nAD: Decoding 8192 bytes\r\nAD: decode(0) consumed 8192+0b (8192), code 1\r\nAD: RC_WMORE, continuing read=8192, cons=8192  with 0..0-0..0\r\nAD: Decoding 205 bytes\r\nAD: decode(0) consumed 205+0b (205), code 0\r\nAD: RC_OK, finishing up with 205+0\r\nTRCPayload ::= {\r\n    version: 0\r\n    iD: TRCID ::= {\r\n        iSD: 76\r\n        serialNumber: 1\r\n        baseNumber: 1\r\n    }\r\n    validity: Validity ::= {\r\n        notBefore: 2025-06-12 08:00:00 (GMT)\r\n        notAfter: 2026-07-15 08:00:00 (GMT)\r\n    }\r\n    gracePeriod: 0\r\n    noTrustReset: FALSE\r\n    votes: votes ::= {\r\n    }\r\n    votingQuorum: 3\r\n    coreASes: coreASes ::= {\r\n        3303\r\n        6730\r\n        33965\r\n        2:2:0\r\n    }\r\n    authoritativeASes: authoritativeASes ::= {\r\n        3303\r\n        6730\r\n        33965\r\n        2:2:0\r\n    }\r\n    description: SSUN ist ein Kommunikationsnetz f\u00fcr die Betreiber kritischer Infrastrukturen in der Schweiz, insbesondere aus dem Energie- und Versorgungssektor.\r\nSSUN erm\u00f6glicht einen sicheren, vom Internet getrennten Datenaustausch zwischen autorisierten Teilnehmern.\r\nDie SSUN-Governance (Voting Members) legt fest, wer das SSUN nutzen darf und unter welchen Bedingungen.\r\nDie Daten\u00fcbertragung erfolgt \u00fcber SCION-f\u00e4hige Verbindungen mit hoher Verf\u00fcgbarkeit und Vertraulichkeit.\r\nSSUN ist unabh\u00e4ngig von der konkreten Anwendung \u2013 es stellt die sichere Transportebene zur Verf\u00fcgung.\r\nDie Regeln des SSUN sind im SSUN-Reglement festgelegt und von allen SSUN-Teilnehmern (Nutzer, Betreiber, Dienstleister) verbindlich einzuhalten.\r\n\r\n    certificates: certificates ::= {\r\n\r\n            30 82 02 4E 30 82 01 F4 A0 03 02 01 02 02 15 00\r\n```",
+          "createdAt": "2026-04-09T15:53:48Z",
+          "updatedAt": "2026-04-09T16:00:43Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "JFYI, with the current ASN module, I was able to decode all initial TRCs available [here](https://learn.anapaya.net/docs/resources/assignments/isds/). I extracted the TRC content using: \r\n```\r\nfor f in *.bundle; do [ -e \"$f\" ] || continue; base=\"${f%.bundle}\"; echo \"Processing $f -> ${base}.der...\"; sed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' \"$f\" | openssl asn1parse -inform PEM -strparse 60 -out \"${base}.der\" -noout; done\r\n```\r\nI could then parse all of them them both with asn1c (see  [decoded_trcs.txt](https://github.com/user-attachments/files/26636062/decoded_trcs.txt) ) and with ASN.1 Studio. With the latter tool, I could also verify all subsequent TRCs for ISD 70 and 71: \r\nExtract subsequent TRCs: \r\n```\r\nawk '\r\n    /-----BEGIN TRC-----/ { count++; file=\"ISD70_trc_\" count \".pem\" }\r\n    { if(file) print > file }\r\n    /-----END TRC-----/ { close(file); file=\"\" }\r\n' ISD70-fd4b0d2abe1b4c54274f46eeb31d66cb.bundle\r\n```\r\nConvert them to .der\r\n```\r\nfor f in *.pem; do [ -e \"$f\" ] || continue; base=\"${f%.bundle}\"; echo \"Processing $f -> ${base}.der...\"; sed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' \"$f\" | openssl asn1parse -inform PEM -strparse 60 -out \"${base}.der\" -noout; done\r\n```\r\nThey look valid in ASN.1 studio\r\n<img width=\"3208\" height=\"2072\" alt=\"Screenshot 2026-04-10 at 19 12 11\" src=\"https://github.com/user-attachments/assets/29438e2a-7d26-4e56-bcae-5ecb0b1d524a\" />\r\n\r\nOverall, all TRCs are valid according to the current module version, except for ISD72, whose description field is too long. \r\n",
+          "createdAt": "2026-04-10T17:14:48Z",
+          "updatedAt": "2026-04-10T17:14:48Z"
         }
       ],
       "reviews": [
@@ -5849,6 +5891,646 @@
               "body": "This is different from the Go code.\n\nWe need to drop the DEFAULT FALSE, otherwise all current TRCs are invalid according to DER encoding (which prohibits including the value if it matches the default value.)\n",
               "createdAt": "2026-04-08T08:42:36Z",
               "updatedAt": "2026-04-08T08:42:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zX_pQ",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T14:38:18Z",
+          "updatedAt": "2026-04-09T14:38:18Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "So is it a requirement (MUST) that validity is always encoded as `GeneralizedTime`? If yes, we also need to update the draft text, which now only says:\r\n```\r\n   *  validity field: Defines the validity period of the certificate.\r\n\r\n      -  *SCION constraints*: All certificates MUST have a well-defined\r\n         expiration date.  GeneralizedTime value \"99991231235959Z\" MUST\r\n         not be used.\r\n\r\n      -  *Additional conditions and remarks*: SCION recommends a\r\n         specific maximum validity period for each type of certificate.\r\n         For details, see Section 2.1.6.  SCION implementations SHOULD\r\n         adopt these values.\r\n ```\r\n\r\nIf that is the case, then I don't think the problem is importing `Validity`, rather  importing `Time`: according to [rfc3280 section 4.1.2.5](https://www.rfc-editor.org/rfc/rfc3280.html#section-4.1.2.5):\r\n> CAs conforming to this profile MUST always encode certificate\r\n   validity dates through the year 2049 as UTCTime; certificate validity\r\n   dates in 2050 or later MUST be encoded as GeneralizedTime.\r\n   \r\nThe ASN.1 module in the RFC is: \r\n```\r\nValidity ::= SEQUENCE {\r\n     notBefore      Time,\r\n     notAfter       Time  }\r\n\r\nTime ::= CHOICE {\r\n     utcTime        UTCTime,\r\n     generalTime    GeneralizedTime }\r\n```\r\n\r\nIf we import Time, we are allowing both UTCTime and GeneralizedTime. What do you think the best solution is? \r\n\r\na)  Not import any of those, and have our own definitions? (but are there any interop drawbacks with existing libraries)? \r\nb) Import both and clarify usage in the text (but this may conflict with rfc3280)\r\nc) only import one of the two.. \r\n\r\nIf we have doubts we could consult our ISE reviewer, who is also the first author of rfc3280.. ",
+              "createdAt": "2026-04-09T14:38:18Z",
+              "updatedAt": "2026-04-09T14:38:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zYBxH",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T14:39:27Z",
+          "updatedAt": "2026-04-09T14:39:27Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "@oncilla are there any restrictions on how we call this module?  (e.g. `SCION-CP-PKI-TRC`)? Are there any limitations? \r\n",
+              "createdAt": "2026-04-09T14:39:27Z",
+              "updatedAt": "2026-04-09T14:39:28Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zYEPk",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T14:40:51Z",
+          "updatedAt": "2026-04-09T14:40:52Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "For both ISD and AS? Or AS only? Then both the current draft and the docs specs are wrong..",
+              "createdAt": "2026-04-09T14:40:51Z",
+              "updatedAt": "2026-04-09T14:40:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zY6XC",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T15:12:55Z",
+          "updatedAt": "2026-04-09T15:12:55Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "I think I could clarify this inspecting a  TRC (ISD76):\n- ASes are PRINTABLESTRING\n- ISDs are integer\n\n```\nsed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' ISD76-495dd7abbc765925299032679fc61b79.bundle | openssl asn1parse -inform PEM -strparse 60 -out trc_payload.der -noout\n\nnic@ottenbergstrasse:~/scion$ openssl asn1parse -inform DER -in trc_payload.der  -i\n    0:d=0  hl=4 l=8393 cons: SEQUENCE\n    4:d=1  hl=2 l=   1 prim:  INTEGER           :00\n    7:d=1  hl=2 l=   9 cons:  SEQUENCE\n    9:d=2  hl=2 l=   1 prim:   INTEGER           :4C ------> this should be the ISD\n   12:d=2  hl=2 l=   1 prim:   INTEGER           :01\n   15:d=2  hl=2 l=   1 prim:   INTEGER           :01\n   18:d=1  hl=2 l=  34 cons:  SEQUENCE\n   20:d=2  hl=2 l=  15 prim:   GENERALIZEDTIME   :20250612080000Z ----> GENERALIZEDTIME used before year 2049\n   37:d=2  hl=2 l=  15 prim:   GENERALIZEDTIME   :20260715080000Z\n   54:d=1  hl=2 l=   1 prim:  INTEGER           :00\n   57:d=1  hl=2 l=   1 prim:  BOOLEAN           :0\n   60:d=1  hl=2 l=   0 cons:  SEQUENCE\n   62:d=1  hl=2 l=   1 prim:  INTEGER           :03\n   65:d=1  hl=2 l=  26 cons:  SEQUENCE\n   67:d=2  hl=2 l=   4 prim:   PRINTABLESTRING   :3303 ------> these are the AS numbers\n   73:d=2  hl=2 l=   4 prim:   PRINTABLESTRING   :6730\n   79:d=2  hl=2 l=   5 prim:   PRINTABLESTRING   :33965\n   86:d=2  hl=2 l=   5 prim:   PRINTABLESTRING   :2:2:0\n   93:d=1  hl=2 l=  26 cons:  SEQUENCE\n   95:d=2  hl=2 l=   4 prim:   PRINTABLESTRING   :3303\n  101:d=2  hl=2 l=   4 prim:   PRINTABLESTRING   :6730\n  107:d=2  hl=2 l=   5 prim:   PRINTABLESTRING   :33965\n  114:d=2  hl=2 l=   5 prim:   PRINTABLESTRING   :2:2:0\n```",
+              "createdAt": "2026-04-09T15:12:55Z",
+              "updatedAt": "2026-04-09T15:12:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zZSPP",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T15:26:18Z",
+          "updatedAt": "2026-04-09T15:26:18Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "P.S. I see that the TRC for ISD 76 is indeed using GeneralizedTime before 2049.. ",
+              "createdAt": "2026-04-09T15:26:18Z",
+              "updatedAt": "2026-04-09T15:26:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zZvy7",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T15:44:35Z",
+          "updatedAt": "2026-04-09T15:44:35Z",
+          "comments": [
+            {
+              "originalPosition": 40,
+              "body": "I can now parse the TRC with a `PrintableString` ASN. Resolving this conversation",
+              "createdAt": "2026-04-09T15:44:35Z",
+              "updatedAt": "2026-04-09T15:44:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zZxRa",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T15:45:34Z",
+          "updatedAt": "2026-04-09T15:45:35Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "I can parse the cert without DEFAULT FALSE. Thank you.",
+              "createdAt": "2026-04-09T15:45:35Z",
+              "updatedAt": "2026-04-09T15:45:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zZ-x-",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T15:54:44Z",
+          "updatedAt": "2026-04-09T15:54:44Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "P.P.S.:  I can successfully parse the trc using imports for both, so maybe option b) is a viable one? ",
+              "createdAt": "2026-04-09T15:54:44Z",
+              "updatedAt": "2026-04-09T15:54:45Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zaVsL",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T16:11:00Z",
+          "updatedAt": "2026-04-09T16:11:00Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "@oncilla this used to be:\n```\n       certificates       SEQUENCE OF Certificate }\n```\nWhere Certificate was imported from the standard PKIX1Explicit88 module, which probably does not know how to parse SCION - specifica parts of certificates. \n\nFor now, I used raw bytes (`ANY`) to get it working, but I think the correct way would be to have an ASN.1 module for SCION certificates, which is the second part of this PR yet to be worked on :) ",
+              "createdAt": "2026-04-09T16:11:00Z",
+              "updatedAt": "2026-04-09T16:11:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zauc5",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T16:29:11Z",
+          "updatedAt": "2026-04-09T16:29:12Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "> So is it a requirement (MUST) that validity is always encoded as `GeneralizedTime`? If yes, we also need to update the draft text, which now only says:\r\n> \r\n> ```\r\n>    *  validity field: Defines the validity period of the certificate.\r\n> \r\n>       -  *SCION constraints*: All certificates MUST have a well-defined\r\n>          expiration date.  GeneralizedTime value \"99991231235959Z\" MUST\r\n>          not be used.\r\n> \r\n>       -  *Additional conditions and remarks*: SCION recommends a\r\n>          specific maximum validity period for each type of certificate.\r\n>          For details, see Section 2.1.6.  SCION implementations SHOULD\r\n>          adopt these values.\r\n> ```\r\n\r\nThat section talks about certificates not TRC payload. We cannot change that definition given we need to be compliant with RFC5280.\r\n\r\nIn the TRC payload, however, we want to use a different definition for validity, which has less footguns.\r\n\r\n> If that is the case, then I don't think the problem is importing `Validity`, rather importing `Time`: according to [rfc3280 section 4.1.2.5](https://www.rfc-editor.org/rfc/rfc3280.html#section-4.1.2.5):\r\n> \r\n> > CAs conforming to this profile MUST always encode certificate\r\n> > validity dates through the year 2049 as UTCTime; certificate validity\r\n> > dates in 2050 or later MUST be encoded as GeneralizedTime.\r\n\r\nThe problem is importing `Validity` as it does not match the definition of what you suggest to import.\r\n(Of course it needs to be redefined with `GeneralizedTime` and not `Time`, which we wrongly do on docs.scion.org. I guess that is what you are referring to)\r\n\r\n> The ASN.1 module in the RFC is:\r\n> \r\n> ```\r\n> Validity ::= SEQUENCE {\r\n>      notBefore      Time,\r\n>      notAfter       Time  }\r\n> \r\n> Time ::= CHOICE {\r\n>      utcTime        UTCTime,\r\n>      generalTime    GeneralizedTime }\r\n> ```\r\n> \r\n> If we import Time, we are allowing both UTCTime and GeneralizedTime. What do you think the best solution is?\r\n> \r\n> a) Not import any of those, and have our own definitions? (but are there any interop drawbacks with existing libraries)? b) Import both and clarify usage in the text (but this may conflict with rfc3280) c) only import one of the two..\r\n> \r\n> If we have doubts we could consult our ISE reviewer, who is also the first author of rfc3280..\r\n\r\nIMO, we should: Define `Validity` ourselves with only `GeneralizedTime`\r\n`UTCTime` is avoided in many of the newer RFCs.\r\n\r\n```\r\n Validity ::= SEQUENCE {\r\n      notBefore      GeneralizedTime,\r\n      notAfter       GeneralizedTime  }\r\n```\r\n\r\n> P.P.S.: I can successfully parse the trc using imports for both, so maybe option b) is a viable one?\r\n\r\nIf we do that, all code needs to respect that. We must be very sure that we do not create TRCs with UTCTime, before all nodes in the network have been upgraded to also support UTCTime. I don't see a real advantage of doing that, as UTCTime is not really a good choice in the first place.\r\n\r\nSome examples of GeneralizedTime only:\r\n- https://datatracker.ietf.org/doc/html/rfc6960#section-4.2.2.1\r\n- https://datatracker.ietf.org/doc/html/rfc3161#section-2.4.2\r\n- https://datatracker.ietf.org/doc/html/rfc5755#section-4.2.6\r\n- https://datatracker.ietf.org/doc/html/rfc4059#section-2.1\r\n\r\n",
+              "createdAt": "2026-04-09T16:29:11Z",
+              "updatedAt": "2026-04-09T16:29:12Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zaugo",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T16:29:14Z",
+          "updatedAt": "2026-04-09T16:29:14Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "SCION certificates are rfc5280 compliant. I would be very interested to understand what failed to parse.",
+              "createdAt": "2026-04-09T16:29:14Z",
+              "updatedAt": "2026-04-09T16:29:14Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zdcAG",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T18:26:23Z",
+          "updatedAt": "2026-04-09T18:26:23Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "~The PKIX1Explicit88.asn module I used comes from RFC 3280, let me check if I can find a module from rfc5280 and see if it works~",
+              "createdAt": "2026-04-09T18:26:23Z",
+              "updatedAt": "2026-04-09T18:59:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zdvdJ",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T18:42:23Z",
+          "updatedAt": "2026-04-09T18:42:23Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "Ok, let's define our own validity with `GeneralizedTime` only. I did it in [9918106](https://github.com/scionassociation/scion-cppki_I-D/pull/127/commits/99181061d39712c10be1fce2bc5577c8048b785b) and completely removed imports.",
+              "createdAt": "2026-04-09T18:42:23Z",
+              "updatedAt": "2026-04-09T18:42:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zeGRh",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T18:59:36Z",
+          "updatedAt": "2026-04-09T18:59:36Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "I was wrong on this, [the module](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1) I am using does come from rfc5280. Let me figure out where it fails parsing.",
+              "createdAt": "2026-04-09T18:59:36Z",
+              "updatedAt": "2026-04-09T18:59:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zejmM",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T19:21:12Z",
+          "updatedAt": "2026-04-09T19:21:12Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "However, if I use imports, the new definition of `Validity` clashes in asn1c with the one from PKIX1Explicit88. I think this may be a tooling limitation. I for now renamed `Validity` into `TRCValidity`  in [10d2c76](https://github.com/scionassociation/scion-cppki_I-D/pull/127/commits/10d2c763e7d836bb7572a035046b446909675a38).\r\nWould this rename be problematic @oncilla ? \r\n",
+              "createdAt": "2026-04-09T19:21:12Z",
+              "updatedAt": "2026-04-09T19:21:27Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zfEkT",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T19:48:07Z",
+          "updatedAt": "2026-04-09T19:48:07Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "Decoding gets stuck at the first certificate: \r\n\r\n```\r\n~/scion/decoder$ ./progname -d  -iber -otext ../ssun_trc.der\r\nAD: Processing ../ssun_trc.der\r\nAD: Decoding 8192 bytes\r\nAD: decode(0) consumed 844+0b (8192), code 2\r\nAD: Clean up partially decoded structure\r\nAD: ofp 1, no=844, oo=0, dbl=0\r\n../ssun_trc.der: Decode failed past byte 844: Input processing error\r\n\r\n\r\n~/scion/decoder$ openssl asn1parse -inform DER -in ../trc_payload.der  -i | grep -B 5 -A 5  844:\r\nDie SSUN-Governance (Voting Members) legt fest, wer das SSUN nutzen darf und unter welchen Bedingungen.\r\nDie Daten\u00fcbertragung erfolgt \u00fcber SCION-f\u00e4hige Verbindungen mit hoher Verf\u00fcgbarkeit und Vertraulichkeit.\r\nSSUN ist unabh\u00e4ngig von der konkreten Anwendung \u2013 es stellt die sichere Transportebene zur Verf\u00fcgung.\r\nDie Regeln des SSUN sind im SSUN-Reglement festgelegt und von allen SSUN-Teilnehmern (Nutzer, Betreiber, Dienstleister) verbindlich einzuhalten.\r\n\r\n  844:d=1  hl=4 l=7549 cons:  SEQUENCE\r\n  848:d=2  hl=4 l= 590 cons:   SEQUENCE\r\n  852:d=3  hl=4 l= 500 cons:    SEQUENCE\r\n  856:d=4  hl=2 l=   3 cons:     cont [ 0 ]\r\n  858:d=5  hl=2 l=   1 prim:      INTEGER           :02\r\n  861:d=4  hl=2 l=  21 prim:     INTEGER           :FF1A34D34C76A774E43A865E0DB4986F907B664D\r\n```\r\n\r\nThis is probably because the asn1c decoder is using  X.509 Certificate definitions from PKIX1Explicit88. I'm still not sure if/how the tool is able to handle SCION custom fields",
+              "createdAt": "2026-04-09T19:48:07Z",
+              "updatedAt": "2026-04-09T19:48:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zgpvy",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-09T21:07:31Z",
+          "updatedAt": "2026-04-09T21:07:32Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "What custom fields are you referring to?\r\nWe have a couple of our own OIDs. But that is standard compliant. ",
+              "createdAt": "2026-04-09T21:07:31Z",
+              "updatedAt": "2026-04-09T21:07:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zueqD",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T10:42:23Z",
+          "updatedAt": "2026-04-10T10:42:23Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "`extKeyUsage` attributes (that depend as far as I understand also on the SCION OID). I feel ans1c might be too strict. Trying to figure this out",
+              "createdAt": "2026-04-10T10:42:23Z",
+              "updatedAt": "2026-04-10T10:42:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zxgQ4",
+          "commit": {
+            "abbreviatedOid": "10d2c76"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:11:02Z",
+          "updatedAt": "2026-04-10T13:11:02Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "I do not know TBH.\n\nFrom the implementation perspective, there is no limitations.\nI am unsure what the best practices or conventions are.",
+              "createdAt": "2026-04-10T13:11:02Z",
+              "updatedAt": "2026-04-10T13:11:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zxhuK",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:11:58Z",
+          "updatedAt": "2026-04-10T13:11:58Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "I think the rename is fine. In the end it is just a name. On the wire, it looks the same.",
+              "createdAt": "2026-04-10T13:11:58Z",
+              "updatedAt": "2026-04-10T13:11:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zyM2A",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:39:30Z",
+          "updatedAt": "2026-04-10T13:39:30Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "@oncilla I found the culprit: in the SSUN TRC, several `CertificateSerialNumber` are 20-21 bytes integers.  \r\nThis field was indeed defined in PKIX1Explicit88  as an INTEGER. However, I think asn1c was getting stuck due to an integer overflow. Changing PKIX1Explicit88 from \r\n`CertificateSerialNumber  ::=  INTEGER `\r\nto \r\n`CertificateSerialNumber  ::=  [UNIVERSAL 2] IMPLICIT OCTET STRING`\r\nMakes asn1c avoid decoding this long integer, with this trick it correctly decode the TRC using the current ASN.1 module \r\n\r\nThis change is in commit: 1676ed5a7b6e0dfbd32503bad55b29887ae153e6\r\n\r\nFor the records, I got there decoding the TRC with OSS Noklava studio, which has much more descriptive error messages :) \r\n\r\nSo I think I can resolve this discussion, as the certs do get successfully decoded :) ",
+              "createdAt": "2026-04-10T13:39:30Z",
+              "updatedAt": "2026-04-10T13:39:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zyXHb",
+          "commit": {
+            "abbreviatedOid": "8788f3e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:45:20Z",
+          "updatedAt": "2026-04-10T13:45:20Z",
+          "comments": [
+            {
+              "originalPosition": 28,
+              "body": "P.S. For the record, this is the decoded TRC: \r\n\r\n<details>\r\n  <summary>Click to expand</summary>\r\n\r\n```\r\n./progname -d  -iber -otext ../ssun_trc.der\r\nAD: Processing ../ssun_trc.der\r\nAD: Decoding 8192 bytes\r\nAD: decode(0) consumed 8192+0b (8192), code 1\r\nAD: RC_WMORE, continuing read=8192, cons=8192  with 0..0-0..0\r\nAD: Decoding 205 bytes\r\nAD: decode(0) consumed 205+0b (205), code 0\r\nAD: RC_OK, finishing up with 205+0\r\nTRCPayload ::= {\r\n    version: 0\r\n    iD: TRCID ::= {\r\n        iSD: 76\r\n        serialNumber: 1\r\n        baseNumber: 1\r\n    }\r\n    validity: TRCValidity ::= {\r\n        notBefore: 2025-06-12 08:00:00 (GMT)\r\n        notAfter: 2026-07-15 08:00:00 (GMT)\r\n    }\r\n    gracePeriod: 0\r\n    noTrustReset: FALSE\r\n    votes: votes ::= {\r\n    }\r\n    votingQuorum: 3\r\n    coreASes: coreASes ::= {\r\n        3303\r\n        6730\r\n        33965\r\n        2:2:0\r\n    }\r\n    authoritativeASes: authoritativeASes ::= {\r\n        3303\r\n        6730\r\n        33965\r\n        2:2:0\r\n    }\r\n    description: SSUN ist ein Kommunikationsnetz f\u00fcr die Betreiber kritischer Infrastrukturen in der Schweiz, insbesondere aus dem Energie- und Versorgungssektor.\r\nSSUN erm\u00f6glicht einen sicheren, vom Internet getrennten Datenaustausch zwischen autorisierten Teilnehmern.\r\nDie SSUN-Governance (Voting Members) legt fest, wer das SSUN nutzen darf und unter welchen Bedingungen.\r\nDie Daten\u00fcbertragung erfolgt \u00fcber SCION-f\u00e4hige Verbindungen mit hoher Verf\u00fcgbarkeit und Vertraulichkeit.\r\nSSUN ist unabh\u00e4ngig von der konkreten Anwendung \u2013 es stellt die sichere Transportebene zur Verf\u00fcgung.\r\nDie Regeln des SSUN sind im SSUN-Reglement festgelegt und von allen SSUN-Teilnehmern (Nutzer, Betreiber, Dienstleister) verbindlich einzuhalten.\r\n\r\n    certificates: certificates ::= {\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    00 FF 1A 34 D3 4C 76 A7 74 E4 3A 86 5E 0D B4 98\r\n                    6F 90 7B 66 4D\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 0A 42 65 6C 6C 69 6E 7A 6F 6E 61\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 03 41 45 54\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 02 54 41\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 20 41 45 54 20 53 65 6E 73 69 74 69 76 65 20\r\n                                56 6F 74 69 6E 67 20 43 65 72 74 69 66 69 63 61\r\n                                74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 35 37 36 37 36\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 0A 42 65 6C 6C 69 6E 7A 6F 6E 61\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 03 41 45 54\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 02 54 41\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 20 41 45 54 20 53 65 6E 73 69 74 69 76 65 20\r\n                                56 6F 74 69 6E 67 20 43 65 72 74 69 66 69 63 61\r\n                                74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 35 37 36 37 36\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 C3 C7 2B B8 4C 72 39 2C F3 08 26 11 9D 7F 60\r\n                            69 B8 D7 BC 0F 39 E4 98 39 3D BE D5 41 C9 45 A9\r\n                            D9 10 BF 1C 6A 86 FB 34 74 69 65 85 A6 E2 F1 59\r\n                            1A 57 09 22 31 6D 98 0F 0E 72 76 12 C4 DF E5 62\r\n                            00\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 C9 DD 9E DD 36 5C B5 F3 5F 43 39 B8 65 61\r\n                            C2 E3 87 53 EA F1\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 45 02 21 00 E0 26 9C 2B 0F FF 4E 75 86 6A 0B\r\n                    C1 5E 98 B1 9D E0 70 3D EB C8 D5 97 4C FB 49 6D\r\n                    7C D5 DA FC A1 02 20 12 9B C6 92 B2 43 ED 62 EF\r\n                    DB 46 72 10 56 F0 89 90 FF 38 72 8F 8A 3B 00 4B\r\n                    92 EF BC 6E C0 0F 7D\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    0F EC B8 94 D2 D9 89 BF 92 20 F8 E0 08 49 5B FF\r\n                    90 96 61 4E\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 0A 42 65 6C 6C 69 6E 7A 6F 6E 61\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 03 41 45 54\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 02 54 41\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 1E 41 45 54 20 52 65 67 75 6C 61 72 20 56 6F\r\n                                74 69 6E 67 20 43 65 72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 35 37 36 37 36\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 0A 42 65 6C 6C 69 6E 7A 6F 6E 61\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 03 41 45 54\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 02 54 41\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 1E 41 45 54 20 52 65 67 75 6C 61 72 20 56 6F\r\n                                74 69 6E 67 20 43 65 72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 35 37 36 37 36\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 C5 72 5F 83 5A 41 E2 AA EB 3A 8A B0 87 95 2C\r\n                            04 98 53 0A A3 56 27 99 34 02 94 19 80 02 40 AB\r\n                            C2 96 AF 28 90 DD 9F 6A C9 7E 39 17 20 AE 6E 6D\r\n                            06 F6 55 D7 5C 8C 78 6C 95 80 1B 58 ED 63 AA A3\r\n                            6D\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 02\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 CB EF C0 B9 BC B6 3D D4 FD D1 EF 8B A6 40\r\n                            C5 D6 78 AD 0E 8A\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 46 02 21 00 9B CF 18 05 7B 8C 7D 7C 68 C6 8E\r\n                    95 B0 08 6D FE DC 4B BC 13 DB 2D D4 6B 79 AA 35\r\n                    5F F9 14 E6 B2 02 21 00 C6 93 DB 5F F7 48 59 25\r\n                    0F AC F9 2D FB 9C 6F 82 75 18 57 0C 86 EE 73 C0\r\n                    B3 38 81 6B EE C4 5C 0E\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    24 E6 FD B7 B8 28 C2 BC DC D6 05 37 84 85 FC 40\r\n                    4C 12 0C 5F\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 08 4C 61 75 73 61 6E 6E 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 05 41 6C 70 69 71\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 03 53 48 44\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 22 41 6C 70 69 71 20 53 65 6E 73 69 74 69 76\r\n                                65 20 56 6F 74 69 6E 67 20 43 65 72 74 69 66 69\r\n                                63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 35 30 39 30\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 08 4C 61 75 73 61 6E 6E 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 05 41 6C 70 69 71\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 03 53 48 44\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 22 41 6C 70 69 71 20 53 65 6E 73 69 74 69 76\r\n                                65 20 56 6F 74 69 6E 67 20 43 65 72 74 69 66 69\r\n                                63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 35 30 39 30\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 1B 65 1F 52 A6 FE 34 32 AA 36 64 21 A5 35 89\r\n                            2F 50 B5 E2 FD 3C A9 21 18 F1 A8 FA E6 66 3F D8\r\n                            64 F9 CB E3 C0 0C 8B 1C D2 AA 60 8D B2 71 7C 38\r\n                            20 0A EF 04 FC DB DE 44 23 37 A6 59 BD 2C DF A5\r\n                            C8\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 B8 F9 B0 DD 20 BF 00 ED 9C C3 85 58 83 07\r\n                            BE 2A 24 D9 D4 61\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 45 02 21 00 F8 5D 9D 62 D7 56 9B 9C 05 86 93\r\n                    5B A5 ED 41 2E FD CF B4 66 CD 58 C2 1B 7F 64 19\r\n                    36 81 26 93 FC 02 20 2D 65 15 AD 16 76 77 4F 24\r\n                    DA ED DF AB E6 3B C1 3D B5 01 B6 57 58 68 48 6D\r\n                    61 E2 FA 5F 72 4B A9\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    3A 75 3A 6A 16 80 2D E6 F2 AA EB C3 BD BF 82 04\r\n                    8D D4 A8 95\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 08 4C 61 75 73 61 6E 6E 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 05 41 6C 70 69 71\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 03 53 48 44\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 20 41 6C 70 69 71 20 52 65 67 75 6C 61 72 20\r\n                                56 6F 74 69 6E 67 20 43 65 72 74 69 66 69 63 61\r\n                                74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 35 30 39 30\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 08 4C 61 75 73 61 6E 6E 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 05 41 6C 70 69 71\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.11 }\r\n                            value: 13 03 53 48 44\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 20 41 6C 70 69 71 20 52 65 67 75 6C 61 72 20\r\n                                56 6F 74 69 6E 67 20 43 65 72 74 69 66 69 63 61\r\n                                74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 35 30 39 30\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 7F 6F B0 8A 8F 88 C0 28 E8 C3 17 3C 38 FE EC\r\n                            A6 ED CB 9D D4 A6 21 84 EF 14 E1 2C B9 05 0A F7\r\n                            31 A2 62 9E E9 ED E3 DA 9C B8 21 A9 89 CE 28 F1\r\n                            06 FF BE 01 5E CD 35 A1 E3 F5 45 46 16 0E 2D 57\r\n                            88\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 02\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 41 E5 E1 BD F2 71 01 F0 BB 17 36 62 C8 21\r\n                            3A 1C 7B D0 57 F4\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 46 02 21 00 D4 5C F1 B5 1C 33 26 D2 09 32 8B\r\n                    C1 D9 A9 59 D2 9E FF CD B9 F2 23 CB 46 D3 02 EF\r\n                    8C 1D 6A B9 C4 02 21 00 BB 58 89 0E 65 C4 34 27\r\n                    B6 4A 8D 0A 7B 34 B5 D3 A4 6A EF 7C B5 A1 17 85\r\n                    05 1C 15 5F E7 6A BA D9\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    00 A7 AC 9E 56 45 54 00 98 D6 9C 2F D4 E8 0D 19\r\n                    91 17 BA 7A 04\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 06 4C 75 70 66 69 67\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                13 0F 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 2C 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47 20 53 65 6E 73 69 74 69 76 65 20 56 6F 74 69\r\n                                6E 67 20 43 65 72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 30\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 06 4C 75 70 66 69 67\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                13 0F 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 2C 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47 20 53 65 6E 73 69 74 69 76 65 20 56 6F 74 69\r\n                                6E 67 20 43 65 72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 30\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 7D 50 DB 7D 3B 30 E4 25 90 95 1A EC 0F 1B 37\r\n                            90 4E 19 90 D6 3D D3 B8 20 D4 02 C5 5E 23 54 EA\r\n                            0E 5F 9A 38 74 2F A6 7F 5F B1 9C 48 CD 11 C2 3F\r\n                            FA 54 20 0B 98 76 2F 2D D6 50 0C A3 F0 97 D2 A7\r\n                            3B\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 B8 EC 0A DA FA 16 5C 53 C3 A8 85 E4 1C A3\r\n                            42 15 5A DF 6B 72\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 44 02 20 21 94 7C 36 93 30 EE D1 AB 13 CB 3D\r\n                    09 84 9B 5B 97 A3 15 74 C2 96 0C 24 9C D2 62 89\r\n                    14 B0 AD DB 02 20 02 65 58 0A 28 E8 B7 88 62 33\r\n                    39 FF 23 57 A5 32 08 38 7C 9B 26 9F 81 75 83 EE\r\n                    3B 22 72 BD 18 1A\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    40 09 58 22 3C E0 66 0E EB C1 B8 0F EB 6B CC 46\r\n                    5F 4A 61 71\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 06 4C 75 70 66 69 67\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                13 0F 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 2A 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47 20 52 65 67 75 6C 61 72 20 56 6F 74 69 6E 67\r\n                                20 43 65 72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 30\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 06 4C 75 70 66 69 67\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                13 0F 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 2A 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47 20 52 65 67 75 6C 61 72 20 56 6F 74 69 6E 67\r\n                                20 43 65 72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 30\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 B7 24 E7 96 14 7D B2 79 17 6E 24 70 DC E7 35\r\n                            AC 73 A8 CA EA 2C 07 C1 FB B3 D8 65 2B A4 C9 65\r\n                            61 17 CD C4 31 99 1B E4 54 63 43 94 06 D1 AA B4\r\n                            3E E8 AE E6 05 50 BA 2D 5F 74 BA 01 EE 2F 55 C9\r\n                            1B\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 02\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 7E CD 2A BA 44 27 AB 81 48 1D DE 9B 24 48\r\n                            48 E3 FA 1B 6D FF\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 46 02 21 00 97 C5 5F 7B B6 96 EE 47 D9 C6 01\r\n                    4D 51 C0 26 B0 F7 B5 06 D1 1E EC E9 80 4B 5D 01\r\n                    08 44 7E 39 E4 02 21 00 F8 D4 88 CE 0D 41 48 BD\r\n                    C5 92 9B 24 08 D8 25 70 5C 86 73 B8 4A 6A AC FD\r\n                    FA 64 A0 CF 1A 64 CA 0A\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    00 8B 9B 28 0F 0D 95 FC 7A 5C 00 A4 66 DA 99 AC\r\n                    4D 8D 8E AC 6A\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 0A 4C 69 74 65 63 6F 6D 20 41 47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 27 4C 69 74 65 63 6F 6D 20 41 47 20 53 65 6E\r\n                                73 69 74 69 76 65 20 56 6F 74 69 6E 67 20 43 65\r\n                                72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 33 33 39 36 35\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 0A 4C 69 74 65 63 6F 6D 20 41 47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 27 4C 69 74 65 63 6F 6D 20 41 47 20 53 65 6E\r\n                                73 69 74 69 76 65 20 56 6F 74 69 6E 67 20 43 65\r\n                                72 74 69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 33 33 39 36 35\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 E3 FE 84 E9 6D 97 73 A7 5E 46 29 5F 88 51 B6\r\n                            0D 6D E5 D0 8E 8E AA F0 4F 3D 6F 13 31 40 76 1E\r\n                            20 34 19 B8 EA 84 5D F7 32 35 07 F8 43 63 08 ED\r\n                            3F A3 56 08 E8 15 6E 0E 44 62 23 1B 77 6F CA 5B\r\n                            2D\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 71 DD 11 DE 79 E6 7F 30 9C 97 BF 83 A6 C7\r\n                            90 42 D9 0C BA 4D\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 45 02 20 50 14 2F 04 AE A3 55 0F 3F 38 75 B6\r\n                    47 11 C2 EB A4 BF 59 2C B7 5F CA E4 6D 52 B4 28\r\n                    06 63 FE C8 02 21 00 EF 35 7D 9D 99 FC 87 7D 92\r\n                    EA 6E E6 6E 60 24 8A AB B2 3D 19 C7 A4 09 94 6B\r\n                    19 D7 EE E6 3F 76 51\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    66 A8 2D CD 8E 7F 81 ED 59 E7 0A E4 0A 71 59 E2\r\n                    4A 1C F6 56\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 0A 4C 69 74 65 63 6F 6D 20 41 47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 25 4C 69 74 65 63 6F 6D 20 41 47 20 52 65 67\r\n                                75 6C 61 72 20 56 6F 74 69 6E 67 20 43 65 72 74\r\n                                69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 33 33 39 36 35\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 0A 4C 69 74 65 63 6F 6D 20 41 47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 25 4C 69 74 65 63 6F 6D 20 41 47 20 52 65 67\r\n                                75 6C 61 72 20 56 6F 74 69 6E 67 20 43 65 72 74\r\n                                69 66 69 63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 33 33 39 36 35\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 A6 DC 35 49 51 97 4B 74 DD 99 93 C8 75 F5 6F\r\n                            48 52 86 58 32 36 BE 6A 85 61 4D DB 15 7E 2C BE\r\n                            46 13 AA AA AF 47 15 FE 39 7F 93 55 4A 50 48 A9\r\n                            6E 7D 3A 51 D7 DA 58 8C 67 8F 8D AB 4D 27 2C F2\r\n                            60\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 02\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 D8 FC 58 C1 66 3E 5B 8F 26 E4 44 2F 3A 68\r\n                            78 79 B2 7A A6 B0\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 45 02 21 00 A1 D6 CE 74 DB 3C 2B A5 DA 77 49\r\n                    07 F9 3D FC 94 45 DB F1 48 7B 35 9C F2 F3 56 3E\r\n                    56 99 06 12 2C 02 20 0F 9F C9 F1 30 F9 6B 40 56\r\n                    34 1B 7F 01 9E 84 5D 66 B2 68 C9 02 28 6D 60 33\r\n                    12 E9 C1 A4 1E B2 D5\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    00 FA BE 56 CF C5 BA AB 50 85 D4 71 08 BA C8 28\r\n                    0E 5C D4 1A 34\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 05 41 61 72 61 75\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                0C 35 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                0C 52 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45 20 53 65 6E 73 69 74 69 76\r\n                                65 20 56 6F 74 69 6E 67 20 43 65 72 74 69 66 69\r\n                                63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 31\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 05 41 61 72 61 75\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                0C 35 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                0C 52 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45 20 53 65 6E 73 69 74 69 76\r\n                                65 20 56 6F 74 69 6E 67 20 43 65 72 74 69 66 69\r\n                                63 61 74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 31\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 62 BE 90 8B B5 3E 76 FB 68 0A 19 11 6F 88 DF\r\n                            97 12 AD FA DA BB 1A FB 03 11 E0 69 8F 9C 65 0D\r\n                            9B 97 14 7C 45 DA 38 24 1E 8C B3 3D 5F 3F 1F 7D\r\n                            F9 E5 9C 3A EC F5 1B 90 FE 9B B2 45 E3 65 67 B9\r\n                            0D\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 59 38 2C 10 55 CD E7 90 8F 12 BC 5D 8A BD\r\n                            46 F0 60 2F 70 B2\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 46 02 21 00 E6 3A F1 3E 4F C2 E5 AB B8 13 EF\r\n                    E6 C1 49 C6 68 22 CC F5 40 1A 46 C2 70 05 E4 B2\r\n                    74 FF D6 B1 93 02 21 00 DB DE CD 06 AC 37 AB 9D\r\n                    0D 7A 3E 97 16 3E DA D0 F2 99 14 5F 0D 28 72 97\r\n                    FA 73 A4 36 6C E5 71 4F\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    0B 55 3D C4 B0 B5 3F 5E 57 AB FA 00 A9 2D 7B AC\r\n                    0C 3F 9A 2E\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 05 41 61 72 61 75\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                0C 35 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                0C 50 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45 20 52 65 67 75 6C 61 72 20\r\n                                56 6F 74 69 6E 67 20 43 65 72 74 69 66 69 63 61\r\n                                74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 31\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-12 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.7 }\r\n                            value: 13 05 41 61 72 61 75\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                0C 35 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                0C 50 56 65 72 62 61 6E 64 20 53 63 68 77 65 69\r\n                                7A 65 72 69 73 63 68 65 72 20 45 6C 65 6B 74 72\r\n                                69 7A 69 74 C3 A4 74 73 75 6E 74 65 72 6E 65 68\r\n                                6D 65 6E 20 56 53 45 20 52 65 67 75 6C 61 72 20\r\n                                56 6F 74 69 6E 67 20 43 65 72 74 69 66 69 63 61\r\n                                74 65\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 32 3A 32 3A 31\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 9E 6E 32 3E D0 CD 64 8D B8 06 F8 3D 10 22 B9\r\n                            86 C5 4A E5 C5 2A CC 56 E3 7F 06 85 D6 A7 33 A4\r\n                            0E C8 4A 0E 67 1E 91 25 DB 30 03 8F 8E 65 7B E0\r\n                            76 B6 95 E3 24 C7 61 E2 6B 79 A7 78 47 F6 B6 36\r\n                            97\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 02\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 62 EB AD B1 B9 AF 88 68 BE 9D 5F 2D 05 55\r\n                            3C 2D 57 BF E6 F2\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 44 02 20 62 0B D6 61 2B DF C4 49 38 DF 94 EA\r\n                    20 CE D3 C5 71 FD D2 38 64 37 9D 42 56 E2 65 0D\r\n                    74 E1 FF 14 02 20 76 6D DC 22 0B 6A 19 EB B2 28\r\n                    43 3F E6 47 DE B7 5E 98 DA 7D DB E9 08 59 AC 53\r\n                    F0 48 70 AF E5 DC\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    45 31 8C 5F DC DA 56 49 9B E0 00 4B 62 2E 37 70\r\n                    57 E5 86 FA\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.4 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                0C 0F 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.5 }\r\n                            value:\r\n                                13 0F 43 48 45 2D 31 30 37 2E 34 31 30 2E 38 39\r\n                                34\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                0C 14 53 53 55 4E 20 41 78 70 6F 20 43 50 20 52\r\n                                6F 6F 74 20 43 41\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 0C 08 37 36 2D 32 3A 32 3A 30\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-05-21 15:00:31 (GMT)\r\n                    notAfter: 2030-05-21 15:00:31 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value:\r\n                                0C 0F 41 78 70 6F 20 53 79 73 74 65 6D 73 20 41\r\n                                47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.5 }\r\n                            value:\r\n                                13 0F 43 48 45 2D 31 30 37 2E 34 31 30 2E 38 39\r\n                                34\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                0C 14 53 53 55 4E 20 41 78 70 6F 20 43 50 20 52\r\n                                6F 6F 74 20 43 41\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 0C 08 37 36 2D 32 3A 32 3A 30\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 05 2B 81 04 00 23\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 00 67 63 48 09 62 31 E2 37 AB 72 A8 9B 3E A7\r\n                            34 E0 5D E9 91 81 EF 9B 82 78 9B 3D 9C A0 D7 3F\r\n                            1D C0 DE D9 5B C9 52 66 24 1F 70 1E 81 DD 56 84\r\n                            87 63 15 63 55 7A 0F C4 BC 84 84 94 2C E7 35 80\r\n                            4C 74 60 00 BC A3 68 70 38 5A 9C 22 1B 06 16 B4\r\n                            86 2F 19 2C F8 2F 04 49 BF 22 D4 CA 5E 23 70 62\r\n                            1B 0E 52 E8 F1 BE 62 CD 8C 07 7B E6 32 06 6A 43\r\n                            A7 D4 3F 8C 9E 49 2C DB C4 1E E8 29 5B CA D0 67\r\n                            6F 07 45 76 1F\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.19 }\r\n                        critical: TRUE\r\n                        extnValue: 30 06 01 01 FF 02 01 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 17 06 08 2B 06 01 05 05 07 03 08 06 0B 2B 06\r\n                            01 04 01 83 B0 1C 01 03 03\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.15 }\r\n                        critical: TRUE\r\n                        extnValue: 03 02 02 04\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 27 48 56 FB 0E 8F 8B E6 93 BF D6 29 38 91\r\n                            19 07 FB 80 F7 FF\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.35 }\r\n                        extnValue:\r\n                            30 16 80 14 27 48 56 FB 0E 8F 8B E6 93 BF D6 29\r\n                            38 91 19 07 FB 80 F7 FF\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.4 }\r\n            }\r\n            signature:\r\n                    30 81 88 02 42 00 B3 A5 B2 2A 54 4B 0A 66 AD A9\r\n                    95 5C 1A 68 4B C2 62 40 CA 97 A2 D8 DF E9 38 37\r\n                    EE 1D D3 61 CD 1B E6 E0 50 DA 4F 48 B8 05 0D 96\r\n                    83 1C F0 BA 22 F7 3C F8 D8 31 E7 36 55 B3 15 58\r\n                    CE 17 80 4D 20 C2 77 02 42 01 FB 43 C3 1F 13 47\r\n                    03 D8 2B 04 DC DB 41 80 5C 3B 64 32 67 B2 46 4E\r\n                    A6 03 B6 A0 4F 6B 76 19 BB E9 1F F9 B8 74 85 09\r\n                    DA 19 95 CE DC 6C D9 B0 A2 61 56 92 D4 66 26 E0\r\n                    CC 84 79 F2 1F E0 64 99 A8 9A 8E\r\n        }\r\n        Certificate ::= {\r\n            tbsCertificate: TBSCertificate ::= {\r\n                version: 2\r\n                serialNumber:\r\n                    00 A1 10 D8 89 9B 5C 91 38 9F 21 24 B9 02 1A 1A\r\n                    D3 88 AB 99 04\r\n                signature: AlgorithmIdentifier ::= {\r\n                    algorithm: { 1.2.840.10045.4.3.2 }\r\n                }\r\n                issuer: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 0A 4C 69 74 65 63 6F 6D 20 41 47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 1A 4C 69 74 65 63 6F 6D 20 41 47 20 43 50 20\r\n                                52 6F 6F 74 20 2D 20 47 45 4E 20 49\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 33 33 39 36 35\r\n                        }\r\n                    }\r\n                }\r\n                validity: Validity ::= {\r\n                    notBefore: 2025-06-06 08:00:00 (GMT)\r\n                    notAfter: 2030-06-30 08:00:00 (GMT)\r\n                }\r\n                subject: RDNSequence ::= {\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.6 }\r\n                            value: 13 02 43 48\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.10 }\r\n                            value: 13 0A 4C 69 74 65 63 6F 6D 20 41 47\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 2.5.4.3 }\r\n                            value:\r\n                                13 1A 4C 69 74 65 63 6F 6D 20 41 47 20 43 50 20\r\n                                52 6F 6F 74 20 2D 20 47 45 4E 20 49\r\n                        }\r\n                    }\r\n                    RelativeDistinguishedName ::= {\r\n                        AttributeTypeAndValue ::= {\r\n                            type: { 1.3.6.1.4.1.55324.1.2.1 }\r\n                            value: 13 08 37 36 2D 33 33 39 36 35\r\n                        }\r\n                    }\r\n                }\r\n                subjectPublicKeyInfo: SubjectPublicKeyInfo ::= {\r\n                    algorithm: AlgorithmIdentifier ::= {\r\n                        algorithm: { 1.2.840.10045.2.1 }\r\n                        parameters: 06 08 2A 86 48 CE 3D 03 01 07\r\n                    }\r\n                    subjectPublicKey:\r\n                            04 F0 C5 1D F7 19 5B AA A8 E9 82 C4 D8 DA AC B1\r\n                            0D D4 FB 3F DE 8C A5 17 66 0B FC 4F 38 A8 45 3C\r\n                            21 6D 26 58 AA 9C 90 EC 73 C2 CB B9 55 FB 62 5A\r\n                            29 AC C5 47 EF C3 8B AE 11 7C F8 B0 87 BA 22 8A\r\n                            2E\r\n                }\r\n                extensions: Extensions ::= {\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.15 }\r\n                        critical: TRUE\r\n                        extnValue: 03 02 02 04\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.37 }\r\n                        extnValue:\r\n                            30 1D 06 08 2B 06 01 05 05 07 03 08 06 04 55 1D\r\n                            25 00 06 0B 2B 06 01 04 01 83 B0 1C 01 03 03\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.19 }\r\n                        critical: TRUE\r\n                        extnValue: 30 06 01 01 FF 02 01 01\r\n                    }\r\n                    Extension ::= {\r\n                        extnID: { 2.5.29.14 }\r\n                        extnValue:\r\n                            04 14 30 CD 07 13 7E CE 89 DC A9 2A 60 5A 54 4B\r\n                            DF 26 19 0E 76 0F\r\n                    }\r\n                }\r\n            }\r\n            signatureAlgorithm: AlgorithmIdentifier ::= {\r\n                algorithm: { 1.2.840.10045.4.3.2 }\r\n            }\r\n            signature:\r\n                    30 44 02 20 50 26 52 A0 D2 A6 5B 78 E5 A3 CD B9\r\n                    67 E8 79 BF 0A FA 41 1B 0B 2B 73 ED EF DE D1 7E\r\n                    A9 28 C6 64 02 20 2D 98 08 31 49 2D A7 37 0E A4\r\n                    FC 78 73 90 DB 7C 92 23 3B 1C AE B4 1B AB 39 37\r\n                    E8 A0 F2 7F 35 F5\r\n        }\r\n    }\r\n}\r\nAD: Processing ../ssun_trc.der\r\nAD: Clean up partially decoded structure\r\n```",
+              "createdAt": "2026-04-10T13:45:20Z",
+              "updatedAt": "2026-04-10T13:45:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zygmt",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:50:34Z",
+          "updatedAt": "2026-04-10T13:50:35Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "@oncilla this does not seem to be true for the initial TRC of SSUN, which has 0 votes: \n```\n    votes: votes ::= {\n    }\n```\n\n Shall we change it to: \n```suggestion\n       votes         SEQUENCE SIZE (0..255) OF INTEGER,\n```",
+              "createdAt": "2026-04-10T13:50:35Z",
+              "updatedAt": "2026-04-10T13:50:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zyjXY",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:52:16Z",
+          "updatedAt": "2026-04-10T13:52:17Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "For the record: OSS Noklava ASN.1 studio showing this is a problem: \n\n<img width=\"3208\" height=\"2072\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/604b1121-5c97-40ea-b3a3-f04690f2111a\" />",
+              "createdAt": "2026-04-10T13:52:16Z",
+              "updatedAt": "2026-04-10T13:52:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zyosV",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T13:56:00Z",
+          "updatedAt": "2026-04-10T13:56:01Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "Yupp, I agree. ",
+              "createdAt": "2026-04-10T13:56:00Z",
+              "updatedAt": "2026-04-10T13:56:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zyzJp",
+          "commit": {
+            "abbreviatedOid": "75835a1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T14:02:53Z",
+          "updatedAt": "2026-04-10T14:02:53Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Ok, then let's use this name.. In the end it doesn't make any difference, except when this module is imported.\r\nI will double check with the reviewer Russ if he has any objections on the name",
+              "createdAt": "2026-04-10T14:02:53Z",
+              "updatedAt": "2026-04-10T14:02:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zzlwO",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T14:35:12Z",
+          "updatedAt": "2026-04-10T14:35:13Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Uf, nice catch!\r\n\r\nYes, let's allow 0 as a value too.\r\n\r\nIn fact, in the code it is currently this:\r\nhttps://github.com/scionproto/scion/blob/68db9a02ff3f7bb0b3cc39217be001cfb2ac6d4f/pkg/scrypto/cppki/trc_asn1.go#L46\r\n\r\n(no restrictions atm)\r\n\r\nI wonder though if 255 is the right value. The quorum is limited to 255. Given a voter always has 2 certificates, and we could have arbitrary many root certificates, the values can end up larger than 255 to identify the correct certificate. We maybe shouldn't even put a restriction?\r\n\r\nOr if we do, maybe something like uint16?\r\n",
+              "createdAt": "2026-04-10T14:35:12Z",
+              "updatedAt": "2026-04-10T14:35:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7zz2uP",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T14:47:00Z",
+          "updatedAt": "2026-04-10T14:47:00Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "> I wonder though if 255 is the right value. \r\n\r\nNo strong opinion.. Is there any reason to have a constraint here? If not, then we could just drop it and make it a \r\n```suggestion\r\n       votes         SEQUENCE OF INTEGER,\r\n```",
+              "createdAt": "2026-04-10T14:47:00Z",
+              "updatedAt": "2026-04-10T14:47:01Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7z1Ae3",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T15:37:47Z",
+          "updatedAt": "2026-04-10T15:37:48Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "@oncilla  do we already have an  OID for this TRCs module? I don't think we do, right? \n\nIf not, we need to determine the right OID. The current module assumes that we get an OID from the \"SMI Security for PKIX Module Identifier\" IANA registry (1.3.6.1.5.5.7.0), whose allocation policy according to RFC 7299 is of \"Specification Required\". However, the RFC says \"The expert is expected to ensure that any new values are strongly related to the work that was done by the PKIX Working Group.\", so I'm not sure if we would qualify. We could check with our ISE reviewer Russ who is also one of the two IANA experts for this registry.\n\nAnother option is to use an OID under the SCION PEN, which would not require any IANA approval:\n\n\n\n```suggestion\n   SCION-CP-PKI-TRC { \n       iso(1) identified-organization(3) dod(6) internet(1) private(4) \n       enterprise(1) scion(55324) module(0) trc(1)\n   }\n```\n\nWhat do you think is best? I could also ask Russ, but if I were to upload a new draft version, I would first start with our own PEN, and then nicely ask if we can use something else..",
+              "createdAt": "2026-04-10T15:37:48Z",
+              "updatedAt": "2026-04-10T15:37:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7z1I0i",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T15:43:50Z",
+          "updatedAt": "2026-04-10T15:43:50Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Should we also add the ISD-AS attribute? (which is also mentioned in the draft) and sometimes pops up in [scionproto](https://github.com/scionproto/scion/blob/68db9a02ff3f7bb0b3cc39217be001cfb2ac6d4f/tools/cryptoplayground/openssl.cnf#L7)?\n```\n   id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}\n```\n",
+              "createdAt": "2026-04-10T15:43:50Z",
+              "updatedAt": "2026-04-10T15:43:50Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7z1ihm",
+          "commit": {
+            "abbreviatedOid": "40eaec7"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T16:02:04Z",
+          "updatedAt": "2026-04-10T16:02:04Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "@oncilla should we use EXPLICIT  or IMPLICIT [tags](https://www.oss.com/asn1/resources/asn1-made-simple/asn1-quick-reference/asn1-tags.html)? As far as I understand, it should not make a difference since we are using automatic tags (no tags in the module)",
+              "createdAt": "2026-04-10T16:02:04Z",
+              "updatedAt": "2026-04-10T16:02:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7z2P2Q",
+          "commit": {
+            "abbreviatedOid": "4e5bf4d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-10T16:27:22Z",
+          "updatedAt": "2026-04-10T16:27:22Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "@oncilla the SSHN TRC has a longer description. Is it expected? Should the field be bigger? \r\n\r\n<img width=\"3208\" height=\"2072\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9d9f2dc3-546d-4499-8214-5333eeca2f93\" />",
+              "createdAt": "2026-04-10T16:27:22Z",
+              "updatedAt": "2026-04-10T16:27:38Z"
             }
           ]
         }
