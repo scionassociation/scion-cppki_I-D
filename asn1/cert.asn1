@@ -16,6 +16,9 @@ id-scion OBJECT IDENTIFIER ::= { 1 3 6 1 4 1 55324 }
 -- SCION Control Plane PKI
 id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
 
+-- SCION ISD-AS Attribute
+id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
+
 -- RENAMED: SCION Key Purposes (Avoids collision with PKIX1Explicit88's id-kp)
 id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
 
