@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-12T00:41:17.385653+00:00",
+  "timestamp": "2026-04-14T00:42:40.005782+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -5767,13 +5767,13 @@
       "labels": [],
       "body": "Contributes to #28 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio ",
       "createdAt": "2026-03-19T03:52:27Z",
-      "updatedAt": "2026-04-10T17:17:34Z",
+      "updatedAt": "2026-04-13T16:14:54Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "asn-1",
-      "headRefOid": "406a1f9d166df80beb3c05eeb2309ba0399dd4a7",
+      "headRefOid": "0bdee8708bef29e4a9482b98127a868491e3a466",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -6531,6 +6531,124 @@
               "body": "@oncilla the SSHN TRC has a longer description. Is it expected? Should the field be bigger? \r\n\r\n<img width=\"3208\" height=\"2072\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9d9f2dc3-546d-4499-8214-5333eeca2f93\" />",
               "createdAt": "2026-04-10T16:27:22Z",
               "updatedAt": "2026-04-10T16:27:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM70NV3S",
+          "commit": {
+            "abbreviatedOid": "406a1f9"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-13T07:49:41Z",
+          "updatedAt": "2026-04-13T09:06:13Z",
+          "comments": [
+            {
+              "originalPosition": 4,
+              "body": "Let's go with scion PEN first, and ask if there is something other we should use.",
+              "createdAt": "2026-04-13T07:49:41Z",
+              "updatedAt": "2026-04-13T09:06:13Z"
+            },
+            {
+              "originalPosition": 31,
+              "body": "So far, we didn't check the length, which was an oversight.\nI think 1024 characters is too little, as is proven by the SSUN TRC payload already.\n\nI think we would want a reasonable upper limit. Maybe 4096 or 8192 to be on the safe side?\n\nWe should also enforce this going forward during TRC creation.\n",
+              "createdAt": "2026-04-13T08:56:12Z",
+              "updatedAt": "2026-04-13T09:06:13Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "Sure let's add it. (Not in the extKeyUsage attributes though)",
+              "createdAt": "2026-04-13T08:57:56Z",
+              "updatedAt": "2026-04-13T09:06:13Z"
+            },
+            {
+              "originalPosition": 6,
+              "body": "Let's use EXPLICIT. (Agreed that it doesn't do anything now, but in case we extend the file, it is probably good to already have it.)",
+              "createdAt": "2026-04-13T09:06:01Z",
+              "updatedAt": "2026-04-13T09:06:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM70S-Fd",
+          "commit": {
+            "abbreviatedOid": "4e5bf4d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-13T12:19:38Z",
+          "updatedAt": "2026-04-13T12:19:38Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "Ok let's make it 8192.. Are there any constraints with a large TRC? \r\nAFAIK this is always transmitted over gRPC in -controlplane, so there should not be size constraints  ",
+              "createdAt": "2026-04-13T12:19:38Z",
+              "updatedAt": "2026-04-13T12:19:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM70TApS",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-13T12:21:41Z",
+          "updatedAt": "2026-04-13T12:21:41Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "@oncilla let me know if you want to leave the current 255 limit, or if we should remove the limit overall",
+              "createdAt": "2026-04-13T12:21:41Z",
+              "updatedAt": "2026-04-13T12:21:41Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM70YgZY",
+          "commit": {
+            "abbreviatedOid": "4e5bf4d"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-13T15:56:07Z",
+          "updatedAt": "2026-04-13T15:56:07Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "The message size limit for gRPC is usually ~4MB. So that is a theoretical upper limit for the TRC.\r\n\r\n",
+              "createdAt": "2026-04-13T15:56:07Z",
+              "updatedAt": "2026-04-13T15:56:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM70ZEPy",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-13T16:14:54Z",
+          "updatedAt": "2026-04-13T16:14:54Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Let's change to safe upper bounds. I think that is way more than is reasonable, but it will ensure there is no unbounded integers (which is best practice AFAIU.)\r\n\r\n```\r\nvotes SEQUENCE SIZE (0..32767) OF INTEGER (0..65535)\r\n...\r\ncertificates       SEQUENCE SIZE (0..65535) OF Certificate\r\n```\r\n\r\n(32767 because at most half can vote (regular vs sensitive) and 1 root is required)\r\n\r\n\r\nIf you want to restrict it further, we can try to choose sensible values based on the 4MB upper limit.\r\nI think that gives you around 4k-5k certificates tops.\r\n",
+              "createdAt": "2026-04-13T16:14:54Z",
+              "updatedAt": "2026-04-13T16:14:55Z"
             }
           ]
         }
