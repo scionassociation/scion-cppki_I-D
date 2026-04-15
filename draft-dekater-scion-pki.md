@@ -598,7 +598,7 @@ Other attributes are not used.
 
 If a certificate’s public key is used to verify the signature of a control plane payload (`digitalSignature` attribute), it MUST be possible to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
-When present, this extension SHOULD be marked as critical. In such case, the public key in the certificate SHOULD only be used for the purpose set in the critical extension.
+When present, this extension SHOULD be marked as critical.
 
 Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the `keyUsage` extension differently. The next table shows the specifications per certificate type.
 
