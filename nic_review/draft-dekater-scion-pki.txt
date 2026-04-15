@@ -1385,15 +1385,12 @@ Table of Contents
 
    All numbers MUST be positive integers.
 
-   *  The *ISD number* MUST be an integer in the inclusive range from 64
-      to 4094 (i.e., the numbering range for public ISDs, see
-      Section 1.6.1).
+   *  The *ISD number* MUST be an integer.
 
    *  The *base number* indicates the starting point of the current TRC
       update chain.  This starting point is either the ISD's initial TRC
       or the currently valid base TRC, if the valid base TRC differs
-      from the initial TRC.  The latter MUST be the case after a trust
-      reset.
+      from the initial TRC.  The latter is the case after a trust reset.
 
    *  The *serial number* represents the current update cycle, counting
       from the initial TRC of a specific ISD.
@@ -1441,9 +1438,6 @@ Table of Contents
    | Regular   | ISD15-B05-S06   | Only the serial number is          |
    |           |                 | incremented.                       |
    +-----------+-----------------+------------------------------------+
-   | Regular   | ISD15-B05-S07   | Only the serial number is          |
-   |           |                 | incremented.                       |
-   +-----------+-----------------+------------------------------------+
    | And so on |                 |                                    |
    +-----------+-----------------+------------------------------------+
 
@@ -1451,13 +1445,11 @@ Table of Contents
 
 3.2.2.3.  validity Field
 
-   The validity field defines the validity period of the TRC, which is
-   the period of time during which the TRC is in the "valid" state.  The
-   notBefore and notAfter attributes of the validity field specify the
-   lower and upper bound of the time interval during which a TRC can be
-   active.
+   The validity field defines the TRC validity period.  The notBefore
+   and notAfter attributes of the validity field specify the lower and
+   upper bound of the time interval during which a TRC can be active.
 
-   *Note:* An active TRC is a valid TRC that can be used for verifying
+   An active TRC is a valid TRC that can be used for verifying
    certificate signatures.  The time period during which a TRC is active
    can be shorter than the time period during which the TRC is valid.
    For more information, see Section 3.1.
@@ -1512,11 +1504,11 @@ Table of Contents
 
    The noTrustReset field is OPTIONAL and defaults to FALSE.
 
-   *Important:* Note that once the noTrustReset Boolean is set to TRUE
-   and a trust reset is disallowed, this cannot be reversed.  Therefore,
-   ISDs SHOULD always set this value to FALSE, unless they have
-   sufficiently assessed the risks and implications of making a trust
-   reset impossible.
+   Note that once the noTrustReset Boolean is set to TRUE and a trust
+   reset is disallowed, this cannot be reversed.  Therefore, ISDs SHOULD
+   always set this value to FALSE, unless they have sufficiently
+   assessed the risks and implications of making a trust reset
+   impossible.
 
    *Note:* A trust reset represents a special use case where a new base
    TRC is created.  It therefore differs from a TRC update (regular or
@@ -1571,8 +1563,8 @@ Table of Contents
    *  To assign the core status to a given AS, add the respective AS
       number to the sequence of AS numbers in the coreASes field.
 
-   *Important:* Revoking or assigning the core status of/to an AS always
-   requires a (sensitive) TRC update.
+   Revoking or assigning the core status of/to an AS always requires a
+   sensitive TRC update.
 
 3.2.2.9.  authoritativeASes Field
 
@@ -1601,7 +1593,7 @@ Table of Contents
       authoritativeASes field.
 
    *Important:* Revoking or assigning the authoritative status of/to an
-   AS always requires a (sensitive) TRC update.
+   AS always requires a sensitive TRC update.
 
 3.2.2.10.  description Field
 

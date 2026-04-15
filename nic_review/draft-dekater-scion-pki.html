@@ -2820,10 +2820,10 @@ TRC
 <p id="section-3.2.2.2-4">All numbers <span class="bcp14">MUST</span> be positive integers.<a href="#section-3.2.2.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.2.2-5.1">
-                <p id="section-3.2.2.2-5.1.1">The <strong>ISD number</strong> <span class="bcp14">MUST</span> be an integer in the inclusive range from 64 to 4094 (i.e., the numbering range for public ISDs, see <a href="#input" class="auto internal xref">Section 1.6.1</a>).<a href="#section-3.2.2.2-5.1.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2.2.2-5.1.1">The <strong>ISD number</strong> <span class="bcp14">MUST</span> be an integer.<a href="#section-3.2.2.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2.2.2-5.2">
-                <p id="section-3.2.2.2-5.2.1">The <strong>base number</strong> indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter <span class="bcp14">MUST</span> be the case after a trust reset.<a href="#section-3.2.2.2-5.2.1" class="pilcrow">¶</a></p>
+                <p id="section-3.2.2.2-5.2.1">The <strong>base number</strong> indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.<a href="#section-3.2.2.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-3.2.2.2-5.3">
                 <p id="section-3.2.2.2-5.3.1">The <strong>serial number</strong> represents the current update cycle, counting from the initial TRC of a specific ISD.<a href="#section-3.2.2.2-5.3.1" class="pilcrow">¶</a></p>
@@ -2878,11 +2878,6 @@ The following simple example illustrates how to specify the ID of the TRCs in an
                   <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
                 </tr>
                 <tr>
-                  <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                  <td class="text-left" rowspan="1" colspan="1">ISD15-B05-S07</td>
-                  <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
-                </tr>
-                <tr>
                   <td class="text-left" rowspan="1" colspan="1">And so on</td>
                   <td class="text-left" rowspan="1" colspan="1"> </td>
                   <td class="text-left" rowspan="1" colspan="1"> </td>
@@ -2897,8 +2892,8 @@ The following simple example illustrates how to specify the ID of the TRCs in an
             <h5 id="name-validity-field">
 <a href="#section-3.2.2.3" class="section-number selfRef">3.2.2.3. </a><a href="#name-validity-field" class="section-name selfRef"><code>validity</code> Field</a>
             </h5>
-<p id="section-3.2.2.3-1">The <code>validity</code> field defines the validity period of the TRC, which is the period of time during which the TRC is in the "valid" state. The <code>notBefore</code> and <code>notAfter</code> attributes of the <code>validity</code> field specify the lower and upper bound of the time interval during which a TRC can be active.<a href="#section-3.2.2.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.2.3-2"><strong>Note:</strong> An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see <a href="#trc-states" class="auto internal xref">Section 3.1</a>.<a href="#section-3.2.2.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.3-1">The <code>validity</code> field defines the TRC validity period. The <code>notBefore</code> and <code>notAfter</code> attributes of the <code>validity</code> field specify the lower and upper bound of the time interval during which a TRC can be active.<a href="#section-3.2.2.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.3-2">An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see <a href="#trc-states" class="auto internal xref">Section 3.1</a>.<a href="#section-3.2.2.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.2.3-3">The <code>validity</code> field consists of a sequence of two dates, as defined in section 7.2. of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>.<a href="#section-3.2.2.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.2.3-4">In addition to this standard definition, the following constraint applies to the <code>validity</code> field of the TRC:<a href="#section-3.2.2.3-4" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -2938,7 +2933,7 @@ The following simple example illustrates how to specify the ID of the TRCs in an
             </h5>
 <p id="section-3.2.2.5-1">The <code>noTrustReset</code> Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value <span class="bcp14">MUST NOT</span> be changed by a regular or sensitive update. However, it is possible to change the <code>noTrustReset</code> value in the event of a trust reset where a new base TRC is created.<a href="#section-3.2.2.5-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.2.5-2">The <code>noTrustReset</code> field is <span class="bcp14">OPTIONAL</span> and defaults to FALSE.<a href="#section-3.2.2.5-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.2.5-3"><strong>Important:</strong> Note that once the <code>noTrustReset</code> Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs <span class="bcp14">SHOULD</span> always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.<a href="#section-3.2.2.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.5-3">Note that once the <code>noTrustReset</code> Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs <span class="bcp14">SHOULD</span> always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.<a href="#section-3.2.2.5-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.2.5-4"><strong>Note:</strong> A trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.<a href="#section-3.2.2.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2983,7 +2978,7 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
                   <p id="section-3.2.2.8.1-1.2.1">To assign the core status to a given AS, add the respective AS number to the sequence of AS numbers in the <code>coreASes</code> field.<a href="#section-3.2.2.8.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
-<p id="section-3.2.2.8.1-2"><strong>Important:</strong> Revoking or assigning the core status of/to an AS always requires a (sensitive) TRC update.<a href="#section-3.2.2.8.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.8.1-2">Revoking or assigning the core status of/to an AS always requires a sensitive TRC update.<a href="#section-3.2.2.8.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3016,7 +3011,7 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
                   <p id="section-3.2.2.9.1-1.2.1">To assign the authoritative status to a given AS, add the respective AS number to the sequence of AS numbers in the <code>authoritativeASes</code> field.<a href="#section-3.2.2.9.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
-<p id="section-3.2.2.9.1-2"><strong>Important:</strong> Revoking or assigning the authoritative status of/to an AS always requires a (sensitive) TRC update.<a href="#section-3.2.2.9.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.2.9.1-2"><strong>Important:</strong> Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.<a href="#section-3.2.2.9.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
