@@ -1056,9 +1056,9 @@ The selection algorithm for building the trust anchor pool is described in pseud
 
 ## TRC Updates {#update}
 
-All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates, and the type of update determines the (payload) information that changes in the updated TRC.
+All non-base TRCs of an ISD are updates of the ISD's base TRC(s) and constitute a chain. Updates are categorized as regular or sensitive, depending on which payload fields are being modified.
 
-This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types whilst some only apply to a regular or a sensitive TRC update. Based on the type of update, different sets of voters are needed to create a verifiable TRC update and the corresponding voting (signing) process is also described. To verify a TRC update, a relying party MUST perform a couple of checks which are also listed.
+This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types whilst some only apply to a regular or a sensitive TRC update. Based on the type of update, different sets of voters are needed to create a verifiable TRC update and the corresponding voting (signing) process is also described. Last, this section describes checks to verify a newly issued TRC.
 
 
 ### Changed or New Certificates {#change-new}
@@ -1068,20 +1068,20 @@ In the context of a TRC update,
 - A certificate is *changing* if the certificate is part of the `certificates` sequence in the predecessor TRC, but no longer part of the `certificates` sequence in the updated TRC. Instead, the `certificates` sequence of the updated TRC holds another certificate of the *same type* and with the *same distinguished name*.
 - A certificate is *new* if there is **no** certificate of the same type and distinguished name at all in the `certificates` sequence of the predecessor TRC.
 
-**Note:** Every new sensitive or regular voting certificate in a TRC attaches a signature to the TRC. This is done to ensure that the freshly included voting entity agrees with the contents of the TRC it is now part of.
+Every new sensitive or regular voting certificate in a TRC attaches a signature to the TRC. This is done to ensure that the freshly included voting entity agrees with the contents of the TRC it is now part of.
 
 
 ### Update Rules - Overview
 
-The following table gives an overview of the types of TRC update as well as the rules that must apply in regard to the updated TRC's payload information.
+The following table gives an overview of the types of TRC update, as well as the rules that must apply in regard to the updated TRC's payload information.
 
 The sections that follow provide more detailed descriptions of each rule.
 
 
-| Type of Update                     | Payload Updated TRC - Unchanged Elements  | Payload Updated TRC - Required Changes | Payload Updated TRC: Other Rules to Hold            |
+| Type of Update                     |                 Unchanged Elements  |       Changed Elements |    Other Rules to Hold            |
 |------------------------------------+-------------------------------------------+----------------------------------------+-----------------------------------------------------|
 | Both Regular AND Sensitive Updates | - `iD` field: `iSD` and `baseNumber` <br> - `noTrustReset` field | `iD` field: `serialNumber` MUST be incremented by 1 | `votes` field: Number of votes (indices) => number set in the `votingQuorum` field of the predecessor TRC |
-| Regular TRC Update | - Quorum in the `votingQuorum` field<br>- Core ASes in the `coreASes` field<br>- ASes in the `authoritativeASes` field<br>- Nr. and distinguished names of root & voting certificates in the `certificates` field<br>- Set of sensitive voting certificates in the `certificates` field | | `votes` field:<br> - All votes MUST only refer to *regular* voting certificates in the predecessor TRC<br>- Must include votes of each changed regular voting certificate from the predecessor TRC<br> `signatures` field:<br> - Must include signatures of each changed root certificate from the predecessor TRC |
+| Regular TRC Update | - Quorum in the `votingQuorum` field<br>- Core ASes in the `coreASes` field<br>- ASes in the `authoritativeASes` field<br>- Nr. and distinguished names of root & voting certificates in the `certificates` field<br>- Set of sensitive voting certificates in the `certificates` field | | `votes` field:<br> - All votes MUST only refer to *regular* voting certificates in the predecessor TRC<br>- MUST include votes of each changed regular voting certificate from the predecessor TRC<br> `signatures` field:<br> - MUST include signatures of each changed root certificate from the predecessor TRC |
 | Sensitive TRC Update | If the update does not qualify as a regular update, it is a sensitive update |  | `votes` field: <br> - All votes MUST only refer to *sensitive* voting certificates in the predecessor TRC |
 {: #table-8 title="Overview of the update types and corresponding rules"}
 
@@ -1130,34 +1130,34 @@ Furthermore, if one or more *new* certificates are added to the updated TRC, the
 It is up to the ISD members to decide how the "casting a vote" procedure for updated TRCs will take place. Some ISDs make a distinction between regular and sensitive updates by dividing the regular and sensitive signing keys in different security classes, e.g. they keep the regular key in an online vault while the sensitive key would be stored offline. This way, the regular TRC update would lend itself to being automated (since the keys are accessible online) whereas the sensitive one would require manual actions to access the offline key. Other ISDs keep both regular and sensitive keys online and perform both updates automatically.
 
 
-### TRC Update Verification
+### TRC Update Verification {#trc-verification}
 
 To verify a TRC update, the relying party MUST perform the following checks:
 
 - Check that the specified update rules as described above are respected.
-- Check whether the update is regular or sensitive.
-   - In case of a regular update,
-      - check that the signatures for the changing certificates are present and verifiable, and
-      - check that all votes are cast by a regular voting certificate.
-   - In case of a sensitive update, check that all votes are cast by a sensitive voting certificate.
-- In both cases, check that all signatures are verifiable, and no superfluous signatures are attached.
+- Check that all signatures are verifiable, and no superfluous signatures are attached.
+- In case of a regular update:
+    - check that the signatures for the changing certificates are present and verifiable, and
+    - check that all votes are cast by a regular voting certificate.
+- In case of a sensitive update:
+    - check that all votes are cast by a sensitive voting certificate.
 
 If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.
 
 
 ## Initial TRC Signing Ceremony {#trc-ceremony}
 
-The very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC where the number of the ISD is chosen. The initial TRC MUST be signed during a special signing ceremony and all voting representatives of the initial TRC need to take part in this to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain the TRC by means of a secure offline or online mechanism.
+The very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC. The initial TRC MUST be signed during a signing ceremony where all voting representatives of the initial TRC take part to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain the TRC by means of a secure offline or online mechanism.
 
 [](#initial-ceremony) describes a possible procedure for the signing ceremony of an ISD's initial TRC. Whilst it is up to the initial members of an ISD how to organize the signing ceremony, it recommended to implement a process in line with the ceremony described in the Appendix.
 
 
-# Deploying the CP PKI - Specifications {#deploy-cp-pki}
+# Using the CP PKI {#deploy-cp-pki}
 
 This section provides several specifications regarding the deployment of the control plane PKI.
 
 
-## Deploying a TRC
+## Distribution of TRCs
 
 
 ### Base TRC
@@ -1165,17 +1165,11 @@ This section provides several specifications regarding the deployment of the con
 Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an ISD MUST be pre-loaded with the currently valid base-version TRC of their own ISD. For all specifications regarding the creation and distribution of initial/base TRCs, see [](#trc-ceremony).
 
 
-### TRC Update
+### TRC Update Discovery
 
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in [](#update).
 
-
-#### TRC Update Discovery {#discover-trcupdate}
-
-Relying parties MUST have at least one valid TRC available. Relying parties MUST discover TRC updates within the grace period defined in the updated TRC, and SHOULD discover TRC updates in a matter of minutes to hours. Additionally, the following requirement MUST be satisfied:
-
-**Requirement**<br>
-Any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information.
+Relying parties MUST have at least one valid TRC available. Relying parties MUST discover TRC updates within the grace period defined in the updated TRC, and SHOULD discover TRC updates in a matter of minutes to hours. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information.
 
 SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:
 
@@ -1194,7 +1188,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 
 ## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
 
-SCION requires that control plane messages are signed. The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties MUST be able to verify signatures with the help of the Control Plane PKI.
+The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties MUST be able to verify signatures with the help of the Control Plane PKI.
 
 The following sections specify the requirements that apply to the signing and verification of control plane messages.
 
@@ -1202,10 +1196,10 @@ The following sections specify the requirements that apply to the signing and ve
 
 An AS signs control plane messages with the private key that corresponds to the (valid) AS' certificate.
 
-The AS MUST attach the following information as signature metadata. It is the minimum information a relying party requires to identify which certificate to use to verify the signed message.
+The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:
 
 - ISD-AS number: The ISD-AS number of the signing entity. For specification details, see [](#isd-as-nr).
-- Subject key identifier: The identifier of the public key that MUST be used to verify the message. For specification details, see [](#subject-key-id-ext).
+- Subject key identifier: The identifier of the public key to be used to verify the message. For specification details, see [](#subject-key-id-ext).
 
 Additionally, the signer SHOULD include the following information:
 
@@ -1215,7 +1209,7 @@ Additionally, the signer SHOULD include the following information:
 
 ### Verifying a Control Plane Message
 
-When the relying party receives a control plane message they want to verify, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.
+To verify a received control plane message, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.
 
 AS certificates are bundled together with the corresponding signing CA certificate into certificate chains. For efficiency, SCION distributes these certificate chains separately from the signed messages.
 
@@ -1306,15 +1300,15 @@ The Control Plane PKI lays the foundation for the authentication procedures in S
 
 The relying party MUST be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
 
-As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control-plane messages.
 
 On the other hand, this does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:
 
 - CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface
-- ISDs usually rely on multiple CAs
-- ISDs could create policies and processes to renew certificates out-of-band
+- relying on multiple CAs within an ISD
+- creating policies and processes to renew certificates out-of-band
 
-## TRC Distribution
+## TRC Distribution and Trust on First Use
 
 Base TRCs act as an ISD root of trust (see [](#trust-relations)).
 
