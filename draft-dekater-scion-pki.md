@@ -608,7 +608,7 @@ In SCION, using the `keyIdentifier` attribute is the preferred way to specify th
 
 SCION implementations MAY also support the use of the `authorityCertIssuer` and `authorityCertSerialNumber` attributes. However, if these attributes are set and support for them is missing, implementations SHOULD error out.
 
-This extension MUST always be non-critical. However, SCION implementations MUST error out if the extension is not present AND the certificate is not self-signed.
+This extension MUST be marked as non-critical. Implementations MUST error out if the extension is not present AND the certificate is not self-signed.
 
 #### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
 
@@ -616,7 +616,7 @@ The `subjectKeyIdentifier` extension identifies certificates that contain a part
 
 For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.2, and {{X.509}}, clause 9.2.2.2.
 
-This extension MUST always be non-critical. However, SCION implementations MUST error out if the extension is not present.
+This extension MUST be marked as non-critical. Implementations MUST error out if the extension is not present.
 
 #### `keyUsage` Extension {#key-usage-ext}
 
@@ -631,9 +631,7 @@ Other attributes are not used.
 
 If a certificate’s public key is used to verify the signature of a control plane payload (`digitalSignature` attribute), it MUST be possible to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
-If present, the `keyUsage` extension's  `critical` attribute MUST be set to TRUE.
-
-**Note**: If a certificate extension is marked "critical", the public key in the certificate SHOULD only be used for the purpose set in the critical extension.
+When present, this extension MUST be marked as critical. In such case, the public key in the certificate SHOULD only be used for the purpose set in the critical extension.
 
 Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the `keyUsage` extension differently. The next table shows the specifications per certificate type.
 
@@ -663,14 +661,14 @@ Additionally, the Extended Key Usage extension sequence MAY include the SCION-sp
 
 The specifications of the `extKeyUsage` extension differ per SCION Control Plane PKI certificate type. The next table provides an overview of the specifications per certificate type.
 
-| Certificate Type               | Root                   | CA                              | AS                    | Voting                     |
-| ------------------------------ | ---------------------- | ----------------------------- | --------------------- | --------------------------------- |
-| *Attribute:*                   |                        |                               |                       |                                   |
-| `extKeyUsage` extension itself | REQUIRED               | OPTIONAL                      | REQUIRED              | REQUIRED                        |
-| `id-kp-serverAuth`             | MUST NOT be included   | MUST NOT be included          | MUST be included, if the certificate is used on the server-side of a control plane TLS session. | MUST NOT be included |
-| `id-kp-clientAuth`             | MUST NOT be included   | MUST NOT be included          | MUST be included, if the certificate is used on the client-side of a control plane TLS session. | MUST NOT be included |
-| `id-kp-timeStamping`           |  MUST be included      |                               | MUST be included      | MUST be included                  |
-| SCION-specific attributes (see [](#specatt)) | `id-kp-root` MUST be included |     |     | Regular voting cert: `id-kp-regular` MUST be included.<br> Sensitive voting cert: `id-kp-sensitive` MUST be included |
+| Certificate Type               | Root                   | CA                      | AS                    | Voting                     |
+| ------------------------------ | ---------------------- | ------------------------ | --------------------- | --------------------------------- |
+| *Attribute:*                   |                        |                       |                       |                                   |
+| `extKeyUsage` extension itself | REQUIRED               | OPTIONAL              | REQUIRED              | REQUIRED                        |
+| `id-kp-serverAuth`             | MUST NOT be included   | MUST NOT be included  | MUST be included, if the certificate is used on the server-side of a control plane TLS session. | MUST NOT be included |
+| `id-kp-clientAuth`             | MUST NOT be included   | MUST NOT be included  | MUST be included, if the certificate is used on the client-side of a control plane TLS session. | MUST NOT be included |
+| `id-kp-timeStamping`           | MUST be included       |                       | MUST be included      | MUST be included                  |
+| SCION-specific attributes (see [](#specatt)) | `id-kp-root` MUST be included |  |                       | Regular voting cert: `id-kp-regular` MUST be included.<br> Sensitive voting cert: `id-kp-sensitive` MUST be included |
 {: #table-5 title="extKeyUsage extension - Specifications per certificate type"}
 
 **Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
@@ -695,17 +693,17 @@ The `basicConstraints` extension specifies whether the certificate subject may a
 
 The `basicConstraints` extension includes the following attributes relevant for SCION:
 
-- `cA` attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute MUST be set to TRUE.
+- `cA` attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute MUST be asserted and the extension MUST be marked as critical.
 - `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE and specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the maximum length of the certification path.
 
 The settings of the `basicConstraints` extension differ for each SCION Control Plane PKI certificate type. The next table shows the specifications per certificate type.
 
-| Certificate Type                    | Root                   | CA                            | AS                            | Voting (regular and sensitive)    |
-| ----------------------------------- | ---------------------- | ----------------------------- | ----------------------------- | --------------------------------- |
-| *Attribute:*                        |                        |                               |                               |                                   |
-| `basicConstraints` extension itself | REQUIRED        | REQUIRED               | SHOULD NOT be present         | SHOULD NOT be present             |
-| `cA`                               | MUST be set to TRUE    | MUST be set to TRUE           | If the extension is present, this attribute MUST be set to FALSE | If the extension is present, this attribute MUST be set to FALSE |
-| `pathLenConstraint`                | SHOULD be set to "1", MUST be marked as "critical" | SHOULD be set to "0" (1), MUST be marked as "critical" | If the extension is present, this attribute MUST be absent. | If the extension is present, this attribute MUST be absent. |
+| Certificate Type                    | Root                   | CA                       | AS                            | Voting (regular and sensitive)    |
+| ----------------------------------- | ---------------------- | ------------------------ | ----------------------------- | --------------------------------- |
+| *Attribute:*                        |                        |                          |                               |                                   |
+| `basicConstraints` extension itself | REQUIRED               | REQUIRED                 | SHOULD NOT be present         | SHOULD NOT be present             |
+| `cA`                               | MUST be asserted        | MUST be asserted         | If the extension is present, this attribute MUST NOT be asserted | If the extension is present, this attribute MUST NOT be asserted |
+| `pathLenConstraint`                | SHOULD be set to "1"    | SHOULD be set to "0" (1) | MUST NOT be included          | MUST NOT be included              |
 {: #table-6 title="basicConstraints extension - Specifications per certificate type"}
 
 (1) Control Plane CAs can only issue end-entity certificates.
