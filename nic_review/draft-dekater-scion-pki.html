@@ -2391,7 +2391,7 @@ TRC
             </ul>
 <p id="section-2.7.2.3-4">Other attributes are not used.<a href="#section-2.7.2.3-4" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.3-5">If a certificate’s public key is used to verify the signature of a control plane payload (<code>digitalSignature</code> attribute), it <span class="bcp14">MUST</span> be possible to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the <code>subjectKeyIdentifier</code> extension). For more information about the <code>subjectKeyIdentifier</code> extension (see <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2.2</a>).<a href="#section-2.7.2.3-5" class="pilcrow">¶</a></p>
-<p id="section-2.7.2.3-6">When present, this extension <span class="bcp14">SHOULD</span> be marked as critical. In such case, the public key in the certificate <span class="bcp14">SHOULD</span> only be used for the purpose set in the critical extension.<a href="#section-2.7.2.3-6" class="pilcrow">¶</a></p>
+<p id="section-2.7.2.3-6">When present, this extension <span class="bcp14">SHOULD</span> be marked as critical.<a href="#section-2.7.2.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.3-7">Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the <code>keyUsage</code> extension differently. The next table shows the specifications per certificate type.<a href="#section-2.7.2.3-7" class="pilcrow">¶</a></p>
 <span id="name-keyusage-extension-specific"></span><div id="_table-4">
 <table class="center" id="table-3">

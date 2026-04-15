@@ -1053,9 +1053,7 @@ Table of Contents
    (via the subjectKeyIdentifier extension).  For more information about
    the subjectKeyIdentifier extension (see Section 2.7.2.2).
 
-   When present, this extension SHOULD be marked as critical.  In such
-   case, the public key in the certificate SHOULD only be used for the
-   purpose set in the critical extension.
+   When present, this extension SHOULD be marked as critical.
 
    Each Control Plane PKI certificate type uses the public key
    differently, and consequently also specifies the attributes of the
