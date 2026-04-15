@@ -810,8 +810,8 @@ The identifier is a unique sequence of
 
 All numbers MUST be positive integers.
 
-- The **ISD number** MUST be an integer in the inclusive range from 64 to 4094 (i.e., the numbering range for public ISDs, see [Input](#input)).
-- The **base number** indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter MUST be the case after a trust reset.
+- The **ISD number** MUST be an integer.
+- The **base number** indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
 - The **serial number** represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and MUST have a serial number of 1 and a base number of 1. With every TRC update, the serial number MUST be incremented by one which facilitates the unique identification of the predecessor and successor TRC in an update chain.
@@ -829,16 +829,15 @@ The following simple example illustrates how to specify the ID of the TRCs in an
 | Sensitive   | ISD15-B01-S04       | Only the serial number is incremented.           |
 | Trust reset | ISD15-**B05**-S05   | A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD. |
 | Regular     | ISD15-B05-S06       | Only the serial number is incremented.           |
-| Regular     | ISD15-B05-S07       | Only the serial number is incremented.           |
 | And so on   |                     |                                                  |
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
 
 #### `validity` Field {#validity}
 
-The `validity` field defines the validity period of the TRC, which is the period of time during which the TRC is in the "valid" state. The `notBefore` and `notAfter` attributes of the `validity` field specify the lower and upper bound of the time interval during which a TRC can be active.
+The `validity` field defines the TRC validity period. The `notBefore` and `notAfter` attributes of the `validity` field specify the lower and upper bound of the time interval during which a TRC can be active.
 
-**Note:** An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
+An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
 The `validity` field consists of a sequence of two dates, as defined in section 7.2. of {{X.509}}.
 
@@ -870,7 +869,7 @@ The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the I
 
 The `noTrustReset` field is OPTIONAL and defaults to FALSE.
 
-**Important:** Note that once the `noTrustReset` Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs SHOULD always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
+Note that once the `noTrustReset` Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs SHOULD always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
 
 **Note:** A trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.
 
@@ -905,7 +904,7 @@ Each core AS number MUST be unique in the sequence of core AS numbers. That is, 
 - To revoke the core status of a given AS, remove the respective AS number from the sequence of AS numbers in the `coreASes` field.
 - To assign the core status to a given AS, add the respective AS number to the sequence of AS numbers in the `coreASes` field.
 
-**Important:** Revoking or assigning the core status of/to an AS always requires a (sensitive) TRC update.
+Revoking or assigning the core status of/to an AS always requires a sensitive TRC update.
 
 
 #### `authoritativeASes` Field {#auth}
@@ -923,7 +922,7 @@ Authoritative ASes are those ASes in an ISD that always have the latest TRCs of 
 - To revoke the authoritative status of a given AS, remove the respective AS number from the sequence of AS numbers in the `authoritativeASes` field.
 - To assign the authoritative status to a given AS, add the respective AS number to the sequence of AS numbers in the `authoritativeASes` field.
 
-**Important:** Revoking or assigning the authoritative status of/to an AS always requires a (sensitive) TRC update.
+**Important:** Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.
 
 
 #### `description` Field {#description}
