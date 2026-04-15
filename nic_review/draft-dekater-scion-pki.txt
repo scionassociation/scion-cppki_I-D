@@ -141,7 +141,6 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
-   Deployment Testing: SCIONLab
    Appendix A.  Signing Ceremony Initial TRC
       Ceremony Participants
      Ceremony Preparations
@@ -2560,21 +2559,6 @@ Table of Contents
               Infrastructure (RPKI) to Router Protocol, Version 1",
               RFC 8210, DOI 10.17487/RFC8210, September 2017,
               <https://www.rfc-editor.org/rfc/rfc8210>.
-
-   [SCIONLAB] Kown, J., García-Pardo, J., Legner, M., Wirz, F., Frei,
-              M., Hausheer, D., and A. Perrig, "SCIONLAB - A Next-
-              Generation Internet Testbed", 2020,
-              <https://ieeexplore.ieee.org/abstract/document/9259355>.
-
-Deployment Testing: SCIONLab
-
-   SCIONLab is a global research network that is available to test the
-   SCION architecture.  You can create and use your ASes using your own
-   computation resources which allows you to gain real-world experience
-   of deploying and managing a SCION network.
-
-   More information can be found on the SCIONLab website and in the
-   [SCIONLAB] paper.
 
 Appendix A.  Signing Ceremony Initial TRC
 
