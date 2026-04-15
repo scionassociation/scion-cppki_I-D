@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 12 October 2026                                         S. Hitz
+Expires: 17 October 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           10 April 2026
+                                                           15 April 2026
 
 
                         SCION Control Plane PKI
@@ -64,7 +64,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 12 October 2026.
+   This Internet-Draft will expire on 17 October 2026.
 
 Copyright Notice
 
@@ -998,9 +998,9 @@ Table of Contents
    However, if these attributes are set and support for them is missing,
    implementations SHOULD error out.
 
-   This extension MUST always be non-critical.  However, SCION
-   implementations MUST error out if the extension is not present AND
-   the certificate is not self-signed.
+   This extension MUST be marked as non-critical.  Implementations MUST
+   error out if the extension is not present AND the certificate is not
+   self-signed.
 
 2.7.2.2.  subjectKeyIdentifier Extension
 
@@ -1013,8 +1013,8 @@ Table of Contents
    For the syntax and definition of the subjectKeyIdentifier extension,
    see [RFC5280], section 4.2.1.2, and [X.509], clause 9.2.2.2.
 
-   This extension MUST always be non-critical.  However, SCION
-   implementations MUST error out if the extension is not present.
+   This extension MUST be marked as non-critical.  Implementations MUST
+   error out if the extension is not present.
 
 2.7.2.3.  keyUsage Extension
 
@@ -1042,12 +1042,9 @@ Table of Contents
    (via the subjectKeyIdentifier extension).  For more information about
    the subjectKeyIdentifier extension (see Section 2.7.2.2).
 
-   If present, the keyUsage extension's critical attribute MUST be set
-   to TRUE.
-
-   *Note*: If a certificate extension is marked "critical", the public
-   key in the certificate SHOULD only be used for the purpose set in the
-   critical extension.
+   When present, this extension MUST be marked as critical.  In such
+   case, the public key in the certificate SHOULD only be used for the
+   purpose set in the critical extension.
 
    Each Control Plane PKI certificate type uses the public key
    differently, and consequently also specifies the attributes of the
@@ -1191,7 +1188,8 @@ Table of Contents
    relevant for SCION:
 
    *  cA attribute: Specifies whether the certificate subject may act as
-      a CA.  If yes, this attribute MUST be set to TRUE.
+      a CA.  If yes, this attribute MUST be asserted and the extension
+      MUST be marked as critical.
 
    *  pathLenConstraint attribute: This attribute is only relevant if
       the cA attribute is set to TRUE and specifies the maximum number
@@ -1205,37 +1203,33 @@ Table of Contents
    Control Plane PKI certificate type.  The next table shows the
    specifications per certificate type.
 
-   +===================+==========+============+=========+============+
-   | Certificate Type  |Root      | CA         |AS       | Voting     |
-   |                   |          |            |         | (regular   |
-   |                   |          |            |         | and        |
-   |                   |          |            |         | sensitive) |
-   +===================+==========+============+=========+============+
-   | _Attribute:_      |          |            |         |            |
-   +-------------------+----------+------------+---------+------------+
-   | basicConstraints  |REQUIRED  | REQUIRED   |SHOULD   | SHOULD NOT |
-   | extension itself  |          |            |NOT be   | be present |
-   |                   |          |            |present  |            |
-   +-------------------+----------+------------+---------+------------+
-   | cA                |MUST be   | MUST be    |If the   | If the     |
-   |                   |set to    | set to     |extension| extension  |
-   |                   |TRUE      | TRUE       |is       | is         |
-   |                   |          |            |present, | present,   |
-   |                   |          |            |this     | this       |
-   |                   |          |            |attribute| attribute  |
-   |                   |          |            |MUST be  | MUST be    |
-   |                   |          |            |set to   | set to     |
-   |                   |          |            |FALSE    | FALSE      |
-   +-------------------+----------+------------+---------+------------+
-   | pathLenConstraint |SHOULD be | SHOULD be  |If the   | If the     |
-   |                   |set to    | set to "0" |extension| extension  |
-   |                   |"1", MUST | (1), MUST  |is       | is         |
-   |                   |be marked | be marked  |present, | present,   |
-   |                   |as        | as         |this     | this       |
-   |                   |"critical"| "critical" |attribute| attribute  |
-   |                   |          |            |MUST be  | MUST be    |
-   |                   |          |            |absent.  | absent.    |
-   +-------------------+----------+------------+---------+------------+
+   +===================+==========+==========+===========+============+
+   | Certificate Type  | Root     | CA       | AS        | Voting     |
+   |                   |          |          |           | (regular   |
+   |                   |          |          |           | and        |
+   |                   |          |          |           | sensitive) |
+   +===================+==========+==========+===========+============+
+   | _Attribute:_      |          |          |           |            |
+   +-------------------+----------+----------+-----------+------------+
+   | basicConstraints  | REQUIRED | REQUIRED | SHOULD    | SHOULD NOT |
+   | extension itself  |          |          | NOT be    | be present |
+   |                   |          |          | present   |            |
+   +-------------------+----------+----------+-----------+------------+
+   | cA                | MUST be  | MUST be  | If the    | If the     |
+   |                   | asserted | asserted | extension | extension  |
+   |                   |          |          | is        | is         |
+   |                   |          |          | present,  | present,   |
+   |                   |          |          | this      | this       |
+   |                   |          |          | attribute | attribute  |
+   |                   |          |          | MUST NOT  | MUST NOT   |
+   |                   |          |          | be        | be         |
+   |                   |          |          | asserted  | asserted   |
+   +-------------------+----------+----------+-----------+------------+
+   | pathLenConstraint | SHOULD   | SHOULD   | MUST NOT  | MUST NOT   |
+   |                   | be set   | be set   | be        | be         |
+   |                   | to "1"   | to "0"   | included  | included   |
+   |                   |          | (1)      |           |            |
+   +-------------------+----------+----------+-----------+------------+
 
          Table 5: basicConstraints extension - Specifications per
                              certificate type
