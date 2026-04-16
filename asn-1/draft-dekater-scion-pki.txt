@@ -102,9 +102,18 @@ Table of Contents
        2.7.2.  Extensions
    3.  Trust Root Configuration Specification
      3.1.  TRC Types and States
-     3.2.  TRC Format
-       3.2.1.  TRC Schema
-       3.2.2.  TRC Fields
+     3.2.  TRC Fields
+       3.2.1.  version Field
+       3.2.2.  iD Field
+       3.2.3.  validity Field
+       3.2.4.  gracePeriod Field
+       3.2.5.  noTrustReset Boolean
+       3.2.6.  votes Field
+       3.2.7.  votingQuorum Field
+       3.2.8.  coreASes Field
+       3.2.9.  authoritativeASes Field
+       3.2.10. description Field
+       3.2.11. certificates Field
      3.3.  TRC Signature Syntax
        3.3.1.  SCION-specific rules
        3.3.2.  TRC Equality
@@ -139,14 +148,15 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
-   Appendix A.  Signing Ceremony Initial TRC
-      Ceremony Participants
-     Ceremony Preparations
-      Ceremony Process
-       Phase 1: Certificate Exchange
-       Phase 2: Generation of the TRC Payload
-       Phase 3: TRC Signing
-       Phase 4: TRC Validation
+   Appendix A.  TRC in ASN.1 Syntax
+   Appendix B.  Signing Ceremony Initial TRC
+     B.1.   Ceremony Participants
+     B.2.  Ceremony Preparations
+     B.3.   Ceremony Process
+       B.3.1.  Phase 1: Certificate Exchange
+       B.3.2.  Phase 2: Generation of the TRC Payload
+       B.3.3.  Phase 3: TRC Signing
+       B.3.4.  Phase 4: TRC Validation
    Change Log
      draft-dekater-scion-pki-12
      draft-dekater-scion-pki-11
@@ -449,8 +459,7 @@ Table of Contents
    binding between name and public key explicit; and (2) the binding is
    signed to prove possession of the corresponding private key.  The
    public keys of Voting AS certificates must therefore be explicitly
-   verified during the Signing Ceremony (Appendix "Appendix A.  Signing
-   Ceremony Initial TRC").
+   verified during the Signing Ceremony (Appendix B).
 
    SCION ASes sign and verify control plane messages.  Certain ASes have
    additional roles:
@@ -1093,7 +1102,7 @@ Table of Contents
    sensitive.  These attributes are used in the TRC setup to distinguish
    root certificates, regular voting certificates, and sensitive voting
    certificates from each other.  For more information, see
-   Section 3.2.2.11.
+   Section 3.2.11.
 
    The specifications of the extKeyUsage extension differ per SCION
    Control Plane PKI certificate type.  The next table provides an
@@ -1275,62 +1284,27 @@ Table of Contents
    A TRC can have the following states:
 
    *  Valid: The validity period of a TRC is defined in the TRC itself,
-      in the validity field (see Section 3.2.2.3).  A TRC is considered
+      in the validity field (see Section 3.2.3).  A TRC is considered
       valid if the current time falls within its validity period.
 
    *  Active: An active TRC is a valid TRC that can be used for
       verifying certificate signatures.  This is either the latest TRC
       or the predecessor TRC if it is still in its grace period (as
       defined in the gracePeriod field of the new TRC, see
-      Section 3.2.2.4).  No more than two TRCs can be active at the same
+      Section 3.2.4).  No more than two TRCs can be active at the same
       time for any ISD.
 
    Figure 2 shows the content of both a base/initial TRC, the changes
    made with the first regular update to the base TRC.  All elements of
    the TRC is detailed in the following subsections.
 
-3.2.  TRC Format
+3.2.  TRC Fields
 
    The TRC defines the roots of trust of an ISD and is the basis of the
    ISD's Control Plane PKI.  It holds the root and voting certificates
-   of the ISD and defines the ISD's trust policy.
-
-3.2.1.  TRC Schema
-
-   The following code block shows the format of a TRC specification file
-   (the payload schema):
-
-      TRCPayload  ::=  SEQUENCE {
-          version   TRCFormatVersion,
-          iD        TRCID,
-          validity  Validity,
-
-          gracePeriod   INTEGER,
-          noTrustReset  BOOLEAN DEFAULT FALSE,
-          votes         SEQUENCE OF INTEGER (SIZE (1..255)),
-
-          votingQuorum  INTEGER (1..255),
-
-          coreASes           SEQUENCE OF ASN,
-          authoritativeASes  SEQUENCE OF ASN,
-          description        UTF8String (SIZE (0..1024)),
-
-          certificates       SEQUENCE OF Certificate }
-
-      TRCFormatVersion  ::=  INTEGER { v1(0) }
-
-      TRCID  ::=  SEQUENCE {
-          iSD           ISD,
-          serialNumber  INTEGER (1..MAX),
-          baseNumber    INTEGER (1..MAX) }
-
-      ISD  ::=  INTEGER (1..65535)
-
-      Validity  ::=  SEQUENCE {
-          notBefore  Time,
-          notAfter   Time }
-
-      ASN  ::=  INTEGER (1..281474976710655)
+   of the ISD and defines the ISD's trust policy.  This section
+   describes the syntax and semantics of all TRC payload fields.  Its
+   ASN.1 module is in Appendix A.
 
    The TRCPayload sequence contains the identifying information of a TRC
    as well as policy information for TRC updates.  Furthermore, it
@@ -1341,19 +1315,14 @@ Table of Contents
    using ASN.1 distinguished encoding rules (DER) [X.690].  For more
    details, see Section 3.3.
 
-3.2.2.  TRC Fields
-
-   This section describes the syntax and semantics of all TRC payload
-   fields.
-
-3.2.2.1.  version Field
+3.2.1.  version Field
 
    The version field describes the version of the TRC format
    specification.
 
    Currently, the version MUST always be "v1".
 
-3.2.2.2.  iD Field
+3.2.2.  iD Field
 
    The iD field specifies the unique identifier of the TRC.
 
@@ -1425,7 +1394,7 @@ Table of Contents
 
                  Table 6: ID of TRCs in TRC update chain
 
-3.2.2.3.  validity Field
+3.2.3.  validity Field
 
    The validity field defines the TRC validity period.  The notBefore
    and notAfter attributes of the validity field specify the lower and
@@ -1447,7 +1416,7 @@ Table of Contents
       value "99991231235959Z", and verifiers MUST error out when
       encountering such a TRC.
 
-3.2.2.4.  gracePeriod Field
+3.2.4.  gracePeriod Field
 
    The gracePeriod field of a TRC specifies the period of time during
    which the predecessor TRC can still be considered active (the "grace
@@ -1476,7 +1445,7 @@ Table of Contents
    might expire before the corresponding AS can fetch an updated version
    from its CA.
 
-3.2.2.5.  noTrustReset Boolean
+3.2.5.  noTrustReset Boolean
 
    The noTrustReset Boolean specifies whether a trust reset is forbidden
    by the ISD.  Within a TRC update chain, this value MUST NOT be
@@ -1499,14 +1468,14 @@ Table of Contents
    trust reset base TRC must be axiomatically trusted, similarly to how
    the initial TRC is trusted.
 
-3.2.2.6.  votes Field
+3.2.6.  votes Field
 
    The votes field contains a sequence of indices that refer to the
    voting certificates in the predecessor TRC.  If index i is part of
    the votes field, then the voting certificate at position i in the
    certificates sequence of the predecessor TRC casted a vote on the
    successor TRC.  For more information on the certificates sequence,
-   see Section 3.2.2.11.
+   see Section 3.2.11.
 
    *Note:* In a base TRC, the votes sequence is empty.
 
@@ -1520,7 +1489,7 @@ Table of Contents
    the same payload, but different voting signature sets.  This would
    violate the requirement of uniqueness of a TRC.
 
-3.2.2.7.  votingQuorum Field
+3.2.7.  votingQuorum Field
 
    The votingQuorum field defines the number of necessary votes on a
    successor TRC to make it verifiable.
@@ -1528,7 +1497,7 @@ Table of Contents
    A voting quorum greater than one will prevent a single entity from
    creating a malicious TRC update.
 
-3.2.2.8.  coreASes Field
+3.2.8.  coreASes Field
 
    The coreASes field contains the AS numbers of the core ASes in this
    ISD.
@@ -1537,7 +1506,7 @@ Table of Contents
    numbers.  That is, each AS number MUST appear only once in the
    coreASes field.
 
-3.2.2.8.1.  Revoking or Assigning Core Status
+3.2.8.1.  Revoking or Assigning Core Status
 
    *  To revoke the core status of a given AS, remove the respective AS
       number from the sequence of AS numbers in the coreASes field.
@@ -1548,7 +1517,7 @@ Table of Contents
    Revoking or assigning the core status of/to an AS always requires a
    sensitive TRC update.
 
-3.2.2.9.  authoritativeASes Field
+3.2.9.  authoritativeASes Field
 
    The authoritativeASes field contains the AS numbers of the
    authoritative ASes in this ISD.
@@ -1564,7 +1533,7 @@ Table of Contents
       authoritative AS numbers.  That is, each AS number MUST NOT appear
       more than once in the authoritativeASes field.
 
-3.2.2.9.1.  Revoking or Assigning Authoritative Status
+3.2.9.1.  Revoking or Assigning Authoritative Status
 
    *  To revoke the authoritative status of a given AS, remove the
       respective AS number from the sequence of AS numbers in the
@@ -1577,7 +1546,7 @@ Table of Contents
    *Important:* Revoking or assigning the authoritative status of/to an
    AS always requires a sensitive TRC update.
 
-3.2.2.10.  description Field
+3.2.10.  description Field
 
    The description field contains a UTF-8 encoded string that describes
    the ISD.
@@ -1587,7 +1556,7 @@ Table of Contents
    *  The description of the ISD MUST be in English.  Additionally, the
       description field MAY contain information in other languages.
 
-3.2.2.11.  certificates Field
+3.2.11.  certificates Field
 
    The voting ASes and the certification authorities (CAs) of an ISD are
    not specified explicitly in the ISD's TRC.  Instead, this information
@@ -1625,7 +1594,7 @@ Table of Contents
 
    *  If an ISD-AS number is present in the distinguished name of the
       certificate, this ISD number MUST be equal to the ISD number of
-      the TRC (which is defined in the iD field (see Section 3.2.2.2).
+      the TRC (which is defined in the iD field (see Section 3.2.2).
 
    *  Every certificate MUST have a validity period that fully contains
       the validity period of this TRC.  That is, the notBefore date of
@@ -1642,13 +1611,13 @@ Table of Contents
 
    *  votingQuorum <= count (sensitive voting certificates)
       That is, the quorum defined in the TRC's votingQuorum field
-      (Section 3.2.2.7) MUST be smaller than or equal to the number of
+      (Section 3.2.7) MUST be smaller than or equal to the number of
       _sensitive_ voting certificates specified in the TRC's
       certificates field.
 
    *  votingQuorum <= count (regular voting certificates)
       That is, the quorum defined in the TRC's votingQuorum field
-      (Section 3.2.2.7) MUST be smaller than or equal to the number of
+      (Section 3.2.7) MUST be smaller than or equal to the number of
       _regular_ voting certificates specified in the TRC's certificates
       field.
 
@@ -1681,7 +1650,7 @@ Table of Contents
       -  The certificates field MUST be left empty.  The certificate
          pool used to verify a TRC update is already specified in the
          certificates field of the predecessor TRC's payload (see also
-         Section 3.2.2.11).
+         Section 3.2.11).
 
       -  The version field MUST be set to "1".  This is because SCION
          uses the "id-data" content type to encapsulate content info and
@@ -1723,7 +1692,7 @@ Table of Contents
       mentioned in the votes field of the payload: If index "i" is part
       of the votes field, then the voting certificate at position i in
       the certificates sequence of the predecessor TRC casted a vote on
-      the successor TRC.  See also Section 3.2.2.6.
+      the successor TRC.  See also Section 3.2.6.
 
    *  The REQUIRED signatures for new certificates are implied by the
       currently valid TRC payload, and, in case of a TRC update, the
@@ -1931,22 +1900,22 @@ Table of Contents
    the update type:
 
    *  The iSD and baseNumber in the iD field MUST NOT change (see also
-      Section 3.2.2.2).
+      Section 3.2.2).
 
    *  The serialNumber in the iD field MUST be incremented by one.
 
-   *  The noTrustReset field MUST NOT change (see also Section 3.2.2.5).
+   *  The noTrustReset field MUST NOT change (see also Section 3.2.5).
 
    *  The votes sequence of the updated TRC MUST only contain indices
       that refer to sensitive or regular voting certificates in the
       predecessor TRC.  This guarantees that the updated TRC only
       contains valid votes authenticated by sensitive or regular voting
       certificates in the predecessor TRC.  For more information, see
-      Section 3.2.2.6 and Section 3.2.2.11.
+      Section 3.2.6 and Section 3.2.11.
 
    *  The number of votes in the updated TRC MUST be greater than or
       equal to the number set in the votingQuorum field of the
-      predecessor TRC (see Section 3.2.2.7).  The number of votes
+      predecessor TRC (see Section 3.2.7).  The number of votes
       corresponds to the number of indices in the votes field of the
       updated TRC.
 
@@ -2008,8 +1977,8 @@ Table of Contents
 
    As described above, a set of voters MUST cast votes on the updated
    TRC to make it verifiable.  The votingQuorum field of the predecessor
-   TRC (see Section 3.2.2.7) defines the required number of voters,
-   which will represent regular or sensitive voting certificates,
+   TRC (see Section 3.2.7) defines the required number of voters, which
+   will represent regular or sensitive voting certificates,
    respectively.
 
    Furthermore, if one or more _new_ certificates are added to the
@@ -2066,11 +2035,10 @@ Table of Contents
    Following this, all entities within an ISD can obtain the TRC by
    means of a secure offline or online mechanism.
 
-   Appendix "Appendix A.  Signing Ceremony Initial TRC" describes a
-   possible procedure for the signing ceremony of an ISD's initial TRC.
-   Whilst it is up to the initial members of an ISD how to organize the
-   signing ceremony, it recommended to implement a process in line with
-   the ceremony described in the Appendix.
+   Appendix B describes a possible procedure for the signing ceremony of
+   an ISD's initial TRC.  Whilst it is up to the initial members of an
+   ISD how to organize the signing ceremony, it recommended to implement
+   a process in line with the ceremony described in the Appendix.
 
 4.  Using the CP PKI
 
@@ -2163,7 +2131,7 @@ Table of Contents
 
    *  Serial and base number of the latest TRC: Including this
       information allows relying parties to discover TRC updates and
-      trust resets.  For specification details, see Section 3.2.2.2.
+      trust resets.  For specification details, see Section 3.2.2.
 
    *  Timestamp: For many messages, the time at which it was signed is
       useful information to ensure freshness.
@@ -2191,7 +2159,7 @@ Table of Contents
    1.  Build a collection of root certificates from the latest TRC of
        the relevant ISD (that is, the ISD referenced in the signature
        metadata of the message).  If the grace period (see
-       Section 3.2.2.4) introduced by the latest TRC is still on-going,
+       Section 3.2.4) introduced by the latest TRC is still on-going,
        the root certificates in the second-to-latest TRC MUST also be
        included.  For a description on how to build the correct
        collection of certificates, see Section 3.4.1.
@@ -2305,9 +2273,8 @@ Table of Contents
 
    *  actions in case of compromise or regulations breach
 
-   This document describes a typical TRC signing ceremony in
-   Appendix "Appendix A.  Signing Ceremony Initial TRC", but further
-   processes are out-of-scope.
+   This document describes a typical TRC signing ceremony in Appendix B,
+   but further processes are out-of-scope.
 
 6.  Security Considerations
 
@@ -2365,7 +2332,7 @@ Table of Contents
       the TRC are compromised, the TRC MUST be updated as described in
       Section 3.5.  A trust reset is only required in the case the
       number of compromised keys at the same time is greater or equal
-      than the TRC's quorum (see Section 3.2.2.7), and a invalid update
+      than the TRC's quorum (see Section 3.2.7), and a invalid update
       has been produced and distributed in the network.
 
    *  At CA level: If the private key related to a CA certificate is
@@ -2531,14 +2498,65 @@ Table of Contents
               RFC 8210, DOI 10.17487/RFC8210, September 2017,
               <https://www.rfc-editor.org/rfc/rfc8210>.
 
-Appendix A.  Signing Ceremony Initial TRC
+Appendix A.  TRC in ASN.1 Syntax
+
+   SCION-CP-PKI-TRC {
+       iso(1) identified-organization(3) dod(6) internet(1) private(4)
+       enterprise(1) scion(55324) module(0) trc(1)
+   }
+
+   DEFINITIONS EXPLICIT TAGS ::=
+   BEGIN
+
+   IMPORTS
+       Certificate
+           FROM PKIX1Explicit88 {
+               iso(1) identified-organization(3) dod(6) internet(1)
+               security(5) mechanisms(5) pkix(7) id-mod(0)
+               id-pkix1-explicit(18)
+           };
+
+   TRCValidity ::= SEQUENCE {
+       notBefore          GeneralizedTime,
+       notAfter           GeneralizedTime
+   }
+
+   TRCPayload ::= SEQUENCE {
+       version            TRCFormatVersion,
+       iD                 TRCID,
+       validity           TRCValidity,
+       gracePeriod        INTEGER,
+       noTrustReset       BOOLEAN,
+       votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+       votingQuorum       INTEGER (1..2047),
+       coreASes           SEQUENCE OF ASN,
+       authoritativeASes  SEQUENCE OF ASN,
+       description        UTF8String (SIZE (0..8192)),
+       certificates       SEQUENCE SIZE (0..4095) OF Certificate
+   }
+
+   TRCFormatVersion ::= INTEGER { v1(0) }
+
+   TRCID ::= SEQUENCE {
+       iSD                ISD,
+       serialNumber       INTEGER (1..MAX),
+       baseNumber         INTEGER (1..MAX)
+   }
+
+   ISD ::= INTEGER (1..65535)
+
+   ASN ::= PrintableString
+
+   END
+
+Appendix B.  Signing Ceremony Initial TRC
 
    A Signing Ceremony is used to create the initial (first) Trust Root
    Configuration of an ISD.  Each ISD may decide how to conduct this
    ceremony, but it is RECOMMENDED to establish a procedure similar to
    the one described below:
 
- Ceremony Participants
+B.1.   Ceremony Participants
 
    The Signing Ceremony SHOULD include the following participants:
 
@@ -2571,26 +2589,26 @@ Appendix A.  Signing Ceremony Initial TRC
    leave their machine.  The Ceremony Administrator does not have to be
    entrusted with private keys.
 
-Ceremony Preparations
+B.2.  Ceremony Preparations
 
    The participants MUST decide in advance on the physical location of
    the Signing Ceremony, the devices that will be used, and the ISD
    policy as follows:
 
    *  ISD number - usually obtained from the SCION registry, see
-      Section 3.2.2.2;
+      Section 3.2.2;
 
-   *  The description of the TRC, see Section 3.2.2.10;
+   *  The description of the TRC, see Section 3.2.10;
 
-   *  Validity period of the TRC, see Section 3.2.2.3;
+   *  Validity period of the TRC, see Section 3.2.3;
 
    *  Grace period of the TRC (except for Base TRCs);
 
-   *  Voting quorum for the TRC, see Section 3.2.2.7;
+   *  Voting quorum for the TRC, see Section 3.2.7;
 
-   *  AS numbers of the Core ASes, see Section 3.2.2.8;
+   *  AS numbers of the Core ASes, see Section 3.2.8;
 
-   *  AS numbers of the Authoritative ASes, see Section 3.2.2.9;
+   *  AS numbers of the Authoritative ASes, see Section 3.2.9;
 
    *  The list of Control Plane Root Certificates.
 
@@ -2627,7 +2645,7 @@ Ceremony Preparations
    The Signing Ceremony SHOULD include a procedure to verify that all
    devices are secure.
 
- Ceremony Process
+B.3.   Ceremony Process
 
    The number of Voting ASes present at the Signing Ceremony must be
    equal to or larger than the specified voting quorum.
@@ -2636,7 +2654,7 @@ Ceremony Preparations
    Ceremony Administrator who provides instructions to the other
    participants:
 
-Phase 1: Certificate Exchange
+B.3.1.  Phase 1: Certificate Exchange
 
    All parties share the certificates that must be part of the TRC with
    the Ceremony Administrator.  For the Voting ASes, these are the
@@ -2669,11 +2687,11 @@ Phase 1: Certificate Exchange
    sums are correct.  If there is any mismatch then this phase MUST be
    repeated.
 
-Phase 2: Generation of the TRC Payload
+B.3.2.  Phase 2: Generation of the TRC Payload
 
    The Ceremony Administrator generates the TRC payload based on the
-   bundled certificates and the Section 3.2.2 completed in accordance
-   with ISD policy, see Appendix "Ceremony Preparations".
+   bundled certificates and the Section 3.2 completed in accordance with
+   ISD policy, see Appendix B.2.
 
    For each bundled certificate, the voting representatives MUST then
    verify the certificate type and that the following fields contain the
@@ -2689,8 +2707,8 @@ Phase 2: Generation of the TRC Payload
 
    Once the voting representatives have verified the TRC data, the
    Ceremony Administrator computes the DER encoding of the data
-   according to Section 3.2.1 and the SHA-512 hash value of the TRC
-   payload file.  The TRC payload file is then shared with the voting
+   according to Appendix A and the SHA-512 hash value of the TRC payload
+   file.  The TRC payload file is then shared with the voting
    representatives via the data exchange device who verify the TRC
    payload hash value by computing this on their machine and checking it
    matches the one displayed by the Ceremony Administrator.
@@ -2698,7 +2716,7 @@ Phase 2: Generation of the TRC Payload
    Phase 2 concludes when all voting representatives confirm that the
    contents of the TRC payload are correct.
 
-Phase 3: TRC Signing
+B.3.3.  Phase 3: TRC Signing
 
    Each voting representative attaches a signature created with their
    own private voting key to the TRC (payload file), using their own
@@ -2707,7 +2725,7 @@ Phase 3: TRC Signing
    Phase 3 concludes when all voting representatives have attached their
    signatures to the TRC.
 
-Phase 4: TRC Validation
+B.3.4.  Phase 4: TRC Validation
 
    All voting representatives copy the TRC payload signed with their
    private voting keys to the data exchange device and return this to
@@ -2734,6 +2752,8 @@ draft-dekater-scion-pki-12
    *  Reduce number of headings in sections 2 and 3
 
    *  Tables 3-7: sharpen normative language use
+
+   *  TRC: add ASN.1 module in appendix
 
 draft-dekater-scion-pki-11
 
