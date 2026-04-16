@@ -470,7 +470,7 @@ Table of Contents
    SCION ASes sign and verify control plane messages.  Certain ASes have
    additional roles:
 
-   *  *Core ASes*: they are a distinct set of ASes in the SCION Control
+   *  *Core ASes*: They are a distinct set of ASes in the SCION Control
       Plane.  For each ISD, the core ASes are listed in the TRC and each
       core AS has links to the other core ASes (in the same or in
       different ISDs).
