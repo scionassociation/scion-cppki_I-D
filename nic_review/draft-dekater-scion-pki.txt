@@ -317,10 +317,10 @@ Table of Contents
    To fulfill the above requirements, which in fact apply well to inter-
    domain networking, SCION introduces the concept of *Isolation
    Domains*. An Isolation Domain (ISD) is a building block to support
-   for heterogeneous trust while achieving high availability and
-   scalability in [I-D.dekater-scion-controlplane].  It consists of a
-   logical grouping of SCION ASes that share a uniform trust environment
-   (i.e. a common jurisdiction).
+   heterogeneous trust while achieving high availability and scalability
+   in [I-D.dekater-scion-controlplane].  It consists of a logical
+   grouping of SCION ASes that share a uniform trust environment (i.e. a
+   common jurisdiction).
 
    An ISD is governed by one or multiple ASes, known as the *voting
    ASes*. Furthermore, each ISD has a set of ASes that form the ISD
