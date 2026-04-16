@@ -1862,8 +1862,8 @@ Table of Contents
    are valid for both update types whilst some only apply to a regular
    or a sensitive TRC update.  Based on the type of update, different
    sets of voters are needed to create a verifiable TRC update and the
-   corresponding voting (signing) process is also described.  Last, this
-   section describes checks to verify a newly issued TRC.
+   corresponding voting (signing) process is also described.  Finally,
+   this section describes checks to verify a newly issued TRC.
 
 3.5.1.  Changed or New Certificates
 
