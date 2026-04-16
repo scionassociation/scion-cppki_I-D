@@ -478,7 +478,7 @@ Table of Contents
    *  *Certification authorities (CAs)*: CAs are responsible for issuing
       AS certificates to other ASes and/or themselves.
 
-   *  *Voting ASes*: they may sign TRC updates.  The process of
+   *  *Voting ASes*: They may sign TRC updates.  The process of
       appending a signature to a new TRC is called "casting a vote", and
       the designated ASes that hold the private keys to sign a TRC
       update are "voting ASes".
