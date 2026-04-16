@@ -2371,7 +2371,7 @@ TRC
             </h5>
 <p id="section-2.7.2.2-1">The <code>subjectKeyIdentifier</code> extension identifies certificates that contain a particular public key. It can be used, for example, by control plane messages to identify which certificate to use for verification. The extension allows for overlapping control plane CA keys, for example during updates.<a href="#section-2.7.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.2-2">For the syntax and definition of the <code>subjectKeyIdentifier</code> extension, see <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, section 4.2.1.2, and <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>, clause 9.2.2.2.<a href="#section-2.7.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.7.2.2-3">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> error out if the extension is not present.<a href="#section-2.7.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-2.7.2.2-3">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> return an error if the extension is not present.<a href="#section-2.7.2.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="key-usage-ext">

@@ -1025,7 +1025,7 @@ Table of Contents
    see [RFC5280], section 4.2.1.2, and [X.509], clause 9.2.2.2.
 
    This extension MUST be marked as non-critical.  Implementations MUST
-   error out if the extension is not present.
+   return an error if the extension is not present.
 
 2.7.2.3.  keyUsage Extension
 
