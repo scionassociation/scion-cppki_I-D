@@ -25,12 +25,12 @@ TRCPayload ::= SEQUENCE {
     validity           TRCValidity,
     gracePeriod        INTEGER,
     noTrustReset       BOOLEAN,
-    votes              SEQUENCE SIZE (0..32767) OF INTEGER (0..65535),
-    votingQuorum       INTEGER (1..255),
+    votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum       INTEGER (1..2047),
     coreASes           SEQUENCE OF ASN,
     authoritativeASes  SEQUENCE OF ASN,
     description        UTF8String (SIZE (0..8192)),
-    certificates       SEQUENCE SIZE (0..65535) OF Certificate
+    certificates       SEQUENCE SIZE (0..4095) OF Certificate
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
