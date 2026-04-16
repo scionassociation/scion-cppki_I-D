@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-14T00:42:40.005782+00:00",
+  "timestamp": "2026-04-16T00:43:48.818339+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1369,9 +1369,9 @@
         "knmeynell"
       ],
       "labels": [],
-      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [ ] Sections 2 and 3: reduce indents by removing one section\n- [ ] 3.1.4.1. TRC Selection For Trust Anchor Pool -> do we need python pseudo-code?\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [ ] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [ ] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 )\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] Review use of normative language. I feel we use it too much.\n- [ ] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned paper review",
+      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [ ] #128\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [ ] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [ ] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 )\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] Review use of normative language. I feel we use it too much.\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-02-06T15:59:44Z",
+      "updatedAt": "2026-04-15T16:09:44Z",
       "closedAt": null,
       "comments": []
     },
@@ -1419,9 +1419,41 @@
       "labels": [],
       "body": "> **Note**: If a certificate extension is marked \"critical\", the public key in the certificate SHOULD only be used for the purpose set in the critical extension.\n\nWhy? Is it a reference to some other RFC?",
       "createdAt": "2026-02-06T16:18:33Z",
-      "updatedAt": "2026-02-06T16:18:33Z",
+      "updatedAt": "2026-04-15T17:26:24Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "RFC 5280 is using a MUST on criticality:\n\n> A certificate-using system MUST reject the certificate if it encounters\n   a critical extension it does not recognize or a critical extension\n   that contains information that it cannot process.  A non-critical\n   extension MAY be ignored if it is not recognized, but MUST be\n   processed if it is recognized.\n\n\nOn KeyUsage: \n\n>   If the keyUsage extension is present, then the subject public key\n   MUST NOT be used to verify signatures on certificates or CRLs unless\n   the corresponding keyCertSign or cRLSign bit is set.  \n\n\nI think we could therefore piggyback on 5280 and completely remove this sentence on the purpose of the key.",
+          "createdAt": "2026-04-15T17:26:24Z",
+          "updatedAt": "2026-04-15T17:26:24Z"
+        }
+      ]
+    },
+    {
+      "number": 128,
+      "id": "I_kwDOH386tM7-hUsW",
+      "title": "3.1.4.1. TRC Selection For Trust Anchor Pool -> do we need python pseudo-code?",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/128",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Can we do something better than having all this code? \n\n```\n~~~~python\n    def select_trust_anchors(trcs: Dict[(int,int), TRC], \\\n    verification_time: int) -> Set[RootCert]:\n        \"\"\"\n        Args:\n            trcs: The dictionary mapping (serial number, \\\n            base number) to the TRC for a given ISD.\n            verification_time: The time of verification.\n\n        Returns:\n            The set of CP Root certificates acting as trust anchors.\n        \"\"\"\n        # Find highest base number that has a TRC with validity\n        # period starting before verification time.\n        base_nr = 1\n        for trc in trcs.values()\n            if trc.id.base_nr > base_nr and trc.validity.not_before \\\n            <= verification_time:\n                base_nr = trc.id.base_nr\n\n        # Find TRC with highest serial number with given base number\n        # and a validity period starting before verification time.\n        serial_nr = 1\n        for trc in trcs[isd].values():\n            if trc.id.base_nr != base_nr:\n                continue\n            if trc.id.serial_nr > serial_nr and \\\n            trc.validity.not_before <= verification_time:\n                serial_nr = trc.id.serial_nr\n\n        candidate = trcs[(serial_nr, base_nr)]\n\n        # If the verification time is not inside the validity period,\n        # there is no valid set of trust anchors.\n        if not candidate.validity.contains(verification_time):\n            return set()\n\n        # If the grace period has passed, only the certificates in\n        # that TRC may be used as trust anchors.\n        if candidate.validity.not_before + candidate.grace_period \\\n        < verification_time:\n            return collect_trust_anchors(candidate)\n\n        predecessor = trcs.get((serial_nr-1, base_nr))\n        if not predecessor or predecessor.validity.not_after < \\\n        verification_time:\n            return collect_trust_anchors(candidate)\n\n        return collect_trust_anchors(candidate) | \\\n        collect_trust_anchors(predecessor)\n\n\n    def collect_trust_anchors(trc: TRC) -> Set[RootCert]:\n        \"\"\"\n        Args:\n            trc: A TRC from which the CP Root Certificates shall \\\n            be extracted.\n\n        Returns:\n            The set of CP Root certificates acting as trust anchors.\n        \"\"\"\n        roots = set()\n        for cert in trc.certificates:\n            if not cert.basic_constraints.ca:\n                continue\n            roots.add(cert)\n        return roots\n```",
+      "createdAt": "2026-04-15T16:03:25Z",
+      "updatedAt": "2026-04-15T16:07:39Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "e.g. Gemini proposes: \n```\n### Trust Anchor Selection Algorithm\n\nThe selection of the right set of TRCs to build the trust anchor pool depends on the verification time. For control plane messages, the verification time is typically the current time. For auditing purposes, the verification time is the historical point in time when the signature was created.\n\nTo construct the trust anchor pool for a specific ISD at a given `verification_time`, a relying party MUST execute the following steps:\n\n1. **Determine the Active Base Number:**\n   Filter the set of all available TRCs for the ISD to those whose `notBefore` validity date is less than or equal to the `verification_time`. From this filtered set, select the highest `baseNumber`.\n\n2. **Identify the Candidate TRC:**\n   Filter the set of available TRCs again to find only those that match the `baseNumber` identified in Step 1, and whose `notBefore` date is less than or equal to the `verification_time`. From this set, select the TRC with the highest `serialNumber`. This is the *Candidate TRC*.\n\n3. **Verify Candidate TRC Expiration:**\n   If the `verification_time` is strictly greater than the Candidate TRC's `notAfter` date, the algorithm terminates and returns an empty set. There are no valid trust anchors for this time.\n\n4. **Extract Candidate Trust Anchors:**\n   Parse the `certificates` sequence of the Candidate TRC. Extract all certificates that possess a `basicConstraints` extension with the `cA` boolean asserted. Add these CP Root Certificates to the trust anchor pool.\n\n5. **Evaluate the Grace Period:**\n   Check if the Candidate TRC is currently within its grace period (i.e., `verification_time` <= `notBefore` + `gracePeriod`). If the grace period has expired, the algorithm terminates and returns the current trust anchor pool.\n\n6. **Process the Predecessor TRC (If Applicable):**\n   If the Candidate TRC is still within its grace period, attempt to retrieve the Predecessor TRC (the TRC with the same `baseNumber` and a `serialNumber` exactly one less than the Candidate TRC). \n   If the Predecessor TRC exists and its `notAfter` date is greater than or equal to the `verification_time`, extract its CP Root Certificates (as described in Step 4) and add them to the trust anchor pool.\n\n7. **Return the Pool:**\n   The algorithm terminates and returns the assembled trust anchor pool.\n```",
+          "createdAt": "2026-04-15T16:07:39Z",
+          "updatedAt": "2026-04-15T16:07:39Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -5720,18 +5752,26 @@
       "labels": [],
       "body": "Contributes to #122 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-02-06T15:22:53Z",
-      "updatedAt": "2026-04-10T18:36:31Z",
+      "updatedAt": "2026-04-15T17:31:53Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "nic_review",
-      "headRefOid": "d144b0f8bfbeaf8acd40e577850a90802dbd9b5f",
+      "headRefOid": "f74cf38b18ae597fd2307174214e4e12fb684902",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@knmeynell can you do a thorough 4 eye check (especially on normative language)? Please do not merge yet",
+          "createdAt": "2026-04-15T17:13:42Z",
+          "updatedAt": "2026-04-15T17:13:42Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH386tM7z4JR5",
@@ -5752,6 +5792,126 @@
               "updatedAt": "2026-04-10T18:02:02Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71RJVA",
+          "commit": {
+            "abbreviatedOid": "5757e88"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T15:42:18Z",
+          "updatedAt": "2026-04-15T15:42:18Z",
+          "comments": [
+            {
+              "originalPosition": 327,
+              "body": "@oncilla is there any reason why this is a SHOULD rather than a MUST? Are there cases when the certificate path is longer than 1?\n\n> `pathLenConstraint`                | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"\n\n\n",
+              "createdAt": "2026-04-15T15:42:18Z",
+              "updatedAt": "2026-04-15T15:42:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71SvSC",
+          "commit": {
+            "abbreviatedOid": "5757e88"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T16:52:25Z",
+          "updatedAt": "2026-04-15T16:52:25Z",
+          "comments": [
+            {
+              "originalPosition": 327,
+              "body": "I think we tried to be in line with RFC 5280, but actually in the implementation we have this:\n\nhttps://github.com/scionproto/scion/blob/68db9a02ff3f7bb0b3cc39217be001cfb2ac6d4f/pkg/scrypto/cppki/certs.go#L305\n\nhttps://github.com/scionproto/scion/blob/68db9a02ff3f7bb0b3cc39217be001cfb2ac6d4f/pkg/scrypto/cppki/certs.go#L453-L455\n\nSo, actually we enforce it AFAICT.\n",
+              "createdAt": "2026-04-15T16:52:25Z",
+              "updatedAt": "2026-04-15T16:52:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71Sw9V",
+          "commit": {
+            "abbreviatedOid": "774e67f"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T16:53:39Z",
+          "updatedAt": "2026-04-15T16:53:39Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "Quoting: https://www.rfc-editor.org/rfc/rfc5280.html#section-4.2.1.3\r\n\r\n> Conforming CAs MUST include this extension in certificates that\r\n   contain public keys that are used to validate digital signatures on\r\n   other public key certificates or CRLs.  When present, conforming CAs\r\n   SHOULD mark this extension as critical.\r\n   \r\nI think we tried to capture this and be in line with RFC 5280.",
+              "createdAt": "2026-04-15T16:53:39Z",
+              "updatedAt": "2026-04-15T16:53:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71THP0",
+          "commit": {
+            "abbreviatedOid": "774e67f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T17:09:20Z",
+          "updatedAt": "2026-04-15T17:09:20Z",
+          "comments": [
+            {
+              "originalPosition": 242,
+              "body": "Thank you, then this is a SHOULD. \r\n\r\nP.S. the conflict in the old text was: \r\n> SHOULD be marked as \"critical\"\r\n\r\nWhich somehow conflicts with: \r\n> `critical` Boolean attribute of this extension MUST be set to TRUE\r\n\r\nThe latest wording is: \r\n> When present, this extension SHOULD be marked as critical. In such case, the public key in the certificate SHOULD only be used for the purpose set in the critical extension.\r\n",
+              "createdAt": "2026-04-15T17:09:20Z",
+              "updatedAt": "2026-04-15T17:09:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71TLd4",
+          "commit": {
+            "abbreviatedOid": "5757e88"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T17:12:31Z",
+          "updatedAt": "2026-04-15T17:12:31Z",
+          "comments": [
+            {
+              "originalPosition": 327,
+              "body": "So shall I change it to MUST? \r\n\"Must be set to 0\" and \"MUST be set to 1\"",
+              "createdAt": "2026-04-15T17:12:31Z",
+              "updatedAt": "2026-04-15T17:12:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71TlKH",
+          "commit": {
+            "abbreviatedOid": "f74cf38"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T17:31:53Z",
+          "updatedAt": "2026-04-15T17:31:53Z",
+          "comments": [
+            {
+              "originalPosition": 294,
+              "body": "> **Note**: If a certificate extension is marked \"critical\", the public key in the certificate SHOULD only be used for the purpose set in the critical extension.\n\n@oncilla I removed this text above because I believe this is duplicating what RFC 5280 already states On KeyUsage:\n\n> If the keyUsage extension is present, then the subject public key\nMUST NOT be used to verify signatures on certificates or CRLs unless\nthe corresponding keyCertSign or cRLSign bit is set.\n\nI think we could therefore piggyback on 5280 and completely remove this sentence on the purpose of the key.\n\nDo you agree? \n\n",
+              "createdAt": "2026-04-15T17:31:53Z",
+              "updatedAt": "2026-04-15T17:32:39Z"
+            }
+          ]
         }
       ]
     },
@@ -5767,13 +5927,13 @@
       "labels": [],
       "body": "Contributes to #28 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio ",
       "createdAt": "2026-03-19T03:52:27Z",
-      "updatedAt": "2026-04-13T16:14:54Z",
+      "updatedAt": "2026-04-15T14:48:48Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "asn-1",
-      "headRefOid": "0bdee8708bef29e4a9482b98127a868491e3a466",
+      "headRefOid": "812edba1aa27f43333618f201805f50de7cfda2d",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -6649,6 +6809,86 @@
               "body": "Let's change to safe upper bounds. I think that is way more than is reasonable, but it will ensure there is no unbounded integers (which is best practice AFAIU.)\r\n\r\n```\r\nvotes SEQUENCE SIZE (0..32767) OF INTEGER (0..65535)\r\n...\r\ncertificates       SEQUENCE SIZE (0..65535) OF Certificate\r\n```\r\n\r\n(32767 because at most half can vote (regular vs sensitive) and 1 root is required)\r\n\r\n\r\nIf you want to restrict it further, we can try to choose sensible values based on the 4MB upper limit.\r\nI think that gives you around 4k-5k certificates tops.\r\n",
               "createdAt": "2026-04-13T16:14:54Z",
               "updatedAt": "2026-04-13T16:14:55Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71PZ3i",
+          "commit": {
+            "abbreviatedOid": "4e5bf4d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T14:35:53Z",
+          "updatedAt": "2026-04-15T14:35:53Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "Good, leaving 8192 bytes as we are far away from the gRPC limit.",
+              "createdAt": "2026-04-15T14:35:53Z",
+              "updatedAt": "2026-04-15T14:35:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71PfOT",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T14:38:48Z",
+          "updatedAt": "2026-04-15T14:38:48Z",
+          "comments": [
+            {
+              "originalPosition": 27,
+              "body": "Added upper bounds in [812edba](https://github.com/scionassociation/scion-cppki_I-D/pull/127/commits/812edba1aa27f43333618f201805f50de7cfda2d) ",
+              "createdAt": "2026-04-15T14:38:48Z",
+              "updatedAt": "2026-04-15T14:38:48Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71PvVi",
+          "commit": {
+            "abbreviatedOid": "812edba"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T14:48:02Z",
+          "updatedAt": "2026-04-15T14:48:02Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "> If you want to restrict it further, we can try to choose sensible values based on the 4MB upper limit.\nI think that gives you around 4k-5k certificates tops.\n\n@oncilla how about this: \n\nNote that I think we also have to adjust the quorum accordingly!\n\n\n```suggestion\n       votes SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),\n       votingQuorum  INTEGER (1..2047),\n       coreASes           SEQUENCE OF ASN,\n       authoritativeASes  SEQUENCE OF ASN,\n       description        UTF8String (SIZE (0..8192)),\n       certificates       SEQUENCE SIZE (0..4095) OF Certificate }\n```",
+              "createdAt": "2026-04-15T14:48:02Z",
+              "updatedAt": "2026-04-15T14:48:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71Pwft",
+          "commit": {
+            "abbreviatedOid": "1676ed5"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-15T14:48:48Z",
+          "updatedAt": "2026-04-15T14:48:48Z",
+          "comments": [
+            {
+              "originalPosition": 34,
+              "body": "Done [b66c120](https://github.com/scionassociation/scion-cppki_I-D/pull/127/commits/b66c12090db71ea830f3cb9c6ba1e7779af0bea3) ",
+              "createdAt": "2026-04-15T14:48:48Z",
+              "updatedAt": "2026-04-15T14:48:48Z"
             }
           ]
         }
