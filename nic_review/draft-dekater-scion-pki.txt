@@ -2053,7 +2053,7 @@ Table of Contents
    *  Check that the specified update rules as described above are
       respected.
 
-   *  Check that all signatures are verifiable, and no superfluous
+   *  Check that all signatures are verifiable and no superfluous
       signatures are attached.
 
    *  In case of a regular update:
