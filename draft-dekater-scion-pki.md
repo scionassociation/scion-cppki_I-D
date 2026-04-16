@@ -263,7 +263,7 @@ SCION ASes sign and verify control plane messages. Certain ASes have additional 
 - **Core ASes**: They are a distinct set of ASes in the SCION Control Plane. For each ISD, the core ASes are listed in the TRC and each core AS has links to the other core ASes (in the same or in different ISDs).
 - **Certification authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
 - **Voting ASes**: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "voting ASes".
-- **Authoritative ASes**: they always have the latest TRCs of the ISD. They start the announcement of a TRC update.
+- **Authoritative ASes**: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.
 
 
 ## Trust as a Function
@@ -1078,11 +1078,11 @@ The following table gives an overview of the types of TRC update, as well as the
 The sections that follow provide more detailed descriptions of each rule.
 
 
-| Type of Update                     |                 Unchanged Elements  |       Changed Elements |    Other Rules to Hold            |
+| Type of TRC Update                 |                 Unchanged Elements  |       Changed Elements |    Other Rules to Hold            |
 |------------------------------------+-------------------------------------------+----------------------------------------+-----------------------------------------------------|
-| Both Regular AND Sensitive Updates | - `iD` field: `iSD` and `baseNumber` <br> - `noTrustReset` field | `iD` field: `serialNumber` MUST be incremented by 1 | `votes` field: Number of votes (indices) => number set in the `votingQuorum` field of the predecessor TRC |
-| Regular TRC Update | - Quorum in the `votingQuorum` field<br>- Core ASes in the `coreASes` field<br>- ASes in the `authoritativeASes` field<br>- Nr. and distinguished names of root & voting certificates in the `certificates` field<br>- Set of sensitive voting certificates in the `certificates` field | | `votes` field:<br> - All votes MUST only refer to *regular* voting certificates in the predecessor TRC<br>- MUST include votes of each changed regular voting certificate from the predecessor TRC<br> `signatures` field:<br> - MUST include signatures of each changed root certificate from the predecessor TRC |
-| Sensitive TRC Update | If the update does not qualify as a regular update, it is a sensitive update |  | `votes` field: <br> - All votes MUST only refer to *sensitive* voting certificates in the predecessor TRC |
+| Both Regular AND Sensitive         | - `iD` field: `iSD` and `baseNumber` <br> - `noTrustReset` field | `iD` field: `serialNumber` MUST be incremented by 1 | `votes` field: Number of votes (indices) => number set in the `votingQuorum` field of the predecessor TRC |
+| Regular                            | - Quorum in the `votingQuorum` field<br>- Core ASes in the `coreASes` field<br>- ASes in the `authoritativeASes` field<br>- Nr. and distinguished names of root & voting certificates in the `certificates` field<br>- Set of sensitive voting certificates in the `certificates` field | | `votes` field:<br> - All votes MUST only refer to *regular* voting certificates in the predecessor TRC<br>- MUST include votes of each changed regular voting certificate from the predecessor TRC<br> `signatures` field:<br> - MUST include signatures of each changed root certificate from the predecessor TRC |
+| Sensitive                          | If the update does not qualify as a regular update, it is a sensitive update |  | `votes` field: <br> - All votes MUST only refer to *sensitive* voting certificates in the predecessor TRC |
 {: #table-8 title="Overview of the update types and corresponding rules"}
 
 
