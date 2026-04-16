@@ -10,36 +10,39 @@ IMPORTS
     Certificate
         FROM PKIX1Explicit88 { 
             iso(1) identified-organization(3) dod(6) internet(1) 
-            security(5) mechanisms(5) pkix(7) id-mod(0) id-pkix1-explicit(18) 
+            security(5) mechanisms(5) pkix(7) id-mod(0) 
+            id-pkix1-explicit(18) 
         };
 
 TRCValidity ::= SEQUENCE {
-    notBefore      GeneralizedTime,
-    notAfter       GeneralizedTime
+    notBefore          GeneralizedTime,
+    notAfter           GeneralizedTime
 }
 
-TRCPayload  ::=  SEQUENCE {
-    version           TRCFormatVersion,
-    iD                TRCID,
-    validity          TRCValidity,
-    gracePeriod       INTEGER,
-    noTrustReset      BOOLEAN,
-    votes             SEQUENCE SIZE (0..32767) OF INTEGER (0..65535),
-    votingQuorum      INTEGER (1..255),
-    coreASes          SEQUENCE OF ASN,
-    description       UTF8String (SIZE (0..8192)),
-    certificates      SEQUENCE SIZE (0..65535) OF Certificate
+TRCPayload ::= SEQUENCE {
+    version            TRCFormatVersion,
+    iD                 TRCID,
+    validity           TRCValidity,
+    gracePeriod        INTEGER,
+    noTrustReset       BOOLEAN,
+    votes              SEQUENCE SIZE (0..32767) OF INTEGER (0..65535),
+    votingQuorum       INTEGER (1..255),
+    coreASes           SEQUENCE OF ASN,
+    authoritativeASes  SEQUENCE OF ASN,
+    description        UTF8String (SIZE (0..8192)),
+    certificates       SEQUENCE SIZE (0..65535) OF Certificate
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
 
 TRCID ::= SEQUENCE {
-    iSD           ISD,
-    serialNumber  INTEGER (1..MAX),
-    baseNumber    INTEGER (1..MAX)
+    iSD                ISD,
+    serialNumber       INTEGER (1..MAX),
+    baseNumber         INTEGER (1..MAX)
 }
 
 ISD ::= INTEGER (1..65535)
+
 ASN ::= PrintableString
 
 END
