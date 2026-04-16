@@ -340,7 +340,7 @@ Table of Contents
    a certificate outside the ISD.  An ISD's trust roots and policy are
    encoded in the TRC, which has a version number, a list of public keys
    that serves as root of trust for various purposes, and a voting
-   quorums governing the number of signatures required to update TRCs.
+   quorum governing the number of signatures required to update TRCs.
    The TRC serves as a way to bootstrap all authentication within SCION.
    Additionally, TRC versioning is used to efficiently revoke
    compromised roots of trust.
