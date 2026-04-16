@@ -103,9 +103,9 @@ informative:
 
 --- abstract
 
-This document presents the trust concept and design of the SCION *Control Plane Public Key Infrastructure (CP-PKI)*. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture where the Control Plane PKI handles cryptographic material and is the foundation of the authentication procedures in SCION. It is used by SCION's Control Plane ({{I-D.dekater-scion-controlplane}}) to authenticate and verify path information, and provisions SCION's trust model based on Isolation Domains.
+This document presents the trust concept and design of the SCION *Control Plane Public Key Infrastructure (CP-PKI)*. SCION (Scalability, Control, and Isolation On Next-generation networks) is a path-aware, inter-domain network architecture that relies on the CP-PKI to handle cryptographic material, authenticate control plane messages used to securely disseminate path information.
 
-This document describes the trust model behind the SCION Control Plane PKI, including the specifications of the different types of certificates and the Trust Root Configuration. It also describes how to deploy the Control Plane PKI infrastructure.
+This specification introduces its localized trust model, anchored in Isolation Domains (ISDs). It defines the distinct certificate types, and specifies the structure, format and lifecycle of the Trust Root Configuration (TRC). Furthermore, it provides practical guidelines for deploying and maintaining the CP-PKI infrastructure.
 
 This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet.
 
@@ -113,7 +113,7 @@ This document contains new approaches to secure path aware networking. It is not
 
 # Introduction
 
-SCION is a path-aware internetworking routing architecture as described in {{RFC9217}}. It allows endpoints and applications to select paths across the network to use for traffic, based on trusted path properties. SCION is an inter-domain network architecture and is therefore not concerned with intra-domain forwarding.
+SCION is a path-aware internetworking routing architecture as described in {{RFC9217}}. A more detailed introduction, motivation, and problem statement are provided in {{I-D.dekater-scion-controlplane}}. Readers are encouraged to read the introduction in that document first.
 
 SCION relies on three main components:
 
@@ -122,10 +122,6 @@ SCION relies on three main components:
 *Control Plane* - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
 
 *Data Plane* - carrying out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. It is described in {{I-D.dekater-scion-dataplane}}.
-
-A more detailed introduction, motivation, and problem statement are provided in {{I-D.dekater-scion-controlplane}}. Readers are encouraged to read the introduction in that document first.
-
-The SCION architecture was initially developed outside of the IETF by ETH Zurich with significant contributions from Anapaya Systems. It is deployed in the Swiss finance sector to provide resilient connectivity between financial institutions. The aim of this document is to document the existing protocol specification as deployed, to encourage interoperability among implementations, and to introduce new concepts that can potentially be further improved to address particular problems with the current Internet architecture.
 
 
 ## Terminology
@@ -178,11 +174,11 @@ Thus, there is a need for a trust architecture that supports meaningful trust ro
 
 Ideally, the trust architecture allows parties that mutually trust each other to form their own trust domain, and to freely decide whether to trust other trust domains.
 
-To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support for heterogeneous trust while achieving high availability and scalability in {{I-D.dekater-scion-controlplane}}. It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
+To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane ({{I-D.dekater-scion-controlplane}}). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
 An ISD is governed by one or multiple ASes, known as the **voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **core ASes**. The set of core and voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
-Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorums governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
+Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
 The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.
 
@@ -260,10 +256,10 @@ All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}
 
 SCION ASes sign and verify control plane messages. Certain ASes have additional roles:
 
-- **Core ASes**: they are a distinct set of ASes in the SCION Control Plane. For each ISD, the core ASes are listed in the TRC and each core AS has links to the other core ASes (in the same or in different ISDs).
+- **Core ASes**: They are a distinct set of ASes in the SCION Control Plane. For each ISD, the core ASes are listed in the TRC and each core AS has links to the other core ASes (in the same or in different ISDs).
 - **Certification authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
-- **Voting ASes**: they may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "voting ASes".
-- **Authoritative ASes**: they always have the latest TRCs of the ISD. They start the announcement of a TRC update.
+- **Voting ASes**: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "voting ASes".
+- **Authoritative ASes**: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.
 
 
 ## Trust as a Function
@@ -567,7 +563,7 @@ In SCION, using the `keyIdentifier` attribute is the preferred way to specify th
 
 SCION implementations MAY also support the use of the `authorityCertIssuer` and `authorityCertSerialNumber` attributes. However, if these attributes are set and support for them is missing, implementations SHOULD error out.
 
-This extension MUST be marked as non-critical. Implementations MUST error out if the extension is not present AND the certificate is not self-signed.
+This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
 
 #### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
 
@@ -575,7 +571,7 @@ The `subjectKeyIdentifier` extension identifies certificates that contain a part
 
 For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.2, and {{X.509}}, clause 9.2.2.2.
 
-This extension MUST be marked as non-critical. Implementations MUST error out if the extension is not present.
+This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present.
 
 #### `keyUsage` Extension {#key-usage-ext}
 
@@ -1050,7 +1046,7 @@ The selection algorithm for building the trust anchor pool is described in pseud
 
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s) and constitute a chain. Updates are categorized as regular or sensitive, depending on which payload fields are being modified.
 
-This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types whilst some only apply to a regular or a sensitive TRC update. Based on the type of update, different sets of voters are needed to create a verifiable TRC update and the corresponding voting (signing) process is also described. Last, this section describes checks to verify a newly issued TRC.
+This section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types whilst some only apply to a regular or a sensitive TRC update. Based on the type of update, different sets of voters are needed to create a verifiable TRC update and the corresponding voting (signing) process is also described. Finally, this section describes checks to verify a newly issued TRC.
 
 
 ### Changed or New Certificates {#change-new}
@@ -1070,11 +1066,11 @@ The following table gives an overview of the types of TRC update, as well as the
 The sections that follow provide more detailed descriptions of each rule.
 
 
-| Type of Update                     |                 Unchanged Elements  |       Changed Elements |    Other Rules to Hold            |
+| Type of TRC Update                 |                 Unchanged Elements  |       Changed Elements |    Other Rules to Hold            |
 |------------------------------------+-------------------------------------------+----------------------------------------+-----------------------------------------------------|
-| Both Regular AND Sensitive Updates | - `iD` field: `iSD` and `baseNumber` <br> - `noTrustReset` field | `iD` field: `serialNumber` MUST be incremented by 1 | `votes` field: Number of votes (indices) => number set in the `votingQuorum` field of the predecessor TRC |
-| Regular TRC Update | - Quorum in the `votingQuorum` field<br>- Core ASes in the `coreASes` field<br>- ASes in the `authoritativeASes` field<br>- Nr. and distinguished names of root & voting certificates in the `certificates` field<br>- Set of sensitive voting certificates in the `certificates` field | | `votes` field:<br> - All votes MUST only refer to *regular* voting certificates in the predecessor TRC<br>- MUST include votes of each changed regular voting certificate from the predecessor TRC<br> `signatures` field:<br> - MUST include signatures of each changed root certificate from the predecessor TRC |
-| Sensitive TRC Update | If the update does not qualify as a regular update, it is a sensitive update |  | `votes` field: <br> - All votes MUST only refer to *sensitive* voting certificates in the predecessor TRC |
+| Both Regular AND Sensitive         | - `iD` field: `iSD` and `baseNumber` <br> - `noTrustReset` field | `iD` field: `serialNumber` MUST be incremented by 1 | `votes` field: Number of votes (indices) => number set in the `votingQuorum` field of the predecessor TRC |
+| Regular                            | - Quorum in the `votingQuorum` field<br>- Core ASes in the `coreASes` field<br>- ASes in the `authoritativeASes` field<br>- Nr. and distinguished names of root & voting certificates in the `certificates` field<br>- Set of sensitive voting certificates in the `certificates` field | | `votes` field:<br> - All votes MUST only refer to *regular* voting certificates in the predecessor TRC<br>- MUST include votes of each changed regular voting certificate from the predecessor TRC<br> `signatures` field:<br> - MUST include signatures of each changed root certificate from the predecessor TRC |
+| Sensitive                          | If the update does not qualify as a regular update, it is a sensitive update |  | `votes` field: <br> - All votes MUST only refer to *sensitive* voting certificates in the predecessor TRC |
 {: #table-8 title="Overview of the update types and corresponding rules"}
 
 
@@ -1127,7 +1123,7 @@ It is up to the ISD members to decide how the "casting a vote" procedure for upd
 To verify a TRC update, the relying party MUST perform the following checks:
 
 - Check that the specified update rules as described above are respected.
-- Check that all signatures are verifiable, and no superfluous signatures are attached.
+- Check that all signatures are verifiable and no superfluous signatures are attached.
 - In case of a regular update:
     - check that the signatures for the changing certificates are present and verifiable, and
     - check that all votes are cast by a regular voting certificate.
