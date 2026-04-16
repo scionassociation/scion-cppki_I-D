@@ -1010,8 +1010,8 @@ Table of Contents
    implementations SHOULD error out.
 
    This extension MUST be marked as non-critical.  Implementations MUST
-   error out if the extension is not present AND the certificate is not
-   self-signed.
+   return an error if the extension is not present AND the certificate
+   is not self-signed.
 
 2.7.2.2.  subjectKeyIdentifier Extension
 

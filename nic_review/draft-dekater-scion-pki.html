@@ -2361,7 +2361,7 @@ TRC
             </ul>
 <p id="section-2.7.2.1-5">In SCION, using the <code>keyIdentifier</code> attribute is the preferred way to specify the <code>authorityKeyIdentifier</code> extension.<a href="#section-2.7.2.1-5" class="pilcrow">¶</a></p>
 <p id="section-2.7.2.1-6">SCION implementations <span class="bcp14">MAY</span> also support the use of the <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes. However, if these attributes are set and support for them is missing, implementations <span class="bcp14">SHOULD</span> error out.<a href="#section-2.7.2.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.7.2.1-7">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> error out if the extension is not present AND the certificate is not self-signed.<a href="#section-2.7.2.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.7.2.1-7">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> return an error if the extension is not present AND the certificate is not self-signed.<a href="#section-2.7.2.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subject-key-id-ext">
