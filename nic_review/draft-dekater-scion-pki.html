@@ -1705,7 +1705,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
             <p id="section-1.5-5.3.1"><strong>Voting ASes</strong>: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "voting ASes".<a href="#section-1.5-5.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-1.5-5.4">
-            <p id="section-1.5-5.4.1"><strong>Authoritative ASes</strong>: they always have the latest TRCs of the ISD. They start the announcement of a TRC update.<a href="#section-1.5-5.4.1" class="pilcrow">¶</a></p>
+            <p id="section-1.5-5.4.1"><strong>Authoritative ASes</strong>: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.<a href="#section-1.5-5.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -3294,7 +3294,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
             </caption>
 <thead>
               <tr>
-                <th class="text-left" rowspan="1" colspan="1">Type of Update</th>
+                <th class="text-left" rowspan="1" colspan="1">Type of TRC Update</th>
                 <th class="text-left" rowspan="1" colspan="1">Unchanged Elements</th>
                 <th class="text-left" rowspan="1" colspan="1">Changed Elements</th>
                 <th class="text-left" rowspan="1" colspan="1">Other Rules to Hold</th>
@@ -3302,7 +3302,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
             </thead>
             <tbody>
               <tr>
-                <td class="text-left" rowspan="1" colspan="1">Both Regular AND Sensitive Updates</td>
+                <td class="text-left" rowspan="1" colspan="1">Both Regular AND Sensitive</td>
                 <td class="text-left" rowspan="1" colspan="1">- <code>iD</code> field: <code>iSD</code> and <code>baseNumber</code> <br> - <code>noTrustReset</code> field</td>
                 <td class="text-left" rowspan="1" colspan="1">
                   <code>iD</code> field: <code>serialNumber</code> <span class="bcp14">MUST</span> be incremented by 1</td>
@@ -3310,14 +3310,14 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
                   <code>votes</code> field: Number of votes (indices) =&gt; number set in the <code>votingQuorum</code> field of the predecessor TRC</td>
               </tr>
               <tr>
-                <td class="text-left" rowspan="1" colspan="1">Regular TRC Update</td>
+                <td class="text-left" rowspan="1" colspan="1">Regular</td>
                 <td class="text-left" rowspan="1" colspan="1">- Quorum in the <code>votingQuorum</code> field<br>- Core ASes in the <code>coreASes</code> field<br>- ASes in the <code>authoritativeASes</code> field<br>- Nr. and distinguished names of root &amp; voting certificates in the <code>certificates</code> field<br>- Set of sensitive voting certificates in the <code>certificates</code> field</td>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
                 <td class="text-left" rowspan="1" colspan="1">
                   <code>votes</code> field:<br> - All votes <span class="bcp14">MUST</span> only refer to <em>regular</em> voting certificates in the predecessor TRC<br>- <span class="bcp14">MUST</span> include votes of each changed regular voting certificate from the predecessor TRC<br> <code>signatures</code> field:<br> - <span class="bcp14">MUST</span> include signatures of each changed root certificate from the predecessor TRC</td>
               </tr>
               <tr>
-                <td class="text-left" rowspan="1" colspan="1">Sensitive TRC Update</td>
+                <td class="text-left" rowspan="1" colspan="1">Sensitive</td>
                 <td class="text-left" rowspan="1" colspan="1">If the update does not qualify as a regular update, it is a sensitive update</td>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
                 <td class="text-left" rowspan="1" colspan="1">

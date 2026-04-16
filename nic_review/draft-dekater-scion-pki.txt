@@ -483,7 +483,7 @@ Table of Contents
       the designated ASes that hold the private keys to sign a TRC
       update are "voting ASes".
 
-   *  *Authoritative ASes*: they always have the latest TRCs of the ISD.
+   *  *Authoritative ASes*: They always have the latest TRCs of the ISD.
       They start the announcement of a TRC update.
 
 1.6.  Trust as a Function
@@ -1895,19 +1895,20 @@ Table of Contents
 
    +===========+====================+==============+===================+
    | Type of   | Unchanged          | Changed      | Other Rules to    |
-   | Update    | Elements           | Elements     | Hold              |
+   | TRC       | Elements           | Elements     | Hold              |
+   | Update    |                    |              |                   |
    +===========+====================+==============+===================+
    | Both      | - iD field: iSD    | iD field:    | votes field:      |
    | Regular   | and baseNumber     | serialNumber | Number of votes   |
    | AND       | - noTrustReset     | MUST be      | (indices) =>      |
    | Sensitive | field              | incremented  | number set in the |
-   | Updates   |                    | by 1         | votingQuorum      |
+   |           |                    | by 1         | votingQuorum      |
    |           |                    |              | field of the      |
    |           |                    |              | predecessor TRC   |
    +-----------+--------------------+--------------+-------------------+
    | Regular   | - Quorum in the    |              | votes field:      |
-   | TRC       | votingQuorum       |              | - All votes MUST  |
-   | Update    | field              |              | only refer to     |
+   |           | votingQuorum       |              | - All votes MUST  |
+   |           | field              |              | only refer to     |
    |           | - Core ASes in     |              | _regular_ voting  |
    |           | the coreASes       |              | certificates in   |
    |           | field              |              | the predecessor   |
@@ -1928,8 +1929,8 @@ Table of Contents
    |           | field              |              | TRC               |
    +-----------+--------------------+--------------+-------------------+
    | Sensitive | If the update      |              | votes field:      |
-   | TRC       | does not qualify   |              | - All votes MUST  |
-   | Update    | as a regular       |              | only refer to     |
+   |           | does not qualify   |              | - All votes MUST  |
+   |           | as a regular       |              | only refer to     |
    |           | update, it is a    |              | _sensitive_       |
    |           | sensitive update   |              | voting            |
    |           |                    |              | certificates in   |
