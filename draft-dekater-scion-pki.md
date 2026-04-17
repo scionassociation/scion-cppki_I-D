@@ -818,11 +818,11 @@ The `certificates` field is a sequence of self-signed X.509 certificates. Each c
 
 A certificate that is no control plane root or voting certificate MUST NOT be included in the sequence of certificates in the `certificates` field.
 
-**Note**: A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
+A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
 
 The following constraints MUST hold for each certificate in the `certificates` field of the TRC payload:
 
-- Each certificate MUST be unique in the sequence of certificates. That is, each certificate MUST NOT appear more than once in the `certificates` field.
+- Each certificate MUST be unique in the sequence of certificates.
 - The `issuer` / `serialNumber` pair for each certificate MUST be unique.
 - If an ISD-AS number is present in the distinguished name of the certificate, this ISD number MUST be equal to the ISD number of the TRC (which is defined in the `iD` field (see [](#id)).
 - Every certificate MUST have a validity period that fully contains the validity period of this TRC. That is, the `notBefore` date of this TRC's validity period MUST be equal to or later than the certificate's `notBefore` date, and the `notAfter` date of this TRC's validity period MUST be before or equal to the certificate's `notAfter` date.
@@ -831,9 +831,9 @@ The following constraints MUST hold for each certificate in the `certificates` f
 The following must hold for the entire sequence of certificates in the `certificates` field:
 
 - `votingQuorum` <= count (sensitive voting certificates) <br>
-That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of *sensitive* voting certificates specified in the TRC's `certificates` field.
+That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of sensitive voting certificates specified in the TRC's `certificates` field.
 - `votingQuorum` <= count (regular voting certificates) <br>
-That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of *regular* voting certificates specified in the TRC's `certificates` field.
+That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of regular voting certificates specified in the TRC's `certificates` field.
 
 
 ## TRC Signature Syntax {#signed-format}
@@ -877,11 +877,10 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 
 The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
 
-However, AS certificates and the corresponding issuing CA certificates are **not** part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
-
+However, AS certificates and the corresponding issuing CA certificates are not part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
 The following section explains how to build a trust anchor pool.
 
-**Note:** Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
+Note that any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
 
 
 ### TRC Selection For Trust Anchor Pool {#trc-selection}
