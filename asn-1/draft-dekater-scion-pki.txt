@@ -128,7 +128,7 @@ Table of Contents
        3.5.6.  Signing a TRC Update
        3.5.7.  TRC Update Verification
      3.6.  Initial TRC Signing Ceremony
-   4.  Using the CP PKI
+   4.  CP-PKI Operations
      4.1.  Distribution of TRCs
        4.1.1.  Base TRC
        4.1.2.  TRC Update Discovery
@@ -137,8 +137,8 @@ Table of Contents
        4.2.2.  Verifying a Control Plane Message
      4.3.  Issuing a New Control Plane AS Certificate
    5.  Deployment Considerations
-     5.1.  PKI availability
-     5.2.  Processes
+     5.1.  PKI Availability
+     5.2.  Operational Processes for ISD Governance
    6.  Security Considerations
      6.1.  Compromise of an ISD
        6.1.1.  Recovery from Compromise
@@ -2023,10 +2023,10 @@ Table of Contents
    ISD how to organize the signing ceremony, it recommended to implement
    a process in line with the ceremony described in the Appendix.
 
-4.  Using the CP PKI
+4.  CP-PKI Operations
 
-   This section provides several specifications regarding the deployment
-   of the control plane PKI.
+   This section details the procedures for deploying the CP-PKI and
+   securing control plane communications.
 
 4.1.  Distribution of TRCs
 
@@ -2224,7 +2224,7 @@ Table of Contents
 
 5.  Deployment Considerations
 
-5.1.  PKI availability
+5.1.  PKI Availability
 
    The Control Plane PKI relies on short-lived certificates as an
    alternative to revocation, as described in Section 1.4.2.  AS
@@ -2238,7 +2238,7 @@ Table of Contents
    be able to quickly switch over to a backup CA to renew their
    certificates in time.
 
-5.2.  Processes
+5.2.  Operational Processes for ISD Governance
 
    An ISD is governed by voting ASes.  In existing deployments, voting
    ASes may produce a regulations document to facilitate operations.

@@ -1328,7 +1328,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4">
-            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-using-the-cp-pki" class="internal xref">Using the CP PKI</a></p>
+            <p id="section-toc.1-1.4.1"><a href="#section-4" class="auto internal xref">4</a>.  <a href="#name-cp-pki-operations" class="internal xref">CP-PKI Operations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.1">
                 <p id="section-toc.1-1.4.2.1.1"><a href="#section-4.1" class="auto internal xref">4.1</a>.  <a href="#name-distribution-of-trcs" class="internal xref">Distribution of TRCs</a></p>
@@ -1361,10 +1361,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
             <p id="section-toc.1-1.5.1"><a href="#section-5" class="auto internal xref">5</a>.  <a href="#name-deployment-considerations" class="internal xref">Deployment Considerations</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.1">
-                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-pki-availability" class="internal xref">PKI availability</a></p>
+                <p id="section-toc.1-1.5.2.1.1"><a href="#section-5.1" class="auto internal xref">5.1</a>.  <a href="#name-pki-availability" class="internal xref">PKI Availability</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.5.2.2">
-                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-processes" class="internal xref">Processes</a></p>
+                <p id="section-toc.1-1.5.2.2.1"><a href="#section-5.2" class="auto internal xref">5.2</a>.  <a href="#name-operational-processes-for-i" class="internal xref">Operational Processes for ISD Governance</a></p>
 </li>
             </ul>
 </li>
@@ -3440,12 +3440,12 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 </div>
 </section>
 </div>
-<div id="deploy-cp-pki">
+<div id="operations-cp-pki">
 <section id="section-4">
-      <h2 id="name-using-the-cp-pki">
-<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-using-the-cp-pki" class="section-name selfRef">Using the CP PKI</a>
+      <h2 id="name-cp-pki-operations">
+<a href="#section-4" class="section-number selfRef">4. </a><a href="#name-cp-pki-operations" class="section-name selfRef">CP-PKI Operations</a>
       </h2>
-<p id="section-4-1">This section provides several specifications regarding the deployment of the control plane PKI.<a href="#section-4-1" class="pilcrow">¶</a></p>
+<p id="section-4-1">This section details the procedures for deploying the CP-PKI and securing control plane communications.<a href="#section-4-1" class="pilcrow">¶</a></p>
 <div id="distribution-of-trcs">
 <section id="section-4.1">
         <h3 id="name-distribution-of-trcs">
@@ -3614,17 +3614,17 @@ Any TRC can be obtained at any time from the sender of the information it secure
 <div id="pki-availability">
 <section id="section-5.1">
         <h3 id="name-pki-availability">
-<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-pki-availability" class="section-name selfRef">PKI availability</a>
+<a href="#section-5.1" class="section-number selfRef">5.1. </a><a href="#name-pki-availability" class="section-name selfRef">PKI Availability</a>
         </h3>
 <p id="section-5.1-1">The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>. AS certificates typically have a validity of days (see <a href="#_table-3" class="auto internal xref">Table 2</a>), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="processes">
+<div id="operational-processes-for-isd-governance">
 <section id="section-5.2">
-        <h3 id="name-processes">
-<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-processes" class="section-name selfRef">Processes</a>
+        <h3 id="name-operational-processes-for-i">
+<a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-operational-processes-for-i" class="section-name selfRef">Operational Processes for ISD Governance</a>
         </h3>
 <p id="section-5.2-1">An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
