@@ -548,7 +548,7 @@ Table of Contents
    act as a CA in an ISD.
 
    In X.509 terms, Control Plane root certificates are CA certificates.
-   For simplicity, this document calls them 'root certificates,'
+   For simplicity, this document calls them 'root certificates',
    distinguishing them from from the subordinate 'issuing CA
    certificates'.  Root certificates are self-signed; the issuer and
    subject are the same entity, and the public key within the
