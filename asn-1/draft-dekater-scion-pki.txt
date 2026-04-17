@@ -141,7 +141,7 @@ Table of Contents
      4.2.   Signing and Verifying Control Plane Messages
        4.2.1.  Signing a Control Plane Message
        4.2.2.  Verifying a Control Plane Message
-     4.3.  Issuing a New Control Plane AS Certificate
+     4.3.  Issuing Control Plane AS Certificates
    5.  Deployment Considerations
      5.1.  PKI Availability
      5.2.  Operational Processes for ISD Governance
@@ -160,10 +160,10 @@ Table of Contents
      C.1.   Ceremony Participants
      C.2.  Ceremony Preparations
      C.3.   Ceremony Process
-       C.3.1.  Phase 1: Certificate Exchange
-       C.3.2.  Phase 2: Generation of the TRC Payload
-       C.3.3.  Phase 3: TRC Signing
-       C.3.4.  Phase 4: TRC Validation
+       C.3.1.  Certificate Exchange
+       C.3.2.  Generation of the TRC Payload
+       C.3.3.  TRC Signing
+       C.3.4.  TRC Validation
    Change Log
      draft-dekater-scion-pki-12
      draft-dekater-scion-pki-11
@@ -2145,7 +2145,7 @@ Table of Contents
    rely on path segments being verified on insert since TRC updates that
    change the root key can invalidate a certificate chain.
 
-4.3.  Issuing a New Control Plane AS Certificate
+4.3.  Issuing Control Plane AS Certificates
 
    The steps REQUIRED to issue a new AS certificate are the following:
 
@@ -2615,7 +2615,7 @@ C.3.   Ceremony Process
    Ceremony Administrator who provides instructions to the other
    participants:
 
-C.3.1.  Phase 1: Certificate Exchange
+C.3.1.  Certificate Exchange
 
    All parties share the certificates that must be part of the TRC with
    the Ceremony Administrator.  For the Voting ASes, these are the
@@ -2644,11 +2644,11 @@ C.3.1.  Phase 1: Certificate Exchange
    that the hash value of their certificates and that of the bundled
    certificates is the same as displayed by the Ceremony Administrator.
 
-   Phase 1 concludes when every representative has confirmed the SHA-512
-   sums are correct.  If there is any mismatch then this phase MUST be
-   repeated.
+   This phase concludes when every representative has confirmed the
+   SHA-512 sums are correct.  If there is any mismatch then this phase
+   MUST be repeated.
 
-C.3.2.  Phase 2: Generation of the TRC Payload
+C.3.2.  Generation of the TRC Payload
 
    The Ceremony Administrator generates the TRC payload based on the
    bundled certificates and the Section 3.2 completed in accordance with
@@ -2674,28 +2674,29 @@ C.3.2.  Phase 2: Generation of the TRC Payload
    payload hash value by computing this on their machine and checking it
    matches the one displayed by the Ceremony Administrator.
 
-   Phase 2 concludes when all voting representatives confirm that the
+   This phase concludes when all voting representatives confirm that the
    contents of the TRC payload are correct.
 
-C.3.3.  Phase 3: TRC Signing
+C.3.3.  TRC Signing
 
    Each voting representative attaches a signature created with their
    own private voting key to the TRC (payload file), using their own
    machine.  This serves to prove possession of the private keys.
 
-   Phase 3 concludes when all voting representatives have attached their
-   signatures to the TRC.
+   This phase concludes when all voting representatives have attached
+   their signatures to the TRC.
 
-C.3.4.  Phase 4: TRC Validation
+C.3.4.  TRC Validation
 
    All voting representatives copy the TRC payload signed with their
    private voting keys to the data exchange device and return this to
    the Ceremony Administrator.  The Ceremony Administrator assembles the
    final TRC by aggregating the payload data and verifying the
-   signatures based on the certificates exchanged during Phase 1.  The
-   Ceremony Administrator then shares the assembled TRC with all
-   participants who MUST again inspect the signatures and verify them
-   based on the certificates exchanged in Phase 1.
+   signatures based on the certificates exchanged during phase
+   Appendix C.3.1.  The Ceremony Administrator then shares the assembled
+   TRC with all participants who MUST again inspect the signatures and
+   verify them based on the certificates exchanged in phase
+   Appendix C.3.1.
 
    The Signing Ceremony is completed once when every voting
    representative confirms that the signatures match.  All participants
@@ -2811,14 +2812,15 @@ Acknowledgments
 
    Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
    Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google),
-   Ramon Keller (LibC Technologies), Patrick Ambord (independent), and
-   Kevin Meynell (SCION Association) for reviewing this document.  We
-   are also very grateful to Adrian Perrig (ETH Zurich), for providing
-   guidance and feedback about each aspect of SCION.  Finally, we are
-   indebted to the SCION development teams of Anapaya and ETH Zurich,
-   for their practical knowledge and for the documentation about the CP-
-   PKI, as well as to the authors of [CHUAT22] - the book is an
-   important source of input and inspiration for this draft.
+   Ramon Keller (LibC Technologies), Patrick Ambord (independent),
+   Dominik Roos (Anapaya), and Kevin Meynell (SCION Association) for
+   reviewing this document.  We are also very grateful to Adrian Perrig
+   (ETH Zurich), for providing guidance and feedback about each aspect
+   of SCION.  Finally, we are indebted to the SCION development teams of
+   Anapaya and ETH Zurich, for their practical knowledge and for the
+   documentation about the CP-PKI, as well as to the authors of
+   [CHUAT22] - the book is an important source of input and inspiration
+   for this draft.
 
 Authors' Addresses
 
