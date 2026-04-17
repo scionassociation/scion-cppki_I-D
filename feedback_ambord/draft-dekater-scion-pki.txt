@@ -2817,7 +2817,7 @@ Acknowledgments
    are also very grateful to Adrian Perrig (ETH Zurich), for providing
    guidance and feedback about each aspect of SCION.  Finally, we are
    indebted to the SCION development teams of Anapaya and ETH Zurich,
-   for their practical knowledge and for the documentation about the CP
+   for their practical knowledge and for the documentation about the CP-
    PKI, as well as to the authors of [CHUAT22] - the book is an
    important source of input and inspiration for this draft.
 
