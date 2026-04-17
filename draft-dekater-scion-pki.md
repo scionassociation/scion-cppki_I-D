@@ -1392,7 +1392,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Consistently use "Issuing CA certificate" / root certificate"
 - Reduce number of headings in sections 2 and 3
 - Tables 3-7: sharpen normative language use
-- TRC: add ASN.1 module in appendix
+- TRC: add ASN.1 module in appendix and reword field descriptions. Clarify that TRC validity uses GeneralizedTime
 
 ## draft-dekater-scion-pki-11
 {:numbered="false"}

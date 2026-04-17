@@ -1,6 +1,6 @@
 SCION-CP-PKI-CERT-EXTENSIONS { 
-    iso(1) identified-organization(3) dod(6) internet(1) security(5)
-    mechanisms(5) pkix(7) id-mod(0) id-mod-scion-pki-cert-ext(101) 
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) id-scion-pki-cert-ext(101)
 }
 
 DEFINITIONS EXPLICIT TAGS ::= 
