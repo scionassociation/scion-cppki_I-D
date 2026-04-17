@@ -501,7 +501,7 @@ The recommended maximum validity period for each type of certificate is describe
 ### `subject`
 
 The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
-The `subject` field is specified in the same way as the `issuer` field. For details, see [](#issuer) and [](#isd-as-nr).
+The same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
 
 ### `subjectPublicKeyInfo`
 
