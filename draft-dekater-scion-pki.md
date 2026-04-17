@@ -767,14 +767,13 @@ Note that a trust reset represents a special use case where a new base TRC is cr
 
 ### `votes` {#votes}
 
-The `votes` field contains a sequence of indices that refer to the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the `certificates` sequence, see [](#cert).
+The `votes` field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the `certificates` sequence, see [](#cert).
 
-In a base TRC, the `votes` sequence is empty.
-
-Every entry in the `votes` sequence MUST be unique.<br>
+In a base TRC, the `votes` sequence MUST be empty.
+Every entry in the `votes` sequence MUST be unique.
 Further restrictions on votes are discussed in [](#update).
 
-**Note:** The `votes` sequence of indices is mandatory in order to prevent stripping voting signatures from the TRC. Absence of the `votes` sequence makes it possible to transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets. This would violate the requirement of uniqueness of a TRC.
+The `votes` sequence MUST be present to prevent the stripping of voting signatures from the TRC. Without this sequence, an attacker could transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets, which directly violates the uniqueness requirement of a TRC.
 
 
 ### `votingQuorum` {#quorum}
@@ -786,32 +785,34 @@ A voting quorum greater than one will prevent a single entity from creating a ma
 
 ### `coreASes` {#core}
 
-The `coreASes` field contains the AS numbers of the core ASes in this ISD.
-
-Each core AS number MUST be unique in the sequence of core AS numbers. That is, each AS number MUST appear only once in the `coreASes` field.
+The `coreASes` field contains a sequence listing the core AS numbers within the ISD.
+Each AS number in the sequence MUST be unique. Furthermore, each AS number MUST be encoded as a `PrintableString` using the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation".
 
 #### Revoking or Assigning Core Status
 
-- To revoke the core status of a given AS, remove the respective AS number from the sequence of AS numbers in the `coreASes` field.
-- To assign the core status to a given AS, add the respective AS number to the sequence of AS numbers in the `coreASes` field.
+The set of core ASes can be updated as follows:
 
-Revoking or assigning the core status of/to an AS always requires a sensitive TRC update.
+- To revoke core status: remove the target AS from the `coreASes` sequence.
+- To assign core status: add the target AS to the `coreASes` sequence.
+
+Any modification to the `coreASes` field requires a sensitive TRC update.
 
 
 ### `authoritativeASes` {#auth}
 
-The `authoritativeASes` field contains the AS numbers of the authoritative ASes in this ISD.
+The `authoritativeASes` field contains the sequence of the authoritative AS numbers in the ISD.
 
 Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
 
 - Every authoritative AS MUST be a core AS and be listed in the `coreASes` field.
-- Each authoritative AS number MUST be unique in the sequence of authoritative AS numbers. That is, each AS number MUST NOT appear more than once in the `authoritativeASes` field.
-
+Each AS number in the sequence MUST be unique. Furthermore, each AS number MUST be encoded as a `PrintableString` using the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation".
 
 #### Revoking or Assigning Authoritative Status
 
-- To revoke the authoritative status of a given AS, remove the respective AS number from the sequence of AS numbers in the `authoritativeASes` field.
-- To assign the authoritative status to a given AS, add the respective AS number to the sequence of AS numbers in the `authoritativeASes` field.
+The set of authoritative ASes can be updated as follows:
+
+- To revoke authoritative status: remove the target AS from the `authoritativeASes` sequence.
+- To assign authoritative status: dd the target AS to the `authoritativeASes` sequence.
 
 **Important:** Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.
 
