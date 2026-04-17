@@ -97,9 +97,15 @@ Table of Contents
        2.5.1.  Regular Voting Certificate
        2.5.2.  Sensitive Voting Certificate
      2.6.  Key Pairs Overview and Notations
-     2.7.  X.509 Certificate Profiles
-       2.7.1.  Constraints on Basic Fields
-       2.7.2.  Extensions
+     2.7.  X.509 Certificate Profiles and Constraints
+       2.7.1.  signature Field
+       2.7.2.  issuer Field
+     2.8.  Extensions
+       2.8.1.  authorityKeyIdentifier Extension
+       2.8.2.  subjectKeyIdentifier Extension
+       2.8.3.  keyUsage Extension
+       2.8.4.  extKeyUsage Extension
+       2.8.5.  basicConstraints Extension
    3.  Trust Root Configuration Specification
      3.1.  TRC Types and States
      3.2.  TRC Fields
@@ -148,15 +154,16 @@ Table of Contents
    8.  References
      8.1.  Normative References
      8.2.  Informative References
-   Appendix A.  TRC in ASN.1 Syntax
-   Appendix B.  Signing Ceremony Initial TRC
-     B.1.   Ceremony Participants
-     B.2.  Ceremony Preparations
-     B.3.   Ceremony Process
-       B.3.1.  Phase 1: Certificate Exchange
-       B.3.2.  Phase 2: Generation of the TRC Payload
-       B.3.3.  Phase 3: TRC Signing
-       B.3.4.  Phase 4: TRC Validation
+   Appendix A.  Certificate Extensions in ASN.1 Syntax
+   Appendix B.  TRC in ASN.1 Syntax
+   Appendix C.  Signing Ceremony Initial TRC
+     C.1.   Ceremony Participants
+     C.2.  Ceremony Preparations
+     C.3.   Ceremony Process
+       C.3.1.  Phase 1: Certificate Exchange
+       C.3.2.  Phase 2: Generation of the TRC Payload
+       C.3.3.  Phase 3: TRC Signing
+       C.3.4.  Phase 4: TRC Validation
    Change Log
      draft-dekater-scion-pki-12
      draft-dekater-scion-pki-11
@@ -461,7 +468,7 @@ Table of Contents
    binding between name and public key explicit; and (2) the binding is
    signed to prove possession of the corresponding private key.  The
    public keys of Voting AS certificates must therefore be explicitly
-   verified during the Signing Ceremony (Appendix B).
+   verified during the Signing Ceremony (Appendix C).
 
    SCION ASes sign and verify control plane messages.  Certain ASes have
    additional roles:
@@ -771,19 +778,13 @@ Table of Contents
      Figure 2: TRC and the different types of associated certificates.
                  Arrows indicate the certificate hierarchy.
 
-2.7.  X.509 Certificate Profiles
+2.7.  X.509 Certificate Profiles and Constraints
 
    Whilst the certificates used in the Control Plane PKI are X.509 v3
-   certificates, the SCION specification is more restrictive.  This
-   section defines these additional constraints and conditions in
-   comparison to [RFC5280].
-
-2.7.1.  Constraints on Basic Fields
-
-   The described fields of the Control Plane PKI certificates are
-   relevant for each certificate regardless of the certificate type.
-   For detailed descriptions of the full generic format of X.509 v3
-   certificates, see [RFC5280] and [X.509] clause 7.2.
+   certificates, this specification is more restrictive.  This section
+   defines these additional constraints and conditions in comparison to
+   [RFC5280], which apply to all SCION certificate types.  For the
+   baseline X.509 v3 format, refer to [RFC5280] and [X.509] Clause 7.2.
 
    TBSCertificate sequence: Contains information associated with the
    subject of the certificate and the CA that issued it.  It includes
@@ -800,7 +801,7 @@ Table of Contents
       the CA to sign the certificate.
 
       -  *SCION constraints*: supported signatures are described in
-         Section 2.7.1.1.
+         Section 2.7.1.
 
       -  *Additional conditions and remarks*: As a consequence, the
          parameters field in the AlgorithmIdentifier sequence MUST NOT
@@ -815,8 +816,7 @@ Table of Contents
 
       -  *Additional conditions and remarks*: All SCION implementations
          MUST support the additional SCION-specific attribute ISD-AS
-         number.  For details, see Section 2.7.1.2 and
-         Section 2.7.1.2.1.
+         number.  For details, see Section 2.7.2 and Section 2.7.2.1.
 
    *  validity field: Defines the validity period of the certificate.
 
@@ -837,7 +837,7 @@ Table of Contents
 
       -  *Additional conditions and remarks*: The subject field is
          specified in the same way as the issuer field.  For details,
-         see Section 2.7.1.2 and Section 2.7.1.2.1.
+         see Section 2.7.2 and Section 2.7.2.1.
 
    *  subjectPublicKeyInfo field: Carries the public key of the
       certificate's subject (the entity that owns the certificate, as
@@ -853,9 +853,9 @@ Table of Contents
 
    *  extensions sequence: Defines the extensions of the certificate.
       For a description of all extensions used in SCION, see
-      Section 2.7.2.
+      Section 2.8.
 
-2.7.1.1.  signature Field
+2.7.1.  signature Field
 
    The signature field contains information about the signature
    algorithm.  Current implementations use the ECDSA signature algorithm
@@ -894,15 +894,15 @@ Table of Contents
 
    *  ECDSA with SHA-512, for a P-521 signing key
 
-2.7.1.2.  issuer Field
+2.7.2.  issuer Field
 
    The issuer field contains the distinguished name (DN) of the CA that
    created the certificate.  [RFC5280], section 4.1.2.4, describes the
    field's syntax and attributes.  In addition to these attributes,
    SCION implementations MUST also support the SCION-specific attribute
-   ISD-AS number.  See Section 2.7.1.2.1.
+   ISD-AS number.  See Section 2.7.2.1.
 
-2.7.1.2.1.  ISD-AS number Attribute
+2.7.2.1.  ISD-AS number Attribute
 
    The ISD-AS number attribute identifies the SCION ISD and AS.  In the
    SCION open source implementation, the attribute type is id-at-ia,
@@ -935,7 +935,7 @@ Table of Contents
    Voting-only certificates are not required to include the ISD-AS
    number attribute in their distinguished name.
 
-2.7.2.  Extensions
+2.8.  Extensions
 
    [RFC5280], section 4.2.1, defines the syntax of the Extensions
    sequence in a X.509 certificate.  Descriptions of each standard
@@ -958,7 +958,7 @@ Table of Contents
    The following sections describe the SCION-specifics in regard to
    these extensions.
 
-2.7.2.1.  authorityKeyIdentifier Extension
+2.8.1.  authorityKeyIdentifier Extension
 
    The authorityKeyIdentifier extension identifies the public key
    corresponding to the private key used to sign a certificate.
@@ -988,7 +988,7 @@ Table of Contents
    return an error if the extension is not present AND the certificate
    is not self-signed.
 
-2.7.2.2.  subjectKeyIdentifier Extension
+2.8.2.  subjectKeyIdentifier Extension
 
    The subjectKeyIdentifier extension identifies certificates that
    contain a particular public key.  It can be used, for example, by
@@ -1002,7 +1002,7 @@ Table of Contents
    This extension MUST be marked as non-critical.  Implementations MUST
    return an error if the extension is not present.
 
-2.7.2.3.  keyUsage Extension
+2.8.3.  keyUsage Extension
 
    The keyUsage extension identifies the intended usage of the public
    key in the corresponding certificate.  For the syntax and definition
@@ -1026,7 +1026,7 @@ Table of Contents
    possible to trace back the private key used to sign the certificate.
    This is done by referencing the ISD-AS and the subject key identifier
    (via the subjectKeyIdentifier extension).  For more information about
-   the subjectKeyIdentifier extension (see Section 2.7.2.2).
+   the subjectKeyIdentifier extension (see Section 2.8.2).
 
    When present, this extension SHOULD be marked as critical.
 
@@ -1061,7 +1061,7 @@ Table of Contents
    (2) Issuing CA certificates SHOULD NOT be used to verify control
    plane messages.
 
-2.7.2.4.  extKeyUsage Extension
+2.8.4.  extKeyUsage Extension
 
    The extKeyUsage extension specifies additional usages of the public
    key in the certificate.  For the syntax and definition of the
@@ -1126,7 +1126,7 @@ Table of Contents
    +------------------+----------+--------+-----------+---------------+
    |SCION-specific    |id-kp-root|        |           |Regular voting |
    |attributes (see   |MUST be   |        |           |cert: id-kp-   |
-   |Section 2.7.2.4.1)|included  |        |           |regular MUST be|
+   |Section 2.8.4.1)  |included  |        |           |regular MUST be|
    |                  |          |        |           |included.      |
    |                  |          |        |           |Sensitive      |
    |                  |          |        |           |voting cert:   |
@@ -1143,7 +1143,7 @@ Table of Contents
    implementations follow what described in this document, the use of
    extKeyUsage should be revised in future protocol iterations.
 
-2.7.2.4.1.  SCION-Specific Attributes
+2.8.4.1.  SCION-Specific Attributes
 
    The id-kp-root, id-kp-regular, and id-kp-sensitive attributes MUST be
    specified as follows:
@@ -1164,7 +1164,7 @@ Table of Contents
    implementation is the IANA Private Enterprise Number '55324':
    id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}
 
-2.7.2.5.  basicConstraints Extension
+2.8.5.  basicConstraints Extension
 
    The basicConstraints extension specifies whether the certificate
    subject may act as a CA.  For the syntax and definition of the
@@ -1284,7 +1284,7 @@ Table of Contents
 3.2.  TRC Fields
 
    The TRC holds the root and voting certificates of the ISD, defining
-   the ISD's trust policy.  Its ASN.1 module is described in Appendix A.
+   the ISD's trust policy.  Its ASN.1 module is described in Appendix B.
    Its fields are contained in a TRCPayload sequence.  This section
    describes their syntax and semantics.
 
@@ -1509,7 +1509,7 @@ Table of Contents
    A certificate's type (voting or root) is specified in the extKeyUsage
    extension of the certificate, by means of the SCION-specific
    attributes id-kp-regular, id-kp-sensitive, and id-kp-root,
-   respectively.  For more information, see Section 2.7.2.4.
+   respectively.  For more information, see Section 2.8.4.
 
    The following constraints MUST hold for each certificate in the
    certificates field of the TRC payload:
@@ -1599,7 +1599,7 @@ Table of Contents
 
       -  The algorithm specified in the signatureAlgorithm field MUST be
          one of the algorithms supported by SCION . For details, see
-         signature Field - Additional Information (Section 2.7.1.1).
+         signature Field - Additional Information (Section 2.7.1).
 
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
@@ -1963,7 +1963,7 @@ Table of Contents
    Following this, all entities within an ISD can obtain the TRC by
    means of a secure offline or online mechanism.
 
-   Appendix B describes a possible procedure for the signing ceremony of
+   Appendix C describes a possible procedure for the signing ceremony of
    an ISD's initial TRC.  Whilst it is up to the initial members of an
    ISD how to organize the signing ceremony, it recommended to implement
    a process in line with the ceremony described in the Appendix.
@@ -2049,11 +2049,11 @@ Table of Contents
    verify the signed message:
 
    *  ISD-AS number: The ISD-AS number of the signing entity.  For
-      specification details, see Section 2.7.1.2.1.
+      specification details, see Section 2.7.2.1.
 
    *  Subject key identifier: The identifier of the public key to be
       used to verify the message.  For specification details, see
-      Section 2.7.2.2.
+      Section 2.8.2.
 
    Additionally, the signer SHOULD include the following information:
 
@@ -2104,11 +2104,11 @@ Table of Contents
 
        *  The ISD-AS number in the subject of the AS certificate MUST
           match the ISD-AS number in the signature metadata.  See also
-          Section 2.7.1.2.1.
+          Section 2.7.2.1.
 
        *  The subject key identifier of the AS certificate MUST match
           the subject key identifier in the signature metadata.  See
-          also Section 2.7.2.2.
+          also Section 2.8.2.
 
        *  The AS certificate MUST be valid at verification time, which
           will normally be the current time.  In special cases, e.g.
@@ -2124,7 +2124,7 @@ Table of Contents
        *  Checking that
 
           -  all subjects of the certificates in the chain carry the
-             same ISD number (see also Section 2.7.1.2.1,
+             same ISD number (see also Section 2.7.2.1,
 
           -  each certificate is of the correct type (see also
              Section 2), and
@@ -2201,7 +2201,7 @@ Table of Contents
 
    *  actions in case of compromise or regulations breach
 
-   This document describes a typical TRC signing ceremony in Appendix B,
+   This document describes a typical TRC signing ceremony in Appendix C,
    but further processes are out-of-scope.
 
 6.  Security Considerations
@@ -2426,7 +2426,40 @@ Table of Contents
               RFC 8210, DOI 10.17487/RFC8210, September 2017,
               <https://www.rfc-editor.org/rfc/rfc8210>.
 
-Appendix A.  TRC in ASN.1 Syntax
+Appendix A.  Certificate Extensions in ASN.1 Syntax
+
+  SCION-CP-PKI-CERT-EXTENSIONS {
+      iso(1) identified-organization(3) dod(6) internet(1) private(4)
+      enterprise(1) scion(55324) module(0) id-scion-pki-cert-ext(101)
+  }
+
+  DEFINITIONS EXPLICIT TAGS ::=
+  BEGIN
+
+  -- Root SCION object identifier (IANA Private Enterprise Number 55324)
+  id-scion OBJECT IDENTIFIER ::= { 1 3 6 1 4 1 55324 }
+
+  -- SCION Control Plane PKI
+  id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
+
+  -- SCION ISD-AS Attribute
+  id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
+
+  -- SCION Key Purposes
+  id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
+
+  -- Identifies a Sensitive voting certificate
+  id-kp-sensitive OBJECT IDENTIFIER ::= { id-scion-kp 1 }
+
+  -- Identifies a Regular voting certificate
+  id-kp-regular   OBJECT IDENTIFIER ::= { id-scion-kp 2 }
+
+  -- Identifies a Root certificate
+  id-kp-root      OBJECT IDENTIFIER ::= { id-scion-kp 3 }
+
+  END
+
+Appendix B.  TRC in ASN.1 Syntax
 
    SCION-CP-PKI-TRC {
        iso(1) identified-organization(3) dod(6) internet(1) private(4)
@@ -2477,14 +2510,14 @@ Appendix A.  TRC in ASN.1 Syntax
 
    END
 
-Appendix B.  Signing Ceremony Initial TRC
+Appendix C.  Signing Ceremony Initial TRC
 
    A Signing Ceremony is used to create the initial (first) Trust Root
    Configuration of an ISD.  Each ISD may decide how to conduct this
    ceremony, but it is RECOMMENDED to establish a procedure similar to
    the one described below:
 
-B.1.   Ceremony Participants
+C.1.   Ceremony Participants
 
    The Signing Ceremony SHOULD include the following participants:
 
@@ -2517,7 +2550,7 @@ B.1.   Ceremony Participants
    leave their machine.  The Ceremony Administrator does not have to be
    entrusted with private keys.
 
-B.2.  Ceremony Preparations
+C.2.  Ceremony Preparations
 
    The participants MUST decide in advance on the physical location of
    the Signing Ceremony, the devices that will be used, and the ISD
@@ -2573,7 +2606,7 @@ B.2.  Ceremony Preparations
    The Signing Ceremony SHOULD include a procedure to verify that all
    devices are secure.
 
-B.3.   Ceremony Process
+C.3.   Ceremony Process
 
    The number of Voting ASes present at the Signing Ceremony must be
    equal to or larger than the specified voting quorum.
@@ -2582,7 +2615,7 @@ B.3.   Ceremony Process
    Ceremony Administrator who provides instructions to the other
    participants:
 
-B.3.1.  Phase 1: Certificate Exchange
+C.3.1.  Phase 1: Certificate Exchange
 
    All parties share the certificates that must be part of the TRC with
    the Ceremony Administrator.  For the Voting ASes, these are the
@@ -2615,11 +2648,11 @@ B.3.1.  Phase 1: Certificate Exchange
    sums are correct.  If there is any mismatch then this phase MUST be
    repeated.
 
-B.3.2.  Phase 2: Generation of the TRC Payload
+C.3.2.  Phase 2: Generation of the TRC Payload
 
    The Ceremony Administrator generates the TRC payload based on the
    bundled certificates and the Section 3.2 completed in accordance with
-   ISD policy, see Appendix B.2.
+   ISD policy, see Appendix C.2.
 
    For each bundled certificate, the voting representatives MUST then
    verify the certificate type and that the following fields contain the
@@ -2635,7 +2668,7 @@ B.3.2.  Phase 2: Generation of the TRC Payload
 
    Once the voting representatives have verified the TRC data, the
    Ceremony Administrator computes the DER encoding of the data
-   according to Appendix A and the SHA-512 hash value of the TRC payload
+   according to Appendix B and the SHA-512 hash value of the TRC payload
    file.  The TRC payload file is then shared with the voting
    representatives via the data exchange device who verify the TRC
    payload hash value by computing this on their machine and checking it
@@ -2644,7 +2677,7 @@ B.3.2.  Phase 2: Generation of the TRC Payload
    Phase 2 concludes when all voting representatives confirm that the
    contents of the TRC payload are correct.
 
-B.3.3.  Phase 3: TRC Signing
+C.3.3.  Phase 3: TRC Signing
 
    Each voting representative attaches a signature created with their
    own private voting key to the TRC (payload file), using their own
@@ -2653,7 +2686,7 @@ B.3.3.  Phase 3: TRC Signing
    Phase 3 concludes when all voting representatives have attached their
    signatures to the TRC.
 
-B.3.4.  Phase 4: TRC Validation
+C.3.4.  Phase 4: TRC Validation
 
    All voting representatives copy the TRC payload signed with their
    private voting keys to the data exchange device and return this to
