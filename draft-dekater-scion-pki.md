@@ -696,37 +696,28 @@ A TRC can have the following states:
 ## TRC Fields {#trcfields}
 
 The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in [](#trc-asn1).
-This section describes the syntax and semantics of TRC payload fields that are contained in the `TRCPayload` sequence.
+Its fields are contained in a `TRCPayload` sequence. This section describes their syntax and semantics.
 
-### `version` Field {#field}
+### `version`
 
-The `version` field describes the version of the TRC format specification.
-
-Currently, the version MUST always be "v1".
+The `version` field describes the version of the TRC format specification. It MUST be "v1".
 
 
-### `iD` Field {#id}
+### `iD` {#id}
 
-The `iD` field specifies the unique identifier of the TRC.
-
-The identifier is a unique sequence of
+The `iD` field contains an unique identifier for the TRC, constituted by a sequence of:
 
 - ISD number (`iSD` attribute),
-- base number (`baseNumber` attribute), and
-- TRC serial number (`serialNumber` attribute).
+- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
+- TRC serial number (`serialNumber` attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 All numbers MUST be positive integers.
-
-- The **ISD number** MUST be an integer.
-- The **base number** indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
-- The **serial number** represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and MUST have a serial number of 1 and a base number of 1. With every TRC update, the serial number MUST be incremented by one which facilitates the unique identification of the predecessor and successor TRC in an update chain.
 
 If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain SHOULD be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.
 
-**Example**<br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
+The following example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
 
 | Update      | TRC ID              | Remarks                                          |
 |-------------+---------------------+--------------------------------------------------|
@@ -740,37 +731,30 @@ The following simple example illustrates how to specify the ID of the TRCs in an
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
 
-### `validity` Field {#validity}
+### `validity` {#validity}
 
 The `validity` field defines the TRC validity period. The `notBefore` and `notAfter` attributes of the `validity` field specify the lower and upper bound of the time interval during which a TRC can be active.
 
 An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
-The `validity` field consists of a sequence of two dates, as defined in section 7.2. of {{X.509}}.
-
-In addition to this standard definition, the following constraint applies to the `validity` field of the TRC:
-
-- All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST error out when encountering such a TRC.
+The `validity` field consists of a sequence of a `notBefore` and a `notAfter` date, both encoded as `GeneralizedTime`.
+All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST error out when encountering such a TRC.
 
 
-### `gracePeriod` Field {#grace}
+### `gracePeriod` {#grace}
 
-The `gracePeriod` field of a TRC specifies the period of time during which the predecessor TRC can still be considered active (the "grace period"). The grace period starts at the beginning of the validity period of the new TRC.
+The `gracePeriod` field specifies the duration, in seconds, during which the predecessor TRC remains active after a new TRC is issued. This grace period starts at the beginning of the validity period of the new TRC.
 
-The validity period of the predecessor TRC ends when:
+A predecessor TRC ceases to be active when the earliest of the following events occurs:
 
-- the grace period has passed;
-- the predecessor’s expiration time is reached; or
-- the successor TRC of the new TRC has been announced.
+- the grace period expires;
+- the predecessor TRC reaches its expiration time (`notAfter`); or
+- a subsequent TRC update (i.e., the successor to the new TRC) is announced.
 
-**Note:** The event that happens first marks the end of the predecessor's validity period.
-
-The `gracePeriod` field defines the grace period as a number of seconds (positive integer).
-
-The value of the `gracePeriod` field in a base TRC MUST be zero. The value of the `gracePeriod` field in a non-base TRC SHOULD be non-zero. It SHOULD be long enough to provide sufficient overlap between the TRCs in order to facilitate interruption-free operations in the ISD. If the grace period is too short, some Control Plane AS certificates might expire before the corresponding AS can fetch an updated version from its CA.
+In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod` SHOULD be greater than zero. The defined duration SHOULD provide sufficient overlap between the two TRCs to ensure uninterrupted operations within the ISD. If the grace period is too short, some Control Plane AS certificates may expire before the corresponding ASes can fetch an updated version from their CA.
 
 
-### `noTrustReset` Boolean {#notrustreset}
+### `noTrustReset` {#notrustreset}
 
 The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value MUST NOT be changed by a regular or sensitive update. However, it is possible to change the `noTrustReset` value in the event of a trust reset where a new base TRC is created.
 
@@ -778,14 +762,14 @@ The `noTrustReset` field is OPTIONAL and defaults to FALSE.
 
 Note that once the `noTrustReset` Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs SHOULD always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
 
-**Note:** A trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.
+Note that a trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.
 
 
-### `votes` Field {#votes}
+### `votes` {#votes}
 
 The `votes` field contains a sequence of indices that refer to the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the `certificates` sequence, see [](#cert).
 
-**Note:** In a base TRC, the `votes` sequence is empty.
+In a base TRC, the `votes` sequence is empty.
 
 Every entry in the `votes` sequence MUST be unique.<br>
 Further restrictions on votes are discussed in [](#update).
@@ -793,14 +777,14 @@ Further restrictions on votes are discussed in [](#update).
 **Note:** The `votes` sequence of indices is mandatory in order to prevent stripping voting signatures from the TRC. Absence of the `votes` sequence makes it possible to transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets. This would violate the requirement of uniqueness of a TRC.
 
 
-### `votingQuorum` Field {#quorum}
+### `votingQuorum` {#quorum}
 
 The `votingQuorum` field defines the number of necessary votes on a successor TRC to make it verifiable.
 
 A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.
 
 
-### `coreASes` Field {#core}
+### `coreASes` {#core}
 
 The `coreASes` field contains the AS numbers of the core ASes in this ISD.
 
@@ -814,7 +798,7 @@ Each core AS number MUST be unique in the sequence of core AS numbers. That is, 
 Revoking or assigning the core status of/to an AS always requires a sensitive TRC update.
 
 
-### `authoritativeASes` Field {#auth}
+### `authoritativeASes` {#auth}
 
 The `authoritativeASes` field contains the AS numbers of the authoritative ASes in this ISD.
 
@@ -832,13 +816,13 @@ Authoritative ASes are those ASes in an ISD that always have the latest TRCs of 
 **Important:** Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.
 
 
-### `description` Field {#description}
+### `description` {#description}
 
 The `description` field contains a UTF-8 encoded string that describes the ISD. It SHOULD NOT be empty.
 The description MUST be in English and MAY additionally contain information in other languages.
 
 
-### `certificates` Field {#cert}
+### `certificates` {#cert}
 
 The voting ASes and the certification authorities (CAs) of an ISD are not specified explicitly in the ISD's TRC. Instead, this information is defined by the list of voting and root certificates in the `certificates` field of the TRC payload.
 
