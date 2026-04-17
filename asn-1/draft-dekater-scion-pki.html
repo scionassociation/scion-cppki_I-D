@@ -2893,11 +2893,11 @@ All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SC
           <h4 id="name-votes">
 <a href="#section-3.2.6" class="section-number selfRef">3.2.6. </a><a href="#name-votes" class="section-name selfRef"><code>votes</code></a>
           </h4>
-<p id="section-3.2.6-1">The <code>votes</code> field contains a sequence of indices that refer to the voting certificates in the predecessor TRC. If index i is part of the <code>votes</code> field, then the voting certificate at position i in the <code>certificates</code> sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the <code>certificates</code> sequence, see <a href="#cert" class="auto internal xref">Section 3.2.11</a>.<a href="#section-3.2.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.6-2">In a base TRC, the <code>votes</code> sequence is empty.<a href="#section-3.2.6-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.6-3">Every entry in the <code>votes</code> sequence <span class="bcp14">MUST</span> be unique.<br>
-Further restrictions on votes are discussed in <a href="#update" class="auto internal xref">Section 3.5</a>.<a href="#section-3.2.6-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.6-4"><strong>Note:</strong> The <code>votes</code> sequence of indices is mandatory in order to prevent stripping voting signatures from the TRC. Absence of the <code>votes</code> sequence makes it possible to transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets. This would violate the requirement of uniqueness of a TRC.<a href="#section-3.2.6-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-1">The <code>votes</code> field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the <code>votes</code> field, then the voting certificate at position i in the <code>certificates</code> sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the <code>certificates</code> sequence, see <a href="#cert" class="auto internal xref">Section 3.2.11</a>.<a href="#section-3.2.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-2">In a base TRC, the <code>votes</code> sequence <span class="bcp14">MUST</span> be empty.
+Every entry in the <code>votes</code> sequence <span class="bcp14">MUST</span> be unique.
+Further restrictions on votes are discussed in <a href="#update" class="auto internal xref">Section 3.5</a>.<a href="#section-3.2.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-3">The <code>votes</code> sequence <span class="bcp14">MUST</span> be present to prevent the stripping of voting signatures from the TRC. Without this sequence, an attacker could transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets, which directly violates the uniqueness requirement of a TRC.<a href="#section-3.2.6-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="quorum">
@@ -2914,22 +2914,23 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-coreases">
 <a href="#section-3.2.8" class="section-number selfRef">3.2.8. </a><a href="#name-coreases" class="section-name selfRef"><code>coreASes</code></a>
           </h4>
-<p id="section-3.2.8-1">The <code>coreASes</code> field contains the AS numbers of the core ASes in this ISD.<a href="#section-3.2.8-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-2">Each core AS number <span class="bcp14">MUST</span> be unique in the sequence of core AS numbers. That is, each AS number <span class="bcp14">MUST</span> appear only once in the <code>coreASes</code> field.<a href="#section-3.2.8-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-1">The <code>coreASes</code> field contains a sequence listing the core AS numbers within the ISD.
+Each AS number in the sequence <span class="bcp14">MUST</span> be unique. Furthermore, each AS number <span class="bcp14">MUST</span> be encoded as a <code>PrintableString</code> using the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation".<a href="#section-3.2.8-1" class="pilcrow">¶</a></p>
 <div id="revoking-or-assigning-core-status">
 <section id="section-3.2.8.1">
             <h5 id="name-revoking-or-assigning-core-">
 <a href="#section-3.2.8.1" class="section-number selfRef">3.2.8.1. </a><a href="#name-revoking-or-assigning-core-" class="section-name selfRef">Revoking or Assigning Core Status</a>
             </h5>
+<p id="section-3.2.8.1-1">The set of core ASes can be updated as follows:<a href="#section-3.2.8.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.8.1-1.1">
-                <p id="section-3.2.8.1-1.1.1">To revoke the core status of a given AS, remove the respective AS number from the sequence of AS numbers in the <code>coreASes</code> field.<a href="#section-3.2.8.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.2.8.1-2.1">
+                <p id="section-3.2.8.1-2.1.1">To revoke core status: remove the target AS from the <code>coreASes</code> sequence.<a href="#section-3.2.8.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.2.8.1-1.2">
-                <p id="section-3.2.8.1-1.2.1">To assign the core status to a given AS, add the respective AS number to the sequence of AS numbers in the <code>coreASes</code> field.<a href="#section-3.2.8.1-1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-3.2.8.1-2.2">
+                <p id="section-3.2.8.1-2.2.1">To assign core status: add the target AS to the <code>coreASes</code> sequence.<a href="#section-3.2.8.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-3.2.8.1-2">Revoking or assigning the core status of/to an AS always requires a sensitive TRC update.<a href="#section-3.2.8.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.8.1-3">Any modification to the <code>coreASes</code> field requires a sensitive TRC update.<a href="#section-3.2.8.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2939,14 +2940,12 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-authoritativeases">
 <a href="#section-3.2.9" class="section-number selfRef">3.2.9. </a><a href="#name-authoritativeases" class="section-name selfRef"><code>authoritativeASes</code></a>
           </h4>
-<p id="section-3.2.9-1">The <code>authoritativeASes</code> field contains the AS numbers of the authoritative ASes in this ISD.<a href="#section-3.2.9-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-1">The <code>authoritativeASes</code> field contains the sequence of the authoritative AS numbers in the ISD.<a href="#section-3.2.9-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-2">Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.<a href="#section-3.2.9-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.9-3.1">
-              <p id="section-3.2.9-3.1.1">Every authoritative AS <span class="bcp14">MUST</span> be a core AS and be listed in the <code>coreASes</code> field.<a href="#section-3.2.9-3.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.9-3.2">
-              <p id="section-3.2.9-3.2.1">Each authoritative AS number <span class="bcp14">MUST</span> be unique in the sequence of authoritative AS numbers. That is, each AS number <span class="bcp14">MUST NOT</span> appear more than once in the <code>authoritativeASes</code> field.<a href="#section-3.2.9-3.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.9-3.1.1">Every authoritative AS <span class="bcp14">MUST</span> be a core AS and be listed in the <code>coreASes</code> field.
+Each AS number in the sequence <span class="bcp14">MUST</span> be unique. Furthermore, each AS number <span class="bcp14">MUST</span> be encoded as a <code>PrintableString</code> using the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation".<a href="#section-3.2.9-3.1.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <div id="revoking-or-assigning-authoritative-status">
@@ -2954,15 +2953,16 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
             <h5 id="name-revoking-or-assigning-autho">
 <a href="#section-3.2.9.1" class="section-number selfRef">3.2.9.1. </a><a href="#name-revoking-or-assigning-autho" class="section-name selfRef">Revoking or Assigning Authoritative Status</a>
             </h5>
+<p id="section-3.2.9.1-1">The set of authoritative ASes can be updated as follows:<a href="#section-3.2.9.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.9.1-1.1">
-                <p id="section-3.2.9.1-1.1.1">To revoke the authoritative status of a given AS, remove the respective AS number from the sequence of AS numbers in the <code>authoritativeASes</code> field.<a href="#section-3.2.9.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.2.9.1-2.1">
+                <p id="section-3.2.9.1-2.1.1">To revoke authoritative status: remove the target AS from the <code>authoritativeASes</code> sequence.<a href="#section-3.2.9.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
-              <li class="normal" id="section-3.2.9.1-1.2">
-                <p id="section-3.2.9.1-1.2.1">To assign the authoritative status to a given AS, add the respective AS number to the sequence of AS numbers in the <code>authoritativeASes</code> field.<a href="#section-3.2.9.1-1.2.1" class="pilcrow">¶</a></p>
+              <li class="normal" id="section-3.2.9.1-2.2">
+                <p id="section-3.2.9.1-2.2.1">To assign authoritative status: dd the target AS to the <code>authoritativeASes</code> sequence.<a href="#section-3.2.9.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-3.2.9.1-2"><strong>Important:</strong> Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.<a href="#section-3.2.9.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.9.1-3"><strong>Important:</strong> Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.<a href="#section-3.2.9.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
