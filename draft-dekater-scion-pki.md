@@ -695,13 +695,8 @@ A TRC can have the following states:
 
 ## TRC Fields {#trcfields}
 
-The TRC defines the roots of trust of an ISD and is the basis of the ISD's Control Plane PKI. It holds the root and voting certificates of the ISD and defines the ISD's trust policy.
-This section describes the syntax and semantics of all TRC payload fields. Its ASN.1 module is in [](#trc-asn1).
-
-The `TRCPayload` sequence contains the identifying information of a TRC as well as policy information for TRC updates. Furthermore, it defines the list of certificates that build the trust anchor of the ISD.
-
-For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}. For more details, see [](#signed-format).
-
+The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in [](#trc-asn1).
+This section describes the syntax and semantics of TRC payload fields that are contained in the `TRCPayload` sequence.
 
 ### `version` Field {#field}
 
@@ -839,10 +834,8 @@ Authoritative ASes are those ASes in an ISD that always have the latest TRCs of 
 
 ### `description` Field {#description}
 
-The `description` field contains a UTF-8 encoded string that describes the ISD.
-
-- The `description` field SHOULD NOT be empty.
-- The description of the ISD MUST be in English. Additionally, the `description` field MAY contain information in other languages.
+The `description` field contains a UTF-8 encoded string that describes the ISD. It SHOULD NOT be empty.
+The description MUST be in English and MAY additionally contain information in other languages.
 
 
 ### `certificates` Field {#cert}
@@ -877,9 +870,9 @@ That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST
 
 ## TRC Signature Syntax {#signed-format}
 
-A TRC contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD.
+To guarantee the integrity and authenticity of the distributed trust anchors, each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
 
-Each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
+For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}.
 
 
 ### SCION-specific rules
