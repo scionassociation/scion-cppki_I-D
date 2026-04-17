@@ -1053,7 +1053,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 18 October 2026</td>
+<td class="center">Expires 19 October 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-04-16" class="published">16 April 2026</time>
+<time datetime="2026-04-17" class="published">17 April 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-10-18">18 October 2026</time></dd>
+<dd class="expires"><time datetime="2026-10-19">19 October 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 18 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 19 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1201,7 +1201,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.2.2.2.1"><a href="#section-2.2" class="auto internal xref">2.2</a>.  <a href="#name-control-plane-root-certific" class="internal xref">Control Plane Root Certificate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.3">
-                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-control-plane-ca-certificat" class="internal xref">Control Plane CA Certificate</a></p>
+                <p id="section-toc.1-1.2.2.3.1"><a href="#section-2.3" class="auto internal xref">2.3</a>.  <a href="#name-control-plane-issuing-ca-ce" class="internal xref">Control Plane Issuing CA Certificate</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.4">
                 <p id="section-toc.1-1.2.2.4.1"><a href="#section-2.4" class="auto internal xref">2.4</a>.  <a href="#name-control-plane-as-certificat" class="internal xref">Control Plane AS Certificate</a></p>
@@ -1218,7 +1218,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.6">
-                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-key-pairs-notations" class="internal xref">Key Pairs Notations</a></p>
+                <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-key-pairs-overview-and-nota" class="internal xref">Key Pairs Overview and Notations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7">
                 <p id="section-toc.1-1.2.2.7.1"><a href="#section-2.7" class="auto internal xref">2.7</a>.  <a href="#name-certificate-specification-2" class="internal xref">Certificate Specification</a></p>
@@ -1353,7 +1353,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.3">
-                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-creating-a-new-control-plan" class="internal xref">Creating a New Control Plane AS Certificate</a></p>
+                <p id="section-toc.1-1.4.2.3.1"><a href="#section-4.3" class="auto internal xref">4.3</a>.  <a href="#name-issuing-a-new-control-plane" class="internal xref">Issuing a New Control Plane AS Certificate</a></p>
 </li>
             </ul>
 </li>
@@ -1536,7 +1536,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <p id="section-1.3-7">To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of <strong>Isolation Domains</strong>. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane (<span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).<a href="#section-1.3-7" class="pilcrow">¶</a></p>
 <p id="section-1.3-8">An ISD is governed by one or multiple ASes, known as the <strong>voting ASes</strong>. Furthermore, each ISD has a set of ASes that form the ISD core, known as the <strong>core ASes</strong>. The set of core and voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the <strong>Trust Root Configuration</strong> (TRC), which is negotiated by the voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.<a href="#section-1.3-8" class="pilcrow">¶</a></p>
 <p id="section-1.3-9">Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.<a href="#section-1.3-9" class="pilcrow">¶</a></p>
-<p id="section-1.3-10">The TRC also provides <em>trust agility</em> - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-10" class="pilcrow">¶</a></p>
+<p id="section-1.3-10">The TRC also provides <em>trust agility</em> - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-10" class="pilcrow">¶</a></p>
 <p id="section-1.3-11">The need for trust agility also means that SCION does not by design provide IP prefix origin validation as provided by RPKI <span>[<a href="#RFC8210" class="cite xref">RFC8210</a>]</span>. RPKI's trust model is currently reliant on the trust roots provided by the five Regional Internet Registries, and therefore outside of the governance of an ISD.<a href="#section-1.3-11" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -1545,7 +1545,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
         <h3 id="name-trust-relations-within-an-i">
 <a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-trust-relations-within-an-i" class="section-name selfRef">Trust Relations within an Isolation Domain</a>
         </h3>
-<p id="section-1.4-1">The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called <strong>base TRC</strong> constitutes the ISD's trust anchor which is signed during a signing ceremony by the voting ASes and then distributed throughout the ISD.<a href="#section-1.4-1" class="pilcrow">¶</a></p>
+<p id="section-1.4-1">The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called <strong>base TRC</strong> constitutes the ISD's trust anchor which is signed during a signing ceremony by the voting ASes and then distributed throughout the ISD.<a href="#section-1.4-1" class="pilcrow">¶</a></p>
 <div id="trust-reset">
 <section id="section-1.4.1">
           <h4 id="name-updates-and-trust-resets">
@@ -1563,7 +1563,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the two mechanisms described above and on short-lived certificates. This approach constitutes an attractive alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.4.2-2.1">
-              <p id="section-1.4.2-2.1.1">Both short-lived certificates and revocation lists must be signed by a CA. Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD.<a href="#section-1.4.2-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-1.4.2-2.1.1">Both short-lived certificates and revocation lists must be signed by a CA. Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL/OCSP checks improves performance by removing additional network lookups during PKI processing.<a href="#section-1.4.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-1.4.2-2.2">
               <p id="section-1.4.2-2.2.1">Even with a revocation system, a compromised key cannot be instantaneously revoked. Through their validity period, both short-lived certificates and revocation lists implicitly define an attack window (i.e. a period during which an attacker who managed to compromise a key could use it before it becomes invalid). In both cases, the CA must consider a tradeoff between efficiency and security when picking this validity period.<a href="#section-1.4.2-2.2.1" class="pilcrow">¶</a></p>
@@ -1588,11 +1588,11 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <path d="M 80,96 L 80,160" fill="none" stroke="black"></path>
                 <path d="M 96,576 L 96,624" fill="none" stroke="black"></path>
                 <path d="M 128,32 L 128,400" fill="none" stroke="black"></path>
+                <path d="M 136,464 L 136,512" fill="none" stroke="black"></path>
                 <path d="M 144,64 L 144,160" fill="none" stroke="black"></path>
                 <path d="M 144,192 L 144,240" fill="none" stroke="black"></path>
                 <path d="M 144,272 L 144,304" fill="none" stroke="black"></path>
                 <path d="M 144,336 L 144,368" fill="none" stroke="black"></path>
-                <path d="M 152,464 L 152,512" fill="none" stroke="black"></path>
                 <path d="M 168,512 L 168,568" fill="none" stroke="black"></path>
                 <path d="M 192,576 L 192,624" fill="none" stroke="black"></path>
                 <path d="M 200,368 L 200,456" fill="none" stroke="black"></path>
@@ -1604,12 +1604,12 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <path d="M 304,192 L 304,240" fill="none" stroke="black"></path>
                 <path d="M 304,272 L 304,304" fill="none" stroke="black"></path>
                 <path d="M 304,576 L 304,624" fill="none" stroke="black"></path>
-                <path d="M 328,464 L 328,512" fill="none" stroke="black"></path>
+                <path d="M 320,464 L 320,512" fill="none" stroke="black"></path>
                 <path d="M 328,576 L 328,624" fill="none" stroke="black"></path>
                 <path d="M 376,368 L 376,456" fill="none" stroke="black"></path>
                 <path d="M 376,512 L 376,568" fill="none" stroke="black"></path>
-                <path d="M 424,464 L 424,512" fill="none" stroke="black"></path>
                 <path d="M 424,576 L 424,624" fill="none" stroke="black"></path>
+                <path d="M 432,464 L 432,512" fill="none" stroke="black"></path>
                 <path d="M 440,64 L 440,160" fill="none" stroke="black"></path>
                 <path d="M 440,192 L 440,240" fill="none" stroke="black"></path>
                 <path d="M 440,272 L 440,304" fill="none" stroke="black"></path>
@@ -1637,10 +1637,10 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <path d="M 144,336 L 440,336" fill="none" stroke="black"></path>
                 <path d="M 144,368 L 440,368" fill="none" stroke="black"></path>
                 <path d="M 128,400 L 456,400" fill="none" stroke="black"></path>
-                <path d="M 152,464 L 248,464" fill="none" stroke="black"></path>
-                <path d="M 328,464 L 424,464" fill="none" stroke="black"></path>
-                <path d="M 152,512 L 248,512" fill="none" stroke="black"></path>
-                <path d="M 328,512 L 424,512" fill="none" stroke="black"></path>
+                <path d="M 136,464 L 248,464" fill="none" stroke="black"></path>
+                <path d="M 320,464 L 432,464" fill="none" stroke="black"></path>
+                <path d="M 136,512 L 248,512" fill="none" stroke="black"></path>
+                <path d="M 320,512 L 432,512" fill="none" stroke="black"></path>
                 <path d="M 96,576 L 192,576" fill="none" stroke="black"></path>
                 <path d="M 208,576 L 304,576" fill="none" stroke="black"></path>
                 <path d="M 328,576 L 424,576" fill="none" stroke="black"></path>
@@ -1697,11 +1697,13 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                   <text x="220" y="356">CP</text>
                   <text x="252" y="356">Root</text>
                   <text x="324" y="356">Certificates</text>
-                  <text x="188" y="484">CP</text>
-                  <text x="212" y="484">CA</text>
-                  <text x="364" y="484">CP</text>
-                  <text x="388" y="484">CA</text>
-                  <text x="200" y="500">Certificate</text>
+                  <text x="148" y="484">CP</text>
+                  <text x="192" y="484">Issuing</text>
+                  <text x="236" y="484">CA</text>
+                  <text x="332" y="484">CP</text>
+                  <text x="376" y="484">Issuing</text>
+                  <text x="420" y="484">CA</text>
+                  <text x="192" y="500">Certificate</text>
                   <text x="376" y="500">Certificate</text>
                   <text x="132" y="596">CP</text>
                   <text x="156" y="596">AS</text>
@@ -1759,7 +1761,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-output">
 <a href="#section-1.6.2" class="section-number selfRef">1.6.2. </a><a href="#name-output" class="section-name selfRef">Output</a>
           </h4>
-<p id="section-1.6.2-1">The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates - the latter being used to verify control plane messages. Together with the ISD's control plane root certificates, the CA and AS certificates build the ISD's trust and verification chain.<a href="#section-1.6.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.6.2-1">The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates - the latter being used to verify control plane messages. Together with the ISD's control plane root certificates, the issuing CA and AS certificates build the ISD's trust and verification chain.<a href="#section-1.6.2-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1771,7 +1773,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
       <h2 id="name-certificate-specification">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-certificate-specification" class="section-name selfRef">Certificate Specification</a>
       </h2>
-<p id="section-2-1">There are three types of Control Plane (CP) certificates: root certificates, CA certificates, and AS certificates. Together, they build a chain of trust that is anchored in the Trust Root Configuration (TRC) file of the respective Isolation Domain (ISD). Additionally, there are regular and sensitive voting certificates which define the keys to cast votes in a regular or sensitive TRC update.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-1">There are three types of Control Plane (CP) certificates: root certificates, issuing CA certificates, and AS certificates. Together, they build a chain of trust that is anchored in the Trust Root Configuration (TRC) file of the respective Isolation Domain (ISD). Additionally, there are regular and sensitive voting certificates which define the keys to cast votes in a regular or sensitive TRC update.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">All certificates in the Control Plane PKI are in X.509 v3 format <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <div id="trust-hierarchy">
 <section id="section-2.1">
@@ -1788,7 +1790,7 @@ TRC
 ── Sensitive Voting Certificates
      └── TRC (next version, sensitive update)
 ── CP Root Certificates
-     └── CP CA Certificates
+     └── CP Issuing CA Certificates
           └── CP AS Certificates
 </pre><a href="#section-2.1-3" class="pilcrow">¶</a>
 </div>
@@ -1799,20 +1801,21 @@ TRC
         <h3 id="name-control-plane-root-certific">
 <a href="#section-2.2" class="section-number selfRef">2.2. </a><a href="#name-control-plane-root-certific" class="section-name selfRef">Control Plane Root Certificate</a>
         </h3>
-<p id="section-2.2-1">The private key of the Control Plane root certificate is used to sign Control Plane CA certificates. Consequently, the public key of the Control Plane Root certificate is used to verify Control Plane CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
-<p id="section-2.2-2">In X.509 terms, Control Plane root certificates are <em>self-signed</em> CA certificates. That is, issuer and subject of the certificate are the same entity, and the public key in the root certificate can be used to verify the root certificate's signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
+<p id="section-2.2-1">The private key of the Control Plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the Control Plane Root certificate is used to verify Control Plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.<a href="#section-2.2-1" class="pilcrow">¶</a></p>
+<p id="section-2.2-2">In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.<a href="#section-2.2-2" class="pilcrow">¶</a></p>
 <p id="section-2.2-3">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a Control Plane root certificate is 1 year.<a href="#section-2.2-3" class="pilcrow">¶</a></p>
 <p id="section-2.2-4"><strong>Note</strong>: The TRC of each ISD contains a trusted set of Control Plane root certificates, and this set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see <a href="#trc-specification" class="auto internal xref">Section 3</a>.<a href="#section-2.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="control-plane-ca-certificate">
+<div id="control-plane-issuing-ca-certificate">
 <section id="section-2.3">
-        <h3 id="name-control-plane-ca-certificat">
-<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-control-plane-ca-certificat" class="section-name selfRef">Control Plane CA Certificate</a>
+        <h3 id="name-control-plane-issuing-ca-ce">
+<a href="#section-2.3" class="section-number selfRef">2.3. </a><a href="#name-control-plane-issuing-ca-ce" class="section-name selfRef">Control Plane Issuing CA Certificate</a>
         </h3>
-<p id="section-2.3-1">The private key of the Control Plane CA is used to sign Control Plane AS certificates. Consequently, Control Plane CA certificates holding the public key of the Control Plane CA are used to verify Control Plane AS certificates.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
-<p id="section-2.3-2">The public key needed to verify the CA certificate is in a Control Plane root certificate. CA certificates do not bundle the root certificate needed to verify them. In order to verify a CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>).<a href="#section-2.3-2" class="pilcrow">¶</a></p>
-<p id="section-2.3-3">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a Control Plane CA certificate is 11 days.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
+<p id="section-2.3-1">The private key of the Control Plane issuing CA certificate is used to sign Control Plane AS certificates. Consequently, Control Plane issuing CA certificates holding the public key of the Control Plane CA are used to verify Control Plane AS certificates.<a href="#section-2.3-1" class="pilcrow">¶</a></p>
+<p id="section-2.3-2">The public key needed to verify the issuing CA certificate is in a Control Plane root certificate. Issuing CA certificates do not bundle the root certificate needed to verify them. In order to verify an issuing CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>).<a href="#section-2.3-2" class="pilcrow">¶</a></p>
+<p id="section-2.3-3">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a Control Plane issuing CA certificate is 11 days.
+This is much shorter than root certificates, which have a longer recommended maximum validity period, because they are part of the TRC of an ISD, which itself also has a longer recommended maximum validity (see <a href="#_table-2" class="auto internal xref">Table 1</a>). This ensures that the TRC need not be updated all the time and is thus relatively stable.<a href="#section-2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="control-plane-as-certificate">
@@ -1848,24 +1851,16 @@ TRC
           </h4>
 <p id="section-2.5.2-1">Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.<a href="#section-2.5.2-1" class="pilcrow">¶</a></p>
 <p id="section-2.5.2-2">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a sensitive voting certificate is 5 years.<a href="#section-2.5.2-2" class="pilcrow">¶</a></p>
-<p id="section-2.5.2-3"><strong>Note</strong>:<a href="#section-2.5.2-3" class="pilcrow">¶</a></p>
-<ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-2.5.2-4.1">
-              <p id="section-2.5.2-4.1.1">Both SCION Control Plane root certificates and Control Plane CA certificates are in fact CA certificates. That is, they can both be used to verify other certificates.<a href="#section-2.5.2-4.1.1" class="pilcrow">¶</a></p>
-<p id="section-2.5.2-4.1.2">One important difference between both certificate types lies in their validity period: A SCION Control Plane root certificate has a <span class="bcp14">RECOMMENDED</span> maximum validity period of one year, whereas the <span class="bcp14">RECOMMENDED</span> maximum validity period of a SCION Control Plane CA certificate is 11 days. This is because a root certificate is part of the TRC of an ISD, which itself also has a <span class="bcp14">RECOMMENDED</span> maximum validity period of one year (see <a href="#_table-2" class="auto internal xref">Table 1</a> below). This ensures that the TRC need not be updated all the time and is thus relatively stable.<a href="#section-2.5.2-4.1.2" class="pilcrow">¶</a></p>
-<p id="section-2.5.2-4.1.3">The SCION root private key and public key/certificate are used to sign and verify the Control Plane CA certificates, respectively. The control plane CA certificates are explicitly NOT part of the TRC, for reasons of security. The Control Plane CA certificates are used to verify the Control Plane AS certificates, which in turn are used to verify control plane messages. Routing is made more secure if both the SCION Control Plane CA and AS certificates can be renewed on a very regular basis. If the control plane CA and AS certificates were part of the TRC, then the TRC would have to be updated constantly, which is undesirable.<a href="#section-2.5.2-4.1.3" class="pilcrow">¶</a></p>
-</li>
-          </ul>
 </section>
 </div>
 </section>
 </div>
 <div id="key-pair-notation">
 <section id="section-2.6">
-        <h3 id="name-key-pairs-notations">
-<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-key-pairs-notations" class="section-name selfRef">Key Pairs Notations</a>
+        <h3 id="name-key-pairs-overview-and-nota">
+<a href="#section-2.6" class="section-number selfRef">2.6. </a><a href="#name-key-pairs-overview-and-nota" class="section-name selfRef">Key Pairs Overview and Notations</a>
         </h3>
-<p id="section-2.6-1"><a href="#_table-2" class="auto internal xref">Table 1</a> and <a href="#_table-3" class="auto internal xref">Table 2</a> below provide an overview of the different types of key pairs and certificates in the control plane PKI.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6-1"><a href="#_table-2" class="auto internal xref">Table 1</a> and <a href="#_table-3" class="auto internal xref">Table 2</a> below provide an overview of certificates and corresponding key pairs.<a href="#section-2.6-1" class="pilcrow">¶</a></p>
 <span id="name-key-chain"></span><div id="_table-2">
 <table class="center" id="table-1">
           <caption>
@@ -1896,7 +1891,7 @@ TRC
               <td class="text-left" rowspan="1" colspan="1">CP root key</td>
               <td class="text-left" rowspan="1" colspan="1">K<sub>root</sub>
 </td>
-              <td class="text-left" rowspan="1" colspan="1">CP CA certificates</td>
+              <td class="text-left" rowspan="1" colspan="1">CP issuing CA certificates</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">CP CA key</td>
@@ -1968,7 +1963,7 @@ TRC
               <td class="text-left" rowspan="1" colspan="1">1 year</td>
             </tr>
             <tr>
-              <td class="text-left" rowspan="1" colspan="1">CP CA certificate</td>
+              <td class="text-left" rowspan="1" colspan="1">CP issuing CA certificate</td>
               <td class="text-left" rowspan="1" colspan="1">C<sub>CA</sub>
 </td>
               <td class="text-left" rowspan="1" colspan="1">SK<sub>root</sub>
@@ -1992,9 +1987,9 @@ TRC
 </div>
 <p id="section-2.6-5">(1) Multiple signatures and certificates of each type <span class="bcp14">MAY</span> be included in a TRC.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
-(3) A validity of 11 days with 4 days overlap between two CA certificates is <span class="bcp14">RECOMMENDED</span> to enable the best possible operational procedures when performing a CA certificate rollover.<a href="#section-2.6-5" class="pilcrow">¶</a></p>
+(3) A validity of 11 days with 4 days overlap between two issuing CA certificates is <span class="bcp14">RECOMMENDED</span> to enable the best possible operational procedures when performing a issuing CA certificate rollover.<a href="#section-2.6-5" class="pilcrow">¶</a></p>
 <p id="section-2.6-6"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.<a href="#section-2.6-6" class="pilcrow">¶</a></p>
-<span id="name-trc-update-chain-and-the-di"></span><div id="_figure-2">
+<span id="name-trc-and-the-different-types"></span><div id="_figure-2">
 <figure id="figure-2">
           <div id="section-2.6-7.1">
             <div class="alignLeft art-svg artwork" id="section-2.6-7.1.1">
@@ -2007,15 +2002,15 @@ TRC
                 <path d="M 40,400 L 40,432" fill="none" stroke="black"></path>
                 <path d="M 40,464 L 40,496" fill="none" stroke="black"></path>
                 <path d="M 40,592 L 40,656" fill="none" stroke="black"></path>
-                <path d="M 56,736 L 56,784" fill="none" stroke="black"></path>
+                <path d="M 48,736 L 48,784" fill="none" stroke="black"></path>
                 <path d="M 56,832 L 56,880" fill="none" stroke="black"></path>
                 <path d="M 88,592 L 88,656" fill="none" stroke="black"></path>
                 <path d="M 104,592 L 104,656" fill="none" stroke="black"></path>
                 <path d="M 104,784 L 104,824" fill="none" stroke="black"></path>
                 <path d="M 128,656 L 128,728" fill="none" stroke="black"></path>
                 <path d="M 152,592 L 152,656" fill="none" stroke="black"></path>
-                <path d="M 152,736 L 152,784" fill="none" stroke="black"></path>
                 <path d="M 152,832 L 152,880" fill="none" stroke="black"></path>
+                <path d="M 160,736 L 160,784" fill="none" stroke="black"></path>
                 <path d="M 168,592 L 168,656" fill="none" stroke="black"></path>
                 <path d="M 176,400 L 176,432" fill="none" stroke="black"></path>
                 <path d="M 176,464 L 176,496" fill="none" stroke="black"></path>
@@ -2026,8 +2021,8 @@ TRC
                 <path d="M 216,592 L 216,656" fill="none" stroke="black"></path>
                 <path d="M 224,256 L 224,320" fill="none" stroke="black"></path>
                 <path d="M 224,432 L 224,496" fill="none" stroke="black"></path>
+                <path d="M 224,736 L 224,784" fill="none" stroke="black"></path>
                 <path d="M 232,592 L 232,656" fill="none" stroke="black"></path>
-                <path d="M 232,736 L 232,784" fill="none" stroke="black"></path>
                 <path d="M 232,832 L 232,880" fill="none" stroke="black"></path>
                 <path d="M 256,656 L 256,728" fill="none" stroke="black"></path>
                 <path d="M 272,256 L 272,320" fill="none" stroke="black"></path>
@@ -2036,10 +2031,10 @@ TRC
                 <path d="M 280,784 L 280,824" fill="none" stroke="black"></path>
                 <path d="M 288,256 L 288,320" fill="none" stroke="black"></path>
                 <path d="M 288,432 L 288,496" fill="none" stroke="black"></path>
-                <path d="M 328,736 L 328,784" fill="none" stroke="black"></path>
                 <path d="M 328,832 L 328,880" fill="none" stroke="black"></path>
                 <path d="M 336,256 L 336,320" fill="none" stroke="black"></path>
                 <path d="M 336,432 L 336,496" fill="none" stroke="black"></path>
+                <path d="M 336,736 L 336,784" fill="none" stroke="black"></path>
                 <path d="M 368,80 L 368,176" fill="none" stroke="black"></path>
                 <path d="M 368,208 L 368,336" fill="none" stroke="black"></path>
                 <path d="M 368,368 L 368,512" fill="none" stroke="black"></path>
@@ -2079,10 +2074,10 @@ TRC
                 <path d="M 232,656 L 280,656" fill="none" stroke="black"></path>
                 <path d="M 24,672 L 368,672" fill="none" stroke="black"></path>
                 <path d="M 8,688 L 384,688" fill="none" stroke="black"></path>
-                <path d="M 56,736 L 152,736" fill="none" stroke="black"></path>
-                <path d="M 232,736 L 328,736" fill="none" stroke="black"></path>
-                <path d="M 56,784 L 152,784" fill="none" stroke="black"></path>
-                <path d="M 232,784 L 328,784" fill="none" stroke="black"></path>
+                <path d="M 48,736 L 160,736" fill="none" stroke="black"></path>
+                <path d="M 224,736 L 336,736" fill="none" stroke="black"></path>
+                <path d="M 48,784 L 160,784" fill="none" stroke="black"></path>
+                <path d="M 224,784 L 336,784" fill="none" stroke="black"></path>
                 <path d="M 56,832 L 152,832" fill="none" stroke="black"></path>
                 <path d="M 232,832 L 328,832" fill="none" stroke="black"></path>
                 <path d="M 56,880 L 152,880" fill="none" stroke="black"></path>
@@ -2168,10 +2163,12 @@ TRC
                   <text x="196" y="644">root</text>
                   <text x="260" y="644">root</text>
                   <text x="304" y="644">...</text>
-                  <text x="92" y="756">CP</text>
-                  <text x="116" y="756">CA</text>
-                  <text x="268" y="756">CP</text>
-                  <text x="292" y="756">CA</text>
+                  <text x="60" y="756">CP</text>
+                  <text x="104" y="756">Issuing</text>
+                  <text x="148" y="756">CA</text>
+                  <text x="236" y="756">CP</text>
+                  <text x="280" y="756">Issuing</text>
+                  <text x="324" y="756">CA</text>
                   <text x="104" y="772">Certificate</text>
                   <text x="280" y="772">Certificate</text>
                   <text x="92" y="852">CP</text>
@@ -2185,7 +2182,7 @@ TRC
 </div>
 </div>
 <figcaption><a href="#figure-2" class="selfRef">Figure 2</a>:
-<a href="#name-trc-update-chain-and-the-di" class="selfRef">TRC update chain and the different types of associated certificates. Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.</a>
+<a href="#name-trc-and-the-different-types" class="selfRef">TRC and the different types of associated certificates. Arrows indicate the certificate hierarchy.</a>
           </figcaption></figure>
 </div>
 </section>
@@ -2334,8 +2331,8 @@ TRC
 <p id="section-2.7.1.2.1-3">The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
                 <code>id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}</code><a href="#section-2.7.1.2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.7.1.2.1-4">The string representation of the <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> follow the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.<a href="#section-2.7.1.2.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.7.1.2.1-5">Voting AS and CA certificates <span class="bcp14">MUST</span> include the <code>ISD-AS number</code> attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the <code>issuer</code> or <code>subject</code> field respectively. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates whose <code>issuer</code> and <code>subject</code> fields do not include the ISD-AS number at all, or include it more than once.<a href="#section-2.7.1.2.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.7.1.2.1-6">For CA certificates, the inclusion of the <code>ISD-AS number</code> ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.<a href="#section-2.7.1.2.1-6" class="pilcrow">¶</a></p>
+<p id="section-2.7.1.2.1-5">Voting AS and issuing CA certificates <span class="bcp14">MUST</span> include the <code>ISD-AS number</code> attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the <code>issuer</code> or <code>subject</code> field respectively. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates whose <code>issuer</code> and <code>subject</code> fields do not include the ISD-AS number at all, or include it more than once.<a href="#section-2.7.1.2.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.7.1.2.1-6">For issuing CA certificates, the inclusion of the <code>ISD-AS number</code> ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.<a href="#section-2.7.1.2.1-6" class="pilcrow">¶</a></p>
 <p id="section-2.7.1.2.1-7">Voting-only certificates are not required to include the <code>ISD-AS number</code> attribute in their distinguished name.<a href="#section-2.7.1.2.1-7" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2431,7 +2428,7 @@ TRC
                 <tr>
                   <th class="text-left" rowspan="1" colspan="1">Certificate Type</th>
                   <th class="text-left" rowspan="1" colspan="1">Root</th>
-                  <th class="text-left" rowspan="1" colspan="1">CA</th>
+                  <th class="text-left" rowspan="1" colspan="1">Issuing CA</th>
                   <th class="text-left" rowspan="1" colspan="1">AS</th>
                   <th class="text-left" rowspan="1" colspan="1">Voting</th>
                 </tr>
@@ -2490,7 +2487,7 @@ TRC
             </table>
 </div>
 <p id="section-2.7.2.3-9">(1)  Root certificates <span class="bcp14">SHOULD NOT</span> be used to verify control plane messages.<br>
-(2)  CA certificates <span class="bcp14">SHOULD NOT</span> be used to verify control plane messages.<a href="#section-2.7.2.3-9" class="pilcrow">¶</a></p>
+(2)  Issuing CA certificates <span class="bcp14">SHOULD NOT</span> be used to verify control plane messages.<a href="#section-2.7.2.3-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ext-key-usage-ext">
@@ -2523,7 +2520,7 @@ TRC
                 <tr>
                   <th class="text-left" rowspan="1" colspan="1">Certificate Type</th>
                   <th class="text-left" rowspan="1" colspan="1">Root</th>
-                  <th class="text-left" rowspan="1" colspan="1">CA</th>
+                  <th class="text-left" rowspan="1" colspan="1">Issuing CA</th>
                   <th class="text-left" rowspan="1" colspan="1">AS</th>
                   <th class="text-left" rowspan="1" colspan="1">Voting</th>
                 </tr>
@@ -2654,7 +2651,7 @@ TRC
                 <tr>
                   <th class="text-left" rowspan="1" colspan="1">Certificate Type</th>
                   <th class="text-left" rowspan="1" colspan="1">Root</th>
-                  <th class="text-left" rowspan="1" colspan="1">CA</th>
+                  <th class="text-left" rowspan="1" colspan="1">Issuing CA</th>
                   <th class="text-left" rowspan="1" colspan="1">AS</th>
                   <th class="text-left" rowspan="1" colspan="1">Voting (regular and sensitive)</th>
                 </tr>
@@ -2740,7 +2737,7 @@ TRC
             <p id="section-3.1-2.1.1">Initial: The very first TRC of an ISD is the initial TRC of that ISD. It is a special case of the base TRC, where the number of the ISD is specified.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.2">
-            <p id="section-3.1-2.2.1">Base: A base TRC is either the initial TRC, or the first TRC after a trust reset (see <a href="#trust-reset" class="auto internal xref">Section 1.4.1</a>). Trust for a base TRC cannot be inferred by verifying a TRC update; base TRCs are trusted axiomatically, similarly to how root CA certificates are trusted by clients in the Web PKI.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-2.2.1">Base: A base TRC is either the initial TRC, or the first TRC after a trust reset (see <a href="#trust-reset" class="auto internal xref">Section 1.4.1</a>). Trust for a base TRC cannot be inferred by verifying a TRC update; base TRCs are trusted axiomatically, similarly to how root certificates are trusted by clients in the Web PKI.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.3">
             <p id="section-3.1-2.3.1">Update: All non-base TRCs are updated TRCs. They are the product of either a regular or a sensitive update.<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
@@ -3074,7 +3071,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
           <h4 id="name-scion-specific-rules">
 <a href="#section-3.3.1" class="section-number selfRef">3.3.1. </a><a href="#name-scion-specific-rules" class="section-name selfRef">SCION-specific rules</a>
           </h4>
-<p id="section-3.3.1-1">SCION implementations <span class="bcp14">MUST</span> fulfil the following additional rules, as well as the general syntax rules specified in <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>:<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.3.1-1">SCION implementations <span class="bcp14">MUST</span> fulfill the following additional rules, as well as the general syntax rules specified in <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>:<a href="#section-3.3.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.3.1-2.1">
               <p id="section-3.3.1-2.1.1"><code>EncapsulatedContentInfo</code> sequence:<a href="#section-3.3.1-2.1.1" class="pilcrow">¶</a></p>
@@ -3149,7 +3146,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-certification-path-trust-an" class="section-name selfRef">Certification Path - Trust Anchor Pool</a>
         </h3>
 <p id="section-3.4-1">The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">However, AS certificates and the corresponding signing CA certificates are <strong>not</strong> part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">However, AS certificates and the corresponding issuing CA certificates are <strong>not</strong> part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
 <p id="section-3.4-3">The following section explains how to build a trust anchor pool.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 <p id="section-3.4-4"><strong>Note:</strong> Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, <span class="bcp14">MUST</span> be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party <span class="bcp14">MUST</span> query the originator of the message for the missing material through the control plane API described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
 <div id="trc-selection">
@@ -3528,8 +3525,8 @@ Any TRC can be obtained at any time from the sender of the information it secure
 <a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-verifying-a-control-plane-m" class="section-name selfRef">Verifying a Control Plane Message</a>
           </h4>
 <p id="section-4.2.2-1">To verify a received control plane message, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-2">AS certificates are bundled together with the corresponding signing CA certificate into certificate chains. For efficiency, SCION distributes these certificate chains separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-3">A certificate chain is verified against the Control Plane root certificate, although the the root certificate is bundled with the TRC and <strong>not</strong> in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-2">AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, SCION distributes these certificate chains separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-3">A certificate chain is verified against the Control Plane root certificate, although the root certificate is bundled with the TRC and <strong>not</strong> in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-4">To verify a control plane message, the relying party <span class="bcp14">MUST</span> perform the following steps:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.2.2-5">
 <li id="section-4.2.2-5.1">
@@ -3584,12 +3581,12 @@ Any TRC can be obtained at any time from the sender of the information it secure
 </div>
 </section>
 </div>
-<div id="creating-a-new-control-plane-as-certificate">
+<div id="issuing-a-new-control-plane-as-certificate">
 <section id="section-4.3">
-        <h3 id="name-creating-a-new-control-plan">
-<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-creating-a-new-control-plan" class="section-name selfRef">Creating a New Control Plane AS Certificate</a>
+        <h3 id="name-issuing-a-new-control-plane">
+<a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-issuing-a-new-control-plane" class="section-name selfRef">Issuing a New Control Plane AS Certificate</a>
         </h3>
-<p id="section-4.3-1">The steps <span class="bcp14">REQUIRED</span> to create a new AS certificate are the following:<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">The steps <span class="bcp14">REQUIRED</span> to issue a new AS certificate are the following:<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.3-2">
 <li id="section-4.3-2.1">
             <p id="section-4.3-2.1.1">The AS creates a new key pair and a certificate signing request (CSR) using that key pair.<a href="#section-4.3-2.1.1" class="pilcrow">¶</a></p>
@@ -3670,10 +3667,10 @@ ASes should then be able to quickly switch over to a backup CA to renew their ce
 <p id="section-6.1-1">In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-2.1">
-            <p id="section-6.1-2.1.1">At TRC level: The private root keys of the root certificates contained in an TRC are used to sign CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.1.1">At TRC level: The private root keys of the root certificates contained in an TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-2.2">
-            <p id="section-6.1-2.2.1">At CA level: The private keys of an ISD's CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.2.1">At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-2.3">
             <p id="section-6.1-2.3.1">At AS level: Each AS within an ISD signs control plane messages with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control plane messages including Path Construction Beacons (PCBs). This means that the adversary can manipulate the PCBs and propagate them to neighboring ASes or register/store them as path segments.<a href="#section-6.1-2.3.1" class="pilcrow">¶</a></p>
@@ -3691,7 +3688,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
               <p id="section-6.1.1-2.1.1">At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC <span class="bcp14">MUST</span> be updated as described in <a href="#update" class="auto internal xref">Section 3.5</a>. A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and a invalid update has been produced and distributed in the network.<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.2">
-              <p id="section-6.1.1-2.2.1">At CA level: If the private key related to a CA certificate is compromised, the impacted CA AS <span class="bcp14">MUST</span> obtain a new CA certificate from the corresponding root AS. CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-2.2.1">At CA level: If the private key related to a issuing CA certificate is compromised, the impacted CA AS <span class="bcp14">MUST</span> obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.3">
               <p id="section-6.1.1-2.3.1">At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
@@ -4052,13 +4049,16 @@ END
             <p id="appendix-C.1-1.1.1">Overall review and wording polish<a href="#appendix-C.1-1.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.2">
-            <p id="appendix-C.1-1.2.1">Reduce number of headings in sections 2 and 3<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.2.1">Consistently use "Issuing CA certificate" / root certificate"<a href="#appendix-C.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.3">
-            <p id="appendix-C.1-1.3.1">Tables 3-7: sharpen normative language use<a href="#appendix-C.1-1.3.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.3.1">Reduce number of headings in sections 2 and 3<a href="#appendix-C.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-1.4">
-            <p id="appendix-C.1-1.4.1">TRC: add ASN.1 module in appendix<a href="#appendix-C.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-1.4.1">Tables 3-7: sharpen normative language use<a href="#appendix-C.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-C.1-1.5">
+            <p id="appendix-C.1-1.5.1">TRC: add ASN.1 module in appendix<a href="#appendix-C.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -4210,7 +4210,7 @@ END
       <h2 id="name-acknowledgments">
 <a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="appendix-D-1">Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google), Ramon Keller (LibC Technologies) and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of <span>[<a href="#CHUAT22" class="cite xref">CHUAT22</a>]</span> - the book is an important source of input and inspiration for this draft.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
+<p id="appendix-D-1">Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of <span>[<a href="#CHUAT22" class="cite xref">CHUAT22</a>]</span> - the book is an important source of input and inspiration for this draft.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="authors-addresses">
