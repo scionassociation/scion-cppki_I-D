@@ -443,50 +443,20 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
 
-`TBSCertificate` sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:
+The following subsections define the specific constraints for the fields contained in the `TBSCertificate` sequence.
 
-- `version` field: Describes the version of the encoded certificate. It MUST be set to "v3" (as extensions are REQUIRED in SCION).
-- `serialNumber` field: A positive integer assigned by the CA to each certificate. It MUST be unique for each certificate issued by a given CA.
-- `signature` field: Contains the identifier for the algorithm used by the CA to sign the certificate.
+### `version`
 
-  - **SCION constraints**: supported signatures are described in [](#certsign).
-  - **Additional conditions and remarks**: As a consequence, the `parameters` field in the `AlgorithmIdentifier` sequence MUST NOT be used.
+The `version` field describes the version of the encoded certificate. It MUST be set to "v3" because extensions are required.
 
-- `issuer` field: Contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA).
+### `serialNumber`
 
-  - **SCION constraints**:
+The `serialNumber` field contains a positive integer assigned by the CA to each certificate. It MUST be unique for each certificate issued by a given CA.
 
-    - This field MUST be non-empty.
+### `signature` {#certsign}
 
-  - **Additional conditions and remarks**: All SCION implementations MUST support the additional SCION-specific attribute `ISD-AS number`. For details, see [](#issuer) and [](#isd-as-nr).
-
-- `validity` field: Defines the validity period of the certificate.
-
-  - **SCION constraints**: All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
-  - **Additional conditions and remarks**: SCION recommends a specific maximum validity period for each type of certificate. For details, see [](#key-pair-notation). SCION implementations SHOULD adopt these values.
-
-- `subject` field: Defines the entity that owns the certificate.
-
-  - **SCION constraints**:
-
-    - This field MUST be non-empty.
-
-  - **Additional conditions and remarks**: The `subject` field is specified in the same way as the `issuer` field. For details, see [](#issuer) and [](#isd-as-nr).
-
-- `subjectPublicKeyInfo` field: Carries the public key of the certificate's subject (the entity that owns the certificate, as defined in the `subject` field). The `subjectPublicKeyInfo` field also identifies which algorithm to use with the key.
-
-  - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
-
-- `issuerUniqueID` field: it MUST NOT be used in SCION.
-
-- `subjectUniqueID` field: it MUST NOT be used in SCION.
-
-- `extensions` sequence: Defines the extensions of the certificate. For a description of all extensions used in SCION, see [](#exts).
-
-
-### `signature` Field  {#certsign}
-
-The `signature` field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
+The `signature` field contains the identifier for the signature algorithm used by the CA to sign the certificate. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
+As a consequence, the `parameters` field in the `AlgorithmIdentifier` sequence MUST NOT be used.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
@@ -506,27 +476,49 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
 
-### `issuer` Field  {#issuer}
+### `issuer` {#issuer}
 
-The `issuer` field contains the distinguished name (DN) of the CA that created the certificate. {{RFC5280}}, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`. See [](#isd-as-nr).
+The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
+All SCION implementations MUST support the additional SCION-specific attribute `ISD-AS number`. For details, see below and [](#isd-as-nr).
 
-#### `ISD-AS number` Attribute {#isd-as-nr}
+In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`.
 
-The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open source implementation, the attribute type is `id-at-ia`, defined as:<br>
-`id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}`
+#### `id-at-ia` Attribute {#isd-as-nr}
 
-where `id-scion` specifies the root SCION object identifier (OID).
+The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in [](#cert-asn1).
 
-The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
-`id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
-
-The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The string representation of the `ISD-AS number` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
 Voting AS and issuing CA certificates MUST include the `ISD-AS number` attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
 For issuing CA certificates, the inclusion of the `ISD-AS number` ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.
 
 Voting-only certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
+
+### `validity`
+
+The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
+The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
+
+### `subject`
+
+The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
+The `subject` field is specified in the same way as the `issuer` field. For details, see [](#issuer) and [](#isd-as-nr).
+
+### `subjectPublicKeyInfo`
+
+The `subjectPublicKeyInfo` field carries the public key of the certificate's subject (the entity that owns the certificate, as defined in the `subject` field). The `subjectPublicKeyInfo` field also identifies which algorithm to use with the key.
+
+  - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
+
+### `issuerUniqueID`
+
+The `issuerUniqueID` field MUST NOT be used.
+
+### `subjectUniqueID`
+
+The `subjectUniqueID` field MUST NOT be used.
+
 
 ## Extensions {#exts}
 
@@ -682,7 +674,7 @@ The following types of TRCs exist:
 
 A TRC can have the following states:
 
-- Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity)). A TRC is considered valid if the current time falls within its validity period.
+- Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity-trc)). A TRC is considered valid if the current time falls within its validity period.
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the `gracePeriod` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
 
 {{figure-2}} shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.
@@ -726,7 +718,7 @@ The following example illustrates how to specify the ID of the TRCs in an TRC up
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
 
-### `validity` {#validity}
+### `validity` {#validity-trc}
 
 The `validity` field defines the TRC validity period. The `notBefore` and `notAfter` attributes of the `validity` field specify the lower and upper bound of the time interval during which a TRC can be active.
 
@@ -782,7 +774,7 @@ A voting quorum greater than one will prevent a single entity from creating a ma
 
 The `coreASes` field contains a sequence listing the core AS numbers within the ISD.
 
-Each AS number MUST be unique and encoded as a `PrintableString` using the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation".
+Each AS number MUST be unique and encoded as a `PrintableString` using the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation".
 
 To assign or revoke core status, the target AS number is added to or removed from this sequence. For such modification, a sensitive TRC update is REQUIRED.
 
@@ -1175,7 +1167,7 @@ SCION fundamentally differs from a global monopolistic trust model as each ISD m
 This section discussed implication of such trust architecture, covering *inter*-AS security considerations. All *intra*-AS trust- and security aspects are out of scope.
 
 
-### Compromise of an ISD
+## Compromise of an ISD
 
 In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:
 
@@ -1337,7 +1329,7 @@ The participants MUST decide in advance on the physical location of the Signing 
 
 - ISD number - usually obtained from the SCION registry, see [](#id);
 - The description of the TRC, see [](#description);
-- Validity period of the TRC, see [](#validity);
+- Validity period of the TRC, see [](#validity-trc);
 - Grace period of the TRC (except for Base TRCs);
 - Voting quorum for the TRC, see [](#quorum);
 - AS numbers of the Core ASes, see [](#core);
@@ -1360,7 +1352,7 @@ The Ceremony Administrator MUST provide or be provided with a device to exchange
 The Signing Ceremony SHOULD include a procedure to verify that all devices are secure.
 
 
-## Ceremony Process {#ceremonyprocess}
+## Ceremony Phases {#ceremonyprocess}
 
 The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
 
@@ -1422,6 +1414,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Consistently use "Issuing CA certificate" / root certificate"
 - Reduce number of headings in sections 2 and 3
 - Tables 3-7: sharpen normative language use
+- Certificate fields: reorganize headings, add ASN.1 module with definitions in appendix
 - TRC: add ASN.1 module in appendix and reword field descriptions. Clarify that TRC validity uses GeneralizedTime
 
 ## draft-dekater-scion-pki-11
