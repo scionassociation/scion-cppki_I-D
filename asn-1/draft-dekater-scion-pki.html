@@ -2760,10 +2760,8 @@ This is much shorter than root certificates, which have a longer recommended max
         <h3 id="name-trc-fields">
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-trc-fields" class="section-name selfRef">TRC Fields</a>
         </h3>
-<p id="section-3.2-1">The TRC defines the roots of trust of an ISD and is the basis of the ISD's Control Plane PKI. It holds the root and voting certificates of the ISD and defines the ISD's trust policy.
-This section describes the syntax and semantics of all TRC payload fields. Its ASN.1 module is in <a href="#trc-asn1" class="auto internal xref">Appendix A</a>.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.2-2">The <code>TRCPayload</code> sequence contains the identifying information of a TRC as well as policy information for TRC updates. Furthermore, it defines the list of certificates that build the trust anchor of the ISD.<a href="#section-3.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.2-3">For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) <span>[<a href="#X.690" class="cite xref">X.690</a>]</span>. For more details, see <a href="#signed-format" class="auto internal xref">Section 3.3</a>.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-1">The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in <a href="#trc-asn1" class="auto internal xref">Appendix A</a>.
+This section describes the syntax and semantics of TRC payload fields that are contained in the <code>TRCPayload</code> sequence.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <div id="field">
 <section id="section-3.2.1">
           <h4 id="name-version-field">
@@ -2995,15 +2993,8 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-description-field">
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description-field" class="section-name selfRef"><code>description</code> Field</a>
           </h4>
-<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD.<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2.10-2.1">
-              <p id="section-3.2.10-2.1.1">The <code>description</code> field <span class="bcp14">SHOULD NOT</span> be empty.<a href="#section-3.2.10-2.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.10-2.2">
-              <p id="section-3.2.10-2.2.1">The description of the ISD <span class="bcp14">MUST</span> be in English. Additionally, the <code>description</code> field <span class="bcp14">MAY</span> contain information in other languages.<a href="#section-3.2.10-2.2.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
+<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. It <span class="bcp14">SHOULD NOT</span> be empty.
+The description <span class="bcp14">MUST</span> be in English and <span class="bcp14">MAY</span> additionally contain information in other languages.<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cert">
@@ -3064,8 +3055,8 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
         <h3 id="name-trc-signature-syntax">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-trc-signature-syntax" class="section-name selfRef">TRC Signature Syntax</a>
         </h3>
-<p id="section-3.3-1">A TRC contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
-<p id="section-3.3-2">Each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>, and is encapsulated in a CMS <code>ContentInfo</code> element, as defined in Section 3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">To guarantee the integrity and authenticity of the distributed trust anchors, each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>, and is encapsulated in a CMS <code>ContentInfo</code> element, as defined in Section 3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-2">For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) <span>[<a href="#X.690" class="cite xref">X.690</a>]</span>.<a href="#section-3.3-2" class="pilcrow">¶</a></p>
 <div id="scion-specific-rules">
 <section id="section-3.3.1">
           <h4 id="name-scion-specific-rules">
