@@ -439,14 +439,9 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 ~~~~
 {: #figure-2 title="TRC and the different types of associated certificates. Arrows indicate the certificate hierarchy."}
 
-## X.509 Certificate Profiles
+## X.509 Certificate Profiles and Constraints
 
-Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, the SCION specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}.
-
-
-### Constraints on Basic Fields
-
-The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and {{X.509}} clause 7.2.
+Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
 
 `TBSCertificate` sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:
 
@@ -489,7 +484,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 - `extensions` sequence: Defines the extensions of the certificate. For a description of all extensions used in SCION, see [](#exts).
 
 
-#### `signature` Field  {#certsign}
+### `signature` Field  {#certsign}
 
 The `signature` field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
 
@@ -511,11 +506,11 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
 
-#### `issuer` Field  {#issuer}
+### `issuer` Field  {#issuer}
 
 The `issuer` field contains the distinguished name (DN) of the CA that created the certificate. {{RFC5280}}, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`. See [](#isd-as-nr).
 
-##### `ISD-AS number` Attribute {#isd-as-nr}
+#### `ISD-AS number` Attribute {#isd-as-nr}
 
 The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open source implementation, the attribute type is `id-at-ia`, defined as:<br>
 `id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}`
@@ -533,7 +528,7 @@ For issuing CA certificates, the inclusion of the `ISD-AS number` ensures the Co
 
 Voting-only certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
-### Extensions {#exts}
+## Extensions {#exts}
 
 {{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2 and clause 9, respectively.
 
@@ -547,7 +542,7 @@ The following extensions are relevant for the SCION PKI:
 
 The following sections describe the SCION-specifics in regard to these extensions.
 
-#### `authorityKeyIdentifier` Extension
+### `authorityKeyIdentifier` Extension
 
 The `authorityKeyIdentifier` extension identifies the public key corresponding to the private key used to sign a certificate.
 
@@ -565,7 +560,7 @@ SCION implementations MAY also support the use of the `authorityCertIssuer` and 
 
 This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
 
-#### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
+### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
 
 The `subjectKeyIdentifier` extension identifies certificates that contain a particular public key. It can be used, for example, by control plane messages to identify which certificate to use for verification. The extension allows for overlapping control plane CA keys, for example during updates.
 
@@ -573,7 +568,7 @@ For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC
 
 This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present.
 
-#### `keyUsage` Extension {#key-usage-ext}
+### `keyUsage` Extension {#key-usage-ext}
 
 The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. For the syntax and definition of the `keyUsage` extension, see {{RFC5280}}, section 4.2.1.3, and {{X.509}}, clause 9.2.2.3.
 
@@ -602,7 +597,7 @@ Each Control Plane PKI certificate type uses the public key differently, and con
 (2)  Issuing CA certificates SHOULD NOT be used to verify control plane messages.
 
 
-#### `extKeyUsage` Extension {#ext-key-usage-ext}
+### `extKeyUsage` Extension {#ext-key-usage-ext}
 
 The `extKeyUsage` extension specifies additional usages of the public key in the certificate. For the syntax and definition of the `extKeyUsage` extension, see {{X.509}}, clause 9.2.2.4.
 
@@ -628,7 +623,7 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 
 **Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
 
-##### SCION-Specific Attributes {#specatt}
+#### SCION-Specific Attributes {#specatt}
 
 The `id-kp-root`, `id-kp-regular`, and `id-kp-sensitive` attributes MUST be specified as follows:
 
@@ -642,7 +637,7 @@ The root SCION object identifier (OID) for the SCION open-source implementation 
 `id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
 
 
-#### `basicConstraints` Extension {#basic-constr-ext}
+### `basicConstraints` Extension {#basic-constr-ext}
 
 The `basicConstraints` extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the `basicConstraints` extension, see {{X.509}}, clause 9.4.2.1.
 
@@ -1229,6 +1224,41 @@ The ISD and SCION AS number are SCION-specific numbers. They are currently alloc
 
 
 --- back
+
+# Certificate Extensions in ASN.1 Syntax {#cert-asn1}
+
+~~~~
+SCION-CP-PKI-CERT-EXTENSIONS {
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) id-scion-pki-cert-ext(101)
+}
+
+DEFINITIONS EXPLICIT TAGS ::=
+BEGIN
+
+-- Root SCION object identifier (IANA Private Enterprise Number 55324)
+id-scion OBJECT IDENTIFIER ::= { 1 3 6 1 4 1 55324 }
+
+-- SCION Control Plane PKI
+id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
+
+-- SCION ISD-AS Attribute
+id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
+
+-- SCION Key Purposes
+id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
+
+-- Identifies a Sensitive voting certificate
+id-kp-sensitive OBJECT IDENTIFIER ::= { id-scion-kp 1 }
+
+-- Identifies a Regular voting certificate
+id-kp-regular   OBJECT IDENTIFIER ::= { id-scion-kp 2 }
+
+-- Identifies a Root certificate
+id-kp-root      OBJECT IDENTIFIER ::= { id-scion-kp 3 }
+
+END
+~~~~
 
 # TRC in ASN.1 Syntax {#trc-asn1}
 
