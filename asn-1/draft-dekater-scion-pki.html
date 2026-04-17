@@ -2957,11 +2957,11 @@ The description <span class="bcp14">MUST</span> be in English and <span class="b
 </li>
           </ul>
 <p id="section-3.2.11-4">A certificate that is no control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-5"><strong>Note</strong>: A certificate's type (voting or root) is specified in the <code>extKeyUsage</code> extension of the certificate, by means of the SCION-specific attributes <code>id-kp-regular</code>, <code>id-kp-sensitive</code>, and <code>id-kp-root</code>, respectively. For more information, see <a href="#ext-key-usage-ext" class="auto internal xref">Section 2.7.2.4</a>.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-5">A certificate's type (voting or root) is specified in the <code>extKeyUsage</code> extension of the certificate, by means of the SCION-specific attributes <code>id-kp-regular</code>, <code>id-kp-sensitive</code>, and <code>id-kp-root</code>, respectively. For more information, see <a href="#ext-key-usage-ext" class="auto internal xref">Section 2.7.2.4</a>.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-6">The following constraints <span class="bcp14">MUST</span> hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.11-7.1">
-              <p id="section-3.2.11-7.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates. That is, each certificate <span class="bcp14">MUST NOT</span> appear more than once in the <code>certificates</code> field.<a href="#section-3.2.11-7.1.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.11-7.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates.<a href="#section-3.2.11-7.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.11-7.2">
               <p id="section-3.2.11-7.2.1">The <code>issuer</code> / <code>serialNumber</code> pair for each certificate <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.11-7.2.1" class="pilcrow">¶</a></p>
@@ -2980,11 +2980,11 @@ The description <span class="bcp14">MUST</span> be in English and <span class="b
 <ul class="normal">
 <li class="normal" id="section-3.2.11-9.1">
               <p id="section-3.2.11-9.1.1"><code>votingQuorum</code> &lt;= count (sensitive voting certificates) <br>
-That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of <em>sensitive</em> voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.1.1" class="pilcrow">¶</a></p>
+That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of sensitive voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.11-9.2">
               <p id="section-3.2.11-9.2.1"><code>votingQuorum</code> &lt;= count (regular voting certificates) <br>
-That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of <em>regular</em> voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.2.1" class="pilcrow">¶</a></p>
+That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of regular voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3078,9 +3078,9 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-certification-path-trust-an" class="section-name selfRef">Certification Path - Trust Anchor Pool</a>
         </h3>
 <p id="section-3.4-1">The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">However, AS certificates and the corresponding issuing CA certificates are <strong>not</strong> part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
-<p id="section-3.4-3">The following section explains how to build a trust anchor pool.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
-<p id="section-3.4-4"><strong>Note:</strong> Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, <span class="bcp14">MUST</span> be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party <span class="bcp14">MUST</span> query the originator of the message for the missing material through the control plane API described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">However, AS certificates and the corresponding issuing CA certificates are not part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
+The following section explains how to build a trust anchor pool.<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-3">Note that any entity sending information that is secured by the Control Plane PKI, such as control plane messages, <span class="bcp14">MUST</span> be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party <span class="bcp14">MUST</span> query the originator of the message for the missing material through the control plane API described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>.<a href="#section-3.4-3" class="pilcrow">¶</a></p>
 <div id="trc-selection">
 <section id="section-3.4.1">
           <h4 id="name-trc-selection-for-trust-anc">

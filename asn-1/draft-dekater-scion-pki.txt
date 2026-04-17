@@ -1506,17 +1506,15 @@ Table of Contents
    MUST NOT be included in the sequence of certificates in the
    certificates field.
 
-   *Note*: A certificate's type (voting or root) is specified in the
-   extKeyUsage extension of the certificate, by means of the SCION-
-   specific attributes id-kp-regular, id-kp-sensitive, and id-kp-root,
+   A certificate's type (voting or root) is specified in the extKeyUsage
+   extension of the certificate, by means of the SCION-specific
+   attributes id-kp-regular, id-kp-sensitive, and id-kp-root,
    respectively.  For more information, see Section 2.7.2.4.
 
    The following constraints MUST hold for each certificate in the
    certificates field of the TRC payload:
 
    *  Each certificate MUST be unique in the sequence of certificates.
-      That is, each certificate MUST NOT appear more than once in the
-      certificates field.
 
    *  The issuer / serialNumber pair for each certificate MUST be
       unique.
@@ -1541,13 +1539,13 @@ Table of Contents
    *  votingQuorum <= count (sensitive voting certificates)
       That is, the quorum defined in the TRC's votingQuorum field
       (Section 3.2.7) MUST be smaller than or equal to the number of
-      _sensitive_ voting certificates specified in the TRC's
-      certificates field.
+      sensitive voting certificates specified in the TRC's certificates
+      field.
 
    *  votingQuorum <= count (regular voting certificates)
       That is, the quorum defined in the TRC's votingQuorum field
       (Section 3.2.7) MUST be smaller than or equal to the number of
-      _regular_ voting certificates specified in the TRC's certificates
+      regular voting certificates specified in the TRC's certificates
       field.
 
 3.3.  TRC Signature Syntax
@@ -1636,26 +1634,25 @@ Table of Contents
    for a given ISD is distributed via the TRC.
 
    However, AS certificates and the corresponding issuing CA
-   certificates are *not* part of the TRC, but are bundled into
+   certificates are not part of the TRC, but are bundled into
    certificate chains and distributed separately from the corresponding
    TRC.  This separation makes it possible to extend the validity period
    of the root certificate, and to update the corresponding TRC without
    having to modify the certificate chain.  To be able to validate a
    certification path, each AS builds a collection of root certificates
-   from the latest TRC of the relevant ISD.
+   from the latest TRC of the relevant ISD.  The following section
+   explains how to build a trust anchor pool.
 
-   The following section explains how to build a trust anchor pool.
-
-   *Note:* Any entity sending information that is secured by the Control
-   Plane PKI, such as control plane messages, MUST be able to provide
-   all the necessary trust material including certificates to verify
-   said information.  If any cryptographic material is missing in the
-   process, the relying party MUST query the originator of the message
-   for the missing material through the control plane API described in
-   [I-D.dekater-scion-controlplane], section "Distribution of
-   Cryptographic Material".  If it cannot be resolved, the verification
-   process fails.  For more details, see 4.2 "Signing and Verifying
-   Control Plane Messages" Section 4.2.
+   Note that any entity sending information that is secured by the
+   Control Plane PKI, such as control plane messages, MUST be able to
+   provide all the necessary trust material including certificates to
+   verify said information.  If any cryptographic material is missing in
+   the process, the relying party MUST query the originator of the
+   message for the missing material through the control plane API
+   described in [I-D.dekater-scion-controlplane], section "Distribution
+   of Cryptographic Material".  If it cannot be resolved, the
+   verification process fails.  For more details, see 4.2 "Signing and
+   Verifying Control Plane Messages" Section 4.2.
 
 3.4.1.  TRC Selection For Trust Anchor Pool
 
