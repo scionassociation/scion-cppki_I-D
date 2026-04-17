@@ -1097,10 +1097,9 @@ The very first base TRC of an ISD - called the initial TRC - is a special case o
 [](#initial-ceremony) describes a possible procedure for the signing ceremony of an ISD's initial TRC. Whilst it is up to the initial members of an ISD how to organize the signing ceremony, it recommended to implement a process in line with the ceremony described in the Appendix.
 
 
-# Using the CP PKI {#deploy-cp-pki}
+# CP-PKI Operations {#operations-cp-pki}
 
-This section provides several specifications regarding the deployment of the control plane PKI.
-
+This section details the procedures for deploying the CP-PKI and securing control plane communications.
 
 ## Distribution of TRCs
 
@@ -1194,14 +1193,14 @@ When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as 
 
 # Deployment Considerations
 
-## PKI availability
+## PKI Availability
 
 The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.
 
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
-## Processes
+## Operational Processes for ISD Governance
 
 An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
 
