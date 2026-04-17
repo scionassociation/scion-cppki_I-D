@@ -439,12 +439,12 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 ~~~~
 {: #figure-2 title="TRC and the different types of associated certificates. Arrows indicate the certificate hierarchy."}
 
-## Certificate Specification
+## X.509 Certificate Profiles
 
 Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, the SCION specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}.
 
 
-### Basic Fields: SCION-Specific Constraints and Conditions
+### Constraints on Basic Fields
 
 The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and {{X.509}} clause 7.2.
 
@@ -489,7 +489,7 @@ The described fields of the Control Plane PKI certificates are relevant for each
 - `extensions` sequence: Defines the extensions of the certificate. For a description of all extensions used in SCION, see [](#exts).
 
 
-#### `signature` Field - Additional Information {#certsign}
+#### `signature` Field  {#certsign}
 
 The `signature` field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
 
@@ -511,7 +511,7 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
 
-#### `issuer` Field - Additional Information {#issuer}
+#### `issuer` Field  {#issuer}
 
 The `issuer` field contains the distinguished name (DN) of the CA that created the certificate. {{RFC5280}}, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`. See [](#isd-as-nr).
 
