@@ -98,8 +98,15 @@ Table of Contents
        2.5.2.  Sensitive Voting Certificate
      2.6.  Key Pairs Overview and Notations
      2.7.  X.509 Certificate Profiles and Constraints
-       2.7.1.  signature Field
-       2.7.2.  issuer Field
+       2.7.1.  version
+       2.7.2.  serialNumber
+       2.7.3.  signature
+       2.7.4.  issuer
+       2.7.5.  validity
+       2.7.6.  subject
+       2.7.7.  subjectPublicKeyInfo
+       2.7.8.  issuerUniqueID
+       2.7.9.  subjectUniqueID
      2.8.  Extensions
        2.8.1.  authorityKeyIdentifier Extension
        2.8.2.  subjectKeyIdentifier Extension
@@ -159,7 +166,7 @@ Table of Contents
    Appendix C.  Signing Ceremony Initial TRC
      C.1.   Ceremony Participants
      C.2.  Ceremony Preparations
-     C.3.   Ceremony Process
+     C.3.   Ceremony Phases
        C.3.1.  Certificate Exchange
        C.3.2.  Generation of the TRC Payload
        C.3.3.  TRC Signing
@@ -786,80 +793,27 @@ Table of Contents
    [RFC5280], which apply to all SCION certificate types.  For the
    baseline X.509 v3 format, refer to [RFC5280] and [X.509] Clause 7.2.
 
-   TBSCertificate sequence: Contains information associated with the
-   subject of the certificate and the CA that issued it.  It includes
-   the following fields:
+   The following subsections define the specific constraints for the
+   fields contained in the TBSCertificate sequence.
 
-   *  version field: Describes the version of the encoded certificate.
-      It MUST be set to "v3" (as extensions are REQUIRED in SCION).
+2.7.1.  version
 
-   *  serialNumber field: A positive integer assigned by the CA to each
-      certificate.  It MUST be unique for each certificate issued by a
-      given CA.
+   The version field describes the version of the encoded certificate.
+   It MUST be set to "v3" because extensions are required.
 
-   *  signature field: Contains the identifier for the algorithm used by
-      the CA to sign the certificate.
+2.7.2.  serialNumber
 
-      -  *SCION constraints*: supported signatures are described in
-         Section 2.7.1.
+   The serialNumber field contains a positive integer assigned by the CA
+   to each certificate.  It MUST be unique for each certificate issued
+   by a given CA.
 
-      -  *Additional conditions and remarks*: As a consequence, the
-         parameters field in the AlgorithmIdentifier sequence MUST NOT
-         be used.
+2.7.3.  signature
 
-   *  issuer field: Contains the distinguished name (DN) of the entity
-      that has issued and signed the certificate (usually a CA).
-
-      -  *SCION constraints*:
-
-         o  This field MUST be non-empty.
-
-      -  *Additional conditions and remarks*: All SCION implementations
-         MUST support the additional SCION-specific attribute ISD-AS
-         number.  For details, see Section 2.7.2 and Section 2.7.2.1.
-
-   *  validity field: Defines the validity period of the certificate.
-
-      -  *SCION constraints*: All certificates MUST have a well-defined
-         expiration date.  GeneralizedTime value "99991231235959Z" MUST
-         NOT be used.
-
-      -  *Additional conditions and remarks*: SCION recommends a
-         specific maximum validity period for each type of certificate.
-         For details, see Section 2.6.  SCION implementations SHOULD
-         adopt these values.
-
-   *  subject field: Defines the entity that owns the certificate.
-
-      -  *SCION constraints*:
-
-         o  This field MUST be non-empty.
-
-      -  *Additional conditions and remarks*: The subject field is
-         specified in the same way as the issuer field.  For details,
-         see Section 2.7.2 and Section 2.7.2.1.
-
-   *  subjectPublicKeyInfo field: Carries the public key of the
-      certificate's subject (the entity that owns the certificate, as
-      defined in the subject field).  The subjectPublicKeyInfo field
-      also identifies which algorithm to use with the key.
-
-      -  *SCION constraints*: For constraints regarding the algorithm,
-         see the signature field.
-
-   *  issuerUniqueID field: it MUST NOT be used in SCION.
-
-   *  subjectUniqueID field: it MUST NOT be used in SCION.
-
-   *  extensions sequence: Defines the extensions of the certificate.
-      For a description of all extensions used in SCION, see
-      Section 2.8.
-
-2.7.1.  signature Field
-
-   The signature field contains information about the signature
-   algorithm.  Current implementations use the ECDSA signature algorithm
-   defined in [X9.62].
+   The signature field contains the identifier for the signature
+   algorithm used by the CA to sign the certificate.  Current
+   implementations use the ECDSA signature algorithm defined in [X9.62].
+   As a consequence, the parameters field in the AlgorithmIdentifier
+   sequence MUST NOT be used.
 
    The Object Identifiers (OIDs) for ECDSA are defined as ecdsa-with-
    SHA256, ecdsa-with-SHA384, and ecdsa-with-SHA512 in [RFC5758].
@@ -894,32 +848,27 @@ Table of Contents
 
    *  ECDSA with SHA-512, for a P-521 signing key
 
-2.7.2.  issuer Field
+2.7.4.  issuer
 
-   The issuer field contains the distinguished name (DN) of the CA that
-   created the certificate.  [RFC5280], section 4.1.2.4, describes the
-   field's syntax and attributes.  In addition to these attributes,
+   The issuer field contains the distinguished name (DN) of the entity
+   that has issued and signed the certificate (usually a CA).  This
+   field MUST be non-empty.  All SCION implementations MUST support the
+   additional SCION-specific attribute ISD-AS number.  For details, see
+   below and Section 2.7.4.1.
+
+   In addition to the attributes described in [RFC5280] section 4.1.2.4,
    SCION implementations MUST also support the SCION-specific attribute
-   ISD-AS number.  See Section 2.7.2.1.
+   ISD-AS number.
 
-2.7.2.1.  ISD-AS number Attribute
+2.7.4.1.  id-at-ia Attribute
 
-   The ISD-AS number attribute identifies the SCION ISD and AS.  In the
-   SCION open source implementation, the attribute type is id-at-ia,
-   defined as:
-   id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
-
-   where id-scion specifies the root SCION object identifier (OID).
-
-   The root SCION object identifier (OID) for the SCION open-source
-   implementation is the IANA Private Enterprise Number '55324':
-   id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}
+   The id-at-ia attribute identifies the SCION ISD and AS numbers.  Its
+   object identifier is defined in Appendix A.
 
    The string representation of the ISD-AS number attribute MUST follow
-   the text representation defined in [I-D.dekater-scion-controlplane],
-   section "Text Representation" where AS numbers in the lower 32-bit
-   range are represented in decimal notation, and others in hexadecimal
-   notation.
+   the formatting defined in [I-D.dekater-scion-controlplane], section
+   "Text Representation" where AS numbers in the lower 32-bit range are
+   represented in decimal notation, and others in hexadecimal notation.
 
    Voting AS and issuing CA certificates MUST include the ISD-AS number
    attribute exactly once in the distinguished name of the certificate
@@ -934,6 +883,40 @@ Table of Contents
 
    Voting-only certificates are not required to include the ISD-AS
    number attribute in their distinguished name.
+
+2.7.5.  validity
+
+   The validity field defines the validity period of the certificate.
+   All certificates MUST have a well-defined expiration date.
+   GeneralizedTime value "99991231235959Z" MUST NOT be used.  The
+   recommended maximum validity period for each type of certificate is
+   described in Section 2.6.  SCION implementations SHOULD adopt these
+   values.
+
+2.7.6.  subject
+
+   The subject field defines the entity that owns the certificate.  It
+   MUST NOT be empty.  The subject field is specified in the same way as
+   the issuer field.  For details, see Section 2.7.4 and
+   Section 2.7.4.1.
+
+2.7.7.  subjectPublicKeyInfo
+
+   The subjectPublicKeyInfo field carries the public key of the
+   certificate's subject (the entity that owns the certificate, as
+   defined in the subject field).  The subjectPublicKeyInfo field also
+   identifies which algorithm to use with the key.
+
+   *  *SCION constraints*: For constraints regarding the algorithm, see
+      the signature field.
+
+2.7.8.  issuerUniqueID
+
+   The issuerUniqueID field MUST NOT be used.
+
+2.7.9.  subjectUniqueID
+
+   The subjectUniqueID field MUST NOT be used.
 
 2.8.  Extensions
 
@@ -1457,8 +1440,8 @@ Table of Contents
    within the ISD.
 
    Each AS number MUST be unique and encoded as a PrintableString using
-   the text representation defined in [I-D.dekater-scion-controlplane],
-   section "Text Representation".
+   the formatting defined in [I-D.dekater-scion-controlplane], section
+   "Text Representation".
 
    To assign or revoke core status, the target AS number is added to or
    removed from this sequence.  For such modification, a sensitive TRC
@@ -1599,7 +1582,7 @@ Table of Contents
 
       -  The algorithm specified in the signatureAlgorithm field MUST be
          one of the algorithms supported by SCION . For details, see
-         signature Field - Additional Information (Section 2.7.1).
+         signature Field - Additional Information (Section 2.7.3).
 
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
@@ -2049,7 +2032,7 @@ Table of Contents
    verify the signed message:
 
    *  ISD-AS number: The ISD-AS number of the signing entity.  For
-      specification details, see Section 2.7.2.1.
+      specification details, see Section 2.7.4.1.
 
    *  Subject key identifier: The identifier of the public key to be
       used to verify the message.  For specification details, see
@@ -2104,7 +2087,7 @@ Table of Contents
 
        *  The ISD-AS number in the subject of the AS certificate MUST
           match the ISD-AS number in the signature metadata.  See also
-          Section 2.7.2.1.
+          Section 2.7.4.1.
 
        *  The subject key identifier of the AS certificate MUST match
           the subject key identifier in the signature metadata.  See
@@ -2124,7 +2107,7 @@ Table of Contents
        *  Checking that
 
           -  all subjects of the certificates in the chain carry the
-             same ISD number (see also Section 2.7.2.1,
+             same ISD number (see also Section 2.7.4.1,
 
           -  each certificate is of the correct type (see also
              Section 2), and
@@ -2606,7 +2589,7 @@ C.2.  Ceremony Preparations
    The Signing Ceremony SHOULD include a procedure to verify that all
    devices are secure.
 
-C.3.   Ceremony Process
+C.3.   Ceremony Phases
 
    The number of Voting ASes present at the Signing Ceremony must be
    equal to or larger than the specified voting quorum.
@@ -2716,6 +2699,9 @@ draft-dekater-scion-pki-12
    *  Reduce number of headings in sections 2 and 3
 
    *  Tables 3-7: sharpen normative language use
+
+   *  Certificate fields: reorganize headings, add ASN.1 module with
+      definitions in appendix
 
    *  TRC: add ASN.1 module in appendix and reword field descriptions.
       Clarify that TRC validity uses GeneralizedTime
