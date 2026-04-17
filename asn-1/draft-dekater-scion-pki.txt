@@ -97,8 +97,8 @@ Table of Contents
        2.5.1.  Regular Voting Certificate
        2.5.2.  Sensitive Voting Certificate
      2.6.  Key Pairs Overview and Notations
-     2.7.  Certificate Specification
-       2.7.1.  Basic Fields: SCION-Specific Constraints and Conditions
+     2.7.  X.509 Certificate Profiles
+       2.7.1.  Constraints on Basic Fields
        2.7.2.  Extensions
    3.  Trust Root Configuration Specification
      3.1.  TRC Types and States
@@ -771,14 +771,14 @@ Table of Contents
      Figure 2: TRC and the different types of associated certificates.
                  Arrows indicate the certificate hierarchy.
 
-2.7.  Certificate Specification
+2.7.  X.509 Certificate Profiles
 
    Whilst the certificates used in the Control Plane PKI are X.509 v3
    certificates, the SCION specification is more restrictive.  This
    section defines these additional constraints and conditions in
    comparison to [RFC5280].
 
-2.7.1.  Basic Fields: SCION-Specific Constraints and Conditions
+2.7.1.  Constraints on Basic Fields
 
    The described fields of the Control Plane PKI certificates are
    relevant for each certificate regardless of the certificate type.
@@ -855,7 +855,7 @@ Table of Contents
       For a description of all extensions used in SCION, see
       Section 2.7.2.
 
-2.7.1.1.  signature Field - Additional Information
+2.7.1.1.  signature Field
 
    The signature field contains information about the signature
    algorithm.  Current implementations use the ECDSA signature algorithm
@@ -894,7 +894,7 @@ Table of Contents
 
    *  ECDSA with SHA-512, for a P-521 signing key
 
-2.7.1.2.  issuer Field - Additional Information
+2.7.1.2.  issuer Field
 
    The issuer field contains the distinguished name (DN) of the CA that
    created the certificate.  [RFC5280], section 4.1.2.4, describes the

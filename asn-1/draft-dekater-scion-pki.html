@@ -1221,10 +1221,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
                 <p id="section-toc.1-1.2.2.6.1"><a href="#section-2.6" class="auto internal xref">2.6</a>.  <a href="#name-key-pairs-overview-and-nota" class="internal xref">Key Pairs Overview and Notations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7">
-                <p id="section-toc.1-1.2.2.7.1"><a href="#section-2.7" class="auto internal xref">2.7</a>.  <a href="#name-certificate-specification-2" class="internal xref">Certificate Specification</a></p>
+                <p id="section-toc.1-1.2.2.7.1"><a href="#section-2.7" class="auto internal xref">2.7</a>.  <a href="#name-x509-certificate-profiles" class="internal xref">X.509 Certificate Profiles</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7.2.1">
-                    <p id="section-toc.1-1.2.2.7.2.1.1"><a href="#section-2.7.1" class="auto internal xref">2.7.1</a>.  <a href="#name-basic-fields-scion-specific" class="internal xref">Basic Fields: SCION-Specific Constraints and Conditions</a></p>
+                    <p id="section-toc.1-1.2.2.7.2.1.1"><a href="#section-2.7.1" class="auto internal xref">2.7.1</a>.  <a href="#name-constraints-on-basic-fields" class="internal xref">Constraints on Basic Fields</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2.2.7.2.2">
                     <p id="section-toc.1-1.2.2.7.2.2.1"><a href="#section-2.7.2" class="auto internal xref">2.7.2</a>.  <a href="#name-extensions" class="internal xref">Extensions</a></p>
@@ -2187,16 +2187,16 @@ This is much shorter than root certificates, which have a longer recommended max
 </div>
 </section>
 </div>
-<div id="certificate-specification">
+<div id="x509-certificate-profiles">
 <section id="section-2.7">
-        <h3 id="name-certificate-specification-2">
-<a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-certificate-specification-2" class="section-name selfRef">Certificate Specification</a>
+        <h3 id="name-x509-certificate-profiles">
+<a href="#section-2.7" class="section-number selfRef">2.7. </a><a href="#name-x509-certificate-profiles" class="section-name selfRef">X.509 Certificate Profiles</a>
         </h3>
 <p id="section-2.7-1">Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, the SCION specification is more restrictive. This section defines these additional constraints and conditions in comparison to <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.<a href="#section-2.7-1" class="pilcrow">¶</a></p>
-<div id="basic-fields-scion-specific-constraints-and-conditions">
+<div id="constraints-on-basic-fields">
 <section id="section-2.7.1">
-          <h4 id="name-basic-fields-scion-specific">
-<a href="#section-2.7.1" class="section-number selfRef">2.7.1. </a><a href="#name-basic-fields-scion-specific" class="section-name selfRef">Basic Fields: SCION-Specific Constraints and Conditions</a>
+          <h4 id="name-constraints-on-basic-fields">
+<a href="#section-2.7.1" class="section-number selfRef">2.7.1. </a><a href="#name-constraints-on-basic-fields" class="section-name selfRef">Constraints on Basic Fields</a>
           </h4>
 <p id="section-2.7.1-1">The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> and <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> clause 7.2.<a href="#section-2.7.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.7.1-2"><code>TBSCertificate</code> sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:<a href="#section-2.7.1-2" class="pilcrow">¶</a></p>
@@ -2281,8 +2281,8 @@ This is much shorter than root certificates, which have a longer recommended max
           </ul>
 <div id="certsign">
 <section id="section-2.7.1.1">
-            <h5 id="name-signature-field-additional-">
-<a href="#section-2.7.1.1" class="section-number selfRef">2.7.1.1. </a><a href="#name-signature-field-additional-" class="section-name selfRef"><code>signature</code> Field - Additional Information</a>
+            <h5 id="name-signature-field">
+<a href="#section-2.7.1.1" class="section-number selfRef">2.7.1.1. </a><a href="#name-signature-field" class="section-name selfRef"><code>signature</code> Field</a>
             </h5>
 <p id="section-2.7.1.1-1">The <code>signature</code> field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in <span>[<a href="#X9.62" class="cite xref">X9.62</a>]</span>.<a href="#section-2.7.1.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.7.1.1-2">The Object Identifiers (OIDs) for ECDSA are defined as <code>ecdsa-with-SHA256</code>, <code>ecdsa-with-SHA384</code>, and <code>ecdsa-with-SHA512</code> in <span>[<a href="#RFC5758" class="cite xref">RFC5758</a>]</span>.<a href="#section-2.7.1.1-2" class="pilcrow">¶</a></p>
@@ -2316,8 +2316,8 @@ This is much shorter than root certificates, which have a longer recommended max
 </div>
 <div id="issuer">
 <section id="section-2.7.1.2">
-            <h5 id="name-issuer-field-additional-inf">
-<a href="#section-2.7.1.2" class="section-number selfRef">2.7.1.2. </a><a href="#name-issuer-field-additional-inf" class="section-name selfRef"><code>issuer</code> Field - Additional Information</a>
+            <h5 id="name-issuer-field">
+<a href="#section-2.7.1.2" class="section-number selfRef">2.7.1.2. </a><a href="#name-issuer-field" class="section-name selfRef"><code>issuer</code> Field</a>
             </h5>
 <p id="section-2.7.1.2-1">The <code>issuer</code> field contains the distinguished name (DN) of the CA that created the certificate. <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations <span class="bcp14">MUST</span> also support the SCION-specific attribute <code>ISD-AS number</code>. See <a href="#isd-as-nr" class="auto internal xref">Section 2.7.1.2.1</a>.<a href="#section-2.7.1.2-1" class="pilcrow">¶</a></p>
 <div id="isd-as-nr">
