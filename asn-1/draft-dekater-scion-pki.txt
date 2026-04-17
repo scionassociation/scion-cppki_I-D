@@ -852,13 +852,10 @@ Table of Contents
 
    The issuer field contains the distinguished name (DN) of the entity
    that has issued and signed the certificate (usually a CA).  This
-   field MUST be non-empty.  All SCION implementations MUST support the
-   additional SCION-specific attribute ISD-AS number.  For details, see
-   below and Section 2.7.4.1.
-
-   In addition to the attributes described in [RFC5280] section 4.1.2.4,
-   SCION implementations MUST also support the SCION-specific attribute
-   ISD-AS number.
+   field MUST be non-empty.  In addition to the attributes described in
+   [RFC5280] section 4.1.2.4, SCION implementations MUST also support
+   the SCION-specific id-at-ia attribute identifying the SCION ISD and
+   AS numbers.
 
 2.7.4.1.  id-at-ia Attribute
 
@@ -1126,26 +1123,22 @@ Table of Contents
    implementations follow what described in this document, the use of
    extKeyUsage should be revised in future protocol iterations.
 
-2.8.4.1.  SCION-Specific Attributes
+2.8.4.1.  SCION-Specific Key Purposes
 
-   The id-kp-root, id-kp-regular, and id-kp-sensitive attributes MUST be
-   specified as follows:
+   Three additional key purpose attributes differentiate certificate
+   roles within the CP-PKI:
 
-   *  Root certificate:
-      id-kp-root AttributeType ::= {id-scion id-cppki(1) id-kp(3) 3}
+   *  id-kp-sensitive (OID 1.3.6.1.4.1.55324.1.3.1): identifies
+      sensitive voting certificate
 
-   *  Regular voting certificate:
-      id-kp-regular AttributeType ::= {id-scion id-cppki(1) id-kp(3) 2}
+   *  id-kp-regular (OID 1.3.6.1.4.1.55324.1.3.2): identifies a regular
+      voting certificate
 
-   *  Sensitive voting certificate:
-      id-kp-sensitive AttributeType ::= {id-scion id-cppki(1) id-kp(3)
-      1}
+   *  id-kp-root (OID 1.3.6.1.4.1.55324.1.3.3): identifies a root
+      certificate
 
-   where id-scion specifies the root SCION object identifier (OID).
-
-   The root SCION object identifier (OID) for the SCION open-source
-   implementation is the IANA Private Enterprise Number '55324':
-   id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}
+   The formal ASN.1 definitions for these attributes are provided in
+   Appendix A.
 
 2.8.5.  basicConstraints Extension
 

@@ -2296,8 +2296,7 @@ As a consequence, the <code>parameters</code> field in the <code>AlgorithmIdenti
 <a href="#section-2.7.4" class="section-number selfRef">2.7.4. </a><a href="#name-issuer" class="section-name selfRef"><code>issuer</code></a>
           </h4>
 <p id="section-2.7.4-1">The <code>issuer</code> field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field <span class="bcp14">MUST</span> be non-empty.
-All SCION implementations <span class="bcp14">MUST</span> support the additional SCION-specific attribute <code>ISD-AS number</code>. For details, see below and <a href="#isd-as-nr" class="auto internal xref">Section 2.7.4.1</a>.<a href="#section-2.7.4-1" class="pilcrow">¶</a></p>
-<p id="section-2.7.4-2">In addition to the attributes described in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> section 4.1.2.4, SCION implementations <span class="bcp14">MUST</span> also support the SCION-specific attribute <code>ISD-AS number</code>.<a href="#section-2.7.4-2" class="pilcrow">¶</a></p>
+In addition to the attributes described in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> section 4.1.2.4, SCION implementations <span class="bcp14">MUST</span> also support the SCION-specific <code>id-at-ia</code> attribute identifying the SCION ISD and AS numbers.<a href="#section-2.7.4-1" class="pilcrow">¶</a></p>
 <div id="isd-as-nr">
 <section id="section-2.7.4.1">
             <h5 id="name-id-at-ia-attribute">
@@ -2624,24 +2623,22 @@ The <code>subject</code> field is specified in the same way as the <code>issuer<
 <p id="section-2.8.4-7"><strong>Note</strong>: the use of <code>extKeyUsage</code> in Root certificates renders them incompatible with standard TLS handshakes according to <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, because the <code>id-kp-serverAuth</code> attribute is not set. While current implementations follow what described in this document, the use of <code>extKeyUsage</code> should be revised in future protocol iterations.<a href="#section-2.8.4-7" class="pilcrow">¶</a></p>
 <div id="specatt">
 <section id="section-2.8.4.1">
-            <h5 id="name-scion-specific-attributes">
-<a href="#section-2.8.4.1" class="section-number selfRef">2.8.4.1. </a><a href="#name-scion-specific-attributes" class="section-name selfRef">SCION-Specific Attributes</a>
+            <h5 id="name-scion-specific-key-purposes">
+<a href="#section-2.8.4.1" class="section-number selfRef">2.8.4.1. </a><a href="#name-scion-specific-key-purposes" class="section-name selfRef">SCION-Specific Key Purposes</a>
             </h5>
-<p id="section-2.8.4.1-1">The <code>id-kp-root</code>, <code>id-kp-regular</code>, and <code>id-kp-sensitive</code> attributes <span class="bcp14">MUST</span> be specified as follows:<a href="#section-2.8.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.8.4.1-1">Three additional key purpose attributes differentiate certificate roles within the CP-PKI:<a href="#section-2.8.4.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.8.4.1-2.1">
-                <p id="section-2.8.4.1-2.1.1">Root certificate:<br> <code>id-kp-root AttributeType ::= {id-scion id-cppki(1) id-kp(3) 3}</code><a href="#section-2.8.4.1-2.1.1" class="pilcrow">¶</a></p>
+                <p id="section-2.8.4.1-2.1.1"><code>id-kp-sensitive</code> (OID 1.3.6.1.4.1.55324.1.3.1): identifies sensitive voting certificate<a href="#section-2.8.4.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.8.4.1-2.2">
-                <p id="section-2.8.4.1-2.2.1">Regular voting certificate:<br> <code>id-kp-regular AttributeType ::= {id-scion id-cppki(1) id-kp(3) 2}</code><a href="#section-2.8.4.1-2.2.1" class="pilcrow">¶</a></p>
+                <p id="section-2.8.4.1-2.2.1"><code>id-kp-regular</code> (OID 1.3.6.1.4.1.55324.1.3.2): identifies a regular voting certificate<a href="#section-2.8.4.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
               <li class="normal" id="section-2.8.4.1-2.3">
-                <p id="section-2.8.4.1-2.3.1">Sensitive voting certificate:<br> <code>id-kp-sensitive AttributeType ::= {id-scion id-cppki(1) id-kp(3) 1}</code><a href="#section-2.8.4.1-2.3.1" class="pilcrow">¶</a></p>
+                <p id="section-2.8.4.1-2.3.1"><code>id-kp-root</code> (OID 1.3.6.1.4.1.55324.1.3.3): identifies a root certificate<a href="#section-2.8.4.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
             </ul>
-<p id="section-2.8.4.1-3">where <code>id-scion</code> specifies the root SCION object identifier (OID).<a href="#section-2.8.4.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.8.4.1-4">The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
-              <code>id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}</code><a href="#section-2.8.4.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.8.4.1-3">The formal ASN.1 definitions for these attributes are provided in <a href="#cert-asn1" class="auto internal xref">Appendix A</a>.<a href="#section-2.8.4.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
