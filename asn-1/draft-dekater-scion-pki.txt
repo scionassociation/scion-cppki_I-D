@@ -2683,7 +2683,8 @@ draft-dekater-scion-pki-12
 
    *  Tables 3-7: sharpen normative language use
 
-   *  TRC: add ASN.1 module in appendix
+   *  TRC: add ASN.1 module in appendix and reword field descriptions.
+      Clarify that TRC validity uses GeneralizedTime
 
 draft-dekater-scion-pki-11
 
