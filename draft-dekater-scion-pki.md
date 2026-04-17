@@ -479,9 +479,7 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 ### `issuer` {#issuer}
 
 The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
-All SCION implementations MUST support the additional SCION-specific attribute `ISD-AS number`. For details, see below and [](#isd-as-nr).
-
-In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`.
+In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute identifying the SCION ISD and AS numbers.
 
 #### `id-at-ia` Attribute {#isd-as-nr}
 
@@ -615,19 +613,15 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 
 **Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
 
-#### SCION-Specific Attributes {#specatt}
+#### SCION-Specific Key Purposes {#specatt}
 
-The `id-kp-root`, `id-kp-regular`, and `id-kp-sensitive` attributes MUST be specified as follows:
+Three additional key purpose attributes differentiate certificate roles within the CP-PKI:
 
-- Root certificate:<br> `id-kp-root AttributeType ::= {id-scion id-cppki(1) id-kp(3) 3}`
-- Regular voting certificate:<br> `id-kp-regular AttributeType ::= {id-scion id-cppki(1) id-kp(3) 2}`
-- Sensitive voting certificate:<br> `id-kp-sensitive AttributeType ::= {id-scion id-cppki(1) id-kp(3) 1}`
+- `id-kp-sensitive` (OID 1.3.6.1.4.1.55324.1.3.1): identifies sensitive voting certificate
+- `id-kp-regular` (OID 1.3.6.1.4.1.55324.1.3.2): identifies a regular voting certificate
+- `id-kp-root` (OID 1.3.6.1.4.1.55324.1.3.3): identifies a root certificate
 
-where `id-scion` specifies the root SCION object identifier (OID).
-
-The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
-`id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
-
+The formal ASN.1 definitions for these attributes are provided in [](#cert-asn1).
 
 ### `basicConstraints` Extension {#basic-constr-ext}
 
