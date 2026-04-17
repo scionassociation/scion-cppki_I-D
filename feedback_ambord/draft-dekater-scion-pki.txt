@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 18 October 2026                                         S. Hitz
+Expires: 19 October 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           16 April 2026
+                                                           17 April 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 18 October 2026.
+   This Internet-Draft will expire on 19 October 2026.
 
 Copyright Notice
 
@@ -2811,7 +2811,7 @@ draft-dekater-scion-pki-06
 Acknowledgments
 
    Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
-   Prado (ETH Zurich), Russ Housley (IETF), Brian Trammel (Google),
+   Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google),
    Ramon Keller (LibC Technologies), Patrick Ambord (independent), and
    Kevin Meynell (SCION Association) for reviewing this document.  We
    are also very grateful to Adrian Perrig (ETH Zurich), for providing
