@@ -1454,50 +1454,30 @@ Table of Contents
 3.2.8.  coreASes
 
    The coreASes field contains a sequence listing the core AS numbers
-   within the ISD.  Each AS number in the sequence MUST be unique.
-   Furthermore, each AS number MUST be encoded as a PrintableString
-   using the text representation defined in
-   [I-D.dekater-scion-controlplane], section "Text Representation".
+   within the ISD.
 
-3.2.8.1.  Revoking or Assigning Core Status
+   Each AS number MUST be unique and encoded as a PrintableString using
+   the text representation defined in [I-D.dekater-scion-controlplane],
+   section "Text Representation".
 
-   The set of core ASes can be updated as follows:
-
-   *  To revoke core status: remove the target AS from the coreASes
-      sequence.
-
-   *  To assign core status: add the target AS to the coreASes sequence.
-
-   Any modification to the coreASes field requires a sensitive TRC
-   update.
+   To assign or revoke core status, the target AS number is added to or
+   removed from this sequence.  For such modification, a sensitive TRC
+   update is REQUIRED.
 
 3.2.9.  authoritativeASes
 
-   The authoritativeASes field contains the sequence of the
-   authoritative AS numbers in the ISD.
+   The authoritativeASes field contains a sequence listing the
+   authoritative AS numbers in the ISD.  Authoritative ASes are those
+   ASes in an ISD that always possess the latest TRCs for the ISD and
+   initiate TRC update announcements.
 
-   Authoritative ASes are those ASes in an ISD that always have the
-   latest TRCs of the ISD.  As a consequence, authoritative ASes also
-   start the announcement of a TRC update.
+   Every authoritative AS MUST be a core AS (i.e., be listed in the
+   coreASes field).  The encoding and uniqueness requirements for this
+   sequence are identical to those of the coreASes field.
 
-   *  Every authoritative AS MUST be a core AS and be listed in the
-      coreASes field.  Each AS number in the sequence MUST be unique.
-      Furthermore, each AS number MUST be encoded as a PrintableString
-      using the text representation defined in
-      [I-D.dekater-scion-controlplane], section "Text Representation".
-
-3.2.9.1.  Revoking or Assigning Authoritative Status
-
-   The set of authoritative ASes can be updated as follows:
-
-   *  To revoke authoritative status: remove the target AS from the
-      authoritativeASes sequence.
-
-   *  To assign authoritative status: dd the target AS to the
-      authoritativeASes sequence.
-
-   *Important:* Revoking or assigning the authoritative status of/to an
-   AS always requires a sensitive TRC update.
+   As with core ASes, assigning or revoking authoritative status is
+   performed by adding or removing the target AS number from this
+   sequence.  For such modification, a sensitive TRC update is REQUIRED.
 
 3.2.10.  description
 

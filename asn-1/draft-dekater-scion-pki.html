@@ -2914,25 +2914,9 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-coreases">
 <a href="#section-3.2.8" class="section-number selfRef">3.2.8. </a><a href="#name-coreases" class="section-name selfRef"><code>coreASes</code></a>
           </h4>
-<p id="section-3.2.8-1">The <code>coreASes</code> field contains a sequence listing the core AS numbers within the ISD.
-Each AS number in the sequence <span class="bcp14">MUST</span> be unique. Furthermore, each AS number <span class="bcp14">MUST</span> be encoded as a <code>PrintableString</code> using the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation".<a href="#section-3.2.8-1" class="pilcrow">¶</a></p>
-<div id="revoking-or-assigning-core-status">
-<section id="section-3.2.8.1">
-            <h5 id="name-revoking-or-assigning-core-">
-<a href="#section-3.2.8.1" class="section-number selfRef">3.2.8.1. </a><a href="#name-revoking-or-assigning-core-" class="section-name selfRef">Revoking or Assigning Core Status</a>
-            </h5>
-<p id="section-3.2.8.1-1">The set of core ASes can be updated as follows:<a href="#section-3.2.8.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2.8.1-2.1">
-                <p id="section-3.2.8.1-2.1.1">To revoke core status: remove the target AS from the <code>coreASes</code> sequence.<a href="#section-3.2.8.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.2.8.1-2.2">
-                <p id="section-3.2.8.1-2.2.1">To assign core status: add the target AS to the <code>coreASes</code> sequence.<a href="#section-3.2.8.1-2.2.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<p id="section-3.2.8.1-3">Any modification to the <code>coreASes</code> field requires a sensitive TRC update.<a href="#section-3.2.8.1-3" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-3.2.8-1">The <code>coreASes</code> field contains a sequence listing the core AS numbers within the ISD.<a href="#section-3.2.8-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-2">Each AS number <span class="bcp14">MUST</span> be unique and encoded as a <code>PrintableString</code> using the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation".<a href="#section-3.2.8-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-3">To assign or revoke core status, the target AS number is added to or removed from this sequence. For such modification, a sensitive TRC update is <span class="bcp14">REQUIRED</span>.<a href="#section-3.2.8-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="auth">
@@ -2940,31 +2924,9 @@ Each AS number in the sequence <span class="bcp14">MUST</span> be unique. Furthe
           <h4 id="name-authoritativeases">
 <a href="#section-3.2.9" class="section-number selfRef">3.2.9. </a><a href="#name-authoritativeases" class="section-name selfRef"><code>authoritativeASes</code></a>
           </h4>
-<p id="section-3.2.9-1">The <code>authoritativeASes</code> field contains the sequence of the authoritative AS numbers in the ISD.<a href="#section-3.2.9-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-2">Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.<a href="#section-3.2.9-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2.9-3.1">
-              <p id="section-3.2.9-3.1.1">Every authoritative AS <span class="bcp14">MUST</span> be a core AS and be listed in the <code>coreASes</code> field.
-Each AS number in the sequence <span class="bcp14">MUST</span> be unique. Furthermore, each AS number <span class="bcp14">MUST</span> be encoded as a <code>PrintableString</code> using the text representation defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation".<a href="#section-3.2.9-3.1.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-<div id="revoking-or-assigning-authoritative-status">
-<section id="section-3.2.9.1">
-            <h5 id="name-revoking-or-assigning-autho">
-<a href="#section-3.2.9.1" class="section-number selfRef">3.2.9.1. </a><a href="#name-revoking-or-assigning-autho" class="section-name selfRef">Revoking or Assigning Authoritative Status</a>
-            </h5>
-<p id="section-3.2.9.1-1">The set of authoritative ASes can be updated as follows:<a href="#section-3.2.9.1-1" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2.9.1-2.1">
-                <p id="section-3.2.9.1-2.1.1">To revoke authoritative status: remove the target AS from the <code>authoritativeASes</code> sequence.<a href="#section-3.2.9.1-2.1.1" class="pilcrow">¶</a></p>
-</li>
-              <li class="normal" id="section-3.2.9.1-2.2">
-                <p id="section-3.2.9.1-2.2.1">To assign authoritative status: dd the target AS to the <code>authoritativeASes</code> sequence.<a href="#section-3.2.9.1-2.2.1" class="pilcrow">¶</a></p>
-</li>
-            </ul>
-<p id="section-3.2.9.1-3"><strong>Important:</strong> Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.<a href="#section-3.2.9.1-3" class="pilcrow">¶</a></p>
-</section>
-</div>
+<p id="section-3.2.9-1">The <code>authoritativeASes</code> field contains a sequence listing the authoritative AS numbers in the ISD. Authoritative ASes are those ASes in an ISD that always possess the latest TRCs for the ISD and initiate TRC update announcements.<a href="#section-3.2.9-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-2">Every authoritative AS <span class="bcp14">MUST</span> be a core AS (i.e., be listed in the <code>coreASes</code> field). The encoding and uniqueness requirements for this sequence are identical to those of the <code>coreASes</code> field.<a href="#section-3.2.9-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-3">As with core ASes, assigning or revoking authoritative status is performed by adding or removing the target AS number from this sequence. For such modification, a sensitive TRC update is <span class="bcp14">REQUIRED</span>.<a href="#section-3.2.9-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="description">
