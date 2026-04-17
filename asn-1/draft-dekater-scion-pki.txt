@@ -893,9 +893,8 @@ Table of Contents
 2.7.6.  subject
 
    The subject field defines the entity that owns the certificate.  It
-   MUST NOT be empty.  The subject field is specified in the same way as
-   the issuer field.  For details, see Section 2.7.4 and
-   Section 2.7.4.1.
+   MUST NOT be empty.  The same constraints as the issuer field apply.
+   For details, see Section 2.7.4 and Section 2.7.4.1.
 
 2.7.7.  subjectPublicKeyInfo
 
