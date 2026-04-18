@@ -821,7 +821,7 @@ That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST
 
 To guarantee the integrity and authenticity of the distributed trust anchors, each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
 
-For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}.
+For signature calculation, the data that is to be signed MUST be encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}.
 
 
 ### SCION-specific rules
