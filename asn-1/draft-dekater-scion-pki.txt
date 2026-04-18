@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 19 October 2026                                         S. Hitz
+Expires: 20 October 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           17 April 2026
+                                                           18 April 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 19 October 2026.
+   This Internet-Draft will expire on 20 October 2026.
 
 Copyright Notice
 
@@ -1532,8 +1532,8 @@ Table of Contents
    encapsulated in a CMS ContentInfo element, as defined in Section 3 of
    [RFC5652].
 
-   For signature calculation, the data that is to be signed is encoded
-   using ASN.1 distinguished encoding rules (DER) [X.690].
+   For signature calculation, the data that is to be signed MUST be
+   encoded using ASN.1 distinguished encoding rules (DER) [X.690].
 
 3.3.1.  SCION-specific rules
 
