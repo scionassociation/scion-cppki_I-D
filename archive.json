@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-16T00:43:48.818339+00:00",
+  "timestamp": "2026-04-19T00:42:33.960904+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1369,9 +1369,9 @@
         "knmeynell"
       ],
       "labels": [],
-      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [ ] #128\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [ ] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [ ] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 )\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] Review use of normative language. I feel we use it too much.\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
+      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [ ] #128\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [ ] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-04-15T16:09:44Z",
+      "updatedAt": "2026-04-16T14:35:41Z",
       "closedAt": null,
       "comments": []
     },
@@ -1454,6 +1454,40 @@
           "updatedAt": "2026-04-15T16:07:39Z"
         }
       ]
+    },
+    {
+      "number": 130,
+      "id": "I_kwDOH386tM7-yHtT",
+      "title": "Feedback P. Ambord",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/130",
+      "state": "CLOSED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Section 1.3\n\"The TRC also provides trust agility - that is it which enables users to select the trust roots used to initiate certificate validation.\"\nThe wording could be improved for clarity. The phrase \"that is it which enables\" reads awkwardly.\n\nSection 1.4\n\"Each TRC consists of a collection of signed root CA certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates.\"\nI suggest using the terms \"Root CA certificates\" and \"Issuing CA certificates\" consistently. Both are CA certificates, and making that naming explicit would improve precision.\n\nSection 1.4.2\n\"In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD.\"\nThis statement may be too strict. In practice, there can be more certificates than ASes, for example where an AS has multiple gateways.\nIt may also be worth mentioning that the absence of CRL/OCSP checking improves performance by removing additional network lookups during PKI processing.\n\nSection 2.1.5\n\"Voting certificates are X.509-style certificates.\"\nThis sounds vague compared to other parts of the text that refer more precisely to X.509 v3.\n\"Both SCION Control Plane root certificates and Control Plane CA certificates are in fact CA certificates. That is, they can both be used to verify other certificates.\"\nThis formulation appears imprecise. A Control Plane CA certificate cannot be used to validate another Control Plane CA certificate. However, both are involved in validating an AS certificate.\n\"The SCION root private key and public key/certificate are used to sign and verify the Control Plane CA certificates, respectively.\"\nOnly the certificate is needed for verification, since it contains the public key.\n\"The control plane CA certificates are explicitly NOT part of the TRC, for reasons of security.\"\nI am not sure \"for reasons of security\" is the right characterization here. This seems more related to practicality or availability than to security in the strict sense.\n\nSection 2.1.6\n\"Arrows show how signatures are verified; in other words, they indicate that a public key contained in a certificate or TRC can be used to verify the authenticity of another item.\"\nThe TRC contains certificates, not standalone public keys. That wording should be adjusted.\n\nSection 3.1.3.1\n\"SCION implementations MUST fulfill the following additional rules, as well as the general syntax rules specified in [RFC5652]:\"\nThere appears to be a typo in \"fulfill\".\n\nSection 4.2.2\n\"A certificate chain is verified against the Control Plane root certificate, although the the root certificate is bundled with the TRC and not in the chain.\"\nThere is a duplicated \"the\".",
+      "createdAt": "2026-04-16T09:15:12Z",
+      "updatedAt": "2026-04-17T12:25:21Z",
+      "closedAt": "2026-04-17T12:25:21Z",
+      "comments": []
+    },
+    {
+      "number": 132,
+      "id": "I_kwDOH386tM7-5UfM",
+      "title": "Review use of normative language",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/132",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti"
+      ],
+      "labels": [],
+      "body": "- [ ] Change the two SHOULD to MUST in this line in Table? \n`pathLenConstraint | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"`\nWe use SHOULD as per RFC 5280, but our code is enforcing this (see  Leftover from https://github.com/scionassociation/scion-cppki_I-D/pull/123#discussion_r3088049508)\n-  [ ] Check that all pending comments in https://github.com/scionassociation/scion-cppki_I-D/pull/123 are addressed\n",
+      "createdAt": "2026-04-16T14:35:41Z",
+      "updatedAt": "2026-04-16T14:39:33Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -5745,24 +5779,26 @@
       "id": "PR_kwDOH386tM7CBd6z",
       "title": "Draft review Nico",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/123",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Contributes to #122 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-02-06T15:22:53Z",
-      "updatedAt": "2026-04-15T17:31:53Z",
+      "updatedAt": "2026-04-16T14:55:24Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "nic_review",
-      "headRefOid": "f74cf38b18ae597fd2307174214e4e12fb684902",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "2287cb8b8c5377b390eb90bb6a4ae3a5be47fbc0",
+      "closedAt": "2026-04-16T14:55:24Z",
+      "mergedAt": "2026-04-16T14:55:24Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "3054827b5fd042f4f01cd35cf1b7d950d0c1f0c4"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -5912,28 +5948,270 @@
               "updatedAt": "2026-04-15T17:32:39Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71kfR9",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-04-16T09:59:32Z",
+          "updatedAt": "2026-04-16T10:08:54Z",
+          "comments": [
+            {
+              "originalPosition": 69,
+              "body": "\"to support heterogeneous trust while..\"",
+              "createdAt": "2026-04-16T09:59:33Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 74,
+              "body": "\"and a voting quorum...\"",
+              "createdAt": "2026-04-16T10:00:20Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 116,
+              "body": "Would capitalise 'They'",
+              "createdAt": "2026-04-16T10:01:27Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 120,
+              "body": "Would capitalise 'They'",
+              "createdAt": "2026-04-16T10:01:44Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 261,
+              "body": "I'm not sure 'error out' is good terminology here. Suggest 'Implementations must generate/create an error if the extension is not present...'",
+              "createdAt": "2026-04-16T10:04:11Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 270,
+              "body": "Same comment about 'error out'.",
+              "createdAt": "2026-04-16T10:04:27Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 618,
+              "body": "I suggest 'Finally' before 'this section describes check..\"",
+              "createdAt": "2026-04-16T10:07:12Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            },
+            {
+              "originalPosition": 699,
+              "body": "I don't think a comma is needed here.",
+              "createdAt": "2026-04-16T10:07:53Z",
+              "updatedAt": "2026-04-16T10:08:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71q-yI",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:27:12Z",
+          "updatedAt": "2026-04-16T14:27:13Z",
+          "comments": [
+            {
+              "originalPosition": 69,
+              "body": "```suggestion\r\nTo fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in {{I-D.dekater-scion-controlplane}}. It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).\r\n```",
+              "createdAt": "2026-04-16T14:27:12Z",
+              "updatedAt": "2026-04-16T14:27:13Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rAMY",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:27:59Z",
+          "updatedAt": "2026-04-16T14:27:59Z",
+          "comments": [
+            {
+              "originalPosition": 74,
+              "body": "```suggestion\r\nAuthentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.\r\n```",
+              "createdAt": "2026-04-16T14:27:59Z",
+              "updatedAt": "2026-04-16T14:27:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rAvY",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:28:15Z",
+          "updatedAt": "2026-04-16T14:28:15Z",
+          "comments": [
+            {
+              "originalPosition": 116,
+              "body": "```suggestion\r\n- **Core ASes**: They are a distinct set of ASes in the SCION Control Plane. For each ISD, the core ASes are listed in the TRC and each core AS has links to the other core ASes (in the same or in different ISDs).\r\n```",
+              "createdAt": "2026-04-16T14:28:15Z",
+              "updatedAt": "2026-04-16T14:28:16Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rCE7",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:28:58Z",
+          "updatedAt": "2026-04-16T14:28:58Z",
+          "comments": [
+            {
+              "originalPosition": 699,
+              "body": "```suggestion\r\n- Check that all signatures are verifiable and no superfluous signatures are attached.\r\n```",
+              "createdAt": "2026-04-16T14:28:58Z",
+              "updatedAt": "2026-04-16T14:28:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rCyn",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:29:20Z",
+          "updatedAt": "2026-04-16T14:29:20Z",
+          "comments": [
+            {
+              "originalPosition": 120,
+              "body": "```suggestion\r\n- **Voting ASes**: They may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\", and the designated ASes that hold the private keys to sign a TRC update are \"voting ASes\".\r\n```",
+              "createdAt": "2026-04-16T14:29:20Z",
+              "updatedAt": "2026-04-16T14:29:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rFGL",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:30:34Z",
+          "updatedAt": "2026-04-16T14:30:35Z",
+          "comments": [
+            {
+              "originalPosition": 261,
+              "body": "```suggestion\r\nThis extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.\r\n```",
+              "createdAt": "2026-04-16T14:30:34Z",
+              "updatedAt": "2026-04-16T14:30:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rGMC",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:31:10Z",
+          "updatedAt": "2026-04-16T14:31:10Z",
+          "comments": [
+            {
+              "originalPosition": 270,
+              "body": "```suggestion\r\nThis extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present.\r\n```",
+              "createdAt": "2026-04-16T14:31:10Z",
+              "updatedAt": "2026-04-16T14:31:10Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rG9l",
+          "commit": {
+            "abbreviatedOid": "d084426"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:31:35Z",
+          "updatedAt": "2026-04-16T14:31:36Z",
+          "comments": [
+            {
+              "originalPosition": 618,
+              "body": "```suggestion\r\nThis section describes the rules that apply to updating a TRC in regard to the payload information contained in the TRC. Some rules are valid for both update types whilst some only apply to a regular or a sensitive TRC update. Based on the type of update, different sets of voters are needed to create a verifiable TRC update and the corresponding voting (signing) process is also described. Finally, this section describes checks to verify a newly issued TRC.\r\n```",
+              "createdAt": "2026-04-16T14:31:35Z",
+              "updatedAt": "2026-04-16T14:31:36Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71rTvB",
+          "commit": {
+            "abbreviatedOid": "5757e88"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T14:38:32Z",
+          "updatedAt": "2026-04-16T14:38:33Z",
+          "comments": [
+            {
+              "originalPosition": 327,
+              "body": "I have to merge this to submit a new draft version and keep the ISE process going. I left a note about this SHOULD in https://github.com/scionassociation/scion-cppki_I-D/issues/132 ",
+              "createdAt": "2026-04-16T14:38:32Z",
+              "updatedAt": "2026-04-16T14:38:33Z"
+            }
+          ]
         }
       ]
     },
     {
       "number": 127,
       "id": "PR_kwDOH386tM7LvMG-",
-      "title": "Add asn.1 module for TRCs",
+      "title": "Add asn.1 module for TRCs and certificate extensions",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/127",
       "state": "OPEN",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Contributes to #28 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio ",
+      "body": "Contributes to #28 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.txt) ",
       "createdAt": "2026-03-19T03:52:27Z",
-      "updatedAt": "2026-04-15T14:48:48Z",
+      "updatedAt": "2026-04-18T18:07:58Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
+      "baseRefOid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "asn-1",
-      "headRefOid": "812edba1aa27f43333618f201805f50de7cfda2d",
+      "headRefOid": "4d1eb67f2d8414ba7f0cbbfb8851a1ff6f285298",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -5959,6 +6237,13 @@
           "body": "JFYI, with the current ASN module, I was able to decode all initial TRCs available [here](https://learn.anapaya.net/docs/resources/assignments/isds/). I extracted the TRC content using: \r\n```\r\nfor f in *.bundle; do [ -e \"$f\" ] || continue; base=\"${f%.bundle}\"; echo \"Processing $f -> ${base}.der...\"; sed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' \"$f\" | openssl asn1parse -inform PEM -strparse 60 -out \"${base}.der\" -noout; done\r\n```\r\nI could then parse all of them them both with asn1c (see  [decoded_trcs.txt](https://github.com/user-attachments/files/26636062/decoded_trcs.txt) ) and with ASN.1 Studio. With the latter tool, I could also verify all subsequent TRCs for ISD 70 and 71: \r\nExtract subsequent TRCs: \r\n```\r\nawk '\r\n    /-----BEGIN TRC-----/ { count++; file=\"ISD70_trc_\" count \".pem\" }\r\n    { if(file) print > file }\r\n    /-----END TRC-----/ { close(file); file=\"\" }\r\n' ISD70-fd4b0d2abe1b4c54274f46eeb31d66cb.bundle\r\n```\r\nConvert them to .der\r\n```\r\nfor f in *.pem; do [ -e \"$f\" ] || continue; base=\"${f%.bundle}\"; echo \"Processing $f -> ${base}.der...\"; sed 's/BEGIN TRC/BEGIN CMS/g; s/END TRC/END CMS/g' \"$f\" | openssl asn1parse -inform PEM -strparse 60 -out \"${base}.der\" -noout; done\r\n```\r\nThey look valid in ASN.1 studio\r\n<img width=\"3208\" height=\"2072\" alt=\"Screenshot 2026-04-10 at 19 12 11\" src=\"https://github.com/user-attachments/assets/29438e2a-7d26-4e56-bcae-5ecb0b1d524a\" />\r\n\r\nOverall, all TRCs are valid according to the current module version, except for ISD72, whose description field is too long. \r\n",
           "createdAt": "2026-04-10T17:14:48Z",
           "updatedAt": "2026-04-10T17:14:48Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@oncilla @knmeynell I now integrated the ASN.1 modules into the draft's appendix. This required a general headings  overhaul  in sections  `2.  Certificate Specification` and section `3.  Trust Root Configuration Specification`. It also required quite some  rewording. I believe the draft structure is overall more clear now. Please let me know if it looks ok to you. Could you 4 eye check that the new text is correct, and that I did not miss/confuse anything?\r\n\r\nI leave some comments in GitHub where I have some remarks/questions\r\n\r\nTo better see the final result, you may want to look at the compiled [diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.txt) and  [HTML version](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#name-extkeyusage-extension).",
+          "createdAt": "2026-04-17T18:44:51Z",
+          "updatedAt": "2026-04-17T18:44:51Z"
         }
       ],
       "reviews": [
@@ -6891,8 +7176,272 @@
               "updatedAt": "2026-04-15T14:48:48Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM71tada",
+          "commit": {
+            "abbreviatedOid": "812edba"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-16T15:51:19Z",
+          "updatedAt": "2026-04-16T15:51:20Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "JFYI I used the numbers I proposed in 8ce0c91b859182edd5161f94cd4ba8bcc6a941a7",
+              "createdAt": "2026-04-16T15:51:19Z",
+              "updatedAt": "2026-04-16T15:51:20Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM711tBO",
+          "commit": {
+            "abbreviatedOid": "5d94d44"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "I'll take your word on the ASN.1 syntax ;-)  The rest seems fine.",
+          "createdAt": "2026-04-16T21:17:54Z",
+          "updatedAt": "2026-04-16T21:17:54Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM72HrG3",
+          "commit": {
+            "abbreviatedOid": "77d5757"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-17T13:32:34Z",
+          "updatedAt": "2026-04-17T13:32:34Z",
+          "comments": [
+            {
+              "originalPosition": 212,
+              "body": "@oncilla  does the paragraph make sense, and should this be a MUST here\n \n> For signature calculation, the data that is to be signed ~is~ MUST be encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}.\n",
+              "createdAt": "2026-04-17T13:32:34Z",
+              "updatedAt": "2026-04-17T13:32:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM72LMCW",
+          "commit": {
+            "abbreviatedOid": "812edba"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-17T15:37:08Z",
+          "updatedAt": "2026-04-17T15:37:08Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "So, right now the quorum is enforced to be at most 255 in the code.\r\n\r\nBut I guess we can change it. I don't think anyone will get even close to that number, and when they do, all implementations should have been updated",
+              "createdAt": "2026-04-17T15:37:08Z",
+              "updatedAt": "2026-04-17T15:37:08Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM72LPOk",
+          "commit": {
+            "abbreviatedOid": "77d5757"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-17T15:39:24Z",
+          "updatedAt": "2026-04-17T15:39:24Z",
+          "comments": [
+            {
+              "originalPosition": 212,
+              "body": "Makes sense, yes.",
+              "createdAt": "2026-04-17T15:39:24Z",
+              "updatedAt": "2026-04-17T15:39:24Z"
+            }
+          ]
         }
       ]
+    },
+    {
+      "number": 129,
+      "id": "PR_kwDOH386tM7S573e",
+      "title": "rewrite abstract and shorten intro",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/129",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Contributes to #122  \r\n\r\nDiff with [main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/shorten-abstract/draft-dekater-scion-pki.txt): ",
+      "createdAt": "2026-04-16T08:51:18Z",
+      "updatedAt": "2026-04-16T14:57:24Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "shorten-abstract",
+      "headRefOid": "efc5857c097e2315662e8d01f2d490c8ec9fe636",
+      "closedAt": "2026-04-16T14:57:21Z",
+      "mergedAt": "2026-04-16T14:57:21Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "820014277fb7784ba0240695de8700a81d04ffe7"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM71kuj0",
+          "commit": {
+            "abbreviatedOid": "efc5857"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-16T10:10:16Z",
+          "updatedAt": "2026-04-16T10:10:16Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 131,
+      "id": "PR_kwDOH386tM7S71jv",
+      "title": "p. Ambord Clarifications",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/131",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #130 \r\n\r\nTo be merged AFTER #122 \r\n\r\nDiff with [main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/feedback_ambord/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-04-16T10:40:44Z",
+      "updatedAt": "2026-04-17T12:25:23Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "820014277fb7784ba0240695de8700a81d04ffe7",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "feedback_ambord",
+      "headRefOid": "2b9cd5a9c1a5d4919eeae9602e83db072981ef25",
+      "closedAt": "2026-04-17T12:25:20Z",
+      "mergedAt": "2026-04-17T12:25:20Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM71tzsP",
+          "commit": {
+            "abbreviatedOid": "b63fc9e"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "I think the edits are improvements.",
+          "createdAt": "2026-04-16T16:04:06Z",
+          "updatedAt": "2026-04-16T16:07:57Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "Closing quote for 'root certificates,' should be after comma - i.e. 'root certificates',",
+              "createdAt": "2026-04-16T16:04:06Z",
+              "updatedAt": "2026-04-16T16:07:58Z"
+            },
+            {
+              "originalPosition": 295,
+              "body": "Is it not 'Brian Tramell'?",
+              "createdAt": "2026-04-16T16:06:54Z",
+              "updatedAt": "2026-04-16T16:07:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM719GVR",
+          "commit": {
+            "abbreviatedOid": "b63fc9e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-17T05:54:09Z",
+          "updatedAt": "2026-04-17T05:54:09Z",
+          "comments": [
+            {
+              "originalPosition": 295,
+              "body": "No, actually Trammel**L**\r\nhttps://trammell.ch/\r\n```suggestion\r\nMany thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.\r\n```",
+              "createdAt": "2026-04-17T05:54:09Z",
+              "updatedAt": "2026-04-17T05:54:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM719IY4",
+          "commit": {
+            "abbreviatedOid": "b63fc9e"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-17T05:56:18Z",
+          "updatedAt": "2026-04-17T05:56:19Z",
+          "comments": [
+            {
+              "originalPosition": 71,
+              "body": "```suggestion\r\nIn X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.\r\n```",
+              "createdAt": "2026-04-17T05:56:18Z",
+              "updatedAt": "2026-04-17T05:56:19Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 133,
+      "id": "PR_kwDOH386tM7Ta9YB",
+      "title": "TRC selection: remove python code",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/133",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #128",
+      "createdAt": "2026-04-17T19:05:03Z",
+      "updatedAt": "2026-04-17T19:05:53Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "trc_selection",
+      "headRefOid": "211c0d9ead6cc32a50b60f69b3cb914f8e23f1a1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "[211c0d9](https://github.com/scionassociation/scion-cppki_I-D/pull/133/commits/211c0d9ead6cc32a50b60f69b3cb914f8e23f1a1) is just an AI starting point. @katyatitkova , @romshark could one of you help translating this python block into just a text section ? ",
+          "createdAt": "2026-04-17T19:05:45Z",
+          "updatedAt": "2026-04-17T19:05:45Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
