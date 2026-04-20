@@ -1,0 +1,30 @@
+SCION-CP-PKI-CERT-EXTENSIONS { 
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) id-scion-pki-cert-ext(101)
+}
+
+DEFINITIONS EXPLICIT TAGS ::= 
+BEGIN
+
+-- Root SCION object identifier (IANA Private Enterprise Number 55324)
+id-scion OBJECT IDENTIFIER ::= { 1 3 6 1 4 1 55324 }
+
+-- SCION Control Plane PKI
+id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
+
+-- SCION ISD-AS Attribute
+id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
+
+-- SCION Key Purposes
+id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
+
+-- Identifies a Sensitive voting certificate
+id-kp-sensitive OBJECT IDENTIFIER ::= { id-scion-kp 1 }
+
+-- Identifies a Regular voting certificate
+id-kp-regular   OBJECT IDENTIFIER ::= { id-scion-kp 2 }
+
+-- Identifies a Root certificate
+id-kp-root      OBJECT IDENTIFIER ::= { id-scion-kp 3 }
+
+END
