@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 20 October 2026                                         S. Hitz
+Expires: 22 October 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           18 April 2026
+                                                           20 April 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 20 October 2026.
+   This Internet-Draft will expire on 22 October 2026.
 
 Copyright Notice
 
@@ -572,15 +572,15 @@ Table of Contents
 
    In X.509 terms, Control Plane root certificates are CA certificates.
    For simplicity, this document calls them 'root certificates',
-   distinguishing them from from the subordinate 'issuing CA
-   certificates'.  Root certificates are self-signed; the issuer and
-   subject are the same entity, and the public key within the
-   certificate is used to verify its own signature.  The public key of
-   the Control Plane root certificate and proof of ownership of the
-   private key are embedded in the TRC of an ISD, via the self-signed
-   Control Plane root certificate.  This facilitates the bootstrapping
-   of trust within an ISD, and marks the Control Plane root certificates
-   as the starting point of an ISD's certificate verification path.
+   distinguishing them from the subordinate 'issuing CA certificates'.
+   Root certificates are self-signed; the issuer and subject are the
+   same entity, and the public key within the certificate is used to
+   verify its own signature.  The public key of the Control Plane root
+   certificate and proof of ownership of the private key are embedded in
+   the TRC of an ISD, via the self-signed Control Plane root
+   certificate.  This facilitates the bootstrapping of trust within an
+   ISD, and marks the Control Plane root certificates as the starting
+   point of an ISD's certificate verification path.
 
    The RECOMMENDED maximum validity period of a Control Plane root
    certificate is 1 year.
@@ -1615,8 +1615,7 @@ Table of Contents
    of the root certificate, and to update the corresponding TRC without
    having to modify the certificate chain.  To be able to validate a
    certification path, each AS builds a collection of root certificates
-   from the latest TRC of the relevant ISD.  The following section
-   explains how to build a trust anchor pool.
+   from the latest TRC of the relevant ISD.
 
    Note that any entity sending information that is secured by the
    Control Plane PKI, such as control plane messages, MUST be able to
@@ -1628,6 +1627,8 @@ Table of Contents
    of Cryptographic Material".  If it cannot be resolved, the
    verification process fails.  For more details, see 4.2 "Signing and
    Verifying Control Plane Messages" Section 4.2.
+
+   The following section explains how to build a trust anchor pool.
 
 3.4.1.  TRC Selection For Trust Anchor Pool
 
@@ -2270,7 +2271,7 @@ Table of Contents
    material are not prone to additional denial of service attacks.  We
    refer to the security considerations of
    [I-D.dekater-scion-controlplane] for a more detailed description of
-   DoS vulnerabilities of control-plane messages.
+   DoS vulnerabilities of control plane messages.
 
    On the other hand, this does not apply for certificate renewal.
    Denial of Service on the CA infrastructure or on the communication
@@ -2731,8 +2732,8 @@ draft-dekater-scion-pki-11
 
 draft-dekater-scion-pki-10
 
-   *  removed ISD assignment table and replaced to reference in control-
-      plane draft
+   *  removed ISD assignment table and replaced to reference in Control
+      Plane draft
 
    *  Updated number assignment reference
 
