@@ -1405,11 +1405,11 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Overall review and wording polish
+- Introduction: shorten and refer to -controlplane
 - Consistently use "Issuing CA certificate" / root certificate"
-- Reduce number of headings in sections 2 and 3
+- Sections 2 and 3 (Certificate, TRC specification): reduce number of subheadings, reword TRC field descriptions. - Clarify that TRC validity uses GeneralizedTime
+- Add ASN.1 modules in the appendix for Certificate extensions and TRCs
 - Tables 3-7: sharpen normative language use
-- Certificate fields: reorganize headings, add ASN.1 module with definitions in appendix
-- TRC: add ASN.1 module in appendix and reword field descriptions. Clarify that TRC validity uses GeneralizedTime
 
 ## draft-dekater-scion-pki-11
 {:numbered="false"}
