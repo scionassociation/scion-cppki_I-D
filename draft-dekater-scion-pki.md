@@ -307,7 +307,7 @@ TRC
 
 The private key of the Control Plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the Control Plane Root certificate is used to verify Control Plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.
 
-In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.
+In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.
 
 The RECOMMENDED maximum validity period of a Control Plane root certificate is 1 year.
 
@@ -859,10 +859,10 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
 
 However, AS certificates and the corresponding issuing CA certificates are not part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
-The following section explains how to build a trust anchor pool.
 
 Note that any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
 
+The following section explains how to build a trust anchor pool.
 
 ### TRC Selection For Trust Anchor Pool {#trc-selection}
 
@@ -1185,7 +1185,7 @@ The Control Plane PKI lays the foundation for the authentication procedures in S
 
 The relying party MUST be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
 
-As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control plane messages.
 
 On the other hand, this does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:
 
@@ -1428,7 +1428,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-10
 {:numbered="false"}
 
-- removed ISD assignment table and replaced to reference in control-plane draft
+- removed ISD assignment table and replaced to reference in Control Plane draft
 - Updated number assignment reference
 - Signatures: mention that other algorithms that ECDSA may be used in the future
 - Figures: add SVG version
