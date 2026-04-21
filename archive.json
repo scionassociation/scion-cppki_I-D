@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-19T00:42:33.960904+00:00",
+  "timestamp": "2026-04-21T00:42:07.825765+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -129,7 +129,7 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2026-04-10T15:49:46Z",
+      "updatedAt": "2026-04-20T16:16:41Z",
       "closedAt": null,
       "comments": [
         {
@@ -173,6 +173,13 @@
           "body": "TODO for TRCs:\n- [ ] Write correct ASN.1 module for TRCs (check we follow best practices from [rfc6025](https://datatracker.ietf.org/doc/html/rfc6025#section-2.2))\n- [x] Use it to compile a decoder (e.g. with asn1c)\n- [ ] Successfully decode an old and a new TRC\n- [ ] Add ASN.1 module to draft\n- [ ] Clarify use of OID under our PEN v.s. PKIX Module Identifiers\n- [ ] Update text descriptions in the draft\n\n\nTODO for certs: \n- [ ] clarify need of ASN.1 module for scion-specific constraints \n- [ ] clarify `id-kp` name collisions with imports from x.509 and eventually replace with `id-scion-kp`",
           "createdAt": "2026-04-10T11:50:33Z",
           "updatedAt": "2026-04-10T15:49:46Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Leaving open pending Dominik's 4 eye check in #127 (see my last comments in the PR)",
+          "createdAt": "2026-04-20T16:16:26Z",
+          "updatedAt": "2026-04-20T16:16:41Z"
         }
       ]
     },
@@ -1396,31 +1403,39 @@
       "id": "I_kwDOH386tM7o5r3C",
       "title": "AlgorithmIdentifier: what if we use different algorithms?",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/125",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "> Additional conditions and remarks: As a consequence, the parameters field in the AlgorithmIdentifier sequence MUST NOT be used.\n\nWhat if we use a different algorithm? ",
       "createdAt": "2026-02-06T16:12:30Z",
-      "updatedAt": "2026-02-06T16:12:30Z",
-      "closedAt": null,
-      "comments": []
+      "updatedAt": "2026-04-20T16:33:11Z",
+      "closedAt": "2026-04-20T16:33:11Z",
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "That sentence got changed in #127 to: \n\n> Current\n   implementations use the ECDSA signature algorithm defined in [X9.62].\n   As a consequence, the parameters field in the AlgorithmIdentifier\n   sequence MUST NOT be used. \n\nThis wording clearly links the MUST NOT to use of ECDSA. So this resolves the issue if using other algos",
+          "createdAt": "2026-04-20T16:33:11Z",
+          "updatedAt": "2026-04-20T16:33:11Z"
+        }
+      ]
     },
     {
       "number": 126,
       "id": "I_kwDOH386tM7o5xG6",
       "title": "Clarify critical certificate extension",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/126",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "> **Note**: If a certificate extension is marked \"critical\", the public key in the certificate SHOULD only be used for the purpose set in the critical extension.\n\nWhy? Is it a reference to some other RFC?",
       "createdAt": "2026-02-06T16:18:33Z",
-      "updatedAt": "2026-04-15T17:26:24Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-20T16:29:27Z",
+      "closedAt": "2026-04-20T16:29:27Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1428,6 +1443,13 @@
           "body": "RFC 5280 is using a MUST on criticality:\n\n> A certificate-using system MUST reject the certificate if it encounters\n   a critical extension it does not recognize or a critical extension\n   that contains information that it cannot process.  A non-critical\n   extension MAY be ignored if it is not recognized, but MUST be\n   processed if it is recognized.\n\n\nOn KeyUsage: \n\n>   If the keyUsage extension is present, then the subject public key\n   MUST NOT be used to verify signatures on certificates or CRLs unless\n   the corresponding keyCertSign or cRLSign bit is set.  \n\n\nI think we could therefore piggyback on 5280 and completely remove this sentence on the purpose of the key.",
           "createdAt": "2026-04-15T17:26:24Z",
           "updatedAt": "2026-04-15T17:26:24Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Resolved in #123 ",
+          "createdAt": "2026-04-20T16:29:27Z",
+          "updatedAt": "2026-04-20T16:29:27Z"
         }
       ]
     },
@@ -6198,24 +6220,26 @@
       "id": "PR_kwDOH386tM7LvMG-",
       "title": "Add asn.1 module for TRCs and certificate extensions",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/127",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Contributes to #28 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.txt) ",
+      "body": "Resolves #28 \r\n\r\nAlso resolves: #125 \r\n\r\nThis PR contains: \r\n- RFC5280 ASN.1 module copied from [here](https://raw.githubusercontent.com/erlang/otp/master/lib/asn1/test/asn1_SUITE_data/PKIX1Explicit88.asn1), required for decoding X.509 certificates. There is one trick in this file:  \r\n`CertificateSerialNumber`  was changed from  `INTEGER`  to  `[UNIVERSAL 2] IMPLICIT OCTET STRING` to avoid an integer overflow problem in tooling, since serial numbers are 20-21 bytes long. \r\n- SCION TRC ASN.1 module  \r\n\r\nThis module was used to successfully decode various production TRCs using asn1c and OSS Noklava ASN.1 studio\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.txt) ",
       "createdAt": "2026-03-19T03:52:27Z",
-      "updatedAt": "2026-04-18T18:07:58Z",
+      "updatedAt": "2026-04-20T16:33:47Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "asn-1",
-      "headRefOid": "4d1eb67f2d8414ba7f0cbbfb8851a1ff6f285298",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a86c1fa14033eb04250d349f516a5adc953d359d",
+      "closedAt": "2026-04-20T16:15:51Z",
+      "mergedAt": "2026-04-20T16:15:51Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "db5fbeed2a68f913992fffa6b3d4130f8774a2ba"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -7419,9 +7443,9 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #128",
+      "body": "Resolves #128\r\n\r\n-  [ ] Evaluate if we can remove sub-heading [3.4.1. ](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#section-3.4.1)[TRC Selection For Trust Anchor Pool](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#name-trc-selection-for-trust-anc), maybe this can just be a single paragraph",
       "createdAt": "2026-04-17T19:05:03Z",
-      "updatedAt": "2026-04-17T19:05:53Z",
+      "updatedAt": "2026-04-20T14:48:32Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74",
