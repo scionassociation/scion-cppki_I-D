@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 22 October 2026                                         S. Hitz
+Expires: 24 October 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           20 April 2026
+                                                           22 April 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 22 October 2026.
+   This Internet-Draft will expire on 24 October 2026.
 
 Copyright Notice
 
@@ -2418,8 +2418,11 @@ Appendix A.  Certificate Extensions in ASN.1 Syntax
   -- SCION Control Plane PKI
   id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
 
+  -- SCION Attributes
+  id-at OBJECT IDENTIFIER ::= { id-cppki 2 }
+
   -- SCION ISD-AS Attribute
-  id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
+  id-at-ia OBJECT IDENTIFIER ::= { id-at 1 }
 
   -- SCION Key Purposes
   id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
