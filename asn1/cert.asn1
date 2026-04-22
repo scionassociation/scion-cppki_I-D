@@ -12,8 +12,11 @@ id-scion OBJECT IDENTIFIER ::= { 1 3 6 1 4 1 55324 }
 -- SCION Control Plane PKI
 id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
 
+-- SCION Attributes
+id-at OBJECT IDENTIFIER ::= { id-cppki 2 }
+
 -- SCION ISD-AS Attribute
-id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}
+id-at-ia OBJECT IDENTIFIER ::= { id-at 1 }
 
 -- SCION Key Purposes
 id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
