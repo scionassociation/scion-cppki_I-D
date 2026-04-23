@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-21T00:42:07.825765+00:00",
+  "timestamp": "2026-04-23T00:44:16.523259+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -7465,6 +7465,34 @@
           "updatedAt": "2026-04-17T19:05:45Z"
         }
       ],
+      "reviews": []
+    },
+    {
+      "number": 134,
+      "id": "PR_kwDOH386tM7UtXZj",
+      "title": "Make cert Asn 1 module compile",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/134",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "As suggested by Russ.\r\nContributes to #28 ",
+      "createdAt": "2026-04-22T17:24:04Z",
+      "updatedAt": "2026-04-22T17:25:51Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "db5fbeed2a68f913992fffa6b3d4130f8774a2ba",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "asn-1",
+      "headRefOid": "347565bfea31795a6b2e4826ba5b64a07eaaadc7",
+      "closedAt": "2026-04-22T17:25:46Z",
+      "mergedAt": "2026-04-22T17:25:46Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "d3895db8c0ead3689da999ac3742c60ddbf320fb"
+      },
+      "comments": [],
       "reviews": []
     }
   ]
