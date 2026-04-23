@@ -868,76 +868,26 @@ The following section explains how to build a trust anchor pool.
 
 The selection of the right set of TRCs to build the trust anchor pool depends on the time of verification. The trust anchor pool is usually used to verify control plane messages and in this case, the time of verification is the current time. However, if the trust anchor pool will be used for auditing, the time of verification is the point in time to check whether a given signature was verifiable.
 
-The selection algorithm for building the trust anchor pool is described in pseudo-python code below.
+To construct the trust anchor pool for a specific ISD at a given `verification_time`, a relying party executes the following steps:
 
-~~~~python
-    def select_trust_anchors(trcs: Dict[(int,int), TRC], \
-    verification_time: int) -> Set[RootCert]:
-        """
-        Args:
-            trcs: The dictionary mapping (serial number, \
-            base number) to the TRC for a given ISD.
-            verification_time: The time of verification.
+1. Determine the Active Base Number: Filter the set of all available TRCs for the ISD to those whose `notBefore` validity date is less than or equal to the `verification_time`. From this filtered set, select the highest `baseNumber`.
 
-        Returns:
-            The set of CP Root certificates acting as trust anchors.
-        """
-        # Find highest base number that has a TRC with validity
-        # period starting before verification time.
-        base_nr = 1
-        for trc in trcs.values()
-            if trc.id.base_nr > base_nr and trc.validity.not_before \
-            <= verification_time:
-                base_nr = trc.id.base_nr
+2. Identify the Candidate TRC: Filter the set of available TRCs again to find only those that match the `baseNumber` identified in Step 1, and whose `notBefore` date is less than or equal to the `verification_time`. From this set, select the TRC with the highest `serialNumber`. This is the *Candidate TRC*.
 
-        # Find TRC with highest serial number with given base number
-        # and a validity period starting before verification time.
-        serial_nr = 1
-        for trc in trcs[isd].values():
-            if trc.id.base_nr != base_nr:
-                continue
-            if trc.id.serial_nr > serial_nr and \
-            trc.validity.not_before <= verification_time:
-                serial_nr = trc.id.serial_nr
+3. Verify Candidate TRC Expiration:**
+   If the `verification_time` is strictly greater than the Candidate TRC's `notAfter` date, the algorithm terminates and returns an empty set. There are no valid trust anchors for this time.
 
-        candidate = trcs[(serial_nr, base_nr)]
+4. Extract Candidate Trust Anchors:**
+   Parse the `certificates` sequence of the Candidate TRC. Extract all certificates that possess a `basicConstraints` extension with the `cA` boolean asserted. Add these CP Root Certificates to the trust anchor pool.
 
-        # If the verification time is not inside the validity period,
-        # there is no valid set of trust anchors.
-        if not candidate.validity.contains(verification_time):
-            return set()
+5. Evaluate the Grace Period:**
+   Check if the Candidate TRC is currently within its grace period (i.e., `verification_time` <= `notBefore` + `gracePeriod`). If the grace period has expired, the algorithm terminates and returns the current trust anchor pool.
 
-        # If the grace period has passed, only the certificates in
-        # that TRC may be used as trust anchors.
-        if candidate.validity.not_before + candidate.grace_period \
-        < verification_time:
-            return collect_trust_anchors(candidate)
+6. Process the Predecessor TRC (If Applicable):
+  If the Candidate TRC is still within its grace period, attempt to retrieve the Predecessor TRC (the TRC with the same `baseNumber` and a `serialNumber` exactly one less than the Candidate TRC).
+   If the Predecessor TRC exists and its `notAfter` date is greater than or equal to the `verification_time`, extract its CP Root Certificates (as described in Step 4) and add them to the trust anchor pool.
 
-        predecessor = trcs.get((serial_nr-1, base_nr))
-        if not predecessor or predecessor.validity.not_after < \
-        verification_time:
-            return collect_trust_anchors(candidate)
-
-        return collect_trust_anchors(candidate) | \
-        collect_trust_anchors(predecessor)
-
-
-    def collect_trust_anchors(trc: TRC) -> Set[RootCert]:
-        """
-        Args:
-            trc: A TRC from which the CP Root Certificates shall \
-            be extracted.
-
-        Returns:
-            The set of CP Root certificates acting as trust anchors.
-        """
-        roots = set()
-        for cert in trc.certificates:
-            if not cert.basic_constraints.ca:
-                continue
-            roots.add(cert)
-        return roots
-~~~~
+7. Return the Pool: The algorithm terminates and returns the assembled trust anchor pool.
 
 
 ## TRC Updates {#update}
