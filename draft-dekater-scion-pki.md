@@ -132,13 +132,13 @@ SCION relies on three main components:
 
 **Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
-**Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD MUST have at least one Core AS.
+**Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
 
 **Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.
 
 **Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
 
-**Base TRC**: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. Each ISD MUST create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
+**Base TRC**: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. ISD operators create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
 
 **TRC Signing Ceremony**: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.
 
@@ -270,7 +270,7 @@ For this to work, it is not necessary that all the ASes of the ISD trust each ot
 
 ### Input {#input}
 
-Prior to the ceremony, the trusted parties MUST decide about the validity period of the TRC as well as the number of votes required to update a TRC. They MUST also bring the required keys and certificates, the so-called root and voting keys/certificates.
+Prior to the ceremony, the trusted parties decide about the validity period of the TRC as well as the number of votes required to update a TRC. They MUST also bring the required keys and certificates, the so-called root and voting keys/certificates.
 
 The trusted parties require an ISD number whose numbering scheme is described in {{I-D.dekater-scion-controlplane}} section `ISD Numbers`, and allocation in {{ISD-AS-assignments}}.
 
@@ -534,17 +534,12 @@ The following sections describe the SCION-specifics in regard to these extension
 
 ### `authorityKeyIdentifier` Extension
 
-The `authorityKeyIdentifier` extension identifies the public key corresponding to the private key used to sign a certificate.
+The `authorityKeyIdentifier` extension identifies the public key corresponding to the private key used to sign a certificate. For its syntax and definition, see {{RFC5280}}, section 4.2.1.1, and {{X.509}}, clause 9.2.2.1.
 
-For the syntax and definition of the `authorityKeyIdentifier` extension, see {{RFC5280}}, section 4.2.1.1, and {{X.509}}, clause 9.2.2.1.
+To ensure deterministic matching, the authorityKeyIdentifier attributes are strictly restricted:
 
-The `authorityKeyIdentifier` extension provides three attributes to specify the public key:
-
-- `keyIdentifier`
-- `authorityCertIssuer`
-- `authorityCertSerialNumber`
-
-In SCION, using the `keyIdentifier` attribute is the preferred way to specify the `authorityKeyIdentifier` extension.
+- `keyIdentifier`: MUST be included.
+- `authorityCertIssuer` & `authorityCertSerialNumber`: MUST NOT be included. Implementations MUST return an error if either is present.
 
 SCION implementations MAY also support the use of the `authorityCertIssuer` and `authorityCertSerialNumber` attributes. However, if these attributes are set and support for them is missing, implementations SHOULD error out.
 
@@ -801,7 +796,7 @@ A certificate that is no control plane root or voting certificate MUST NOT be in
 
 A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
 
-The following constraints MUST hold for each certificate in the `certificates` field of the TRC payload:
+The following constraints must hold for each certificate in the `certificates` field of the TRC payload:
 
 - Each certificate MUST be unique in the sequence of certificates.
 - The `issuer` / `serialNumber` pair for each certificate MUST be unique.
@@ -974,7 +969,7 @@ The sections that follow provide more detailed descriptions of each rule.
 
 ### General Update Rules
 
-The following rules MUST hold for each updated TRC, independent of the update type:
+The following rules hold for each updated TRC, independent of the update type:
 
 - The `iSD` and `baseNumber` in the `iD` field MUST NOT change (see also [](#id)).
 - The `serialNumber` in the `iD` field MUST be incremented by one.
@@ -989,7 +984,7 @@ A regular TRC update is a periodic re-issuance of the TRC where the entities and
 
 A TRC update qualifies as a regular update if the following rules apply in regard to the TRC's payload information.
 
-- The settings of the following fields in the updated TRC MUST remain the same compared to the predecessor TRC:
+- The following fields in the updated TRC MUST remain the same compared to the predecessor TRC:
    - The voting quorum set in the `votingQuorum` field.
    - The core ASes specified in the `coreASes` field.
    - The authoritative ASes specified in the `authoritativeASes` field.
@@ -1183,7 +1178,7 @@ As described in [](#substitutes-to-revocation), there is no revocation in the Co
 
 The Control Plane PKI lays the foundation for the authentication procedures in SCION by providing each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control plane messages - every AS and endpoint can verify all control plane messages by following the certificate chain.
 
-The relying party MUST be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
+The relying party needs to be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
 
 As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control plane messages.
 
@@ -1318,11 +1313,11 @@ The Signing Ceremony SHOULD include the following participants:
 
 - **Witness(es)** - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.
 
-**Note:** The ISD members MUST decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and MUST have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
+**Note:** The ISD members must decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
 
 ## Ceremony Preparations {#ceremonyprep}
 
-The participants MUST decide in advance on the physical location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:
+The participants agree in advance on the physical location of the Signing Ceremony, the devices that will be used, and MUST decide the ISD policy as follows:
 
 - ISD number - usually obtained from the SCION registry, see [](#id);
 - The description of the TRC, see [](#description);
@@ -1340,7 +1335,7 @@ Each representative of a Voting AS MUST also create the following before the cer
 
 In addition, each Certificate Authority MUST create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they MUST provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance MUST cover the full TRC validity period.
 
-The location MUST provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.
+The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.
 
 The Ceremony Administrator and Voting ASes MUST each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.
 
@@ -1408,6 +1403,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Certificate validity recommendations: align to current practice
+- `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
