@@ -485,13 +485,13 @@ In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION im
 
 The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in [](#cert-asn1).
 
-The string representation of the `ISD-AS number` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The `id-at-ia` attribute MUST be included in the `issuer` and `subject` fields of root, issuing CA, and AS certificates. It SHOULD be included in voting certificates.
+In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies.
 
-Voting AS and issuing CA certificates MUST include the `ISD-AS number` attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
+When present, the `id-at-ia` attribute MUST appear exactly once in a given distinguished name (DN), and implementations MUST reject certificates if the `id-at-ia` appears more than once.
 
-For issuing CA certificates, the inclusion of the `ISD-AS number` ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.
+The string representation of the `id-at-ia` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
-Voting-only certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
 ### `validity`
 
@@ -540,8 +540,6 @@ To ensure deterministic matching, the authorityKeyIdentifier attributes are stri
 
 - `keyIdentifier`: MUST be included.
 - `authorityCertIssuer` & `authorityCertSerialNumber`: MUST NOT be included. Implementations MUST return an error if either is present.
-
-SCION implementations MAY also support the use of the `authorityCertIssuer` and `authorityCertSerialNumber` attributes. However, if these attributes are set and support for them is missing, implementations SHOULD error out.
 
 This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
 
