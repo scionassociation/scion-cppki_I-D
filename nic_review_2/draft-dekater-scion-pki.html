@@ -2306,10 +2306,10 @@ In addition to the attributes described in <span>[<a href="#RFC5280" class="cite
 <a href="#section-2.7.4.1" class="section-number selfRef">2.7.4.1. </a><a href="#name-id-at-ia-attribute" class="section-name selfRef"><code>id-at-ia</code> Attribute</a>
             </h5>
 <p id="section-2.7.4.1-1">The <code>id-at-ia</code> attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in <a href="#cert-asn1" class="auto internal xref">Appendix A</a>.<a href="#section-2.7.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.7.4.1-2">The string representation of the <code>ISD-AS number</code> attribute <span class="bcp14">MUST</span> follow the formatting defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.<a href="#section-2.7.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.7.4.1-3">Voting AS and issuing CA certificates <span class="bcp14">MUST</span> include the <code>ISD-AS number</code> attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the <code>issuer</code> or <code>subject</code> field respectively. Implementations <span class="bcp14">MUST NOT</span> create nor successfully verify certificates whose <code>issuer</code> and <code>subject</code> fields do not include the ISD-AS number at all, or include it more than once.<a href="#section-2.7.4.1-3" class="pilcrow">¶</a></p>
-<p id="section-2.7.4.1-4">For issuing CA certificates, the inclusion of the <code>ISD-AS number</code> ensures the Control Plane knows from which AS to retrieve the certificate, thereby avoiding circular dependencies.<a href="#section-2.7.4.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.7.4.1-5">Voting-only certificates are not required to include the <code>ISD-AS number</code> attribute in their distinguished name.<a href="#section-2.7.4.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.7.4.1-2">The <code>id-at-ia</code> attribute <span class="bcp14">MUST</span> be included in the <code>issuer</code> and <code>subject</code> fields of root, issuing CA, and AS certificates. It <span class="bcp14">SHOULD</span> be included in voting certificates.
+In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies.<a href="#section-2.7.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-2.7.4.1-3">When present, the <code>id-at-ia</code> attribute <span class="bcp14">MUST</span> appear exactly once in a given distinguished name (DN), and implementations <span class="bcp14">MUST</span> reject certificates if the <code>id-at-ia</code> appears more than once.<a href="#section-2.7.4.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.7.4.1-4">The string representation of the <code>id-at-ia</code> attribute <span class="bcp14">MUST</span> follow the formatting defined in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.<a href="#section-2.7.4.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -2403,8 +2403,7 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
               <p id="section-2.8.1-3.2.1"><code>authorityCertIssuer</code> &amp; <code>authorityCertSerialNumber</code>: <span class="bcp14">MUST NOT</span> be included. Implementations <span class="bcp14">MUST</span> return an error if either is present.<a href="#section-2.8.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-2.8.1-4">SCION implementations <span class="bcp14">MAY</span> also support the use of the <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes. However, if these attributes are set and support for them is missing, implementations <span class="bcp14">SHOULD</span> error out.<a href="#section-2.8.1-4" class="pilcrow">¶</a></p>
-<p id="section-2.8.1-5">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> return an error if the extension is not present AND the certificate is not self-signed.<a href="#section-2.8.1-5" class="pilcrow">¶</a></p>
+<p id="section-2.8.1-4">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> return an error if the extension is not present AND the certificate is not self-signed.<a href="#section-2.8.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subject-key-id-ext">
