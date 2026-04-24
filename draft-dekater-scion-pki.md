@@ -309,7 +309,7 @@ The private key of the Control Plane root certificate is used to sign Control Pl
 
 In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.
 
-The RECOMMENDED maximum validity period of a Control Plane root certificate is 1 year.
+The RECOMMENDED maximum validity period of a Control Plane root certificate is 5 years.
 
 **Note**: The TRC of each ISD contains a trusted set of Control Plane root certificates, and this set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [](#trc-specification).
 
@@ -319,7 +319,7 @@ The private key of the Control Plane issuing CA certificate is used to sign Cont
 
 The public key needed to verify the issuing CA certificate is in a Control Plane root certificate. Issuing CA certificates do not bundle the root certificate needed to verify them. In order to verify an issuing CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [](#signing-verifying-cp-messages)).
 
-The RECOMMENDED maximum validity period of a Control Plane issuing CA certificate is 11 days.
+The RECOMMENDED maximum validity period of a Control Plane issuing CA certificate is 15 days.
 This is much shorter than root certificates, which have a longer recommended maximum validity period, because they are part of the TRC of an ISD, which itself also has a longer recommended maximum validity (see {{table-2}}). This ensures that the TRC need not be updated all the time and is thus relatively stable.
 
 ## Control Plane AS Certificate
@@ -340,7 +340,7 @@ Regular and sensitive voting certificates are used to verify regular and sensiti
 
 Regular voting certificates may be used to cast a vote in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
 
-The RECOMMENDED maximum validity period of a regular voting certificate is 1 year.
+The RECOMMENDED maximum validity period of a regular voting certificate is 5 years.
 
 ### Sensitive Voting Certificate
 
@@ -368,15 +368,15 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 |------------------------+-------------------+------------------------------------------+---------------------------------------------------------+--------------|
 | TRC (trust root conf.) | TRC               | SK<sub>sens</sub>, SK<sub>reg</sub> (1)  | C<sub>root</sub>, C<sub>sens</sub>, C<sub>reg</sub> (1) | 1 year       |
 | Sensitive voting cert. | C<sub>sens</sub>  | SK<sub>sens</sub>                        | PK<sub>sens</sub>                                       | 5 years      |
-| Regular voting cert.   | C<sub>reg</sub>   | SK<sub>reg</sub>                         | PK<sub>reg</sub>                                        | 1 year       |
-| CP root certificate    | C<sub>root</sub>  | SK<sub>root</sub>                        | PK<sub>root</sub>                                       | 1 year       |
-| CP issuing CA certificate      | C<sub>CA</sub>    | SK<sub>root</sub>                        | PK<sub>CA</sub>                                         | 11 days (3)  |
+| Regular voting cert.   | C<sub>reg</sub>   | SK<sub>reg</sub>                         | PK<sub>reg</sub>                                        | 5 years      |
+| CP root certificate    | C<sub>root</sub>  | SK<sub>root</sub>                        | PK<sub>root</sub>                                       | 5 years      |
+| CP issuing CA certificate      | C<sub>CA</sub>    | SK<sub>root</sub>                        | PK<sub>CA</sub>                                 | 15 days (3)  |
 | CP AS certificate      | C<sub>AS</sub>    | SK<sub>CA</sub>                          | PK<sub>AS</sub>                                         | 3 days       |
 {: #table-3 title="Certificates"}
 
 (1) Multiple signatures and certificates of each type MAY be included in a TRC.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
-(3) A validity of 11 days with 4 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a issuing CA certificate rollover.
+(3) A validity of 15 days with 4 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a issuing CA certificate rollover.
 
 {{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
 
@@ -639,7 +639,7 @@ The settings of the `basicConstraints` extension differ for each SCION Control P
 | *Attribute:*                        |                        |                          |                               |                                   |
 | `basicConstraints` extension itself | REQUIRED               | REQUIRED                 | SHOULD NOT be present         | SHOULD NOT be present             |
 | `cA`                               | MUST be asserted        | MUST be asserted         | If the extension is present, this attribute MUST NOT be asserted | If the extension is present, this attribute MUST NOT be asserted |
-| `pathLenConstraint`                | SHOULD be set to "1"    | SHOULD be set to "0" (1) | MUST NOT be included          | MUST NOT be included              |
+| `pathLenConstraint`                | MUST be set to "1"    | MUST be set to "0" (1) | MUST NOT be included          | MUST NOT be included              |
 {: #table-6 title="basicConstraints extension - Specifications per certificate type"}
 
 (1) Control Plane CAs can only issue end-entity certificates.
@@ -1403,6 +1403,11 @@ The Signing Ceremony is completed once when every voting representative confirms
 {:numbered="false"}
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
+
+## draft-dekater-scion-pki-13
+{:numbered="false"}
+
+- Certificate validity recommendations: align to current practice
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
