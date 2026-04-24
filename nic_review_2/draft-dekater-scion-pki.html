@@ -1533,10 +1533,10 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <p id="section-1.1-1"><strong>Control Plane PKI (CP-PKI)</strong>: It is the public key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.1-2"><strong>SCION Autonomous System (AS)</strong>: A SCION Autonomous System is a network under a common administrative control. For example, the network of a SCION service provider, company, or university can constitute an AS. While functionally similar to a BGP AS, a SCION AS operates within an Isolation Domain (ISD), utilizes a different address scheme, and serves as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.<a href="#section-1.1-2" class="pilcrow">¶</a></p>
 <p id="section-1.1-3"><strong>Isolation Domain (ISD)</strong>: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).<a href="#section-1.1-3" class="pilcrow">¶</a></p>
-<p id="section-1.1-4"><strong>Core AS</strong>: Each Isolation Domain (ISD) is administered by a set of distinguished SCION autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD <span class="bcp14">MUST</span> have at least one Core AS.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
+<p id="section-1.1-4"><strong>Core AS</strong>: Each Isolation Domain (ISD) is administered by a set of distinguished SCION autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.<a href="#section-1.1-4" class="pilcrow">¶</a></p>
 <p id="section-1.1-5"><strong>Trust Root Configuration (TRC)</strong>: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.<a href="#section-1.1-5" class="pilcrow">¶</a></p>
 <p id="section-1.1-6"><strong>Authoritative AS</strong>: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.<a href="#section-1.1-6" class="pilcrow">¶</a></p>
-<p id="section-1.1-7"><strong>Base TRC</strong>: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. Each ISD <span class="bcp14">MUST</span> create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
+<p id="section-1.1-7"><strong>Base TRC</strong>: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. ISD operators create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.<a href="#section-1.1-7" class="pilcrow">¶</a></p>
 <p id="section-1.1-8"><strong>TRC Signing Ceremony</strong>: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.<a href="#section-1.1-8" class="pilcrow">¶</a></p>
 <p id="section-1.1-9"><strong>TRC Update</strong>: A <em>regular</em> TRC update is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged. A <em>sensitive</em> TRC update is an update that modifies critical aspects of the TRC, such as the set of core ASes. In both cases, the base TRC remains unchanged.<a href="#section-1.1-9" class="pilcrow">¶</a></p>
 <p id="section-1.1-10"><strong>Voting ASes</strong>: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".<a href="#section-1.1-10" class="pilcrow">¶</a></p>
@@ -1799,7 +1799,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-input">
 <a href="#section-1.6.1" class="section-number selfRef">1.6.1. </a><a href="#name-input" class="section-name selfRef">Input</a>
           </h4>
-<p id="section-1.6.1-1">Prior to the ceremony, the trusted parties <span class="bcp14">MUST</span> decide about the validity period of the TRC as well as the number of votes required to update a TRC. They <span class="bcp14">MUST</span> also bring the required keys and certificates, the so-called root and voting keys/certificates.<a href="#section-1.6.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.6.1-1">Prior to the ceremony, the trusted parties decide about the validity period of the TRC as well as the number of votes required to update a TRC. They <span class="bcp14">MUST</span> also bring the required keys and certificates, the so-called root and voting keys/certificates.<a href="#section-1.6.1-1" class="pilcrow">¶</a></p>
 <p id="section-1.6.1-2">The trusted parties require an ISD number whose numbering scheme is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section <code>ISD Numbers</code>, and allocation in <span>[<a href="#ISD-AS-assignments" class="cite xref">ISD-AS-assignments</a>]</span>.<a href="#section-1.6.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2393,23 +2393,18 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
           <h4 id="name-authoritykeyidentifier-exte">
 <a href="#section-2.8.1" class="section-number selfRef">2.8.1. </a><a href="#name-authoritykeyidentifier-exte" class="section-name selfRef"><code>authorityKeyIdentifier</code> Extension</a>
           </h4>
-<p id="section-2.8.1-1">The <code>authorityKeyIdentifier</code> extension identifies the public key corresponding to the private key used to sign a certificate.<a href="#section-2.8.1-1" class="pilcrow">¶</a></p>
-<p id="section-2.8.1-2">For the syntax and definition of the <code>authorityKeyIdentifier</code> extension, see <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, section 4.2.1.1, and <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>, clause 9.2.2.1.<a href="#section-2.8.1-2" class="pilcrow">¶</a></p>
-<p id="section-2.8.1-3">The <code>authorityKeyIdentifier</code> extension provides three attributes to specify the public key:<a href="#section-2.8.1-3" class="pilcrow">¶</a></p>
+<p id="section-2.8.1-1">The <code>authorityKeyIdentifier</code> extension identifies the public key corresponding to the private key used to sign a certificate. For its syntax and definition, see <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>, section 4.2.1.1, and <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>, clause 9.2.2.1.<a href="#section-2.8.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.8.1-2">To ensure deterministic matching, the authorityKeyIdentifier attributes are strictly restricted:<a href="#section-2.8.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-2.8.1-4.1">
-              <p id="section-2.8.1-4.1.1"><code>keyIdentifier</code><a href="#section-2.8.1-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-2.8.1-3.1">
+              <p id="section-2.8.1-3.1.1"><code>keyIdentifier</code>: <span class="bcp14">MUST</span> be included.<a href="#section-2.8.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-2.8.1-4.2">
-              <p id="section-2.8.1-4.2.1"><code>authorityCertIssuer</code><a href="#section-2.8.1-4.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-2.8.1-4.3">
-              <p id="section-2.8.1-4.3.1"><code>authorityCertSerialNumber</code><a href="#section-2.8.1-4.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-2.8.1-3.2">
+              <p id="section-2.8.1-3.2.1"><code>authorityCertIssuer</code> &amp; <code>authorityCertSerialNumber</code>: <span class="bcp14">MUST NOT</span> be included. Implementations <span class="bcp14">MUST</span> return an error if either is present.<a href="#section-2.8.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-2.8.1-5">In SCION, using the <code>keyIdentifier</code> attribute is the preferred way to specify the <code>authorityKeyIdentifier</code> extension.<a href="#section-2.8.1-5" class="pilcrow">¶</a></p>
-<p id="section-2.8.1-6">SCION implementations <span class="bcp14">MAY</span> also support the use of the <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes. However, if these attributes are set and support for them is missing, implementations <span class="bcp14">SHOULD</span> error out.<a href="#section-2.8.1-6" class="pilcrow">¶</a></p>
-<p id="section-2.8.1-7">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> return an error if the extension is not present AND the certificate is not self-signed.<a href="#section-2.8.1-7" class="pilcrow">¶</a></p>
+<p id="section-2.8.1-4">SCION implementations <span class="bcp14">MAY</span> also support the use of the <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes. However, if these attributes are set and support for them is missing, implementations <span class="bcp14">SHOULD</span> error out.<a href="#section-2.8.1-4" class="pilcrow">¶</a></p>
+<p id="section-2.8.1-5">This extension <span class="bcp14">MUST</span> be marked as non-critical. Implementations <span class="bcp14">MUST</span> return an error if the extension is not present AND the certificate is not self-signed.<a href="#section-2.8.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subject-key-id-ext">
@@ -2977,7 +2972,7 @@ The description <span class="bcp14">MUST</span> be in English and <span class="b
           </ul>
 <p id="section-3.2.11-4">A certificate that is no control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-5">A certificate's type (voting or root) is specified in the <code>extKeyUsage</code> extension of the certificate, by means of the SCION-specific attributes <code>id-kp-regular</code>, <code>id-kp-sensitive</code>, and <code>id-kp-root</code>, respectively. For more information, see <a href="#ext-key-usage-ext" class="auto internal xref">Section 2.8.4</a>.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-6">The following constraints <span class="bcp14">MUST</span> hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-6">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.11-7.1">
               <p id="section-3.2.11-7.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates.<a href="#section-3.2.11-7.1.1" class="pilcrow">¶</a></p>
@@ -3259,7 +3254,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
           <h4 id="name-general-update-rules">
 <a href="#section-3.5.3" class="section-number selfRef">3.5.3. </a><a href="#name-general-update-rules" class="section-name selfRef">General Update Rules</a>
           </h4>
-<p id="section-3.5.3-1">The following rules <span class="bcp14">MUST</span> hold for each updated TRC, independent of the update type:<a href="#section-3.5.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.5.3-1">The following rules hold for each updated TRC, independent of the update type:<a href="#section-3.5.3-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.5.3-2.1">
               <p id="section-3.5.3-2.1.1">The <code>iSD</code> and <code>baseNumber</code> in the <code>iD</code> field <span class="bcp14">MUST NOT</span> change (see also <a href="#id" class="auto internal xref">Section 3.2.2</a>).<a href="#section-3.5.3-2.1.1" class="pilcrow">¶</a></p>
@@ -3288,7 +3283,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <p id="section-3.5.4-2">A TRC update qualifies as a regular update if the following rules apply in regard to the TRC's payload information.<a href="#section-3.5.4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.5.4-3.1">
-              <p id="section-3.5.4-3.1.1">The settings of the following fields in the updated TRC <span class="bcp14">MUST</span> remain the same compared to the predecessor TRC:<a href="#section-3.5.4-3.1.1" class="pilcrow">¶</a></p>
+              <p id="section-3.5.4-3.1.1">The following fields in the updated TRC <span class="bcp14">MUST</span> remain the same compared to the predecessor TRC:<a href="#section-3.5.4-3.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.5.4-3.1.2.1">
                   <p id="section-3.5.4-3.1.2.1.1">The voting quorum set in the <code>votingQuorum</code> field.<a href="#section-3.5.4-3.1.2.1.1" class="pilcrow">¶</a></p>
@@ -3655,7 +3650,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <a href="#section-6.2" class="section-number selfRef">6.2. </a><a href="#name-denial-of-service-attacks" class="section-name selfRef">Denial of Service Attacks</a>
         </h3>
 <p id="section-6.2-1">The Control Plane PKI lays the foundation for the authentication procedures in SCION by providing each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control plane messages - every AS and endpoint can verify all control plane messages by following the certificate chain.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
-<p id="section-6.2-2">The relying party <span class="bcp14">MUST</span> be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
+<p id="section-6.2-2">The relying party needs to be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
 <p id="section-6.2-3">As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> for a more detailed description of DoS vulnerabilities of control plane messages.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
 <p id="section-6.2-4">On the other hand, this does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:<a href="#section-6.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -3911,7 +3906,7 @@ END
             <p id="appendix-C.1-2.3.1"><strong>Witness(es)</strong> - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.<a href="#appendix-C.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.1-3"><strong>Note:</strong> The ISD members <span class="bcp14">MUST</span> decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and <span class="bcp14">MUST</span> have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.1-3"><strong>Note:</strong> The ISD members must decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ceremonyprep">
@@ -3919,7 +3914,7 @@ END
         <h3 id="name-ceremony-preparations">
 <a href="#appendix-C.2" class="section-number selfRef">C.2. </a><a href="#name-ceremony-preparations" class="section-name selfRef">Ceremony Preparations</a>
         </h3>
-<p id="appendix-C.2-1">The participants <span class="bcp14">MUST</span> decide in advance on the physical location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:<a href="#appendix-C.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-1">The participants agree in advance on the physical location of the Signing Ceremony, the devices that will be used, and <span class="bcp14">MUST</span> decide the ISD policy as follows:<a href="#appendix-C.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.2-2.1">
             <p id="appendix-C.2-2.1.1">ISD number - usually obtained from the SCION registry, see <a href="#id" class="auto internal xref">Section 3.2.2</a>;<a href="#appendix-C.2-2.1.1" class="pilcrow">¶</a></p>
@@ -3956,7 +3951,7 @@ END
 </li>
         </ul>
 <p id="appendix-C.2-5">In addition, each Certificate Authority <span class="bcp14">MUST</span> create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they <span class="bcp14">MUST</span> provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance <span class="bcp14">MUST</span> cover the full TRC validity period.<a href="#appendix-C.2-5" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-6">The location <span class="bcp14">MUST</span> provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.<a href="#appendix-C.2-6" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-6">The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.<a href="#appendix-C.2-6" class="pilcrow">¶</a></p>
 <p id="appendix-C.2-7">The Ceremony Administrator and Voting ASes <span class="bcp14">MUST</span> each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.<a href="#appendix-C.2-7" class="pilcrow">¶</a></p>
 <p id="appendix-C.2-8">The Ceremony Administrator <span class="bcp14">MUST</span> provide or be provided with a device to exchange data between the ceremony participants.<a href="#appendix-C.2-8" class="pilcrow">¶</a></p>
 <p id="appendix-C.2-9">The Signing Ceremony <span class="bcp14">SHOULD</span> include a procedure to verify that all devices are secure.<a href="#appendix-C.2-9" class="pilcrow">¶</a></p>
@@ -4042,6 +4037,9 @@ END
 <ul class="normal">
 <li class="normal" id="appendix-D.1-1.1">
             <p id="appendix-D.1-1.1.1">Certificate validity recommendations: align to current practice<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.2">
+            <p id="appendix-D.1-1.2.1"><code>authorityKeyIdentifier</code> Extension: clarify support for <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
