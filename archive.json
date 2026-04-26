@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-23T00:44:16.523259+00:00",
+  "timestamp": "2026-04-26T00:44:14.426984+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1505,9 +1505,9 @@
         "nicorusti"
       ],
       "labels": [],
-      "body": "- [ ] Change the two SHOULD to MUST in this line in Table? \n`pathLenConstraint | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"`\nWe use SHOULD as per RFC 5280, but our code is enforcing this (see  Leftover from https://github.com/scionassociation/scion-cppki_I-D/pull/123#discussion_r3088049508)\n-  [ ] Check that all pending comments in https://github.com/scionassociation/scion-cppki_I-D/pull/123 are addressed\n",
+      "body": "- [x] Change the two SHOULD to MUST in this line in Table? \n`pathLenConstraint | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"`\nWe use SHOULD as per RFC 5280, but our code is enforcing this (see  Leftover from https://github.com/scionassociation/scion-cppki_I-D/pull/123#discussion_r3088049508)\n-  [x] Check that all pending comments in https://github.com/scionassociation/scion-cppki_I-D/pull/123 are addressed\n- [ ] Do we need normative language in the appendix (ceremony)? \nAppendixes are often considered informative unless explicitly stated otherwise. If the signing ceremony procedure is a requirement for a valid SCION deployment, having normative language there is fine, but it should be clearly stated at the beginning of the appendix if the entire process is normative.\n",
       "createdAt": "2026-04-16T14:35:41Z",
-      "updatedAt": "2026-04-16T14:39:33Z",
+      "updatedAt": "2026-04-24T13:05:25Z",
       "closedAt": null,
       "comments": []
     }
@@ -5808,7 +5808,7 @@
       "labels": [],
       "body": "Contributes to #122 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-02-06T15:22:53Z",
-      "updatedAt": "2026-04-16T14:55:24Z",
+      "updatedAt": "2026-04-24T10:32:08Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "250ff2dbf3ca0c511531489f97f3f9b9e5787e06",
@@ -6210,6 +6210,46 @@
               "body": "I have to merge this to submit a new draft version and keep the ISE process going. I left a note about this SHOULD in https://github.com/scionassociation/scion-cppki_I-D/issues/132 ",
               "createdAt": "2026-04-16T14:38:32Z",
               "updatedAt": "2026-04-16T14:38:33Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM74iVb7",
+          "commit": {
+            "abbreviatedOid": "f74cf38"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T10:25:15Z",
+          "updatedAt": "2026-04-24T10:25:15Z",
+          "comments": [
+            {
+              "originalPosition": 294,
+              "body": "He commented via email: SGTM ",
+              "createdAt": "2026-04-24T10:25:15Z",
+              "updatedAt": "2026-04-24T10:25:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM74ie-i",
+          "commit": {
+            "abbreviatedOid": "5757e88"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T10:32:08Z",
+          "updatedAt": "2026-04-24T10:32:08Z",
+          "comments": [
+            {
+              "originalPosition": 327,
+              "body": "Dominik commented: \r\nMUST is good\r\n\r\nChanging this in #135 ",
+              "createdAt": "2026-04-24T10:32:08Z",
+              "updatedAt": "2026-04-24T10:32:08Z"
             }
           ]
         }
@@ -7479,7 +7519,7 @@
       "labels": [],
       "body": "As suggested by Russ.\r\nContributes to #28 ",
       "createdAt": "2026-04-22T17:24:04Z",
-      "updatedAt": "2026-04-22T17:25:51Z",
+      "updatedAt": "2026-04-24T10:23:32Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "db5fbeed2a68f913992fffa6b3d4130f8774a2ba",
@@ -7494,6 +7534,73 @@
       },
       "comments": [],
       "reviews": []
+    },
+    {
+      "number": 135,
+      "id": "PR_kwDOH386tM7VTPF_",
+      "title": "Nic review - part 2",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/135",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #132 \r\n ...\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-04-24T10:31:59Z",
+      "updatedAt": "2026-04-24T16:30:07Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "nic_review_2",
+      "headRefOid": "e46f353490ef1a331652c33c248502511365e937",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM74q7hS",
+          "commit": {
+            "abbreviatedOid": "e46f353"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T16:28:00Z",
+          "updatedAt": "2026-04-24T16:28:01Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies.\n\nThat sentence does not make any sense IMO, and should be dropped.",
+              "createdAt": "2026-04-24T16:28:00Z",
+              "updatedAt": "2026-04-24T16:28:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM74q-ZX",
+          "commit": {
+            "abbreviatedOid": "e46f353"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-24T16:30:07Z",
+          "updatedAt": "2026-04-24T16:30:07Z",
+          "comments": [
+            {
+              "originalPosition": 68,
+              "body": "> A validity of 15 days with 4 days overlap\n\nWhat we do in practice is to create a new intermediate CA every Monday at the same time, hence the overlap is 8(?) days.\n",
+              "createdAt": "2026-04-24T16:30:07Z",
+              "updatedAt": "2026-04-24T16:30:07Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
