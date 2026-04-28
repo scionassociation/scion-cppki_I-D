@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-26T00:44:14.426984+00:00",
+  "timestamp": "2026-04-28T00:47:12.722571+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -119,7 +119,7 @@
       "id": "I_kwDOH386tM57aRFd",
       "title": "ASN.1 Module for new types",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/28",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "jiceathome",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
@@ -129,8 +129,8 @@
       ],
       "body": "(Moved from https://github.com/scionassociation/standards/issues/62)\r\n\r\nRuss Housley suggested that we could add an appendix for new types (with an ASN.1 module)\r\n\r\n> Finally, you might want to consider an ASN.1 Module in an appendix for any new types that you are defining.  It will make it easier for others to implement.\r\n\r\nAlso, at IETF 115, he recommended: \r\n>  In Section 3.1.3, I suggest that you assign a content type for the TRC payload (you are currently using id-data).\r\n ",
       "createdAt": "2024-01-08T13:39:37Z",
-      "updatedAt": "2026-04-20T16:16:41Z",
-      "closedAt": null,
+      "updatedAt": "2026-04-27T08:00:51Z",
+      "closedAt": "2026-04-27T08:00:51Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1376,9 +1376,9 @@
         "knmeynell"
       ],
       "labels": [],
-      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [ ] #128\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [ ] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
+      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [ ] #128\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [x] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-04-16T14:35:41Z",
+      "updatedAt": "2026-04-27T08:01:57Z",
       "closedAt": null,
       "comments": []
     },
@@ -7485,7 +7485,7 @@
       "labels": [],
       "body": "Resolves #128\r\n\r\n-  [ ] Evaluate if we can remove sub-heading [3.4.1. ](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#section-3.4.1)[TRC Selection For Trust Anchor Pool](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#name-trc-selection-for-trust-anc), maybe this can just be a single paragraph",
       "createdAt": "2026-04-17T19:05:03Z",
-      "updatedAt": "2026-04-20T14:48:32Z",
+      "updatedAt": "2026-04-27T10:15:17Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74",
@@ -7505,7 +7505,48 @@
           "updatedAt": "2026-04-17T19:05:45Z"
         }
       ],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM75JeDD",
+          "commit": {
+            "abbreviatedOid": "211c0d9"
+          },
+          "author": "romshark",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-27T10:13:56Z",
+          "updatedAt": "2026-04-27T10:13:57Z",
+          "comments": [
+            {
+              "originalPosition": 80,
+              "body": "what are those trailing `**`?",
+              "createdAt": "2026-04-27T10:13:57Z",
+              "updatedAt": "2026-04-27T10:13:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM75Jgru",
+          "commit": {
+            "abbreviatedOid": "211c0d9"
+          },
+          "author": "romshark",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-04-27T10:15:17Z",
+          "updatedAt": "2026-04-27T10:15:17Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "Missing space here?\n\n```suggestion\n   If the Candidate TRC is still within its grace period, attempt to retrieve the Predecessor TRC (the TRC with the same `baseNumber` and a `serialNumber` exactly one less than the Candidate TRC).\n```",
+              "createdAt": "2026-04-27T10:15:17Z",
+              "updatedAt": "2026-04-27T10:15:17Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 134,
