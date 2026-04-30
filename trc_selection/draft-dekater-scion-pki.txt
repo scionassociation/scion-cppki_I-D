@@ -1742,20 +1742,23 @@ Table of Contents
 
    The selection of the right set of TRCs to build the trust anchor pool
    depends on the time of verification.  This is typically the current
-   time when verifying control plane messages.
+   time when verifying control plane messages, but may be a historical
+   point in time when auditing past signatures.
 
    To construct the trust anchor pool for a specific ISD at a given
-   verification time, a relying party executes the following steps:
+   verification time, a relying party MUST execute the following steps:
 
-   1.  Filter TRCs whose validity start time (notBefore) precedes the
-       verification time.
+   1.  From the set of all available TRCs for the ISD, filter out TRCs
+       whose validity start time (notBefore) precedes the verification
+       time.
 
-   2.  Filter TRCs with the highest base number, then select the TRC
-       with the highest serial number.
+   2.  From the remaining TRCs, identify those with the highest base
+       number, then select the TRC with the highest serial number.
 
-   3.  If the TRC is not valid anymore (the verification time is greater
-       than the TRC's notAfter date), there are no valid trust anchors
-       at the verification time.
+   3.  If the verification time is strictly greater than the Candidate
+       TRC's notAfter date, it is no longer valid.  There are no valid
+       trust anchors at the verification time, and the process
+       terminates.
 
    4.  If the TRC is valid, add its root certificates to the trust
        anchor pool.
