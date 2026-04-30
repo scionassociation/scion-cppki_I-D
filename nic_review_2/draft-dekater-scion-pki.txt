@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 26 October 2026                                         S. Hitz
+Expires: 1 November 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           24 April 2026
+                                                           30 April 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 26 October 2026.
+   This Internet-Draft will expire on 1 November 2026.
 
 Copyright Notice
 
@@ -1391,6 +1391,7 @@ Table of Contents
    certificates in the predecessor TRC.  If index i is part of the votes
    field, then the voting certificate at position i in the certificates
    sequence of the predecessor TRC casted a vote on the successor TRC.
+   The index is 0-based, meaning that 0 represents the first element.
    For more information on the certificates sequence, see
    Section 3.2.11.
 
@@ -2302,9 +2303,9 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-17, 2 April 2026,
+              scion-controlplane-18, 30 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-17>.
+              scion-controlplane-18>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,

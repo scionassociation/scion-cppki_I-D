@@ -1053,7 +1053,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 26 October 2026</td>
+<td class="center">Expires 1 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-04-24" class="published">24 April 2026</time>
+<time datetime="2026-04-30" class="published">30 April 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-10-26">26 October 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-01">1 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 26 October 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 1 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -2906,7 +2906,7 @@ All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SC
           <h4 id="name-votes">
 <a href="#section-3.2.6" class="section-number selfRef">3.2.6. </a><a href="#name-votes" class="section-name selfRef"><code>votes</code></a>
           </h4>
-<p id="section-3.2.6-1">The <code>votes</code> field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the <code>votes</code> field, then the voting certificate at position i in the <code>certificates</code> sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the <code>certificates</code> sequence, see <a href="#cert" class="auto internal xref">Section 3.2.11</a>.<a href="#section-3.2.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-1">The <code>votes</code> field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the <code>votes</code> field, then the voting certificate at position i in the <code>certificates</code> sequence of the predecessor TRC casted a vote on the successor TRC. The index is 0-based, meaning that 0 represents the first element. For more information on the <code>certificates</code> sequence, see <a href="#cert" class="auto internal xref">Section 3.2.11</a>.<a href="#section-3.2.6-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.6-2">In a base TRC, the <code>votes</code> sequence <span class="bcp14">MUST</span> be empty.
 Every entry in the <code>votes</code> sequence <span class="bcp14">MUST</span> be unique.
 Further restrictions on votes are discussed in <a href="#update" class="auto internal xref">Section 3.5</a>.<a href="#section-3.2.6-2" class="pilcrow">¶</a></p>
@@ -3699,7 +3699,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <dl class="references">
 <dt id="I-D.dekater-scion-controlplane">[I-D.dekater-scion-controlplane]</dt>
         <dd>
-<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-17</span>, <time datetime="2026-04-02" class="refDate">2 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-17">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-17</a>&gt;</span>. </dd>
+<span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-18</span>, <time datetime="2026-04-30" class="refDate">30 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-18">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-18</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.dekater-scion-dataplane">[I-D.dekater-scion-dataplane]</dt>
         <dd>
