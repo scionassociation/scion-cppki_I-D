@@ -741,7 +741,7 @@ Note that a trust reset represents a special use case where a new base TRC is cr
 
 ### `votes` {#votes}
 
-The `votes` field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the `certificates` sequence, see [](#cert).
+The `votes` field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. The index is 0-based, meaning that 0 represents the first element. For more information on the `certificates` sequence, see [](#cert).
 
 In a base TRC, the `votes` sequence MUST be empty.
 Every entry in the `votes` sequence MUST be unique.
