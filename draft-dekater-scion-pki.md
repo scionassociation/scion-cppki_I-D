@@ -961,36 +961,24 @@ The certification path of a Control Plane AS certificate starts in a Control Pla
 
 However, AS certificates and the corresponding issuing CA certificates are **not** part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
 
-The following section explains how to build a trust anchor pool.
-
 **Note:** Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
 
 
 ### TRC Selection For Trust Anchor Pool {#trc-selection}
 
-The selection of the right set of TRCs to build the trust anchor pool depends on the time of verification. The trust anchor pool is usually used to verify control plane messages and in this case, the time of verification is the current time. However, if the trust anchor pool will be used for auditing, the time of verification is the point in time to check whether a given signature was verifiable.
+The selection of the right set of TRCs to build the trust anchor pool depends on the time of verification. This is typically the current time when verifying control plane messages.
 
-To construct the trust anchor pool for a specific ISD at a given `verification_time`, a relying party executes the following steps:
+To construct the trust anchor pool for a specific ISD at a given verification time, a relying party executes the following steps:
 
-1. Determine the Active Base Number: Filter the set of all available TRCs for the ISD to those whose `notBefore` validity date is less than or equal to the `verification_time`. From this filtered set, select the highest `baseNumber`.
+1. Filter TRCs whose validity start time (`notBefore`) precedes the verification time.
 
-2. Identify the Candidate TRC: Filter the set of available TRCs again to find only those that match the `baseNumber` identified in Step 1, and whose `notBefore` date is less than or equal to the `verification_time`. From this set, select the TRC with the highest `serialNumber`. This is the *Candidate TRC*.
+2. Filter TRCs with the highest base number, then select the TRC with the highest serial number.
 
-3. Verify Candidate TRC Expiration:**
-   If the `verification_time` is strictly greater than the Candidate TRC's `notAfter` date, the algorithm terminates and returns an empty set. There are no valid trust anchors for this time.
+3. If the TRC is not valid anymore (the verification time is greater than the TRC's `notAfter` date), there are no valid trust anchors at the verification time.
 
-4. Extract Candidate Trust Anchors:**
-   Parse the `certificates` sequence of the Candidate TRC. Extract all certificates that possess a `basicConstraints` extension with the `cA` boolean asserted. Add these CP Root Certificates to the trust anchor pool.
+4. If the TRC is valid, add its root certificates to the trust anchor pool.
 
-5. Evaluate the Grace Period:**
-   Check if the Candidate TRC is currently within its grace period (i.e., `verification_time` <= `notBefore` + `gracePeriod`). If the grace period has expired, the algorithm terminates and returns the current trust anchor pool.
-
-6. Process the Predecessor TRC (If Applicable):
-  If the Candidate TRC is still within its grace period, attempt to retrieve the Predecessor TRC (the TRC with the same `baseNumber` and a `serialNumber` exactly one less than the Candidate TRC).
-   If the Predecessor TRC exists and its `notAfter` date is greater than or equal to the `verification_time`, extract its CP Root Certificates (as described in Step 4) and add them to the trust anchor pool.
-
-7. Return the Pool: The algorithm terminates and returns the assembled trust anchor pool.
-
+5. If the TRC is in its grace period, add the preceding TRC's root certificates to the trust anchor pool.
 
 ## TRC Updates {#update}
 
