@@ -376,7 +376,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 (1) Multiple signatures and certificates of each type MAY be included in a TRC.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
-(3) A validity of 15 days with 4 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a issuing CA certificate rollover.
+(3) A validity of 15 days with 8 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a issuing CA certificate rollover.
 
 {{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
 
