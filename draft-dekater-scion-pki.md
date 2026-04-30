@@ -548,7 +548,7 @@ The attributes of the `keyUsage` extension define possible ways of using the pub
 
 Other attributes are not used.
 
-If a certificate’s public key is used to verify the signature of a control plane payload (`digitalSignature` attribute), it MUST be possible to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
+If a relying party uses the certificate’s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party MUST be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
 When present, this extension SHOULD be marked as critical.
 
@@ -1109,7 +1109,7 @@ The steps REQUIRED to issue a new AS certificate are the following:
 3. The CA uses its CA key and the CSR to create the new AS certificate.
 4. The CA sends the AS certificate back to the AS.
 
-When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
+When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
 
 # Deployment Considerations
 
@@ -1386,6 +1386,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-13
 {:numbered="false"}
 
+- remove trust Hierarchy subsection and redundant code block
 - Certificate validity recommendations: align to current practice
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 
