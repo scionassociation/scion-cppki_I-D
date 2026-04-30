@@ -974,12 +974,13 @@ Table of Contents
 
    Other attributes are not used.
 
-   If a certificate’s public key is used to verify the signature of a
-   control plane payload (digitalSignature attribute), it MUST be
-   possible to trace back the private key used to sign the certificate.
-   This is done by referencing the ISD-AS and the subject key identifier
-   (via the subjectKeyIdentifier extension).  For more information about
-   the subjectKeyIdentifier extension (see Section 2.7.2).
+   If a relying party uses the certificate’s public key to verify the
+   signature of a control plane payload (digitalSignature attribute),
+   the relying party MUST be able to trace back the private key used to
+   sign the certificate.  This is done by referencing the ISD-AS and the
+   subject key identifier (via the subjectKeyIdentifier extension).  For
+   more information about the subjectKeyIdentifier extension (see
+   Section 2.7.2).
 
    When present, this extension SHOULD be marked as critical.
 
@@ -2110,7 +2111,7 @@ Table of Contents
 
    4.  The CA sends the AS certificate back to the AS.
 
-   When an AS joins an ISD, the first CSR is sent out of band to one of
+   When an AS joins an ISD, it sends the first CSR out of band to one of
    the CAs as part of the formalities to join the ISD.  Subsequent
    certificate renewals MAY be automated and can leverage the control
    plane communication infrastructure (see
@@ -2661,6 +2662,8 @@ Change Log
    removed before publication.
 
 draft-dekater-scion-pki-13
+
+   *  remove trust Hierarchy subsection and redundant code block
 
    *  Certificate validity recommendations: align to current practice
 
