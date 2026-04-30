@@ -1130,14 +1130,14 @@ Table of Contents
 2.8.5.  basicConstraints Extension
 
    The basicConstraints extension specifies whether the certificate
-   subject may act as a CA.  For the syntax and definition of the
+   subject acts as a CA.  For the syntax and definition of the
    basicConstraints extension, see [X.509], clause 9.4.2.1.
 
    The basicConstraints extension includes the following attributes
    relevant for SCION:
 
-   *  cA attribute: Specifies whether the certificate subject may act as
-      a CA.  If yes, this attribute MUST be asserted and the extension
+   *  cA attribute: Specifies whether the certificate subject acts as a
+      CA.  If yes, this attribute MUST be asserted and the extension
       MUST be marked as critical.
 
    *  pathLenConstraint attribute: This attribute is only relevant if
@@ -1336,7 +1336,7 @@ Table of Contents
    notAfter date, both encoded as GeneralizedTime.  All TRCs MUST have a
    well-defined expiration date.  SCION implementations MUST NOT create
    TRCs that use GeneralizedTime value "99991231235959Z", and verifiers
-   MUST error out when encountering such a TRC.
+   MUST reject such a TRC.
 
 3.2.4.  gracePeriod
 

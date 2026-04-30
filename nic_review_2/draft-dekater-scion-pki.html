@@ -2645,11 +2645,11 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
           <h4 id="name-basicconstraints-extension">
 <a href="#section-2.8.5" class="section-number selfRef">2.8.5. </a><a href="#name-basicconstraints-extension" class="section-name selfRef"><code>basicConstraints</code> Extension</a>
           </h4>
-<p id="section-2.8.5-1">The <code>basicConstraints</code> extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the <code>basicConstraints</code> extension, see <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>, clause 9.4.2.1.<a href="#section-2.8.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.8.5-1">The <code>basicConstraints</code> extension specifies whether the certificate subject acts as a CA. For the syntax and definition of the <code>basicConstraints</code> extension, see <span>[<a href="#X.509" class="cite xref">X.509</a>]</span>, clause 9.4.2.1.<a href="#section-2.8.5-1" class="pilcrow">¶</a></p>
 <p id="section-2.8.5-2">The <code>basicConstraints</code> extension includes the following attributes relevant for SCION:<a href="#section-2.8.5-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-2.8.5-3.1">
-              <p id="section-2.8.5-3.1.1"><code>cA</code> attribute: Specifies whether the certificate subject may act as a CA. If yes, this attribute <span class="bcp14">MUST</span> be asserted and the extension <span class="bcp14">MUST</span> be marked as critical.<a href="#section-2.8.5-3.1.1" class="pilcrow">¶</a></p>
+              <p id="section-2.8.5-3.1.1"><code>cA</code> attribute: Specifies whether the certificate subject acts as a CA. If yes, this attribute <span class="bcp14">MUST</span> be asserted and the extension <span class="bcp14">MUST</span> be marked as critical.<a href="#section-2.8.5-3.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-2.8.5-3.2">
               <p id="section-2.8.5-3.2.1"><code>pathLenConstraint</code> attribute: This attribute is only relevant if the <code>cA</code> attribute is set to TRUE and specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the maximum length of the certification path.<a href="#section-2.8.5-3.2.1" class="pilcrow">¶</a></p>
@@ -2866,7 +2866,7 @@ Its fields are contained in a <code>TRCPayload</code> sequence. This section des
 <p id="section-3.2.3-1">The <code>validity</code> field defines the TRC validity period. The <code>notBefore</code> and <code>notAfter</code> attributes of the <code>validity</code> field specify the lower and upper bound of the time interval during which a TRC can be active.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-2">An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see <a href="#trc-states" class="auto internal xref">Section 3.1</a>.<a href="#section-3.2.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-3">The <code>validity</code> field consists of a sequence of a <code>notBefore</code> and a <code>notAfter</code> date, both encoded as <code>GeneralizedTime</code>.
-All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SCION implementations <span class="bcp14">MUST NOT</span> create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers <span class="bcp14">MUST</span> error out when encountering such a TRC.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SCION implementations <span class="bcp14">MUST NOT</span> create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers <span class="bcp14">MUST</span> reject such a TRC.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="grace">
