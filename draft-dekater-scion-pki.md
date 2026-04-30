@@ -286,22 +286,8 @@ There are three types of Control Plane (CP) certificates: root certificates, iss
 
 All certificates in the Control Plane PKI are in X.509 v3 format {{RFC5280}}.
 
-## Trust Hierarchy
-
 The trust is anchored in the TRC for each ISD. The trust root is axiomatic: All trust derived from this anchor relies on all parties transitively trusting the TRC.
 
-The trust hierarchy looks like this:
-
-~~~~
-TRC
-── Regular Voting Certificates
-     └── TRC (next version, regular update)
-── Sensitive Voting Certificates
-     └── TRC (next version, sensitive update)
-── CP Root Certificates
-     └── CP Issuing CA Certificates
-          └── CP AS Certificates
-~~~~
 
 ## Control Plane Root Certificate {#cp-root-cert}
 
