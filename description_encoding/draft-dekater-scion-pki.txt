@@ -1457,9 +1457,9 @@ Table of Contents
 3.2.10.  description
 
    The description field contains a UTF-8 encoded string that describes
-   the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
-   [RFC5198] to ensure consistent normalization.  It SHOULD NOT be
-   empty.  The description MUST be in English.  It MAY additionally
+   the ISD.  The text SHOULD be formatted in accordance with "Net-
+   Unicode" [RFC5198] to ensure consistent normalization.  It SHOULD NOT
+   be empty.  The description MUST be in English.  It MAY additionally
    contain information in other languages; if it does, the non-English
    text SHOULD be identified using language tags as defined in
    [RFC5646].
@@ -2319,9 +2319,9 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-17, 2 April 2026,
+              scion-controlplane-18, 30 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-17>.
+              scion-controlplane-18>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
