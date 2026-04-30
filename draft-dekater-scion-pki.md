@@ -785,7 +785,7 @@ As with core ASes, assigning or revoking authoritative status is performed by ad
 
 ### `description` {#description}
 
-The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. It SHOULD NOT be empty.
+The `description` field contains a UTF-8 encoded string that describes the ISD. The text SHOULD be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. It SHOULD NOT be empty.
 The description MUST be in English. It MAY additionally contain information in other languages; if it does, the non-English text SHOULD be identified using language tags as defined in {{RFC5646}}.
 
 
