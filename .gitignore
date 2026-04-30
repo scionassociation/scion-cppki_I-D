@@ -1,4 +1,7 @@
 *.der
+*.c
+*.h
+*.o
 *.html
 *.pdf
 *.redxml

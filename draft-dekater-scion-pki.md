@@ -307,7 +307,7 @@ TRC
 
 The private key of the Control Plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the Control Plane Root certificate is used to verify Control Plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.
 
-In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.
+In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.
 
 The RECOMMENDED maximum validity period of a Control Plane root certificate is 1 year.
 
@@ -439,59 +439,24 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 ~~~~
 {: #figure-2 title="TRC and the different types of associated certificates. Arrows indicate the certificate hierarchy."}
 
-## Certificate Specification
+## X.509 Certificate Profiles and Constraints
 
-Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, the SCION specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}.
+Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
 
+The following subsections define the specific constraints for the fields contained in the `TBSCertificate` sequence.
 
-### Basic Fields: SCION-Specific Constraints and Conditions
+### `version`
 
-The described fields of the Control Plane PKI certificates are relevant for each certificate regardless of the certificate type. For detailed descriptions of the full generic format of X.509 v3 certificates, see {{RFC5280}} and {{X.509}} clause 7.2.
+The `version` field describes the version of the encoded certificate. It MUST be set to "v3" because extensions are required.
 
-`TBSCertificate` sequence: Contains information associated with the subject of the certificate and the CA that issued it. It includes the following fields:
+### `serialNumber`
 
-- `version` field: Describes the version of the encoded certificate. It MUST be set to "v3" (as extensions are REQUIRED in SCION).
-- `serialNumber` field: A positive integer assigned by the CA to each certificate. It MUST be unique for each certificate issued by a given CA.
-- `signature` field: Contains the identifier for the algorithm used by the CA to sign the certificate.
+The `serialNumber` field contains a positive integer assigned by the CA to each certificate. It MUST be unique for each certificate issued by a given CA.
 
-  - **SCION constraints**: supported signatures are described in [](#certsign).
-  - **Additional conditions and remarks**: As a consequence, the `parameters` field in the `AlgorithmIdentifier` sequence MUST NOT be used.
+### `signature` {#certsign}
 
-- `issuer` field: Contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA).
-
-  - **SCION constraints**:
-
-    - This field MUST be non-empty.
-
-  - **Additional conditions and remarks**: All SCION implementations MUST support the additional SCION-specific attribute `ISD-AS number`. For details, see [](#issuer) and [](#isd-as-nr).
-
-- `validity` field: Defines the validity period of the certificate.
-
-  - **SCION constraints**: All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
-  - **Additional conditions and remarks**: SCION recommends a specific maximum validity period for each type of certificate. For details, see [](#key-pair-notation). SCION implementations SHOULD adopt these values.
-
-- `subject` field: Defines the entity that owns the certificate.
-
-  - **SCION constraints**:
-
-    - This field MUST be non-empty.
-
-  - **Additional conditions and remarks**: The `subject` field is specified in the same way as the `issuer` field. For details, see [](#issuer) and [](#isd-as-nr).
-
-- `subjectPublicKeyInfo` field: Carries the public key of the certificate's subject (the entity that owns the certificate, as defined in the `subject` field). The `subjectPublicKeyInfo` field also identifies which algorithm to use with the key.
-
-  - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
-
-- `issuerUniqueID` field: it MUST NOT be used in SCION.
-
-- `subjectUniqueID` field: it MUST NOT be used in SCION.
-
-- `extensions` sequence: Defines the extensions of the certificate. For a description of all extensions used in SCION, see [](#exts).
-
-
-#### `signature` Field - Additional Information {#certsign}
-
-The `signature` field contains information about the signature algorithm. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
+The `signature` field contains the identifier for the signature algorithm used by the CA to sign the certificate. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
+As a consequence, the `parameters` field in the `AlgorithmIdentifier` sequence MUST NOT be used.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
@@ -511,21 +476,16 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 - ECDSA with SHA-384, for a P-384 signing key
 - ECDSA with SHA-512, for a P-521 signing key
 
-#### `issuer` Field - Additional Information {#issuer}
+### `issuer` {#issuer}
 
-The `issuer` field contains the distinguished name (DN) of the CA that created the certificate. {{RFC5280}}, section 4.1.2.4, describes the field's syntax and attributes. In addition to these attributes, SCION implementations MUST also support the SCION-specific attribute `ISD-AS number`. See [](#isd-as-nr).
+The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
+In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute identifying the SCION ISD and AS numbers.
 
-##### `ISD-AS number` Attribute {#isd-as-nr}
+#### `id-at-ia` Attribute {#isd-as-nr}
 
-The `ISD-AS number` attribute identifies the SCION ISD and AS. In the SCION open source implementation, the attribute type is `id-at-ia`, defined as:<br>
-`id-at-ia AttributeType ::= {id-scion id-cppki(1) id-at(2) 1}`
+The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in [](#cert-asn1).
 
-where `id-scion` specifies the root SCION object identifier (OID).
-
-The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
-`id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
-
-The string representation of the `ISD-AS number` attribute MUST follow the text representation defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The string representation of the `ISD-AS number` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
 Voting AS and issuing CA certificates MUST include the `ISD-AS number` attribute exactly once in the distinguished name of the certificate issuer or owner, specified in the `issuer` or `subject` field respectively. Implementations MUST NOT create nor successfully verify certificates whose `issuer` and `subject` fields do not include the ISD-AS number at all, or include it more than once.
 
@@ -533,7 +493,32 @@ For issuing CA certificates, the inclusion of the `ISD-AS number` ensures the Co
 
 Voting-only certificates are not required to include the `ISD-AS number` attribute in their distinguished name.
 
-### Extensions {#exts}
+### `validity`
+
+The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
+The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
+
+### `subject`
+
+The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
+The same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
+
+### `subjectPublicKeyInfo`
+
+The `subjectPublicKeyInfo` field carries the public key of the certificate's subject (the entity that owns the certificate, as defined in the `subject` field). The `subjectPublicKeyInfo` field also identifies which algorithm to use with the key.
+
+  - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
+
+### `issuerUniqueID`
+
+The `issuerUniqueID` field MUST NOT be used.
+
+### `subjectUniqueID`
+
+The `subjectUniqueID` field MUST NOT be used.
+
+
+## Extensions {#exts}
 
 {{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2 and clause 9, respectively.
 
@@ -547,7 +532,7 @@ The following extensions are relevant for the SCION PKI:
 
 The following sections describe the SCION-specifics in regard to these extensions.
 
-#### `authorityKeyIdentifier` Extension
+### `authorityKeyIdentifier` Extension
 
 The `authorityKeyIdentifier` extension identifies the public key corresponding to the private key used to sign a certificate.
 
@@ -565,7 +550,7 @@ SCION implementations MAY also support the use of the `authorityCertIssuer` and 
 
 This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
 
-#### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
+### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
 
 The `subjectKeyIdentifier` extension identifies certificates that contain a particular public key. It can be used, for example, by control plane messages to identify which certificate to use for verification. The extension allows for overlapping control plane CA keys, for example during updates.
 
@@ -573,7 +558,7 @@ For the syntax and definition of the `subjectKeyIdentifier` extension, see {{RFC
 
 This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present.
 
-#### `keyUsage` Extension {#key-usage-ext}
+### `keyUsage` Extension {#key-usage-ext}
 
 The `keyUsage` extension identifies the intended usage of the public key in the corresponding certificate. For the syntax and definition of the `keyUsage` extension, see {{RFC5280}}, section 4.2.1.3, and {{X.509}}, clause 9.2.2.3.
 
@@ -602,7 +587,7 @@ Each Control Plane PKI certificate type uses the public key differently, and con
 (2)  Issuing CA certificates SHOULD NOT be used to verify control plane messages.
 
 
-#### `extKeyUsage` Extension {#ext-key-usage-ext}
+### `extKeyUsage` Extension {#ext-key-usage-ext}
 
 The `extKeyUsage` extension specifies additional usages of the public key in the certificate. For the syntax and definition of the `extKeyUsage` extension, see {{X.509}}, clause 9.2.2.4.
 
@@ -628,21 +613,17 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 
 **Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
 
-##### SCION-Specific Attributes {#specatt}
+#### SCION-Specific Key Purposes {#specatt}
 
-The `id-kp-root`, `id-kp-regular`, and `id-kp-sensitive` attributes MUST be specified as follows:
+Three additional key purpose attributes differentiate certificate roles within the CP-PKI:
 
-- Root certificate:<br> `id-kp-root AttributeType ::= {id-scion id-cppki(1) id-kp(3) 3}`
-- Regular voting certificate:<br> `id-kp-regular AttributeType ::= {id-scion id-cppki(1) id-kp(3) 2}`
-- Sensitive voting certificate:<br> `id-kp-sensitive AttributeType ::= {id-scion id-cppki(1) id-kp(3) 1}`
+- `id-kp-sensitive` (OID 1.3.6.1.4.1.55324.1.3.1): identifies sensitive voting certificate
+- `id-kp-regular` (OID 1.3.6.1.4.1.55324.1.3.2): identifies a regular voting certificate
+- `id-kp-root` (OID 1.3.6.1.4.1.55324.1.3.3): identifies a root certificate
 
-where `id-scion` specifies the root SCION object identifier (OID).
+The formal ASN.1 definitions for these attributes are provided in [](#cert-asn1).
 
-The root SCION object identifier (OID) for the SCION open-source implementation is the IANA Private Enterprise Number '55324':<br>
-`id-scion ::= OBJECT IDENTIFIER {1 3 6 1 4 1 55324}`
-
-
-#### `basicConstraints` Extension {#basic-constr-ext}
+### `basicConstraints` Extension {#basic-constr-ext}
 
 The `basicConstraints` extension specifies whether the certificate subject may act as a CA. For the syntax and definition of the `basicConstraints` extension, see {{X.509}}, clause 9.4.2.1.
 
@@ -687,94 +668,37 @@ The following types of TRCs exist:
 
 A TRC can have the following states:
 
-- Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity)). A TRC is considered valid if the current time falls within its validity period.
+- Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity-trc)). A TRC is considered valid if the current time falls within its validity period.
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the `gracePeriod` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
 
 {{figure-2}} shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.
 
 
-## TRC Format
+## TRC Fields {#trcfields}
 
-The TRC defines the roots of trust of an ISD and is the basis of the ISD's Control Plane PKI. It holds the root and voting certificates of the ISD and defines the ISD's trust policy.
+The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in [](#trc-asn1).
+Its fields are contained in a `TRCPayload` sequence. This section describes their syntax and semantics.
 
+### `version`
 
-### TRC Schema {#trcpayload}
-
-The following code block shows the format of a TRC specification file (the payload schema):
-
-~~~~
-   TRCPayload  ::=  SEQUENCE {
-       version   TRCFormatVersion,
-       iD        TRCID,
-       validity  Validity,
-
-       gracePeriod   INTEGER,
-       noTrustReset  BOOLEAN DEFAULT FALSE,
-       votes         SEQUENCE OF INTEGER (SIZE (1..255)),
-
-       votingQuorum  INTEGER (1..255),
-
-       coreASes           SEQUENCE OF ASN,
-       authoritativeASes  SEQUENCE OF ASN,
-       description        UTF8String (SIZE (0..1024)),
-
-       certificates       SEQUENCE OF Certificate }
-
-   TRCFormatVersion  ::=  INTEGER { v1(0) }
-
-   TRCID  ::=  SEQUENCE {
-       iSD           ISD,
-       serialNumber  INTEGER (1..MAX),
-       baseNumber    INTEGER (1..MAX) }
-
-   ISD  ::=  INTEGER (1..65535)
-
-   Validity  ::=  SEQUENCE {
-       notBefore  Time,
-       notAfter   Time }
-
-   ASN  ::=  INTEGER (1..281474976710655)
-~~~~
-
-The `TRCPayload` sequence contains the identifying information of a TRC as well as policy information for TRC updates. Furthermore, it defines the list of certificates that build the trust anchor of the ISD.
-
-For signature calculation, the data that is to be signed is encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}. For more details, see [](#signed-format).
+The `version` field describes the version of the TRC format specification. It MUST be "v1".
 
 
-### TRC Fields {#trcfields}
+### `iD` {#id}
 
-This section describes the syntax and semantics of all TRC payload fields.
-
-
-#### `version` Field {#field}
-
-The `version` field describes the version of the TRC format specification.
-
-Currently, the version MUST always be "v1".
-
-
-#### `iD` Field {#id}
-
-The `iD` field specifies the unique identifier of the TRC.
-
-The identifier is a unique sequence of
+The `iD` field contains an unique identifier for the TRC, constituted by a sequence of:
 
 - ISD number (`iSD` attribute),
-- base number (`baseNumber` attribute), and
-- TRC serial number (`serialNumber` attribute).
+- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
+- TRC serial number (`serialNumber` attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 All numbers MUST be positive integers.
-
-- The **ISD number** MUST be an integer.
-- The **base number** indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
-- The **serial number** represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and MUST have a serial number of 1 and a base number of 1. With every TRC update, the serial number MUST be incremented by one which facilitates the unique identification of the predecessor and successor TRC in an update chain.
 
 If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain SHOULD be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.
 
-**Example**<br>
-The following simple example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
+The following example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
 
 | Update      | TRC ID              | Remarks                                          |
 |-------------+---------------------+--------------------------------------------------|
@@ -788,37 +712,30 @@ The following simple example illustrates how to specify the ID of the TRCs in an
 {: #table-7 title="ID of TRCs in TRC update chain"}
 
 
-#### `validity` Field {#validity}
+### `validity` {#validity-trc}
 
 The `validity` field defines the TRC validity period. The `notBefore` and `notAfter` attributes of the `validity` field specify the lower and upper bound of the time interval during which a TRC can be active.
 
 An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
-The `validity` field consists of a sequence of two dates, as defined in section 7.2. of {{X.509}}.
-
-In addition to this standard definition, the following constraint applies to the `validity` field of the TRC:
-
-- All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST error out when encountering such a TRC.
+The `validity` field consists of a sequence of a `notBefore` and a `notAfter` date, both encoded as `GeneralizedTime`.
+All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST error out when encountering such a TRC.
 
 
-#### `gracePeriod` Field {#grace}
+### `gracePeriod` {#grace}
 
-The `gracePeriod` field of a TRC specifies the period of time during which the predecessor TRC can still be considered active (the "grace period"). The grace period starts at the beginning of the validity period of the new TRC.
+The `gracePeriod` field specifies the duration, in seconds, during which the predecessor TRC remains active after a new TRC is issued. This grace period starts at the beginning of the validity period of the new TRC.
 
-The validity period of the predecessor TRC ends when:
+A predecessor TRC ceases to be active when the earliest of the following events occurs:
 
-- the grace period has passed;
-- the predecessor’s expiration time is reached; or
-- the successor TRC of the new TRC has been announced.
+- the grace period expires;
+- the predecessor TRC reaches its expiration time (`notAfter`); or
+- a subsequent TRC update (i.e., the successor to the new TRC) is announced.
 
-**Note:** The event that happens first marks the end of the predecessor's validity period.
-
-The `gracePeriod` field defines the grace period as a number of seconds (positive integer).
-
-The value of the `gracePeriod` field in a base TRC MUST be zero. The value of the `gracePeriod` field in a non-base TRC SHOULD be non-zero. It SHOULD be long enough to provide sufficient overlap between the TRCs in order to facilitate interruption-free operations in the ISD. If the grace period is too short, some Control Plane AS certificates might expire before the corresponding AS can fetch an updated version from its CA.
+In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod` SHOULD be greater than zero. The defined duration SHOULD provide sufficient overlap between the two TRCs to ensure uninterrupted operations within the ISD. If the grace period is too short, some Control Plane AS certificates may expire before the corresponding ASes can fetch an updated version from their CA.
 
 
-#### `noTrustReset` Boolean {#notrustreset}
+### `noTrustReset` {#notrustreset}
 
 The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value MUST NOT be changed by a regular or sensitive update. However, it is possible to change the `noTrustReset` value in the event of a trust reset where a new base TRC is created.
 
@@ -826,69 +743,51 @@ The `noTrustReset` field is OPTIONAL and defaults to FALSE.
 
 Note that once the `noTrustReset` Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs SHOULD always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
 
-**Note:** A trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.
+Note that a trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.
 
 
-#### `votes` Field {#votes}
+### `votes` {#votes}
 
-The `votes` field contains a sequence of indices that refer to the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the `certificates` sequence, see [](#cert).
+The `votes` field contains a sequence of indices referencing the voting certificates in the predecessor TRC. If index i is part of the `votes` field, then the voting certificate at position i in the `certificates` sequence of the predecessor TRC casted a vote on the successor TRC. For more information on the `certificates` sequence, see [](#cert).
 
-**Note:** In a base TRC, the `votes` sequence is empty.
-
-Every entry in the `votes` sequence MUST be unique.<br>
+In a base TRC, the `votes` sequence MUST be empty.
+Every entry in the `votes` sequence MUST be unique.
 Further restrictions on votes are discussed in [](#update).
 
-**Note:** The `votes` sequence of indices is mandatory in order to prevent stripping voting signatures from the TRC. Absence of the `votes` sequence makes it possible to transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets. This would violate the requirement of uniqueness of a TRC.
+The `votes` sequence MUST be present to prevent the stripping of voting signatures from the TRC. Without this sequence, an attacker could transform a TRC with more voting signatures than the voting quorum into multiple verifiable TRCs with the same payload, but different voting signature sets, which directly violates the uniqueness requirement of a TRC.
 
 
-#### `votingQuorum` Field {#quorum}
+### `votingQuorum` {#quorum}
 
 The `votingQuorum` field defines the number of necessary votes on a successor TRC to make it verifiable.
 
 A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.
 
 
-#### `coreASes` Field {#core}
+### `coreASes` {#core}
 
-The `coreASes` field contains the AS numbers of the core ASes in this ISD.
+The `coreASes` field contains a sequence listing the core AS numbers within the ISD.
 
-Each core AS number MUST be unique in the sequence of core AS numbers. That is, each AS number MUST appear only once in the `coreASes` field.
+Each AS number MUST be unique and encoded as a `PrintableString` using the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation".
 
-##### Revoking or Assigning Core Status
+To assign or revoke core status, the target AS number is added to or removed from this sequence. For such modification, a sensitive TRC update is REQUIRED.
 
-- To revoke the core status of a given AS, remove the respective AS number from the sequence of AS numbers in the `coreASes` field.
-- To assign the core status to a given AS, add the respective AS number to the sequence of AS numbers in the `coreASes` field.
+### `authoritativeASes` {#auth}
 
-Revoking or assigning the core status of/to an AS always requires a sensitive TRC update.
+The `authoritativeASes` field contains a sequence listing the authoritative AS numbers in the ISD. Authoritative ASes are those ASes in an ISD that always possess the latest TRCs for the ISD and initiate TRC update announcements.
 
+Every authoritative AS MUST be a core AS (i.e., be listed in the `coreASes` field). The encoding and uniqueness requirements for this sequence are identical to those of the `coreASes` field.
 
-#### `authoritativeASes` Field {#auth}
-
-The `authoritativeASes` field contains the AS numbers of the authoritative ASes in this ISD.
-
-Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
-
-- Every authoritative AS MUST be a core AS and be listed in the `coreASes` field.
-- Each authoritative AS number MUST be unique in the sequence of authoritative AS numbers. That is, each AS number MUST NOT appear more than once in the `authoritativeASes` field.
+As with core ASes, assigning or revoking authoritative status is performed by adding or removing the target AS number from this sequence. For such modification, a sensitive TRC update is REQUIRED.
 
 
-##### Revoking or Assigning Authoritative Status
+### `description` {#description}
 
-- To revoke the authoritative status of a given AS, remove the respective AS number from the sequence of AS numbers in the `authoritativeASes` field.
-- To assign the authoritative status to a given AS, add the respective AS number to the sequence of AS numbers in the `authoritativeASes` field.
-
-**Important:** Revoking or assigning the authoritative status of/to an AS always requires a sensitive TRC update.
+The `description` field contains a UTF-8 encoded string that describes the ISD. It SHOULD NOT be empty.
+The description MUST be in English and MAY additionally contain information in other languages.
 
 
-#### `description` Field {#description}
-
-The `description` field contains a UTF-8 encoded string that describes the ISD.
-
-- The `description` field SHOULD NOT be empty.
-- The description of the ISD MUST be in English. Additionally, the `description` field MAY contain information in other languages.
-
-
-#### `certificates` Field {#cert}
+### `certificates` {#cert}
 
 The voting ASes and the certification authorities (CAs) of an ISD are not specified explicitly in the ISD's TRC. Instead, this information is defined by the list of voting and root certificates in the `certificates` field of the TRC payload.
 
@@ -900,11 +799,11 @@ The `certificates` field is a sequence of self-signed X.509 certificates. Each c
 
 A certificate that is no control plane root or voting certificate MUST NOT be included in the sequence of certificates in the `certificates` field.
 
-**Note**: A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
+A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
 
 The following constraints MUST hold for each certificate in the `certificates` field of the TRC payload:
 
-- Each certificate MUST be unique in the sequence of certificates. That is, each certificate MUST NOT appear more than once in the `certificates` field.
+- Each certificate MUST be unique in the sequence of certificates.
 - The `issuer` / `serialNumber` pair for each certificate MUST be unique.
 - If an ISD-AS number is present in the distinguished name of the certificate, this ISD number MUST be equal to the ISD number of the TRC (which is defined in the `iD` field (see [](#id)).
 - Every certificate MUST have a validity period that fully contains the validity period of this TRC. That is, the `notBefore` date of this TRC's validity period MUST be equal to or later than the certificate's `notBefore` date, and the `notAfter` date of this TRC's validity period MUST be before or equal to the certificate's `notAfter` date.
@@ -913,16 +812,16 @@ The following constraints MUST hold for each certificate in the `certificates` f
 The following must hold for the entire sequence of certificates in the `certificates` field:
 
 - `votingQuorum` <= count (sensitive voting certificates) <br>
-That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of *sensitive* voting certificates specified in the TRC's `certificates` field.
+That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of sensitive voting certificates specified in the TRC's `certificates` field.
 - `votingQuorum` <= count (regular voting certificates) <br>
-That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of *regular* voting certificates specified in the TRC's `certificates` field.
+That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of regular voting certificates specified in the TRC's `certificates` field.
 
 
 ## TRC Signature Syntax {#signed-format}
 
-A TRC contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD.
+To guarantee the integrity and authenticity of the distributed trust anchors, each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
 
-Each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
+For signature calculation, the data that is to be signed MUST be encoded using ASN.1 distinguished encoding rules (DER) {{X.690}}.
 
 
 ### SCION-specific rules
@@ -1071,10 +970,9 @@ The very first base TRC of an ISD - called the initial TRC - is a special case o
 [](#initial-ceremony) describes a possible procedure for the signing ceremony of an ISD's initial TRC. Whilst it is up to the initial members of an ISD how to organize the signing ceremony, it recommended to implement a process in line with the ceremony described in the Appendix.
 
 
-# Using the CP PKI {#deploy-cp-pki}
+# CP-PKI Operations {#operations-cp-pki}
 
-This section provides several specifications regarding the deployment of the control plane PKI.
-
+This section details the procedures for deploying the CP-PKI and securing control plane communications.
 
 ## Distribution of TRCs
 
@@ -1155,7 +1053,7 @@ If any cryptographic material is missing in the process, the relying party MUST 
 **Important:** An implication of the above procedure is that path segments SHOULD be verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.
 
 
-## Issuing a New Control Plane AS Certificate
+## Issuing Control Plane AS Certificates
 
 The steps REQUIRED to issue a new AS certificate are the following:
 
@@ -1168,14 +1066,14 @@ When an AS joins an ISD, the first CSR is sent out of band to one of the CAs as 
 
 # Deployment Considerations
 
-## PKI availability
+## PKI Availability
 
 The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.
 
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
-## Processes
+## Operational Processes for ISD Governance
 
 An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
 
@@ -1195,7 +1093,7 @@ SCION fundamentally differs from a global monopolistic trust model as each ISD m
 This section discussed implication of such trust architecture, covering *inter*-AS security considerations. All *intra*-AS trust- and security aspects are out of scope.
 
 
-### Compromise of an ISD
+## Compromise of an ISD
 
 In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:
 
@@ -1219,7 +1117,7 @@ The Control Plane PKI lays the foundation for the authentication procedures in S
 
 The relying party MUST be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
 
-As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control-plane messages.
+As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control plane messages.
 
 On the other hand, this does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:
 
@@ -1245,15 +1143,104 @@ The ISD and SCION AS number are SCION-specific numbers. They are currently alloc
 
 --- back
 
+# Certificate Extensions in ASN.1 Syntax {#cert-asn1}
 
-# Appendix A. Signing Ceremony Initial TRC {#initial-ceremony}
-{:numbered="false"}
+~~~~
+SCION-CP-PKI-CERT-EXTENSIONS {
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) id-scion-pki-cert-ext(101)
+}
+
+DEFINITIONS EXPLICIT TAGS ::=
+BEGIN
+
+-- Root SCION object identifier (IANA Private Enterprise Number 55324)
+id-scion OBJECT IDENTIFIER ::= { 1 3 6 1 4 1 55324 }
+
+-- SCION Control Plane PKI
+id-cppki OBJECT IDENTIFIER ::= { id-scion 1 }
+
+-- SCION Attributes
+id-at OBJECT IDENTIFIER ::= { id-cppki 2 }
+
+-- SCION ISD-AS Attribute
+id-at-ia OBJECT IDENTIFIER ::= { id-at 1 }
+
+-- SCION Key Purposes
+id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
+
+-- Identifies a Sensitive voting certificate
+id-kp-sensitive OBJECT IDENTIFIER ::= { id-scion-kp 1 }
+
+-- Identifies a Regular voting certificate
+id-kp-regular   OBJECT IDENTIFIER ::= { id-scion-kp 2 }
+
+-- Identifies a Root certificate
+id-kp-root      OBJECT IDENTIFIER ::= { id-scion-kp 3 }
+
+END
+~~~~
+
+# TRC in ASN.1 Syntax {#trc-asn1}
+
+~~~~
+SCION-CP-PKI-TRC {
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) trc(1)
+}
+
+DEFINITIONS EXPLICIT TAGS ::=
+BEGIN
+
+IMPORTS
+    Certificate
+        FROM PKIX1Explicit88 {
+            iso(1) identified-organization(3) dod(6) internet(1)
+            security(5) mechanisms(5) pkix(7) id-mod(0)
+            id-pkix1-explicit(18)
+        };
+
+TRCValidity ::= SEQUENCE {
+    notBefore          GeneralizedTime,
+    notAfter           GeneralizedTime
+}
+
+TRCPayload ::= SEQUENCE {
+    version            TRCFormatVersion,
+    iD                 TRCID,
+    validity           TRCValidity,
+    gracePeriod        INTEGER,
+    noTrustReset       BOOLEAN,
+    votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum       INTEGER (1..2047),
+    coreASes           SEQUENCE OF ASN,
+    authoritativeASes  SEQUENCE OF ASN,
+    description        UTF8String (SIZE (0..8192)),
+    certificates       SEQUENCE SIZE (0..4095) OF Certificate
+}
+
+TRCFormatVersion ::= INTEGER { v1(0) }
+
+TRCID ::= SEQUENCE {
+    iSD                ISD,
+    serialNumber       INTEGER (1..MAX),
+    baseNumber         INTEGER (1..MAX)
+}
+
+ISD ::= INTEGER (1..65535)
+
+ASN ::= PrintableString
+
+END
+~~~~
+
+
+# Signing Ceremony Initial TRC {#initial-ceremony}
 
 A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is RECOMMENDED to establish a procedure similar to the one described below:
 
 
 ## Ceremony Participants
-{:numbered="false"}
 
 The Signing Ceremony SHOULD include the following participants:
 
@@ -1266,13 +1253,12 @@ The Signing Ceremony SHOULD include the following participants:
 **Note:** The ISD members MUST decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and MUST have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
 
 ## Ceremony Preparations {#ceremonyprep}
-{:numbered="false"}
 
 The participants MUST decide in advance on the physical location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:
 
 - ISD number - usually obtained from the SCION registry, see [](#id);
 - The description of the TRC, see [](#description);
-- Validity period of the TRC, see [](#validity);
+- Validity period of the TRC, see [](#validity-trc);
 - Grace period of the TRC (except for Base TRCs);
 - Voting quorum for the TRC, see [](#quorum);
 - AS numbers of the Core ASes, see [](#core);
@@ -1295,16 +1281,14 @@ The Ceremony Administrator MUST provide or be provided with a device to exchange
 The Signing Ceremony SHOULD include a procedure to verify that all devices are secure.
 
 
-## Ceremony Process {#ceremonyprocess}
-{:numbered="false"}
+## Ceremony Phases {#ceremonyprocess}
 
 The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
 
 The signing process has four phases of data sharing, led by the Ceremony Administrator who provides instructions to the other participants:
 
 
-### Phase 1: Certificate Exchange {#phase1}
-{:numbered="false"}
+### Certificate Exchange {#phase1}
 
 All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.
 
@@ -1314,11 +1298,10 @@ The Ceremony Administrator then checks that the validity period of each provided
 
 The Ceremony Administrator MUST then share the bundle with the representatives of the voting ASes who MUST validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
 
-Phase 1 concludes when every representative has confirmed the SHA-512 sums are correct. If there is any mismatch then this phase MUST be repeated.
+This phase concludes when every representative has confirmed the SHA-512 sums are correct. If there is any mismatch then this phase MUST be repeated.
 
 
-### Phase 2: Generation of the TRC Payload {#phase2}
-{:numbered="false"}
+### Generation of the TRC Payload {#phase2}
 
 The Ceremony Administrator generates the TRC payload based on the bundled certificates and the [](#trcfields) completed in accordance with ISD policy, see [](#ceremonyprep).
 
@@ -1329,23 +1312,21 @@ For each bundled certificate, the voting representatives MUST then verify the ce
 - `validity`
 - `signature`
 
-Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to [](#trcpayload) and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.
+Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to [](#trc-asn1) and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.
 
-Phase 2 concludes when all voting representatives confirm that the contents of the TRC payload are correct.
+This phase concludes when all voting representatives confirm that the contents of the TRC payload are correct.
 
 
-### Phase 3: TRC Signing {#phase3}
-{:numbered="false"}
+### TRC Signing {#phase3}
 
 Each voting representative attaches a signature created with their own private voting key to the TRC (payload file), using their own machine. This serves to prove possession of the private keys.
 
-Phase 3 concludes when all voting representatives have attached their signatures to the TRC.
+This phase concludes when all voting representatives have attached their signatures to the TRC.
 
 
-### Phase 4: TRC Validation {#phase4}
-{:numbered="false"}
+### TRC Validation {#phase4}
 
-All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during Phase 1. The Ceremony Administrator then shares the assembled TRC with all participants who MUST again inspect the signatures and verify them based on the certificates exchanged in Phase 1.
+All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during phase [](#phase1). The Ceremony Administrator then shares the assembled TRC with all participants who MUST again inspect the signatures and verify them based on the certificates exchanged in phase [](#phase1).
 
 The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.
 
@@ -1359,8 +1340,10 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Overall review and wording polish
+- Introduction: shorten and refer to -controlplane
 - Consistently use "Issuing CA certificate" / root certificate"
-- Reduce number of headings in sections 2 and 3
+- Sections 2 and 3 (Certificate, TRC specification): reduce number of subheadings, reword TRC field descriptions. - Clarify that TRC validity uses GeneralizedTime
+- Add ASN.1 modules in the appendix for Certificate extensions and TRCs
 - Tables 3-7: sharpen normative language use
 
 ## draft-dekater-scion-pki-11
@@ -1380,7 +1363,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-10
 {:numbered="false"}
 
-- removed ISD assignment table and replaced to reference in control-plane draft
+- removed ISD assignment table and replaced to reference in Control Plane draft
 - Updated number assignment reference
 - Signatures: mention that other algorithms that ECDSA may be used in the future
 - Figures: add SVG version
@@ -1426,5 +1409,5 @@ Minor changes:
 # Acknowledgments
 {:numbered="false"}
 
-Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
