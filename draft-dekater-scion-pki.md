@@ -955,20 +955,11 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 - The REQUIRED signatures for new certificates are implied by the currently valid TRC payload, and, in case of a TRC update, the predecessor payload.
 
 
-## Certification Path - Trust Anchor Pool
+## Certification Path - Trust Anchor Pool {#trc-selection}
 
-The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
+The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. While root certificates for a given ISD are distributed via the TRC, AS and issuing CA certificates are distributed separately. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain.
 
-However, AS certificates and the corresponding issuing CA certificates are **not** part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
-
-**Note:** Any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
-
-
-### TRC Selection For Trust Anchor Pool {#trc-selection}
-
-The selection of the right set of TRCs to build the trust anchor pool depends on the time of verification. This is typically the current time when verifying control plane messages, but may be a historical point in time when auditing past signatures.
-
-To construct the trust anchor pool for a specific ISD at a given verification time, a relying party MUST execute the following steps:
+To validate a certification path, a relying party builds a collection of root certificates know as the trust anchor pool. Because TRC updates can introduce a grace period where multiple TRCs overlap, relying parties MUST execute the following steps to determine the correct trust anchor pool for a given verification time:
 
 1. From the set of all available TRCs for the ISD, filter out TRCs whose validity start time (`notBefore`) precedes the verification time.
 
@@ -979,6 +970,8 @@ To construct the trust anchor pool for a specific ISD at a given verification ti
 4. If the TRC is valid, add its root certificates to the trust anchor pool.
 
 5. If the TRC is in its grace period, add the preceding TRC's root certificates to the trust anchor pool.
+
+Note that any entity sending information secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
 
 ## TRC Updates {#update}
 
