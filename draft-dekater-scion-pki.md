@@ -1141,6 +1141,8 @@ The Control Plane PKI relies on short-lived certificates as an alternative to re
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
 ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
+Furthermore, PKI operators need to ensure that the CAs maintain accurate time. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, section "Attacks on Time Sources".
+
 ## Operational Processes for ISD Governance
 
 An ISD is governed by voting ASes. In existing deployments, voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
