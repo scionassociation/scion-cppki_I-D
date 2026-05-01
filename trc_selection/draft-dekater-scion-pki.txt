@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 1 November 2026                                         S. Hitz
+Expires: 2 November 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           30 April 2026
+                                                              1 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 November 2026.
+   This Internet-Draft will expire on 2 November 2026.
 
 Copyright Notice
 
@@ -1611,7 +1611,7 @@ Table of Contents
    corresponding TRC without having to modify the certificate chain.
 
    To validate a certification path, a relying party builds a collection
-   of root certificates know as the trust anchor pool.  Because TRC
+   of root certificates known as the trust anchor pool.  Because TRC
    updates can introduce a grace period where multiple TRCs overlap,
    relying parties MUST execute the following steps to determine the
    correct trust anchor pool for a given verification time:
