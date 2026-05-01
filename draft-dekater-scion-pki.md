@@ -42,7 +42,7 @@ normative:
   RFC5758:
   RFC9217:
   X.509:
-    title: "ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"
+    title: "ITU-T X.509 (10/2016) | Information technology - Open Systems Interconnection - The Directory: Public-key and attribute certificate frameworks"
     date: 10/2016
     target: https://handle.itu.int/11.1002/1000/13031
   X.680:
@@ -180,7 +180,7 @@ An ISD is governed by one or multiple ASes, known as the **voting ASes**. Furthe
 
 Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
-The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.
+The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains an uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.
 
 The need for trust agility also means that SCION does not by design provide IP prefix origin validation as provided by RPKI {{RFC8210}}. RPKI's trust model is currently reliant on the trust roots provided by the five Regional Internet Registries, and therefore outside of the governance of an ISD.
 
@@ -362,7 +362,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 (1) Multiple signatures and certificates of each type MAY be included in a TRC.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
-(3) A validity of 15 days with 8 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a issuing CA certificate rollover.
+(3) A validity of 15 days with 8 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing an issuing CA certificate rollover.
 
 {{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
 
@@ -548,7 +548,7 @@ The attributes of the `keyUsage` extension define possible ways of using the pub
 
 Other attributes are not used.
 
-If a relying party uses the certificate’s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party MUST be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
+If a relying party uses the certificate's public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party MUST be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
 When present, this extension SHOULD be marked as critical.
 
@@ -677,7 +677,7 @@ A TRC where the base number is equal to the serial number is a base TRC. The ini
 
 If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain SHOULD be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.
 
-The following example illustrates how to specify the ID of the TRCs in an TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
+The following example illustrates how to specify the ID of the TRCs in a TRC update chain for *ISD 15*. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.
 
 | Update      | TRC ID              | Remarks                                          |
 |-------------+---------------------+--------------------------------------------------|
@@ -817,7 +817,7 @@ SCION implementations MUST fulfill the following additional rules, as well as th
    - The type of signer identifier chosen here MUST be `IssuerAndSerialNumber`.
 - `SignerInfo` sequence:
    - The `version` field MUST be set to "1". This is because SCION uses the `IssuerAndSerialNumber` type of signer identifier (see also Section 5.3 of {{RFC5652}}).
-   - The algorithm specified in the `signatureAlgorithm` field MUST be one of the algorithms supported by SCION . For details, see [signature Field - Additional Information](#certsign).
+   - The algorithm specified in the `signatureAlgorithm` field MUST be one of the algorithms supported by SCION. For details, see [signature Field - Additional Information](#certsign).
    - The `digestAlgorithm` is determined by the algorithm specified in the `signatureAlgorithm` field.
 
 
@@ -1050,7 +1050,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 
 
 
-## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
+## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
 
 The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties MUST be able to verify signatures with the help of the Control Plane PKI.
 
@@ -1144,8 +1144,8 @@ This section discussed implication of such trust architecture, covering *inter*-
 
 In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:
 
-- At TRC level: The private root keys of the root certificates contained in an TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.
-- At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.
+- At TRC level: The private root keys of the root certificates contained in a TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.
+- At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA's keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.
 - At AS level: Each AS within an ISD signs control plane messages with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control plane messages including Path Construction Beacons (PCBs). This means that the adversary can manipulate the PCBs and propagate them to neighboring ASes or register/store them as path segments.
 
 
@@ -1153,8 +1153,8 @@ In SCION there is no central authority that could "switch off" an ISD as each re
 This section deals with possible recovery from the compromises discussed in the previous paragraph.
 As described in [](#substitutes-to-revocation), there is no revocation in the Control Plane PKI.
 
-- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and a invalid update has been produced and distributed in the network.
-- At CA level: If the private key related to a issuing CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
+- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and an invalid update has been produced and distributed in the network.
+- At CA level: If the private key related to an issuing CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
 - At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
 
 
@@ -1287,7 +1287,7 @@ END
 A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is RECOMMENDED to establish a procedure similar to the one described below:
 
 
-## Ceremony Participants
+## Ceremony Participants
 
 The Signing Ceremony SHOULD include the following participants:
 
@@ -1328,7 +1328,7 @@ The Ceremony Administrator MUST provide or be provided with a device to exchange
 The Signing Ceremony SHOULD include a procedure to verify that all devices are secure.
 
 
-## Ceremony Phases {#ceremonyprocess}
+## Ceremony Phases {#ceremonyprocess}
 
 The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
 
