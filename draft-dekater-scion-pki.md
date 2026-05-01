@@ -1291,11 +1291,11 @@ A signing ceremony is used to create the initial (first) Trust Root Configuratio
 
 The signing ceremony SHOULD include the following participants:
 
-- **Ceremony administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The ceremony administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.
+- **Ceremony administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The ceremony administrator is typically appointed by the ISD Manager or by resolution of the voting ASes.
 
 - **Voting AS representatives** - individuals representing each voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.
 
-- **Witness(es)** - individual(s) who have no active role in the signing ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the voting ASes.
+- **Witness(es)** - individual(s) who have no active role in the signing ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The witness(es) are typically appointed by resolution of the voting ASes.
 
 **Note:** The ISD members must decide on the roles of the signing ceremony participants in advance of signing ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the signing ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The ceremony administrator does not have to be entrusted with private keys.
 
@@ -1310,7 +1310,7 @@ The participants agree in advance on the physical location of the signing ceremo
 - Voting quorum for the TRC, see [](#quorum);
 - AS numbers of the core ASes, see [](#core);
 - AS numbers of the authoritative ASes, see [](#auth);
-- The list of control plane Root Certificates.
+- The list of control plane root certificates.
 
 Each representative of a voting AS MUST also create the following before the ceremony:
 
