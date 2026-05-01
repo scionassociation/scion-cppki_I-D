@@ -36,8 +36,10 @@ author:
 normative:
   I-D.dekater-scion-controlplane:
   I-D.dekater-scion-dataplane:
+  RFC5198:
   RFC5280:
   RFC5480:
+  RFC5646:
   RFC5652:
   RFC5758:
   RFC9217:
@@ -783,8 +785,8 @@ As with core ASes, assigning or revoking authoritative status is performed by ad
 
 ### `description` {#description}
 
-The `description` field contains a UTF-8 encoded string that describes the ISD. It SHOULD NOT be empty.
-The description MUST be in English and MAY additionally contain information in other languages.
+The `description` field contains a UTF-8 encoded string that describes the ISD. The text SHOULD be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. It SHOULD NOT be empty.
+The description MUST be in English. It MAY additionally contain information in other languages; if it does, the non-English text SHOULD be identified using language tags as defined in {{RFC5646}}.
 
 
 ### `certificates` {#cert}
@@ -1477,5 +1479,5 @@ Minor changes:
 # Acknowledgments
 {:numbered="false"}
 
-Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (Vigil Security LLC), Alexey Melnikov (Isode), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya Systems AG), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
