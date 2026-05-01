@@ -85,9 +85,6 @@ Table of Contents
        1.4.1.  Updates and Trust Resets
        1.4.2.  Substitutes to Certificate Revocation
      1.5.  Overview of Certificates, Keys, and Roles
-     1.6.  Trust as a Function
-       1.6.1.  Input
-       1.6.2.  Output
    2.  Certificate Specification
      2.1.  Trust Hierarchy
      2.2.  Control Plane Root Certificate
@@ -379,6 +376,10 @@ Table of Contents
    constitutes the ISD's trust anchor which is signed during a signing
    ceremony by the voting ASes and then distributed throughout the ISD.
 
+   While it is not necessary that all the ASes of the ISD trust each
+   other, all ASes MUST trust the ISD's core ASes, authoritative ASes,
+   voting ASes, as well as its CA(s).
+
 1.4.1.  Updates and Trust Resets
 
    There are two types of TRC updates: regular and sensitive (see
@@ -474,7 +475,8 @@ Table of Contents
    binding between name and public key explicit; and (2) the binding is
    signed to prove possession of the corresponding private key.  The
    public keys of Voting AS certificates must therefore be explicitly
-   verified during the Signing Ceremony (Appendix C).
+   verified during the Signing Ceremony (Appendix C) that is used to
+   bootstrap trust for the initial TRC.
 
    SCION ASes sign and verify control plane messages.  Certain ASes have
    additional roles:
@@ -494,42 +496,6 @@ Table of Contents
 
    *  *Authoritative ASes*: They always have the latest TRCs of the ISD.
       They start the announcement of a TRC update.
-
-1.6.  Trust as a Function
-
-   The Control Plane PKI can be seen as a function that transforms
-   potential distrust among different parties into a mutually accepted
-   trust contract.  This includes a trust update and reset policy as
-   well as certificates used for authentication procedures in SCION's
-   Control Plane.
-
-   For this to work, it is not necessary that all the ASes of the ISD
-   trust each other.  However, all ASes MUST trust the ISD's core ASes,
-   authoritative ASes, voting ASes, as well as its CA(s).  These trusted
-   parties negotiate the ISD trust contract in a "bootstrapping of
-   trust" ceremony where cryptographic material is exchanged and the
-   ISD's trust anchor (the initial Trust Root Configuration) is created
-   and signed.
-
-1.6.1.  Input
-
-   Prior to the ceremony, the trusted parties MUST decide about the
-   validity period of the TRC as well as the number of votes required to
-   update a TRC.  They MUST also bring the required keys and
-   certificates, the so-called root and voting keys/certificates.
-
-   The trusted parties require an ISD number whose numbering scheme is
-   described in [I-D.dekater-scion-controlplane] section ISD Numbers,
-   and allocation in [ISD-AS-assignments].
-
-1.6.2.  Output
-
-   The output of the bootstrapping of trust ceremony, or the trust
-   "function", are the ISD's initial Trust Root Configuration as well as
-   mutually trusted and accepted CA and AS certificates - the latter
-   being used to verify control plane messages.  Together with the ISD's
-   control plane root certificates, the issuing CA and AS certificates
-   build the ISD's trust and verification chain.
 
 2.  Certificate Specification
 

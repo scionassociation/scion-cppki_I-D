@@ -1178,17 +1178,6 @@ svg :is([fill="white"], [fill^="#fff"]) {
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.5">
                 <p id="section-toc.1-1.1.2.5.1"><a href="#section-1.5" class="auto internal xref">1.5</a>.  <a href="#name-overview-of-certificates-ke" class="internal xref">Overview of Certificates, Keys, and Roles</a></p>
 </li>
-              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.6">
-                <p id="section-toc.1-1.1.2.6.1"><a href="#section-1.6" class="auto internal xref">1.6</a>.  <a href="#name-trust-as-a-function" class="internal xref">Trust as a Function</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.6.2.1">
-                    <p id="section-toc.1-1.1.2.6.2.1.1"><a href="#section-1.6.1" class="auto internal xref">1.6.1</a>.  <a href="#name-input" class="internal xref">Input</a></p>
-</li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.1.2.6.2.2">
-                    <p id="section-toc.1-1.1.2.6.2.2.1"><a href="#section-1.6.2" class="auto internal xref">1.6.2</a>.  <a href="#name-output" class="internal xref">Output</a></p>
-</li>
-                </ul>
-</li>
             </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.2">
@@ -1585,6 +1574,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-trust-relations-within-an-i" class="section-name selfRef">Trust Relations within an Isolation Domain</a>
         </h3>
 <p id="section-1.4-1">The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called <strong>base TRC</strong> constitutes the ISD's trust anchor which is signed during a signing ceremony by the voting ASes and then distributed throughout the ISD.<a href="#section-1.4-1" class="pilcrow">¶</a></p>
+<p id="section-1.4-2">While it is not necessary that all the ASes of the ISD trust each other, all ASes <span class="bcp14">MUST</span> trust the ISD's core ASes, authoritative ASes, voting ASes, as well as its CA(s).<a href="#section-1.4-2" class="pilcrow">¶</a></p>
 <div id="trust-reset">
 <section id="section-1.4.1">
           <h4 id="name-updates-and-trust-resets">
@@ -1761,7 +1751,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <a href="#name-chain-of-trust-within-an-is" class="selfRef">Chain of trust within an ISD</a>
           </figcaption></figure>
 </div>
-<p id="section-1.5-3">All certificates used in the Control Plane PKI are in X.509 v3 format <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony (<a href="#initial-ceremony" class="auto internal xref">Appendix C</a>).<a href="#section-1.5-3" class="pilcrow">¶</a></p>
+<p id="section-1.5-3">All certificates used in the Control Plane PKI are in X.509 v3 format <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony (<a href="#initial-ceremony" class="auto internal xref">Appendix C</a>) that is used to bootstrap trust for the initial TRC.<a href="#section-1.5-3" class="pilcrow">¶</a></p>
 <p id="section-1.5-4">SCION ASes sign and verify control plane messages. Certain ASes have additional roles:<a href="#section-1.5-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.5-5.1">
@@ -1777,32 +1767,6 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
             <p id="section-1.5-5.4.1"><strong>Authoritative ASes</strong>: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.<a href="#section-1.5-5.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-</section>
-</div>
-<div id="trust-as-a-function">
-<section id="section-1.6">
-        <h3 id="name-trust-as-a-function">
-<a href="#section-1.6" class="section-number selfRef">1.6. </a><a href="#name-trust-as-a-function" class="section-name selfRef">Trust as a Function</a>
-        </h3>
-<p id="section-1.6-1">The Control Plane PKI can be seen as a function that transforms potential distrust among different parties into a mutually accepted trust contract. This includes a trust update and reset policy as well as certificates used for authentication procedures in SCION's Control Plane.<a href="#section-1.6-1" class="pilcrow">¶</a></p>
-<p id="section-1.6-2">For this to work, it is not necessary that all the ASes of the ISD trust each other. However, all ASes <span class="bcp14">MUST</span> trust the ISD's core ASes, authoritative ASes, voting ASes, as well as its CA(s). These trusted parties negotiate the ISD trust contract in a "bootstrapping of trust" ceremony where cryptographic material is exchanged and the ISD's trust anchor (the initial Trust Root Configuration) is created and signed.<a href="#section-1.6-2" class="pilcrow">¶</a></p>
-<div id="input">
-<section id="section-1.6.1">
-          <h4 id="name-input">
-<a href="#section-1.6.1" class="section-number selfRef">1.6.1. </a><a href="#name-input" class="section-name selfRef">Input</a>
-          </h4>
-<p id="section-1.6.1-1">Prior to the ceremony, the trusted parties <span class="bcp14">MUST</span> decide about the validity period of the TRC as well as the number of votes required to update a TRC. They <span class="bcp14">MUST</span> also bring the required keys and certificates, the so-called root and voting keys/certificates.<a href="#section-1.6.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.6.1-2">The trusted parties require an ISD number whose numbering scheme is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section <code>ISD Numbers</code>, and allocation in <span>[<a href="#ISD-AS-assignments" class="cite xref">ISD-AS-assignments</a>]</span>.<a href="#section-1.6.1-2" class="pilcrow">¶</a></p>
-</section>
-</div>
-<div id="output">
-<section id="section-1.6.2">
-          <h4 id="name-output">
-<a href="#section-1.6.2" class="section-number selfRef">1.6.2. </a><a href="#name-output" class="section-name selfRef">Output</a>
-          </h4>
-<p id="section-1.6.2-1">The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates - the latter being used to verify control plane messages. Together with the ISD's control plane root certificates, the issuing CA and AS certificates build the ISD's trust and verification chain.<a href="#section-1.6.2-1" class="pilcrow">¶</a></p>
-</section>
-</div>
 </section>
 </div>
 </section>
