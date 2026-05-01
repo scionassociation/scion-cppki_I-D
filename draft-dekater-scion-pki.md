@@ -189,6 +189,7 @@ The need for trust agility also means that SCION does not by design provide IP p
 
 The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called **base TRC** constitutes the ISD's trust anchor which is signed during a signing ceremony by the voting ASes and then distributed throughout the ISD.
 
+While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's core ASes, authoritative ASes, voting ASes, as well as its CA(s).
 
 ### Updates and Trust Resets {#trust-reset}
 
@@ -252,7 +253,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~~
 {: #figure-1 title="Chain of trust within an ISD"}
 
-All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)).
+All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)) that is used to bootstrap trust for the initial TRC.
 
 SCION ASes sign and verify control plane messages. Certain ASes have additional roles:
 
@@ -260,24 +261,6 @@ SCION ASes sign and verify control plane messages. Certain ASes have additional 
 - **Certification authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
 - **Voting ASes**: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "voting ASes".
 - **Authoritative ASes**: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.
-
-
-## Trust as a Function
-
-The Control Plane PKI can be seen as a function that transforms potential distrust among different parties into a mutually accepted trust contract. This includes a trust update and reset policy as well as certificates used for authentication procedures in SCION's Control Plane.
-
-For this to work, it is not necessary that all the ASes of the ISD trust each other. However, all ASes MUST trust the ISD's core ASes, authoritative ASes, voting ASes, as well as its CA(s). These trusted parties negotiate the ISD trust contract in a "bootstrapping of trust" ceremony where cryptographic material is exchanged and the ISD's trust anchor (the initial Trust Root Configuration) is created and signed.
-
-### Input {#input}
-
-Prior to the ceremony, the trusted parties MUST decide about the validity period of the TRC as well as the number of votes required to update a TRC. They MUST also bring the required keys and certificates, the so-called root and voting keys/certificates.
-
-The trusted parties require an ISD number whose numbering scheme is described in {{I-D.dekater-scion-controlplane}} section `ISD Numbers`, and allocation in {{ISD-AS-assignments}}.
-
-
-### Output
-
-The output of the bootstrapping of trust ceremony, or the trust "function", are the ISD's initial Trust Root Configuration as well as mutually trusted and accepted CA and AS certificates - the latter being used to verify control plane messages. Together with the ISD's control plane root certificates, the issuing CA and AS certificates build the ISD's trust and verification chain.
 
 
 # Certificate Specification {#cert-specs}
