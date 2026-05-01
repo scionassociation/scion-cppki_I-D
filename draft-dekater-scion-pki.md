@@ -1386,6 +1386,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-13
 {:numbered="false"}
 
+- Draftforge review
 - remove trust Hierarchy subsection and redundant code block
 - Certificate validity recommendations: align to current practice
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
