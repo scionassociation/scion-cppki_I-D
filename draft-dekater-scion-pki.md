@@ -854,91 +854,23 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 - The REQUIRED signatures for new certificates are implied by the currently valid TRC payload, and, in case of a TRC update, the predecessor payload.
 
 
-## Certification Path - Trust Anchor Pool
+## Certification Path - Trust Anchor Pool {#trc-selection}
 
-The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
+The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. While root certificates for a given ISD are distributed via the TRC, AS and issuing CA certificates are distributed separately. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain.
 
-However, AS certificates and the corresponding issuing CA certificates are not part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
+To validate a certification path, a relying party builds a collection of root certificates known as the trust anchor pool. Because TRC updates can introduce a grace period where multiple TRCs overlap, relying parties MUST execute the following steps to determine the correct trust anchor pool for a given verification time:
 
-Note that any entity sending information that is secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
+1. From the set of all available TRCs for the ISD, keep only TRCs whose validity start time (`notBefore` date) is at or before the verification time. If no such TRC exists, the process terminates unsuccessfully.
 
-The following section explains how to build a trust anchor pool.
+2. From the selected TRCs, identify those with the highest base number (`baseNumber`), then select the TRC among them with the highest serial number (`serialNumber`).
 
-### TRC Selection For Trust Anchor Pool {#trc-selection}
+3. If the verification time is strictly greater than the selected TRC's `notAfter` date then the process terminates unsuccessfully.
 
-The selection of the right set of TRCs to build the trust anchor pool depends on the time of verification. The trust anchor pool is usually used to verify control plane messages and in this case, the time of verification is the current time. However, if the trust anchor pool will be used for auditing, the time of verification is the point in time to check whether a given signature was verifiable.
+4. If the TRC is valid, add its root certificates to the trust anchor pool.
 
-The selection algorithm for building the trust anchor pool is described in pseudo-python code below.
+5. If the TRC is in its grace period, add the preceding TRC's root certificates to the trust anchor pool.
 
-~~~~python
-    def select_trust_anchors(trcs: Dict[(int,int), TRC], \
-    verification_time: int) -> Set[RootCert]:
-        """
-        Args:
-            trcs: The dictionary mapping (serial number, \
-            base number) to the TRC for a given ISD.
-            verification_time: The time of verification.
-
-        Returns:
-            The set of CP Root certificates acting as trust anchors.
-        """
-        # Find highest base number that has a TRC with validity
-        # period starting before verification time.
-        base_nr = 1
-        for trc in trcs.values()
-            if trc.id.base_nr > base_nr and trc.validity.not_before \
-            <= verification_time:
-                base_nr = trc.id.base_nr
-
-        # Find TRC with highest serial number with given base number
-        # and a validity period starting before verification time.
-        serial_nr = 1
-        for trc in trcs[isd].values():
-            if trc.id.base_nr != base_nr:
-                continue
-            if trc.id.serial_nr > serial_nr and \
-            trc.validity.not_before <= verification_time:
-                serial_nr = trc.id.serial_nr
-
-        candidate = trcs[(serial_nr, base_nr)]
-
-        # If the verification time is not inside the validity period,
-        # there is no valid set of trust anchors.
-        if not candidate.validity.contains(verification_time):
-            return set()
-
-        # If the grace period has passed, only the certificates in
-        # that TRC may be used as trust anchors.
-        if candidate.validity.not_before + candidate.grace_period \
-        < verification_time:
-            return collect_trust_anchors(candidate)
-
-        predecessor = trcs.get((serial_nr-1, base_nr))
-        if not predecessor or predecessor.validity.not_after < \
-        verification_time:
-            return collect_trust_anchors(candidate)
-
-        return collect_trust_anchors(candidate) | \
-        collect_trust_anchors(predecessor)
-
-
-    def collect_trust_anchors(trc: TRC) -> Set[RootCert]:
-        """
-        Args:
-            trc: A TRC from which the CP Root Certificates shall \
-            be extracted.
-
-        Returns:
-            The set of CP Root certificates acting as trust anchors.
-        """
-        roots = set()
-        for cert in trc.certificates:
-            if not cert.basic_constraints.ca:
-                continue
-            roots.add(cert)
-        return roots
-~~~~
-
+Note that any entity sending information secured by the Control Plane PKI, such as control plane messages, MUST be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material through the control plane API described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" [](#signing-verifying-cp-messages).
 
 ## TRC Updates {#update}
 
