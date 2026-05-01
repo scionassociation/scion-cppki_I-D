@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 24 October 2026                                         S. Hitz
+Expires: 2 November 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           22 April 2026
+                                                              1 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 24 October 2026.
+   This Internet-Draft will expire on 2 November 2026.
 
 Copyright Notice
 
@@ -131,7 +131,6 @@ Table of Contents
        3.3.1.  SCION-specific rules
        3.3.2.  TRC Equality
      3.4.  Certification Path - Trust Anchor Pool
-       3.4.1.  TRC Selection For Trust Anchor Pool
      3.5.  TRC Updates
        3.5.1.  Changed or New Certificates
        3.5.2.  Update Rules - Overview
@@ -1605,109 +1604,46 @@ Table of Contents
 3.4.  Certification Path - Trust Anchor Pool
 
    The certification path of a Control Plane AS certificate starts in a
-   Control Plane root certificate.  The Control Plane root certificate
-   for a given ISD is distributed via the TRC.
+   Control Plane root certificate.  While root certificates for a given
+   ISD are distributed via the TRC, AS and issuing CA certificates are
+   distributed separately.  This separation makes it possible to extend
+   the validity period of the root certificate, and to update the
+   corresponding TRC without having to modify the certificate chain.
 
-   However, AS certificates and the corresponding issuing CA
-   certificates are not part of the TRC, but are bundled into
-   certificate chains and distributed separately from the corresponding
-   TRC.  This separation makes it possible to extend the validity period
-   of the root certificate, and to update the corresponding TRC without
-   having to modify the certificate chain.  To be able to validate a
-   certification path, each AS builds a collection of root certificates
-   from the latest TRC of the relevant ISD.
+   To validate a certification path, a relying party builds a collection
+   of root certificates known as the trust anchor pool.  Because TRC
+   updates can introduce a grace period where multiple TRCs overlap,
+   relying parties MUST execute the following steps to determine the
+   correct trust anchor pool for a given verification time:
 
-   Note that any entity sending information that is secured by the
-   Control Plane PKI, such as control plane messages, MUST be able to
-   provide all the necessary trust material including certificates to
-   verify said information.  If any cryptographic material is missing in
-   the process, the relying party MUST query the originator of the
-   message for the missing material through the control plane API
-   described in [I-D.dekater-scion-controlplane], section "Distribution
-   of Cryptographic Material".  If it cannot be resolved, the
-   verification process fails.  For more details, see 4.2 "Signing and
-   Verifying Control Plane Messages" Section 4.2.
+   1.  From the set of all available TRCs for the ISD, keep only TRCs
+       whose validity start time (notBefore date) is at or before the
+       verification time.  If no such TRC exists, the process terminates
+       unsuccessfully.
 
-   The following section explains how to build a trust anchor pool.
+   2.  From the selected TRCs, identify those with the highest base
+       number (baseNumber), then select the TRC among them with the
+       highest serial number (serialNumber).
 
-3.4.1.  TRC Selection For Trust Anchor Pool
+   3.  If the verification time is strictly greater than the selected
+       TRC's notAfter date then the process terminates unsuccessfully.
 
-   The selection of the right set of TRCs to build the trust anchor pool
-   depends on the time of verification.  The trust anchor pool is
-   usually used to verify control plane messages and in this case, the
-   time of verification is the current time.  However, if the trust
-   anchor pool will be used for auditing, the time of verification is
-   the point in time to check whether a given signature was verifiable.
+   4.  If the TRC is valid, add its root certificates to the trust
+       anchor pool.
 
-   The selection algorithm for building the trust anchor pool is
-   described in pseudo-python code below.
+   5.  If the TRC is in its grace period, add the preceding TRC's root
+       certificates to the trust anchor pool.
 
-       def select_trust_anchors(trcs: Dict[(int,int), TRC], \
-       verification_time: int) -> Set[RootCert]:
-           """
-           Args:
-               trcs: The dictionary mapping (serial number, \
-               base number) to the TRC for a given ISD.
-               verification_time: The time of verification.
-
-           Returns:
-               The set of CP Root certificates acting as trust anchors.
-           """
-           # Find highest base number that has a TRC with validity
-           # period starting before verification time.
-           base_nr = 1
-           for trc in trcs.values()
-               if trc.id.base_nr > base_nr and trc.validity.not_before \
-               <= verification_time:
-                   base_nr = trc.id.base_nr
-
-           # Find TRC with highest serial number with given base number
-           # and a validity period starting before verification time.
-           serial_nr = 1
-           for trc in trcs[isd].values():
-               if trc.id.base_nr != base_nr:
-                   continue
-               if trc.id.serial_nr > serial_nr and \
-               trc.validity.not_before <= verification_time:
-                   serial_nr = trc.id.serial_nr
-
-           candidate = trcs[(serial_nr, base_nr)]
-
-           # If the verification time is not inside the validity period,
-           # there is no valid set of trust anchors.
-           if not candidate.validity.contains(verification_time):
-               return set()
-
-           # If the grace period has passed, only the certificates in
-           # that TRC may be used as trust anchors.
-           if candidate.validity.not_before + candidate.grace_period \
-           < verification_time:
-               return collect_trust_anchors(candidate)
-
-           predecessor = trcs.get((serial_nr-1, base_nr))
-           if not predecessor or predecessor.validity.not_after < \
-           verification_time:
-               return collect_trust_anchors(candidate)
-
-           return collect_trust_anchors(candidate) | \
-           collect_trust_anchors(predecessor)
-
-
-       def collect_trust_anchors(trc: TRC) -> Set[RootCert]:
-           """
-           Args:
-               trc: A TRC from which the CP Root Certificates shall \
-               be extracted.
-
-           Returns:
-               The set of CP Root certificates acting as trust anchors.
-           """
-           roots = set()
-           for cert in trc.certificates:
-               if not cert.basic_constraints.ca:
-                   continue
-               roots.add(cert)
-           return roots
+   Note that any entity sending information secured by the Control Plane
+   PKI, such as control plane messages, MUST be able to provide all the
+   necessary trust material including certificates to verify said
+   information.  If any cryptographic material is missing in the
+   process, the relying party MUST query the originator of the message
+   for the missing material through the control plane API described in
+   [I-D.dekater-scion-controlplane], section "Distribution of
+   Cryptographic Material".  If it cannot be resolved, the verification
+   process fails.  For more details, see 4.2 "Signing and Verifying
+   Control Plane Messages" Section 4.2.
 
 3.5.  TRC Updates
 
@@ -2066,7 +2002,7 @@ Table of Contents
        Section 3.2.4) introduced by the latest TRC is still on-going,
        the root certificates in the second-to-latest TRC MUST also be
        included.  For a description on how to build the correct
-       collection of certificates, see Section 3.4.1.
+       collection of certificates, see Section 3.4.
 
    2.  If the signature metadata of the message contains the serial and
        base number of the latest TRC, the relying party MUST check that
@@ -2315,9 +2251,9 @@ Table of Contents
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
-              scion-controlplane-17, 2 April 2026,
+              scion-controlplane-18, 30 April 2026,
               <https://datatracker.ietf.org/doc/html/draft-dekater-
-              scion-controlplane-17>.
+              scion-controlplane-18>.
 
    [I-D.dekater-scion-dataplane]
               de Kater, C., Rustignoli, N., Hugly, J., and S. Hitz,
