@@ -126,19 +126,19 @@ SCION relies on three main components:
 
 ## Terminology
 
-**Control Plane PKI (CP-PKI)**: It is the public key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage trust root configurations (TRCs) and certificates.
+**Control Plane PKI (CP-PKI)**: It is the public key infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage Trust Root Configurations (TRCs) and certificates.
 
 **SCION Autonomous System (AS)**: A SCION Autonomous System is a network under a common administrative control. For example, the network of a SCION service provider, company, or university can constitute an AS. While functionally similar to a BGP AS, a SCION AS operates within an Isolation Domain (ISD), utilizes a different address scheme, and serves as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.
 
 **Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
-**Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
+**Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION Autonomous Systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
 
-**Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.
+**Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an Isolation Domain (ISD). TRCs also contain ISD-specific policies.
 
 **Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, authoritative ASes also start the announcement of a TRC update.
 
-**Base TRC**: A base TRC is a trust root configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. ISD operators create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
+**Base TRC**: A base TRC is a Trust Root Configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. ISD operators create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
 
 **TRC Signing Ceremony**: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.
 
@@ -252,7 +252,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~~
 {: #figure-1 title="Chain of trust within an ISD"}
 
-All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)).
+All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the signing ceremony ([](#initial-ceremony)).
 
 SCION ASes sign and verify control plane messages. Certain ASes have additional roles:
 
@@ -282,7 +282,7 @@ The output of the bootstrapping of trust ceremony, or the trust "function", are 
 
 # Certificate Specification {#cert-specs}
 
-There are three types of Control Plane (CP) certificates: root certificates, issuing CA certificates, and AS certificates. Together, they build a chain of trust that is anchored in the Trust Root Configuration (TRC) file of the respective Isolation Domain (ISD). Additionally, there are regular and sensitive voting certificates which define the keys to cast votes in a regular or sensitive TRC update.
+There are three types of control plane (CP) certificates: root certificates, issuing CA certificates, and AS certificates. Together, they build a chain of trust that is anchored in the Trust Root Configuration (TRC) file of the respective Isolation Domain (ISD). Additionally, there are regular and sensitive voting certificates which define the keys to cast votes in a regular or sensitive TRC update.
 
 All certificates in the Control Plane PKI are in X.509 v3 format {{RFC5280}}.
 
@@ -291,28 +291,28 @@ The trust is anchored in the TRC for each ISD. The trust root is axiomatic: All 
 
 ## Control Plane Root Certificate {#cp-root-cert}
 
-The private key of the Control Plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the Control Plane Root certificate is used to verify Control Plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.
+The private key of the control plane root certificate is used to sign control plane issuing CA certificates. Consequently, the public key of the control plane Root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.
 
-In X.509 terms, Control Plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the Control Plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed Control Plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the Control Plane root certificates as the starting point of an ISD's certificate verification path.
+In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the control plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed control plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the control plane root certificates as the starting point of an ISD's certificate verification path.
 
-The RECOMMENDED maximum validity period of a Control Plane root certificate is 5 years.
+The RECOMMENDED maximum validity period of a control plane root certificate is 5 years.
 
-**Note**: The TRC of each ISD contains a trusted set of Control Plane root certificates, and this set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [](#trc-specification).
+**Note**: The TRC of each ISD contains a trusted set of control plane root certificates, and this set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see [](#trc-specification).
 
 ## Control Plane Issuing CA Certificate
 
-The private key of the Control Plane issuing CA certificate is used to sign Control Plane AS certificates. Consequently, Control Plane issuing CA certificates holding the public key of the Control Plane CA are used to verify Control Plane AS certificates.
+The private key of the control plane issuing CA certificate is used to sign control plane AS certificates. Consequently, control plane issuing CA certificates holding the public key of the control plane CA are used to verify control plane AS certificates.
 
-The public key needed to verify the issuing CA certificate is in a Control Plane root certificate. Issuing CA certificates do not bundle the root certificate needed to verify them. In order to verify an issuing CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [](#signing-verifying-cp-messages)).
+The public key needed to verify the issuing CA certificate is in a control plane root certificate. Issuing CA certificates do not bundle the root certificate needed to verify them. In order to verify an issuing CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [](#signing-verifying-cp-messages)).
 
-The RECOMMENDED maximum validity period of a Control Plane issuing CA certificate is 15 days.
+The RECOMMENDED maximum validity period of a control plane issuing CA certificate is 15 days.
 This is much shorter than root certificates, which have a longer recommended maximum validity period, because they are part of the TRC of an ISD, which itself also has a longer recommended maximum validity (see {{table-2}}). This ensures that the TRC need not be updated all the time and is thus relatively stable.
 
 ## Control Plane AS Certificate
 
-SCION ASes sign control plane messages, such as Path Construction Beacons, with their AS private key. Consequently, Control Plane AS certificates holding the corresponding AS public key are required to verify control plane messages.
+SCION ASes sign control plane messages, such as Path Construction Beacons, with their AS private key. Consequently, control plane AS certificates holding the corresponding AS public key are required to verify control plane messages.
 
-In X.509 terms, Control Plane AS certificates are end entity certificates. That is, they cannot be used to verify other certificates.
+In X.509 terms, control plane AS certificates are end entity certificates. That is, they cannot be used to verify other certificates.
 
 The RECOMMENDED maximum validity period of a CP AS certificate is 3 days.
 
@@ -621,7 +621,7 @@ The settings of the `basicConstraints` extension differ for each SCION Control P
 | `pathLenConstraint`                | MUST be set to "1"    | MUST be set to "0" (1) | MUST NOT be included          | MUST NOT be included              |
 {: #table-6 title="basicConstraints extension - Specifications per certificate type"}
 
-(1) Control Plane CAs can only issue end-entity certificates.
+(1) control plane CAs can only issue end-entity certificates.
 
 
 
@@ -711,7 +711,7 @@ A predecessor TRC ceases to be active when the earliest of the following events 
 - the predecessor TRC reaches its expiration time (`notAfter`); or
 - a subsequent TRC update (i.e., the successor to the new TRC) is announced.
 
-In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod` SHOULD be greater than zero. The defined duration SHOULD provide sufficient overlap between the two TRCs to ensure uninterrupted operations within the ISD. If the grace period is too short, some Control Plane AS certificates may expire before the corresponding ASes can fetch an updated version from their CA.
+In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod` SHOULD be greater than zero. The defined duration SHOULD provide sufficient overlap between the two TRCs to ensure uninterrupted operations within the ISD. If the grace period is too short, some control plane AS certificates may expire before the corresponding ASes can fetch an updated version from their CA.
 
 
 ### `noTrustReset` {#notrustreset}
@@ -835,7 +835,7 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 
 ## Certification Path - Trust Anchor Pool
 
-The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. The Control Plane root certificate for a given ISD is distributed via the TRC.
+The certification path of a control plane AS certificate starts in a control plane root certificate. The control plane root certificate for a given ISD is distributed via the TRC.
 
 However, AS certificates and the corresponding issuing CA certificates are not part of the TRC, but are bundled into certificate chains and distributed separately from the corresponding TRC. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain. To be able to validate a certification path, each AS builds a collection of root certificates from the latest TRC of the relevant ISD.
 
@@ -972,10 +972,10 @@ A TRC update qualifies as a regular update if the following rules apply in regar
    - The voting quorum set in the `votingQuorum` field.
    - The core ASes specified in the `coreASes` field.
    - The authoritative ASes specified in the `authoritativeASes` field.
-   - The number of sensitive and regular voting certificates as well as Control Plane root certificates included in the `certificates` field and their distinguished names.
+   - The number of sensitive and regular voting certificates as well as control plane root certificates included in the `certificates` field and their distinguished names.
    - The set of sensitive voting certificates specified in the `certificates` field.
 - For every regular voting certificate that changes, the regular voting certificate in the predecessor TRC is part of the voters on the updated TRC. That is, for each changed regular voting certificate, an index in the `votes` field of the updated TRC MUST refer to the changed regular voting certificate in the predecessor TRC.
-- For every Control Plane root certificate that changes, the updated TRC MUST include a signature created with the private key belonging to the changed Control Plane root certificate (which is part of the predecessor TRC).
+- For every control plane root certificate that changes, the updated TRC MUST include a signature created with the private key belonging to the changed control plane root certificate (which is part of the predecessor TRC).
 - In order for a regular TRC update to be verifiable, all votes MUST be cast by *regular* voting certificates. That is, each index in the `votes` field of the regularly updated TRC MUST refer to a *regular* voting certificate in the `certificates` field of the predecessor TRC.
 
 
@@ -1162,7 +1162,7 @@ As described in [](#substitutes-to-revocation), there is no revocation in the Co
 
 The Control Plane PKI lays the foundation for the authentication procedures in SCION by providing each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control plane messages - every AS and endpoint can verify all control plane messages by following the certificate chain.
 
-The relying party needs to be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a path construction beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
+The relying party needs to be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a Path Construction Beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.
 
 As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of {{I-D.dekater-scion-controlplane}} for a more detailed description of DoS vulnerabilities of control plane messages.
 
@@ -1284,24 +1284,24 @@ END
 
 # Signing Ceremony Initial TRC {#initial-ceremony}
 
-A Signing Ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is RECOMMENDED to establish a procedure similar to the one described below:
+A signing ceremony is used to create the initial (first) Trust Root Configuration of an ISD. Each ISD may decide how to conduct this ceremony, but it is RECOMMENDED to establish a procedure similar to the one described below:
 
 
 ## Ceremony Participants
 
-The Signing Ceremony SHOULD include the following participants:
+The signing ceremony SHOULD include the following participants:
 
 - **Ceremony Administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.
 
 - **Voting AS Representatives** - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.
 
-- **Witness(es)** - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.
+- **Witness(es)** - individual(s) who have no active role in the signing ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.
 
-**Note:** The ISD members must decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
+**Note:** The ISD members must decide on the roles of the signing ceremony participants in advance of signing ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the signing ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
 
 ## Ceremony Preparations {#ceremonyprep}
 
-The participants agree in advance on the physical location of the Signing Ceremony, the devices that will be used, and MUST decide the ISD policy as follows:
+The participants agree in advance on the physical location of the signing ceremony, the devices that will be used, and MUST decide the ISD policy as follows:
 
 - ISD number - usually obtained from the SCION registry, see [](#id);
 - The description of the TRC, see [](#description);
@@ -1310,7 +1310,7 @@ The participants agree in advance on the physical location of the Signing Ceremo
 - Voting quorum for the TRC, see [](#quorum);
 - AS numbers of the Core ASes, see [](#core);
 - AS numbers of the Authoritative ASes, see [](#auth);
-- The list of Control Plane Root Certificates.
+- The list of control plane Root Certificates.
 
 Each representative of a Voting AS MUST also create the following before the ceremony:
 
@@ -1321,23 +1321,23 @@ In addition, each Certificate Authority MUST create a control plane root private
 
 The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.
 
-The Ceremony Administrator and Voting ASes MUST each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.
+The Ceremony Administrator and Voting ASes MUST each bring to the signing ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For voting ASes, the machine requires access to their own sensitive and regular voting private keys.
 
 The Ceremony Administrator MUST provide or be provided with a device to exchange data between the ceremony participants.
 
-The Signing Ceremony SHOULD include a procedure to verify that all devices are secure.
+The signing ceremony SHOULD include a procedure to verify that all devices are secure.
 
 
 ## Ceremony Phases {#ceremonyprocess}
 
-The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
+The number of voting ASes present at the signing ceremony must be equal to or larger than the specified voting quorum.
 
 The signing process has four phases of data sharing, led by the Ceremony Administrator who provides instructions to the other participants:
 
 
 ### Certificate Exchange {#phase1}
 
-All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the Control Plane root certificates.
+All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.
 
 Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives MUST NOT copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.
 
@@ -1375,7 +1375,7 @@ This phase concludes when all voting representatives have attached their signatu
 
 All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during phase [](#phase1). The Ceremony Administrator then shares the assembled TRC with all participants who MUST again inspect the signatures and verify them based on the certificates exchanged in phase [](#phase1).
 
-The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.
+The signing ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.
 
 
 # Change Log
