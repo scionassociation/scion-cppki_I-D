@@ -2095,6 +2095,11 @@ Table of Contents
    be able to quickly switch over to a backup CA to renew their
    certificates in time.
 
+   Furthermore, PKI operators need to ensure that the CAs maintain
+   accurate time.  Further considerations related to this aspect are
+   discussed in [I-D.dekater-scion-controlplane], section "Attacks on
+   Time Sources".
+
 5.2.  Operational Processes for ISD Governance
 
    An ISD is governed by voting ASes.  In existing deployments, voting
