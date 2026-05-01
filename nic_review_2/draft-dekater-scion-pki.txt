@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 1 November 2026                                         S. Hitz
+Expires: 2 November 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                           30 April 2026
+                                                              1 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 1 November 2026.
+   This Internet-Draft will expire on 2 November 2026.
 
 Copyright Notice
 
@@ -144,7 +144,7 @@ Table of Contents
      4.1.  Distribution of TRCs
        4.1.1.  Base TRC
        4.1.2.  TRC Update Discovery
-     4.2.   Signing and Verifying Control Plane Messages
+     4.2.  Signing and Verifying Control Plane Messages
        4.2.1.  Signing a Control Plane Message
        4.2.2.  Verifying a Control Plane Message
      4.3.  Issuing Control Plane AS Certificates
@@ -163,9 +163,9 @@ Table of Contents
    Appendix A.  Certificate Extensions in ASN.1 Syntax
    Appendix B.  TRC in ASN.1 Syntax
    Appendix C.  Signing Ceremony Initial TRC
-     C.1.   Ceremony Participants
+     C.1.  Ceremony Participants
      C.2.  Ceremony Preparations
-     C.3.   Ceremony Phases
+     C.3.  Ceremony Phases
        C.3.1.  Certificate Exchange
        C.3.2.  Generation of the TRC Payload
        C.3.3.  TRC Signing
@@ -356,7 +356,7 @@ Table of Contents
 
    The TRC also provides _trust agility_ - enabling users to select the
    trust roots used to initiate certificate validation.  This implies
-   that users are free to choose an ISD they believe maintains a
+   that users are free to choose an ISD they believe maintains an
    uncompromised set of trust roots.  ISD members can also decide
    whether to trust other ISDs and thus transparently define trust
    relationships between parts of the network.  The SCION trust model
@@ -707,7 +707,7 @@ Table of Contents
    for enough time for deployment.
    (3) A validity of 15 days with 8 days overlap between two issuing CA
    certificates is RECOMMENDED to enable the best possible operational
-   procedures when performing a issuing CA certificate rollover.
+   procedures when performing an issuing CA certificate rollover.
 
    Figure 2 shows the content of a base/initial TRC, and the
    relationship between a TRC and the five types of certificates.  The
@@ -974,7 +974,7 @@ Table of Contents
 
    Other attributes are not used.
 
-   If a relying party uses the certificate’s public key to verify the
+   If a relying party uses the certificate's public key to verify the
    signature of a control plane payload (digitalSignature attribute),
    the relying party MUST be able to trace back the private key used to
    sign the certificate.  This is done by referencing the ISD-AS and the
@@ -1275,7 +1275,7 @@ Table of Contents
    for this ISD.
 
    The following example illustrates how to specify the ID of the TRCs
-   in an TRC update chain for _ISD 15_. The IDs are given in a human-
+   in a TRC update chain for _ISD 15_. The IDs are given in a human-
    readable notation, where Bxx is the base number, and Sxx the serial
    number.
 
@@ -1548,7 +1548,7 @@ Table of Contents
          also Section 5.3 of [RFC5652]).
 
       -  The algorithm specified in the signatureAlgorithm field MUST be
-         one of the algorithms supported by SCION . For details, see
+         one of the algorithms supported by SCION.  For details, see
          signature Field - Additional Information (Section 2.6.3).
 
       -  The digestAlgorithm is determined by the algorithm specified in
@@ -1978,7 +1978,7 @@ Table of Contents
    *Note:* The first two mechanisms above only work when there is active
    communication between the relying party and the ISD in question.
 
-4.2.   Signing and Verifying Control Plane Messages
+4.2.  Signing and Verifying Control Plane Messages
 
    The main purpose of the Control Plane PKI is providing a mechanism to
    distribute and authenticate public keys that are used to verify
@@ -2177,7 +2177,7 @@ Table of Contents
    although the following compromises are potentially possible:
 
    *  At TRC level: The private root keys of the root certificates
-      contained in an TRC are used to sign issuing CA certificates.  If
+      contained in a TRC are used to sign issuing CA certificates.  If
       one of these private root keys is compromised, the adversary could
       issue illegitimate issuing CA certificates which may be used in
       further attacks.  To maliciously perform a TRC update, an attacker
@@ -2187,7 +2187,7 @@ Table of Contents
 
    *  At CA level: The private keys of an ISD's issuing CA certificates
       are used to sign the AS certificates and all ASes within an ISD
-      obtain certificates directly from the CAs.  If one of the CA’s
+      obtain certificates directly from the CAs.  If one of the CA's
       keys is compromised, an adversary could issue illegitimate AS
       certificates which may be used to impersonate ASes in further
       attacks.  A compromised or misbehaving CA could also refuse to
@@ -2211,10 +2211,10 @@ Table of Contents
       the TRC are compromised, the TRC MUST be updated as described in
       Section 3.5.  A trust reset is only required in the case the
       number of compromised keys at the same time is greater or equal
-      than the TRC's quorum (see Section 3.2.7), and a invalid update
+      than the TRC's quorum (see Section 3.2.7), and an invalid update
       has been produced and distributed in the network.
 
-   *  At CA level: If the private key related to a issuing CA
+   *  At CA level: If the private key related to an issuing CA
       certificate is compromised, the impacted CA AS MUST obtain a new
       CA certificate from the corresponding root AS.  Issuing CA
       certificates are generally short lived to limit the impact of
@@ -2335,8 +2335,8 @@ Table of Contents
               Networking", RFC 9217, DOI 10.17487/RFC9217, March 2022,
               <https://www.rfc-editor.org/rfc/rfc9217>.
 
-   [X.509]    "ITU-T X.509 (10/2016) | Information technology – Open
-              Systems Interconnection – The Directory: Public-key and
+   [X.509]    "ITU-T X.509 (10/2016) | Information technology - Open
+              Systems Interconnection - The Directory: Public-key and
               attribute certificate frameworks", January 2016,
               <https://handle.itu.int/11.1002/1000/13031>.
 
@@ -2471,7 +2471,7 @@ Appendix C.  Signing Ceremony Initial TRC
    ceremony, but it is RECOMMENDED to establish a procedure similar to
    the one described below:
 
-C.1.   Ceremony Participants
+C.1.  Ceremony Participants
 
    The Signing Ceremony SHOULD include the following participants:
 
@@ -2560,7 +2560,7 @@ C.2.  Ceremony Preparations
    The Signing Ceremony SHOULD include a procedure to verify that all
    devices are secure.
 
-C.3.   Ceremony Phases
+C.3.  Ceremony Phases
 
    The number of Voting ASes present at the Signing Ceremony must be
    equal to or larger than the specified voting quorum.

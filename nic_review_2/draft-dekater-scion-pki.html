@@ -1049,11 +1049,11 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">April 2026</td>
+<td class="right">May 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 1 November 2026</td>
+<td class="center">Expires 2 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1066,12 +1066,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-04-30" class="published">30 April 2026</time>
+<time datetime="2026-05-01" class="published">1 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-01">1 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-02">2 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1126,7 +1126,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 1 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 2 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1580,7 +1580,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <p id="section-1.3-7">To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of <strong>Isolation Domains</strong>. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane (<span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).<a href="#section-1.3-7" class="pilcrow">¶</a></p>
 <p id="section-1.3-8">An ISD is governed by one or multiple ASes, known as the <strong>voting ASes</strong>. Furthermore, each ISD has a set of ASes that form the ISD core, known as the <strong>core ASes</strong>. The set of core and voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the <strong>Trust Root Configuration</strong> (TRC), which is negotiated by the voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.<a href="#section-1.3-8" class="pilcrow">¶</a></p>
 <p id="section-1.3-9">Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.<a href="#section-1.3-9" class="pilcrow">¶</a></p>
-<p id="section-1.3-10">The TRC also provides <em>trust agility</em> - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-10" class="pilcrow">¶</a></p>
+<p id="section-1.3-10">The TRC also provides <em>trust agility</em> - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains an uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-10" class="pilcrow">¶</a></p>
 <p id="section-1.3-11">The need for trust agility also means that SCION does not by design provide IP prefix origin validation as provided by RPKI <span>[<a href="#RFC8210" class="cite xref">RFC8210</a>]</span>. RPKI's trust model is currently reliant on the trust roots provided by the five Regional Internet Registries, and therefore outside of the governance of an ISD.<a href="#section-1.3-11" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2011,7 +2011,7 @@ This is much shorter than root certificates, which have a longer recommended max
 </div>
 <p id="section-2.5-5">(1) Multiple signatures and certificates of each type <span class="bcp14">MAY</span> be included in a TRC.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
-(3) A validity of 15 days with 8 days overlap between two issuing CA certificates is <span class="bcp14">RECOMMENDED</span> to enable the best possible operational procedures when performing a issuing CA certificate rollover.<a href="#section-2.5-5" class="pilcrow">¶</a></p>
+(3) A validity of 15 days with 8 days overlap between two issuing CA certificates is <span class="bcp14">RECOMMENDED</span> to enable the best possible operational procedures when performing an issuing CA certificate rollover.<a href="#section-2.5-5" class="pilcrow">¶</a></p>
 <p id="section-2.5-6"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.<a href="#section-2.5-6" class="pilcrow">¶</a></p>
 <span id="name-trc-and-the-different-types"></span><div id="_figure-2">
 <figure id="figure-2">
@@ -2409,7 +2409,7 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
 </li>
           </ul>
 <p id="section-2.7.3-4">Other attributes are not used.<a href="#section-2.7.3-4" class="pilcrow">¶</a></p>
-<p id="section-2.7.3-5">If a relying party uses the certificate’s public key to verify the signature of a control plane payload (<code>digitalSignature</code> attribute), the relying party <span class="bcp14">MUST</span> be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the <code>subjectKeyIdentifier</code> extension). For more information about the <code>subjectKeyIdentifier</code> extension (see <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2</a>).<a href="#section-2.7.3-5" class="pilcrow">¶</a></p>
+<p id="section-2.7.3-5">If a relying party uses the certificate's public key to verify the signature of a control plane payload (<code>digitalSignature</code> attribute), the relying party <span class="bcp14">MUST</span> be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the <code>subjectKeyIdentifier</code> extension). For more information about the <code>subjectKeyIdentifier</code> extension (see <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2</a>).<a href="#section-2.7.3-5" class="pilcrow">¶</a></p>
 <p id="section-2.7.3-6">When present, this extension <span class="bcp14">SHOULD</span> be marked as critical.<a href="#section-2.7.3-6" class="pilcrow">¶</a></p>
 <p id="section-2.7.3-7">Each Control Plane PKI certificate type uses the public key differently, and consequently also specifies the attributes of the <code>keyUsage</code> extension differently. The next table shows the specifications per certificate type.<a href="#section-2.7.3-7" class="pilcrow">¶</a></p>
 <span id="name-keyusage-extension-specific"></span><div id="_table-4">
@@ -2780,7 +2780,7 @@ Its fields are contained in a <code>TRCPayload</code> sequence. This section des
 <p id="section-3.2.2-3">All numbers <span class="bcp14">MUST</span> be positive integers.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-4">A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and <span class="bcp14">MUST</span> have a serial number of 1 and a base number of 1. With every TRC update, the serial number <span class="bcp14">MUST</span> be incremented by one which facilitates the unique identification of the predecessor and successor TRC in an update chain.<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-5">If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain <span class="bcp14">SHOULD</span> be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.<a href="#section-3.2.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-6">The following example illustrates how to specify the ID of the TRCs in an TRC update chain for <em>ISD 15</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.2.2-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-6">The following example illustrates how to specify the ID of the TRCs in a TRC update chain for <em>ISD 15</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.2.2-6" class="pilcrow">¶</a></p>
 <span id="name-id-of-trcs-in-trc-update-ch"></span><div id="_table-7">
 <table class="center" id="table-6">
             <caption>
@@ -3032,7 +3032,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
                   <p id="section-3.3.1-2.4.2.1.1">The <code>version</code> field <span class="bcp14">MUST</span> be set to "1". This is because SCION uses the <code>IssuerAndSerialNumber</code> type of signer identifier (see also Section 5.3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>).<a href="#section-3.3.1-2.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-3.3.1-2.4.2.2">
-                  <p id="section-3.3.1-2.4.2.2.1">The algorithm specified in the <code>signatureAlgorithm</code> field <span class="bcp14">MUST</span> be one of the algorithms supported by SCION . For details, see <span><a href="#certsign" class="internal xref">signature Field - Additional Information</a> (<a href="#certsign" class="auto internal xref">Section 2.6.3</a>)</span>.<a href="#section-3.3.1-2.4.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-3.3.1-2.4.2.2.1">The algorithm specified in the <code>signatureAlgorithm</code> field <span class="bcp14">MUST</span> be one of the algorithms supported by SCION. For details, see <span><a href="#certsign" class="internal xref">signature Field - Additional Information</a> (<a href="#certsign" class="auto internal xref">Section 2.6.3</a>)</span>.<a href="#section-3.3.1-2.4.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-3.3.1-2.4.2.3">
                   <p id="section-3.3.1-2.4.2.3.1">The <code>digestAlgorithm</code> is determined by the algorithm specified in the <code>signatureAlgorithm</code> field.<a href="#section-3.3.1-2.4.2.3.1" class="pilcrow">¶</a></p>
@@ -3589,10 +3589,10 @@ ASes should then be able to quickly switch over to a backup CA to renew their ce
 <p id="section-6.1-1">In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-2.1">
-            <p id="section-6.1-2.1.1">At TRC level: The private root keys of the root certificates contained in an TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.1.1">At TRC level: The private root keys of the root certificates contained in a TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-2.2">
-            <p id="section-6.1-2.2.1">At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.2.1">At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA's keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-2.3">
             <p id="section-6.1-2.3.1">At AS level: Each AS within an ISD signs control plane messages with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control plane messages including Path Construction Beacons (PCBs). This means that the adversary can manipulate the PCBs and propagate them to neighboring ASes or register/store them as path segments.<a href="#section-6.1-2.3.1" class="pilcrow">¶</a></p>
@@ -3607,10 +3607,10 @@ ASes should then be able to quickly switch over to a backup CA to renew their ce
 As described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>, there is no revocation in the Control Plane PKI.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1.1-2.1">
-              <p id="section-6.1.1-2.1.1">At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC <span class="bcp14">MUST</span> be updated as described in <a href="#update" class="auto internal xref">Section 3.5</a>. A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and a invalid update has been produced and distributed in the network.<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-2.1.1">At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC <span class="bcp14">MUST</span> be updated as described in <a href="#update" class="auto internal xref">Section 3.5</a>. A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and an invalid update has been produced and distributed in the network.<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.2">
-              <p id="section-6.1.1-2.2.1">At CA level: If the private key related to a issuing CA certificate is compromised, the impacted CA AS <span class="bcp14">MUST</span> obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-2.2.1">At CA level: If the private key related to an issuing CA certificate is compromised, the impacted CA AS <span class="bcp14">MUST</span> obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.3">
               <p id="section-6.1.1-2.3.1">At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.<a href="#section-6.1.1-2.3.1" class="pilcrow">¶</a></p>
@@ -3712,7 +3712,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <dd class="break"></dd>
 <dt id="X.509">[X.509]</dt>
         <dd>
-<span class="refTitle">"ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"</span>, <time datetime="2016-01" class="refDate">January 2016</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/13031">https://handle.itu.int/11.1002/1000/13031</a>&gt;</span>. </dd>
+<span class="refTitle">"ITU-T X.509 (10/2016) | Information technology - Open Systems Interconnection - The Directory: Public-key and attribute certificate frameworks"</span>, <time datetime="2016-01" class="refDate">January 2016</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/13031">https://handle.itu.int/11.1002/1000/13031</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="X.680">[X.680]</dt>
         <dd>
