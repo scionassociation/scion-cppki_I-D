@@ -858,7 +858,7 @@ Two TRCs with byte equal payloads can be considered as equal because the TRC pay
 
 The certification path of a Control Plane AS certificate starts in a Control Plane root certificate. While root certificates for a given ISD are distributed via the TRC, AS and issuing CA certificates are distributed separately. This separation makes it possible to extend the validity period of the root certificate, and to update the corresponding TRC without having to modify the certificate chain.
 
-To validate a certification path, a relying party builds a collection of root certificates know as the trust anchor pool. Because TRC updates can introduce a grace period where multiple TRCs overlap, relying parties MUST execute the following steps to determine the correct trust anchor pool for a given verification time:
+To validate a certification path, a relying party builds a collection of root certificates known as the trust anchor pool. Because TRC updates can introduce a grace period where multiple TRCs overlap, relying parties MUST execute the following steps to determine the correct trust anchor pool for a given verification time:
 
 1. From the set of all available TRCs for the ISD, filter out TRCs whose validity start time (`notBefore` date) precedes the verification time.
 
