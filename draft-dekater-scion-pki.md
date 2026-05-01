@@ -860,7 +860,7 @@ The certification path of a Control Plane AS certificate starts in a Control Pla
 
 To validate a certification path, a relying party builds a collection of root certificates known as the trust anchor pool. Because TRC updates can introduce a grace period where multiple TRCs overlap, relying parties MUST execute the following steps to determine the correct trust anchor pool for a given verification time:
 
-1. From the set of all available TRCs for the ISD, filter out TRCs whose validity start time (`notBefore` date) precedes the verification time.
+1. From the set of all available TRCs for the ISD, keep only TRCs whose validity start time (`notBefore` date) is at or before the verification time.
 
 2. From the remaining TRCs, identify those with the highest base number, then select the TRC with the highest serial number.
 
