@@ -2479,7 +2479,7 @@ C.1.  Ceremony Participants
       the signing process, guiding the participants through the steps,
       and acting as an intermediary for sharing information.  The
       ceremony administrator is typically appointed by the ISD Manager
-      or by resolution of the Voting ASes.
+      or by resolution of the voting ASes.
 
    *  *Voting AS representatives* - individuals representing each voting
       AS who are able to create voting signatures on the TRC.  They are
@@ -2489,7 +2489,7 @@ C.1.  Ceremony Participants
    *  *Witness(es)* - individual(s) who have no active role in the
       signing ceremony but may stop the process and request more
       information if they feel its integrity may have been compromised.
-      The Witness(es) are typically appointed by resolution of the
+      The witness(es) are typically appointed by resolution of the
       voting ASes.
 
    *Note:* The ISD members must decide on the roles of the signing
@@ -2525,7 +2525,7 @@ C.2.  Ceremony Preparations
 
    *  AS numbers of the authoritative ASes, see Section 3.2.9;
 
-   *  The list of control plane Root Certificates.
+   *  The list of control plane root certificates.
 
    Each representative of a voting AS MUST also create the following
    before the ceremony:
