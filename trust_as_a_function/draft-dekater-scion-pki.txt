@@ -476,7 +476,7 @@ Table of Contents
    binding between name and public key explicit; and (2) the binding is
    signed to prove possession of the corresponding private key.  The
    public keys of Voting AS certificates must therefore be explicitly
-   verified during the Signing Ceremony (Appendix C), that is used to
+   verified during the Signing Ceremony (Appendix C) that is used to
    bootstrap trust for the initial TRC.
 
    SCION ASes sign and verify control plane messages.  Certain ASes have
