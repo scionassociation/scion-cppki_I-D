@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-04-28T00:47:12.722571+00:00",
+  "timestamp": "2026-05-03T00:49:19.864291+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1350,7 +1350,7 @@
       "id": "I_kwDOH386tM7oR2bi",
       "title": "Time: mention CAs should keep time in sync",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/121",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1359,8 +1359,8 @@
       "labels": [],
       "body": "In https://github.com/scionassociation/scion-cp_I-D/issues/204 I reviewed time dependencies. It is critical that CAs issue certs with the right validity, therefore CAs must have a reliable time. We should mention it somewhere in the draft.\n\nThis could be in 4.3.  Creating a New Control Plane AS Certificate\n ",
       "createdAt": "2026-02-04T15:03:38Z",
-      "updatedAt": "2026-02-04T15:05:53Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-01T14:08:36Z",
+      "closedAt": "2026-05-01T14:08:36Z",
       "comments": []
     },
     {
@@ -1376,9 +1376,9 @@
         "knmeynell"
       ],
       "labels": [],
-      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [ ] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [ ] #128\n- [ ] > The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?\n- [x] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] 5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] Voting ASes: do they need to partecipate in routing? (CAs do I think)\n- [ ] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [ ] Reduce use of passive tense and be more precise about subjects\n- [ ] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
+      "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [x] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [x] #128\n- [ ] > ~The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?~\n- [x] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] ~5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?~\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] ~Voting ASes: do they need to partecipate in routing? (CAs do I think)~\n- [x] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [x] Reduce use of passive tense and be more precise about subjects\n- [x] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-04-27T08:01:57Z",
+      "updatedAt": "2026-05-01T14:45:27Z",
       "closedAt": null,
       "comments": []
     },
@@ -1387,15 +1387,15 @@
       "id": "I_kwDOH386tM7o5U1X",
       "title": "1.6. Trust as a Function --> move close to TRC ceremony?",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/124",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-02-06T15:47:45Z",
-      "updatedAt": "2026-02-06T15:47:45Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-01T14:45:26Z",
+      "closedAt": "2026-05-01T14:45:26Z",
       "comments": []
     },
     {
@@ -1458,15 +1458,15 @@
       "id": "I_kwDOH386tM7-hUsW",
       "title": "3.1.4.1. TRC Selection For Trust Anchor Pool -> do we need python pseudo-code?",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/128",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Can we do something better than having all this code? \n\n```\n~~~~python\n    def select_trust_anchors(trcs: Dict[(int,int), TRC], \\\n    verification_time: int) -> Set[RootCert]:\n        \"\"\"\n        Args:\n            trcs: The dictionary mapping (serial number, \\\n            base number) to the TRC for a given ISD.\n            verification_time: The time of verification.\n\n        Returns:\n            The set of CP Root certificates acting as trust anchors.\n        \"\"\"\n        # Find highest base number that has a TRC with validity\n        # period starting before verification time.\n        base_nr = 1\n        for trc in trcs.values()\n            if trc.id.base_nr > base_nr and trc.validity.not_before \\\n            <= verification_time:\n                base_nr = trc.id.base_nr\n\n        # Find TRC with highest serial number with given base number\n        # and a validity period starting before verification time.\n        serial_nr = 1\n        for trc in trcs[isd].values():\n            if trc.id.base_nr != base_nr:\n                continue\n            if trc.id.serial_nr > serial_nr and \\\n            trc.validity.not_before <= verification_time:\n                serial_nr = trc.id.serial_nr\n\n        candidate = trcs[(serial_nr, base_nr)]\n\n        # If the verification time is not inside the validity period,\n        # there is no valid set of trust anchors.\n        if not candidate.validity.contains(verification_time):\n            return set()\n\n        # If the grace period has passed, only the certificates in\n        # that TRC may be used as trust anchors.\n        if candidate.validity.not_before + candidate.grace_period \\\n        < verification_time:\n            return collect_trust_anchors(candidate)\n\n        predecessor = trcs.get((serial_nr-1, base_nr))\n        if not predecessor or predecessor.validity.not_after < \\\n        verification_time:\n            return collect_trust_anchors(candidate)\n\n        return collect_trust_anchors(candidate) | \\\n        collect_trust_anchors(predecessor)\n\n\n    def collect_trust_anchors(trc: TRC) -> Set[RootCert]:\n        \"\"\"\n        Args:\n            trc: A TRC from which the CP Root Certificates shall \\\n            be extracted.\n\n        Returns:\n            The set of CP Root certificates acting as trust anchors.\n        \"\"\"\n        roots = set()\n        for cert in trc.certificates:\n            if not cert.basic_constraints.ca:\n                continue\n            roots.add(cert)\n        return roots\n```",
       "createdAt": "2026-04-15T16:03:25Z",
-      "updatedAt": "2026-04-15T16:07:39Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-01T13:57:02Z",
+      "closedAt": "2026-05-01T13:57:02Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1505,11 +1505,44 @@
         "nicorusti"
       ],
       "labels": [],
-      "body": "- [x] Change the two SHOULD to MUST in this line in Table? \n`pathLenConstraint | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"`\nWe use SHOULD as per RFC 5280, but our code is enforcing this (see  Leftover from https://github.com/scionassociation/scion-cppki_I-D/pull/123#discussion_r3088049508)\n-  [x] Check that all pending comments in https://github.com/scionassociation/scion-cppki_I-D/pull/123 are addressed\n- [ ] Do we need normative language in the appendix (ceremony)? \nAppendixes are often considered informative unless explicitly stated otherwise. If the signing ceremony procedure is a requirement for a valid SCION deployment, having normative language there is fine, but it should be clearly stated at the beginning of the appendix if the entire process is normative.\n",
+      "body": "- [x] Change the two SHOULD to MUST in this line in Table? \n`pathLenConstraint | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"`\nWe use SHOULD as per RFC 5280, but our code is enforcing this (see  Leftover from https://github.com/scionassociation/scion-cppki_I-D/pull/123#discussion_r3088049508)\n-  [x] Check that all pending comments in https://github.com/scionassociation/scion-cppki_I-D/pull/123 are addressed\n- [x] Do we need normative language in the appendix (ceremony)? \nAppendixes are often considered informative unless explicitly stated otherwise. If the signing ceremony procedure is a requirement for a valid SCION deployment, having normative language there is fine, but it should be clearly stated at the beginning of the appendix if the entire process is normative.\n",
       "createdAt": "2026-04-16T14:35:41Z",
-      "updatedAt": "2026-04-24T13:05:25Z",
+      "updatedAt": "2026-05-01T14:24:37Z",
       "closedAt": null,
       "comments": []
+    },
+    {
+      "number": 136,
+      "id": "I_kwDOH386tM8AAAABA6wrYA",
+      "title": "Language tags in TRC description (RFC 5198) and UTF-8 normalization",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/136",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti"
+      ],
+      "labels": [],
+      "body": "From Alexey Melnikov: \n\n3.2.10. description\n\n    The description field contains a UTF-8 encoded string that describes\n    the ISD. It SHOULD NOT be empty. The description MUST be in English\n    and MAY additionally contain information in other languages.\n\nIf information in other languages is conveyed, it should be tagged with language tags in some form, see RFC 5646.\n\nAlso, if one suggests using UTF-8 for human readable text, one should generally use (reference) something like RFC 5198.",
+      "createdAt": "2026-04-30T08:33:07Z",
+      "updatedAt": "2026-05-01T08:12:43Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Key questions here are two: \n1.  Do we want to prescribe that UTF-8 text MUST be normalized according to [RFC5198](https://www.rfc-editor.org/rfc/rfc5198.html#section-3)? \nThis essentially ensures that text appearing identical to the human eye is also identical on a byte level, since UTF-8 has several identical looking characters. This could be important for crypto operations, but I'm not sure we ever use the description field for anything.   According to gemini, in scionproto we use `encoding/asn1` which does not normalize text according to RFC5198. \n2. Do we want to encourage (SHOULD) use of language tags according to RFC5646 ?  We don't use them.\nOlder versions of the SSFN TRC did not use language tags and were NOT in English, ut text was already UTF-8 encoded: \ne.g.\nSSHN has various languages, but without tags:\n```\n\u201cDie ISD 72 bildet die Grundlage f\u00fcr den HVR, den HIN Vertrauensraum. Der HVR ist ein f\u00fcr den Gesundheitsmarkt Schweiz bereitgestelltes, eigenst\u00e4ndiges Kommunikationsnetzwerk, welches Gesundheitsfachpersonen, administrativen und technischen Hilfspersonen und deren Einrichtungen, medizinische und administrative Applikations- / Serviceanbieter /-Provider des Gesundheits- und Sozialwesens sowie Kostentr\u00e4gern (\u201cHVR Nutzer\u201d) erlaubt, unter Reduktion der Cyberrisiken des Internet in einem gesch\u00fctzten System sicher untereinander zu kommunizieren, ohne dass diese bei demselben Telekommunikationsanbieter angeschlossen sein m\u00fcssen. L'ISD 72 constitue la base du HVR, l\u2019Espace de Confiance HIN. Le HVR est un r\u00e9seau de communication autonome mis \u00e0 la disposition du march\u00e9 suisse de la sant\u00e9. Il permet aux professionnels de la sant\u00e9, aux auxiliaires administratifs et techniques et \u00e0 leurs institutions, aux fournisseurs d'applications / de services / d'administration m\u00e9dicaux et sociaux ainsi qu'aux organismes payeurs (\"utilisateurs de l\u2019HVR\") de communiquer entre eux de mani\u00e8re s\u00e9curis\u00e9e dans un syst\u00e8me prot\u00e9g\u00e9, en r\u00e9duisant les cyber-risques d'Internet, sans devoir \u00eatre raccord\u00e9s au m\u00eame fournisseur de t\u00e9l\u00e9communications. L'ISD 72 costituisce la base della HVR, lo spazio della fiducia HIN. L\u2019HVR \u00e8 una rete di comunicazione indipendente messa a disposizione del mercato sanitario svizzero, che consente agli operatori sanitari, al personale amministrativo e di supporto tecnico e alle loro strutture, ai fornitori di applicazioni/servizi medici e amministrativi del settore sanitario e sociale, nonch\u00e9 ai sostenitori dei costi (\"utenti HVR\") di comunicare in modo sicuro tra loro in un sistema protetto, riducendo i rischi informatici di Internet, senza dover essere collegati allo stesso fornitore di telecomunicazioni. ISD 72 forms the basis of the HVR, the HIN Trust Space. The HVR is a stand-alone communication network provided for the Swiss healthcare market, which allows healthcare professionals, administrative and technical support staff and their facilities, medical and administrative application/service providers/providers of the healthcare and social sector as well as payers (\"HVR Users\") to communicate securely with each other in a protected system while reducing the cyber risks of the Internet, without having to be connected to the same telecommunications provider. \u201d\n```\n\n\nP.S. scionproto also seems to mention UTF-8 encoding [here](https://github.com/scionproto/scion/blob/368ef5973c7909d126902dc626c0530a0573e71d/pkg/scrypto/cppki/trc_asn1.go#L50), but I'm not sure if this is actually used: \n```\nDescription       string          `asn1:\"description,utf8\"`\n```\n\n[Slack discussion](https://scionproto.slack.com/archives/C8ADA9CEP/p1777543129435299)\n\n ",
+          "createdAt": "2026-04-30T09:38:47Z",
+          "updatedAt": "2026-04-30T10:03:24Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Discussion with reviewer: \n\n>> - Language tags: they would help, we already have some TRCs containing multi-language text, but without tags. They could be a SHOULD in the draft. Future TRCs could be aligned in the next TRC update.\n\n> Ok. If you add a SHOULD you should also describe where/how the language tag is included. I assume you don't want to modify the ASN.1 structure to add a new field for it?\n\n>> - RFC 5198: are you talking, for example, about normalization (section 3 of RFC5918)?\n\n>That and also that RFC 5198 restricts valid sequences of characters. So a recipient can potentially reject UTF-8 which doesn't conform to a more restricted subset specified in RFC 5198.",
+          "createdAt": "2026-05-01T08:12:43Z",
+          "updatedAt": "2026-05-01T08:12:43Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -7478,24 +7511,26 @@
       "id": "PR_kwDOH386tM7Ta9YB",
       "title": "TRC selection: remove python code",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/133",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #128\r\n\r\n-  [ ] Evaluate if we can remove sub-heading [3.4.1. ](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#section-3.4.1)[TRC Selection For Trust Anchor Pool](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#name-trc-selection-for-trust-anc), maybe this can just be a single paragraph",
+      "body": "Resolves #128\r\n\r\n-  [x] Evaluate if we can remove sub-heading [3.4.1. ](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#section-3.4.1)[TRC Selection For Trust Anchor Pool](https://scionassociation.github.io/scion-cppki_I-D/asn-1/draft-dekater-scion-pki.html#name-trc-selection-for-trust-anc), maybe this can just be a single paragraph\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/trc_selection/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-04-17T19:05:03Z",
-      "updatedAt": "2026-04-27T10:15:17Z",
+      "updatedAt": "2026-05-01T13:57:21Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "a90a0001c8962587cd34fc8b9810f6cf040ebd74",
+      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "trc_selection",
-      "headRefOid": "211c0d9ead6cc32a50b60f69b3cb914f8e23f1a1",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "d7679a3f845ae16eea35eb57d603e1343e01b3f2",
+      "closedAt": "2026-05-01T13:57:01Z",
+      "mergedAt": "2026-05-01T13:57:01Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "81df16e6585cc82ba929b82e9a3480620ad801e5"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -7503,6 +7538,13 @@
           "body": "[211c0d9](https://github.com/scionassociation/scion-cppki_I-D/pull/133/commits/211c0d9ead6cc32a50b60f69b3cb914f8e23f1a1) is just an AI starting point. @katyatitkova , @romshark could one of you help translating this python block into just a text section ? ",
           "createdAt": "2026-04-17T19:05:45Z",
           "updatedAt": "2026-04-17T19:05:45Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@romshark @knmeynell I completely removed the pseudocode section. Does the new section seem correct and accurate to you? \r\n",
+          "createdAt": "2026-04-30T15:58:33Z",
+          "updatedAt": "2026-04-30T15:58:33Z"
         }
       ],
       "reviews": [
@@ -7512,7 +7554,7 @@
             "abbreviatedOid": "211c0d9"
           },
           "author": "romshark",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-04-27T10:13:56Z",
@@ -7532,7 +7574,7 @@
             "abbreviatedOid": "211c0d9"
           },
           "author": "romshark",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-04-27T10:15:17Z",
@@ -7543,6 +7585,119 @@
               "body": "Missing space here?\n\n```suggestion\n   If the Candidate TRC is still within its grace period, attempt to retrieve the Predecessor TRC (the TRC with the same `baseNumber` and a `serialNumber` exactly one less than the Candidate TRC).\n```",
               "createdAt": "2026-04-27T10:15:17Z",
               "updatedAt": "2026-04-27T10:15:17Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM76wUg0",
+          "commit": {
+            "abbreviatedOid": "3138803"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-04-30T16:51:21Z",
+          "updatedAt": "2026-04-30T16:51:21Z",
+          "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM77AFQi",
+          "commit": {
+            "abbreviatedOid": "3138803"
+          },
+          "author": "romshark",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-01T12:23:29Z",
+          "updatedAt": "2026-05-01T12:23:29Z",
+          "comments": [
+            {
+              "originalPosition": 92,
+              "body": "```suggestion\nTo validate a certification path, a relying party builds a collection of root certificates known as the trust anchor pool. Because TRC updates can introduce a grace period where multiple TRCs overlap, relying parties MUST execute the following steps to determine the correct trust anchor pool for a given verification time:\n```\nTypo?",
+              "createdAt": "2026-05-01T12:23:29Z",
+              "updatedAt": "2026-05-01T12:23:29Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM77AI6N",
+          "commit": {
+            "abbreviatedOid": "3138803"
+          },
+          "author": "romshark",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-01T12:30:23Z",
+          "updatedAt": "2026-05-01T12:30:23Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\n1. From the set of all available TRCs for the ISD, keep only TRCs whose validity start time (`notBefore` date) is at or before the verification time.\n```\n\nIIUC, this effectively says \"_remove_ (filter out) TRCs whose notBefore _precedes_ the verification time\", but those are the TRCs that became eligible for selection, no?\n\nOr maybe it's \"filter out\" that's ambiguous and potentially misleading.\n",
+              "createdAt": "2026-05-01T12:30:23Z",
+              "updatedAt": "2026-05-01T12:32:58Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM77BNkj",
+          "commit": {
+            "abbreviatedOid": "6521767"
+          },
+          "author": "romshark",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-01T13:50:38Z",
+          "updatedAt": "2026-05-01T13:50:39Z",
+          "comments": [
+            {
+              "originalPosition": 94,
+              "body": "```suggestion\n1. From the set of all available TRCs for the ISD, keep only TRCs whose validity start time (`notBefore` date) is at or before the verification time. If no such TRC exists, the process terminates unsuccessfully.\n```",
+              "createdAt": "2026-05-01T13:50:38Z",
+              "updatedAt": "2026-05-01T13:50:39Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM77BN48",
+          "commit": {
+            "abbreviatedOid": "6521767"
+          },
+          "author": "romshark",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-01T13:51:02Z",
+          "updatedAt": "2026-05-01T13:51:03Z",
+          "comments": [
+            {
+              "originalPosition": 96,
+              "body": "```suggestion\n2. From the selected TRCs, identify those with the highest base number (`baseNumber`), then select the TRC among them with the highest serial number (`serialNumber`).\n```",
+              "createdAt": "2026-05-01T13:51:02Z",
+              "updatedAt": "2026-05-01T13:51:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM77BOLs",
+          "commit": {
+            "abbreviatedOid": "6521767"
+          },
+          "author": "romshark",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-01T13:51:20Z",
+          "updatedAt": "2026-05-01T13:51:20Z",
+          "comments": [
+            {
+              "originalPosition": 98,
+              "body": "```suggestion\n3. If the verification time is strictly greater than the selected TRC's `notAfter` date then the process terminates unsuccessfully.\n```",
+              "createdAt": "2026-05-01T13:51:20Z",
+              "updatedAt": "2026-05-01T13:51:20Z"
             }
           ]
         }
@@ -7586,15 +7741,15 @@
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #132 \r\n ...\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt)",
+      "body": "Resolves #132 \r\nResolves #122 \r\n ...\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-04-24T10:31:59Z",
-      "updatedAt": "2026-04-24T16:30:07Z",
+      "updatedAt": "2026-05-01T14:48:01Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
+      "baseRefOid": "55fbfe25553b0e56be8651461f42ffe86f0fdbd3",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "nic_review_2",
-      "headRefOid": "e46f353490ef1a331652c33c248502511365e937",
+      "headRefOid": "5dd8c31eacbd00a09e2423a39156bf06383669b2",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -7638,6 +7793,293 @@
               "body": "> A validity of 15 days with 4 days overlap\n\nWhat we do in practice is to create a new intermediate CA every Monday at the same time, hence the overlap is 8(?) days.\n",
               "createdAt": "2026-04-24T16:30:07Z",
               "updatedAt": "2026-04-24T16:30:07Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM74lCXM",
+          "commit": {
+            "abbreviatedOid": "29e30ec"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "@oncilla could you look at some of my comments, and eventually at the overall diff? \n\n",
+          "createdAt": "2026-04-24T12:36:13Z",
+          "updatedAt": "2026-04-30T16:42:57Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "> if these attributes are set and support for them is missing, implementations SHOULD error out. \n\nWhat does \"error out\" mean? Reject the certificate? If so, this clashes with the  earlier MAY: an implementation would reject a cert with an attribute that we say is optional.\n\nP.S.: This wording was introduced in a very early [draft version](https://github.com/scionassociation/scion-cppki_I-D/commit/6db6cc71211767996eac23814968bef0d3368d03#diff-46a3cbbb8fca7cc808ffd598a474834aeef4be1c1364b16a354475c27c499dacL603) and it comes straight from [docs](https://docs.scion.org/en/latest/cryptography/certificates.html#authority-key-identifier-extension), I believe we should revise it. ",
+              "createdAt": "2026-04-24T12:36:13Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 90,
+              "body": "As far as I understand, using `authorityCertIssuer` & `authorityCertSerialNumber` is not supported in scionproto. If I'm right, then the old wording was incorrect. I therefore reworded to mention that implementations MUST only use `keyIdentifier` \nCorrect @oncilla? \n\nI realized this section was weird because of this old wording:\n\n> if these attributes are set and support for them is missing, implementations SHOULD error out. \n\nWhat does \"error out\" mean? Reject the certificate? If so, this clashes with the  earlier MAY: an implementation would reject a cert with an attribute that we say is optional.\n\nP.S.: This wording was introduced in a very early [draft version](https://github.com/scionassociation/scion-cppki_I-D/commit/6db6cc71211767996eac23814968bef0d3368d03#diff-46a3cbbb8fca7cc808ffd598a474834aeef4be1c1364b16a354475c27c499dacL603) and it comes straight from [docs](https://docs.scion.org/en/latest/cryptography/certificates.html#authority-key-identifier-extension), this is why I think we have to change wording. ",
+              "createdAt": "2026-04-24T12:59:36Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 1,
+              "body": "What is a voting-only certificate?  And these two sentences seem conflicting:\n> Voting AS and issuing CA certificates MUST include the `ISD-AS number` attribute\n\n> Voting-only certificates are not required to include the `ISD-AS number` attribute \n\nThe first sentence was introduced [here](https://github.com/scionassociation/scion-cppki_I-D/commit/a4fa4628a2b9eadbc0e88053431dc884c0ad86a6), specifically in https://github.com/scionassociation/scion-cppki_I-D/pull/108/changes/b4624299438c05c18c86e5f6748738691acf7e56 ",
+              "createdAt": "2026-04-24T13:22:59Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 1,
+              "body": "This topic was discussed in [Slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1740057439410749)",
+              "createdAt": "2026-04-24T13:55:20Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 1,
+              "body": "I reworded this section following Dominik's clarification.",
+              "createdAt": "2026-04-24T14:36:11Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "This sentence is meant to explain the reason why you MUST include the ISD-AS attribute sometimes. The reason is to let relying parties discover where to go and fetch the right certificate (therefore avoiding circular dependencies with cryptography). I agree that the old wording is weird. How about something like: \r\n```suggestion\r\nThe presence of this attribute allows relying parties to identify the AS that operates the issuing CA, facilitating the discovery and retrieval of the intermediate CA certificate during chain validation.\r\n```\r\n\r\nLet me know what you think @oncilla. I don't think this is absolutely necessary, so if you  are still not convinced, I'll drop the sentence. ",
+              "createdAt": "2026-04-30T14:36:04Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 68,
+              "body": "Ok changed to 8 days [f52cbdb](https://github.com/scionassociation/scion-cppki_I-D/pull/135/commits/f52cbdb3fff6e46cf86d3363a3b67bb092c04d49)",
+              "createdAt": "2026-04-30T14:38:00Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            },
+            {
+              "originalPosition": 128,
+              "body": "I feel this was not clear in the earlier text.  @oncilla Looks good?",
+              "createdAt": "2026-04-30T16:10:02Z",
+              "updatedAt": "2026-04-30T16:42:57Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM76-wTb",
+          "commit": {
+            "abbreviatedOid": "29e30ec"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-01T09:48:21Z",
+          "updatedAt": "2026-05-01T09:48:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 137,
+      "id": "PR_kwDOH386tM7XDXKR",
+      "title": "TRC description: mandate normalization and recommend tags",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/137",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)",
+      "createdAt": "2026-04-30T10:02:46Z",
+      "updatedAt": "2026-05-01T14:11:57Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "description_encoding",
+      "headRefOid": "3f857b77f0fde839bc4d912acb9ec962c0b8a501",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 138,
+      "id": "PR_kwDOH386tM7Xa0rW",
+      "title": "Draftforge pass",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/138",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Based on #122 \r\n\r\nThis PR tries to make capitalization consistent based on suggestions by https://draftforge.ietf.org\r\n\r\n\r\nDiff [with Nic](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/draftforge_pass/draft-dekater-scion-pki.txt)\r\n\r\n",
+      "createdAt": "2026-05-01T12:46:54Z",
+      "updatedAt": "2026-05-02T14:16:59Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "nic_review_2",
+      "baseRefOid": "5dd8c31eacbd00a09e2423a39156bf06383669b2",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "draftforge_pass",
+      "headRefOid": "0a6ac38ba06b60da86c32ad89d7f1a67fa2c3ac7",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM77PSBA",
+          "commit": {
+            "abbreviatedOid": "0a6ac38"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-05-02T14:11:32Z",
+          "updatedAt": "2026-05-02T14:16:59Z",
+          "comments": [
+            {
+              "originalPosition": 69,
+              "body": "I'd leave it capitalised. Whilst not strictly necessary (in English), it's a technical document and it's specifically referencing a process documented elsewhere in the document. ",
+              "createdAt": "2026-05-02T14:11:33Z",
+              "updatedAt": "2026-05-02T14:17:21Z"
+            },
+            {
+              "originalPosition": 289,
+              "body": "IMO, Ceremony Administrator should remain capitalised as it's a title/role. ",
+              "createdAt": "2026-05-02T14:14:49Z",
+              "updatedAt": "2026-05-02T14:16:59Z"
+            },
+            {
+              "originalPosition": 295,
+              "body": "Again, Witnesses are a specific role in the Signing Ceremony (as opposed to random people witnessing a crime).",
+              "createdAt": "2026-05-02T14:16:14Z",
+              "updatedAt": "2026-05-02T14:16:59Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 139,
+      "id": "PR_kwDOH386tM7XbeOt",
+      "title": "Clarify dependency on time",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/139",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #121 \r\n",
+      "createdAt": "2026-05-01T13:32:24Z",
+      "updatedAt": "2026-05-01T14:08:48Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "time_sync",
+      "headRefOid": "b8f075b7ddaadb664cc6f5e3832ddbc3648b5e01",
+      "closedAt": "2026-05-01T14:08:35Z",
+      "mergedAt": "2026-05-01T14:08:35Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "137da5050483bfa581093dba6e9daa87b5951bd6"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@knmeynell this one you can merge directly if it works for you",
+          "createdAt": "2026-05-01T13:33:12Z",
+          "updatedAt": "2026-05-01T13:33:12Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM77Bdi9",
+          "commit": {
+            "abbreviatedOid": "b8f075b"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-01T14:08:27Z",
+          "updatedAt": "2026-05-01T14:08:27Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 140,
+      "id": "PR_kwDOH386tM7Xbvus",
+      "title": "remove redundant trust as a function section",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/140",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #124 ",
+      "createdAt": "2026-05-01T13:51:50Z",
+      "updatedAt": "2026-05-01T14:45:39Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "trust_as_a_function",
+      "headRefOid": "b5e8c693723fdbc4aa96d108112f6297fb787872",
+      "closedAt": "2026-05-01T14:45:25Z",
+      "mergedAt": "2026-05-01T14:45:25Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "55fbfe25553b0e56be8651461f42ffe86f0fdbd3"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@knmeynell feel free to merge of text is ok",
+          "createdAt": "2026-05-01T14:26:23Z",
+          "updatedAt": "2026-05-01T14:26:23Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM77BcsC",
+          "commit": {
+            "abbreviatedOid": "7a48669"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-05-01T14:07:25Z",
+          "updatedAt": "2026-05-01T14:07:54Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "I don't think a comma is needed here. \n\nThe public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)) that is used to bootstrap trust for the initial TRC.\n\n",
+              "createdAt": "2026-05-01T14:07:25Z",
+              "updatedAt": "2026-05-01T14:07:54Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM77Bs1b",
+          "commit": {
+            "abbreviatedOid": "7a48669"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-01T14:25:06Z",
+          "updatedAt": "2026-05-01T14:25:07Z",
+          "comments": [
+            {
+              "originalPosition": 13,
+              "body": "```suggestion\r\nAll certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)) that is used to bootstrap trust for the initial TRC.\r\n```",
+              "createdAt": "2026-05-01T14:25:06Z",
+              "updatedAt": "2026-05-01T14:25:07Z"
             }
           ]
         }
