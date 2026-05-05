@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-03T00:49:19.864291+00:00",
+  "timestamp": "2026-05-05T00:44:21.562894+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -7911,7 +7911,7 @@
       "labels": [],
       "body": "Based on #122 \r\n\r\nThis PR tries to make capitalization consistent based on suggestions by https://draftforge.ietf.org\r\n\r\n\r\nDiff [with Nic](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/draftforge_pass/draft-dekater-scion-pki.txt)\r\n\r\n",
       "createdAt": "2026-05-01T12:46:54Z",
-      "updatedAt": "2026-05-02T14:16:59Z",
+      "updatedAt": "2026-05-04T08:20:45Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "nic_review_2",
       "baseRefOid": "5dd8c31eacbd00a09e2423a39156bf06383669b2",
@@ -7953,6 +7953,26 @@
               "body": "Again, Witnesses are a specific role in the Signing Ceremony (as opposed to random people witnessing a crime).",
               "createdAt": "2026-05-02T14:16:14Z",
               "updatedAt": "2026-05-02T14:16:59Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM77cAmm",
+          "commit": {
+            "abbreviatedOid": "0a6ac38"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-04T08:20:45Z",
+          "updatedAt": "2026-05-04T08:20:45Z",
+          "comments": [
+            {
+              "originalPosition": 289,
+              "body": "Through the draft there were many other roles that were not capitalized or capitalized inconsistently. Only the appendix used capitalizations. This is why I removed it.\r\nI only left things that are abbreviated capitalized.",
+              "createdAt": "2026-05-04T08:20:45Z",
+              "updatedAt": "2026-05-04T08:20:45Z"
             }
           ]
         }
