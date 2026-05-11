@@ -132,7 +132,7 @@ SCION relies on three main components:
 
 **Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
-**Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION autonomous systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
+**Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION Autonomous Systems (ASes) called core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
 
 **Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an isolation domain (ISD). TRCs also contain ISD-specific policies.
 
@@ -258,7 +258,7 @@ All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}
 SCION ASes sign and verify control plane messages. Certain ASes have additional roles:
 
 - **Core ASes**: They are a distinct set of ASes in the SCION Control Plane. For each ISD, the core ASes are listed in the TRC and each core AS has links to the other core ASes (in the same or in different ISDs).
-- **Certification authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
+- **Certification Authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
 - **Voting ASes**: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "voting ASes".
 - **Authoritative ASes**: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.
 
@@ -288,8 +288,7 @@ The private key of the Control Plane issuing CA certificate is used to sign Cont
 
 The public key needed to verify the issuing CA certificate is in a Control Plane root certificate. Issuing CA certificates do not bundle the root certificate needed to verify them. In order to verify an issuing CA certificate, a pool of root certificates must first be extracted from one or more active TRCs (as described in [](#signing-verifying-cp-messages)).
 
-The RECOMMENDED maximum validity period of a Control Plane issuing CA certificate is 15 days.
-This is much shorter than root certificates, which have a longer recommended maximum validity period, because they are part of the TRC of an ISD, which itself also has a longer recommended maximum validity (see {{table-2}}). This ensures that the TRC need not be updated all the time and is thus relatively stable.
+The RECOMMENDED maximum validity period of a Control Plane issuing CA certificate is 15 days. This is much shorter than root certificates, which have a longer recommended maximum validity period because they are part of the TRC of an ISD, which itself also has a longer recommended maximum validity (see {{table-2}}). This ensures that the TRC need not be updated all the time and is thus relatively stable.
 
 ## Control Plane AS Certificate
 
@@ -307,13 +306,13 @@ Regular and sensitive voting certificates are used to verify regular and sensiti
 
 ### Regular Voting Certificate
 
-Regular voting certificates may be used to cast a vote in a regular update. In X.509 terms, regular voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
+Regular voting certificates may be used to cast a vote in a regular update. In X.509 terms, regular voting certificates are self-signed end entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
 
 The RECOMMENDED maximum validity period of a regular voting certificate is 5 years.
 
 ### Sensitive Voting Certificate
 
-Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end-entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
+Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
 
 The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 years.
 
@@ -347,7 +346,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
 (3) A validity of 15 days with 8 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing a issuing CA certificate rollover.
 
-{{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the Regular Voting Certificates with the first regular update to the base TRC.
+{{figure-2}} shows the content of a base/initial TRC, and the relationship between a TRC and the five types of certificates. The initial signatures are replaced by those of the regular voting certificates with the first regular update to the base TRC.
 
 ~~~aasvg
 +----------------------------------------------+
@@ -424,8 +423,7 @@ The `serialNumber` field contains a positive integer assigned by the CA to each 
 
 ### `signature` {#certsign}
 
-The `signature` field contains the identifier for the signature algorithm used by the CA to sign the certificate. Current implementations use the ECDSA signature algorithm defined in {{X9.62}}.
-As a consequence, the `parameters` field in the `AlgorithmIdentifier` sequence MUST NOT be used.
+The `signature` field contains the identifier for the signature algorithm used by the CA to sign the certificate. Current implementations use the ECDSA signature algorithm defined in {{X9.62}} and as a consequence, the `parameters` field in the `AlgorithmIdentifier` sequence MUST NOT be used.
 
 The Object Identifiers (OIDs) for ECDSA are defined as `ecdsa-with-SHA256`, `ecdsa-with-SHA384`, and `ecdsa-with-SHA512` in {{RFC5758}}.
 
@@ -573,7 +571,7 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 | SCION-specific attributes (see [](#specatt)) | `id-kp-root` MUST be included |  |                       | Regular voting cert: `id-kp-regular` MUST be included.<br> Sensitive voting cert: `id-kp-sensitive` MUST be included |
 {: #table-5 title="extKeyUsage extension - Specifications per certificate type"}
 
-**Note**: the use of `extKeyUsage` in Root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
+**Note**: the use of `extKeyUsage` in root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
 
 #### SCION-Specific Key Purposes {#specatt}
 
@@ -592,7 +590,7 @@ The `basicConstraints` extension specifies whether the certificate subject acts 
 The `basicConstraints` extension includes the following attributes relevant for SCION:
 
 - `cA` attribute: Specifies whether the certificate subject acts as a CA. If yes, this attribute MUST be asserted and the extension MUST be marked as critical.
-- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE and specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end-entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the maximum length of the certification path.
+- `pathLenConstraint` attribute: This attribute is only relevant if the `cA` attribute is set to TRUE and specifies the maximum number of CA certificates that may follow this CA certificate in the certification chain. Value "0" means that this CA may only issue end entity certificates, but no CA certificates. If the attribute is not set, there is no limit to the maximum length of the certification path.
 
 The settings of the `basicConstraints` extension differ for each SCION Control Plane PKI certificate type. The next table shows the specifications per certificate type.
 
@@ -604,8 +602,7 @@ The settings of the `basicConstraints` extension differ for each SCION Control P
 | `pathLenConstraint`                | MUST be set to "1"    | MUST be set to "0" (1) | MUST NOT be included          | MUST NOT be included              |
 {: #table-6 title="basicConstraints extension - Specifications per certificate type"}
 
-(1) Control Plane CAs can only issue end-entity certificates.
-
+(1) Control Plane CAs can only issue end entity certificates.
 
 
 # Trust Root Configuration Specification {#trc-specification}
@@ -1032,8 +1029,7 @@ When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as
 
 The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in [](#substitutes-to-revocation). AS certificates typically have a validity of days (see {{table-3}}), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.
 
-It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load.
-ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
+It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load. ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
 Furthermore, PKI operators need to ensure that the CAs maintain accurate time. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, section "Attacks on Time Sources".
 
@@ -1071,8 +1067,8 @@ This section deals with possible recovery from the compromises discussed in the 
 As described in [](#substitutes-to-revocation), there is no revocation in the Control Plane PKI.
 
 - At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and a invalid update has been produced and distributed in the network.
-- At CA level: If the private key related to a issuing CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update, a new root keys can also be forced, invalidating the compromised CA.
-- At AS level: In the event of a key compromise of a (non-core) AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
+- At CA level: If the private key related to a issuing CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update new root keys can also be forced, invalidating the compromised CA.
+- At AS level: In the event of a key compromise of a non-core AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
 
 
 ## Denial of Service Attacks
@@ -1133,13 +1129,13 @@ id-at-ia OBJECT IDENTIFIER ::= { id-at 1 }
 -- SCION Key Purposes
 id-scion-kp OBJECT IDENTIFIER ::= { id-cppki 3 }
 
--- Identifies a Sensitive voting certificate
+-- Identifies a sensitive voting certificate
 id-kp-sensitive OBJECT IDENTIFIER ::= { id-scion-kp 1 }
 
--- Identifies a Regular voting certificate
+-- Identifies a regular voting certificate
 id-kp-regular   OBJECT IDENTIFIER ::= { id-scion-kp 2 }
 
--- Identifies a Root certificate
+-- Identifies a root certificate
 id-kp-root      OBJECT IDENTIFIER ::= { id-scion-kp 3 }
 
 END
@@ -1210,11 +1206,11 @@ The Signing Ceremony SHOULD include the following participants:
 
 - **Ceremony Administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.
 
-- **Voting AS Representatives** - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.
+- **Voting AS representatives** - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.
 
 - **Witness(es)** - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.
 
-**Note:** The ISD members must decide on the roles of the Signing Ceremony participants in advance of Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
+**Note:** The ISD members must decide on the roles of the Signing Ceremony participants in advance of the Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.
 
 ## Ceremony Preparations {#ceremonyprep}
 
