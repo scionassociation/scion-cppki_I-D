@@ -1302,6 +1302,12 @@ svg :is([fill="white"], [fill^="#fff"]) {
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.11">
                     <p id="section-toc.1-1.3.2.2.2.11.1"><a href="#section-3.2.11" class="auto internal xref">3.2.11</a>. <a href="#name-certificates-2" class="internal xref"><code>certificates</code></a></p>
 </li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.12">
+                    <p id="section-toc.1-1.3.2.2.2.12.1"><a href="#section-3.2.12" class="auto internal xref">3.2.12</a>. <a href="#name-localizeddescriptions" class="internal xref"><code>localizedDescriptions</code></a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.13">
+                    <p id="section-toc.1-1.3.2.2.2.13.1"><a href="#section-3.2.13" class="auto internal xref">3.2.13</a>. <a href="#name-descriptionlangtag" class="internal xref"><code>descriptionLangTag</code></a></p>
+</li>
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.3">
@@ -2883,9 +2889,9 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-description">
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
-<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. It <span class="bcp14">SHOULD NOT</span> be empty.
-The description <span class="bcp14">MUST</span> be in English. If multiple languages are provided, each language section <span class="bcp14">SHOULD</span> be identified by a language tags as defined in <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.
-When using language tags, each tag <span class="bcp14">SHOULD</span> be enclosed in square brackets (e.g., [en], [de-CH]) at the start of its respective section.<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. If present, it <span class="bcp14">MUST NOT</span> be empty.
+When this field contains languages other than English, the corresponding language tag <span class="bcp14">SHOULD</span> explicitly identified in the <code>descriptionLangTag</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cert">
@@ -2908,33 +2914,58 @@ When using language tags, each tag <span class="bcp14">SHOULD</span> be enclosed
           </ul>
 <p id="section-3.2.11-4">A certificate that is no control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-5">A certificate's type (voting or root) is specified in the <code>extKeyUsage</code> extension of the certificate, by means of the SCION-specific attributes <code>id-kp-regular</code>, <code>id-kp-sensitive</code>, and <code>id-kp-root</code>, respectively. For more information, see <a href="#ext-key-usage-ext" class="auto internal xref">Section 2.7.4</a>.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-6">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="description-multilang">
+<section id="section-3.2.12">
+          <h4 id="name-localizeddescriptions">
+<a href="#section-3.2.12" class="section-number selfRef">3.2.12. </a><a href="#name-localizeddescriptions" class="section-name selfRef"><code>localizedDescriptions</code></a>
+          </h4>
+<p id="section-3.2.12-1">The <code>localizedDescriptions</code> field provides an optional mechanism for including multilingual descriptions.
+It consists of a sequence of <code>LocalizedText</code> structures, each containing:<a href="#section-3.2.12-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.11-7.1">
-              <p id="section-3.2.11-7.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates.<a href="#section-3.2.11-7.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.2.12-2.1">
+              <p id="section-3.2.12-2.1.1"><code>languageTag</code>: specifies the description's language. It <span class="bcp14">MUST</span> use language tags according to <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.12-2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.11-7.2">
-              <p id="section-3.2.11-7.2.1">The <code>issuer</code> / <code>serialNumber</code> pair for each certificate <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.11-7.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.11-7.3">
-              <p id="section-3.2.11-7.3.1">If an ISD-AS number is present in the distinguished name of the certificate, this ISD number <span class="bcp14">MUST</span> be equal to the ISD number of the TRC (which is defined in the <code>iD</code> field (see <a href="#id" class="auto internal xref">Section 3.2.2</a>).<a href="#section-3.2.11-7.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.11-7.4">
-              <p id="section-3.2.11-7.4.1">Every certificate <span class="bcp14">MUST</span> have a validity period that fully contains the validity period of this TRC. That is, the <code>notBefore</code> date of this TRC's validity period <span class="bcp14">MUST</span> be equal to or later than the certificate's <code>notBefore</code> date, and the <code>notAfter</code> date of this TRC's validity period <span class="bcp14">MUST</span> be before or equal to the certificate's <code>notAfter</code> date.<a href="#section-3.2.11-7.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.11-7.5">
-              <p id="section-3.2.11-7.5.1">Per certificate type, every certificate distinguished name <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.11-7.5.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-3.2.12-2.2">
+              <p id="section-3.2.12-2.2.1"><code>text</code>: contains the localized description. It <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span>.<a href="#section-3.2.12-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.2.11-8">The following must hold for the entire sequence of certificates in the <code>certificates</code> field:<a href="#section-3.2.11-8" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="langtag">
+<section id="section-3.2.13">
+          <h4 id="name-descriptionlangtag">
+<a href="#section-3.2.13" class="section-number selfRef">3.2.13. </a><a href="#name-descriptionlangtag" class="section-name selfRef"><code>descriptionLangTag</code></a>
+          </h4>
+<p id="section-3.2.13-1">The <span class="bcp14">OPTIONAL</span> <code>descriptionLangTag</code> field identifies the language used to express the <code>description</code> field. When <code>descriptionLangTag</code> is absent, English (equivalent to the "en" language tag) is used. The value of the <code>descriptionLangTag</code> <span class="bcp14">MUST</span> be a valid language tag as described in <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.13-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.13-2">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.13-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.11-9.1">
-              <p id="section-3.2.11-9.1.1"><code>votingQuorum</code> &lt;= count (sensitive voting certificates) <br>
-That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of sensitive voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-3.2.13-3.1">
+              <p id="section-3.2.13-3.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates.<a href="#section-3.2.13-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.11-9.2">
-              <p id="section-3.2.11-9.2.1"><code>votingQuorum</code> &lt;= count (regular voting certificates) <br>
-That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of regular voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-3.2.13-3.2">
+              <p id="section-3.2.13-3.2.1">The <code>issuer</code> / <code>serialNumber</code> pair for each certificate <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.13-3.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.13-3.3">
+              <p id="section-3.2.13-3.3.1">If an ISD-AS number is present in the distinguished name of the certificate, this ISD number <span class="bcp14">MUST</span> be equal to the ISD number of the TRC (which is defined in the <code>iD</code> field (see <a href="#id" class="auto internal xref">Section 3.2.2</a>).<a href="#section-3.2.13-3.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.13-3.4">
+              <p id="section-3.2.13-3.4.1">Every certificate <span class="bcp14">MUST</span> have a validity period that fully contains the validity period of this TRC. That is, the <code>notBefore</code> date of this TRC's validity period <span class="bcp14">MUST</span> be equal to or later than the certificate's <code>notBefore</code> date, and the <code>notAfter</code> date of this TRC's validity period <span class="bcp14">MUST</span> be before or equal to the certificate's <code>notAfter</code> date.<a href="#section-3.2.13-3.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.13-3.5">
+              <p id="section-3.2.13-3.5.1">Per certificate type, every certificate distinguished name <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.13-3.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.2.13-4">The following must hold for the entire sequence of certificates in the <code>certificates</code> field:<a href="#section-3.2.13-4" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.13-5.1">
+              <p id="section-3.2.13-5.1.1"><code>votingQuorum</code> &lt;= count (sensitive voting certificates) <br>
+That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of sensitive voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.13-5.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.13-5.2">
+              <p id="section-3.2.13-5.2.1"><code>votingQuorum</code> &lt;= count (regular voting certificates) <br>
+That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of regular voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.13-5.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3740,18 +3771,25 @@ TRCValidity ::= SEQUENCE {
     notAfter           GeneralizedTime
 }
 
+LocalizedText ::= SEQUENCE {
+    languageTag        VisibleString,
+    text               UTF8String (SIZE (0..8192))
+}
+
 TRCPayload ::= SEQUENCE {
-    version            TRCFormatVersion,
-    iD                 TRCID,
-    validity           TRCValidity,
-    gracePeriod        INTEGER,
-    noTrustReset       BOOLEAN,
-    votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
-    votingQuorum       INTEGER (1..2047),
-    coreASes           SEQUENCE OF ASN,
-    authoritativeASes  SEQUENCE OF ASN,
-    description        UTF8String (SIZE (0..8192)),
-    certificates       SEQUENCE SIZE (0..4095) OF Certificate
+    version               TRCFormatVersion,
+    iD                    TRCID,
+    validity              TRCValidity,
+    gracePeriod           INTEGER,
+    noTrustReset          BOOLEAN,
+    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum          INTEGER (1..2047),
+    coreASes              SEQUENCE OF ASN,
+    authoritativeASes     SEQUENCE OF ASN,
+    description           UTF8String (SIZE (1..8192)) OPTIONAL,
+    certificates          SEQUENCE SIZE (1..4095) OF Certificate,
+        localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
+    descriptionLangTag    [1] VisibleString OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }

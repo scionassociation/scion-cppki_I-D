@@ -123,6 +123,8 @@ Table of Contents
        3.2.9.  authoritativeASes
        3.2.10. description
        3.2.11. certificates
+       3.2.12. localizedDescriptions
+       3.2.13. descriptionLangTag
      3.3.  TRC Signature Syntax
        3.3.1.  SCION-specific rules
        3.3.2.  TRC Equality
@@ -1398,12 +1400,14 @@ Table of Contents
 
    The description field contains a UTF-8 encoded string that describes
    the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
-   [RFC5198] to ensure consistent normalization.  It SHOULD NOT be
-   empty.  The description MUST be in English.  If multiple languages
-   are provided, each language section SHOULD be identified by a
-   language tags as defined in [BCP47].  When using language tags, each
-   tag SHOULD be enclosed in square brackets (e.g., [en], [de-CH]) at
-   the start of its respective section.
+   [RFC5198] to ensure consistent normalization.  If present, it MUST
+   NOT be empty.  When this field contains languages other than English,
+   the corresponding language tag SHOULD explicitly identified in the
+   descriptionLangTag field (see ()[#langtag]).
+
+   Multi-language TRCs SHOULD use the localizedDescriptions field
+   instead.  Either the description or the localizedDescriptionsfield
+   MUST be present.
 
 3.2.11.  certificates
 
@@ -1430,6 +1434,26 @@ Table of Contents
    extension of the certificate, by means of the SCION-specific
    attributes id-kp-regular, id-kp-sensitive, and id-kp-root,
    respectively.  For more information, see Section 2.7.4.
+
+3.2.12.  localizedDescriptions
+
+   The localizedDescriptions field provides an optional mechanism for
+   including multilingual descriptions.  It consists of a sequence of
+   LocalizedText structures, each containing:
+
+   *  languageTag: specifies the description's language.  It MUST use
+      language tags according to [BCP47].
+
+   *  text: contains the localized description.  It MUST be formatted in
+      accordance with "Net-Unicode" [RFC5198].
+
+3.2.13.  descriptionLangTag
+
+   The OPTIONAL descriptionLangTag field identifies the language used to
+   express the description field.  When descriptionLangTag is absent,
+   English (equivalent to the "en" language tag) is used.  The value of
+   the descriptionLangTag MUST be a valid language tag as described in
+   [BCP47].
 
    The following constraints must hold for each certificate in the
    certificates field of the TRC payload:
@@ -2343,54 +2367,61 @@ Appendix A.  Certificate Extensions in ASN.1 Syntax
 
 Appendix B.  TRC in ASN.1 Syntax
 
-   SCION-CP-PKI-TRC {
-       iso(1) identified-organization(3) dod(6) internet(1) private(4)
-       enterprise(1) scion(55324) module(0) trc(1)
-   }
+SCION-CP-PKI-TRC {
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) trc(1)
+}
 
-   DEFINITIONS EXPLICIT TAGS ::=
-   BEGIN
+DEFINITIONS EXPLICIT TAGS ::=
+BEGIN
 
-   IMPORTS
-       Certificate
-           FROM PKIX1Explicit88 {
-               iso(1) identified-organization(3) dod(6) internet(1)
-               security(5) mechanisms(5) pkix(7) id-mod(0)
-               id-pkix1-explicit(18)
-           };
+IMPORTS
+    Certificate
+        FROM PKIX1Explicit88 {
+            iso(1) identified-organization(3) dod(6) internet(1)
+            security(5) mechanisms(5) pkix(7) id-mod(0)
+            id-pkix1-explicit(18)
+        };
 
-   TRCValidity ::= SEQUENCE {
-       notBefore          GeneralizedTime,
-       notAfter           GeneralizedTime
-   }
+TRCValidity ::= SEQUENCE {
+    notBefore          GeneralizedTime,
+    notAfter           GeneralizedTime
+}
 
-   TRCPayload ::= SEQUENCE {
-       version            TRCFormatVersion,
-       iD                 TRCID,
-       validity           TRCValidity,
-       gracePeriod        INTEGER,
-       noTrustReset       BOOLEAN,
-       votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
-       votingQuorum       INTEGER (1..2047),
-       coreASes           SEQUENCE OF ASN,
-       authoritativeASes  SEQUENCE OF ASN,
-       description        UTF8String (SIZE (0..8192)),
-       certificates       SEQUENCE SIZE (0..4095) OF Certificate
-   }
+LocalizedText ::= SEQUENCE {
+    languageTag        VisibleString,
+    text               UTF8String (SIZE (0..8192))
+}
 
-   TRCFormatVersion ::= INTEGER { v1(0) }
+TRCPayload ::= SEQUENCE {
+    version               TRCFormatVersion,
+    iD                    TRCID,
+    validity              TRCValidity,
+    gracePeriod           INTEGER,
+    noTrustReset          BOOLEAN,
+    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum          INTEGER (1..2047),
+    coreASes              SEQUENCE OF ASN,
+    authoritativeASes     SEQUENCE OF ASN,
+    description           UTF8String (SIZE (1..8192)) OPTIONAL,
+    certificates          SEQUENCE SIZE (1..4095) OF Certificate,
+        localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
+    descriptionLangTag    [1] VisibleString OPTIONAL
+}
 
-   TRCID ::= SEQUENCE {
-       iSD                ISD,
-       serialNumber       INTEGER (1..MAX),
-       baseNumber         INTEGER (1..MAX)
-   }
+TRCFormatVersion ::= INTEGER { v1(0) }
 
-   ISD ::= INTEGER (1..65535)
+TRCID ::= SEQUENCE {
+    iSD                ISD,
+    serialNumber       INTEGER (1..MAX),
+    baseNumber         INTEGER (1..MAX)
+}
 
-   ASN ::= PrintableString
+ISD ::= INTEGER (1..65535)
 
-   END
+ASN ::= PrintableString
+
+END
 
 Appendix C.  Signing Ceremony Initial TRC
 
