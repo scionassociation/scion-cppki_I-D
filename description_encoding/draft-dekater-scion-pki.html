@@ -2951,7 +2951,8 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
 <p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. It <span class="bcp14">SHOULD NOT</span> be empty.
-The description <span class="bcp14">MUST</span> be in English. It <span class="bcp14">MAY</span> additionally contain information in other languages; if it does, the non-English text <span class="bcp14">SHOULD</span> be identified using language tags as defined in <span>[<a href="#RFC5646" class="cite xref">RFC5646</a>]</span>.<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
+The description <span class="bcp14">MUST</span> be in English. If multiple languages are provided, each language section <span class="bcp14">SHOULD</span> be identified by a language tags as defined in <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.
+When using language tags, each tag <span class="bcp14">SHOULD</span> be enclosed in square brackets (e.g., [en], [de-CH]) at the start of its respective section.<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cert">
@@ -3700,6 +3701,16 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="BCP47">[BCP47]</dt>
+        <dd>
+<div class="refInstance">Best Current Practice 47, <span>&lt;<a href="https://www.rfc-editor.org/info/bcp47">https://www.rfc-editor.org/info/bcp47</a>&gt;</span>.<br><span>At the time of writing, this BCP comprises the following:</span>
+</div>
+<div class="refInstance" id="RFC4647">
+            <span class="refAuthor">Phillips, A., Ed.</span> and <span class="refAuthor">M. Davis, Ed.</span>, <span class="refTitle">"Matching of Language Tags"</span>, <span class="seriesInfo">BCP 47</span>, <span class="seriesInfo">RFC 4647</span>, <span class="seriesInfo">DOI 10.17487/RFC4647</span>, <time datetime="2006-09" class="refDate">September 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4647">https://www.rfc-editor.org/info/rfc4647</a>&gt;</span>. </div>
+<div class="refInstance" id="RFC5646">
+            <span class="refAuthor">Phillips, A., Ed.</span> and <span class="refAuthor">M. Davis, Ed.</span>, <span class="refTitle">"Tags for Identifying Languages"</span>, <span class="seriesInfo">BCP 47</span>, <span class="seriesInfo">RFC 5646</span>, <span class="seriesInfo">DOI 10.17487/RFC5646</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5646">https://www.rfc-editor.org/info/rfc5646</a>&gt;</span>. </div>
+</dd>
+<dd class="break"></dd>
 <dt id="I-D.dekater-scion-controlplane">[I-D.dekater-scion-controlplane]</dt>
         <dd>
 <span class="refAuthor">de Kater, C.</span>, <span class="refAuthor">Rustignoli, N.</span>, and <span class="refAuthor">S. Hitz</span>, <span class="refTitle">"SCION Control Plane"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-dekater-scion-controlplane-18</span>, <time datetime="2026-04-30" class="refDate">30 April 2026</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-18">https://datatracker.ietf.org/doc/html/draft-dekater-scion-controlplane-18</a>&gt;</span>. </dd>
@@ -3723,10 +3734,6 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <dt id="RFC5480">[RFC5480]</dt>
         <dd>
 <span class="refAuthor">Turner, S.</span>, <span class="refAuthor">Brown, D.</span>, <span class="refAuthor">Yiu, K.</span>, <span class="refAuthor">Housley, R.</span>, and <span class="refAuthor">T. Polk</span>, <span class="refTitle">"Elliptic Curve Cryptography Subject Public Key Information"</span>, <span class="seriesInfo">RFC 5480</span>, <span class="seriesInfo">DOI 10.17487/RFC5480</span>, <time datetime="2009-03" class="refDate">March 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5480">https://www.rfc-editor.org/rfc/rfc5480</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC5646">[RFC5646]</dt>
-        <dd>
-<span class="refAuthor">Phillips, A., Ed.</span> and <span class="refAuthor">M. Davis, Ed.</span>, <span class="refTitle">"Tags for Identifying Languages"</span>, <span class="seriesInfo">BCP 47</span>, <span class="seriesInfo">RFC 5646</span>, <span class="seriesInfo">DOI 10.17487/RFC5646</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5646">https://www.rfc-editor.org/rfc/rfc5646</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5652">[RFC5652]</dt>
         <dd>
