@@ -39,7 +39,7 @@ normative:
   RFC5198:
   RFC5280:
   RFC5480:
-  RFC5646:
+  BCP47:
   RFC5652:
   RFC5758:
   RFC9217:
@@ -786,7 +786,8 @@ As with core ASes, assigning or revoking authoritative status is performed by ad
 ### `description` {#description}
 
 The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. It SHOULD NOT be empty.
-The description MUST be in English. It MAY additionally contain information in other languages; if it does, the non-English text SHOULD be identified using language tags as defined in {{RFC5646}}.
+The description MUST be in English. If multiple languages are provided, each language section SHOULD be identified by a language tags as defined in {{BCP47}}.
+When using language tags, each tag SHOULD be enclosed in square brackets (e.g., [en], [de-CH]) at the start of its respective section.
 
 
 ### `certificates` {#cert}
