@@ -747,10 +747,10 @@ As with core ASes, assigning or revoking authoritative status is performed by ad
 
 ### `description` {#description}
 
-The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. It SHOULD NOT be empty.
-The description MUST be in English. If multiple languages are provided, each language section SHOULD be identified by a language tags as defined in {{BCP47}}.
-When using language tags, each tag SHOULD be enclosed in square brackets (e.g., [en], [de-CH]) at the start of its respective section.
+The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. If present, it MUST NOT be empty.
+When this field contains languages other than English, the corresponding language tag SHOULD explicitly identified in the `descriptionLangTag` field (see ()[#langtag]).
 
+Multi-language TRCs SHOULD use the `localizedDescriptions` field instead. Either the `description` or the `localizedDescriptions`field MUST be present.
 
 ### `certificates` {#cert}
 
@@ -765,6 +765,18 @@ The `certificates` field is a sequence of self-signed X.509 certificates. Each c
 A certificate that is no control plane root or voting certificate MUST NOT be included in the sequence of certificates in the `certificates` field.
 
 A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
+
+### `localizedDescriptions` {#description-multilang}
+
+The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
+It consists of a sequence of `LocalizedText` structures, each containing:
+
+- `languageTag`: specifies the description's language. It MUST use language tags according to {{BCP47}}.
+- `text`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
+
+### `descriptionLangTag` {#langtag}
+
+The OPTIONAL `descriptionLangTag` field identifies the language used to express the `description` field. When `descriptionLangTag` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLangTag` MUST be a valid language tag as described in {{BCP47}}.
 
 The following constraints must hold for each certificate in the `certificates` field of the TRC payload:
 
@@ -1172,18 +1184,25 @@ TRCValidity ::= SEQUENCE {
     notAfter           GeneralizedTime
 }
 
+LocalizedText ::= SEQUENCE {
+    languageTag        VisibleString,
+    text               UTF8String (SIZE (0..8192))
+}
+
 TRCPayload ::= SEQUENCE {
-    version            TRCFormatVersion,
-    iD                 TRCID,
-    validity           TRCValidity,
-    gracePeriod        INTEGER,
-    noTrustReset       BOOLEAN,
-    votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
-    votingQuorum       INTEGER (1..2047),
-    coreASes           SEQUENCE OF ASN,
-    authoritativeASes  SEQUENCE OF ASN,
-    description        UTF8String (SIZE (0..8192)),
-    certificates       SEQUENCE SIZE (0..4095) OF Certificate
+    version               TRCFormatVersion,
+    iD                    TRCID,
+    validity              TRCValidity,
+    gracePeriod           INTEGER,
+    noTrustReset          BOOLEAN,
+    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum          INTEGER (1..2047),
+    coreASes              SEQUENCE OF ASN,
+    authoritativeASes     SEQUENCE OF ASN,
+    description           UTF8String (SIZE (1..8192)) OPTIONAL,
+    certificates          SEQUENCE SIZE (1..4095) OF Certificate,
+    	localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
+    descriptionLangTag    [1] VisibleString OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
