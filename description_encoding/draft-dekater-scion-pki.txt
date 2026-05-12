@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 2 November 2026                                         S. Hitz
+Expires: 13 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                              1 May 2026
+                                                             12 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 2 November 2026.
+   This Internet-Draft will expire on 13 November 2026.
 
 Copyright Notice
 
@@ -1457,9 +1457,9 @@ Table of Contents
 3.2.10.  description
 
    The description field contains a UTF-8 encoded string that describes
-   the ISD.  The text SHOULD be formatted in accordance with "Net-
-   Unicode" [RFC5198] to ensure consistent normalization.  It SHOULD NOT
-   be empty.  The description MUST be in English.  It MAY additionally
+   the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
+   [RFC5198] to ensure consistent normalization.  It SHOULD NOT be
+   empty.  The description MUST be in English.  It MAY additionally
    contain information in other languages; if it does, the non-English
    text SHOULD be identified using language tags as defined in
    [RFC5646].
