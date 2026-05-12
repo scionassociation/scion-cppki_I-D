@@ -1201,7 +1201,7 @@ TRCPayload ::= SEQUENCE {
     authoritativeASes     SEQUENCE OF ASN,
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
-    	localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
+    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
     descriptionLangTag    [1] VisibleString OPTIONAL
 }
 
