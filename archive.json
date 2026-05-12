@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-05T00:44:21.562894+00:00",
+  "timestamp": "2026-05-12T00:45:44.901561+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1378,9 +1378,17 @@
       "labels": [],
       "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [x] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [x] #128\n- [ ] > ~The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?~\n- [x] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] ~5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?~\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] ~Voting ASes: do they need to partecipate in routing? (CAs do I think)~\n- [x] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [x] Reduce use of passive tense and be more precise about subjects\n- [x] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-05-01T14:45:27Z",
+      "updatedAt": "2026-05-11T12:19:57Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Reopening because there are some comments in https://github.com/scionassociation/scion-cppki_I-D/pull/135 that were not addressed yet. \nI had to merge anyways to have others start with the final pass..",
+          "createdAt": "2026-05-11T12:19:40Z",
+          "updatedAt": "2026-05-11T12:19:57Z"
+        }
+      ]
     },
     {
       "number": 124,
@@ -1498,7 +1506,7 @@
       "id": "I_kwDOH386tM7-5UfM",
       "title": "Review use of normative language",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/132",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1507,8 +1515,8 @@
       "labels": [],
       "body": "- [x] Change the two SHOULD to MUST in this line in Table? \n`pathLenConstraint | SHOULD be set to \"1\", MUST be marked as \"critical\" | SHOULD be set to \"0\"`\nWe use SHOULD as per RFC 5280, but our code is enforcing this (see  Leftover from https://github.com/scionassociation/scion-cppki_I-D/pull/123#discussion_r3088049508)\n-  [x] Check that all pending comments in https://github.com/scionassociation/scion-cppki_I-D/pull/123 are addressed\n- [x] Do we need normative language in the appendix (ceremony)? \nAppendixes are often considered informative unless explicitly stated otherwise. If the signing ceremony procedure is a requirement for a valid SCION deployment, having normative language there is fine, but it should be clearly stated at the beginning of the appendix if the entire process is normative.\n",
       "createdAt": "2026-04-16T14:35:41Z",
-      "updatedAt": "2026-05-01T14:24:37Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-11T12:18:39Z",
+      "closedAt": "2026-05-11T12:18:39Z",
       "comments": []
     },
     {
@@ -1525,7 +1533,7 @@
       "labels": [],
       "body": "From Alexey Melnikov: \n\n3.2.10. description\n\n    The description field contains a UTF-8 encoded string that describes\n    the ISD. It SHOULD NOT be empty. The description MUST be in English\n    and MAY additionally contain information in other languages.\n\nIf information in other languages is conveyed, it should be tagged with language tags in some form, see RFC 5646.\n\nAlso, if one suggests using UTF-8 for human readable text, one should generally use (reference) something like RFC 5198.",
       "createdAt": "2026-04-30T08:33:07Z",
-      "updatedAt": "2026-05-01T08:12:43Z",
+      "updatedAt": "2026-05-11T13:25:39Z",
       "closedAt": null,
       "comments": [
         {
@@ -1541,8 +1549,54 @@
           "body": "Discussion with reviewer: \n\n>> - Language tags: they would help, we already have some TRCs containing multi-language text, but without tags. They could be a SHOULD in the draft. Future TRCs could be aligned in the next TRC update.\n\n> Ok. If you add a SHOULD you should also describe where/how the language tag is included. I assume you don't want to modify the ASN.1 structure to add a new field for it?\n\n>> - RFC 5198: are you talking, for example, about normalization (section 3 of RFC5918)?\n\n>That and also that RFC 5198 restricts valid sequences of characters. So a recipient can potentially reject UTF-8 which doesn't conform to a more restricted subset specified in RFC 5198.",
           "createdAt": "2026-05-01T08:12:43Z",
           "updatedAt": "2026-05-01T08:12:43Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "> Key questions here are two:\n> \n> 1. Do we want to prescribe that UTF-8 text MUST be normalized according to [RFC5198](https://www.rfc-editor.org/rfc/rfc5198.html#section-3)?\n>    This essentially ensures that text appearing identical to the human eye is also identical on a byte level, since UTF-8 has several identical looking characters. This could be important for crypto operations, but I'm not sure we ever use the description field for anything.   According to gemini, in scionproto we use `encoding/asn1` which does not normalize text according to RFC5198.\n\nI think it would probably be good to prescribe this, yes. I don't think we created any TRCs with non-normalized UTF-8 symbols.\nBut we can double check. We would need to add enforcement to the Go code based on golang.org/x/text/unicode/norm.\n\n> 2. Do we want to encourage (SHOULD) use of language tags according to RFC5646 ?  We don't use them.\n>    Older versions of the SSFN TRC did not use language tags and were NOT in English, ut text was already UTF-8 encoded:\n>    e.g.\n>    SSHN has various languages, but without tags:\n> \n> ```\n\nI don't really understand how this language tag is intended to be used with asn.1. It does not really fit our current payload structure.\nI think we would need something like a set of tuples (language tag; description in that language).\n\nIf we do not want to change the asn.1 structure, I think it needs to be encoded in the description itself.\nBut at that point, I would leave it up to the ISD to define how to handle this.\n\n> P.S. scionproto also seems to mention UTF-8 encoding [here](https://github.com/scionproto/scion/blob/368ef5973c7909d126902dc626c0530a0573e71d/pkg/scrypto/cppki/trc_asn1.go#L50), but I'm not sure if this is actually used:\n> \n> ```\n> Description       string          `asn1:\"description,utf8\"`\n> ```\n\nIt is used by the asn1 Go std library. It forces the string to be UTF-8 encoded.\nFurthermore, it forces a failure in decoding if the string is not UTF-8 encoded.\n",
+          "createdAt": "2026-05-11T13:12:20Z",
+          "updatedAt": "2026-05-11T13:12:20Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "The following TRCs all successfully verify with the NFC restriction:\n\n```\nVerified TRC successfully: ISD64-B1-S1\nVerified TRC successfully: ISD64-B1-S2\nVerified TRC successfully: ISD64-B1-S3\nVerified TRC successfully: ISD64-B1-S4\nVerified TRC successfully: ISD64-B1-S5\nVerified TRC successfully: ISD64-B1-S6\nVerified TRC successfully: ISD64-B1-S7\nVerified TRC successfully: ISD64-B1-S8\nVerified TRC successfully: ISD64-B1-S9\nVerified TRC successfully: ISD64-B1-S10\nVerified TRC successfully: ISD64-B1-S11\nVerified TRC successfully: ISD64-B1-S12\nVerified TRC successfully: ISD65-B1-S1\nVerified TRC successfully: ISD65-B1-S2\nVerified TRC successfully: ISD65-B1-S3\nVerified TRC successfully: ISD65-B1-S4\nVerified TRC successfully: ISD65-B1-S5\nVerified TRC successfully: ISD65-B1-S6\nVerified TRC successfully: ISD65-B1-S7\nVerified TRC successfully: ISD65-B1-S8\nVerified TRC successfully: ISD65-B1-S9\nVerified TRC successfully: ISD65-B1-S10\nVerified TRC successfully: ISD65-B1-S11\nVerified TRC successfully: ISD65-B1-S12\nVerified TRC successfully: ISD66-B1-S1\nVerified TRC successfully: ISD66-B1-S2\nVerified TRC successfully: ISD66-B1-S3\nVerified TRC successfully: ISD66-B1-S4\nVerified TRC successfully: ISD66-B1-S5\nVerified TRC successfully: ISD66-B1-S6\nVerified TRC successfully: ISD66-B1-S7\nVerified TRC successfully: ISD66-B1-S8\nVerified TRC successfully: ISD66-B1-S9\nVerified TRC successfully: ISD66-B1-S10\nVerified TRC successfully: ISD66-B1-S11\nVerified TRC successfully: ISD66-B1-S12\nVerified TRC successfully: ISD66-B1-S13\nVerified TRC successfully: ISD67-B1-S1\nVerified TRC successfully: ISD67-B1-S2\nVerified TRC successfully: ISD67-B1-S3\nVerified TRC successfully: ISD67-B1-S4\nVerified TRC successfully: ISD67-B1-S5\nVerified TRC successfully: ISD67-B1-S6\nVerified TRC successfully: ISD67-B1-S7\nVerified TRC successfully: ISD67-B1-S8\nVerified TRC successfully: ISD70-B1-S1\nVerified TRC successfully: ISD70-B1-S2\nVerified TRC successfully: ISD70-B1-S3\nVerified TRC successfully: ISD70-B1-S4\nVerified TRC successfully: ISD70-B1-S5\nVerified TRC successfully: ISD71-B1-S1\nVerified TRC successfully: ISD71-B1-S2\nVerified TRC successfully: ISD71-B1-S3\nVerified TRC successfully: ISD71-B1-S4\nVerified TRC successfully: ISD71-B1-S5\nVerified TRC successfully: ISD72-B1-S1\nVerified TRC successfully: ISD72-B1-S2\nVerified TRC successfully: ISD72-B1-S3\nVerified TRC successfully: ISD72-B1-S4\nVerified TRC successfully: ISD72-B1-S5\nVerified TRC successfully: ISD73-B1-S1\nVerified TRC successfully: ISD73-B1-S2\nVerified TRC successfully: ISD74-B1-S1\nVerified TRC successfully: ISD74-B1-S2\nVerified TRC successfully: ISD74-B1-S3\nVerified TRC successfully: ISD74-B1-S4\nVerified TRC successfully: ISD75-B1-S1\nVerified TRC successfully: ISD75-B1-S2\nVerified TRC successfully: ISD75-B1-S3\nVerified TRC successfully: ISD76-B1-S1\n```",
+          "createdAt": "2026-05-11T13:25:39Z",
+          "updatedAt": "2026-05-11T13:25:39Z"
         }
       ]
+    },
+    {
+      "number": 142,
+      "id": "I_kwDOH386tM8AAAABB5oHzw",
+      "title": "Review Til Chpt 1",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/142",
+      "state": "OPEN",
+      "author": "tzaeschke",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "Disclaimer: I have little understanding of PKI, so apologies for asking questions that may be too obvious...\n\n### 1.1 Terminology\n- General: The ordering seems a bit random, maybe explain it?\n- Add references to chapters, e.g. for Trust Reset?\n\n- Authorative AS: the latest TRCs -> \"TRC\"?  More than one TRC?\n\n- Voting quorum: Remove explanation about malicious update. This is a terminology section only.\n\n### 1.3 Trust Model\n\n- This section appears to mix bold font vs italic font for emphasis\n- I am not sure about this section, it sounds more like advertisement and bashing of monopoly/oligopoly, maybe tone it down a bit?\n - Remove 2nd and 3rd paragraph\n  - Change 4th paragraph to `The SCION trust architecture provides the following properties:`\n  - Remove paragraph \"Ideally ...\"\n - Change sentence \"To fulfill...\" to `To fulfill the these requirements, SCION introduces the concept of Isolation Domains.`  \n\n- Special mention of the 3rd paragraph (on oligopoly): This sounds like a catchy but over-the-top sales pitch to me, it makes it sound like oligarchy is really worse than monopoly. I think it is catchy at the cost of correctness because it is mixing up two severities/definitions of \"failure\" here:\n  - monopoly single p-o-f: In case of failure, everything is bust\n  - oligopoly p-o-f: In case of failure, one can use another root -> some inconvenience\n\n- I am also not entirely sure about these questions:\n  - If my parent AS is fraudulent, I have now way of ever finding out. So this is still single point of failure because it can pretend arbitrary ISD topologies + certificates, can't it?\n  - If there is only one voting ASes -> single point of failure, right?\n  \n\n- If we discuss monopoly and oligopoly at all, we could add following differences:\n  - An AS can participate in multiple ISDs. So from an AS perspective, SCION is similar to an oligopoly setup, however, individual TRCs are usually better protected than with today's monopoly-CAs.\n  - The actual advantage of SCION is: \n     - In case of failure, the blast radius is a single TRC/ISD\n     - Every AS can choose their TRC to be someone they \"actually\" trust, rather than some entity in a different country/jurisdiction.\n\n- 2nd to last paragraph starting \"The TRC also provide trust agility..\":\n  - Change \n    `This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network.`\n    to\n    `This implies that ASes are free to choose one or more ISDs they believe maintain a uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network.` \n  - Remove last sentence with comparison to other PKIs, this sounds like unbacked advertisement. \n\n### 1.4 [Trust Relations within an Isolation Domain](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-trust-relations-within-an-i)\n\n- 2nd paragraph, \"MUST\": Should this be here? This MUST is not really actionable, it is implicit.... replace \"MUST\" with \"implicitly\".\n\n\n#### 1.4.1: \n- Maybe remove this paragraph? It doesn't seem to add anything here. If we keep it, we should explain _why_ there are different types of TRC updates. (I have read Chpt 1 and 2 so far and to me it is not clear yet why there are two types)\n- Probably: \"If the _base_ TRC has been compromised ...\"?\n- Explain: why no signing ceremony in case of trust reset? See 1.1.\n\n#### 1.4.2:\n- Contradiction: \"does not support certificate revocation\" but 1.3 states \"TRC versioning is used to efficiently revoke compromised roots of trust\"...?\n- \"Instead it relies on the two mechanisms described above and on short-lived certificates.\"  Which two mechanisms? Unclear what is meant here, are \"regular\" and \"sensitive\" mechanisms?\n\n- Now this section describes reasons why the \"two mechanisms\" are better. Maybe move these reasons to where the two mechanisms are described?\n- Bullet 1) This is unclear to me: Are \"short-lived\" and \"revocation lists\" are part of the SCION system or a description of the disadvantages of other systems? Obviously SCION uses \"short-lived\" but it also says that it does not support explicit revocation (which probably refers to revocation lists)...?\n- What are CRL/OCSP check? Reference?\n\n### 1.5 [1.5. ](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-1.5)[Overview of Certificates, Keys, and Roles](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-overview-of-certificates-ke)\n- Figure 1: What is the name of the TRC number, e.g. TRC 1, TRC 2, ...? I don't think it is the version? Is It part of some name attribute? Is there a sequence number? Or is it just for visualization in the diagram?\n\n- Voting ASes: How are they notified of a new TRC to sign? \n- Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\n",
+      "createdAt": "2026-05-11T16:30:02Z",
+      "updatedAt": "2026-05-11T16:30:02Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 143,
+      "id": "I_kwDOH386tM8AAAABB5090Q",
+      "title": "Review Til Chpt 2",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/143",
+      "state": "OPEN",
+      "author": "tzaeschke",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "## 2.1 \n\n- \"proof of ownership of the private key\" who owns these private keys? If they are owned by \"TRC\", why have multiple?\n- \" This facilitates the bootstrapping of trust within an ISD\". This process is not clear to me. Maybe give step by step instructions of who does what? Or reference the chapter if it is described later.\n\n- \" 5 years.\" -> Why not 1 year? 5 years means there is no operational routine and it is a first for many operators each time it happens....\n\n## 2.2.\n- \"must first be extracted from one or more active TRCs\" Why do we need to consider \"more\" TRCs? Only during the grace period, right?\n\n## 2.3\n- \"3 days\" -> What about the grace period? Paths can be valid for a long time.\n\n## 2.4\n- just for clarity, add \"There is one private key per voting AS (and per sensitive/regular)\". I.e. not 0 keys and not more than 1 key, right?\n\n- In this chapter, maybe explain the rationale for different certificates for regular/sensitive?\n- 2.4.1 and 2.4.2 should be merged, they have identical text except for regular vs sensitive.\n\n## 2.5\n- table 2: \n  - (1) Explain why it makes sense to include multiple certificates\n  - (3) Why 8 days?\n  - ... What is the overlap for other certificates?\n - What is \"TRC 1\"? Is it a name or number stored in the TRC? Or is it just a virtual name used here?\n\n\n## 2.6\n- `whilst` -> `while`\n- Simplify 1st sentence from \n  ``` \n  Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive.\n   ``` \n   to\n  ```\n  Control Plane PKI certificates are X.509 v3 certificate with additional constraints applied.\n  ```  \n\n### 2.6.1: \n- Clarify that this is the X.509 version and not the TRC version. \n- Clarify that this refers to X.509 extensions (not SCION extensions; this is the first time extensions are mentioned)\n- Assuming this is not the TRC version, where actually is the TRC version stored? Or is it implicit from the issuing date (if there is such a thing)?\n\n### 2.6.2: \n- Digits? Hex/decimal? \n\n### 2.6.4: \n- Also, maybe the issuer name MUST be unique? (at least within the scope of an ISD?\n\n#### 2.6.4.1: \n- What is the format of \"issuer\" and \"subject\", how is \"id-at-ia\" included? Separator? Is appended or prepended? Sorry if there is a standard way of doing this and this question makes no sense.\n\n### 2.6.5\n- \"SCION implementations SHOULD adopt these values.\" Change\n  \"implementations\" -> \"deployments\"? I assume this is configurable and not hardcoded?\n\n### 2.6.6\n- Is it worth being more specific than \"same constraints as issuer\"? There is only one additional constraint in \"issuer\" in addition to not being empty. Rephrase to `... it MUST NOT be empty and in addition include the \"id-at-ia\" field.`?\n\n### 2.6.8/2.6.9 \n- Maybe out of scope, but a brief mention _why_ they should not be used could be interesting.\n\n\n### 2.7.1: \n- \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\n### 2.7.2: \n - \"It can be used, for example, by control plane messages to identify which certificate to use for verification.\"\n - ` It can be used, for example, by control plane messages to identify which certificate to use for verification.` I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? Rationale?\n\n### 2.7.3:\n- `digitalSignature: The public key can be used to verify the digital signature of a control plane payload.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `Other attributes are not used.` -> `Other attributes MUST NOT be used`?\n\n- `...  the relying party MUST be able to trace back the private key used to sign the certificate`\n  How is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\n### 2.7.4 \n- \"Note\":  `Root` -> `root`\n- `... implementations follow what --is-- described in this document` \n- `the use of extKeyUsage should be revised in future protocol iterations`\n  This is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\n### 2.7.5\n- The reference to X.509 points to a \"superseded\" document\n\n\n### 3.2.6 \n- Maybe add some suggestions on the value of this field? E.g. should be (voting members - 2) two allow for removing members? Or if a member loses its certificates (and two events overlap)?\n\n",
+      "createdAt": "2026-05-11T17:01:05Z",
+      "updatedAt": "2026-05-11T17:01:05Z",
+      "closedAt": null,
+      "comments": []
     }
   ],
   "pulls": [
@@ -7736,25 +7790,35 @@
       "id": "PR_kwDOH386tM7VTPF_",
       "title": "Nic review - part 2",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/135",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #132 \r\nResolves #122 \r\n ...\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-04-24T10:31:59Z",
-      "updatedAt": "2026-05-01T14:48:01Z",
+      "updatedAt": "2026-05-11T12:18:43Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "55fbfe25553b0e56be8651461f42ffe86f0fdbd3",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "nic_review_2",
       "headRefOid": "5dd8c31eacbd00a09e2423a39156bf06383669b2",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
+      "closedAt": "2026-05-11T12:18:38Z",
+      "mergedAt": "2026-05-11T12:18:38Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "ecba466c1e12209934bfb19f47cada22b114d5f7"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@oncilla what do you think about comments in here? \r\n\r\nI have to merge this PR so that others an review, but the points above remain open",
+          "createdAt": "2026-05-11T12:18:43Z",
+          "updatedAt": "2026-05-11T12:18:43Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH386tM74q7hS",
@@ -7885,7 +7949,7 @@
       "labels": [],
       "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)",
       "createdAt": "2026-04-30T10:02:46Z",
-      "updatedAt": "2026-05-01T14:11:57Z",
+      "updatedAt": "2026-05-11T13:26:15Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
@@ -7897,31 +7961,54 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7-J_8g",
+          "commit": {
+            "abbreviatedOid": "3f857b7"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-11T13:26:15Z",
+          "updatedAt": "2026-05-11T13:26:15Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "We can make it a MUST if you want. All existing TRCs are in that form",
+              "createdAt": "2026-05-11T13:26:15Z",
+              "updatedAt": "2026-05-11T13:26:15Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 138,
       "id": "PR_kwDOH386tM7Xa0rW",
       "title": "Draftforge pass",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/138",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Based on #122 \r\n\r\nThis PR tries to make capitalization consistent based on suggestions by https://draftforge.ietf.org\r\n\r\n\r\nDiff [with Nic](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/draftforge_pass/draft-dekater-scion-pki.txt)\r\n\r\n",
       "createdAt": "2026-05-01T12:46:54Z",
-      "updatedAt": "2026-05-04T08:20:45Z",
+      "updatedAt": "2026-05-11T12:30:14Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "nic_review_2",
       "baseRefOid": "5dd8c31eacbd00a09e2423a39156bf06383669b2",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "draftforge_pass",
-      "headRefOid": "0a6ac38ba06b60da86c32ad89d7f1a67fa2c3ac7",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "0477db14ab1ec46b190c06bba316ec0f63d30e1a",
+      "closedAt": "2026-05-11T12:30:14Z",
+      "mergedAt": "2026-05-11T12:30:14Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "f59f89a7274bf06e7677fe9ee724fffe42938eb8"
+      },
       "comments": [],
       "reviews": [
         {
@@ -8104,6 +8191,32 @@
           ]
         }
       ]
+    },
+    {
+      "number": 141,
+      "id": "PR_kwDOH386tM7aTn1d",
+      "title": "Checking capitalisations and grammar tweaks",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/141",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "",
+      "createdAt": "2026-05-11T15:13:11Z",
+      "updatedAt": "2026-05-11T15:13:13Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Kevin's-Tweaks",
+      "headRefOid": "bda01057c3454359d8fc44500d126dc07882dbf1",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
