@@ -329,7 +329,7 @@ Table of Contents
 
    An ISD is governed by one or multiple ASes, known as the *Voting
    ASes*. Furthermore, each ISD has a set of ASes that form the ISD
-   core, known as the *Core ASes*. The set of core and Voting ASes may
+   core, known as the *Core ASes*. The set of Core and Voting ASes may
    be, but do not necessarily have to be the same ASes.  Governance is
    implemented by a policy called the *Trust Root Configuration* (TRC),
    which is negotiated by the Voting ASes, and which defines the locally
