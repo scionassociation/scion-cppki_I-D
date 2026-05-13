@@ -63,7 +63,6 @@ informative:
     title: "SCION Registry"
     date: 2026
     target: http://scion.org/registry/
-  RFC5280:
   RFC6960:
   RFC8210:
   BARRERA17: DOI.10.1145/3085591
