@@ -207,13 +207,13 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~aasvg
 
                +----------------------------------------+
-               |                 TRC 2                  |
+               |               TRC (iD=2)               |
                | +------------------------------------+ |
                | |- Version       - Core ASes         | |
 +--------+     | |- ID            - Description       | |    +--------+
-| TRC 1  |     | |- Validity      - No Trust Reset    | |    | TRC 3  |
-| (Base  |---->| |- Grace Period  - Voting Quorum     | |--->|        |
-|  TRC)  |     | |- ...                               | |    |        |
+|  TRC   |     | |- Validity      - No Trust Reset    | |    |  TRC   |
+| (iD=1) |---->| |- Grace Period  - Voting Quorum     | |--->| (iD=3) |
+|Base TRC|     | |- ...                               | |    |        |
 +--------+     | +------------------------------------+ |    +--------+
                |                                        |
                | +----------------+  +----------------+ |
@@ -345,7 +345,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 ~~~aasvg
 +----------------------------------------------+
-|                    TRC 1                     |
+|                  TRC (id=1)                  |
 |                (base/initial)                |
 | +------------------------------------------+ |
 | | - Version          - Core ASes           | |
