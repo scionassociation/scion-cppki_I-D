@@ -313,7 +313,7 @@ Table of Contents
    core, known as the *Core ASes*. The set of Core and Voting ASes may
    be, but do not necessarily have to be the same ASes.  Governance is
    implemented by a policy called the *Trust Root Configuration* (TRC),
-   which is negotiated by the Voting ASes, and which defines the locally
+   which is negotiated by the Voting ASes and which defines the locally
    scoped roots of trust used to validate bindings between names and
    public keys.
 
@@ -351,8 +351,8 @@ Table of Contents
    Ceremony by the Voting ASes and then distributed throughout the ISD.
 
    While it is not necessary that all the ASes of the ISD trust each
-   other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes,
-   Voting ASes, as well as its CA(s).
+   other, all ASes implicitly trust the ISD's Core ASes, Authoritative
+   ASes, Voting ASes, as well as its CA(s).
 
 1.4.1.  Updates and Trust Resets
 
@@ -363,28 +363,27 @@ Table of Contents
    modifies critical aspects of the TRC, such as the set of Core ASes.
    In both cases the base TRC remains unchanged.
 
-   If the ISD's TRC has been compromised, it is necessary for an ISD to
-   re-establish the trust root.  This is possible with a process called
-   *trust reset* (if permitted by the ISD's trust policy).  In this
-   case, a new base TRC is created.
+   If the ISD's base TRC has been compromised, it is necessary for an
+   ISD to re-establish the trust root.  This is possible with a process
+   called *trust reset* (if permitted by the ISD's trust policy) when a
+   new base TRC is created.
 
 1.4.2.  Substitutes to Certificate Revocation
 
    The Control Plane PKI does not explicitly support certificate
-   revocation.  Instead it relies on the two mechanisms described above
-   and on short-lived certificates.  This approach constitutes an
-   attractive alternative to a revocation system for the following
+   revocation.  Instead it relies on the regular and sensitive TRC
+   update mechanisms on short-lived certificates.  This approach
+   constitutes an alternative to a revocation system for the following
    reasons:
 
-   *  Both short-lived certificates and revocation lists must be signed
-      by a CA.  Instead of periodically signing a new revocation list,
-      the CA can re-issue all the non-revoked certificates.  Although
-      the overhead of signing multiple certificates is greater than that
-      of signing a single revocation list, the overall complexity of the
-      system is reduced.  In the Control Plane PKI the number of
-      certificates that each CA must renew is manageable as it is
-      limited to at most the number of ASes within an ISD.  The absence
-      of CRL/OCSP checks improves performance by removing additional
+   *  Instead of periodically signing a new revocation list, the CA can
+      re-issue all the non-revoked certificates.  Although the overhead
+      of signing multiple certificates is greater than that of signing a
+      single revocation list, the overall complexity of the system is
+      reduced.  In the Control Plane PKI the number of certificates that
+      each CA must renew is manageable as it is limited to at most the
+      number of ASes within an ISD.  The absence of CRL [RFC5280] and
+      OCSP [RFC6960] checks improves performance by removing additional
       network lookups during PKI processing.
 
    *  Even with a revocation system, a compromised key cannot be
@@ -402,13 +401,13 @@ Table of Contents
    For detailed descriptions, please refer to Section 2 and Section 3.
 
                 +----------------------------------------+
-                |                 TRC 2                  |
+                |               TRC (iD=2)               |
                 | +------------------------------------+ |
                 | |- Version       - Core ASes         | |
  +--------+     | |- ID            - Description       | |    +--------+
- | TRC 1  |     | |- Validity      - No Trust Reset    | |    | TRC 3  |
- | (Base  |---->| |- Grace Period  - Voting Quorum     | |--->|        |
- |  TRC)  |     | |- ...                               | |    |        |
+ |  TRC   |     | |- Validity      - No Trust Reset    | |    |  TRC   |
+ | (iD=1) |---->| |- Grace Period  - Voting Quorum     | |--->| (iD=3) |
+ |Base TRC|     | |- ...                               | |    |        |
  +--------+     | +------------------------------------+ |    +--------+
                 |                                        |
                 | +----------------+  +----------------+ |
@@ -654,7 +653,7 @@ Table of Contents
    certificates with the first regular update to the base TRC.
 
    +----------------------------------------------+
-   |                    TRC 1                     |
+   |                  TRC (id=1)                  |
    |                (base/initial)                |
    | +------------------------------------------+ |
    | | - Version          - Core ASes           | |
@@ -2252,6 +2251,12 @@ Table of Contents
 
    [ISD-AS-assignments]
               "SCION Registry", 2026, <http://scion.org/registry/>.
+
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
 
    [RFC8210]  Bush, R. and R. Austein, "The Resource Public Key
               Infrastructure (RPKI) to Router Protocol, Version 1",

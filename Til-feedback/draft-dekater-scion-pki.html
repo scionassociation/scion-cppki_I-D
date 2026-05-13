@@ -1559,7 +1559,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 </li>
         </ul>
 <p id="section-1.3-4">To fulfill these requirements, SCION introduces the concept of <strong>Isolation Domains</strong>. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane (<span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).<a href="#section-1.3-4" class="pilcrow">¶</a></p>
-<p id="section-1.3-5">An ISD is governed by one or multiple ASes, known as the <strong>Voting ASes</strong>. Furthermore, each ISD has a set of ASes that form the ISD core, known as the <strong>Core ASes</strong>. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the <strong>Trust Root Configuration</strong> (TRC), which is negotiated by the Voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
+<p id="section-1.3-5">An ISD is governed by one or multiple ASes, known as the <strong>Voting ASes</strong>. Furthermore, each ISD has a set of ASes that form the ISD core, known as the <strong>Core ASes</strong>. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the <strong>Trust Root Configuration</strong> (TRC), which is negotiated by the Voting ASes and which defines the locally scoped roots of trust used to validate bindings between names and public keys.<a href="#section-1.3-5" class="pilcrow">¶</a></p>
 <p id="section-1.3-6">Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
 <p id="section-1.3-7">The TRC also provides <em>trust agility</em> - enabling users to select the trust roots used to initiate certificate validation. This implies that ASes are free to choose one or more ISDs they believe maintain an uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network, which differs from trust models provided by other PKI architectures.<a href="#section-1.3-7" class="pilcrow">¶</a></p>
 </section>
@@ -1570,14 +1570,14 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <a href="#section-1.4" class="section-number selfRef">1.4. </a><a href="#name-trust-relations-within-an-i" class="section-name selfRef">Trust Relations within an Isolation Domain</a>
         </h3>
 <p id="section-1.4-1">The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called <strong>base TRC</strong> constitutes the ISD's trust anchor which is signed during a Signing Ceremony by the Voting ASes and then distributed throughout the ISD.<a href="#section-1.4-1" class="pilcrow">¶</a></p>
-<p id="section-1.4-2">While it is not necessary that all the ASes of the ISD trust each other, all ASes <span class="bcp14">MUST</span> trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).<a href="#section-1.4-2" class="pilcrow">¶</a></p>
+<p id="section-1.4-2">While it is not necessary that all the ASes of the ISD trust each other, all ASes implicitly trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).<a href="#section-1.4-2" class="pilcrow">¶</a></p>
 <div id="trust-reset">
 <section id="section-1.4.1">
           <h4 id="name-updates-and-trust-resets">
 <a href="#section-1.4.1" class="section-number selfRef">1.4.1. </a><a href="#name-updates-and-trust-resets" class="section-name selfRef">Updates and Trust Resets</a>
           </h4>
 <p id="section-1.4.1-1">There are two types of TRC updates: regular and sensitive (see <a href="#update" class="auto internal xref">Section 3.5</a>). A <strong>regular TRC update</strong> is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a <strong>sensitive TRC update</strong> is an update that modifies critical aspects of the TRC, such as the set of Core ASes. In both cases the base TRC remains unchanged.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-2">If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if permitted by the ISD's trust policy). In this case, a new base TRC is created.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.4.1-2">If the ISD's base TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if permitted by the ISD's trust policy) when a new base TRC is created.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="substitutes-to-revocation">
@@ -1585,10 +1585,10 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-substitutes-to-certificate-">
 <a href="#section-1.4.2" class="section-number selfRef">1.4.2. </a><a href="#name-substitutes-to-certificate-" class="section-name selfRef">Substitutes to Certificate Revocation</a>
           </h4>
-<p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the two mechanisms described above and on short-lived certificates. This approach constitutes an attractive alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the regular and sensitive TRC update mechanisms on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.4.2-2.1">
-              <p id="section-1.4.2-2.1.1">Both short-lived certificates and revocation lists must be signed by a CA. Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL/OCSP checks improves performance by removing additional network lookups during PKI processing.<a href="#section-1.4.2-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-1.4.2-2.1.1">Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> and OCSP <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span> checks improves performance by removing additional network lookups during PKI processing.<a href="#section-1.4.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-1.4.2-2.2">
               <p id="section-1.4.2-2.2.1">Even with a revocation system, a compromised key cannot be instantaneously revoked. Through their validity period, both short-lived certificates and revocation lists implicitly define an attack window (i.e. a period during which an attacker who managed to compromise a key could use it before it becomes invalid). In both cases, the CA must consider a tradeoff between efficiency and security when picking this validity period.<a href="#section-1.4.2-2.2.1" class="pilcrow">¶</a></p>
@@ -1680,8 +1680,8 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <polygon class="arrowhead" points="176,568 164,562.4 164,573.6" fill="black" transform="rotate(90,168,568)"></polygon>
                 <polygon class="arrowhead" points="128,128 116,122.4 116,133.6" fill="black" transform="rotate(0,120,128)"></polygon>
                 <g class="text">
-                  <text x="280" y="52">TRC</text>
-                  <text x="304" y="52">2</text>
+                  <text x="264" y="52">TRC</text>
+                  <text x="308" y="52">(iD=2)</text>
                   <text x="152" y="84">-</text>
                   <text x="192" y="84">Version</text>
                   <text x="280" y="84">-</text>
@@ -1691,24 +1691,24 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                   <text x="172" y="100">ID</text>
                   <text x="280" y="100">-</text>
                   <text x="336" y="100">Description</text>
-                  <text x="32" y="116">TRC</text>
-                  <text x="56" y="116">1</text>
+                  <text x="40" y="116">TRC</text>
                   <text x="152" y="116">-</text>
                   <text x="196" y="116">Validity</text>
                   <text x="280" y="116">-</text>
                   <text x="300" y="116">No</text>
                   <text x="336" y="116">Trust</text>
                   <text x="384" y="116">Reset</text>
-                  <text x="520" y="116">TRC</text>
-                  <text x="544" y="116">3</text>
-                  <text x="40" y="132">(Base</text>
+                  <text x="528" y="116">TRC</text>
+                  <text x="44" y="132">(iD=1)</text>
                   <text x="152" y="132">-</text>
                   <text x="184" y="132">Grace</text>
                   <text x="236" y="132">Period</text>
                   <text x="280" y="132">-</text>
                   <text x="316" y="132">Voting</text>
                   <text x="372" y="132">Quorum</text>
-                  <text x="44" y="148">TRC)</text>
+                  <text x="532" y="132">(iD=3)</text>
+                  <text x="28" y="148">Base</text>
+                  <text x="64" y="148">TRC</text>
                   <text x="152" y="148">-</text>
                   <text x="176" y="148">...</text>
                   <text x="184" y="212">Regular</text>
@@ -2065,8 +2065,8 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <polygon class="arrowhead" points="136,728 124,722.4 124,733.6" fill="black" transform="rotate(90,128,728)"></polygon>
                 <polygon class="arrowhead" points="112,824 100,818.4 100,829.6" fill="black" transform="rotate(90,104,824)"></polygon>
                 <g class="text">
-                  <text x="184" y="52">TRC</text>
-                  <text x="208" y="52">1</text>
+                  <text x="168" y="52">TRC</text>
+                  <text x="212" y="52">(id=1)</text>
                   <text x="196" y="68">(base/initial)</text>
                   <text x="40" y="100">-</text>
                   <text x="80" y="100">Version</text>
@@ -3636,6 +3636,10 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <dt id="ISD-AS-assignments">[ISD-AS-assignments]</dt>
         <dd>
 <span class="refTitle">"SCION Registry"</span>, <time datetime="2026" class="refDate">2026</time>, <span>&lt;<a href="http://scion.org/registry/">http://scion.org/registry/</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6960">[RFC6960]</dt>
+        <dd>
+<span class="refAuthor">Santesson, S.</span>, <span class="refAuthor">Myers, M.</span>, <span class="refAuthor">Ankney, R.</span>, <span class="refAuthor">Malpani, A.</span>, <span class="refAuthor">Galperin, S.</span>, and <span class="refAuthor">C. Adams</span>, <span class="refTitle">"X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP"</span>, <span class="seriesInfo">RFC 6960</span>, <span class="seriesInfo">DOI 10.17487/RFC6960</span>, <time datetime="2013-06" class="refDate">June 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6960">https://www.rfc-editor.org/rfc/rfc6960</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8210">[RFC8210]</dt>
       <dd>
