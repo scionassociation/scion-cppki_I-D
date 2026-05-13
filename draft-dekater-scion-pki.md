@@ -128,29 +128,30 @@ SCION relies on three main components:
 
 **Control Plane PKI (CP-PKI)**: It is the Public Key Infrastructure upon which SCION's Control Plane relies for the authentication of messages. It is a set of policies, roles, and procedures that are used to manage Trust Root Configurations (TRCs) and certificates.
 
+**Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRC of the ISD. As a consequence, Authoritative ASes also start the announcement of a TRC update.
+
 **SCION Autonomous System (AS)**: A SCION Autonomous System is a network under a common administrative control. For example, the network of a SCION service provider, company, or university can constitute an AS. While functionally similar to a BGP AS, a SCION AS operates within an Isolation Domain (ISD), utilizes a different address scheme, and serves as a locator in the addressing of end hosts. References to ASes throughout this document refer to SCION ASes.
 
-**Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
+**Base TRC**: A base TRC is a Trust Root Configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. ISD operators create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
 
 **Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION Autonomous Systems (ASes) called Core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
 
-**Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an Isolation Domain (ISD). TRCs also contain ISD-specific policies.
+**Grace Period**: The grace period is an interval during which the previous version of a Trust Root Configuration (TRC) is still considered active after a new version has been published.
 
-**Authoritative AS**: Authoritative ASes are those ASes in an ISD that always have the latest TRCs of the ISD. As a consequence, Authoritative ASes also start the announcement of a TRC update.
-
-**Base TRC**: A base TRC is a Trust Root Configuration (TRC) that other parties trust axiomatically. In other words, trust for a base TRC is assumed, not derived from another cryptographic object. ISD operators create and sign a base TRC when the ISD is established. A base TRC is either the first TRC of the ISD or the result of a trust reset.
+**Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
 **TRC Signing Ceremony**: The ceremony during which the very first base TRC of an ISD, called the initial TRC, is signed. The initial TRC is a special case of the base TRC where the number of the ISD is assigned.
 
 **TRC Update**: A *regular* TRC update is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged. A *sensitive* TRC update is an update that modifies critical aspects of the TRC, such as the set of Core ASes. In both cases, the base TRC remains unchanged.
 
+**Trust Reset**: A trust reset is the action of announcing a new base TRC for an existing ISD, to mitigate a compromised TRC.
+
+**Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an Isolation Domain (ISD). TRCs also contain ISD-specific policies.
+
 **Voting ASes**: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".
 
-**Voting Quorum**: The voting quorum is a Trust Root Configuration (TRC) field that indicates the number of votes (signatures) needed on a successor TRC for it to be verifiable. A voting quorum greater than one will thus prevent a single entity from creating a malicious TRC update.
+**Voting Quorum**: The voting quorum is a Trust Root Configuration (TRC) field that indicates the number of votes (signatures) needed on a successor TRC for it to be verifiable.
 
-**Grace Period**: The grace period is an interval during which the previous version of a Trust Root Configuration (TRC) is still considered active after a new version has been published.
-
-**Trust Reset**: A trust reset is the action of announcing a new base TRC for an existing ISD, to mitigate a compromised TRC.
 
 ## Conventions and Definitions
 
@@ -161,28 +162,20 @@ SCION relies on three main components:
 
 Given the diverse nature of the constituents in the current Internet, an important challenge is how to scale authentication of network elements (such as AS ownership, hop-by-hop routing information, name servers for DNS, and domains for TLS) to the global environment. The roots of trust of currently prevalent Public Key Infrastructure (PKI) models do not scale well to a global environment because (1) mutually distrustful parties cannot agree on a single trust root (monopoly model), and because (2) the security of a plethora of roots of trust is only as strong as its weakest link (oligopoly model) - see also {{BARRERA17}}.
 
-The monopoly model suffers from two main drawbacks: First, all parties must agree on a single root of trust. Secondly, the single root of trust represents a single point of failure, the misuse of which enables the forging of certificates. Its revocation can also result in a kill switch for all the entities it certifies.
-
-The oligopoly model relies on several roots of trust, all equally and completely trusted. However, this is not automatically better: whereas the monopoly model has a single point of failure, the oligopoly model has the drawback of exposing more than one point of failure.
-
-Thus, there is a need for a trust architecture that supports meaningful trust roots in a global environment with inherently distrustful parties. This new trust architecture should provide the following properties:
+The SCION trust architecture allows parties that mutually trust each other to form their own trust domain, and to freely decide whether to trust other trust domains. It therefore provides the following properties
 
 - Trust agility (see further below);
 - Resilience to single root of trust compromise;
 - Multi-party governance; and
 - Support for policy versioning and updates.
 
-Ideally, the trust architecture allows parties that mutually trust each other to form their own trust domain, and to freely decide whether to trust other trust domains.
-
-To fulfill the above requirements, which in fact apply well to inter-domain networking, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane ({{I-D.dekater-scion-controlplane}}). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
+To fulfill these requirements, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane ({{I-D.dekater-scion-controlplane}}). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
 An ISD is governed by one or multiple ASes, known as the **Voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
-The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains an uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.
-
-The need for trust agility also means that SCION does not by design provide IP prefix origin validation as provided by RPKI {{RFC8210}}. RPKI's trust model is currently reliant on the trust roots provided by the five Regional Internet Registries, and therefore outside of the governance of an ISD.
+The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that ASes are free to choose one or more ISDs they believe maintain an uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network, which differs from trust models provided by other PKI architectures.
 
 
 ## Trust Relations within an Isolation Domain {#trust-relations}
