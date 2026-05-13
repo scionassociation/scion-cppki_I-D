@@ -63,6 +63,8 @@ informative:
     title: "SCION Registry"
     date: 2026
     target: http://scion.org/registry/
+  RFC5280:
+  RFC6960:
   RFC8210:
   BARRERA17: DOI.10.1145/3085591
   CHUAT22:
@@ -171,7 +173,7 @@ The SCION trust architecture allows parties that mutually trust each other to fo
 
 To fulfill these requirements, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane ({{I-D.dekater-scion-controlplane}}). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
-An ISD is governed by one or multiple ASes, known as the **Voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voting ASes, and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
+An ISD is governed by one or multiple ASes, known as the **Voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voting ASes and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
@@ -182,20 +184,20 @@ The TRC also provides *trust agility* - enabling users to select the trust roots
 
 The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called **base TRC** constitutes the ISD's trust anchor which is signed during a Signing Ceremony by the Voting ASes and then distributed throughout the ISD.
 
-While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).
+While it is not necessary that all the ASes of the ISD trust each other, all ASes implicitly trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).
 
 ### Updates and Trust Resets {#trust-reset}
 
 There are two types of TRC updates: regular and sensitive (see [](#update)). A **regular TRC update** is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged, whereas a **sensitive TRC update** is an update that modifies critical aspects of the TRC, such as the set of Core ASes. In both cases the base TRC remains unchanged.
 
-If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy). In this case, a new base TRC is created.
+If the ISD's base TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy) when a new base TRC is created.
 
 
 ### Substitutes to Certificate Revocation {#substitutes-to-revocation}
 
-The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the two mechanisms described above and on short-lived certificates. This approach constitutes an attractive alternative to a revocation system for the following reasons:
+The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the regular and sensitive TRC update mechanisms on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:
 
-- Both short-lived certificates and revocation lists must be signed by a CA. Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL/OCSP checks improves performance by removing additional network lookups during PKI processing.
+- Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL {{RFC5280}} and OCSP {{RFC6960}} checks improves performance by removing additional network lookups during PKI processing.
 - Even with a revocation system, a compromised key cannot be instantaneously revoked. Through their validity period, both short-lived certificates and revocation lists implicitly define an attack window (i.e. a period during which an attacker who managed to compromise a key could use it before it becomes invalid). In both cases, the CA must consider a tradeoff between efficiency and security when picking this validity period.
 
 ## Overview of Certificates, Keys, and Roles
