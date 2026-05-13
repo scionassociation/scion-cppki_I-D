@@ -274,9 +274,9 @@ The trust is anchored in the TRC for each ISD. The trust root is axiomatic: All 
 
 ## Control Plane Root Certificate {#cp-root-cert}
 
-The private key of the control plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.
+The private key of the control plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as Issuing CAs in an ISD.
 
-In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the control plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed control plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the control plane root certificates as the starting point of an ISD's certificate verification path.
+In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. They are embedded in the TRC of an ISD, and they act as the starting point of an ISD's certificate verification path.
 
 The RECOMMENDED maximum validity period of a control plane root certificate is 5 years.
 
@@ -300,21 +300,13 @@ The RECOMMENDED maximum validity period of a CP AS certificate is 3 days.
 
 ## Voting Certificates {#cp-voting-cert}
 
-There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that may cast votes in the TRC update process.
+There are two types of voting certificates: regular voting certificates and sensitive voting certificates. They contain the public keys associated with the private keys that may cast votes in the TRC update process.
 
-Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC.
+Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC. The distinction between segular and sensitive updates is described in [](#update).
 
-### Regular Voting Certificate
+ Voting certificates may be used to cast votes in a TRC updates. In X.509 terms, voting certificates are self-signed end entity certificates. This means that the issuer and subject of a voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a voting certificate cannot be used to verify other certificates.
 
-Regular voting certificates may be used to cast a vote in a regular update. In X.509 terms, regular voting certificates are self-signed end entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
-
-The RECOMMENDED maximum validity period of a regular voting certificate is 5 years.
-
-### Sensitive Voting Certificate
-
-Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
-
-The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 years.
+The RECOMMENDED maximum validity period of a voting certificate is 5 years.
 
 ## Key Pairs Overview and Notations {#key-pair-notation}
 
@@ -848,7 +840,7 @@ In the context of a TRC update,
 Every new sensitive or regular voting certificate in a TRC attaches a signature to the TRC. This is done to ensure that the freshly included voting entity agrees with the contents of the TRC it is now part of.
 
 
-### Update Rules - Overview
+### Update Rules - Overview {#update-rules-overview}
 
 The following table gives an overview of the types of TRC update, as well as the rules that must apply in regard to the updated TRC's payload information.
 
