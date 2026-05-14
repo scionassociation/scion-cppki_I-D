@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-12T00:45:44.901561+00:00",
+  "timestamp": "2026-05-14T00:52:55.356172+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1533,7 +1533,7 @@
       "labels": [],
       "body": "From Alexey Melnikov: \n\n3.2.10. description\n\n    The description field contains a UTF-8 encoded string that describes\n    the ISD. It SHOULD NOT be empty. The description MUST be in English\n    and MAY additionally contain information in other languages.\n\nIf information in other languages is conveyed, it should be tagged with language tags in some form, see RFC 5646.\n\nAlso, if one suggests using UTF-8 for human readable text, one should generally use (reference) something like RFC 5198.",
       "createdAt": "2026-04-30T08:33:07Z",
-      "updatedAt": "2026-05-11T13:25:39Z",
+      "updatedAt": "2026-05-12T16:51:42Z",
       "closedAt": null,
       "comments": [
         {
@@ -1563,6 +1563,27 @@
           "body": "The following TRCs all successfully verify with the NFC restriction:\n\n```\nVerified TRC successfully: ISD64-B1-S1\nVerified TRC successfully: ISD64-B1-S2\nVerified TRC successfully: ISD64-B1-S3\nVerified TRC successfully: ISD64-B1-S4\nVerified TRC successfully: ISD64-B1-S5\nVerified TRC successfully: ISD64-B1-S6\nVerified TRC successfully: ISD64-B1-S7\nVerified TRC successfully: ISD64-B1-S8\nVerified TRC successfully: ISD64-B1-S9\nVerified TRC successfully: ISD64-B1-S10\nVerified TRC successfully: ISD64-B1-S11\nVerified TRC successfully: ISD64-B1-S12\nVerified TRC successfully: ISD65-B1-S1\nVerified TRC successfully: ISD65-B1-S2\nVerified TRC successfully: ISD65-B1-S3\nVerified TRC successfully: ISD65-B1-S4\nVerified TRC successfully: ISD65-B1-S5\nVerified TRC successfully: ISD65-B1-S6\nVerified TRC successfully: ISD65-B1-S7\nVerified TRC successfully: ISD65-B1-S8\nVerified TRC successfully: ISD65-B1-S9\nVerified TRC successfully: ISD65-B1-S10\nVerified TRC successfully: ISD65-B1-S11\nVerified TRC successfully: ISD65-B1-S12\nVerified TRC successfully: ISD66-B1-S1\nVerified TRC successfully: ISD66-B1-S2\nVerified TRC successfully: ISD66-B1-S3\nVerified TRC successfully: ISD66-B1-S4\nVerified TRC successfully: ISD66-B1-S5\nVerified TRC successfully: ISD66-B1-S6\nVerified TRC successfully: ISD66-B1-S7\nVerified TRC successfully: ISD66-B1-S8\nVerified TRC successfully: ISD66-B1-S9\nVerified TRC successfully: ISD66-B1-S10\nVerified TRC successfully: ISD66-B1-S11\nVerified TRC successfully: ISD66-B1-S12\nVerified TRC successfully: ISD66-B1-S13\nVerified TRC successfully: ISD67-B1-S1\nVerified TRC successfully: ISD67-B1-S2\nVerified TRC successfully: ISD67-B1-S3\nVerified TRC successfully: ISD67-B1-S4\nVerified TRC successfully: ISD67-B1-S5\nVerified TRC successfully: ISD67-B1-S6\nVerified TRC successfully: ISD67-B1-S7\nVerified TRC successfully: ISD67-B1-S8\nVerified TRC successfully: ISD70-B1-S1\nVerified TRC successfully: ISD70-B1-S2\nVerified TRC successfully: ISD70-B1-S3\nVerified TRC successfully: ISD70-B1-S4\nVerified TRC successfully: ISD70-B1-S5\nVerified TRC successfully: ISD71-B1-S1\nVerified TRC successfully: ISD71-B1-S2\nVerified TRC successfully: ISD71-B1-S3\nVerified TRC successfully: ISD71-B1-S4\nVerified TRC successfully: ISD71-B1-S5\nVerified TRC successfully: ISD72-B1-S1\nVerified TRC successfully: ISD72-B1-S2\nVerified TRC successfully: ISD72-B1-S3\nVerified TRC successfully: ISD72-B1-S4\nVerified TRC successfully: ISD72-B1-S5\nVerified TRC successfully: ISD73-B1-S1\nVerified TRC successfully: ISD73-B1-S2\nVerified TRC successfully: ISD74-B1-S1\nVerified TRC successfully: ISD74-B1-S2\nVerified TRC successfully: ISD74-B1-S3\nVerified TRC successfully: ISD74-B1-S4\nVerified TRC successfully: ISD75-B1-S1\nVerified TRC successfully: ISD75-B1-S2\nVerified TRC successfully: ISD75-B1-S3\nVerified TRC successfully: ISD76-B1-S1\n```",
           "createdAt": "2026-05-11T13:25:39Z",
           "updatedAt": "2026-05-11T13:25:39Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Ok, I made [RFC5198](https://www.rfc-editor.org/rfc/rfc5198.html#section-3) a MUST in #137. \n\nOn language: If we were to change the ASN.1 module, we would have to change the definition of the description field, and this would represent a breaking change. I tried it myself in ASN.1 studio, and of course it then fails to decode any past TRCs. Since we are documenting what is deployed today, I am against this change.\n\nFor the record, I tried with this modified ASN.1 module, with `description        SEQUENCE OF LocalizedText,`:\n\n```\nSCION-CP-PKI-TRC { \n    iso(1) identified-organization(3) dod(6) internet(1) private(4) \n    enterprise(1) scion(55324) module(0) trc(1)\n}\n\nDEFINITIONS EXPLICIT TAGS ::= \nBEGIN\n\nIMPORTS\n    Certificate\n        FROM PKIX1Explicit88 { \n            iso(1) identified-organization(3) dod(6) internet(1) \n            security(5) mechanisms(5) pkix(7) id-mod(0) \n            id-pkix1-explicit(18) \n        };\n\nTRCValidity ::= SEQUENCE {\n    notBefore          GeneralizedTime,\n    notAfter           GeneralizedTime\n}\n\n-- Define the language tag type based on BCP 47 (ASCII characters)\nLanguageTag ::= VisibleString (FROM (\"a\"..\"z\" | \"A\"..\"Z\" | \"0\"..\"9\" | \"-\"))\n\n-- Define a structure for localized text\nLocalizedText ::= SEQUENCE {\n    language    LanguageTag,\n    text        UTF8String\n}\n\nTRCPayload ::= SEQUENCE {\n    version            TRCFormatVersion,\n    iD                 TRCID,\n    validity           TRCValidity,\n    gracePeriod        INTEGER,\n    noTrustReset       BOOLEAN,\n    votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),\n    votingQuorum       INTEGER (1..2047),\n    coreASes           SEQUENCE OF ASN,\n    authoritativeASes  SEQUENCE OF ASN,\n    description        SEQUENCE OF LocalizedText,\n    certificates       SEQUENCE SIZE (0..4095) OF Certificate\n}\n\nTRCFormatVersion ::= INTEGER { v1(0) }\n\nTRCID ::= SEQUENCE {\n    iSD                ISD,\n    serialNumber       INTEGER (1..MAX),\n    baseNumber         INTEGER (1..MAX)\n}\n\nISD ::= INTEGER (1..65535)\n\nASN ::= PrintableString\n\nEND\n``` \n\n\n\nAnother non-breaking would be to leave the field as an UTF8String and recommend BCP47 (RFC5646) language tags, which is what I did in the current version of #137 ",
+          "createdAt": "2026-05-12T11:47:15Z",
+          "updatedAt": "2026-05-12T11:48:56Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> If we do not want to change the asn.1 structure, I think it needs to be encoded in the description itself.\nBut at that point, I would leave it up to the ISD to define how to handle this. \n\n@oncilla  How about we jsut recommend using BCP47?  See latest version in #137 \n\n\n",
+          "createdAt": "2026-05-12T13:22:51Z",
+          "updatedAt": "2026-05-12T13:22:51Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Responding to @oncilla 's [comment](https://github.com/scionassociation/scion-cppki_I-D/pull/137#discussion_r3227493891) in the PR (somehow I cannot comment there)\n\n\n\n> Additionally, we can add a descriptionLanguageTag similar to: taTitleLangTag https://datatracker.ietf.org/doc/html/rfc5914#section-2.4\n\nI like the idea of introducing a `descriptionLanguageTag` field like `taTitleLangTag` in [rfc5914](https://datatracker.ietf.org/doc/html/rfc5914#section-2.4), with the same behavior (if it is present, that determines the language of the description, of not, it defaults to English. \n\n> How about the following:\nWe add a backward/forward compatible additional field:\ndescriptions (optional, at the end for DER, with explicit tag) that is a list of description and language.\nMulti-language TRCs should use the descriptions field. No further restrictions on the description field itself.\n(We could even go further and say all TRCs should use the descriptions field rather than description)\n\n> I need to double check that this is actually backward and forward compatible.\n\n> For inspiration: LogotypeImageInfo https://datatracker.ietf.org/doc/html/rfc9399#name-loyalty-logotype \n\nBased on what I tried above, the new ASN.1 definitions could look something like:\n```\n-- Structure for localized text\nLocalizedText ::= SEQUENCE {\n    language    VisibleString,\n    text        UTF8String (SIZE (0..8192))\n}\n```\n\nThe new field could then be:\n```\n    descriptions        SEQUENCE OF LocalizedText,\n```\n\n",
+          "createdAt": "2026-05-12T16:50:33Z",
+          "updatedAt": "2026-05-12T16:51:42Z"
         }
       ]
     },
@@ -1574,13 +1595,24 @@
       "state": "OPEN",
       "author": "tzaeschke",
       "authorAssociation": "NONE",
-      "assignees": [],
+      "assignees": [
+        "nicorusti",
+        "knmeynell"
+      ],
       "labels": [],
-      "body": "Disclaimer: I have little understanding of PKI, so apologies for asking questions that may be too obvious...\n\n### 1.1 Terminology\n- General: The ordering seems a bit random, maybe explain it?\n- Add references to chapters, e.g. for Trust Reset?\n\n- Authorative AS: the latest TRCs -> \"TRC\"?  More than one TRC?\n\n- Voting quorum: Remove explanation about malicious update. This is a terminology section only.\n\n### 1.3 Trust Model\n\n- This section appears to mix bold font vs italic font for emphasis\n- I am not sure about this section, it sounds more like advertisement and bashing of monopoly/oligopoly, maybe tone it down a bit?\n - Remove 2nd and 3rd paragraph\n  - Change 4th paragraph to `The SCION trust architecture provides the following properties:`\n  - Remove paragraph \"Ideally ...\"\n - Change sentence \"To fulfill...\" to `To fulfill the these requirements, SCION introduces the concept of Isolation Domains.`  \n\n- Special mention of the 3rd paragraph (on oligopoly): This sounds like a catchy but over-the-top sales pitch to me, it makes it sound like oligarchy is really worse than monopoly. I think it is catchy at the cost of correctness because it is mixing up two severities/definitions of \"failure\" here:\n  - monopoly single p-o-f: In case of failure, everything is bust\n  - oligopoly p-o-f: In case of failure, one can use another root -> some inconvenience\n\n- I am also not entirely sure about these questions:\n  - If my parent AS is fraudulent, I have now way of ever finding out. So this is still single point of failure because it can pretend arbitrary ISD topologies + certificates, can't it?\n  - If there is only one voting ASes -> single point of failure, right?\n  \n\n- If we discuss monopoly and oligopoly at all, we could add following differences:\n  - An AS can participate in multiple ISDs. So from an AS perspective, SCION is similar to an oligopoly setup, however, individual TRCs are usually better protected than with today's monopoly-CAs.\n  - The actual advantage of SCION is: \n     - In case of failure, the blast radius is a single TRC/ISD\n     - Every AS can choose their TRC to be someone they \"actually\" trust, rather than some entity in a different country/jurisdiction.\n\n- 2nd to last paragraph starting \"The TRC also provide trust agility..\":\n  - Change \n    `This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network.`\n    to\n    `This implies that ASes are free to choose one or more ISDs they believe maintain a uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network.` \n  - Remove last sentence with comparison to other PKIs, this sounds like unbacked advertisement. \n\n### 1.4 [Trust Relations within an Isolation Domain](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-trust-relations-within-an-i)\n\n- 2nd paragraph, \"MUST\": Should this be here? This MUST is not really actionable, it is implicit.... replace \"MUST\" with \"implicitly\".\n\n\n#### 1.4.1: \n- Maybe remove this paragraph? It doesn't seem to add anything here. If we keep it, we should explain _why_ there are different types of TRC updates. (I have read Chpt 1 and 2 so far and to me it is not clear yet why there are two types)\n- Probably: \"If the _base_ TRC has been compromised ...\"?\n- Explain: why no signing ceremony in case of trust reset? See 1.1.\n\n#### 1.4.2:\n- Contradiction: \"does not support certificate revocation\" but 1.3 states \"TRC versioning is used to efficiently revoke compromised roots of trust\"...?\n- \"Instead it relies on the two mechanisms described above and on short-lived certificates.\"  Which two mechanisms? Unclear what is meant here, are \"regular\" and \"sensitive\" mechanisms?\n\n- Now this section describes reasons why the \"two mechanisms\" are better. Maybe move these reasons to where the two mechanisms are described?\n- Bullet 1) This is unclear to me: Are \"short-lived\" and \"revocation lists\" are part of the SCION system or a description of the disadvantages of other systems? Obviously SCION uses \"short-lived\" but it also says that it does not support explicit revocation (which probably refers to revocation lists)...?\n- What are CRL/OCSP check? Reference?\n\n### 1.5 [1.5. ](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-1.5)[Overview of Certificates, Keys, and Roles](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-overview-of-certificates-ke)\n- Figure 1: What is the name of the TRC number, e.g. TRC 1, TRC 2, ...? I don't think it is the version? Is It part of some name attribute? Is there a sequence number? Or is it just for visualization in the diagram?\n\n- Voting ASes: How are they notified of a new TRC to sign? \n- Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\n",
+      "body": "Disclaimer: I have little understanding of PKI, so apologies for asking questions that may be too obvious...\n\n### 1.1 Terminology\n- General: The ordering seems a bit random, maybe explain it?\n- Add references to chapters, e.g. for Trust Reset?\n\n- Authorative AS: the latest TRCs -> \"TRC\"?  More than one latest TRC?\n\n- Voting quorum: Remove explanation about malicious update. This is a terminology section only.\n\n### 1.3 Trust Model\n\n- This section appears to mix bold font vs italic font for emphasis\n- I am not sure about this section, it sounds more like advertisement and bashing of monopoly/oligopoly, maybe tone it down a bit?\n - Remove 2nd and 3rd paragraph\n  - Change 4th paragraph to `The SCION trust architecture provides the following properties:`\n  - Remove paragraph \"Ideally ...\"\n - Change sentence \"To fulfill...\" to `To fulfill the these requirements, SCION introduces the concept of Isolation Domains.`  \n\n- Special mention of the 3rd paragraph (on oligopoly): This sounds like a catchy but over-the-top sales pitch to me, it makes it sound like oligarchy is really worse than monopoly. I think it is catchy at the cost of correctness because it is mixing up two severities/definitions of \"failure\" here:\n  - monopoly single p-o-f: In case of failure, everything is bust\n  - oligopoly p-o-f: In case of failure, one can use another root -> some inconvenience\n\n- I am also not entirely sure about these questions:\n  - If my parent AS is fraudulent, I have now way of ever finding out. So this is still single point of failure because it can pretend arbitrary ISD topologies + certificates, can't it?\n  - If there is only one voting ASes -> single point of failure, right?\n  \n\n- If we discuss monopoly and oligopoly at all, we could add following differences:\n  - An AS can participate in multiple ISDs. So from an AS perspective, SCION is similar to an oligopoly setup, however, individual TRCs are usually better protected than with today's monopoly-CAs.\n  - The actual advantage of SCION is: \n     - In case of failure, the blast radius is a single TRC/ISD\n     - Every AS can choose their TRC to be someone they \"actually\" trust, rather than some entity in a different country/jurisdiction.\n\n- 2nd to last paragraph starting \"The TRC also provide trust agility..\":\n  - Change \n    `This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network.`\n    to\n    `This implies that ASes are free to choose one or more ISDs they believe maintain a uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network.` \n  - Remove last sentence with comparison to other PKIs, this sounds like unbacked advertisement. \n\n### 1.4 [Trust Relations within an Isolation Domain](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-trust-relations-within-an-i)\n\n- 2nd paragraph, \"MUST\": Should this be here? This MUST is not really actionable, it is implicit.... replace \"MUST\" with \"implicitly\".\n\n\n#### 1.4.1: \n- Maybe remove this paragraph? It doesn't seem to add anything here. If we keep it, we should explain _why_ there are different types of TRC updates. (I have read Chpt 1 and 2 so far and to me it is not clear yet why there are two types)\n- Probably: \"If the _base_ TRC has been compromised ...\"?\n- Explain: why no signing ceremony in case of trust reset? See 1.1.\n\n#### 1.4.2:\n- Contradiction: \"does not support certificate revocation\" but 1.3 states \"TRC versioning is used to efficiently revoke compromised roots of trust\"...?\n- \"Instead it relies on the two mechanisms described above and on short-lived certificates.\"  Which two mechanisms? Unclear what is meant here, are \"regular\" and \"sensitive\" mechanisms?\n\n- Now this section describes reasons why the \"two mechanisms\" are better. Maybe move these reasons to where the two mechanisms are described?\n- Bullet 1) This is unclear to me: Are \"short-lived\" and \"revocation lists\" are part of the SCION system or a description of the disadvantages of other systems? Obviously SCION uses \"short-lived\" but it also says that it does not support explicit revocation (which probably refers to revocation lists)...?\n- What are CRL/OCSP check? Reference?\n\n### 1.5 [1.5. ](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-1.5)[Overview of Certificates, Keys, and Roles](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-overview-of-certificates-ke)\n- Figure 1: What is the name of the TRC number, e.g. TRC 1, TRC 2, ...? I think it is the \"ID\"? Maybe clarify to TRC (ID=2) , ...\n- Voting ASes: How are they notified of a new TRC to sign? \n- Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\n",
       "createdAt": "2026-05-11T16:30:02Z",
-      "updatedAt": "2026-05-11T16:30:02Z",
+      "updatedAt": "2026-05-13T10:03:24Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Hi @tzaeschke , thanks a lot for your review. We'll incorporate your feedback and ask you to review the PR.\n\nOn some specific points: \n\n> Add references to chapters, e.g. for Trust Reset?\n\n We don't add references to chapters in the terminology of other drafts. We won't do it here too to keep it consistent. \n\n> Figure 1: What is the name of the TRC number, e.g. TRC 1, TRC 2, ...? I think it is the \"ID\"? Maybe clarify to TRC (ID=2) , ...\n\n`serialNumber` inside the `iD` field. We'll clarify\n\n> Voting ASes: How are they notified of a new TRC to sign?\n \nI don't think there is a mechanism.. I don't think TRC updates are automated\n ",
+          "createdAt": "2026-05-13T09:25:34Z",
+          "updatedAt": "2026-05-13T09:25:34Z"
+        }
+      ]
     },
     {
       "number": 143,
@@ -1590,11 +1622,99 @@
       "state": "OPEN",
       "author": "tzaeschke",
       "authorAssociation": "NONE",
+      "assignees": [
+        "nicorusti"
+      ],
+      "labels": [],
+      "body": "## 2.1 \n\n- \"proof of ownership of the private key\" who owns these private keys? If they are owned by \"TRC\", why have multiple?\n- \" This facilitates the bootstrapping of trust within an ISD\". This process is not clear to me. Maybe give step by step instructions of who does what? Or reference the chapter if it is described later.\n\n- \" 5 years.\" -> Why not 1 year? 5 years means there is no operational routine and it is a first for many operators each time it happens....\n\n## 2.2.\n- \"must first be extracted from one or more active TRCs\" Why do we need to consider \"more\" TRCs? Only during the grace period, right?\n\n## 2.3\n- \"3 days\" -> What about the grace period? Paths can be valid for a long time.\n\n## 2.4\n- just for clarity, add \"There is one private key per voting AS (and per sensitive/regular)\". I.e. not 0 keys and not more than 1 key, right?\n\n- In this chapter, maybe explain the rationale for different certificates for regular/sensitive?  Table 7 explains the difference and 3.5.6 gives a motivation. Maybe just reference 3.5 here?\n\n- 2.4.1 and 2.4.2 should be merged, they have identical text except for regular vs sensitive.\n\n## 2.5\n- table 2: \n  - (1) Explain why it makes sense to include multiple certificates\n  - (3) Why 8 days?\n  - ... What is the overlap for other certificates?\n - What is \"TRC 1\"? Is it a name or number stored in the TRC? Or is it just a virtual name used here?\n\n\n## 2.6\n- `whilst` -> `while`\n- Simplify 1st sentence from \n  ``` \n  Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive.\n   ``` \n   to\n  ```\n  Control Plane PKI certificates are X.509 v3 certificate with additional constraints applied.\n  ```  \n\n### 2.6.1: \n- Clarify that this is the X.509 version and not the TRC version. \n- Clarify that this refers to X.509 extensions (not SCION extensions; this is the first time extensions are mentioned)\n- Assuming this is not the TRC version, where actually is the TRC version stored? Or is it implicit from the issuing date (if there is such a thing)?\n\n### 2.6.2: \n- Digits? Hex/decimal? \n\n### 2.6.4: \n- Also, maybe the issuer name MUST be unique? (at least within the scope of an ISD?\n\n#### 2.6.4.1: \n- What is the format of \"issuer\" and \"subject\", how is \"id-at-ia\" included? Separator? Is appended or prepended? Sorry if there is a standard way of doing this and this question makes no sense.\n\n### 2.6.5\n- \"SCION implementations SHOULD adopt these values.\" Change\n  \"implementations\" -> \"deployments\"? I assume this is configurable and not hardcoded?\n\n### 2.6.6\n- Is it worth being more specific than \"same constraints as issuer\"? There is only one additional constraint in \"issuer\" in addition to not being empty. Rephrase to `... it MUST NOT be empty and in addition include the \"id-at-ia\" field.`?\n\n### 2.6.8/2.6.9 \n- Maybe out of scope, but a brief mention _why_ they should not be used could be interesting.\n\n\n### 2.7.1: \n- \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\n### 2.7.2: \n - \"It can be used, for example, by control plane messages to identify which certificate to use for verification.\"\n - ` It can be used, for example, by control plane messages to identify which certificate to use for verification.` I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? Rationale?\n\n### 2.7.3:\n- `digitalSignature: The public key can be used to verify the digital signature of a control plane payload.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `Other attributes are not used.` -> `Other attributes MUST NOT be used`?\n\n- `...  the relying party MUST be able to trace back the private key used to sign the certificate`\n  How is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\n### 2.7.4 \n- \"Note\":  `Root` -> `root`\n- `... implementations follow what --is-- described in this document` \n- `the use of extKeyUsage should be revised in future protocol iterations`\n  This is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\n### 2.7.5\n- The reference to X.509 points to a \"superseded\" document\n\n\n### 3.2.6 \n- Maybe add some suggestions on the value of this field? E.g. should be (voting members - 2) two allow for removing members? Or if a member loses its certificates (and two events overlap)?\n\n",
+      "createdAt": "2026-05-11T17:01:05Z",
+      "updatedAt": "2026-05-13T15:28:00Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "## 2.1 \n> proof of ownership of the private key\n\nThe proof is the certificate itself (with its private key), so I think this wording can be removed\n\n> \" 5 years.\" -> Why not 1 year?  \n\nThis is a **maximum**. Since 5Y is used in practice, we want this to be reflected in the draft. @oncilla commented via email in a discussion related to #123 : \n> In practice, we use 5 years usually. For SSFN even longer (11 years, I think)\nBut of course, we can keep the recommendation, but we do not really follow it. \n\n## 2.2 \n\n>  \"must first be extracted from one or more active TRCs\" Why do we need to consider \"more\" TRCs? Only during the grace period, right?\n\nCorrect, because of the grace period. This is explained in 3.4. Certification Path - Trust Anchor Pool, that could also be cross referenced. \n\n## 2.3 \n\n> \"3 days\" -> What about the grace period? Paths can be valid for a long time. \n\nhttps://github.com/scionassociation/scion-cppki_I-D/issues/148\n\n## 2.4 \n\n> just for clarity, add \"There is one private key per voting AS (and per sensitive/regular)\". I.e. not 0 keys and not more than 1 key, right?\n\nRight now we don't prescribe anything about votes, so one AS may in principle have more than one vote. I'm not sure we want to be more restrictive than we are already.\nIf we were to, I would rather say \"there is one sensitive and one non sensitive voting certificate per Voting AS\" rather than talking about keys.. It is somehow obvious that one cert corresponds to one private key. \n\n... I'll continue commenting\n",
+          "createdAt": "2026-05-13T09:58:09Z",
+          "updatedAt": "2026-05-13T15:28:00Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "## 2.5 \n\n> (1) Explain why it makes sense to include multiple certificates\n\nRight, this wording is a bit weird.. It should basically say that there are multiple votes, not a single one\n \n> (3) Why 8 days?\n\n https://github.com/scionassociation/scion-cppki_I-D/pull/135#discussion_r3139044949\n\n\n## 2.6.4.1:\n> What is the format of \"issuer\" and \"subject\", how is \"id-at-ia\" included? Separator? Is appended or prepended? Sorry if there is a standard way of doing this and this question makes no sense. \n \nRight, the chain is a bit long, because according to [rfc5280 section-4.1.2.4](https://www.rfc-editor.org/rfc/rfc5280#section-4.1.2.4)  the chain is  `Issuer`/`Subject` --> `RDNSequence` --> `RelativeDistinguishedName` --> `AttributeTypeAndValue` --> `type`:  `id-at-ia` (which is basically OID 1 3 6 1 4 1 55324 1 2 1 ) and `value`: the ISD-AS number.\nThis comes from the RFC: \n```\n RelativeDistinguishedName ::=\n     SET SIZE (1..MAX) OF AttributeTypeAndValue\n\n   AttributeTypeAndValue ::= SEQUENCE {\n     type     AttributeType,\n     value    AttributeValue }\n\n   AttributeType ::= OBJECT IDENTIFIER\n\n   AttributeValue ::= ANY -- DEFINED BY AttributeType\n```\nWe can try to make the text more precise, however I feel people familiar with rfc5280 should understand it (our ISE reviewers did not complain about this wording).\nFor visual help, this is the entire nesting of this attribute inside a cert belonging to ISD-AS 70-196722:\n<img width=\"909\" height=\"506\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/a398a170-9e3d-4c46-9040-9803392b16f8\" />\n",
+          "createdAt": "2026-05-13T14:29:10Z",
+          "updatedAt": "2026-05-13T14:29:10Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "## 2.7.1:\n> \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n\nGood point, yes, we can reference https://www.rfc-editor.org/rfc/rfc5280#section-4.2 that clearly defines critical and non-critical\n\n>  It can be used, for example, by control plane messages to identify which certificate to use for verification. I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n\nWe mention this in https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-4.2.1-3.2.1 : \n\"The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:\n... \nSubject key identifier: The identifier of the public key to be used to verify the message. For specification details, see [Section 2.7.2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#subject-key-id-ext).\n\"\n\n## 2.7.2:\n\n> Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\nCorrect. If a cert is self signed, there is no higher level Certificate Authority. This is why you don't need an `authorityKeyIdentifier` field.  \n\n## 2.7.3:\n\n> digitalSignature: The public key can be used to verify the digital signature of a control plane payload. ->\nIf it can be used, this implies implementations MUST support this?\n\n\n\n> keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate. ->\nIf it can be used, this implies implementations MUST support this?\n\n> Other attributes are not used. -> Other attributes MUST NOT be used?\n\nThese are standard X.509 attributes, so there is no need to say that they MUST or MUST NOT be used in this document. We piggyback on what is in RFC5289.\n\n\n...  the relying party MUST be able to trace back the private key used to sign the certificate\nHow is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\nRight, let me think of a better wording\n\n## 2.7.4\n\n> the use of extKeyUsage should be revised in future protocol iterations\nThis is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\nBecause it makes it hard to use SCION certificates for TLS. See https://github.com/scionassociation/scion-cppki_I-D/issues/79#issuecomment-3748761461 \n\n## 2.7.5 \n\n> The reference to X.509 points to a \"superseded\" document\n\nRight, we can reference the next base version https://handle.itu.int/11.1002/1000/14033",
+          "createdAt": "2026-05-13T14:51:22Z",
+          "updatedAt": "2026-05-13T14:51:22Z"
+        }
+      ]
+    },
+    {
+      "number": 144,
+      "id": "I_kwDOH386tM8AAAABCBX4fA",
+      "title": "Review Til Chpt 3",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/144",
+      "state": "OPEN",
+      "author": "tzaeschke",
+      "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "## 2.1 \n\n- \"proof of ownership of the private key\" who owns these private keys? If they are owned by \"TRC\", why have multiple?\n- \" This facilitates the bootstrapping of trust within an ISD\". This process is not clear to me. Maybe give step by step instructions of who does what? Or reference the chapter if it is described later.\n\n- \" 5 years.\" -> Why not 1 year? 5 years means there is no operational routine and it is a first for many operators each time it happens....\n\n## 2.2.\n- \"must first be extracted from one or more active TRCs\" Why do we need to consider \"more\" TRCs? Only during the grace period, right?\n\n## 2.3\n- \"3 days\" -> What about the grace period? Paths can be valid for a long time.\n\n## 2.4\n- just for clarity, add \"There is one private key per voting AS (and per sensitive/regular)\". I.e. not 0 keys and not more than 1 key, right?\n\n- In this chapter, maybe explain the rationale for different certificates for regular/sensitive?\n- 2.4.1 and 2.4.2 should be merged, they have identical text except for regular vs sensitive.\n\n## 2.5\n- table 2: \n  - (1) Explain why it makes sense to include multiple certificates\n  - (3) Why 8 days?\n  - ... What is the overlap for other certificates?\n - What is \"TRC 1\"? Is it a name or number stored in the TRC? Or is it just a virtual name used here?\n\n\n## 2.6\n- `whilst` -> `while`\n- Simplify 1st sentence from \n  ``` \n  Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive.\n   ``` \n   to\n  ```\n  Control Plane PKI certificates are X.509 v3 certificate with additional constraints applied.\n  ```  \n\n### 2.6.1: \n- Clarify that this is the X.509 version and not the TRC version. \n- Clarify that this refers to X.509 extensions (not SCION extensions; this is the first time extensions are mentioned)\n- Assuming this is not the TRC version, where actually is the TRC version stored? Or is it implicit from the issuing date (if there is such a thing)?\n\n### 2.6.2: \n- Digits? Hex/decimal? \n\n### 2.6.4: \n- Also, maybe the issuer name MUST be unique? (at least within the scope of an ISD?\n\n#### 2.6.4.1: \n- What is the format of \"issuer\" and \"subject\", how is \"id-at-ia\" included? Separator? Is appended or prepended? Sorry if there is a standard way of doing this and this question makes no sense.\n\n### 2.6.5\n- \"SCION implementations SHOULD adopt these values.\" Change\n  \"implementations\" -> \"deployments\"? I assume this is configurable and not hardcoded?\n\n### 2.6.6\n- Is it worth being more specific than \"same constraints as issuer\"? There is only one additional constraint in \"issuer\" in addition to not being empty. Rephrase to `... it MUST NOT be empty and in addition include the \"id-at-ia\" field.`?\n\n### 2.6.8/2.6.9 \n- Maybe out of scope, but a brief mention _why_ they should not be used could be interesting.\n\n\n### 2.7.1: \n- \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\n### 2.7.2: \n - \"It can be used, for example, by control plane messages to identify which certificate to use for verification.\"\n - ` It can be used, for example, by control plane messages to identify which certificate to use for verification.` I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? Rationale?\n\n### 2.7.3:\n- `digitalSignature: The public key can be used to verify the digital signature of a control plane payload.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `Other attributes are not used.` -> `Other attributes MUST NOT be used`?\n\n- `...  the relying party MUST be able to trace back the private key used to sign the certificate`\n  How is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\n### 2.7.4 \n- \"Note\":  `Root` -> `root`\n- `... implementations follow what --is-- described in this document` \n- `the use of extKeyUsage should be revised in future protocol iterations`\n  This is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\n### 2.7.5\n- The reference to X.509 points to a \"superseded\" document\n\n\n### 3.2.6 \n- Maybe add some suggestions on the value of this field? E.g. should be (voting members - 2) two allow for removing members? Or if a member loses its certificates (and two events overlap)?\n\n",
-      "createdAt": "2026-05-11T17:01:05Z",
-      "updatedAt": "2026-05-11T17:01:05Z",
+      "body": "## 3.1\n- Under `A TRC can have the following states:`, add \n  `- invalid: The TRC is neither valid not active`\n   \n### 3.2.2\n- `baseNumber`: This starting point is _always_ the currently valid base TRC, no special case for the initial TRC. Replace\n   \"This starting point is either the ISD's initial TRC or the currently valid base TRC\" \n   with \n   \"This starting point is the currently valid base TRC\"  \n\n### 3.2.3\n\nFont of last \"GeneralizedTime\" is inconsistent\n\n### 3.2.4\n- Remove the \"or\" after the second bullet, I don't think \"or\" is used with \";\".\n- Suggested value for grace period?\n\n### 3.2.7\n- Recommend upper limit for quorum? Using the maximum is risky because certificates may get lost, or a rogue AS may refuse to vote...?\n\n### 3.2.9\n- Suggested number of authorative ASes? (compared to core/voting ASes)\n- Should they overlap with voting ASes? Why not the same?\n\n\n### 3.2.10\n- Should there be a designated separate for non-English text?\n- Should there be a designator for the (non-English) language?\n\n\n### 3.2.11\n- \"The issuer / serialNumber pair for each certificate MUST be unique.\"\n  Is it even possible to create different certificates with the same issuer + serialNumber? If not, isn't this condition implied in the previous point?\n\n",
+      "createdAt": "2026-05-12T15:55:05Z",
+      "updatedAt": "2026-05-12T15:55:05Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 148,
+      "id": "I_kwDOH386tM8AAAABCJXABw",
+      "title": "Double check cert max validity",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/148",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "From #143: \n\n> \"3 days\" -> What about the grace period? Paths can be valid for a long time. \n\nThere is no grace period for AS certificates. Two certificates can be valid at the same time, and during verification the relying party selects the right cert based on the  subject key identifier  (see https://www.ietf.org/archive/id/draft-dekater-scion-pki-12.html#name-verifying-a-control-plane-m ). We could add some wording saying that they are renewed before the old one expires, with a cross reference to that section. \n\nOn path segments validity, in -controlplane, we say: \n```\n2.2.2.6.  AS Entry Signature\n\n   Each AS entry MUST be signed with the AS certificate's private key\n   K_i.  The certificate MUST have a validity period that is longer than\n   the Hop Field absolute expiration time (described in\n   Section 2.2.2.5). \n```\nA hop field max validity is 24h, so with 3 days you should have enough time to overlap and keep beaconing.. However, we should think if we want to extend it. ",
+      "createdAt": "2026-05-13T15:08:16Z",
+      "updatedAt": "2026-05-13T15:08:16Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 149,
+      "id": "I_kwDOH386tM8AAAABCJhjNw",
+      "title": "Review Dominik",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/149",
+      "state": "OPEN",
+      "author": "oncilla",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "### 1.1. Terminology\n\n> Voting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\nIt is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\nI am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.\n\n### 1.3 \n\n> , which has a version number, \n\nVersion number here is imprecise. There is a field called version in the TRC payload which indicates the semantic version of the payload.\nFor TRC you should generally talk about serial and base numbers as to not confuse the reader. I think here, I would replace version number with serial number and gloss over the base number.\n\n### 1.4\n\n> While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).\n\nI wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\n### 2.6.4\n\n> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies\n\nThat sentence does not really make sense. We never have to retrieve the intermediate CA certificate. The AS certificate is always bundled together with the intermediate CA certificate as a certificate chain.\n\n### 2.7.1 \n\n> authorityCertIssuer & authorityCertSerialNumber: MUST NOT be included. Implementations MUST return an error if either is present.\n\nAs also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\n\n### 3\n\n> The TRC is a signed collection of [[X.509](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#X.509)] v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ([[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)] section 5).\n\nThis makes it sound like the certificates are not part of the CMS signed-data. I think it could be rephrased to be clearer.\n\n### 3.1\n\n> [Figure 2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#_figure-2) shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC.\n\nI don't understand the meaning of the second part of the sentence. In figure 2, there is only a base TRC AFAICT.\n\n### 3.2.5\n\n> The noTrustReset field is OPTIONAL and defaults to FALSE.\n\nI think we changed this to not be in the ASN.1 module to follow our implementation\n\n### NOTE TO SELF: Reviewed until 3.3\n\n\n\n\n\n",
+      "createdAt": "2026-05-13T15:33:53Z",
+      "updatedAt": "2026-05-13T15:33:53Z",
+      "closedAt": null,
+      "comments": []
+    },
+    {
+      "number": 150,
+      "id": "I_kwDOH386tM8AAAABCJpRMg",
+      "title": "Review Til Chpt 4, 5, 6 and Appendix C",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/150",
+      "state": "OPEN",
+      "author": "tzaeschke",
+      "authorAssociation": "NONE",
+      "assignees": [],
+      "labels": [],
+      "body": "### 4.1.2\n\n- `Relying parties MUST have at least one valid TRC available.`\n  Maybe specify what relying parties are. I assume it is control services of every AS in the ISD (== AS operators/infrastructure)?\n  I assume it is not border routers and not endhosts.\n\n- The 1st MUST does not give any instructions on what to do or how to achieve it, usually I expect MUST before a description of an  action, not before a description of a state. I suggest moving it to the 3rd point, see below.\n- The 2nd MUST overlaps with the first, I suggest moving it to the 3rd bullet.\n- How to proceed if any of these MUSTs fail (e.g. due to network separation)?\n\n- Beaconing + path discovery: This section is about _ discovering_  TRC updates, but it contains normative language about CP traffic creation. Moreover these MUSTs appear to duplicate the MUSTs in section 4.2.1. Maybe remove the normative language here?\n\n- There is an empty line between 2nd and 3rd point.\n\n- Active discovery: `Any TRC can be obtained at any time from the sender of the information it secures; `\n  This sentence is unclear to me, what is \"it\"?\n  Also, why `any` TRC? Is should probably only get the latest one?\n  Maybe rephrase to: `The latest TRC can be actively queried from any entity (control service) that has it.`\n\n- `Note`: What is the point of this note, why is this relevant? Also, it seems incorrect, also the third mechanism involves active communication.\n  Moreover, the first two mechanisms require the third one, correct?\n\nSuggestion: \n  - Before the bullet list, insert: `New TRCs can be obtained from any AS that has them. The necessary query and response is described in [I-D.dekater-scion-controlplane], section \"Distribution of Cryptographic Material\"`.\n  - Change third bullet to `Any relying party can actively poll other parties for new TRC.`\n  - Add a separate list below the bullet list:  \n    ```\n    When to poll:\n    - A relying party MUST poll if the current TRC is about to expire.\n    - A relying party SHOULD poll if path lookup or beaconing traffic is sparse\n    - A relying party MAY poll at any time.\n    ``` \n  - Remove `Note: ...`\n\n\n\n## 4.2\n- `parties MUST be able`  What is the implication here? What must an implementer do to achieve this? Or does this follow implicitly from following from other sections of this document (including the following sections)? In that case maybe simply replace this `MUST be` with `are`?\n\n### 4.2.1\n- remove parenthesis around `(valid)` or simplify/rephrase to `An AS signs control plane messages with the private key that corresponds to its own certificate.`\n\n### 4.2.2\n- remove reference to SCION: `For efficiency, SCION distributes these certificate chains separately from the signed messages.`\n  -> `For efficiency, these certificate chains are distributed separately from the signed messages.`\n\n\n- 2nd point: Why is this a MUST? If this is security critical, why is this information optional for the sender? \n- 2nd point: How does one know whether this is the `latest TRC`? Do they have to perform a TRC query to check?\n- 2nd point: Combine two MUST into one: `... the relying party MUST ensure that they have this latest TRC.`\n\n- 3rd point: Remove 1st MUST, it seems unnecessary ->  `the relying party selects the certificate chain that will be used to verify the message`\n- 3rd point: Remove the three sub-MUSTs, they are duplicates, the first MUST implies the other 3. Maybe make it similar to 4th point.\n- 3rd point: Is it worth adding something about the `current time`? I.e. that \"coarse synchronization` is sufficient (reference CP draft 7.3? Maybe a reference to a section that discusses time tolerance?\n\n- 5th point: What happens if the verification or the check fails?\n\n- It seems a bit inconsistent that the failure of (4.) is discussed in a separate point (5.) while the failure of (3.) is discussed in a separate paragraph afterwards.\n\n- `Important`: \n  - Remove normative SHOULD, it is not actionable. Also an \"implication\" usually means that something \"is\" or \"is not\", rather than \"should\".\n\n  - I'm not sure what is said here. Why SHOULD they, or rather, may not be, verifiable? As long as I have a certificate, I can verify them (verification may fail because the certificate is outdated)?\n    Is this meant to say: \"An implication of the above procedure is that path segments SHOULD be _valid_ at time of use.\"?\n    How is this an implication of the procedure, the procedure says nothing about storing the path and using it later...\n    Maybe remove the first sentence and shorten the whole paragraph to \"Important: It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.\"?\n\n  - Does \"It is not enough\" mean that something MUST be done? -> Insert MUST\n\n## 4.3\n- Does \"REQUIRED\" need to be normative? This is just a listing of steps, they technically require each other implicitly.\n- Does \"MAY\" need to be normative?\n  \n\n## 5.1\n- `PKI operators need to ensure that the CAs maintain accurate time.`\n  In CP-draft, it is not called \"accurate\" but \"coarse\", maybe write `PKI operators need to (MUST?) maintain coarse time synchronization as discussed in [I-D.dekater-scion-controlplane], section \"Attacks on Time Sources\"`.\n- Also, maybe replace `Attacks on Time Sources` with `7.3. Effects of Clock Inaccuracy`?\n\n- `This document describes a typical TRC signing ceremony in Appendix C, but further processes are out-of-scope.` \n  `This document` is misleading, the previous sentence mentions a document, but a different one. How about: `The documentation of a typical TRC signing ceremony is discussed in Appendix C.`\n\n# 6\n- `This section discussed implication of such trust architecture, covering inter-AS security considerations.`\n   Typo: past tense and singular: `discusseS implicationS`\n\n## 6.1\n- `In SCION there is no central authority that could \"switch off\" an ISD as each`\n  add `In SCION there is no central authority that could \"switch off\" an ISD (except the ISD itself) as each ...`\n\n- 1st point: Maybe simplify to  `... To maliciously perform a TRC update, an attacker would need to compromise enough voting keys for a voting quorum. The higher the quorum, the _harder_ a malicious update _becomes_.`\n\n## 6.2\n- `On the other hand,` -> `However,`  .  On the other hand usually comes after \"on one hand\"\n\n- 1st point: Is this a SHOULD?\n- This is not obvious to me. Every path segment is signed with a specific CA, right? So does that mean every AS should sign its PCBs with different CAs round-robin? If so, maybe that is worth making explicit? \n  Generally, can we be more specific in how one \"relies\" on multiple CAs?\n\n# Appendix C\n\n- In general, the signing procedure document will not be an RFC. Should there be any normative language here?\n  Also, it says the procedure is RECOMMENDED, implying that all the following MUSTs are recommended, so the MUSTs are all optional .... ?\n  Maybe we should remove all normative language from this section, including the \"RECOMMENDED\"?\n\n## C.1\n- The SHOULD and the previous RECOMMENDED seem redundant.\n- `Voting ASes` is spelled with upper case here (several occurrences) but lower case elsewhere. Change to lower case?\n- 2nd point `They are in possession of a device with the private keys of their respective certificates in the TRC.`\n  Device? Maybe shorten to: `They are in possession of the private keys of their respective certificates in the TRC.`\n\n- remove ` and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent.`\n- The sentence `Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine.` seems wrong: \n  - \"Hash comparison checks are included\" -> where? by whom? should they be part of a protocol? What should be hashed? The private keys? Why?\n  - How does hash comparison _ensure_ that a private keys never leave a machine?\n  - Mentioning of \"avoiding mistakes\" seems unnecessary\n\n## C.2\n- The initial sentence seems off:\n  - Do we really need to specify that participants need to agree on a meeting location?\n    If anything we could suggest to use a _physical_ _in-person_ meeting, but the location is irrelevant. \n  - It sounds like, physical location and devices are not a MUST, so why even mention it?\n  - `MUST decide the ISD policy as follows;` makes it sound like the list gives instruction on how to decide on a policy. That is not the case.\n    Maybe: `An ISD policy MUST include the following items:`?\n\n- 1st point: change to `ISD number - for public ISDs obtained from the SCION registry, see Section 3.2.2;`\n\n- `Voting AS` is upper case...\n\n- `Each representative of a Voting AS MUST also create the following before the ceremony:`\n  Why MUST _before_ the ceremony? Also, maybe remove the MUST, it seems implicit/obvious for providing voting keys.\n\n- `In addition,.. ` all the MUSTs here seem obvious/implicit, I think they can be removed.\n\n- `The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.`\n  I'm not sure, does this really belong here?\n \n- `The Ceremony Administrator MUST provide or be provided with a device to exchange data between the ceremony participants.`\n  Again, these seems obvious to me. I would either remove the sentence or remove the MUST, it does not even specify who is actionable. \n\n- `SHOULD`: So after all these MUSTs, the security of the devices is optional?\n\n### C.3.1\n- Simplify sentence: `All parties share the certificates that must be part of the TRC with the Ceremony Administrator.` to \n  `All certificates that must be part of the TRC must be shared with the Ceremony Administrator.`\n\n- `The Ceremony Administrator MUST then` this MUST seems implicit (= a precondition) for the following MUST. Remove it?\n- Does it need to be SHA-512? What is wrong with SHA-3 or others?\n  Maybe add `SHA-512 (or any equivalent or better algorithm)`?\n  Then again, this document is only a recommended example, so maybe we can leave it as is.\n\n### C.3.2\n- 1st sentence: remove words `the` before Section 3.2 and `completed`?\n\n- \"DER encoding\", provide reference?\n\n- `by computing this on their` -> `by computing IT on their`\n- `checking it matches` -> `checking THAT it matches`\n\n### C.3.4\n- `The Signing Ceremony is completed once when every voting representative` -> remove `once` or `when`",
+      "createdAt": "2026-05-13T15:53:13Z",
+      "updatedAt": "2026-05-13T15:53:13Z",
       "closedAt": null,
       "comments": []
     }
@@ -7797,7 +7917,7 @@
       "labels": [],
       "body": "Resolves #132 \r\nResolves #122 \r\n ...\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-04-24T10:31:59Z",
-      "updatedAt": "2026-05-11T12:18:43Z",
+      "updatedAt": "2026-05-13T14:07:10Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "55fbfe25553b0e56be8651461f42ffe86f0fdbd3",
@@ -7817,6 +7937,20 @@
           "body": "@oncilla what do you think about comments in here? \r\n\r\nI have to merge this PR so that others an review, but the points above remain open",
           "createdAt": "2026-05-11T12:18:43Z",
           "updatedAt": "2026-05-11T12:18:43Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "I cannot comment on this directly: https://github.com/scionassociation/scion-cppki_I-D/pull/135#discussion_r3168700487\r\nSo I add the comment here.\r\n\r\n> The presence of this attribute allows relying parties to identify the AS that operates the issuing CA, facilitating the discovery and retrieval of the intermediate CA certificate during chain validation.\r\n\r\nI think this is technically not correct because the intermediate CA certificate is always  distributed together with the AS certificate in a certificate chain. The only thing we need to match is the root certificate, but that can be done based on the Issuer Subject and AKID. \r\n\r\nIt is pretty hard to find a motivation why we have this restriction because it is not technically necessary to have. I think it was necessary before the move to X.509 certificates, and we never reconsidered if this is actually necessary.\r\n\r\nWhat is \"necessary\" is that the CA is a routable entity in the SCION network to support auto-renewal. It also makes sense to include the ISD-AS of that entity in the subject of the intermediate certificate. However, the whole system would still function afaik if the intermediate CA certificate did not have the ISD-AS number. (excluding our validation logic that enforces it of course). In the control plane, we don't really rely on that information.\r\n\r\nFor the auto-renewal, we use the ISD-AS of the roots in the TRC to discover potential fallback ISD-ASes when the renewal fails with the primary. \r\n\r\nIf not requested, I would just leave the motivation open, and state it as a requirement without it.",
+          "createdAt": "2026-05-13T13:09:47Z",
+          "updatedAt": "2026-05-13T13:09:47Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> If not requested, I would just leave the motivation open, and state it as a requirement without it. \r\n\r\n@oncilla ok, I dropped the sentence in https://github.com/scionassociation/scion-cppki_I-D/pull/147 \r\n\r\nCould you also chime in on other comments in this PR?",
+          "createdAt": "2026-05-13T14:07:10Z",
+          "updatedAt": "2026-05-13T14:07:10Z"
         }
       ],
       "reviews": [
@@ -7934,6 +8068,46 @@
           "createdAt": "2026-05-01T09:48:21Z",
           "updatedAt": "2026-05-01T09:48:21Z",
           "comments": []
+        },
+        {
+          "id": "PRR_kwDOH386tM7_N0f6",
+          "commit": {
+            "abbreviatedOid": "c557223"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T12:56:31Z",
+          "updatedAt": "2026-05-13T12:56:31Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "> As far as I understand, using authorityCertIssuer & authorityCertSerialNumber is not supported in scionproto.\r\n\r\nI don't think this is true, no.\r\n\r\nWhile we will never generate the authorityCertIssuer/authorityCertSerialNumber in with the Go code (I cannot attest to the libc implementation, but unlikely they would), the code is still able to deal with certificate chains that have this set without a authorityKeyIdentifier. Essentially, the verification code ignores these paramaters and searches for potential parent certificates:\r\n\r\nFor reference: https://github.com/golang/go/blob/922abf576dfcd6e836a936b5fcc636e9e572b591/src/crypto/x509/cert_pool.go#L153-L155\r\n\r\nSo, we can add this additional restriction (which also is pretty in-line with WebPKI), but currently it is not enforced. We would need to tighten down the verification logic.\r\n\r\n\r\n",
+              "createdAt": "2026-05-13T12:56:31Z",
+              "updatedAt": "2026-05-13T12:56:31Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7_OPyH",
+          "commit": {
+            "abbreviatedOid": "f52cbdb"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-13T13:10:22Z",
+          "updatedAt": "2026-05-13T13:10:23Z",
+          "comments": [
+            {
+              "originalPosition": 128,
+              "body": "WFM.",
+              "createdAt": "2026-05-13T13:10:22Z",
+              "updatedAt": "2026-05-13T13:10:23Z"
+            }
+          ]
         }
       ]
     },
@@ -7949,13 +8123,13 @@
       "labels": [],
       "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)",
       "createdAt": "2026-04-30T10:02:46Z",
-      "updatedAt": "2026-05-11T13:26:15Z",
+      "updatedAt": "2026-05-12T17:42:16Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "d3895db8c0ead3689da999ac3742c60ddbf320fb",
+      "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "description_encoding",
-      "headRefOid": "3f857b77f0fde839bc4d912acb9ec962c0b8a501",
+      "headRefOid": "fcb6bc7db25b8fabdd7be3565c9912c0fc606e62",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -7979,6 +8153,112 @@
               "body": "We can make it a MUST if you want. All existing TRCs are in that form",
               "createdAt": "2026-05-11T13:26:15Z",
               "updatedAt": "2026-05-11T13:26:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7-nkU2",
+          "commit": {
+            "abbreviatedOid": "3f857b7"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T11:26:42Z",
+          "updatedAt": "2026-05-12T11:26:43Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "```suggestion\r\nThe `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with \"Net-Unicode\" {{RFC5198}} to ensure consistent normalization. It SHOULD NOT be empty.\r\n```",
+              "createdAt": "2026-05-12T11:26:42Z",
+              "updatedAt": "2026-05-12T11:26:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7-q1gG",
+          "commit": {
+            "abbreviatedOid": "3909766"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T13:23:22Z",
+          "updatedAt": "2026-05-12T13:23:22Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "@oncilla how about this? \n\n",
+              "createdAt": "2026-05-12T13:23:22Z",
+              "updatedAt": "2026-05-12T13:23:22Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7-uDtP",
+          "commit": {
+            "abbreviatedOid": "ce8c8cb"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T14:52:56Z",
+          "updatedAt": "2026-05-12T15:01:18Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "I don't think this can be a MUST for English. We have examples of TRCs that are not in English already.\nE.g. ISD70, ISD72, ISD 76. It also feels a bit like an overreach. We want SCION to be adopted across the world. \n\nThere is a logical inconsistency, fwiw. If the description is English, it cannot have multiple languages.\n\n",
+              "createdAt": "2026-05-12T14:52:56Z",
+              "updatedAt": "2026-05-12T15:01:18Z"
+            },
+            {
+              "originalPosition": 19,
+              "body": "I don't think this works well, and feels like an after thought. It also makes all our TRCs go against the SHOULD recommendation.\r\n\r\nHow about the following:\r\nWe add a backward/forward compatible additional field:\r\n`descriptions` (optional, at the end for DER, with explicit tag) that is a list of description and language.\r\nMulti-language TRCs should use the descriptions field. No further restrictions on the description field itself.\r\n(We could even go further and say all TRCs should use the descriptions field rather than description)\r\n\r\nI need to double check that this is actually backward and forward compatible.\r\n\r\nFor inspiration: `LogotypeImageInfo` https://datatracker.ietf.org/doc/html/rfc9399#name-loyalty-logotype\r\n\r\nAdditionally, we can add a descriptionLanguageTag similar to: `taTitleLangTag` https://datatracker.ietf.org/doc/html/rfc5914#section-2.4",
+              "createdAt": "2026-05-12T15:01:13Z",
+              "updatedAt": "2026-05-12T15:05:35Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7-w033",
+          "commit": {
+            "abbreviatedOid": "ce8c8cb"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T16:19:03Z",
+          "updatedAt": "2026-05-12T16:19:04Z",
+          "comments": [
+            {
+              "originalPosition": 18,
+              "body": "> The description MUST be in English  \r\n\r\nThis comes from -00 and likely comes from some old docs. I see your point, let's drop it\r\n",
+              "createdAt": "2026-05-12T16:19:03Z",
+              "updatedAt": "2026-05-12T16:19:04Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7-zABf",
+          "commit": {
+            "abbreviatedOid": "3909766"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-12T17:40:34Z",
+          "updatedAt": "2026-05-12T17:40:34Z",
+          "comments": [
+            {
+              "originalPosition": 19,
+              "body": "I updated the text and ASN.1 module to introduce two new optional texts. What do you think? ",
+              "createdAt": "2026-05-12T17:40:34Z",
+              "updatedAt": "2026-05-12T17:40:34Z"
             }
           ]
         }
@@ -8197,20 +8477,177 @@
       "id": "PR_kwDOH386tM7aTn1d",
       "title": "Checking capitalisations and grammar tweaks",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/141",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "",
       "createdAt": "2026-05-11T15:13:11Z",
-      "updatedAt": "2026-05-11T15:13:13Z",
+      "updatedAt": "2026-05-12T17:56:35Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Kevin's-Tweaks",
-      "headRefOid": "bda01057c3454359d8fc44500d126dc07882dbf1",
+      "headRefOid": "2483384f3d0867831b4d6a051ae1b6c06363d2d9",
+      "closedAt": "2026-05-12T17:56:35Z",
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "This is what draftforge says about the current version:\r\n\r\nList of inconsistent use of capitalization in /Users/nic/repos/scion-cppki_I-D/draft-dekater-scion-pki.md:\r\n\r\nPath Aware Networking (2) (Ln 10, 13)\r\npath aware networking (1) (Ln 110)\r\n--------\r\nde Kater (2) (Ln 21, 22)\r\nde kater (1) (Ln 24)\r\n--------\r\nof basic (1) (Ln 49)\r\nof Basic (1) (Ln 53)\r\n--------\r\nencoding rules (1) (Ln 53)\r\nEncoding Rules (4) (Ln 53, 53, 53, 783)\r\n--------\r\nand Distinguished (1) (Ln 53)\r\nand distinguished (2) (Ln 846, 861)\r\n--------\r\nDigital Signature (1) (Ln 57)\r\ndigital signature (1) (Ln 527)\r\n--------\r\nSignature Algorithm (1) (Ln 57)\r\nsignature algorithm (2) (Ln 426, 426)\r\n--------\r\nSCION Registry (1) (Ln 63)\r\nSCION registry (1) (Ln 1219)\r\n--------\r\nThis document (4) (Ln 106, 110, 1047, 1099)\r\nthis document (5) (Ln 120, 131, 279, 574, 1380)\r\n--------\r\ncryptographic material (8) (Ln 106, 120, 832, 1010, 1078, 1078, 1078, 1080)\r\nCryptographic Material (3) (Ln 832, 959, 1024)\r\n--------\r\ncontrol plane messages (21) (Ln 106, 258, 295, 295, 515, 546, 547, 832, 953, 953, 967, 969, 973, 1002, 1008, 1062, 1062, 1076, 1076, 1078, 1080)\r\nControl Plane Messages (2) (Ln 832, 965)\r\n--------\r\ntrust model (5) (Ln 108, 120, 183, 185, 1051)\r\nTrust Model (1) (Ln 160)\r\n--------\r\ntypes and (2) (Ln 108, 863)\r\nTypes and (1) (Ln 620)\r\n--------\r\nof the Trust (1) (Ln 108)\r\nof the trust (1) (Ln 210)\r\n--------\r\nthe Trust Root (4) (Ln 108, 179, 268, 610)\r\nthe trust root (2) (Ln 198, 272)\r\n--------\r\nTrust Root Configuration TRC (6) (Ln 108, 137, 179, 190, 268, 610)\r\ntrust root configuration TRC (3) (Ln 141, 149, 151)\r\n--------\r\nthe Public Key (1) (Ln 129)\r\nthe public key (19) (Ln 277, 279, 279, 287, 289, 309, 315, 475, 504, 523, 525, 527, 528, 536, 552, 556, 557, 558, 978)\r\n--------\r\nSystem is (1) (Ln 131)\r\nsystem is (1) (Ln 205)\r\n--------\r\nAS a (1) (Ln 131)\r\nas a (12) (Ln 131, 181, 277, 426, 588, 592, 610, 730, 862, 881, 896, 1344)\r\n--------\r\npath construction (1) (Ln 135)\r\nPath Construction (3) (Ln 295, 1062, 1078)\r\n--------\r\nEach ISD has (1) (Ln 135)\r\neach ISD has (1) (Ln 179)\r\n--------\r\nA Trust Root Configuration (1) (Ln 137)\r\na trust root configuration (3) (Ln 141, 149, 151)\r\n--------\r\nthose ASes (2) (Ln 139, 736)\r\nThose ASes (1) (Ln 147)\r\n--------\r\na TRC update (16) (Ln 139, 262, 263, 625, 660, 699, 705, 794, 813, 843, 881, 896, 905, 912, 1060, 1070)\r\na TRC Update (1) (Ln 901)\r\n--------\r\ntrust for a base TRC (1) (Ln 141)\r\nTrust for a base TRC (1) (Ln 625)\r\n--------\r\ninitial TRC (18) (Ln 143, 143, 256, 349, 612, 624, 625, 633, 651, 651, 652, 656, 705, 927, 927, 927, 929, 1092)\r\nInitial TRC (2) (Ln 925, 1198)\r\n--------\r\nregular TRC update (5) (Ln 145, 196, 879, 891, 907)\r\nRegular TRC Update (1) (Ln 877)\r\n--------\r\nsensitive TRC update (6) (Ln 145, 196, 268, 732, 740, 838)\r\nSensitive TRC Update (1) (Ln 894)\r\n--------\r\nas the (11) (Ln 145, 179, 179, 196, 279, 471, 705, 788, 820, 853, 953)\r\nAS the (1) (Ln 1071)\r\n--------\r\nTRC updates (17) (Ln 147, 196, 262, 305, 326, 327, 820, 946, 948, 948, 950, 953, 953, 953, 956, 982, 1012)\r\nTRC Updates (1) (Ln 834)\r\n--------\r\nVoting Quorum (3) (Ln 149, 220, 359)\r\nvoting quorum (8) (Ln 149, 149, 181, 716, 723, 884, 1060, 1246)\r\nVoting quorum (1) (Ln 1223)\r\n--------\r\nvotes signatures (1) (Ln 149)\r\nVotes Signatures (1) (Ln 230)\r\n--------\r\nA voting (3) (Ln 149, 181, 723)\r\na Voting (1) (Ln 1228)\r\n--------\r\nGrace Period (3) (Ln 151, 220, 359)\r\ngrace period (9) (Ln 151, 631, 686, 690, 694, 820, 830, 948, 996)\r\nGrace period (1) (Ln 1222)\r\n--------\r\nall parties (3) (Ln 164, 272, 1213)\r\nAll parties (1) (Ln 1253)\r\n--------\r\nshould provide (3) (Ln 168, 1235, 1235)\r\nSHOULD provide (1) (Ln 694)\r\n--------\r\nTrust agility (1) (Ln 170)\r\ntrust agility (2) (Ln 183, 185)\r\n--------\r\nSupport for (1) (Ln 173)\r\nsupport for (2) (Ln 430, 1305)\r\n--------\r\nthe core ASes (3) (Ln 179, 260, 885)\r\nthe Core ASes (1) (Ln 1224)\r\n--------\r\nand voting ASes (1) (Ln 179)\r\nand Voting ASes (1) (Ln 1237)\r\n--------\r\nmay be (8) (Ln 179, 309, 315, 1060, 1061, 1213, 1321, 1336)\r\nMAY be (3) (Ln 345, 438, 1024)\r\n--------\r\nkeys and (1) (Ln 181)\r\nKeys and (1) (Ln 208)\r\n--------\r\nrequired to (2) (Ln 181, 295)\r\nREQUIRED to (1) (Ln 1017)\r\n--------\r\nother ISDs (1) (Ln 183)\r\nOther ISDs (1) (Ln 907)\r\n--------\r\nits own Trust (1) (Ln 190)\r\nits own trust (1) (Ln 1051)\r\n--------\r\nEach TRC (1) (Ln 190)\r\neach TRC (1) (Ln 781)\r\n--------\r\nUpdates and Trust Resets (1) (Ln 194)\r\nupdates and trust resets (1) (Ln 982)\r\n--------\r\nThere are (3) (Ln 196, 268, 303)\r\nthere are (1) (Ln 268)\r\n--------\r\nCertificate Revocation (1) (Ln 201)\r\ncertificate revocation (1) (Ln 203)\r\n--------\r\nBoth short-lived certificates and revocation (1) (Ln 205)\r\nboth short-lived certificates and revocation (1) (Ln 206)\r\n--------\r\nmust be signed (1) (Ln 205)\r\nMUST be signed (1) (Ln 927)\r\n--------\r\nthe CA (11) (Ln 205, 206, 422, 426, 528, 1007, 1021, 1022, 1061, 1082, 1082)\r\nthe cA (1) (Ln 593)\r\n--------\r\nCA must (3) (Ln 205, 206, 1343)\r\ncA MUST (1) (Ln 601)\r\n--------\r\nOverview of Certificates (1) (Ln 208)\r\noverview of certificates (1) (Ln 321)\r\n--------\r\nCP Root (2) (Ln 234, 385)\r\nCP root (3) (Ln 328, 340, 757)\r\n--------\r\nCP Issuing CA Certificate (2) (Ln 242, 397)\r\nCP issuing CA certificate (1) (Ln 341)\r\n--------\r\nCP AS Certificate (2) (Ln 249, 403)\r\nCP AS certificate (2) (Ln 299, 342)\r\n--------\r\nadditionally the TRC contains (1) (Ln 256)\r\nAdditionally the TRC contains (1) (Ln 614)\r\n--------\r\nof Voting (2) (Ln 256, 1246)\r\nof voting (3) (Ln 303, 716, 751)\r\n--------\r\ncertificates must (2) (Ln 256, 289)\r\ncertificates MUST (1) (Ln 465)\r\n--------\r\ncore ASes in the (1) (Ln 260)\r\nCore ASes in the (1) (Ln 861)\r\n--------\r\nCertification Authorities CAs (1) (Ln 261)\r\ncertification authorities CAs (1) (Ln 751)\r\n--------\r\ncertificates to (6) (Ln 261, 828, 830, 832, 1032, 1061)\r\nCertificates to (1) (Ln 1326)\r\n--------\r\nand AS (4) (Ln 268, 449, 453, 455)\r\nand as (1) (Ln 426)\r\n--------\r\nof the Control Plane root (2) (Ln 277, 279)\r\nof the Control Plane Root (1) (Ln 277)\r\n--------\r\nthe Control Plane root certificate (3) (Ln 277, 279, 992)\r\nthe Control Plane Root certificate (1) (Ln 277)\r\n--------\r\nControl Plane root certificate is (2) (Ln 277, 281)\r\nControl Plane Root certificate is (1) (Ln 277)\r\n--------\r\nPlane root certificate is used (1) (Ln 277)\r\nPlane Root certificate is used (1) (Ln 277)\r\n--------\r\nroot certificate is used to (1) (Ln 277)\r\nRoot certificate is used to (1) (Ln 277)\r\n--------\r\nsign Control Plane (2) (Ln 277, 287)\r\nsign control plane (2) (Ln 295, 1062)\r\n--------\r\nused to verify Control Plane (2) (Ln 277, 287)\r\nused to verify control plane (3) (Ln 546, 547, 967)\r\n--------\r\nRECOMMENDED maximum validity period (5) (Ln 281, 291, 299, 311, 317)\r\nrecommended maximum validity period (2) (Ln 291, 466)\r\nRecommended maximum validity period (1) (Ln 346)\r\n--------\r\nof a Control Plane (3) (Ln 281, 291, 818)\r\nof a control plane (4) (Ln 527, 532, 568, 569)\r\n--------\r\na Control Plane root (3) (Ln 281, 289, 818)\r\na control plane root (1) (Ln 1233)\r\n--------\r\nset of Control Plane root (1) (Ln 283)\r\nset of control plane root (1) (Ln 616)\r\n--------\r\nof Control Plane root certificates (1) (Ln 283)\r\nof control plane root certificates (1) (Ln 616)\r\nof Control Plane Root Certificates (1) (Ln 1226)\r\n--------\r\nControl Plane Issuing CA Certificate (1) (Ln 285)\r\nControl Plane issuing CA certificate (2) (Ln 287, 291)\r\n--------\r\nCertificate The (1) (Ln 285)\r\ncertificate The (2) (Ln 582, 1268)\r\n--------\r\nControl Plane AS certificates (5) (Ln 287, 287, 295, 297, 694)\r\nControl Plane AS Certificates (1) (Ln 1015)\r\n--------\r\nControl Plane CA (1) (Ln 287)\r\ncontrol plane CA (1) (Ln 515)\r\n--------\r\nare used to verify Control (1) (Ln 287)\r\nare used to verify control (1) (Ln 967)\r\n--------\r\nas Path (1) (Ln 295)\r\nas path (1) (Ln 1062)\r\n--------\r\nregular voting certificates (11) (Ln 303, 309, 349, 560, 776, 861, 873, 873, 887, 891, 1253)\r\nRegular voting certificates (1) (Ln 309)\r\n--------\r\nKey Pairs (1) (Ln 319)\r\nkey pairs (1) (Ln 321)\r\n--------\r\nSigned with (1) (Ln 335)\r\nsigned with (1) (Ln 1289)\r\n--------\r\nRECOMMENDED to (2) (Ln 347, 1200)\r\nrecommended to (2) (Ln 929, 1032)\r\n--------\r\nThis section (8) (Ln 412, 618, 639, 838, 934, 1053, 1066, 1297)\r\nthis section (1) (Ln 838)\r\n--------\r\nconstraints and conditions (1) (Ln 412)\r\nConstraints and Conditions (1) (Ln 1325)\r\n--------\r\nsignature field (2) (Ln 426, 477)\r\nsignature Field (1) (Ln 800)\r\nSignature field (1) (Ln 1321)\r\n--------\r\nimplementations MUST (5) (Ln 430, 449, 458, 681, 788)\r\nImplementations MUST (3) (Ln 509, 511, 519)\r\n--------\r\nspecified in section (1) (Ln 436)\r\nspecified in Section (1) (Ln 781)\r\n--------\r\nid-at-ia attribute (5) (Ln 449, 453, 455, 458, 460)\r\nid-at-ia Attribute (1) (Ln 451)\r\n--------\r\nobject identifier (2) (Ln 453, 1117)\r\nOBJECT IDENTIFIER (8) (Ln 1118, 1121, 1124, 1127, 1130, 1133, 1136, 1139)\r\n--------\r\nroot issuing CA (1) (Ln 455)\r\nRoot Issuing CA (3) (Ln 538, 564, 597)\r\n--------\r\nSHOULD be (6) (Ln 455, 534, 658, 694, 922, 1012)\r\nshould be (1) (Ln 574)\r\n--------\r\ncertificates the (2) (Ln 456, 998)\r\nCertificates The (1) (Ln 1015)\r\n--------\r\nAS to (1) (Ln 456)\r\nas to (1) (Ln 1380)\r\n--------\r\nvalidity period of the (5) (Ln 465, 686, 818, 992, 1233)\r\nValidity period of the (1) (Ln 1221)\r\n--------\r\nof the certificate (4) (Ln 465, 761, 767, 1008)\r\nof the Certificate (1) (Ln 1233)\r\n--------\r\nauthorityKeyIdentifier Extension (2) (Ln 502, 1305)\r\nauthorityKeyIdentifier extension (1) (Ln 504)\r\n--------\r\nif the extension is (2) (Ln 511, 519)\r\nIf the extension is (2) (Ln 601, 601)\r\n--------\r\nsubjectKeyIdentifier Extension (1) (Ln 513)\r\nsubjectKeyIdentifier extension (4) (Ln 515, 517, 532, 532)\r\n--------\r\na control plane AS certificate (1) (Ln 528)\r\na Control Plane AS certificate (1) (Ln 818)\r\n--------\r\nsubject key identifier (3) (Ln 532, 1000, 1000)\r\nSubject key identifier (1) (Ln 978)\r\n--------\r\nspecifications per certificate type (3) (Ln 536, 562, 595)\r\nSpecifications per certificate type (3) (Ln 544, 572, 603)\r\n--------\r\nextKeyUsage Extension (1) (Ln 550)\r\nextKeyUsage extension (6) (Ln 552, 552, 562, 567, 572, 761)\r\n--------\r\nidentifies a regular voting certificate (1) (Ln 581)\r\nIdentifies a regular voting certificate (1) (Ln 1135)\r\n--------\r\nidentifies a root certificate (1) (Ln 582)\r\nIdentifies a root certificate (1) (Ln 1138)\r\n--------\r\nbasicConstraints Extension (1) (Ln 586)\r\nbasicConstraints extension (6) (Ln 588, 588, 590, 595, 600, 603)\r\n--------\r\ncertification path (3) (Ln 593, 818, 820)\r\nCertification Path (1) (Ln 816)\r\n--------\r\nNOT be present (2) (Ln 600, 600)\r\nnot be present (1) (Ln 1233)\r\n--------\r\nSigning Ceremony and (2) (Ln 612, 1213)\r\nSigning ceremony and (1) (Ln 1342)\r\n--------\r\nbase TRCs are (1) (Ln 625)\r\nBase TRCs are (1) (Ln 941)\r\n--------\r\ntwo TRCs (2) (Ln 631, 694)\r\nTwo TRCs (2) (Ln 808, 810)\r\n--------\r\nchanges made (1) (Ln 633)\r\nChanges made (1) (Ln 1297)\r\n--------\r\nThe iD (4) (Ln 648, 767, 870, 871)\r\nthe ID (1) (Ln 660)\r\n--------\r\nsequence of (12) (Ln 648, 680, 710, 710, 753, 759, 765, 771, 812, 845, 846, 873)\r\nSEQUENCE OF (2) (Ln 1176, 1177)\r\n--------\r\nand MUST have (1) (Ln 656)\r\nand must have (1) (Ln 1213)\r\n--------\r\nnoTrustReset Boolean (2) (Ln 699, 703)\r\nnoTrustReset BOOLEAN (1) (Ln 1173)\r\n--------\r\nonce the (1) (Ln 703)\r\nOnce the (1) (Ln 1275)\r\n--------\r\nTRC must be (1) (Ln 705)\r\nTRC MUST be (3) (Ln 874, 927, 1069)\r\n--------\r\ncertificates sequence (7) (Ln 710, 710, 812, 845, 845, 845, 846)\r\ncertificates SEQUENCE (1) (Ln 1179)\r\n--------\r\nvotes sequence (4) (Ln 712, 713, 716, 873)\r\nvotes SEQUENCE (1) (Ln 1174)\r\n--------\r\nthe ISD and (2) (Ln 736, 1101)\r\nThe iSD and (1) (Ln 870)\r\n--------\r\nof the TRC payload (4) (Ln 751, 763, 1275, 1277)\r\nof the TRC Payload (1) (Ln 1264)\r\n--------\r\nEach certificate MUST be unique (1) (Ln 765)\r\neach certificate MUST be unique (1) (Ln 766)\r\n--------\r\nEvery certificate (1) (Ln 768)\r\nevery certificate (1) (Ln 769)\r\n--------\r\nMUST be equal to or (1) (Ln 768)\r\nmust be equal to or (1) (Ln 1246)\r\n--------\r\nthe Cryptographic (1) (Ln 781)\r\nthe cryptographic (2) (Ln 1078, 1078)\r\n--------\r\nThe REQUIRED (2) (Ln 812, 813)\r\nthe required (1) (Ln 903)\r\n--------\r\nnew certificates (3) (Ln 813, 905, 905)\r\nNew Certificates (1) (Ln 841)\r\n--------\r\nTrust Anchor Pool (1) (Ln 816)\r\ntrust anchor pool (4) (Ln 820, 820, 828, 830)\r\n--------\r\nissuing CA certificates are (2) (Ln 818, 1061)\r\nIssuing CA certificates are (1) (Ln 1070)\r\n--------\r\nrelying parties MUST (2) (Ln 820, 967)\r\nRelying parties MUST (2) (Ln 948, 948)\r\n--------\r\nas control plane (1) (Ln 832)\r\nas Control Plane (1) (Ln 887)\r\n--------\r\nDistribution of (3) (Ln 832, 936, 959)\r\ndistribution of (1) (Ln 941)\r\n--------\r\nSigning and Verifying (2) (Ln 832, 965)\r\nsigning and verifying (1) (Ln 1237)\r\n--------\r\nUpdate Rules (2) (Ln 851, 866)\r\nupdate rules (1) (Ln 914)\r\n--------\r\nof TRC update (1) (Ln 853)\r\nof TRC Update (1) (Ln 858)\r\n--------\r\nTRC update as (1) (Ln 853)\r\nTRC Update As (1) (Ln 901)\r\n--------\r\nBoth Regular AND Sensitive (1) (Ln 860)\r\nboth regular and sensitive (1) (Ln 907)\r\n--------\r\nSet of sensitive voting certificates (1) (Ln 861)\r\nset of sensitive voting certificates (1) (Ln 888)\r\n--------\r\nAll votes MUST (2) (Ln 861, 862)\r\nall votes MUST (2) (Ln 891, 898)\r\n--------\r\ncertificate from (4) (Ln 861, 861, 1070, 1071)\r\nCertificate FROM (1) (Ln 1156)\r\n--------\r\nupdate if (1) (Ln 881)\r\nUpdate If (1) (Ln 894)\r\n--------\r\nThe authoritative ASes (1) (Ln 886)\r\nthe Authoritative ASes (1) (Ln 1225)\r\n--------\r\nAs described above (1) (Ln 903)\r\nas described above (1) (Ln 914)\r\n--------\r\nrepresentatives MUST (2) (Ln 905, 1268)\r\nRepresentatives MUST (1) (Ln 1255)\r\n--------\r\nCheck that the (1) (Ln 914)\r\ncheck that the (1) (Ln 917)\r\n--------\r\nCheck that all (1) (Ln 915)\r\ncheck that all (2) (Ln 918, 920)\r\n--------\r\nall voting representatives (3) (Ln 927, 1277, 1284)\r\nAll voting representatives (1) (Ln 1289)\r\n--------\r\nwith the ceremony (1) (Ln 929)\r\nwith the Ceremony (1) (Ln 1253)\r\n--------\r\nin the Appendix (1) (Ln 929)\r\nin the appendix (1) (Ln 1314)\r\n--------\r\nAll ASes within an ISD (1) (Ln 941)\r\nall ASes within an ISD (1) (Ln 1061)\r\n--------\r\nand SHOULD (1) (Ln 948)\r\nand should (1) (Ln 1235)\r\n--------\r\nBeaconing Process (1) (Ln 952)\r\nbeaconing process (3) (Ln 953, 953, 953)\r\n--------\r\nPath Lookup (1) (Ln 955)\r\npath lookup (1) (Ln 1078)\r\n--------\r\na path (3) (Ln 967, 1078, 1078)\r\na Path (1) (Ln 1078)\r\n--------\r\nto the signing (1) (Ln 969)\r\nto the Signing (1) (Ln 1237)\r\n--------\r\na Control Plane Message (2) (Ln 971, 986)\r\na control plane message (1) (Ln 994)\r\n--------\r\nof the signing (1) (Ln 977)\r\nof the Signing (3) (Ln 1213, 1213, 1217)\r\n--------\r\nSerial and base number of (1) (Ln 982)\r\nserial and base number of (1) (Ln 997)\r\n--------\r\ncertificate validity (2) (Ln 1007, 1007)\r\nCertificate validity (1) (Ln 1304)\r\n--------\r\nSecurity Considerations (1) (Ln 1049)\r\nsecurity considerations (2) (Ln 1053, 1080)\r\nSecurity considerations (2) (Ln 1326, 1327)\r\n--------\r\nEach AS within (2) (Ln 1058, 1062)\r\neach AS within (1) (Ln 1076)\r\n--------\r\nDenial of Service Attacks (1) (Ln 1074)\r\ndenial of service attacks (1) (Ln 1080)\r\n--------\r\nfor certificate (1) (Ln 1082)\r\nfor Certificate (1) (Ln 1314)\r\n--------\r\nCertificate Extensions (1) (Ln 1106)\r\nCertificate extensions (1) (Ln 1314)\r\n--------\r\nceremony but (1) (Ln 1200)\r\nCeremony but (1) (Ln 1211)\r\n--------\r\nCeremony Participants (1) (Ln 1203)\r\nCeremony participants (1) (Ln 1213)\r\nceremony participants (1) (Ln 1239)\r\n--------\r\nof the Voting ASes (2) (Ln 1207, 1211)\r\nof the voting ASes (1) (Ln 1259)\r\n--------\r\neach Voting (1) (Ln 1209)\r\nEach voting (1) (Ln 1282)\r\n--------\r\nmust decide (1) (Ln 1213)\r\nMUST decide (1) (Ln 1217)\r\n",
+          "createdAt": "2026-05-12T13:45:09Z",
+          "updatedAt": "2026-05-12T13:45:09Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "P.S. The github action fails because you use a ` in the branch name",
+          "createdAt": "2026-05-12T17:53:42Z",
+          "updatedAt": "2026-05-12T17:53:42Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Continuing in #145 with branch without special chars",
+          "createdAt": "2026-05-12T17:56:35Z",
+          "updatedAt": "2026-05-12T17:56:35Z"
+        }
+      ],
+      "reviews": []
+    },
+    {
+      "number": 145,
+      "id": "PR_kwDOH386tM7aygEr",
+      "title": "Capitalization check",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/145",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Continues #141 \r\n\r\n[Diff with main ](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/kevin-tweaks/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-05-12T17:56:05Z",
+      "updatedAt": "2026-05-13T09:37:51Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "kevin-tweaks",
+      "headRefOid": "8aea6b1c93a1de255e8c6e78955e39b6753eb190",
+      "closedAt": "2026-05-13T09:37:51Z",
+      "mergedAt": "2026-05-13T09:37:51Z",
+      "mergedBy": "knmeynell",
+      "mergeCommit": {
+        "oid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@knmeynell I continued based on your branch (I had to change branch as your contained a ` ). Wha do you think? \r\nLet's talk before merging. \r\n\r\nI highly recommend looking at the compiled diff https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/kevin-tweaks/draft-dekater-scion-pki.txt ",
+          "createdAt": "2026-05-12T18:21:08Z",
+          "updatedAt": "2026-05-12T18:21:08Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Current draftforge capitalization check: \r\n```\r\nList of inconsistent use of capitalization in /Users/nic/repos/scion-cppki_I-D/draft-dekater-scion-pki.md:\r\n\r\nPath Aware Networking (2) (Ln 10, 13)\r\npath aware networking (1) (Ln 110)\r\n--------\r\nde Kater (2) (Ln 21, 22)\r\nde kater (1) (Ln 24)\r\n--------\r\nof basic (1) (Ln 49)\r\nof Basic (1) (Ln 53)\r\n--------\r\nencoding rules (1) (Ln 53)\r\nEncoding Rules (4) (Ln 53, 53, 53, 783)\r\n--------\r\nand Distinguished (1) (Ln 53)\r\nand distinguished (2) (Ln 846, 861)\r\n--------\r\nDigital Signature (1) (Ln 57)\r\ndigital signature (1) (Ln 527)\r\n--------\r\nSignature Algorithm (1) (Ln 57)\r\nsignature algorithm (2) (Ln 426, 426)\r\n--------\r\nSCION Registry (1) (Ln 63)\r\nSCION registry (1) (Ln 1219)\r\n--------\r\nThis document (4) (Ln 106, 110, 1047, 1099)\r\nthis document (5) (Ln 120, 131, 279, 574, 1380)\r\n--------\r\ncryptographic material (8) (Ln 106, 120, 832, 1010, 1078, 1078, 1078, 1080)\r\nCryptographic Material (3) (Ln 832, 959, 1024)\r\n--------\r\ncontrol plane messages (21) (Ln 106, 258, 295, 295, 515, 546, 547, 832, 953, 953, 967, 969, 973, 1002, 1008, 1062, 1062, 1076, 1076, 1078, 1080)\r\nControl Plane Messages (2) (Ln 832, 965)\r\n--------\r\ntrust model (5) (Ln 108, 120, 183, 185, 1051)\r\nTrust Model (1) (Ln 160)\r\n--------\r\ntypes and (2) (Ln 108, 863)\r\nTypes and (1) (Ln 620)\r\n--------\r\nof the Trust (1) (Ln 108)\r\nof the trust (1) (Ln 210)\r\n--------\r\nthe Trust Root (4) (Ln 108, 179, 268, 610)\r\nthe trust root (2) (Ln 198, 272)\r\n--------\r\nthe Public Key (1) (Ln 129)\r\nthe public key (19) (Ln 277, 279, 279, 287, 289, 309, 315, 475, 504, 523, 525, 527, 528, 536, 552, 556, 557, 558, 978)\r\n--------\r\nSystem is (1) (Ln 131)\r\nsystem is (1) (Ln 205)\r\n--------\r\nAS a (1) (Ln 131)\r\nas a (12) (Ln 131, 181, 277, 426, 588, 592, 610, 730, 862, 881, 896, 1344)\r\n--------\r\npath construction (1) (Ln 135)\r\nPath Construction (3) (Ln 295, 1062, 1078)\r\n--------\r\nEach ISD has (1) (Ln 135)\r\neach ISD has (1) (Ln 179)\r\n--------\r\nA Trust Root (4) (Ln 137, 141, 149, 151)\r\na trust root (1) (Ln 181)\r\n--------\r\nthose ASes (2) (Ln 139, 736)\r\nThose ASes (1) (Ln 147)\r\n--------\r\na TRC update (16) (Ln 139, 262, 263, 625, 660, 699, 705, 794, 813, 843, 881, 896, 905, 912, 1060, 1070)\r\na TRC Update (1) (Ln 901)\r\n--------\r\ntrust for a base TRC (1) (Ln 141)\r\nTrust for a base TRC (1) (Ln 625)\r\n--------\r\nof a trust (2) (Ln 141, 699)\r\nof a Trust (1) (Ln 151)\r\n--------\r\ninitial TRC (18) (Ln 143, 143, 256, 349, 612, 624, 625, 633, 651, 651, 652, 656, 705, 927, 927, 927, 929, 1092)\r\nInitial TRC (2) (Ln 925, 1198)\r\n--------\r\nregular TRC update (5) (Ln 145, 196, 879, 891, 907)\r\nRegular TRC Update (1) (Ln 877)\r\n--------\r\nsensitive TRC update (6) (Ln 145, 196, 268, 732, 740, 838)\r\nSensitive TRC Update (1) (Ln 894)\r\n--------\r\nas the (11) (Ln 145, 179, 179, 196, 279, 471, 705, 788, 820, 853, 953)\r\nAS the (1) (Ln 1071)\r\n--------\r\nTRC updates (17) (Ln 147, 196, 262, 305, 326, 327, 820, 946, 948, 948, 950, 953, 953, 953, 956, 982, 1012)\r\nTRC Updates (1) (Ln 834)\r\n--------\r\nVoting Quorum (3) (Ln 149, 220, 359)\r\nvoting quorum (8) (Ln 149, 149, 181, 716, 723, 884, 1060, 1246)\r\nVoting quorum (1) (Ln 1223)\r\n--------\r\nThe voting (10) (Ln 149, 710, 710, 716, 812, 884, 1060, 1268, 1275, 1275)\r\nthe Voting (8) (Ln 179, 179, 190, 751, 1207, 1211, 1253, 1259)\r\n--------\r\nvotes signatures (1) (Ln 149)\r\nVotes Signatures (1) (Ln 230)\r\n--------\r\nA voting (3) (Ln 149, 181, 723)\r\na Voting (1) (Ln 1228)\r\n--------\r\nGrace Period (3) (Ln 151, 220, 359)\r\ngrace period (9) (Ln 151, 631, 686, 690, 694, 820, 830, 948, 996)\r\nGrace period (1) (Ln 1222)\r\n--------\r\nall parties (3) (Ln 164, 272, 1213)\r\nAll parties (1) (Ln 1253)\r\n--------\r\nshould provide (3) (Ln 168, 1235, 1235)\r\nSHOULD provide (1) (Ln 694)\r\n--------\r\nTrust agility (1) (Ln 170)\r\ntrust agility (2) (Ln 183, 185)\r\n--------\r\nSupport for (1) (Ln 173)\r\nsupport for (2) (Ln 430, 1305)\r\n--------\r\nand Voting (2) (Ln 179, 1237)\r\nand voting (2) (Ln 616, 638)\r\n--------\r\nmay be (8) (Ln 179, 309, 315, 1060, 1061, 1213, 1321, 1336)\r\nMAY be (3) (Ln 345, 438, 1024)\r\n--------\r\nkeys and (1) (Ln 181)\r\nKeys and (1) (Ln 208)\r\n--------\r\nrequired to (2) (Ln 181, 295)\r\nREQUIRED to (1) (Ln 1017)\r\n--------\r\nother ISDs (1) (Ln 183)\r\nOther ISDs (1) (Ln 907)\r\n--------\r\nits own Trust (1) (Ln 190)\r\nits own trust (1) (Ln 1051)\r\n--------\r\nEach TRC (1) (Ln 190)\r\neach TRC (1) (Ln 781)\r\n--------\r\nroot certificates (27) (Ln 190, 268, 277, 279, 279, 283, 283, 289, 291, 560, 574, 616, 625, 751, 818, 820, 828, 830, 887, 996, 996, 998, 1008, 1060, 1213, 1226, 1253)\r\nRoot Certificates (2) (Ln 234, 385)\r\nRoot certificates (2) (Ln 279, 546)\r\n--------\r\nUpdates and Trust Resets (1) (Ln 194)\r\nupdates and trust resets (1) (Ln 982)\r\n--------\r\nThere are (3) (Ln 196, 268, 303)\r\nthere are (1) (Ln 268)\r\n--------\r\nCertificate Revocation (1) (Ln 201)\r\ncertificate revocation (1) (Ln 203)\r\n--------\r\nBoth short-lived certificates and revocation (1) (Ln 205)\r\nboth short-lived certificates and revocation (1) (Ln 206)\r\n--------\r\nmust be signed (1) (Ln 205)\r\nMUST be signed (1) (Ln 927)\r\n--------\r\nthe CA (11) (Ln 205, 206, 422, 426, 528, 1007, 1021, 1022, 1061, 1082, 1082)\r\nthe cA (1) (Ln 593)\r\n--------\r\nCA must (3) (Ln 205, 206, 1343)\r\ncA MUST (1) (Ln 601)\r\n--------\r\nOverview of Certificates (1) (Ln 208)\r\noverview of certificates (1) (Ln 321)\r\n--------\r\nCP Root (2) (Ln 234, 385)\r\nCP root (3) (Ln 328, 340, 757)\r\n--------\r\nCP Issuing CA Certificate (2) (Ln 242, 397)\r\nCP issuing CA certificate (1) (Ln 341)\r\n--------\r\nCP AS Certificate (2) (Ln 249, 403)\r\nCP AS certificate (2) (Ln 299, 342)\r\n--------\r\nadditionally the TRC contains (1) (Ln 256)\r\nAdditionally the TRC contains (1) (Ln 614)\r\n--------\r\nof Voting (2) (Ln 256, 1246)\r\nof voting (3) (Ln 303, 716, 751)\r\n--------\r\ncertificates must (2) (Ln 256, 289)\r\ncertificates MUST (1) (Ln 465)\r\n--------\r\ncertificates to (6) (Ln 261, 828, 830, 832, 1032, 1061)\r\nCertificates to (1) (Ln 1326)\r\n--------\r\nof Control Plane (1) (Ln 268)\r\nof control plane (7) (Ln 283, 610, 616, 953, 969, 1080, 1226)\r\n--------\r\nand AS (4) (Ln 268, 449, 453, 455)\r\nand as (1) (Ln 426)\r\n--------\r\nControl Plane Root Certificate (1) (Ln 275)\r\ncontrol plane root certificate (10) (Ln 277, 277, 279, 279, 281, 289, 818, 890, 890, 992)\r\n--------\r\nprivate key of the control (1) (Ln 277)\r\nprivate key of the Control (1) (Ln 287)\r\n--------\r\nkey of the control plane (3) (Ln 277, 277, 279)\r\nkey of the Control Plane (2) (Ln 287, 287)\r\n--------\r\nsign Control Plane (2) (Ln 277, 287)\r\nsign control plane (2) (Ln 295, 1062)\r\n--------\r\nControl Plane issuing CA certificates (2) (Ln 277, 287)\r\ncontrol plane issuing CA certificates (1) (Ln 277)\r\n--------\r\npublic key of the control (2) (Ln 277, 279)\r\npublic key of the Control (1) (Ln 287)\r\n--------\r\nused to verify (17) (Ln 277, 279, 287, 297, 305, 309, 309, 315, 315, 527, 528, 546, 547, 794, 967, 978, 998)\r\nUsed to verify (1) (Ln 324)\r\n--------\r\nRECOMMENDED maximum validity period (5) (Ln 281, 291, 299, 311, 317)\r\nrecommended maximum validity period (2) (Ln 291, 466)\r\nRecommended maximum validity period (1) (Ln 346)\r\n--------\r\nvalidity period of a control (1) (Ln 281)\r\nvalidity period of a Control (1) (Ln 291)\r\n--------\r\nperiod of a control plane (1) (Ln 281)\r\nperiod of a Control Plane (1) (Ln 291)\r\n--------\r\nCertificate The (1) (Ln 285)\r\ncertificate The (2) (Ln 582, 1268)\r\n--------\r\nControl Plane AS certificates (1) (Ln 287)\r\ncontrol plane AS certificates (4) (Ln 287, 295, 297, 694)\r\nControl Plane AS Certificates (1) (Ln 1015)\r\n--------\r\nControl Plane CA (1) (Ln 287)\r\ncontrol plane CA (1) (Ln 515)\r\n--------\r\nas Path (1) (Ln 295)\r\nas path (1) (Ln 1062)\r\n--------\r\nregular voting certificates (11) (Ln 303, 309, 349, 560, 776, 861, 873, 873, 887, 891, 1253)\r\nRegular voting certificates (1) (Ln 309)\r\n--------\r\nKey Pairs (1) (Ln 319)\r\nkey pairs (1) (Ln 321)\r\n--------\r\nSigned with (1) (Ln 335)\r\nsigned with (1) (Ln 1289)\r\n--------\r\nRECOMMENDED to (2) (Ln 347, 1200)\r\nrecommended to (2) (Ln 929, 1032)\r\n--------\r\nThis section (8) (Ln 412, 618, 639, 838, 934, 1053, 1066, 1297)\r\nthis section (1) (Ln 838)\r\n--------\r\nconstraints and conditions (1) (Ln 412)\r\nConstraints and Conditions (1) (Ln 1325)\r\n--------\r\nsignature field (2) (Ln 426, 477)\r\nsignature Field (1) (Ln 800)\r\nSignature field (1) (Ln 1321)\r\n--------\r\nimplementations MUST (5) (Ln 430, 449, 458, 681, 788)\r\nImplementations MUST (3) (Ln 509, 511, 519)\r\n--------\r\nspecified in section (1) (Ln 436)\r\nspecified in Section (1) (Ln 781)\r\n--------\r\nid-at-ia attribute (5) (Ln 449, 453, 455, 458, 460)\r\nid-at-ia Attribute (1) (Ln 451)\r\n--------\r\nobject identifier (2) (Ln 453, 1117)\r\nOBJECT IDENTIFIER (8) (Ln 1118, 1121, 1124, 1127, 1130, 1133, 1136, 1139)\r\n--------\r\nroot issuing CA (1) (Ln 455)\r\nRoot Issuing CA (3) (Ln 538, 564, 597)\r\n--------\r\nSHOULD be (6) (Ln 455, 534, 658, 694, 922, 1012)\r\nshould be (1) (Ln 574)\r\n--------\r\ncertificates the (2) (Ln 456, 998)\r\nCertificates The (1) (Ln 1015)\r\n--------\r\nAS to (1) (Ln 456)\r\nas to (1) (Ln 1380)\r\n--------\r\nvalidity period of the (5) (Ln 465, 686, 818, 992, 1233)\r\nValidity period of the (1) (Ln 1221)\r\n--------\r\nof the certificate (4) (Ln 465, 761, 767, 1008)\r\nof the Certificate (1) (Ln 1233)\r\n--------\r\nauthorityKeyIdentifier Extension (2) (Ln 502, 1305)\r\nauthorityKeyIdentifier extension (1) (Ln 504)\r\n--------\r\nif the extension is (2) (Ln 511, 519)\r\nIf the extension is (2) (Ln 601, 601)\r\n--------\r\nsubjectKeyIdentifier Extension (1) (Ln 513)\r\nsubjectKeyIdentifier extension (4) (Ln 515, 517, 532, 532)\r\n--------\r\na control plane AS certificate (1) (Ln 528)\r\na Control Plane AS certificate (1) (Ln 818)\r\n--------\r\nsubject key identifier (3) (Ln 532, 1000, 1000)\r\nSubject key identifier (1) (Ln 978)\r\n--------\r\nspecifications per certificate type (3) (Ln 536, 562, 595)\r\nSpecifications per certificate type (3) (Ln 544, 572, 603)\r\n--------\r\nextKeyUsage Extension (1) (Ln 550)\r\nextKeyUsage extension (6) (Ln 552, 552, 562, 567, 572, 761)\r\n--------\r\nidentifies a regular voting certificate (1) (Ln 581)\r\nIdentifies a regular voting certificate (1) (Ln 1135)\r\n--------\r\nidentifies a root certificate (1) (Ln 582)\r\nIdentifies a root certificate (1) (Ln 1138)\r\n--------\r\nbasicConstraints Extension (1) (Ln 586)\r\nbasicConstraints extension (6) (Ln 588, 588, 590, 595, 600, 603)\r\n--------\r\nthe certification (4) (Ln 593, 593, 616, 818)\r\nthe Certification (1) (Ln 751)\r\n--------\r\ncertification path (3) (Ln 593, 818, 820)\r\nCertification Path (1) (Ln 816)\r\n--------\r\nNOT be present (2) (Ln 600, 600)\r\nnot be present (1) (Ln 1233)\r\n--------\r\nSigning Ceremony and (2) (Ln 612, 1213)\r\nSigning ceremony and (1) (Ln 1342)\r\n--------\r\nbase TRCs are (1) (Ln 625)\r\nBase TRCs are (1) (Ln 941)\r\n--------\r\ntwo TRCs (2) (Ln 631, 694)\r\nTwo TRCs (2) (Ln 808, 810)\r\n--------\r\nchanges made (1) (Ln 633)\r\nChanges made (1) (Ln 1297)\r\n--------\r\nThe iD (4) (Ln 648, 767, 870, 871)\r\nthe ID (1) (Ln 660)\r\n--------\r\nsequence of (12) (Ln 648, 680, 710, 710, 753, 759, 765, 771, 812, 845, 846, 873)\r\nSEQUENCE OF (2) (Ln 1176, 1177)\r\n--------\r\nand MUST have (1) (Ln 656)\r\nand must have (1) (Ln 1213)\r\n--------\r\nnoTrustReset Boolean (2) (Ln 699, 703)\r\nnoTrustReset BOOLEAN (1) (Ln 1173)\r\n--------\r\nonce the (1) (Ln 703)\r\nOnce the (1) (Ln 1275)\r\n--------\r\nTRC must be (1) (Ln 705)\r\nTRC MUST be (3) (Ln 874, 927, 1069)\r\n--------\r\ncertificates sequence (7) (Ln 710, 710, 812, 845, 845, 845, 846)\r\ncertificates SEQUENCE (1) (Ln 1179)\r\n--------\r\nvotes sequence (4) (Ln 712, 713, 716, 873)\r\nvotes SEQUENCE (1) (Ln 1174)\r\n--------\r\nthe ISD and (2) (Ln 736, 1101)\r\nThe iSD and (1) (Ln 870)\r\n--------\r\nof the TRC payload (4) (Ln 751, 763, 1275, 1277)\r\nof the TRC Payload (1) (Ln 1264)\r\n--------\r\nEach certificate MUST be unique (1) (Ln 765)\r\neach certificate MUST be unique (1) (Ln 766)\r\n--------\r\nEvery certificate (1) (Ln 768)\r\nevery certificate (1) (Ln 769)\r\n--------\r\nMUST be equal to or (1) (Ln 768)\r\nmust be equal to or (1) (Ln 1246)\r\n--------\r\nthe Cryptographic (1) (Ln 781)\r\nthe cryptographic (2) (Ln 1078, 1078)\r\n--------\r\nThe REQUIRED (2) (Ln 812, 813)\r\nthe required (1) (Ln 903)\r\n--------\r\nnew certificates (3) (Ln 813, 905, 905)\r\nNew Certificates (1) (Ln 841)\r\n--------\r\nTrust Anchor Pool (1) (Ln 816)\r\ntrust anchor pool (4) (Ln 820, 820, 828, 830)\r\n--------\r\nissuing CA certificates are (2) (Ln 818, 1061)\r\nIssuing CA certificates are (1) (Ln 1070)\r\n--------\r\nrelying parties MUST (2) (Ln 820, 967)\r\nRelying parties MUST (2) (Ln 948, 948)\r\n--------\r\nDistribution of (3) (Ln 832, 936, 959)\r\ndistribution of (1) (Ln 941)\r\n--------\r\nSigning and Verifying (2) (Ln 832, 965)\r\nsigning and verifying (1) (Ln 1237)\r\n--------\r\nUpdate Rules (2) (Ln 851, 866)\r\nupdate rules (1) (Ln 914)\r\n--------\r\nof TRC update (1) (Ln 853)\r\nof TRC Update (1) (Ln 858)\r\n--------\r\nTRC update as (1) (Ln 853)\r\nTRC Update As (1) (Ln 901)\r\n--------\r\nBoth Regular AND Sensitive (1) (Ln 860)\r\nboth regular and sensitive (1) (Ln 907)\r\n--------\r\nSet of sensitive voting certificates (1) (Ln 861)\r\nset of sensitive voting certificates (1) (Ln 888)\r\n--------\r\nAll votes MUST (2) (Ln 861, 862)\r\nall votes MUST (2) (Ln 891, 898)\r\n--------\r\ncertificate from (4) (Ln 861, 861, 1070, 1071)\r\nCertificate FROM (1) (Ln 1156)\r\n--------\r\nupdate if (1) (Ln 881)\r\nUpdate If (1) (Ln 894)\r\n--------\r\nAs described above (1) (Ln 903)\r\nas described above (1) (Ln 914)\r\n--------\r\nrepresentatives MUST (2) (Ln 905, 1268)\r\nRepresentatives MUST (1) (Ln 1255)\r\n--------\r\nCheck that the (1) (Ln 914)\r\ncheck that the (1) (Ln 917)\r\n--------\r\nCheck that all (1) (Ln 915)\r\ncheck that all (2) (Ln 918, 920)\r\n--------\r\nall voting representatives (3) (Ln 927, 1277, 1284)\r\nAll voting representatives (1) (Ln 1289)\r\n--------\r\nwith the ceremony (1) (Ln 929)\r\nwith the Ceremony (1) (Ln 1253)\r\n--------\r\nAll ASes within an ISD (1) (Ln 941)\r\nall ASes within an ISD (1) (Ln 1061)\r\n--------\r\nand SHOULD (1) (Ln 948)\r\nand should (1) (Ln 1235)\r\n--------\r\nBeaconing Process (1) (Ln 952)\r\nbeaconing process (3) (Ln 953, 953, 953)\r\n--------\r\nPath Lookup (1) (Ln 955)\r\npath lookup (1) (Ln 1078)\r\n--------\r\na path (3) (Ln 967, 1078, 1078)\r\na Path (1) (Ln 1078)\r\n--------\r\nto the signing (1) (Ln 969)\r\nto the Signing (1) (Ln 1237)\r\n--------\r\na Control Plane Message (2) (Ln 971, 986)\r\na control plane message (1) (Ln 994)\r\n--------\r\nof the signing (1) (Ln 977)\r\nof the Signing (3) (Ln 1213, 1213, 1217)\r\n--------\r\nSerial and base number of (1) (Ln 982)\r\nserial and base number of (1) (Ln 997)\r\n--------\r\ncertificate validity (2) (Ln 1007, 1007)\r\nCertificate validity (1) (Ln 1304)\r\n--------\r\nSecurity Considerations (1) (Ln 1049)\r\nsecurity considerations (2) (Ln 1053, 1080)\r\nSecurity considerations (2) (Ln 1326, 1327)\r\n--------\r\nEach AS within (2) (Ln 1058, 1062)\r\neach AS within (1) (Ln 1076)\r\n--------\r\nDenial of Service Attacks (1) (Ln 1074)\r\ndenial of service attacks (1) (Ln 1080)\r\n--------\r\nfor certificate (1) (Ln 1082)\r\nfor Certificate (1) (Ln 1314)\r\n--------\r\nCertificate Extensions (1) (Ln 1106)\r\nCertificate extensions (1) (Ln 1314)\r\n--------\r\nceremony but (1) (Ln 1200)\r\nCeremony but (1) (Ln 1211)\r\n--------\r\nCeremony Participants (1) (Ln 1203)\r\nCeremony participants (1) (Ln 1213)\r\nceremony participants (1) (Ln 1239)\r\n--------\r\neach Voting (1) (Ln 1209)\r\nEach voting (1) (Ln 1282)\r\n--------\r\nmust decide (1) (Ln 1213)\r\nMUST decide (1) (Ln 1217)\r\n\r\n```",
+          "createdAt": "2026-05-13T07:17:59Z",
+          "updatedAt": "2026-05-13T07:17:59Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7_H-ga",
+          "commit": {
+            "abbreviatedOid": "8aea6b1"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-13T09:37:43Z",
+          "updatedAt": "2026-05-13T09:37:43Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 146,
+      "id": "PR_kwDOH386tM7bGRM_",
+      "title": "Review Chapter 1 - Till",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/146",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #142 \r\n\r\n- Removed the paragraphs on monopoly and oligopoly models. I agree it doesn't add anything.\r\n- The mix of bold and italic was correct in the context it's used: bold refers to defined things, whilst italic refers to concepts.\r\n- Removed the reference to RPKI: agree it doesn't add anything although it may have been added FYI for reviewers' benefit.",
+      "createdAt": "2026-05-13T11:44:19Z",
+      "updatedAt": "2026-05-13T14:56:16Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Til-feedback",
+      "headRefOid": "3b044a821c9f52fb3a6134252d915474150ddf92",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 147,
+      "id": "PR_kwDOH386tM7bJlPW",
+      "title": "remove sentence about reason for ISD-AS attribute",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/147",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Follow up to #135 ",
+      "createdAt": "2026-05-13T14:05:57Z",
+      "updatedAt": "2026-05-13T14:05:57Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "id-at-ia-attribute",
+      "headRefOid": "2a5107a203a086f750ca9f06dbc50d94f1e37643",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 151,
+      "id": "PR_kwDOH386tM7bNHSF",
+      "title": "chapter 2 review",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/151",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #143 ",
+      "createdAt": "2026-05-13T16:40:26Z",
+      "updatedAt": "2026-05-13T16:40:26Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "til-chapter2",
+      "headRefOid": "9dc52ff271751526680ad836eed2f6558aeb46ec",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
