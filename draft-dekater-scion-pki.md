@@ -629,6 +629,7 @@ A TRC can have the following states:
 
 - Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity-trc)). A TRC is considered valid if the current time falls within its validity period.
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the `gracePeriod` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
+- Invalid: The TRC is neither valid nor active.
 
 {{figure-2}} shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.
 
@@ -648,7 +649,7 @@ The `version` field describes the version of the TRC format specification. It MU
 The `iD` field contains an unique identifier for the TRC, constituted by a sequence of:
 
 - ISD number (`iSD` attribute),
-- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
+- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.
 - TRC serial number (`serialNumber` attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 All numbers MUST be positive integers.
@@ -678,7 +679,7 @@ The `validity` field defines the TRC validity period. The `notBefore` and `notAf
 An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
 The `validity` field consists of a sequence of a `notBefore` and a `notAfter` date, both encoded as `GeneralizedTime`.
-All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST reject such a TRC.
+All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime` value "99991231235959Z", and verifiers MUST reject such a TRC.
 
 
 ### `gracePeriod` {#grace}
@@ -688,7 +689,7 @@ The `gracePeriod` field specifies the duration, in seconds, during which the pre
 A predecessor TRC ceases to be active when the earliest of the following events occurs:
 
 - the grace period expires;
-- the predecessor TRC reaches its expiration time (`notAfter`); or
+- the predecessor TRC reaches its expiration time (`notAfter`);
 - a subsequent TRC update (i.e., the successor to the new TRC) is announced.
 
 In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod` SHOULD be greater than zero. The defined duration SHOULD provide sufficient overlap between the two TRCs to ensure uninterrupted operations within the ISD. If the grace period is too short, some control plane AS certificates may expire before the corresponding ASes can fetch an updated version from their CA.
