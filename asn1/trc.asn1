@@ -1,4 +1,4 @@
-SCION-CP-PKI-TRC { 
+SCION-CP-PKI-TRC {
     iso(1) identified-organization(3) dod(6) internet(1) private(4)
     enterprise(1) scion(55324) module(0) trc(1)
 }
@@ -36,7 +36,7 @@ TRCPayload ::= SEQUENCE {
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
     	localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLanguage    [1] PrintableString OPTIONAL
+    descriptionLanguage   [1] PrintableString OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }

@@ -748,7 +748,7 @@ As with core ASes, assigning or revoking authoritative status is performed by ad
 ### `description` {#description}
 
 The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. If present, it MUST NOT be empty.
-When this field contains languages other than English, the corresponding language tag SHOULD explicitly identified in the `descriptionLangTag` field (see ()[#langtag]).
+When this field contains languages other than English, the corresponding language tag SHOULD explicitly identified in the `descriptionLanguage` field (see ()[#langtag]).
 
 Multi-language TRCs SHOULD use the `localizedDescriptions` field instead. Either the `description` or the `localizedDescriptions`field MUST be present.
 
@@ -774,9 +774,9 @@ It consists of a sequence of `LocalizedText` structures, each containing:
 - `languageTag`: specifies the description's language. It MUST use language tags according to {{BCP47}}.
 - `text`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
 
-### `descriptionLangTag` {#langtag}
+### `descriptionLanguage` {#langtag}
 
-The OPTIONAL `descriptionLangTag` field identifies the language used to express the `description` field. When `descriptionLangTag` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLangTag` MUST be a valid language tag as described in {{BCP47}}.
+The OPTIONAL `descriptionLanguage` field identifies the language used to express the `description` field. When `descriptionLanguage` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLanguage` MUST be a valid language tag as described in {{BCP47}}.
 
 The following constraints must hold for each certificate in the `certificates` field of the TRC payload:
 
@@ -1185,10 +1185,9 @@ TRCValidity ::= SEQUENCE {
 }
 
 LocalizedText ::= SEQUENCE {
-    languageTag        VisibleString,
-    text               UTF8String (SIZE (0..8192))
+    language        PrintableString,
+    content         UTF8String (SIZE (0..8192))
 }
-
 TRCPayload ::= SEQUENCE {
     version               TRCFormatVersion,
     iD                    TRCID,
@@ -1202,7 +1201,7 @@ TRCPayload ::= SEQUENCE {
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
     localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLangTag    [1] VisibleString OPTIONAL
+    descriptionLanguage   [1] PrintableString OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
