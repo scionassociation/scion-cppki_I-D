@@ -1306,7 +1306,7 @@ svg :is([fill="white"], [fill^="#fff"]) {
                     <p id="section-toc.1-1.3.2.2.2.12.1"><a href="#section-3.2.12" class="auto internal xref">3.2.12</a>. <a href="#name-localizeddescriptions" class="internal xref"><code>localizedDescriptions</code></a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.2.2.13">
-                    <p id="section-toc.1-1.3.2.2.2.13.1"><a href="#section-3.2.13" class="auto internal xref">3.2.13</a>. <a href="#name-descriptionlangtag" class="internal xref"><code>descriptionLangTag</code></a></p>
+                    <p id="section-toc.1-1.3.2.2.2.13.1"><a href="#section-3.2.13" class="auto internal xref">3.2.13</a>. <a href="#name-descriptionlanguage" class="internal xref"><code>descriptionLanguage</code></a></p>
 </li>
                 </ul>
 </li>
@@ -2890,7 +2890,7 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
 <p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. If present, it <span class="bcp14">MUST NOT</span> be empty.
-When this field contains languages other than English, the corresponding language tag <span class="bcp14">SHOULD</span> explicitly identified in the <code>descriptionLangTag</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
+When this field contains languages other than English, the corresponding language tag <span class="bcp14">SHOULD</span> explicitly identified in the <code>descriptionLanguage</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2935,10 +2935,10 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 </div>
 <div id="langtag">
 <section id="section-3.2.13">
-          <h4 id="name-descriptionlangtag">
-<a href="#section-3.2.13" class="section-number selfRef">3.2.13. </a><a href="#name-descriptionlangtag" class="section-name selfRef"><code>descriptionLangTag</code></a>
+          <h4 id="name-descriptionlanguage">
+<a href="#section-3.2.13" class="section-number selfRef">3.2.13. </a><a href="#name-descriptionlanguage" class="section-name selfRef"><code>descriptionLanguage</code></a>
           </h4>
-<p id="section-3.2.13-1">The <span class="bcp14">OPTIONAL</span> <code>descriptionLangTag</code> field identifies the language used to express the <code>description</code> field. When <code>descriptionLangTag</code> is absent, English (equivalent to the "en" language tag) is used. The value of the <code>descriptionLangTag</code> <span class="bcp14">MUST</span> be a valid language tag as described in <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.13-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.13-1">The <span class="bcp14">OPTIONAL</span> <code>descriptionLanguage</code> field identifies the language used to express the <code>description</code> field. When <code>descriptionLanguage</code> is absent, English (equivalent to the "en" language tag) is used. The value of the <code>descriptionLanguage</code> <span class="bcp14">MUST</span> be a valid language tag as described in <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.13-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.13-2">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.13-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.13-3.1">
@@ -3772,10 +3772,9 @@ TRCValidity ::= SEQUENCE {
 }
 
 LocalizedText ::= SEQUENCE {
-    languageTag        VisibleString,
-    text               UTF8String (SIZE (0..8192))
+    language        PrintableString,
+    content         UTF8String (SIZE (0..8192))
 }
-
 TRCPayload ::= SEQUENCE {
     version               TRCFormatVersion,
     iD                    TRCID,
@@ -3789,7 +3788,7 @@ TRCPayload ::= SEQUENCE {
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
     localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLangTag    [1] VisibleString OPTIONAL
+    descriptionLanguage   [1] PrintableString OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
