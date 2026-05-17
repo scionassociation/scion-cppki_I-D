@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-14T00:52:55.356172+00:00",
+  "timestamp": "2026-05-17T00:52:30.714597+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1666,9 +1666,24 @@
       "labels": [],
       "body": "## 3.1\n- Under `A TRC can have the following states:`, add \n  `- invalid: The TRC is neither valid not active`\n   \n### 3.2.2\n- `baseNumber`: This starting point is _always_ the currently valid base TRC, no special case for the initial TRC. Replace\n   \"This starting point is either the ISD's initial TRC or the currently valid base TRC\" \n   with \n   \"This starting point is the currently valid base TRC\"  \n\n### 3.2.3\n\nFont of last \"GeneralizedTime\" is inconsistent\n\n### 3.2.4\n- Remove the \"or\" after the second bullet, I don't think \"or\" is used with \";\".\n- Suggested value for grace period?\n\n### 3.2.7\n- Recommend upper limit for quorum? Using the maximum is risky because certificates may get lost, or a rogue AS may refuse to vote...?\n\n### 3.2.9\n- Suggested number of authorative ASes? (compared to core/voting ASes)\n- Should they overlap with voting ASes? Why not the same?\n\n\n### 3.2.10\n- Should there be a designated separate for non-English text?\n- Should there be a designator for the (non-English) language?\n\n\n### 3.2.11\n- \"The issuer / serialNumber pair for each certificate MUST be unique.\"\n  Is it even possible to create different certificates with the same issuer + serialNumber? If not, isn't this condition implied in the previous point?\n\n",
       "createdAt": "2026-05-12T15:55:05Z",
-      "updatedAt": "2026-05-12T15:55:05Z",
+      "updatedAt": "2026-05-15T09:54:19Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> 3.2.7\nRecommend upper limit for quorum? Using the maximum is risky because certificates may get lost, or a rogue AS may refuse to vote...?\n\nWe already have a max in the ASN.1 module: \n```\n    votingQuorum       INTEGER (1..2047),\n```\n\n> 3.2.10\nShould there be a designated separate for non-English text?\nShould there be a designator for the (non-English) language?\n\nSee #137 \n\n> 3.2.11\n\"The issuer / serialNumber pair for each certificate MUST be unique.\"\nIs it even possible to create different certificates with the same issuer + serialNumber? If not, isn't this condition implied in the previous point?\n\nThis is correct and comes from https://datatracker.ietf.org/doc/html/rfc5280#section-4.1.2.2 that says \n```\nThe serial number MUST be a positive integer assigned by the CA to\n   each certificate.  It MUST be unique for each certificate issued by a\n   given CA (i.e., the issuer name and serial number identify a unique\n   certificate)\n```\nSo this is why the issuer / serialNumber pair must be unique.  Maybe we can word it better and better refer to rfc5280section 4.1.2.2 .",
+          "createdAt": "2026-05-15T08:07:52Z",
+          "updatedAt": "2026-05-15T08:13:09Z"
+        },
+        {
+          "author": "tzaeschke",
+          "authorAssociation": "NONE",
+          "body": "> > 3.2.7\n> > Recommend upper limit for quorum? Using the maximum is risky because certificates may get lost, or a rogue AS may refuse to vote...?\n> \n> We already have a max in the ASN.1 module:\n> \n> ```\n>     votingQuorum       INTEGER (1..2047),\n> ```\n\nWhat I mean is: the absolute max is the number of voting ASes. However, it is probably recommended to have a lower quorum in case not all parties are available because they have gone rogue/compromised or are not available in a timely manner (in case a speedy vote is required). What would be the recommended quorum as a function of the \nnumber of voting ASes?\n\n\n> > 3.2.11\n> > \"The issuer / serialNumber pair for each certificate MUST be unique.\"\n> > Is it even possible to create different certificates with the same issuer + serialNumber? If not, isn't this condition implied in the previous point?\n> \n> This is correct and comes from https://datatracker.ietf.org/doc/html/rfc5280#section-4.1.2.2 that says\n> \n> ```\n> The serial number MUST be a positive integer assigned by the CA to\n>    each certificate.  It MUST be unique for each certificate issued by a\n>    given CA (i.e., the issuer name and serial number identify a unique\n>    certificate)\n> ```\n> \n> So this is why the issuer / serialNumber pair must be unique. Maybe we can word it better and better refer to rfc5280section 4.1.2.2 .\n\nSo X.509 already specifies that the sequenceNumber MUST be unique _per issuer_, since we already say we are following X.509, I'm not sure we need to specify that here again.  \nThe previous point says \"Each certificate MUST be unique in the sequence of certificates.\". That means any issuer can have only one certificate with a given number in the TRC.\n\nSo as far as I can tell, this 2nd bulled is strictly implied when we are following the 1st bullet in combination with following X.509. I don't think it adds anything and could be removed.",
+          "createdAt": "2026-05-15T09:53:40Z",
+          "updatedAt": "2026-05-15T09:54:19Z"
+        }
+      ]
     },
     {
       "number": 148,
@@ -1682,9 +1697,17 @@
       "labels": [],
       "body": "From #143: \n\n> \"3 days\" -> What about the grace period? Paths can be valid for a long time. \n\nThere is no grace period for AS certificates. Two certificates can be valid at the same time, and during verification the relying party selects the right cert based on the  subject key identifier  (see https://www.ietf.org/archive/id/draft-dekater-scion-pki-12.html#name-verifying-a-control-plane-m ). We could add some wording saying that they are renewed before the old one expires, with a cross reference to that section. \n\nOn path segments validity, in -controlplane, we say: \n```\n2.2.2.6.  AS Entry Signature\n\n   Each AS entry MUST be signed with the AS certificate's private key\n   K_i.  The certificate MUST have a validity period that is longer than\n   the Hop Field absolute expiration time (described in\n   Section 2.2.2.5). \n```\nA hop field max validity is 24h, so with 3 days you should have enough time to overlap and keep beaconing.. However, we should think if we want to extend it. ",
       "createdAt": "2026-05-13T15:08:16Z",
-      "updatedAt": "2026-05-13T15:08:16Z",
+      "updatedAt": "2026-05-15T14:50:32Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "tzaeschke",
+          "authorAssociation": "NONE",
+          "body": "If I understand this correctly, we could suggest: \n\"Certificates must be valid as long as paths are valid. Hopfields in paths may be valid up to 24h. Different hopfields in a path segment may have different expiration dates. To ensure that paths segments are valid until the expiration time of each of their hopfields, it is recommended to create a new certificate every 24h.\"?",
+          "createdAt": "2026-05-15T14:50:32Z",
+          "updatedAt": "2026-05-15T14:50:32Z"
+        }
+      ]
     },
     {
       "number": 149,
@@ -8114,7 +8137,7 @@
     {
       "number": 137,
       "id": "PR_kwDOH386tM7XDXKR",
-      "title": "TRC description: mandate normalization and recommend tags",
+      "title": "TRC description: mandate normalization, introduce language tag and localizedDescriptions",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/137",
       "state": "OPEN",
       "author": "nicorusti",
@@ -8123,18 +8146,26 @@
       "labels": [],
       "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)",
       "createdAt": "2026-04-30T10:02:46Z",
-      "updatedAt": "2026-05-12T17:42:16Z",
+      "updatedAt": "2026-05-15T13:45:02Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "description_encoding",
-      "headRefOid": "fcb6bc7db25b8fabdd7be3565c9912c0fc606e62",
+      "headRefOid": "46e6b9fcc59c42cde4af0b6e08d40d6f44f0d7a0",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Hi @oncilla,  I incorporated your suggestions in the PR.  Good to hear that you like the overall approach, and thanks for posting your comments.. I also sometimes forget to click publish\u2026\r\n\r\n> Did you already check that the existing TRCs are compatible with this ASN.1 module?\r\n\r\nWith the updated ASN.1 module here, I can successfully decode various TRCs in ASN.1 studio: \r\n<img width=\"3248\" height=\"2122\" alt=\"Screenshot 2026-05-15 at 15 16 38\" src=\"https://github.com/user-attachments/assets/83b10642-4dd2-4861-b00b-ae4a98a3446d\" />\r\n\r\n\r\nIn general looks good to me, but I need to double check how existing code will behave if a TRC with these new fields is encountered.\r\nHow long does it take? \r\nI would merge the PR if we don\u2019t expect other changes, but  leave Issue #[136](https://github.com/scionassociation/scion-cppki_I-D/issues/136)  open until you can get this tested. If it helps, I dropped[ a TRC ](https://github.com/scionassociation/scion-cppki_I-D/blob/46e6b9fcc59c42cde4af0b6e08d40d6f44f0d7a0/asn1/trcs/ISD71_trc_4.pem_multilang.der)with the extended description. it would be good to check how this affects signing of the TRC. This way you can take your time. We anyways have at least a few weeks before the draft goes to publication, since Eliot will also do a final review on his side.\r\n\r\nIf you feel this change needs more community input, I can post it on scionproto, but I\u2019m not sure there are more people understanding PKI as deep as you.",
+          "createdAt": "2026-05-15T13:43:34Z",
+          "updatedAt": "2026-05-15T13:43:34Z"
+        }
+      ],
       "reviews": [
         {
           "id": "PRR_kwDOH386tM7-J_8g",
@@ -8259,6 +8290,32 @@
               "body": "I updated the text and ASN.1 module to introduce two new optional texts. What do you think? ",
               "createdAt": "2026-05-12T17:40:34Z",
               "updatedAt": "2026-05-12T17:40:34Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM7_PFt1",
+          "commit": {
+            "abbreviatedOid": "fcb6bc7"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "COMMENTED",
+          "body": "Nit: i would change the field names slightly ",
+          "createdAt": "2026-05-13T13:36:28Z",
+          "updatedAt": "2026-05-15T12:25:41Z",
+          "comments": [
+            {
+              "originalPosition": 32,
+              "body": "```suggestion\nLocalizedText ::= SEQUENCE {\n    language        PrintableString,\n    content         UTF8String (SIZE (0..8192))\n}\n```\n\nI think we can tighten down the string type even further.\nAFAIU, this PrintableString is the most restrictive option that can still represent the required characters\n\nAlso, I think we can remove some redundancy from the text",
+              "createdAt": "2026-05-13T13:36:28Z",
+              "updatedAt": "2026-05-15T12:25:41Z"
+            },
+            {
+              "originalPosition": 57,
+              "body": "```suggestion\n    descriptionLanguage    [1] PrintableString OPTIONAL\n```",
+              "createdAt": "2026-05-13T13:57:21Z",
+              "updatedAt": "2026-05-15T12:25:41Z"
             }
           ]
         }
@@ -8641,13 +8698,60 @@
       "labels": [],
       "body": "Resolves #143 ",
       "createdAt": "2026-05-13T16:40:26Z",
-      "updatedAt": "2026-05-13T16:40:26Z",
+      "updatedAt": "2026-05-14T11:19:34Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "til-chapter2",
       "headRefOid": "9dc52ff271751526680ad836eed2f6558aeb46ec",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM7_rEcU",
+          "commit": {
+            "abbreviatedOid": "9dc52ff"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-05-14T11:19:02Z",
+          "updatedAt": "2026-05-14T11:19:34Z",
+          "comments": [
+            {
+              "originalPosition": 20,
+              "body": "*regular* and sensitive updates",
+              "createdAt": "2026-05-14T11:19:02Z",
+              "updatedAt": "2026-05-14T11:19:34Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 152,
+      "id": "PR_kwDOH386tM7beT2W",
+      "title": "Til-Chapter-3",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/152",
+      "state": "OPEN",
+      "author": "knmeynell",
+      "authorAssociation": "CONTRIBUTOR",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #144 \r\n\r\n- Addressed 3.1, 3.2.2, 3.2.3 & 3.2.4\r\n- Do we have suggestions for 3.2.7, 3.2.9, 3.2.10 & 3.2.11?",
+      "createdAt": "2026-05-14T10:11:54Z",
+      "updatedAt": "2026-05-15T08:03:37Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "Til-Chapter-3",
+      "headRefOid": "64c687049d0e326a9d4cf0f4aeccb84bad87e931",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
