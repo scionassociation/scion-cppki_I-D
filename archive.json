@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-17T00:52:30.714597+00:00",
+  "timestamp": "2026-05-19T00:54:34.009463+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1719,9 +1719,9 @@
       "authorAssociation": "NONE",
       "assignees": [],
       "labels": [],
-      "body": "### 1.1. Terminology\n\n> Voting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\nIt is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\nI am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.\n\n### 1.3 \n\n> , which has a version number, \n\nVersion number here is imprecise. There is a field called version in the TRC payload which indicates the semantic version of the payload.\nFor TRC you should generally talk about serial and base numbers as to not confuse the reader. I think here, I would replace version number with serial number and gloss over the base number.\n\n### 1.4\n\n> While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).\n\nI wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\n### 2.6.4\n\n> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies\n\nThat sentence does not really make sense. We never have to retrieve the intermediate CA certificate. The AS certificate is always bundled together with the intermediate CA certificate as a certificate chain.\n\n### 2.7.1 \n\n> authorityCertIssuer & authorityCertSerialNumber: MUST NOT be included. Implementations MUST return an error if either is present.\n\nAs also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\n\n### 3\n\n> The TRC is a signed collection of [[X.509](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#X.509)] v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ([[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)] section 5).\n\nThis makes it sound like the certificates are not part of the CMS signed-data. I think it could be rephrased to be clearer.\n\n### 3.1\n\n> [Figure 2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#_figure-2) shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC.\n\nI don't understand the meaning of the second part of the sentence. In figure 2, there is only a base TRC AFAICT.\n\n### 3.2.5\n\n> The noTrustReset field is OPTIONAL and defaults to FALSE.\n\nI think we changed this to not be in the ASN.1 module to follow our implementation\n\n### NOTE TO SELF: Reviewed until 3.3\n\n\n\n\n\n",
+      "body": "### 1.1. Terminology\n\n> Voting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\nIt is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\nI am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.\n\n### 1.3 \n\n> , which has a version number, \n\nVersion number here is imprecise. There is a field called version in the TRC payload which indicates the semantic version of the payload.\nFor TRC you should generally talk about serial and base numbers as to not confuse the reader. I think here, I would replace version number with serial number and gloss over the base number.\n\n### 1.4\n\n> While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).\n\nI wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\n### 2.6.4\n\n> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies\n\nThat sentence does not really make sense. We never have to retrieve the intermediate CA certificate. The AS certificate is always bundled together with the intermediate CA certificate as a certificate chain.\n\n### 2.7.1 \n\n> authorityCertIssuer & authorityCertSerialNumber: MUST NOT be included. Implementations MUST return an error if either is present.\n\nAs also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\n\n### 3\n\n> The TRC is a signed collection of [[X.509](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#X.509)] v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ([[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)] section 5).\n\nThis makes it sound like the certificates are not part of the CMS signed-data. I think it could be rephrased to be clearer.\n\n### 3.1\n\n> [Figure 2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#_figure-2) shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC.\n\nI don't understand the meaning of the second part of the sentence. In figure 2, there is only a base TRC AFAICT.\n\n### 3.2.5\n\n> The noTrustReset field is OPTIONAL and defaults to FALSE.\n\nI think we changed this to not be in the ASN.1 module to follow our implementation\n\n### 3.4\n\nI think the algorithm has an issue. In step 2, we identify the highest baseNumber from the pre-filtered TRCs.\nInstead, the highest baseNumber should be selected from all known TRCs.\n\nOtherwise, it could happen that a TRC chain from the highest baseNumber expires (by accident), and an older TRC chain gets to be valid again. (E.g., by malicious actor continuing to create new TRCs in the chain.)\n\n### 3.5.7\n\n> If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.\n\nIs this a SHOULD or a MUST? \n\n### 4.1.2\n\n> Relying parties MUST discover TRC updates within the grace period defined in the updated TRC\n\nThat MUST is really hard to uphold, especially given the relying party does not know what the future value is going to be.\n\n>  and MUST include the hash value of the TRC contents to facilitate the discovery of discrepancies.\n\nWhere is this currently reflected in the specs/implementation. I do not remember where we put this information.\n\n### 4.2.2\n\n> the relying party MUST check that they have this latest TRC. If not, the relying party MUST request the latest TRC\n\nWe do not mention what to do with that requested TRC. We need to go back to step 1, no?\n\n### 6.3\n\nFor the record, the current implementation does not behave this way.\nIf a TRC is unknown, it is ignored, and the relying party fails to verify.\n\n\n\n\n\n\n\n\n",
       "createdAt": "2026-05-13T15:33:53Z",
-      "updatedAt": "2026-05-13T15:33:53Z",
+      "updatedAt": "2026-05-18T15:54:10Z",
       "closedAt": null,
       "comments": []
     },
@@ -8146,7 +8146,7 @@
       "labels": [],
       "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)",
       "createdAt": "2026-04-30T10:02:46Z",
-      "updatedAt": "2026-05-15T13:45:02Z",
+      "updatedAt": "2026-05-18T11:17:23Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
@@ -8164,6 +8164,13 @@
           "body": "Hi @oncilla,  I incorporated your suggestions in the PR.  Good to hear that you like the overall approach, and thanks for posting your comments.. I also sometimes forget to click publish\u2026\r\n\r\n> Did you already check that the existing TRCs are compatible with this ASN.1 module?\r\n\r\nWith the updated ASN.1 module here, I can successfully decode various TRCs in ASN.1 studio: \r\n<img width=\"3248\" height=\"2122\" alt=\"Screenshot 2026-05-15 at 15 16 38\" src=\"https://github.com/user-attachments/assets/83b10642-4dd2-4861-b00b-ae4a98a3446d\" />\r\n\r\n\r\nIn general looks good to me, but I need to double check how existing code will behave if a TRC with these new fields is encountered.\r\nHow long does it take? \r\nI would merge the PR if we don\u2019t expect other changes, but  leave Issue #[136](https://github.com/scionassociation/scion-cppki_I-D/issues/136)  open until you can get this tested. If it helps, I dropped[ a TRC ](https://github.com/scionassociation/scion-cppki_I-D/blob/46e6b9fcc59c42cde4af0b6e08d40d6f44f0d7a0/asn1/trcs/ISD71_trc_4.pem_multilang.der)with the extended description. it would be good to check how this affects signing of the TRC. This way you can take your time. We anyways have at least a few weeks before the draft goes to publication, since Eliot will also do a final review on his side.\r\n\r\nIf you feel this change needs more community input, I can post it on scionproto, but I\u2019m not sure there are more people understanding PKI as deep as you.",
           "createdAt": "2026-05-15T13:43:34Z",
           "updatedAt": "2026-05-15T13:43:34Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "body": "> Hi @oncilla, I incorporated your suggestions in the PR. Good to hear that you like the overall approach, and thanks for posting your comments.. I also sometimes forget to click publish\u2026\r\n> \r\n> > Did you already check that the existing TRCs are compatible with this ASN.1 module?\r\n> \r\n> With the updated ASN.1 module here, I can successfully decode various TRCs in ASN.1 studio: <img alt=\"Screenshot 2026-05-15 at 15 16 38\" width=\"2000\" height=\"1307\" src=\"https://private-user-images.githubusercontent.com/11498717/593149516-83b10642-4dd2-4861-b00b-ae4a98a3446d.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzkxMDMwNTQsIm5iZiI6MTc3OTEwMjc1NCwicGF0aCI6Ii8xMTQ5ODcxNy81OTMxNDk1MTYtODNiMTA2NDItNGRkMi00ODYxLWIwMGItYWU0YTk4YTM0NDZkLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTE4VDExMTIzNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTczZDZjMWM4ZTU4ZjFiMjE2NTU5OTNlYTQzMmIwYjliZGY3MzEwNjdmMmExNTZmY2I1ZGViZjdmZGE1MjI2YzYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.KhHZsP6r2xJDHyWj42B84N3rvnE0ULf226W4wyquHl4\">\r\n\r\nCool. Thanks for checking!\r\n\r\n> In general looks good to me, but I need to double check how existing code will behave if a TRC with these new fields is encountered. How long does it take? I would merge the PR if we don\u2019t expect other changes, but leave Issue #[136](https://github.com/scionassociation/scion-cppki_I-D/issues/136) open until you can get this tested. If it helps, I dropped[ a TRC ](https://github.com/scionassociation/scion-cppki_I-D/blob/46e6b9fcc59c42cde4af0b6e08d40d6f44f0d7a0/asn1/trcs/ISD71_trc_4.pem_multilang.der)with the extended description. it would be good to check how this affects signing of the TRC. This way you can take your time. We anyways have at least a few weeks before the draft goes to publication, since Eliot will also do a final review on his side.\r\n\r\nI created a draft PR with what I did to check: https://github.com/scionproto/scion/pull/4927\r\nAs far as I can tell, the change is forward and backward compatible. So all good from my side!\r\n\r\n> If you feel this change needs more community input, I can post it on scionproto, but I\u2019m not sure there are more people understanding PKI as deep as you.\r\n\r\nIt's probably good form to announce this in the community. I don't think there is going to be much input though.\r\n\r\n\r\n\r\n",
+          "createdAt": "2026-05-18T11:17:23Z",
+          "updatedAt": "2026-05-18T11:17:23Z"
         }
       ],
       "reviews": [
@@ -8646,7 +8653,7 @@
       "labels": [],
       "body": "Resolves #142 \r\n\r\n- Removed the paragraphs on monopoly and oligopoly models. I agree it doesn't add anything.\r\n- The mix of bold and italic was correct in the context it's used: bold refers to defined things, whilst italic refers to concepts.\r\n- Removed the reference to RPKI: agree it doesn't add anything although it may have been added FYI for reviewers' benefit.",
       "createdAt": "2026-05-13T11:44:19Z",
-      "updatedAt": "2026-05-13T14:56:16Z",
+      "updatedAt": "2026-05-18T15:59:02Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
@@ -8658,7 +8665,34 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABAP_Z-g",
+          "commit": {
+            "abbreviatedOid": "3b044a8"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-05-18T15:56:41Z",
+          "updatedAt": "2026-05-18T15:59:02Z",
+          "comments": [
+            {
+              "originalPosition": 110,
+              "body": "shouldn't this be serialNumber, rather than iD?",
+              "createdAt": "2026-05-18T15:56:41Z",
+              "updatedAt": "2026-05-18T15:59:02Z"
+            },
+            {
+              "originalPosition": 128,
+              "body": "ditto (but it is also redundant because initial implies serialNumber == 1)",
+              "createdAt": "2026-05-18T15:58:48Z",
+              "updatedAt": "2026-05-18T15:59:02Z"
+            }
+          ]
+        }
+      ]
     },
     {
       "number": 147,
@@ -8672,7 +8706,7 @@
       "labels": [],
       "body": "Follow up to #135 ",
       "createdAt": "2026-05-13T14:05:57Z",
-      "updatedAt": "2026-05-13T14:05:57Z",
+      "updatedAt": "2026-05-18T16:01:24Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
@@ -8684,7 +8718,21 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABAQBn9A",
+          "commit": {
+            "abbreviatedOid": "2a5107a"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-18T16:01:24Z",
+          "updatedAt": "2026-05-18T16:01:24Z",
+          "comments": []
+        }
+      ]
     },
     {
       "number": 151,
@@ -8745,7 +8793,7 @@
       "labels": [],
       "body": "Resolves #144 \r\n\r\n- Addressed 3.1, 3.2.2, 3.2.3 & 3.2.4\r\n- Do we have suggestions for 3.2.7, 3.2.9, 3.2.10 & 3.2.11?",
       "createdAt": "2026-05-14T10:11:54Z",
-      "updatedAt": "2026-05-15T08:03:37Z",
+      "updatedAt": "2026-05-18T16:01:05Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
@@ -8757,7 +8805,28 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABAQBRvg",
+          "commit": {
+            "abbreviatedOid": "64c6870"
+          },
+          "author": "oncilla",
+          "authorAssociation": "NONE",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-05-18T16:00:41Z",
+          "updatedAt": "2026-05-18T16:01:05Z",
+          "comments": [
+            {
+              "originalPosition": 22,
+              "body": "That looks off",
+              "createdAt": "2026-05-18T16:00:41Z",
+              "updatedAt": "2026-05-18T16:01:05Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
