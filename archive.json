@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-19T00:54:34.009463+00:00",
+  "timestamp": "2026-05-21T00:55:49.886777+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1533,7 +1533,7 @@
       "labels": [],
       "body": "From Alexey Melnikov: \n\n3.2.10. description\n\n    The description field contains a UTF-8 encoded string that describes\n    the ISD. It SHOULD NOT be empty. The description MUST be in English\n    and MAY additionally contain information in other languages.\n\nIf information in other languages is conveyed, it should be tagged with language tags in some form, see RFC 5646.\n\nAlso, if one suggests using UTF-8 for human readable text, one should generally use (reference) something like RFC 5198.",
       "createdAt": "2026-04-30T08:33:07Z",
-      "updatedAt": "2026-05-12T16:51:42Z",
+      "updatedAt": "2026-05-20T17:05:15Z",
       "closedAt": null,
       "comments": [
         {
@@ -1584,6 +1584,13 @@
           "body": "Responding to @oncilla 's [comment](https://github.com/scionassociation/scion-cppki_I-D/pull/137#discussion_r3227493891) in the PR (somehow I cannot comment there)\n\n\n\n> Additionally, we can add a descriptionLanguageTag similar to: taTitleLangTag https://datatracker.ietf.org/doc/html/rfc5914#section-2.4\n\nI like the idea of introducing a `descriptionLanguageTag` field like `taTitleLangTag` in [rfc5914](https://datatracker.ietf.org/doc/html/rfc5914#section-2.4), with the same behavior (if it is present, that determines the language of the description, of not, it defaults to English. \n\n> How about the following:\nWe add a backward/forward compatible additional field:\ndescriptions (optional, at the end for DER, with explicit tag) that is a list of description and language.\nMulti-language TRCs should use the descriptions field. No further restrictions on the description field itself.\n(We could even go further and say all TRCs should use the descriptions field rather than description)\n\n> I need to double check that this is actually backward and forward compatible.\n\n> For inspiration: LogotypeImageInfo https://datatracker.ietf.org/doc/html/rfc9399#name-loyalty-logotype \n\nBased on what I tried above, the new ASN.1 definitions could look something like:\n```\n-- Structure for localized text\nLocalizedText ::= SEQUENCE {\n    language    VisibleString,\n    text        UTF8String (SIZE (0..8192))\n}\n```\n\nThe new field could then be:\n```\n    descriptions        SEQUENCE OF LocalizedText,\n```\n\n",
           "createdAt": "2026-05-12T16:50:33Z",
           "updatedAt": "2026-05-12T16:51:42Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "This  is what is currently introduced in https://github.com/scionassociation/scion-cppki_I-D/pull/137 ",
+          "createdAt": "2026-05-20T17:05:15Z",
+          "updatedAt": "2026-05-20T17:05:15Z"
         }
       ]
     },
@@ -8699,24 +8706,26 @@
       "id": "PR_kwDOH386tM7bJlPW",
       "title": "remove sentence about reason for ISD-AS attribute",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/147",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Follow up to #135 ",
       "createdAt": "2026-05-13T14:05:57Z",
-      "updatedAt": "2026-05-18T16:01:24Z",
+      "updatedAt": "2026-05-20T07:06:41Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "id-at-ia-attribute",
       "headRefOid": "2a5107a203a086f750ca9f06dbc50d94f1e37643",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "closedAt": "2026-05-20T07:06:41Z",
+      "mergedAt": "2026-05-20T07:06:41Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a46ae2d50416a2588135ffb99444c5c516ce69bc"
+      },
       "comments": [],
       "reviews": [
         {
