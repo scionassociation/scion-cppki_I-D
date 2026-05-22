@@ -1399,7 +1399,7 @@ Table of Contents
    the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
    [RFC5198] to ensure consistent normalization.  If present, it MUST
    NOT be empty.  When this field contains languages other than English,
-   the corresponding language tag SHOULD explicitly identified in the
+   the corresponding language SHOULD be identified explicitly in the
    descriptionLanguage field (see ()[#langtag]).
 
    Multi-language TRCs SHOULD use the localizedDescriptions field
