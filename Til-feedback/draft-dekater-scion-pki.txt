@@ -401,11 +401,11 @@ Table of Contents
    For detailed descriptions, please refer to Section 2 and Section 3.
 
                 +----------------------------------------+
-                |               TRC 2                    |
+                |                 TRC 2                  |
                 | +------------------------------------+ |
                 | |- Version       - Core ASes         | |
  +--------+     | |- ID            - Description       | |    +--------+
- |  TRC 1 |     | |- Validity      - No Trust Reset    | |    |  TRC 3 |
+ | TRC 1  |     | |- Validity      - No Trust Reset    | |    | TRC 3  |
  | (Base  |---->| |- Grace Period  - Voting Quorum     | |--->|        |
  |  TRC)  |     | |- ...                               | |    |        |
  +--------+     | +------------------------------------+ |    +--------+
@@ -654,14 +654,14 @@ Table of Contents
    certificates with the first regular update to the base TRC.
 
    +----------------------------------------------+
-   |             TRC (serialNumber=1)             |
+   |                    TRC 1                     |
    |                (base/initial)                |
    | +------------------------------------------+ |
    | | - Version          - Core ASes           | |
    | | - ID               - Description         | |
    | | - Validity         - No Trust Reset      | |
    | | - Grace Period     - Voting Quorum       | |
-   | | - ...                                    | |
+   | | - SerialNumber: 1  - ...                 | |
    | +------------------------------------------+ |
    |                                              |
    | +-------------------+ +--------------------+ |
