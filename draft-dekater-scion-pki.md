@@ -206,13 +206,13 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~aasvg
 
                +----------------------------------------+
-               |               TRC (iD=2)               |
+               |               TRC 2                    |
                | +------------------------------------+ |
                | |- Version       - Core ASes         | |
 +--------+     | |- ID            - Description       | |    +--------+
-|  TRC   |     | |- Validity      - No Trust Reset    | |    |  TRC   |
-| (iD=1) |---->| |- Grace Period  - Voting Quorum     | |--->| (iD=3) |
-|Base TRC|     | |- ...                               | |    |        |
+|  TRC 1 |     | |- Validity      - No Trust Reset    | |    |  TRC 3 |
+| (Base  |---->| |- Grace Period  - Voting Quorum     | |--->|        |
+|  TRC)  |     | |- ...                               | |    |        |
 +--------+     | +------------------------------------+ |    +--------+
                |                                        |
                | +----------------+  +----------------+ |
@@ -245,7 +245,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
            +-----------+ +-----------+  +-----------+
 
 ~~~~
-{: #figure-1 title="Chain of trust within an ISD"}
+{: #figure-1 title="Chain of trust within an ISD. The TRC number (e.g., TRC 1) refers to the TRC's serialNumber."}
 
 All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)) that is used to bootstrap trust for the initial TRC.
 
@@ -344,7 +344,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 ~~~aasvg
 +----------------------------------------------+
-|                  TRC (id=1)                  |
+|             TRC (serialNumber=1)             |
 |                (base/initial)                |
 | +------------------------------------------+ |
 | | - Version          - Core ASes           | |
