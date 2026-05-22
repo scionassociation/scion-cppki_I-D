@@ -401,13 +401,13 @@ Table of Contents
    For detailed descriptions, please refer to Section 2 and Section 3.
 
                 +----------------------------------------+
-                |               TRC (iD=2)               |
+                |               TRC 2                    |
                 | +------------------------------------+ |
                 | |- Version       - Core ASes         | |
  +--------+     | |- ID            - Description       | |    +--------+
- |  TRC   |     | |- Validity      - No Trust Reset    | |    |  TRC   |
- | (iD=1) |---->| |- Grace Period  - Voting Quorum     | |--->| (iD=3) |
- |Base TRC|     | |- ...                               | |    |        |
+ |  TRC 1 |     | |- Validity      - No Trust Reset    | |    |  TRC 3 |
+ | (Base  |---->| |- Grace Period  - Voting Quorum     | |--->|        |
+ |  TRC)  |     | |- ...                               | |    |        |
  +--------+     | +------------------------------------+ |    +--------+
                 |                                        |
                 | +----------------+  +----------------+ |
@@ -439,7 +439,8 @@ Table of Contents
             |Certificate| |Certificate|  |Certificate|
             +-----------+ +-----------+  +-----------+
 
-                 Figure 1: Chain of trust within an ISD
+     Figure 1: Chain of trust within an ISD.  The TRC number (e.g.,
+                TRC 1) refers to the TRC's serialNumber.
 
    All certificates used in the Control Plane PKI are in X.509 v3 format
    [RFC5280] and additionally the TRC contains self-signed certificates
@@ -653,7 +654,7 @@ Table of Contents
    certificates with the first regular update to the base TRC.
 
    +----------------------------------------------+
-   |                  TRC (id=1)                  |
+   |             TRC (serialNumber=1)             |
    |                (base/initial)                |
    | +------------------------------------------+ |
    | | - Version          - Core ASes           | |
