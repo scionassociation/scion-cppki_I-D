@@ -768,8 +768,8 @@ A certificate's type (voting or root) is specified in the `extKeyUsage` extensio
 The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
 It consists of a sequence of `LocalizedText` structures, each containing:
 
-- `languageTag`: specifies the description's language. It MUST use language tags according to {{BCP47}}.
-- `text`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
+- `language`: specifies the description's language. It MUST use language tags according to {{BCP47}}.
+- `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
 
 ### `descriptionLanguage` {#langtag}
 
