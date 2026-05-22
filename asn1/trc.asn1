@@ -29,13 +29,13 @@ TRCPayload ::= SEQUENCE {
     validity              TRCValidity,
     gracePeriod           INTEGER,
     noTrustReset          BOOLEAN,
-    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
-    votingQuorum          INTEGER (1..2047),
+    votes                 SEQUENCE SIZE (0..511) OF INTEGER (0..1023),
+    votingQuorum          INTEGER (1..1023),
     coreASes              SEQUENCE OF ASN,
     authoritativeASes     SEQUENCE OF ASN,
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
-    certificates          SEQUENCE SIZE (1..4095) OF Certificate,
-    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
+    certificates          SEQUENCE SIZE (1..1023) OF Certificate,
+    localizedDescriptions [0] SEQUENCE SIZE (1..128) OF LocalizedText OPTIONAL,
     descriptionLanguage   [1] PrintableString OPTIONAL
 }
 
