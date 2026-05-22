@@ -2887,7 +2887,7 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
 <p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. If present, it <span class="bcp14">MUST NOT</span> be empty.
-When this field contains languages other than English, the corresponding language <span class="bcp14">SHOULD</span> be identified explicitly in the <code>descriptionLanguage</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
+When this field contains a language other than English, the corresponding language <span class="bcp14">SHOULD</span> be identified explicitly in the <code>descriptionLanguage</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead of the <code>description</code> field. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2922,7 +2922,7 @@ When this field contains languages other than English, the corresponding languag
 It consists of a sequence of <code>LocalizedText</code> structures, each containing:<a href="#section-3.2.12-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.12-2.1">
-              <p id="section-3.2.12-2.1.1"><code>language</code>: specifies the description's language. It <span class="bcp14">MUST</span> use language tags according to <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.12-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.12-2.1.1"><code>language</code>: specifies the description's language. It <span class="bcp14">MUST</span> contain a valid language tag according to <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.12-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.12-2.2">
               <p id="section-3.2.12-2.2.1"><code>content</code>: contains the localized description. It <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span>.<a href="#section-3.2.12-2.2.1" class="pilcrow">¶</a></p>
