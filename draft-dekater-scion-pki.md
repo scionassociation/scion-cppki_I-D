@@ -747,7 +747,7 @@ As with Core ASes, assigning or revoking Authoritative status is performed by ad
 The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. If present, it MUST NOT be empty.
 When this field contains languages other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).
 
-Multi-language TRCs SHOULD use the `localizedDescriptions` field instead. Either the `description` or the `localizedDescriptions`field MUST be present.
+Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present.
 
 ### `certificates` {#cert}
 
