@@ -2624,6 +2624,9 @@ draft-dekater-scion-pki-13
 
    *  Certificate validity recommendations: align to current practice
 
+   *  TRC: introduce introduce language tags ([BCP47]) and
+      localizedDescriptions
+
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
 
