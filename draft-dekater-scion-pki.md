@@ -745,7 +745,7 @@ As with Core ASes, assigning or revoking Authoritative status is performed by ad
 ### `description` {#description}
 
 The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. If present, it MUST NOT be empty.
-When this field contains languages other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).
+When this field contains a language other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).
 
 Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present.
 
@@ -768,7 +768,7 @@ A certificate's type (voting or root) is specified in the `extKeyUsage` extensio
 The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
 It consists of a sequence of `LocalizedText` structures, each containing:
 
-- `language`: specifies the description's language. It MUST use language tags according to {{BCP47}}.
+- `language`: specifies the description's language. It MUST contain a valid language tag according to {{BCP47}}.
 - `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
 
 ### `descriptionLanguage` {#langtag}
