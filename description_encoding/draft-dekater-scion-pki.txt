@@ -1397,7 +1397,7 @@ Table of Contents
 
    The description field contains a UTF-8 encoded string that describes
    the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
-   [RFC5198] to ensure consistent normalization.  If present, it MUST
+   [RFC5198] to ensure consistent normalization.  If present, it SHOULD
    NOT be empty.  When this field contains a language other than
    English, the corresponding language SHOULD be identified explicitly
    in the descriptionLanguage field (see ()[#langtag]).
