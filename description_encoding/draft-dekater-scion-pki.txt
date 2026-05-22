@@ -1403,8 +1403,8 @@ Table of Contents
    descriptionLanguage field (see ()[#langtag]).
 
    Multi-language TRCs SHOULD use the localizedDescriptions field
-   instead.  Either the description or the localizedDescriptionsfield
-   MUST be present.
+   instead of the description field.  Either the description or the
+   localizedDescriptionsfield MUST be present.
 
 3.2.11.  certificates
 
