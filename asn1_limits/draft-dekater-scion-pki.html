@@ -2886,7 +2886,7 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-description">
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
-<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. If present, it <span class="bcp14">MUST NOT</span> be empty.
+<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. If present, it <span class="bcp14">SHOULD NOT</span> be empty.
 When this field contains a language other than English, the corresponding language <span class="bcp14">SHOULD</span> be identified explicitly in the <code>descriptionLanguage</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead of the <code>description</code> field. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 </section>
@@ -3769,7 +3769,7 @@ TRCValidity ::= SEQUENCE {
 
 LocalizedText ::= SEQUENCE {
     language        PrintableString,
-    content         UTF8String (SIZE (0..8192))
+    content         UTF8String (SIZE (1..8192))
 }
 TRCPayload ::= SEQUENCE {
     version               TRCFormatVersion,
@@ -3966,7 +3966,10 @@ END
             <p id="appendix-D.1-1.3.1">Certificate validity recommendations: align to current practice<a href="#appendix-D.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.4">
-            <p id="appendix-D.1-1.4.1"><code>authorityKeyIdentifier</code> Extension: clarify support for <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.4.1">TRC: introduce introduce language tags (<span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>) and localizedDescriptions<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.5">
+            <p id="appendix-D.1-1.5.1"><code>authorityKeyIdentifier</code> Extension: clarify support for <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes<a href="#appendix-D.1-1.5.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>

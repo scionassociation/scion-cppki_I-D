@@ -1397,7 +1397,7 @@ Table of Contents
 
    The description field contains a UTF-8 encoded string that describes
    the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
-   [RFC5198] to ensure consistent normalization.  If present, it MUST
+   [RFC5198] to ensure consistent normalization.  If present, it SHOULD
    NOT be empty.  When this field contains a language other than
    English, the corresponding language SHOULD be identified explicitly
    in the descriptionLanguage field (see ()[#langtag]).
@@ -2387,7 +2387,7 @@ TRCValidity ::= SEQUENCE {
 
 LocalizedText ::= SEQUENCE {
     language        PrintableString,
-    content         UTF8String (SIZE (0..8192))
+    content         UTF8String (SIZE (1..8192))
 }
 TRCPayload ::= SEQUENCE {
     version               TRCFormatVersion,
@@ -2623,6 +2623,9 @@ draft-dekater-scion-pki-13
    *  remove trust Hierarchy subsection and redundant code block
 
    *  Certificate validity recommendations: align to current practice
+
+   *  TRC: introduce introduce language tags ([BCP47]) and
+      localizedDescriptions
 
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
