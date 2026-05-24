@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-21T00:55:49.886777+00:00",
+  "timestamp": "2026-05-24T00:54:48.694682+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1368,7 +1368,7 @@
       "id": "I_kwDOH386tM7o42qq",
       "title": "Final review Nico",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/122",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1378,15 +1378,15 @@
       "labels": [],
       "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [x] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [x] #128\n- [ ] > ~The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?~\n- [x] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] ~5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?~\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] ~Voting ASes: do they need to partecipate in routing? (CAs do I think)~\n- [x] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [x] Reduce use of passive tense and be more precise about subjects\n- [x] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-05-11T12:19:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-05-22T13:48:04Z",
+      "closedAt": "2026-05-22T13:48:04Z",
       "comments": [
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "Reopening because there are some comments in https://github.com/scionassociation/scion-cppki_I-D/pull/135 that were not addressed yet. \nI had to merge anyways to have others start with the final pass..",
+          "body": "Reopening because there are some comments in https://github.com/scionassociation/scion-cppki_I-D/pull/135 that were not addressed yet. \nI had to merge anyways to have others start with the final pass..\n\nSpecifically: \n- [x] Check that @oncilla is ok with wording about authorityCertIssuer & authorityCertSerialNumber in https://github.com/scionassociation/scion-cppki_I-D/pull/135#discussion_r3288789608",
           "createdAt": "2026-05-11T12:19:40Z",
-          "updatedAt": "2026-05-11T12:19:57Z"
+          "updatedAt": "2026-05-22T13:48:03Z"
         }
       ]
     },
@@ -1533,7 +1533,7 @@
       "labels": [],
       "body": "From Alexey Melnikov: \n\n3.2.10. description\n\n    The description field contains a UTF-8 encoded string that describes\n    the ISD. It SHOULD NOT be empty. The description MUST be in English\n    and MAY additionally contain information in other languages.\n\nIf information in other languages is conveyed, it should be tagged with language tags in some form, see RFC 5646.\n\nAlso, if one suggests using UTF-8 for human readable text, one should generally use (reference) something like RFC 5198.",
       "createdAt": "2026-04-30T08:33:07Z",
-      "updatedAt": "2026-05-20T17:05:15Z",
+      "updatedAt": "2026-05-22T16:11:01Z",
       "closedAt": null,
       "comments": [
         {
@@ -1552,14 +1552,14 @@
         },
         {
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> Key questions here are two:\n> \n> 1. Do we want to prescribe that UTF-8 text MUST be normalized according to [RFC5198](https://www.rfc-editor.org/rfc/rfc5198.html#section-3)?\n>    This essentially ensures that text appearing identical to the human eye is also identical on a byte level, since UTF-8 has several identical looking characters. This could be important for crypto operations, but I'm not sure we ever use the description field for anything.   According to gemini, in scionproto we use `encoding/asn1` which does not normalize text according to RFC5198.\n\nI think it would probably be good to prescribe this, yes. I don't think we created any TRCs with non-normalized UTF-8 symbols.\nBut we can double check. We would need to add enforcement to the Go code based on golang.org/x/text/unicode/norm.\n\n> 2. Do we want to encourage (SHOULD) use of language tags according to RFC5646 ?  We don't use them.\n>    Older versions of the SSFN TRC did not use language tags and were NOT in English, ut text was already UTF-8 encoded:\n>    e.g.\n>    SSHN has various languages, but without tags:\n> \n> ```\n\nI don't really understand how this language tag is intended to be used with asn.1. It does not really fit our current payload structure.\nI think we would need something like a set of tuples (language tag; description in that language).\n\nIf we do not want to change the asn.1 structure, I think it needs to be encoded in the description itself.\nBut at that point, I would leave it up to the ISD to define how to handle this.\n\n> P.S. scionproto also seems to mention UTF-8 encoding [here](https://github.com/scionproto/scion/blob/368ef5973c7909d126902dc626c0530a0573e71d/pkg/scrypto/cppki/trc_asn1.go#L50), but I'm not sure if this is actually used:\n> \n> ```\n> Description       string          `asn1:\"description,utf8\"`\n> ```\n\nIt is used by the asn1 Go std library. It forces the string to be UTF-8 encoded.\nFurthermore, it forces a failure in decoding if the string is not UTF-8 encoded.\n",
           "createdAt": "2026-05-11T13:12:20Z",
           "updatedAt": "2026-05-11T13:12:20Z"
         },
         {
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "The following TRCs all successfully verify with the NFC restriction:\n\n```\nVerified TRC successfully: ISD64-B1-S1\nVerified TRC successfully: ISD64-B1-S2\nVerified TRC successfully: ISD64-B1-S3\nVerified TRC successfully: ISD64-B1-S4\nVerified TRC successfully: ISD64-B1-S5\nVerified TRC successfully: ISD64-B1-S6\nVerified TRC successfully: ISD64-B1-S7\nVerified TRC successfully: ISD64-B1-S8\nVerified TRC successfully: ISD64-B1-S9\nVerified TRC successfully: ISD64-B1-S10\nVerified TRC successfully: ISD64-B1-S11\nVerified TRC successfully: ISD64-B1-S12\nVerified TRC successfully: ISD65-B1-S1\nVerified TRC successfully: ISD65-B1-S2\nVerified TRC successfully: ISD65-B1-S3\nVerified TRC successfully: ISD65-B1-S4\nVerified TRC successfully: ISD65-B1-S5\nVerified TRC successfully: ISD65-B1-S6\nVerified TRC successfully: ISD65-B1-S7\nVerified TRC successfully: ISD65-B1-S8\nVerified TRC successfully: ISD65-B1-S9\nVerified TRC successfully: ISD65-B1-S10\nVerified TRC successfully: ISD65-B1-S11\nVerified TRC successfully: ISD65-B1-S12\nVerified TRC successfully: ISD66-B1-S1\nVerified TRC successfully: ISD66-B1-S2\nVerified TRC successfully: ISD66-B1-S3\nVerified TRC successfully: ISD66-B1-S4\nVerified TRC successfully: ISD66-B1-S5\nVerified TRC successfully: ISD66-B1-S6\nVerified TRC successfully: ISD66-B1-S7\nVerified TRC successfully: ISD66-B1-S8\nVerified TRC successfully: ISD66-B1-S9\nVerified TRC successfully: ISD66-B1-S10\nVerified TRC successfully: ISD66-B1-S11\nVerified TRC successfully: ISD66-B1-S12\nVerified TRC successfully: ISD66-B1-S13\nVerified TRC successfully: ISD67-B1-S1\nVerified TRC successfully: ISD67-B1-S2\nVerified TRC successfully: ISD67-B1-S3\nVerified TRC successfully: ISD67-B1-S4\nVerified TRC successfully: ISD67-B1-S5\nVerified TRC successfully: ISD67-B1-S6\nVerified TRC successfully: ISD67-B1-S7\nVerified TRC successfully: ISD67-B1-S8\nVerified TRC successfully: ISD70-B1-S1\nVerified TRC successfully: ISD70-B1-S2\nVerified TRC successfully: ISD70-B1-S3\nVerified TRC successfully: ISD70-B1-S4\nVerified TRC successfully: ISD70-B1-S5\nVerified TRC successfully: ISD71-B1-S1\nVerified TRC successfully: ISD71-B1-S2\nVerified TRC successfully: ISD71-B1-S3\nVerified TRC successfully: ISD71-B1-S4\nVerified TRC successfully: ISD71-B1-S5\nVerified TRC successfully: ISD72-B1-S1\nVerified TRC successfully: ISD72-B1-S2\nVerified TRC successfully: ISD72-B1-S3\nVerified TRC successfully: ISD72-B1-S4\nVerified TRC successfully: ISD72-B1-S5\nVerified TRC successfully: ISD73-B1-S1\nVerified TRC successfully: ISD73-B1-S2\nVerified TRC successfully: ISD74-B1-S1\nVerified TRC successfully: ISD74-B1-S2\nVerified TRC successfully: ISD74-B1-S3\nVerified TRC successfully: ISD74-B1-S4\nVerified TRC successfully: ISD75-B1-S1\nVerified TRC successfully: ISD75-B1-S2\nVerified TRC successfully: ISD75-B1-S3\nVerified TRC successfully: ISD76-B1-S1\n```",
           "createdAt": "2026-05-11T13:25:39Z",
           "updatedAt": "2026-05-11T13:25:39Z"
@@ -1591,6 +1591,13 @@
           "body": "This  is what is currently introduced in https://github.com/scionassociation/scion-cppki_I-D/pull/137 ",
           "createdAt": "2026-05-20T17:05:15Z",
           "updatedAt": "2026-05-20T17:05:15Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Leaving it open waiting for testing in https://github.com/scionproto/scion/pull/4927",
+          "createdAt": "2026-05-22T16:11:01Z",
+          "updatedAt": "2026-05-22T16:11:01Z"
         }
       ]
     },
@@ -1601,7 +1608,7 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/142",
       "state": "OPEN",
       "author": "tzaeschke",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "nicorusti",
         "knmeynell"
@@ -1609,7 +1616,7 @@
       "labels": [],
       "body": "Disclaimer: I have little understanding of PKI, so apologies for asking questions that may be too obvious...\n\n### 1.1 Terminology\n- General: The ordering seems a bit random, maybe explain it?\n- Add references to chapters, e.g. for Trust Reset?\n\n- Authorative AS: the latest TRCs -> \"TRC\"?  More than one latest TRC?\n\n- Voting quorum: Remove explanation about malicious update. This is a terminology section only.\n\n### 1.3 Trust Model\n\n- This section appears to mix bold font vs italic font for emphasis\n- I am not sure about this section, it sounds more like advertisement and bashing of monopoly/oligopoly, maybe tone it down a bit?\n - Remove 2nd and 3rd paragraph\n  - Change 4th paragraph to `The SCION trust architecture provides the following properties:`\n  - Remove paragraph \"Ideally ...\"\n - Change sentence \"To fulfill...\" to `To fulfill the these requirements, SCION introduces the concept of Isolation Domains.`  \n\n- Special mention of the 3rd paragraph (on oligopoly): This sounds like a catchy but over-the-top sales pitch to me, it makes it sound like oligarchy is really worse than monopoly. I think it is catchy at the cost of correctness because it is mixing up two severities/definitions of \"failure\" here:\n  - monopoly single p-o-f: In case of failure, everything is bust\n  - oligopoly p-o-f: In case of failure, one can use another root -> some inconvenience\n\n- I am also not entirely sure about these questions:\n  - If my parent AS is fraudulent, I have now way of ever finding out. So this is still single point of failure because it can pretend arbitrary ISD topologies + certificates, can't it?\n  - If there is only one voting ASes -> single point of failure, right?\n  \n\n- If we discuss monopoly and oligopoly at all, we could add following differences:\n  - An AS can participate in multiple ISDs. So from an AS perspective, SCION is similar to an oligopoly setup, however, individual TRCs are usually better protected than with today's monopoly-CAs.\n  - The actual advantage of SCION is: \n     - In case of failure, the blast radius is a single TRC/ISD\n     - Every AS can choose their TRC to be someone they \"actually\" trust, rather than some entity in a different country/jurisdiction.\n\n- 2nd to last paragraph starting \"The TRC also provide trust agility..\":\n  - Change \n    `This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network.`\n    to\n    `This implies that ASes are free to choose one or more ISDs they believe maintain a uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network.` \n  - Remove last sentence with comparison to other PKIs, this sounds like unbacked advertisement. \n\n### 1.4 [Trust Relations within an Isolation Domain](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-trust-relations-within-an-i)\n\n- 2nd paragraph, \"MUST\": Should this be here? This MUST is not really actionable, it is implicit.... replace \"MUST\" with \"implicitly\".\n\n\n#### 1.4.1: \n- Maybe remove this paragraph? It doesn't seem to add anything here. If we keep it, we should explain _why_ there are different types of TRC updates. (I have read Chpt 1 and 2 so far and to me it is not clear yet why there are two types)\n- Probably: \"If the _base_ TRC has been compromised ...\"?\n- Explain: why no signing ceremony in case of trust reset? See 1.1.\n\n#### 1.4.2:\n- Contradiction: \"does not support certificate revocation\" but 1.3 states \"TRC versioning is used to efficiently revoke compromised roots of trust\"...?\n- \"Instead it relies on the two mechanisms described above and on short-lived certificates.\"  Which two mechanisms? Unclear what is meant here, are \"regular\" and \"sensitive\" mechanisms?\n\n- Now this section describes reasons why the \"two mechanisms\" are better. Maybe move these reasons to where the two mechanisms are described?\n- Bullet 1) This is unclear to me: Are \"short-lived\" and \"revocation lists\" are part of the SCION system or a description of the disadvantages of other systems? Obviously SCION uses \"short-lived\" but it also says that it does not support explicit revocation (which probably refers to revocation lists)...?\n- What are CRL/OCSP check? Reference?\n\n### 1.5 [1.5. ](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-1.5)[Overview of Certificates, Keys, and Roles](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#name-overview-of-certificates-ke)\n- Figure 1: What is the name of the TRC number, e.g. TRC 1, TRC 2, ...? I think it is the \"ID\"? Maybe clarify to TRC (ID=2) , ...\n- Voting ASes: How are they notified of a new TRC to sign? \n- Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\n",
       "createdAt": "2026-05-11T16:30:02Z",
-      "updatedAt": "2026-05-13T10:03:24Z",
+      "updatedAt": "2026-05-22T15:43:48Z",
       "closedAt": null,
       "comments": [
         {
@@ -1618,6 +1625,20 @@
           "body": "Hi @tzaeschke , thanks a lot for your review. We'll incorporate your feedback and ask you to review the PR.\n\nOn some specific points: \n\n> Add references to chapters, e.g. for Trust Reset?\n\n We don't add references to chapters in the terminology of other drafts. We won't do it here too to keep it consistent. \n\n> Figure 1: What is the name of the TRC number, e.g. TRC 1, TRC 2, ...? I think it is the \"ID\"? Maybe clarify to TRC (ID=2) , ...\n\n`serialNumber` inside the `iD` field. We'll clarify\n\n> Voting ASes: How are they notified of a new TRC to sign?\n \nI don't think there is a mechanism.. I don't think TRC updates are automated\n ",
           "createdAt": "2026-05-13T09:25:34Z",
           "updatedAt": "2026-05-13T09:25:34Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> An AS can participate in multiple ISDs. So from an AS perspective, SCION is similar to an oligopoly setup, however, individual TRCs are usually better protected than with today's monopoly-CAs.\n \nThere is no concept of joining multiple ISDs in the spec. Addressing-wise, the same AS in two different ISDs is a different address. We don't say anything about this in the drafts, so PKI should also not say much about this ",
+          "createdAt": "2026-05-22T14:31:13Z",
+          "updatedAt": "2026-05-22T14:31:13Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n \n- https://github.com/scionassociation/scion-cppki_I-D/issues/155",
+          "createdAt": "2026-05-22T15:43:39Z",
+          "updatedAt": "2026-05-22T15:43:48Z"
         }
       ]
     },
@@ -1723,14 +1744,22 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/149",
       "state": "OPEN",
       "author": "oncilla",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "### 1.1. Terminology\n\n> Voting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\nIt is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\nI am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.\n\n### 1.3 \n\n> , which has a version number, \n\nVersion number here is imprecise. There is a field called version in the TRC payload which indicates the semantic version of the payload.\nFor TRC you should generally talk about serial and base numbers as to not confuse the reader. I think here, I would replace version number with serial number and gloss over the base number.\n\n### 1.4\n\n> While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).\n\nI wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\n### 2.6.4\n\n> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies\n\nThat sentence does not really make sense. We never have to retrieve the intermediate CA certificate. The AS certificate is always bundled together with the intermediate CA certificate as a certificate chain.\n\n### 2.7.1 \n\n> authorityCertIssuer & authorityCertSerialNumber: MUST NOT be included. Implementations MUST return an error if either is present.\n\nAs also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\n\n### 3\n\n> The TRC is a signed collection of [[X.509](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#X.509)] v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ([[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)] section 5).\n\nThis makes it sound like the certificates are not part of the CMS signed-data. I think it could be rephrased to be clearer.\n\n### 3.1\n\n> [Figure 2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#_figure-2) shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC.\n\nI don't understand the meaning of the second part of the sentence. In figure 2, there is only a base TRC AFAICT.\n\n### 3.2.5\n\n> The noTrustReset field is OPTIONAL and defaults to FALSE.\n\nI think we changed this to not be in the ASN.1 module to follow our implementation\n\n### 3.4\n\nI think the algorithm has an issue. In step 2, we identify the highest baseNumber from the pre-filtered TRCs.\nInstead, the highest baseNumber should be selected from all known TRCs.\n\nOtherwise, it could happen that a TRC chain from the highest baseNumber expires (by accident), and an older TRC chain gets to be valid again. (E.g., by malicious actor continuing to create new TRCs in the chain.)\n\n### 3.5.7\n\n> If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.\n\nIs this a SHOULD or a MUST? \n\n### 4.1.2\n\n> Relying parties MUST discover TRC updates within the grace period defined in the updated TRC\n\nThat MUST is really hard to uphold, especially given the relying party does not know what the future value is going to be.\n\n>  and MUST include the hash value of the TRC contents to facilitate the discovery of discrepancies.\n\nWhere is this currently reflected in the specs/implementation. I do not remember where we put this information.\n\n### 4.2.2\n\n> the relying party MUST check that they have this latest TRC. If not, the relying party MUST request the latest TRC\n\nWe do not mention what to do with that requested TRC. We need to go back to step 1, no?\n\n### 6.3\n\nFor the record, the current implementation does not behave this way.\nIf a TRC is unknown, it is ignored, and the relying party fails to verify.\n\n\n\n\n\n\n\n\n",
       "createdAt": "2026-05-13T15:33:53Z",
-      "updatedAt": "2026-05-18T15:54:10Z",
+      "updatedAt": "2026-05-22T15:44:57Z",
       "closedAt": null,
-      "comments": []
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> 1.1. Terminology: Renaming Voting ASes affects many parts of the text - tracked in \n\n- https://github.com/scionassociation/scion-cppki_I-D/issues/154 ",
+          "createdAt": "2026-05-22T14:00:08Z",
+          "updatedAt": "2026-05-22T15:44:57Z"
+        }
+      ]
     },
     {
       "number": 150,
@@ -1739,12 +1768,62 @@
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/150",
       "state": "OPEN",
       "author": "tzaeschke",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "### 4.1.2\n\n- `Relying parties MUST have at least one valid TRC available.`\n  Maybe specify what relying parties are. I assume it is control services of every AS in the ISD (== AS operators/infrastructure)?\n  I assume it is not border routers and not endhosts.\n\n- The 1st MUST does not give any instructions on what to do or how to achieve it, usually I expect MUST before a description of an  action, not before a description of a state. I suggest moving it to the 3rd point, see below.\n- The 2nd MUST overlaps with the first, I suggest moving it to the 3rd bullet.\n- How to proceed if any of these MUSTs fail (e.g. due to network separation)?\n\n- Beaconing + path discovery: This section is about _ discovering_  TRC updates, but it contains normative language about CP traffic creation. Moreover these MUSTs appear to duplicate the MUSTs in section 4.2.1. Maybe remove the normative language here?\n\n- There is an empty line between 2nd and 3rd point.\n\n- Active discovery: `Any TRC can be obtained at any time from the sender of the information it secures; `\n  This sentence is unclear to me, what is \"it\"?\n  Also, why `any` TRC? Is should probably only get the latest one?\n  Maybe rephrase to: `The latest TRC can be actively queried from any entity (control service) that has it.`\n\n- `Note`: What is the point of this note, why is this relevant? Also, it seems incorrect, also the third mechanism involves active communication.\n  Moreover, the first two mechanisms require the third one, correct?\n\nSuggestion: \n  - Before the bullet list, insert: `New TRCs can be obtained from any AS that has them. The necessary query and response is described in [I-D.dekater-scion-controlplane], section \"Distribution of Cryptographic Material\"`.\n  - Change third bullet to `Any relying party can actively poll other parties for new TRC.`\n  - Add a separate list below the bullet list:  \n    ```\n    When to poll:\n    - A relying party MUST poll if the current TRC is about to expire.\n    - A relying party SHOULD poll if path lookup or beaconing traffic is sparse\n    - A relying party MAY poll at any time.\n    ``` \n  - Remove `Note: ...`\n\n\n\n## 4.2\n- `parties MUST be able`  What is the implication here? What must an implementer do to achieve this? Or does this follow implicitly from following from other sections of this document (including the following sections)? In that case maybe simply replace this `MUST be` with `are`?\n\n### 4.2.1\n- remove parenthesis around `(valid)` or simplify/rephrase to `An AS signs control plane messages with the private key that corresponds to its own certificate.`\n\n### 4.2.2\n- remove reference to SCION: `For efficiency, SCION distributes these certificate chains separately from the signed messages.`\n  -> `For efficiency, these certificate chains are distributed separately from the signed messages.`\n\n\n- 2nd point: Why is this a MUST? If this is security critical, why is this information optional for the sender? \n- 2nd point: How does one know whether this is the `latest TRC`? Do they have to perform a TRC query to check?\n- 2nd point: Combine two MUST into one: `... the relying party MUST ensure that they have this latest TRC.`\n\n- 3rd point: Remove 1st MUST, it seems unnecessary ->  `the relying party selects the certificate chain that will be used to verify the message`\n- 3rd point: Remove the three sub-MUSTs, they are duplicates, the first MUST implies the other 3. Maybe make it similar to 4th point.\n- 3rd point: Is it worth adding something about the `current time`? I.e. that \"coarse synchronization` is sufficient (reference CP draft 7.3? Maybe a reference to a section that discusses time tolerance?\n\n- 5th point: What happens if the verification or the check fails?\n\n- It seems a bit inconsistent that the failure of (4.) is discussed in a separate point (5.) while the failure of (3.) is discussed in a separate paragraph afterwards.\n\n- `Important`: \n  - Remove normative SHOULD, it is not actionable. Also an \"implication\" usually means that something \"is\" or \"is not\", rather than \"should\".\n\n  - I'm not sure what is said here. Why SHOULD they, or rather, may not be, verifiable? As long as I have a certificate, I can verify them (verification may fail because the certificate is outdated)?\n    Is this meant to say: \"An implication of the above procedure is that path segments SHOULD be _valid_ at time of use.\"?\n    How is this an implication of the procedure, the procedure says nothing about storing the path and using it later...\n    Maybe remove the first sentence and shorten the whole paragraph to \"Important: It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.\"?\n\n  - Does \"It is not enough\" mean that something MUST be done? -> Insert MUST\n\n## 4.3\n- Does \"REQUIRED\" need to be normative? This is just a listing of steps, they technically require each other implicitly.\n- Does \"MAY\" need to be normative?\n  \n\n## 5.1\n- `PKI operators need to ensure that the CAs maintain accurate time.`\n  In CP-draft, it is not called \"accurate\" but \"coarse\", maybe write `PKI operators need to (MUST?) maintain coarse time synchronization as discussed in [I-D.dekater-scion-controlplane], section \"Attacks on Time Sources\"`.\n- Also, maybe replace `Attacks on Time Sources` with `7.3. Effects of Clock Inaccuracy`?\n\n- `This document describes a typical TRC signing ceremony in Appendix C, but further processes are out-of-scope.` \n  `This document` is misleading, the previous sentence mentions a document, but a different one. How about: `The documentation of a typical TRC signing ceremony is discussed in Appendix C.`\n\n# 6\n- `This section discussed implication of such trust architecture, covering inter-AS security considerations.`\n   Typo: past tense and singular: `discusseS implicationS`\n\n## 6.1\n- `In SCION there is no central authority that could \"switch off\" an ISD as each`\n  add `In SCION there is no central authority that could \"switch off\" an ISD (except the ISD itself) as each ...`\n\n- 1st point: Maybe simplify to  `... To maliciously perform a TRC update, an attacker would need to compromise enough voting keys for a voting quorum. The higher the quorum, the _harder_ a malicious update _becomes_.`\n\n## 6.2\n- `On the other hand,` -> `However,`  .  On the other hand usually comes after \"on one hand\"\n\n- 1st point: Is this a SHOULD?\n- This is not obvious to me. Every path segment is signed with a specific CA, right? So does that mean every AS should sign its PCBs with different CAs round-robin? If so, maybe that is worth making explicit? \n  Generally, can we be more specific in how one \"relies\" on multiple CAs?\n\n# Appendix C\n\n- In general, the signing procedure document will not be an RFC. Should there be any normative language here?\n  Also, it says the procedure is RECOMMENDED, implying that all the following MUSTs are recommended, so the MUSTs are all optional .... ?\n  Maybe we should remove all normative language from this section, including the \"RECOMMENDED\"?\n\n## C.1\n- The SHOULD and the previous RECOMMENDED seem redundant.\n- `Voting ASes` is spelled with upper case here (several occurrences) but lower case elsewhere. Change to lower case?\n- 2nd point `They are in possession of a device with the private keys of their respective certificates in the TRC.`\n  Device? Maybe shorten to: `They are in possession of the private keys of their respective certificates in the TRC.`\n\n- remove ` and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent.`\n- The sentence `Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine.` seems wrong: \n  - \"Hash comparison checks are included\" -> where? by whom? should they be part of a protocol? What should be hashed? The private keys? Why?\n  - How does hash comparison _ensure_ that a private keys never leave a machine?\n  - Mentioning of \"avoiding mistakes\" seems unnecessary\n\n## C.2\n- The initial sentence seems off:\n  - Do we really need to specify that participants need to agree on a meeting location?\n    If anything we could suggest to use a _physical_ _in-person_ meeting, but the location is irrelevant. \n  - It sounds like, physical location and devices are not a MUST, so why even mention it?\n  - `MUST decide the ISD policy as follows;` makes it sound like the list gives instruction on how to decide on a policy. That is not the case.\n    Maybe: `An ISD policy MUST include the following items:`?\n\n- 1st point: change to `ISD number - for public ISDs obtained from the SCION registry, see Section 3.2.2;`\n\n- `Voting AS` is upper case...\n\n- `Each representative of a Voting AS MUST also create the following before the ceremony:`\n  Why MUST _before_ the ceremony? Also, maybe remove the MUST, it seems implicit/obvious for providing voting keys.\n\n- `In addition,.. ` all the MUSTs here seem obvious/implicit, I think they can be removed.\n\n- `The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.`\n  I'm not sure, does this really belong here?\n \n- `The Ceremony Administrator MUST provide or be provided with a device to exchange data between the ceremony participants.`\n  Again, these seems obvious to me. I would either remove the sentence or remove the MUST, it does not even specify who is actionable. \n\n- `SHOULD`: So after all these MUSTs, the security of the devices is optional?\n\n### C.3.1\n- Simplify sentence: `All parties share the certificates that must be part of the TRC with the Ceremony Administrator.` to \n  `All certificates that must be part of the TRC must be shared with the Ceremony Administrator.`\n\n- `The Ceremony Administrator MUST then` this MUST seems implicit (= a precondition) for the following MUST. Remove it?\n- Does it need to be SHA-512? What is wrong with SHA-3 or others?\n  Maybe add `SHA-512 (or any equivalent or better algorithm)`?\n  Then again, this document is only a recommended example, so maybe we can leave it as is.\n\n### C.3.2\n- 1st sentence: remove words `the` before Section 3.2 and `completed`?\n\n- \"DER encoding\", provide reference?\n\n- `by computing this on their` -> `by computing IT on their`\n- `checking it matches` -> `checking THAT it matches`\n\n### C.3.4\n- `The Signing Ceremony is completed once when every voting representative` -> remove `once` or `when`",
       "createdAt": "2026-05-13T15:53:13Z",
-      "updatedAt": "2026-05-13T15:53:13Z",
+      "updatedAt": "2026-05-22T09:10:02Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "A general comment: Is normative language allowed in RFC appendices? AI claims it is only allowed if the Appendix is explicitly declared as \"normative\", but I couldn't find anything in the style guide about this...",
+          "createdAt": "2026-05-22T09:10:02Z",
+          "updatedAt": "2026-05-22T09:10:02Z"
+        }
+      ]
+    },
+    {
+      "number": 154,
+      "id": "I_kwDOH386tM8AAAABDGldtQ",
+      "title": "Rename Voting ASes (they may not have an AS number)",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/154",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti"
+      ],
+      "labels": [],
+      "body": "As reported by @oncilla in #149 \n\n>> 1.1. Terminology\nVoting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\n>It is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\n>I am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.",
+      "createdAt": "2026-05-22T13:59:31Z",
+      "updatedAt": "2026-05-22T14:00:58Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "How about \"Voters\" ?",
+          "createdAt": "2026-05-22T14:00:52Z",
+          "updatedAt": "2026-05-22T14:00:52Z"
+        }
+      ]
+    },
+    {
+      "number": 155,
+      "id": "I_kwDOH386tM8AAAABDHN9bw",
+      "title": "Clarify how authoritative ASes are provisioned with the latest TRC",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/155",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "In #142, Till points out: \n\n> Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\nI think we could add one more rule in `3.5.3.  General Update Rules` saying that:\n\n- After an update, Voters MUST distribute the TRC to all authoritative ASes. I'm not sure how that works in practice..",
+      "createdAt": "2026-05-22T15:43:32Z",
+      "updatedAt": "2026-05-22T15:43:32Z",
       "closedAt": null,
       "comments": []
     }
@@ -7919,7 +7998,7 @@
       "labels": [],
       "body": "As suggested by Russ.\r\nContributes to #28 ",
       "createdAt": "2026-04-22T17:24:04Z",
-      "updatedAt": "2026-04-24T10:23:32Z",
+      "updatedAt": "2026-05-22T16:17:40Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "db5fbeed2a68f913992fffa6b3d4130f8774a2ba",
@@ -7947,7 +8026,7 @@
       "labels": [],
       "body": "Resolves #132 \r\nResolves #122 \r\n ...\r\n\r\nDiff [with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/nic_review_2/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-04-24T10:31:59Z",
-      "updatedAt": "2026-05-13T14:07:10Z",
+      "updatedAt": "2026-05-22T13:47:47Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "55fbfe25553b0e56be8651461f42ffe86f0fdbd3",
@@ -7970,7 +8049,7 @@
         },
         {
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "I cannot comment on this directly: https://github.com/scionassociation/scion-cppki_I-D/pull/135#discussion_r3168700487\r\nSo I add the comment here.\r\n\r\n> The presence of this attribute allows relying parties to identify the AS that operates the issuing CA, facilitating the discovery and retrieval of the intermediate CA certificate during chain validation.\r\n\r\nI think this is technically not correct because the intermediate CA certificate is always  distributed together with the AS certificate in a certificate chain. The only thing we need to match is the root certificate, but that can be done based on the Issuer Subject and AKID. \r\n\r\nIt is pretty hard to find a motivation why we have this restriction because it is not technically necessary to have. I think it was necessary before the move to X.509 certificates, and we never reconsidered if this is actually necessary.\r\n\r\nWhat is \"necessary\" is that the CA is a routable entity in the SCION network to support auto-renewal. It also makes sense to include the ISD-AS of that entity in the subject of the intermediate certificate. However, the whole system would still function afaik if the intermediate CA certificate did not have the ISD-AS number. (excluding our validation logic that enforces it of course). In the control plane, we don't really rely on that information.\r\n\r\nFor the auto-renewal, we use the ISD-AS of the roots in the TRC to discover potential fallback ISD-ASes when the renewal fails with the primary. \r\n\r\nIf not requested, I would just leave the motivation open, and state it as a requirement without it.",
           "createdAt": "2026-05-13T13:09:47Z",
           "updatedAt": "2026-05-13T13:09:47Z"
@@ -7990,7 +8069,7 @@
             "abbreviatedOid": "e46f353"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-04-24T16:28:00Z",
@@ -8010,7 +8089,7 @@
             "abbreviatedOid": "e46f353"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-04-24T16:30:07Z",
@@ -8105,7 +8184,7 @@
             "abbreviatedOid": "c557223"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-05-13T12:56:31Z",
@@ -8125,7 +8204,7 @@
             "abbreviatedOid": "f52cbdb"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-05-13T13:10:22Z",
@@ -8138,6 +8217,46 @@
               "updatedAt": "2026-05-13T13:10:23Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAwn3MQ",
+          "commit": {
+            "abbreviatedOid": "c557223"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T13:41:42Z",
+          "updatedAt": "2026-05-22T13:41:42Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "So you are fine with the current wording, right? \r\n<img width=\"509\" height=\"360\" alt=\"Screenshot 2026-05-22 at 15 41 25\" src=\"https://github.com/user-attachments/assets/bb25aca2-a847-4d1c-bfc0-8c4cf4288b00\" />\r\n",
+              "createdAt": "2026-05-22T13:41:42Z",
+              "updatedAt": "2026-05-22T13:41:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAwq0yQ",
+          "commit": {
+            "abbreviatedOid": "c557223"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T13:47:47Z",
+          "updatedAt": "2026-05-22T13:47:47Z",
+          "comments": [
+            {
+              "originalPosition": 90,
+              "body": "I see you wrote in #149: \r\n\r\n> As also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\r\n\r\n  ",
+              "createdAt": "2026-05-22T13:47:47Z",
+              "updatedAt": "2026-05-22T13:47:47Z"
+            }
+          ]
         }
       ]
     },
@@ -8146,24 +8265,26 @@
       "id": "PR_kwDOH386tM7XDXKR",
       "title": "TRC description: mandate normalization, introduce language tag and localizedDescriptions",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/137",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)",
+      "body": "Resolves #136 \r\n\r\nDiff[ with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/description_encoding/draft-dekater-scion-pki.txt)\r\n\r\n[Slack discussion](https://github.com/scionassociation/scion-cppki_I-D/pull/137)\r\n\r\nTODO: \r\n- [ ] Ensure latest trc.asn1 is copy pasted to appendix before merging",
       "createdAt": "2026-04-30T10:02:46Z",
-      "updatedAt": "2026-05-18T11:17:23Z",
+      "updatedAt": "2026-05-22T16:10:18Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "ecba466c1e12209934bfb19f47cada22b114d5f7",
+      "baseRefOid": "a46ae2d50416a2588135ffb99444c5c516ce69bc",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "description_encoding",
-      "headRefOid": "46e6b9fcc59c42cde4af0b6e08d40d6f44f0d7a0",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "ca9982d885570b0a7a4ee74cf597f8df591b079d",
+      "closedAt": "2026-05-22T16:09:35Z",
+      "mergedAt": "2026-05-22T16:09:35Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "2879f98dfc2a451db4bb3637b75dc16a55f90891"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -8174,10 +8295,24 @@
         },
         {
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "> Hi @oncilla, I incorporated your suggestions in the PR. Good to hear that you like the overall approach, and thanks for posting your comments.. I also sometimes forget to click publish\u2026\r\n> \r\n> > Did you already check that the existing TRCs are compatible with this ASN.1 module?\r\n> \r\n> With the updated ASN.1 module here, I can successfully decode various TRCs in ASN.1 studio: <img alt=\"Screenshot 2026-05-15 at 15 16 38\" width=\"2000\" height=\"1307\" src=\"https://private-user-images.githubusercontent.com/11498717/593149516-83b10642-4dd2-4861-b00b-ae4a98a3446d.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NzkxMDMwNTQsIm5iZiI6MTc3OTEwMjc1NCwicGF0aCI6Ii8xMTQ5ODcxNy81OTMxNDk1MTYtODNiMTA2NDItNGRkMi00ODYxLWIwMGItYWU0YTk4YTM0NDZkLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNjA1MTglMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjYwNTE4VDExMTIzNFomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTczZDZjMWM4ZTU4ZjFiMjE2NTU5OTNlYTQzMmIwYjliZGY3MzEwNjdmMmExNTZmY2I1ZGViZjdmZGE1MjI2YzYmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnJlc3BvbnNlLWNvbnRlbnQtdHlwZT1pbWFnZSUyRnBuZyJ9.KhHZsP6r2xJDHyWj42B84N3rvnE0ULf226W4wyquHl4\">\r\n\r\nCool. Thanks for checking!\r\n\r\n> In general looks good to me, but I need to double check how existing code will behave if a TRC with these new fields is encountered. How long does it take? I would merge the PR if we don\u2019t expect other changes, but leave Issue #[136](https://github.com/scionassociation/scion-cppki_I-D/issues/136) open until you can get this tested. If it helps, I dropped[ a TRC ](https://github.com/scionassociation/scion-cppki_I-D/blob/46e6b9fcc59c42cde4af0b6e08d40d6f44f0d7a0/asn1/trcs/ISD71_trc_4.pem_multilang.der)with the extended description. it would be good to check how this affects signing of the TRC. This way you can take your time. We anyways have at least a few weeks before the draft goes to publication, since Eliot will also do a final review on his side.\r\n\r\nI created a draft PR with what I did to check: https://github.com/scionproto/scion/pull/4927\r\nAs far as I can tell, the change is forward and backward compatible. So all good from my side!\r\n\r\n> If you feel this change needs more community input, I can post it on scionproto, but I\u2019m not sure there are more people understanding PKI as deep as you.\r\n\r\nIt's probably good form to announce this in the community. I don't think there is going to be much input though.\r\n\r\n\r\n\r\n",
           "createdAt": "2026-05-18T11:17:23Z",
           "updatedAt": "2026-05-18T11:17:23Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> It's probably good form to announce this in the community. I don't think there is going to be much input though. \r\n\r\nFOr the record, this was discussed at TC #10 on 21.05.2026 with no objections. It was also announced on [Slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1779297622605409) and it will be brought to the OS contributor call next week. ",
+          "createdAt": "2026-05-22T13:30:08Z",
+          "updatedAt": "2026-05-22T13:30:25Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "For the record, enclosed the html diff corresponding to this PR\r\n[Diff_ draft-dekater-scion-pki.txt - draft-dekater-scion-pki.txt.html](https://github.com/user-attachments/files/28155534/Diff_.draft-dekater-scion-pki.txt.-.draft-dekater-scion-pki.txt.html)\r\n",
+          "createdAt": "2026-05-22T16:10:18Z",
+          "updatedAt": "2026-05-22T16:10:18Z"
         }
       ],
       "reviews": [
@@ -8187,7 +8322,7 @@
             "abbreviatedOid": "3f857b7"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-05-11T13:26:15Z",
@@ -8247,7 +8382,7 @@
             "abbreviatedOid": "ce8c8cb"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "",
           "createdAt": "2026-05-12T14:52:56Z",
@@ -8313,7 +8448,7 @@
             "abbreviatedOid": "fcb6bc7"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "COMMENTED",
           "body": "Nit: i would change the field names slightly ",
           "createdAt": "2026-05-13T13:36:28Z",
@@ -8332,6 +8467,319 @@
               "updatedAt": "2026-05-15T12:25:41Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAuqrfg",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T08:32:28Z",
+          "updatedAt": "2026-05-22T09:02:24Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\n    content         UTF8String (SIZE (1..8192))\n```",
+              "createdAt": "2026-05-22T08:32:28Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "Instead of MAX, I suggest using a very low number here, e.g. `5`.\n\nI also wonder, do we really need 8KB?\nHow about limiting it to 256 bytes?\nSame for the localizations. Also, localizations don't need to have the same length as the main description...?\n\nThe problem is really that this can be exploited to create really large TRC that could even be used as an attack (as discussed in the meeting yesterday).",
+              "createdAt": "2026-05-22T08:36:37Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 17,
+              "body": "This is already implied by the ASN.1 description, which specifies a minimum size of 1. Do we need an additional MUST here?\nId suggest removing \"If present, it MUST NOT be empty.\"\n",
+              "createdAt": "2026-05-22T08:39:10Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 18,
+              "body": "```suggestion\nWhen this field contains languages other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).\n```",
+              "createdAt": "2026-05-22T08:40:26Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 31,
+              "body": "```suggestion\n    content         UTF8String (SIZE (1..256))\n```\nSee discussion below on `description` field: We should probably avoid bloated TRC.",
+              "createdAt": "2026-05-22T08:45:07Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "The size concern also goes for other fields, do we really need 2000 votes or 4000 certificates?",
+              "createdAt": "2026-05-22T08:49:01Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 34,
+              "body": "```suggestion\n- `language`: specifies the description's language. It MUST use language tags according to {{BCP47}}.\n- `content`: contains the localized description. It MUST be formatted in accordance with \"Net-Unicode\" {{RFC5198}}.\n```",
+              "createdAt": "2026-05-22T08:52:44Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 20,
+              "body": "```suggestion\nMulti-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present.\n```\n\nIt is a bit unclear what \"instead\" refers to. Does it mean that one should use ether \"description\" or \"localizedDescriptions\", but not both?",
+              "createdAt": "2026-05-22T08:59:35Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 49,
+              "body": "See discussion on trc.asn1 above.",
+              "createdAt": "2026-05-22T09:00:41Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 74,
+              "body": "See discussion on trc.asn1 above.",
+              "createdAt": "2026-05-22T09:00:53Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "```suggestion\n   localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,\n```",
+              "createdAt": "2026-05-22T09:01:55Z",
+              "updatedAt": "2026-05-22T09:02:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAvd0DQ",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T10:39:51Z",
+          "updatedAt": "2026-05-22T10:39:51Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "A field containing just a whitespace would be parsed and OK according to the ASN.1 module I don't think that is the point, so I recommend leave this wording where it is. \r\n",
+              "createdAt": "2026-05-22T10:39:51Z",
+              "updatedAt": "2026-05-22T10:39:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAvfmUw",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T10:45:15Z",
+          "updatedAt": "2026-05-22T10:45:15Z",
+          "comments": [
+            {
+              "originalPosition": 49,
+              "body": "Le't work on the .asn1 file firt, then I copy paste it into the draft at the end",
+              "createdAt": "2026-05-22T10:45:15Z",
+              "updatedAt": "2026-05-22T10:45:15Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAvhOPg",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T10:50:03Z",
+          "updatedAt": "2026-05-22T10:50:03Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Or at least leaving a SHOULD: \r\n```suggestion\r\nThe `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with \"Net-Unicode\" {{RFC5198}} to ensure consistent normalization. If present, it SHOULD NOT be empty.\r\n```",
+              "createdAt": "2026-05-22T10:50:03Z",
+              "updatedAt": "2026-05-22T10:50:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAvobNw",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T11:12:25Z",
+          "updatedAt": "2026-05-22T11:12:25Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "Is TRC size a real threat vector? If yes, is it prevented with hard limits in the spec?\r\n\r\nI mean, if you see a 1 GB certificate/TRC, you maybe don't want to open it anyways and I think implementations may have some limits internally. Is it the case?\r\n",
+              "createdAt": "2026-05-22T11:12:25Z",
+              "updatedAt": "2026-05-22T11:12:25Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAv8wZA",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T12:06:24Z",
+          "updatedAt": "2026-05-22T12:06:24Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "The current SSHN TRC does not fit (even tough it uses multiple languages without tags). \r\nhttps://github.com/scionassociation/scion-cppki_I-D/pull/127#discussion_r3065519614",
+              "createdAt": "2026-05-22T12:06:24Z",
+              "updatedAt": "2026-05-22T12:06:24Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAv9HgQ",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T12:07:23Z",
+          "updatedAt": "2026-05-22T12:07:23Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "With @oncilla we discussed [here](https://github.com/scionassociation/scion-cppki_I-D/pull/127#discussion_r3071876416) that 4096 or 8192 is an acceptable size.. I would not make it smaller than 4096 (or bare minimum 1024)",
+              "createdAt": "2026-05-22T12:07:23Z",
+              "updatedAt": "2026-05-22T12:26:18Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAwgwnw",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T13:28:31Z",
+          "updatedAt": "2026-05-22T13:28:31Z",
+          "comments": [
+            {
+              "originalPosition": 31,
+              "body": "We have to review many field limits, I suggest that we merge this one and then just review field sizes in https://github.com/scionassociation/scion-cppki_I-D/pull/153 ",
+              "createdAt": "2026-05-22T13:28:31Z",
+              "updatedAt": "2026-05-22T13:28:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAwry8Q",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T13:49:52Z",
+          "updatedAt": "2026-05-22T13:49:52Z",
+          "comments": [
+            {
+              "originalPosition": 56,
+              "body": "We have to review many field limits, I suggest that we merge this PR, which is about language tags, and then review field sizes in https://github.com/scionassociation/scion-cppki_I-D/pull/153",
+              "createdAt": "2026-05-22T13:49:52Z",
+              "updatedAt": "2026-05-22T13:49:52Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAw_JmA",
+          "commit": {
+            "abbreviatedOid": "c5a0e92"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "I approve, but I think we need to discuss the \"NOT empty\" further, I think it doesn't express what it is supposed to express (see my comment below)....",
+          "createdAt": "2026-05-22T14:35:57Z",
+          "updatedAt": "2026-05-22T14:38:03Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "> A field containing just a whitespace would be parsed and OK according to the ASN.1 module I don't think that is the point, so I recommend leave this wording where it is.\n\nI think what you really want to specify here is that the content should be **sensible**, but I am not sure that can specified with normative language.\n\nIt is also debatable whether a string with a single character is empty, regardless of whether this is a whitespace or not. If you want to prevent a whitespace, a more precise norm would be: `If present, it MUST NOT contain only whitespaces.` ...?\n\nThat would still allow descriptions like `123456`, so I think this cannot be resolved with normative language and I suggest to remove it.",
+              "createdAt": "2026-05-22T14:35:58Z",
+              "updatedAt": "2026-05-22T14:38:03Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAxTEvA",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T15:22:28Z",
+          "updatedAt": "2026-05-22T15:22:28Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "I would still encourage deployers to put something in that field.. I don't think we can be the protocol police and avoid that people put 12345 in it, but I think we should at least give some human-language guidance, and I see no harm in having a SHOULD not be empty. It becomes a lot clearer than just reading the 1 in the ASN.1 module\r\n\r\n",
+              "createdAt": "2026-05-22T15:22:28Z",
+              "updatedAt": "2026-05-22T15:22:47Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAxVEpQ",
+          "commit": {
+            "abbreviatedOid": "46e6b9f"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T15:27:42Z",
+          "updatedAt": "2026-05-22T15:27:43Z",
+          "comments": [
+            {
+              "originalPosition": 17,
+              "body": "Okay :+1: ",
+              "createdAt": "2026-05-22T15:27:43Z",
+              "updatedAt": "2026-05-22T15:27:43Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAxVULg",
+          "commit": {
+            "abbreviatedOid": "c5a0e92"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-05-22T15:28:19Z",
+          "updatedAt": "2026-05-22T15:28:19Z",
+          "comments": []
         }
       ]
     },
@@ -8651,22 +9099,22 @@
     {
       "number": 146,
       "id": "PR_kwDOH386tM7bGRM_",
-      "title": "Review Chapter 1 - Till",
+      "title": "Review Chapter 1 - Till and Dominik",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/146",
       "state": "OPEN",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
-      "body": "Resolves #142 \r\n\r\n- Removed the paragraphs on monopoly and oligopoly models. I agree it doesn't add anything.\r\n- The mix of bold and italic was correct in the context it's used: bold refers to defined things, whilst italic refers to concepts.\r\n- Removed the reference to RPKI: agree it doesn't add anything although it may have been added FYI for reviewers' benefit.",
+      "body": "Resolves #142 \r\nContributes to #149\r\n\r\n- Removed the paragraphs on monopoly and oligopoly models. I agree it doesn't add anything.\r\n- The mix of bold and italic was correct in the context it's used: bold refers to defined things, whilst italic refers to concepts.\r\n- Removed the reference to RPKI: agree it doesn't add anything although it may have been added FYI for reviewers' benefit.\r\n\r\n[Diff with main ](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/Til-feedback/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-13T11:44:19Z",
-      "updatedAt": "2026-05-18T15:59:02Z",
+      "updatedAt": "2026-05-22T16:06:15Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "6ebf5f3a32b579a4fa2f3f5bbc29fcd4449a99c1",
+      "baseRefOid": "a46ae2d50416a2588135ffb99444c5c516ce69bc",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Til-feedback",
-      "headRefOid": "3b044a821c9f52fb3a6134252d915474150ddf92",
+      "headRefOid": "b4cc31a5ebb30f866da74d86fbb0fd523b046afd",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -8679,7 +9127,7 @@
             "abbreviatedOid": "3b044a8"
           },
           "author": "oncilla",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "state": "CHANGES_REQUESTED",
           "body": "",
           "createdAt": "2026-05-18T15:56:41Z",
@@ -8696,6 +9144,94 @@
               "body": "ditto (but it is also redundant because initial implies serialNumber == 1)",
               "createdAt": "2026-05-18T15:58:48Z",
               "updatedAt": "2026-05-18T15:59:02Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAw5M9Q",
+          "commit": {
+            "abbreviatedOid": "7743f88"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "CHANGES_REQUESTED",
+          "body": "@tzaeschke we tried to address your review, but I have some comments on various points. Could you have a look? ",
+          "createdAt": "2026-05-22T14:20:58Z",
+          "updatedAt": "2026-05-22T15:51:56Z",
+          "comments": [
+            {
+              "originalPosition": 57,
+              "body": "I think this text is important to distinguish the PKI's trust model from other PKIs. We can reword it, but I would not delete it, otherwise we are missing some points that motivate SCION having its own PKI.\n\n",
+              "createdAt": "2026-05-22T14:20:58Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 57,
+              "body": "How about: \n\n> The monopoly model requires global consensus on a single root of trust, which introduces a single point of failure. The oligopoly model, conversely, utilizes multiple roots of trust that are typically afforded equal authority, introducing multiple potential points of vulnerability, as the compromise of any individual root can undermine the security of the broader ecosystem.\n\n",
+              "createdAt": "2026-05-22T14:26:53Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 76,
+              "body": "Why remove this? It is a recurring question and it was also requested by a reviewer\nhttps://github.com/scionassociation/scion-cppki_I-D/issues/39",
+              "createdAt": "2026-05-22T14:37:56Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 74,
+              "body": "> The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that ASes are free to choose one or more ISDs they believe maintain an uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network, which differs from trust models provided by other PKI architectures.\n\nThis new wording does not work. The old text was clearly talking about users selecting trust roots for a reason. It was conveying that users (or better - endpoints) send traffic through ASes that are only in trusted ISDs (depending on which TRCs are provisioned on the endpoint). I would stick to the old wording here.\n\n> ASes are free to choose one or more ISDs \n\nAlso, in the spec, there is no such thing. An AS in two ISD is two different ISD-ASes tuples, two different CP instances, etc.. ",
+              "createdAt": "2026-05-22T14:46:30Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 89,
+              "body": "Till suggested that this text is redundant. How about shortening it:\n```suggestion\nThere are two types of TRC updates: regular and sensitive. The update type depends on which fields are changed (see [](#update)). In both cases the base TRC remains unchanged.\n```",
+              "createdAt": "2026-05-22T14:50:03Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 92,
+              "body": "No, a trust reset is necessary if any TRC is compromised, not just a base TRC\n```suggestion\nIf the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy) when a new base TRC is created.\n```",
+              "createdAt": "2026-05-22T14:52:15Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 98,
+              "body": "This text does not make sense, how about\n\n```suggestion\nThe Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism and on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:\n```",
+              "createdAt": "2026-05-22T15:31:15Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 72,
+              "body": "To address till's point: \n> Contradiction: \"does not support certificate revocation\" but 1.3 states \"TRC versioning is used to efficiently revoke compromised roots of trust\"...?\n\n\n```suggestion\nAuthentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. Such scoping of trust roots within an ISD improves security as compromise of a private key associated with a trust root cannot be used to forge a certificate outside the ISD. An ISD's trust roots and policy are encoded in the TRC, which has a version number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used as an alternative to revocation in case of compromised roots of trust.\n```\n\n\n ",
+              "createdAt": "2026-05-22T15:33:16Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            },
+            {
+              "originalPosition": 89,
+              "body": "@oncilla commented in #149: \n\n> I wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\nSo how about: \n\n \n```suggestion\nWhile it is not necessary that all the ASes of the ISD trust each other, all ASes implicitly trust the ISD's Voting ASes, as well as its CA(s).\n```",
+              "createdAt": "2026-05-22T15:51:15Z",
+              "updatedAt": "2026-05-22T15:51:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABAxgeaw",
+          "commit": {
+            "abbreviatedOid": "3b044a8"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-05-22T15:53:42Z",
+          "updatedAt": "2026-05-22T15:53:43Z",
+          "comments": [
+            {
+              "originalPosition": 110,
+              "body": "Yes \r\n```suggestion\r\n               |         TRC (serialNumber =2)          |\r\n```",
+              "createdAt": "2026-05-22T15:53:42Z",
+              "updatedAt": "2026-05-22T15:54:26Z"
             }
           ]
         }
@@ -8836,6 +9372,47 @@
           ]
         }
       ]
+    },
+    {
+      "number": 153,
+      "id": "PR_kwDOH386tM7eWadT",
+      "title": "ASN1 - lower max size for sequences",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/153",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "To avoid infinite size TRCs\r\n\r\nHi @oncilla , @tzaeschke is suggesting that we introduce stricter upper bounds for sequence sizes, to prevent having unbounded bloated TRCs that could be a DoS attack vector. \r\n\r\nWe currently have a potentially unlimited size:\r\n- 4095 certificates (16MB assuming 4KB/certificate)\r\n- For each description field, max 8192 \r\n- MAX localizedDescriptions (ubounded sequence - infinite)\r\n- coreASes - unlimited\r\n- authoritativeASes - unlimited\r\n- ASN - unlimited\r\n- language / descriptionLanguage unlimited\r\n\r\nShall we reduce limits a bit?  Something like:\r\n- 1023 total certificates (4MB) \r\n- 128 localizedDescriptions (sequence - 1MB)\r\n- For each description field, max 8192 (same as before? - I don't think it makes a big difference)\r\n- ASN - 16 bytes\r\nThis way a TRC will be around 5MB, except if some certs are super bloated..\r\n\r\nRemaining problem: \r\n- coreASes & authoritativeASes  are still unlimited - the SCION limit is 2**48, which would result in a still gigantic TRC.. Do we want to introduce a cap here? Why, and to what? there are no other hard limits in the spec AFAIK\r\n@oncilla \r\n\r\nTODO: \r\n- [ ] copy changes into appendix before merging",
+      "createdAt": "2026-05-22T12:56:16Z",
+      "updatedAt": "2026-05-22T16:24:48Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "2879f98dfc2a451db4bb3637b75dc16a55f90891",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "asn1_limits",
+      "headRefOid": "460b575c339f37fb9299045d7c96c3518fd25fec",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "These in the PR are proposed limits, I would like to get input from Till and @oncilla\r\nIf we need, we can also ask Russ, an expert ASN.1 reviewer",
+          "createdAt": "2026-05-22T15:00:05Z",
+          "updatedAt": "2026-05-22T15:00:05Z"
+        },
+        {
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "Is there a possibility to impose a global limit, e.g. TRCs larger than 16MB are rejected?\r\nThis may be simpler than adjusting individual limits...",
+          "createdAt": "2026-05-22T15:03:40Z",
+          "updatedAt": "2026-05-22T15:03:40Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
