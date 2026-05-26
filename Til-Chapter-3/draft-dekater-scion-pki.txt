@@ -516,11 +516,11 @@ Table of Contents
 
 2.1.  Control Plane Root Certificate
 
-   The private key of the control plane root certificate is used to sign
-   Control Plane issuing CA certificates.  Consequently, the public key
-   of the control plane root certificate is used to verify control plane
-   issuing CA certificates, i.e. root certificates determine which ASes
-   act as a CA in an ISD.
+   The private key of the control plane root (CP root) certificate is
+   used to sign Control Plane issuing CA certificates.  Consequently,
+   the public key of the control plane root certificate is used to
+   verify control plane issuing CA certificates, i.e. root certificates
+   determine which ASes act as a CA in an ISD.
 
    In X.509 terms, control plane root certificates are CA certificates.
    For simplicity, this document calls them 'root certificates',
@@ -1419,9 +1419,9 @@ Table of Contents
 
    *  a regular voting certificate, or
 
-   *  a CP root certificate.
+   *  a control plane root certificate.
 
-   A certificate that is no control plane root or voting certificate
+   A certificate that is not a control plane root or voting certificate
    MUST NOT be included in the sequence of certificates in the
    certificates field.
 

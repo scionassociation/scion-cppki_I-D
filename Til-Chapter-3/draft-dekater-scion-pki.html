@@ -1782,7 +1782,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
         <h3 id="name-control-plane-root-certific">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-control-plane-root-certific" class="section-name selfRef">Control Plane Root Certificate</a>
         </h3>
-<p id="section-2.1-1">The private key of the control plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">The private key of the control plane root (CP root) certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1-2">In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the control plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed control plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the control plane root certificates as the starting point of an ISD's certificate verification path.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.1-3">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a control plane root certificate is 5 years.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4"><strong>Note</strong>: The TRC of each ISD contains a trusted set of control plane root certificates, and this set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see <a href="#trc-specification" class="auto internal xref">Section 3</a>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
@@ -2900,10 +2900,10 @@ The description <span class="bcp14">MUST</span> be in English and <span class="b
               <p id="section-3.2.11-3.2.1">a regular voting certificate, or<a href="#section-3.2.11-3.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.11-3.3">
-              <p id="section-3.2.11-3.3.1">a CP root certificate.<a href="#section-3.2.11-3.3.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.11-3.3.1">a control plane root certificate.<a href="#section-3.2.11-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.2.11-4">A certificate that is no control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-4">A certificate that is not a control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-5">A certificate's type (voting or root) is specified in the <code>extKeyUsage</code> extension of the certificate, by means of the SCION-specific attributes <code>id-kp-regular</code>, <code>id-kp-sensitive</code>, and <code>id-kp-root</code>, respectively. For more information, see <a href="#ext-key-usage-ext" class="auto internal xref">Section 2.7.4</a>.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-6">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
 <ul class="normal">
