@@ -1010,7 +1010,7 @@ To verify a control plane message, the relying party MUST perform the following 
 3. After constructing the pool of root certificates, the relying party MUST select the certificate chain used to verify the message. The AS certificate included in this certificate chain MUST have the following properties:
    - The ISD-AS number in the subject of the AS certificate matches the ISD-AS number in the signature metadata. See also [](#isd-as-nr).
    - The subject key identifier of the AS certificate matches the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
-   - The AS certificate is valid at verification time, which will normally be the current time (see {{I-D.dekater-scion-controlplane}}, Section 7.3). In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.
+   - The AS certificate is valid at verification time, which will normally be the current time (see {{I-D.dekater-scion-controlplane}}, section "Effects of Clock Inaccuracy"). In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.
 4. After selecting a certificate chain to verify the control plane messages, the relying party MUST verify the certificate chain by:
    - Executing the regular X.509 verification procedure. For details, see {{X.509}}.
    - Checking that
@@ -1033,7 +1033,7 @@ The steps REQUIRED to issue a new AS certificate are the following:
 3. The CA uses its CA key and the CSR to create the new AS certificate.
 4. The CA sends the AS certificate back to the AS.
 
-When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals MAY be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
+When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals may be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
 
 # Deployment Considerations
 
@@ -1043,11 +1043,11 @@ The Control Plane PKI relies on short-lived certificates as an alternative to re
 
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load. ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
-Furthermore, PKI operators need to ensure that the CAs maintain accurate time. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, section "Attacks on Time Sources".
+Furthermore, PKI operators need to ensure that the CAs maintain accurate time. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, section "Effects of Clock Inaccuracy".
 
 ## Operational Processes for ISD Governance
 
-An ISD is governed by Voting ASes. In existing deployments, Voting ASes may produce a regulations document to facilitate operations. Such document typically describes:
+An ISD is governed by Voting ASes who may produce a regulations document to facilitate operations. Such document typically describes:
 
   - governance structure
   - roles and responsibilities
@@ -1056,7 +1056,7 @@ An ISD is governed by Voting ASes. In existing deployments, Voting ASes may prod
   - protection measures for keys (e.g. use of HSMs)
   - actions in case of compromise or regulations breach
 
-This document describes a typical TRC Signing Ceremony in [](#initial-ceremony), but further processes are out-of-scope.
+This document may also describe a TRC Signing Ceremony, such as that described in [](#initial-ceremony).
 
 # Security Considerations
 
