@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 23 November 2026                                        S. Hitz
+Expires: 27 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             22 May 2026
+                                                             26 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 November 2026.
+   This Internet-Draft will expire on 27 November 2026.
 
 Copyright Notice
 
@@ -1198,8 +1198,10 @@ Table of Contents
 
    The TRC holds the root and voting certificates of the ISD, defining
    the ISD's trust policy.  Its ASN.1 module is described in Appendix B.
-   Its fields are contained in a TRCPayload sequence.  This section
-   describes their syntax and semantics.
+   Although the ASN.1 schema permits larger structures, the total TRC
+   size SHOULD NOT exceed 4 MB.  Its fields are contained in a
+   TRCPayload sequence.  This section describes their syntax and
+   semantics.
 
 3.2.1.  version
 
@@ -2625,7 +2627,8 @@ draft-dekater-scion-pki-13
    *  Certificate validity recommendations: align to current practice
 
    *  TRC: introduce introduce language tags ([BCP47]) and
-      localizedDescriptions
+      localizedDescriptions, introduce more sequence limits in ASN.1 and
+      recommend maximum size
 
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
