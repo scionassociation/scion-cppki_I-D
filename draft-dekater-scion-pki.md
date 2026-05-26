@@ -638,6 +638,7 @@ A TRC can have the following states:
 ## TRC Fields {#trcfields}
 
 The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in [](#trc-asn1).
+Although the ASN.1 schema permits larger structures, the total TRC size SHOULD NOT exceed 4 MB.
 Its fields are contained in a `TRCPayload` sequence. This section describes their syntax and semantics.
 
 ### `version`
@@ -1323,7 +1324,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Draftforge review
 - remove trust Hierarchy subsection and redundant code block
 - Certificate validity recommendations: align to current practice
-- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions
+- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 
 ## draft-dekater-scion-pki-12
