@@ -1887,10 +1887,7 @@ Table of Contents
       part of the beaconing process discover TRC updates passively, i.e.
       a Core AS notices TRC updates for remote ISDs that are on the
       beaconing path.  A non-core AS only notices TRC updates for the
-      local ISD through the beaconing process.  The creation of a new
-      TRC SHOULD trigger the generation of new control plane messages,
-      as the propagation of control plane messages will help other ASes
-      rapidly discover the new TRC.
+      local ISD through the beaconing process.
 
    *  _Path Lookup_
       In every path segment, all ASes MUST reference the latest TRC of
