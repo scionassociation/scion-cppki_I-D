@@ -163,6 +163,8 @@ SCION relies on three main components:
 
 Given the diverse nature of the constituents in the current Internet, an important challenge is how to scale authentication of network elements (such as AS ownership, hop-by-hop routing information, name servers for DNS, and domains for TLS) to the global environment. The roots of trust of currently prevalent Public Key Infrastructure (PKI) models do not scale well to a global environment because (1) mutually distrustful parties cannot agree on a single trust root (monopoly model), and because (2) the security of a plethora of roots of trust is only as strong as its weakest link (oligopoly model) - see also {{BARRERA17}}.
 
+The monopoly model requires global consensus on a single root of trust, which introduces a single point of failure. The oligopoly model, conversely, utilizes multiple roots of trust that are typically afforded equal authority, introducing multiple potential points of vulnerability, as the compromise of any individual root can undermine the security of the broader ecosystem.
+
 The SCION trust architecture allows parties that mutually trust each other to form their own trust domain, and to freely decide whether to trust other trust domains. It therefore provides the following properties
 
 - Trust agility (see further below);
