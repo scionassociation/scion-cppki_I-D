@@ -165,7 +165,7 @@ Given the diverse nature of the constituents in the current Internet, an importa
 
 The monopoly model requires global consensus on a single root of trust, which introduces a single point of failure. The oligopoly model, conversely, utilizes multiple roots of trust that are typically afforded equal authority, introducing multiple potential points of vulnerability, as the compromise of any individual root can undermine the security of the broader ecosystem.
 
-The SCION trust architecture allows parties that mutually trust each other to form their own trust domain, and to freely decide whether to trust other trust domains. It therefore provides the following properties
+The SCION trust architecture allows parties that mutually trust each other to form their own trust domain, and to freely decide which other trust domains should be trusted. It therefore provides the following properties:
 
 - Trust agility (see further below);
 - Resilience to single root of trust compromise;
