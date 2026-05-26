@@ -446,6 +446,7 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 ### `issuer` {#issuer}
 
 The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
+
 In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute identifying the SCION ISD and AS numbers.
 
 #### `id-at-ia` Attribute {#isd-as-nr}
@@ -453,6 +454,7 @@ In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION im
 The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in [](#cert-asn1).
 
 The `id-at-ia` attribute MUST be included in the `issuer` and `subject` fields of root, issuing CA, and AS certificates. It SHOULD be included in voting certificates.
+
 In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies.
 
 When present, the `id-at-ia` attribute MUST appear exactly once in a given distinguished name (DN), and implementations MUST reject certificates if the `id-at-ia` appears more than once.
@@ -463,12 +465,12 @@ The string representation of the `id-at-ia` attribute MUST follow the formatting
 ### `validity`
 
 The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
+
 The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
 
 ### `subject`
 
-The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
-The same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
+The `subject` field defines the entity that owns the certificate. It MUST NOT be empty and the same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
 
 ### `subjectPublicKeyInfo`
 
