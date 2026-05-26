@@ -145,7 +145,7 @@ SCION relies on three main components:
 
 **TRC Update**: A *regular* TRC update is a periodic re-issuance of the TRC where the entities and policies listed in the TRC remain unchanged. A *sensitive* TRC update is an update that modifies critical aspects of the TRC, such as the set of Core ASes. In both cases, the base TRC remains unchanged.
 
-**Trust Reset**: A trust reset is the action of announcing a new base TRC for an existing ISD, to mitigate a compromised TRC.
+**Trust Reset**: A trust reset is the action of creating and announcing a new base TRC for an existing ISD, to mitigate a compromised TRC.
 
 **Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an Isolation Domain (ISD). TRCs also contain ISD-specific policies.
 
