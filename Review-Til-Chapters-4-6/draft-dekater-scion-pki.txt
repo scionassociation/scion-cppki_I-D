@@ -2095,7 +2095,7 @@ Table of Contents
    However, each ISD is still susceptible to compromises that could
    affect or halt other components (control plane and forwarding).
 
-   This section discussed implication of such trust architecture,
+   This section discusses the implications of such trust architecture,
    covering _inter_-AS security considerations.  All _intra_-AS trust-
    and security aspects are out of scope.
 
@@ -2111,9 +2111,10 @@ Table of Contents
       one of these private root keys is compromised, the adversary could
       issue illegitimate issuing CA certificates which may be used in
       further attacks.  To maliciously perform a TRC update, an attacker
-      would need to compromise multiple voting keys, the number of which
-      is dependent on the voting quorum set in the TRC.  The higher the
-      quorum, the more unlikely a malicious update will be.
+      would need to compromise enough voting keys for a voting quorum,
+      the number of which is dependent on the voting quorum set in the
+      TRC.  The higher the quorum, the harder a malicious update
+      becomes.
 
    *  At CA level: The private keys of an ISD's issuing CA certificates
       are used to sign the AS certificates and all ASes within an ISD
@@ -2178,19 +2179,18 @@ Table of Contents
    [I-D.dekater-scion-controlplane] for a more detailed description of
    DoS vulnerabilities of control plane messages.
 
-   On the other hand, this does not apply for certificate renewal.
-   Denial of Service on the CA infrastructure or on the communication
-   links from the individual ASes to the CA could be used by an attacker
-   to prevent victim ASes from renewing their certificates and halting
-   the path discovery process.  This risk can be mitigated in multiple
-   ways:
+   This does not apply for certificate renewal.  Denial of Service on
+   the CA infrastructure or on the communication links from the
+   individual ASes to the CA could be used by an attacker to prevent
+   victim ASes from renewing their certificates and halting the path
+   discovery process.  This risk can be mitigated in multiple ways:
 
    *  CAs only need to be accessible from ASes within the ISD, reducing
-      the potential DoS attack surface
+      the potential DoS attack surface;
 
-   *  relying on multiple CAs within an ISD
+   *  relying on multiple CAs within an ISD;
 
-   *  creating policies and processes to renew certificates out-of-band
+   *  creating policies and processes to renew certificates out-of-band.
 
 6.3.  TRC Distribution and Trust on First Use
 
