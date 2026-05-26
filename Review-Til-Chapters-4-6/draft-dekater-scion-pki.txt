@@ -1904,9 +1904,6 @@ Table of Contents
       described in [I-D.dekater-scion-controlplane], section
       "Distribution of Cryptographic Material".
 
-   *Note:* The first two mechanisms above only work when there is active
-   communication between the relying party and the ISD in question.
-
 4.2.   Signing and Verifying Control Plane Messages
 
    The main purpose of the Control Plane PKI is providing a mechanism to
