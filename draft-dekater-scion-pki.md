@@ -960,21 +960,15 @@ Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an I
 
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in [](#update).
 
-Relying parties MUST have at least one valid TRC available. Relying parties MUST discover TRC updates within the grace period defined in the updated TRC, and SHOULD discover TRC updates in a matter of minutes to hours. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information.
+Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.
 
 SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:
 
-- *Beaconing Process*<br>
-The TRC version is announced in the beaconing process. Each AS MUST announce what it considers to be the latest TRC, and MUST include the hash value of the TRC contents to facilitate the discovery of discrepancies. Therefore, relying parties that are part of the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process. The creation of a new TRC SHOULD trigger the generation of new control plane messages, as the propagation of control plane messages will help other ASes rapidly discover the new TRC.
+- *Beaconing Process*: The TRC version is announced during the beaconing process (see {{I-D.dekater-scion-controlplane}} section "AS Entry Signed Header"). Each AS MUST announce the latest TRC's base and serial number known to it. Consequently, relying parties involved in the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process.
 
-- *Path Lookup*<br>
-In every path segment, all ASes MUST reference the latest TRC of their ISD. Therefore, when resolving paths, every relying party will notice TRC updates, even remote ones.<br>
+- *Path Lookup*: In every path segment, all ASes MUST reference the latest TRC of their ISD. Consequently, relying parties will detect TRC updates, including those from remote ISDs, during path lookups.
 
-- *Active Discovery*<br>
-Any TRC can be obtained at any time from the sender of the information it secures; either in a specific version or in its latest available version. The necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material".
-
-**Note:** The first two mechanisms above only work when there is active communication between the relying party and the ISD in question.
-
+- *Active Discovery*: A relying party can actively request any TRC —either a specific version or the latest available version— from the sender of the secured information at any time. The necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material".
 
 
 ## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
