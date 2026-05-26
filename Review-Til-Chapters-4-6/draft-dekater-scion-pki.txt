@@ -1986,9 +1986,10 @@ Table of Contents
 
        *  The AS certificate is valid at verification time, which will
           normally be the current time (see
-          [I-D.dekater-scion-controlplane], Section 7.3).  In special
-          cases, e.g. auditing, the time can be set to the past to check
-          if the message was verifiable at the given time.
+          [I-D.dekater-scion-controlplane], section "Effects of Clock
+          Inaccuracy").  In special cases, e.g. auditing, the time can
+          be set to the past to check if the message was verifiable at
+          the given time.
 
    4.  After selecting a certificate chain to verify the control plane
        messages, the relying party MUST verify the certificate chain by:
@@ -2037,7 +2038,7 @@ Table of Contents
 
    When an AS joins an ISD, it sends the first CSR out of band to one of
    the CAs as part of the formalities to join the ISD.  Subsequent
-   certificate renewals MAY be automated and can leverage the control
+   certificate renewals may be automated and can leverage the control
    plane communication infrastructure (see
    [I-D.dekater-scion-controlplane], section "Renewal of Cryptographic
    Material").
@@ -2060,14 +2061,14 @@ Table of Contents
 
    Furthermore, PKI operators need to ensure that the CAs maintain
    accurate time.  Further considerations related to this aspect are
-   discussed in [I-D.dekater-scion-controlplane], section "Attacks on
-   Time Sources".
+   discussed in [I-D.dekater-scion-controlplane], section "Effects of
+   Clock Inaccuracy".
 
 5.2.  Operational Processes for ISD Governance
 
-   An ISD is governed by Voting ASes.  In existing deployments, Voting
-   ASes may produce a regulations document to facilitate operations.
-   Such document typically describes:
+   An ISD is governed by Voting ASes who may produce a regulations
+   document to facilitate operations.  Such document typically
+   describes:
 
    *  governance structure
 
@@ -2081,8 +2082,8 @@ Table of Contents
 
    *  actions in case of compromise or regulations breach
 
-   This document describes a typical TRC Signing Ceremony in Appendix C,
-   but further processes are out-of-scope.
+   This document may also describe a TRC Signing Ceremony, such as that
+   described in Appendix C.
 
 6.  Security Considerations
 
