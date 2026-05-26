@@ -982,7 +982,7 @@ The following sections specify the requirements that apply to the signing and ve
 
 ### Signing a Control Plane Message
 
-An AS signs control plane messages with the private key that corresponds to the (valid) AS' certificate.
+An AS signs control plane messages with the private key that corresponds to the valid certificate for the AS.
 
 The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:
 
@@ -999,7 +999,7 @@ Additionally, the signer SHOULD include the following information:
 
 To verify a received control plane message, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.
 
-AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, SCION distributes these certificate chains separately from the signed messages.
+AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, these certificate chains are distributed separately from the signed messages.
 
 A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and **not** in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.
 
@@ -1008,9 +1008,9 @@ To verify a control plane message, the relying party MUST perform the following 
 1. Build a collection of root certificates from the latest TRC of the relevant ISD (that is, the ISD referenced in the signature metadata of the message). If the grace period (see [](#grace)) introduced by the latest TRC is still on-going, the root certificates in the second-to-latest TRC MUST also be included. For a description on how to build the correct collection of certificates, see [](#trc-selection).
 2. If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party MUST check that they have this latest TRC. If not, the relying party MUST request the latest TRC.
 3. After constructing the pool of root certificates, the relying party MUST select the certificate chain used to verify the message. The AS certificate included in this certificate chain MUST have the following properties:
-   - The ISD-AS number in the subject of the AS certificate MUST match the ISD-AS number in the signature metadata. See also [](#isd-as-nr).
-   - The subject key identifier of the AS certificate MUST match the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
-   - The AS certificate MUST be valid at verification time, which will normally be the current time. In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.
+   - The ISD-AS number in the subject of the AS certificate matches the ISD-AS number in the signature metadata. See also [](#isd-as-nr).
+   - The subject key identifier of the AS certificate matches the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
+   - The AS certificate is valid at verification time, which will normally be the current time (see {{I-D.dekater-scion-controlplane}}, Section 7.3). In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.
 4. After selecting a certificate chain to verify the control plane messages, the relying party MUST verify the certificate chain by:
    - Executing the regular X.509 verification procedure. For details, see {{X.509}}.
    - Checking that
@@ -1021,7 +1021,7 @@ To verify a control plane message, the relying party MUST perform the following 
 
 If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material. If it cannot be resolved, the verification process fails.
 
-**Important:** An implication of the above procedure is that path segments SHOULD be verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.
+**Important:** An implication of the above procedure is that path segments MUST be verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.
 
 
 ## Issuing Control Plane AS Certificates
