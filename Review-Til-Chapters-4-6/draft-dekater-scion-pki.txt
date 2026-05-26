@@ -1916,7 +1916,7 @@ Table of Contents
 4.2.1.  Signing a Control Plane Message
 
    An AS signs control plane messages with the private key that
-   corresponds to the (valid) AS' certificate.
+   corresponds to the valid certificate for the AS.
 
    The AS MUST attach the following information as signature metadata to
    ensure that a relying party can identify which certificate to use to
@@ -1945,8 +1945,8 @@ Table of Contents
    corresponding signature on the message.
 
    AS certificates are bundled together with the corresponding issuing
-   CA certificate into certificate chains.  For efficiency, SCION
-   distributes these certificate chains separately from the signed
+   CA certificate into certificate chains.  For efficiency, these
+   certificate chains are distributed separately from the signed
    messages.
 
    A certificate chain is verified against the control plane root
@@ -1976,18 +1976,19 @@ Table of Contents
        message.  The AS certificate included in this certificate chain
        MUST have the following properties:
 
-       *  The ISD-AS number in the subject of the AS certificate MUST
-          match the ISD-AS number in the signature metadata.  See also
+       *  The ISD-AS number in the subject of the AS certificate matches
+          the ISD-AS number in the signature metadata.  See also
           Section 2.6.4.1.
 
-       *  The subject key identifier of the AS certificate MUST match
-          the subject key identifier in the signature metadata.  See
-          also Section 2.7.2.
+       *  The subject key identifier of the AS certificate matches the
+          subject key identifier in the signature metadata.  See also
+          Section 2.7.2.
 
-       *  The AS certificate MUST be valid at verification time, which
-          will normally be the current time.  In special cases, e.g.
-          auditing, the time can be set to the past to check if the
-          message was verifiable at the given time.
+       *  The AS certificate is valid at verification time, which will
+          normally be the current time (see
+          [I-D.dekater-scion-controlplane], Section 7.3).  In special
+          cases, e.g. auditing, the time can be set to the past to check
+          if the message was verifiable at the given time.
 
    4.  After selecting a certificate chain to verify the control plane
        messages, the relying party MUST verify the certificate chain by:
@@ -2015,8 +2016,8 @@ Table of Contents
    material.  If it cannot be resolved, the verification process fails.
 
    *Important:* An implication of the above procedure is that path
-   segments SHOULD be verifiable at time of use.  It is not enough to
-   rely on path segments being verified on insert since TRC updates that
+   segments MUST be verifiable at time of use.  It is not enough to rely
+   on path segments being verified on insert since TRC updates that
    change the root key can invalidate a certificate chain.
 
 4.3.  Issuing Control Plane AS Certificates
