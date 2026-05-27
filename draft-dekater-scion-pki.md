@@ -979,7 +979,7 @@ The following sections specify the requirements that apply to the signing and ve
 
 ### Signing a Control Plane Message
 
-An AS signs control plane messages with the private key that corresponds to the valid certificate for the AS.
+An AS signs control plane messages with the private key that corresponds to its own valid certificate.
 
 The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:
 
