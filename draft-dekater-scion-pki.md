@@ -137,7 +137,6 @@ SCION relies on three main components:
 
 **Core AS**: Each Isolation Domain (ISD) is administered by a set of distinguished SCION Autonomous Systems (ASes) called Core ASes, which are responsible for initiating the path discovery and path construction process (called "beaconing" in SCION). Each ISD has at least one Core AS.
 
-**Grace Period**: The grace period is an interval during which the previous version of a Trust Root Configuration (TRC) is still considered active after a new version has been published.
 
 **Isolation Domain (ISD)**: SCION ASes are organized into logical groups called Isolation Domains or ISDs. Each ISD consists of ASes that span an area with a uniform trust environment (e.g. a common jurisdiction).
 
