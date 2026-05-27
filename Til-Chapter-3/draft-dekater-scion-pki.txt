@@ -1729,6 +1729,10 @@ Table of Contents
       corresponds to the number of indices in the votes field of the
       updated TRC.
 
+   *  Voting ASes SHOULD distribute the updated TRC to all authoritative
+      ASes within the ISD.  The distribution mechanism is typically out
+      of band and it is outside of the scope of this document.
+
 3.5.4.  Regular TRC Update
 
    A regular TRC update is a periodic re-issuance of the TRC where the
