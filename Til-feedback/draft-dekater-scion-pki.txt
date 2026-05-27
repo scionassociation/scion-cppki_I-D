@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 23 November 2026                                        S. Hitz
+Expires: 28 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             22 May 2026
+                                                             27 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 23 November 2026.
+   This Internet-Draft will expire on 28 November 2026.
 
 Copyright Notice
 
@@ -232,10 +232,6 @@ Table of Contents
    construction process (called "beaconing" in SCION).  Each ISD has at
    least one Core AS.
 
-   *Grace Period*: The grace period is an interval during which the
-   previous version of a Trust Root Configuration (TRC) is still
-   considered active after a new version has been published.
-
    *Isolation Domain (ISD)*: SCION ASes are organized into logical
    groups called Isolation Domains or ISDs.  Each ISD consists of ASes
    that span an area with a uniform trust environment (e.g. a common
@@ -252,8 +248,8 @@ Table of Contents
    critical aspects of the TRC, such as the set of Core ASes.  In both
    cases, the base TRC remains unchanged.
 
-   *Trust Reset*: A trust reset is the action of announcing a new base
-   TRC for an existing ISD, to mitigate a compromised TRC.
+   *Trust Reset*: A trust reset is the action of creating and announcing
+   a new base TRC for an existing ISD, to mitigate a compromised TRC.
 
    *Trust Root Configuration (TRC)*: A Trust Root Configuration or TRC
    is a signed collection of certificates pertaining to an Isolation
@@ -288,10 +284,17 @@ Table of Contents
    is only as strong as its weakest link (oligopoly model) - see also
    [BARRERA17].
 
+   The monopoly model requires global consensus on a single root of
+   trust, which introduces a single point of failure.  The oligopoly
+   model, conversely, utilizes multiple roots of trust that are
+   typically afforded equal authority, introducing multiple potential
+   points of vulnerability, as the compromise of any individual root can
+   undermine the security of the broader ecosystem.
+
    The SCION trust architecture allows parties that mutually trust each
-   other to form their own trust domain, and to freely decide whether to
-   trust other trust domains.  It therefore provides the following
-   properties
+   other to form their own trust domain, and to freely decide which
+   other trust domains should be trusted.  It therefore provides the
+   following properties:
 
    *  Trust agility (see further below);
 
@@ -356,11 +359,8 @@ Table of Contents
 
 1.4.1.  Updates and Trust Resets
 
-   There are two types of TRC updates: regular and sensitive (see
-   Section 3.5).  A *regular TRC update* is a periodic re-issuance of
-   the TRC where the entities and policies listed in the TRC remain
-   unchanged, whereas a *sensitive TRC update* is an update that
-   modifies critical aspects of the TRC, such as the set of Core ASes.
+   There are two types of TRC updates: regular and sensitive.  The
+   update type depends on which fields are changed (see Section 3.5).
    In both cases the base TRC remains unchanged.
 
    If the ISD's base TRC has been compromised, it is necessary for an
