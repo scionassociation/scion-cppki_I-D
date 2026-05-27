@@ -798,10 +798,7 @@ Table of Contents
 
    The id-at-ia attribute MUST be included in the issuer and subject
    fields of root, issuing CA, and AS certificates.  It SHOULD be
-   included in voting certificates.  In issuing CA certificates, the
-   presence of this attribute ensures that the Control Plane can
-   identify from which AS to retrieve the intermediate CA certificate,
-   thereby avoiding circular dependencies.
+   included in voting certificates.
 
    When present, the id-at-ia attribute MUST appear exactly once in a
    given distinguished name (DN), and implementations MUST reject
