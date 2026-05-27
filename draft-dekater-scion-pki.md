@@ -189,6 +189,7 @@ While it is not necessary that all the ASes of the ISD trust each other, all ASe
 ### Updates and Trust Resets {#trust-reset}
 
 There are two types of TRC updates: regular and sensitive. The update type depends on which fields are changed (see [](#update)). In both cases the base TRC remains unchanged.
+Authoritative ASes announce these TRC updates (see [](#auth)). 
 
 If the ISD's base TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy) when a new base TRC is created.
 
