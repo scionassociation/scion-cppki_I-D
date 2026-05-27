@@ -889,6 +889,7 @@ The following rules hold for each updated TRC, independent of the update type:
 - The `noTrustReset` field MUST NOT change (see also [](#notrustreset)).
 - The `votes` sequence of the updated TRC MUST only contain indices that refer to sensitive or regular voting certificates in the predecessor TRC. This guarantees that the updated TRC only contains valid votes authenticated by sensitive or regular voting certificates in the predecessor TRC. For more information, see [](#votes) and [](#cert).
 - The number of votes in the updated TRC MUST be greater than or equal to the number set in the `votingQuorum` field of the predecessor TRC (see [](#quorum)). The number of votes corresponds to the number of indices in the `votes` field of the updated TRC.
+- Voting ASes SHOULD distribute the updated TRC to all authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
 
 
 ### Regular TRC Update
