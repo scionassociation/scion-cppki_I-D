@@ -979,7 +979,7 @@ The following sections specify the requirements that apply to the signing and ve
 
 ### Signing a Control Plane Message
 
-An AS signs control plane messages with the private key that corresponds to the valid certificate for the AS.
+An AS signs control plane messages with the private key that corresponds to its own valid certificate.
 
 The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:
 
@@ -1003,11 +1003,11 @@ A certificate chain is verified against the control plane root certificate, alth
 To verify a control plane message, the relying party MUST perform the following steps:
 
 1. Build a collection of root certificates from the latest TRC of the relevant ISD (that is, the ISD referenced in the signature metadata of the message). If the grace period (see [](#grace)) introduced by the latest TRC is still on-going, the root certificates in the second-to-latest TRC MUST also be included. For a description on how to build the correct collection of certificates, see [](#trc-selection).
-2. If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party MUST check that they have this latest TRC. If not, the relying party MUST request the latest TRC.
-3. After constructing the pool of root certificates, the relying party MUST select the certificate chain used to verify the message. The AS certificate included in this certificate chain MUST have the following properties:
+2. If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party MUST ensure that they have this latest TRC.
+3. After constructing the pool of root certificates, the relying party selects the certificate chain used to verify the message. The AS certificate included in this certificate chain MUST satisfy all of the following properties:
    - The ISD-AS number in the subject of the AS certificate matches the ISD-AS number in the signature metadata. See also [](#isd-as-nr).
    - The subject key identifier of the AS certificate matches the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
-   - The AS certificate is valid at verification time, which will normally be the current time (see {{I-D.dekater-scion-controlplane}}, section "Effects of Clock Inaccuracy"). In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.
+   - The AS certificate is valid at time of verification. While this is typically the current time, specific scenarios such as auditing may require verifying against a historical timestamp. Refer to {{I-D.dekater-scion-controlplane}} section "Effects of Clock Inaccuracy" for considerations about time synchronization.
 4. After selecting a certificate chain to verify the control plane messages, the relying party MUST verify the certificate chain by:
    - Executing the regular X.509 verification procedure. For details, see {{X.509}}.
    - Checking that
