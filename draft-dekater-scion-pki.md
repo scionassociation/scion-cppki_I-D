@@ -302,7 +302,7 @@ The RECOMMENDED maximum validity period of a CP AS certificate is 3 days.
 
 There are two types of voting certificates: regular voting certificates and sensitive voting certificates. They contain the public keys associated with the private keys that may cast votes in the TRC update process.
 
-Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC. The distinction between segular and sensitive updates is described in [](#update).
+Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC. The distinction between regular and sensitive updates is described in [](#update).
 
  Voting certificates may be used to cast votes in a TRC updates. In X.509 terms, voting certificates are self-signed end entity certificates. This means that the issuer and subject of a voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a voting certificate cannot be used to verify other certificates.
 
