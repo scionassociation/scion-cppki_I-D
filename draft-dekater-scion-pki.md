@@ -1182,7 +1182,7 @@ TRCValidity ::= SEQUENCE {
 }
 
 LocalizedText ::= SEQUENCE {
-    language        PrintableString,
+    language        PrintableString (SIZE (1..64)),
     content         UTF8String (SIZE (1..8192))
 }
 TRCPayload ::= SEQUENCE {
@@ -1197,8 +1197,8 @@ TRCPayload ::= SEQUENCE {
     authoritativeASes     SEQUENCE OF ASN,
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
-    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLanguage   [1] PrintableString OPTIONAL
+    localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
+    descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
@@ -1211,7 +1211,7 @@ TRCID ::= SEQUENCE {
 
 ISD ::= INTEGER (1..65535)
 
-ASN ::= PrintableString
+ASN ::= PrintableString (SIZE (1..16))
 
 END
 ~~~~
