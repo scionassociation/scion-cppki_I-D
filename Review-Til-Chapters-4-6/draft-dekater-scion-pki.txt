@@ -2536,7 +2536,7 @@ C.3.1.  Certificate Exchange
    calculates the SHA-512 hash value for the entire bundle.  All hash
    values must be displayed to the participants.
 
-   The Ceremony Administrator musr then share the bundle with the
+   The Ceremony Administrator must then share the bundle with the
    representatives of the Voting ASes who MUST validate on their machine
    that the hash value of their certificates and that of the bundled
    certificates is the same as displayed by the Ceremony Administrator.
