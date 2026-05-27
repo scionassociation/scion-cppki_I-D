@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 27 November 2026                                        S. Hitz
+Expires: 28 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             26 May 2026
+                                                             27 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 November 2026.
+   This Internet-Draft will expire on 28 November 2026.
 
 Copyright Notice
 
@@ -1915,7 +1915,7 @@ Table of Contents
 4.2.1.  Signing a Control Plane Message
 
    An AS signs control plane messages with the private key that
-   corresponds to the (valid) AS' certificate.
+   corresponds to its own valid certificate.
 
    The AS MUST attach the following information as signature metadata to
    ensure that a relying party can identify which certificate to use to
@@ -1944,8 +1944,8 @@ Table of Contents
    corresponding signature on the message.
 
    AS certificates are bundled together with the corresponding issuing
-   CA certificate into certificate chains.  For efficiency, SCION
-   distributes these certificate chains separately from the signed
+   CA certificate into certificate chains.  For efficiency, these
+   certificate chains are distributed separately from the signed
    messages.
 
    A certificate chain is verified against the control plane root
@@ -1966,27 +1966,28 @@ Table of Contents
        collection of certificates, see Section 3.4.
 
    2.  If the signature metadata of the message contains the serial and
-       base number of the latest TRC, the relying party MUST check that
-       they have this latest TRC.  If not, the relying party MUST
-       request the latest TRC.
+       base number of the latest TRC, the relying party MUST ensure that
+       they have this latest TRC.
 
    3.  After constructing the pool of root certificates, the relying
-       party MUST select the certificate chain used to verify the
-       message.  The AS certificate included in this certificate chain
-       MUST have the following properties:
+       party selects the certificate chain used to verify the message.
+       The AS certificate included in this certificate chain MUST
+       satisfy all of the following properties:
 
-       *  The ISD-AS number in the subject of the AS certificate MUST
-          match the ISD-AS number in the signature metadata.  See also
+       *  The ISD-AS number in the subject of the AS certificate matches
+          the ISD-AS number in the signature metadata.  See also
           Section 2.6.4.1.
 
-       *  The subject key identifier of the AS certificate MUST match
-          the subject key identifier in the signature metadata.  See
-          also Section 2.7.2.
+       *  The subject key identifier of the AS certificate matches the
+          subject key identifier in the signature metadata.  See also
+          Section 2.7.2.
 
-       *  The AS certificate MUST be valid at verification time, which
-          will normally be the current time.  In special cases, e.g.
-          auditing, the time can be set to the past to check if the
-          message was verifiable at the given time.
+       *  The AS certificate is valid at time of verification.  While
+          this is typically the current time, specific scenarios such as
+          auditing may require verifying against a historical timestamp.
+          Refer to [I-D.dekater-scion-controlplane] section "Effects of
+          Clock Inaccuracy" for considerations about time
+          synchronization.
 
    4.  After selecting a certificate chain to verify the control plane
        messages, the relying party MUST verify the certificate chain by:

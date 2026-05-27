@@ -1051,7 +1051,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 27 November 2026</td>
+<td class="center">Expires 28 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-26" class="published">26 May 2026</time>
+<time datetime="2026-05-27" class="published">27 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-27">27 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-28">28 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 27 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 28 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3339,7 +3339,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
           <h4 id="name-signing-a-control-plane-mes">
 <a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-signing-a-control-plane-mes" class="section-name selfRef">Signing a Control Plane Message</a>
           </h4>
-<p id="section-4.2.1-1">An AS signs control plane messages with the private key that corresponds to the (valid) AS' certificate.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-1">An AS signs control plane messages with the private key that corresponds to its own valid certificate.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-2">The AS <span class="bcp14">MUST</span> attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2.1-3.1">
@@ -3366,7 +3366,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-verifying-a-control-plane-m" class="section-name selfRef">Verifying a Control Plane Message</a>
           </h4>
 <p id="section-4.2.2-1">To verify a received control plane message, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-2">AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, SCION distributes these certificate chains separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-2">AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, these certificate chains are distributed separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-3">A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and <strong>not</strong> in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-4">To verify a control plane message, the relying party <span class="bcp14">MUST</span> perform the following steps:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.2.2-5">
@@ -3374,19 +3374,19 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
               <p id="section-4.2.2-5.1.1">Build a collection of root certificates from the latest TRC of the relevant ISD (that is, the ISD referenced in the signature metadata of the message). If the grace period (see <a href="#grace" class="auto internal xref">Section 3.2.4</a>) introduced by the latest TRC is still on-going, the root certificates in the second-to-latest TRC <span class="bcp14">MUST</span> also be included. For a description on how to build the correct collection of certificates, see <a href="#trc-selection" class="auto internal xref">Section 3.4</a>.<a href="#section-4.2.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-4.2.2-5.2">
-              <p id="section-4.2.2-5.2.1">If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party <span class="bcp14">MUST</span> check that they have this latest TRC. If not, the relying party <span class="bcp14">MUST</span> request the latest TRC.<a href="#section-4.2.2-5.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.2-5.2.1">If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party <span class="bcp14">MUST</span> ensure that they have this latest TRC.<a href="#section-4.2.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-4.2.2-5.3">
-              <p id="section-4.2.2-5.3.1">After constructing the pool of root certificates, the relying party <span class="bcp14">MUST</span> select the certificate chain used to verify the message. The AS certificate included in this certificate chain <span class="bcp14">MUST</span> have the following properties:<a href="#section-4.2.2-5.3.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.2-5.3.1">After constructing the pool of root certificates, the relying party selects the certificate chain used to verify the message. The AS certificate included in this certificate chain <span class="bcp14">MUST</span> satisfy all of the following properties:<a href="#section-4.2.2-5.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2.2-5.3.2.1">
-                  <p id="section-4.2.2-5.3.2.1.1">The ISD-AS number in the subject of the AS certificate <span class="bcp14">MUST</span> match the ISD-AS number in the signature metadata. See also <a href="#isd-as-nr" class="auto internal xref">Section 2.6.4.1</a>.<a href="#section-4.2.2-5.3.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.3.2.1.1">The ISD-AS number in the subject of the AS certificate matches the ISD-AS number in the signature metadata. See also <a href="#isd-as-nr" class="auto internal xref">Section 2.6.4.1</a>.<a href="#section-4.2.2-5.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-4.2.2-5.3.2.2">
-                  <p id="section-4.2.2-5.3.2.2.1">The subject key identifier of the AS certificate <span class="bcp14">MUST</span> match the subject key identifier in the signature metadata. See also <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2</a>.<a href="#section-4.2.2-5.3.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.3.2.2.1">The subject key identifier of the AS certificate matches the subject key identifier in the signature metadata. See also <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2</a>.<a href="#section-4.2.2-5.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-4.2.2-5.3.2.3">
-                  <p id="section-4.2.2-5.3.2.3.1">The AS certificate <span class="bcp14">MUST</span> be valid at verification time, which will normally be the current time. In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.<a href="#section-4.2.2-5.3.2.3.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.3.2.3.1">The AS certificate is valid at time of verification. While this is typically the current time, specific scenarios such as auditing may require verifying against a historical timestamp. Refer to <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "Effects of Clock Inaccuracy" for considerations about time synchronization.<a href="#section-4.2.2-5.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
