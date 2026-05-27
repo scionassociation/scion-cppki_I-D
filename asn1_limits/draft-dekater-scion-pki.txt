@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 27 November 2026                                        S. Hitz
+Expires: 28 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             26 May 2026
+                                                             27 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 November 2026.
+   This Internet-Draft will expire on 28 November 2026.
 
 Copyright Notice
 
@@ -2388,7 +2388,7 @@ TRCValidity ::= SEQUENCE {
 }
 
 LocalizedText ::= SEQUENCE {
-    language        PrintableString,
+    language        PrintableString (SIZE (1..64)),
     content         UTF8String (SIZE (1..8192))
 }
 TRCPayload ::= SEQUENCE {
@@ -2403,8 +2403,8 @@ TRCPayload ::= SEQUENCE {
     authoritativeASes     SEQUENCE OF ASN,
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
-    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLanguage   [1] PrintableString OPTIONAL
+    localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
+    descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
@@ -2417,7 +2417,7 @@ TRCID ::= SEQUENCE {
 
 ISD ::= INTEGER (1..65535)
 
-ASN ::= PrintableString
+ASN ::= PrintableString (SIZE (1..16))
 
 END
 
