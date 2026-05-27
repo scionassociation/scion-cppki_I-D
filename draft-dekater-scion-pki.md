@@ -681,7 +681,7 @@ The `validity` field defines the TRC validity period. The `notBefore` and `notAf
 An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
 The `validity` field consists of a sequence of a `notBefore` and a `notAfter` date, both encoded as `GeneralizedTime`.
-All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime` value "99991231235959Z", and verifiers MUST reject such a TRC.
+All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use `GeneralizedTime` value "99991231235959Z", and verifiers MUST reject such a TRC.
 
 
 ### `gracePeriod` {#grace}
