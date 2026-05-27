@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 27 November 2026                                        S. Hitz
+Expires: 28 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             26 May 2026
+                                                             27 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 November 2026.
+   This Internet-Draft will expire on 28 November 2026.
 
 Copyright Notice
 
@@ -1291,7 +1291,7 @@ Table of Contents
    The validity field consists of a sequence of a notBefore and a
    notAfter date, both encoded as GeneralizedTime.  All TRCs MUST have a
    well-defined expiration date.  SCION implementations MUST NOT create
-   TRCs that use GeneralizedTime` value "99991231235959Z", and verifiers
+   TRCs that use GeneralizedTime value "99991231235959Z", and verifiers
    MUST reject such a TRC.
 
 3.2.4.  gracePeriod
