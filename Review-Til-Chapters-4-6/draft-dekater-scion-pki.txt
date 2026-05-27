@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 27 November 2026                                        S. Hitz
+Expires: 28 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             26 May 2026
+                                                             27 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 27 November 2026.
+   This Internet-Draft will expire on 28 November 2026.
 
 Copyright Notice
 
@@ -1868,38 +1868,37 @@ Table of Contents
    The specifications and rules that apply to updating a TRC are
    described in Section 3.5.
 
-   Relying parties (e.g. AS Control Services) MUST have at least one
-   valid TRC available.  Relying parties also MUST discover TRC updates
-   within the grace period defined in the updated TRC, and SHOULD
-   discover TRC updates in a matter of minutes to hours.  Additionally,
-   any entity sending information that is secured by the Control Plane
-   PKI MUST be able to provide all the necessary trust material to
-   verify said information.
+   Relying parties such as an AS Control Service require at least one
+   valid TRC available and should therefore discover TRC updates within
+   the grace period defined in the updated TRC.  Additionally, any
+   entity sending information that is secured by the Control Plane PKI
+   MUST be able to provide all the necessary trust material to verify
+   said information, ensuring that relying parties can discover TRC
+   updates in a matter of minutes to hours.
 
    SCION provides the following mechanisms for discovering TRC updates
    and fulfilling the above requirement:
 
-   *  _Beaconing Process_
-      The TRC version is announced in the beaconing process.  Each AS
-      MUST announce what it considers to be the latest TRC, and MUST
-      include the hash value of the TRC contents to facilitate the
-      discovery of discrepancies.  Therefore, relying parties that are
-      part of the beaconing process discover TRC updates passively, i.e.
-      a Core AS notices TRC updates for remote ISDs that are on the
+   *  _Beaconing Process_: The TRC version is announced during the
+      beaconing process (see [I-D.dekater-scion-controlplane] section
+      "AS Entry Signed Header").  Each AS MUST announce the latest TRC's
+      base and serial number known to it.  Consequently, relying parties
+      involved in the beaconing process discover TRC updates passively,
+      i.e. a Core AS notices TRC updates for remote ISDs that are on the
       beaconing path.  A non-core AS only notices TRC updates for the
       local ISD through the beaconing process.
 
-   *  _Path Lookup_
-      In every path segment, all ASes MUST reference the latest TRC of
-      their ISD.  Therefore, when resolving paths, every relying party
-      will notice TRC updates, even remote ones.
+   *  _Path Lookup_: In every path segment, all ASes MUST reference the
+      latest TRC of their ISD.  Consequently, relying parties will
+      detect TRC updates, including those from remote ISDs, during path
+      lookups.
 
-   *  _Active Discovery_
-      Any TRC can be obtained at any time from the sender of the
-      information it secures; either in a specific version or in its
-      latest available version.  The necessary query and response is
-      described in [I-D.dekater-scion-controlplane], section
-      "Distribution of Cryptographic Material".
+   *  _Active Discovery_: A relying party can actively request any TRC
+      —either a specific version or the latest available version— from
+      the sender of the secured information at any time.  The necessary
+      query and response is described in
+      [I-D.dekater-scion-controlplane], section "Distribution of
+      Cryptographic Material".
 
 4.2.   Signing and Verifying Control Plane Messages
 
