@@ -36,8 +36,10 @@ author:
 normative:
   I-D.dekater-scion-controlplane:
   I-D.dekater-scion-dataplane:
+  RFC5198:
   RFC5280:
   RFC5480:
+  BCP47:
   RFC5652:
   RFC5758:
   RFC9217:
@@ -455,7 +457,6 @@ The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object ide
 
 The `id-at-ia` attribute MUST be included in the `issuer` and `subject` fields of root, issuing CA, and AS certificates. It SHOULD be included in voting certificates.
 
-In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies.
 
 When present, the `id-at-ia` attribute MUST appear exactly once in a given distinguished name (DN), and implementations MUST reject certificates if the `id-at-ia` appears more than once.
 
@@ -745,9 +746,10 @@ As with Core ASes, assigning or revoking Authoritative status is performed by ad
 
 ### `description` {#description}
 
-The `description` field contains a UTF-8 encoded string that describes the ISD. It SHOULD NOT be empty.
-The description MUST be in English and MAY additionally contain information in other languages.
+The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. If present, it SHOULD NOT be empty.
+When this field contains a language other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).
 
+Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present.
 
 ### `certificates` {#cert}
 
@@ -762,6 +764,18 @@ The `certificates` field is a sequence of self-signed X.509 certificates. Each c
 A certificate that is not a control plane root or voting certificate MUST NOT be included in the sequence of certificates in the `certificates` field.
 
 A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
+
+### `localizedDescriptions` {#description-multilang}
+
+The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
+It consists of a sequence of `LocalizedText` structures, each containing:
+
+- `language`: specifies the description's language. It MUST contain a valid language tag according to {{BCP47}}.
+- `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
+
+### `descriptionLanguage` {#langtag}
+
+The OPTIONAL `descriptionLanguage` field identifies the language used to express the `description` field. When `descriptionLanguage` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLanguage` MUST be a valid language tag as described in {{BCP47}}.
 
 The following constraints must hold for each certificate in the `certificates` field of the TRC payload:
 
@@ -1168,18 +1182,24 @@ TRCValidity ::= SEQUENCE {
     notAfter           GeneralizedTime
 }
 
+LocalizedText ::= SEQUENCE {
+    language        PrintableString,
+    content         UTF8String (SIZE (1..8192))
+}
 TRCPayload ::= SEQUENCE {
-    version            TRCFormatVersion,
-    iD                 TRCID,
-    validity           TRCValidity,
-    gracePeriod        INTEGER,
-    noTrustReset       BOOLEAN,
-    votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
-    votingQuorum       INTEGER (1..2047),
-    coreASes           SEQUENCE OF ASN,
-    authoritativeASes  SEQUENCE OF ASN,
-    description        UTF8String (SIZE (0..8192)),
-    certificates       SEQUENCE SIZE (0..4095) OF Certificate
+    version               TRCFormatVersion,
+    iD                    TRCID,
+    validity              TRCValidity,
+    gracePeriod           INTEGER,
+    noTrustReset          BOOLEAN,
+    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum          INTEGER (1..2047),
+    coreASes              SEQUENCE OF ASN,
+    authoritativeASes     SEQUENCE OF ASN,
+    description           UTF8String (SIZE (1..8192)) OPTIONAL,
+    certificates          SEQUENCE SIZE (1..4095) OF Certificate,
+    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
+    descriptionLanguage   [1] PrintableString OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
@@ -1305,6 +1325,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Draftforge review
 - remove trust Hierarchy subsection and redundant code block
 - Certificate validity recommendations: align to current practice
+- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 
 ## draft-dekater-scion-pki-12
@@ -1380,5 +1401,5 @@ Minor changes:
 # Acknowledgments
 {:numbered="false"}
 
-Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
+Many thanks go to Fritz Steinmann (SIX Group AG), Juan A. Garcia Prado (ETH Zurich), Russ Housley (Vigil Security LLC), Alexey Melnikov (Isode), Brian Trammell (Google), Ramon Keller (LibC Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya Systems AG), and Kevin Meynell (SCION Association) for reviewing this document. We are also very grateful to Adrian Perrig (ETH Zurich), for providing guidance and feedback about each aspect of SCION. Finally, we are indebted to the SCION development teams of Anapaya and ETH Zurich, for their practical knowledge and for the documentation about the CP-PKI, as well as to the authors of {{CHUAT22}} - the book is an important source of input and inspiration for this draft.
 
