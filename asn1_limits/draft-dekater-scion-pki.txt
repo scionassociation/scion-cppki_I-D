@@ -2628,7 +2628,7 @@ draft-dekater-scion-pki-13
 
    *  TRC: introduce introduce language tags ([BCP47]) and
       localizedDescriptions, introduce more sequence limits in ASN.1 and
-      recommend maximum size
+      recommend maximum size.
 
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
