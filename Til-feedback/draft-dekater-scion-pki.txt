@@ -123,6 +123,8 @@ Table of Contents
        3.2.9.  authoritativeASes
        3.2.10. description
        3.2.11. certificates
+       3.2.12. localizedDescriptions
+       3.2.13. descriptionLanguage
      3.3.  TRC Signature Syntax
        3.3.1.  SCION-specific rules
        3.3.2.  TRC Equality
@@ -323,11 +325,13 @@ Table of Contents
    Authentication in SCION is based on X.509 certificates that bind
    identifiers to public keys and carry digital signatures that are
    verified by roots of trust.  SCION allows each ISD to define its own
-   set of trust roots, along with the policy governing their use.  Such
-   scoping of trust roots within an ISD improves security as compromise
-   of a private key associated with a trust root cannot be used to forge
-   a certificate outside the ISD.  An ISD's trust roots and policy are
-   encoded in the TRC, which has a base and serial number, a list of
+   set of trust roots, along with the policy governing their use.  An
+   ISD's TRC is used for signatures pertaining to information
+   originating from that ISD, such as paths, but for nothing originating
+   outside of the ISD.  This ISD-level scoping of trust roots enhances
+   security by strictly limiting effect of a compromise to data
+   originating from the compromised AS.  An ISD's trust roots and policy
+   are encoded in the TRC, which has a base and serial number, a list of
    public keys that serves as root of trust for various purposes, and a
    voting quorum governing the number of signatures required to update
    TRCs.  The TRC serves as a way to bootstrap all authentication within
@@ -1170,8 +1174,10 @@ Table of Contents
 
    The TRC holds the root and voting certificates of the ISD, defining
    the ISD's trust policy.  Its ASN.1 module is described in Appendix B.
-   Its fields are contained in a TRCPayload sequence.  This section
-   describes their syntax and semantics.
+   Although the ASN.1 schema permits larger structures, the total TRC
+   size SHOULD NOT exceed 4 MB.  Its fields are contained in a
+   TRCPayload sequence.  This section describes their syntax and
+   semantics.
 
 3.2.1.  version
 
@@ -1368,8 +1374,15 @@ Table of Contents
 3.2.10.  description
 
    The description field contains a UTF-8 encoded string that describes
-   the ISD.  It SHOULD NOT be empty.  The description MUST be in English
-   and MAY additionally contain information in other languages.
+   the ISD.  The text MUST be formatted in accordance with "Net-Unicode"
+   [RFC5198] to ensure consistent normalization.  If present, it SHOULD
+   NOT be empty.  When this field contains a language other than
+   English, the corresponding language SHOULD be identified explicitly
+   in the descriptionLanguage field (see ()[#langtag]).
+
+   Multi-language TRCs SHOULD use the localizedDescriptions field
+   instead of the description field.  Either the description or the
+   localizedDescriptionsfield MUST be present.
 
 3.2.11.  certificates
 
@@ -1396,6 +1409,26 @@ Table of Contents
    extension of the certificate, by means of the SCION-specific
    attributes id-kp-regular, id-kp-sensitive, and id-kp-root,
    respectively.  For more information, see Section 2.7.4.
+
+3.2.12.  localizedDescriptions
+
+   The localizedDescriptions field provides an optional mechanism for
+   including multilingual descriptions.  It consists of a sequence of
+   LocalizedText structures, each containing:
+
+   *  language: specifies the description's language.  It MUST contain a
+      valid language tag according to [BCP47].
+
+   *  content: contains the localized description.  It MUST be formatted
+      in accordance with "Net-Unicode" [RFC5198].
+
+3.2.13.  descriptionLanguage
+
+   The OPTIONAL descriptionLanguage field identifies the language used
+   to express the description field.  When descriptionLanguage is
+   absent, English (equivalent to the "en" language tag) is used.  The
+   value of the descriptionLanguage MUST be a valid language tag as
+   described in [BCP47].
 
    The following constraints must hold for each certificate in the
    certificates field of the TRC payload:
@@ -2165,6 +2198,18 @@ Table of Contents
 
 8.1.  Normative References
 
+   [BCP47]    Best Current Practice 47,
+              <https://www.rfc-editor.org/info/bcp47>.
+              At the time of writing, this BCP comprises the following:
+
+              Phillips, A., Ed. and M. Davis, Ed., "Matching of Language
+              Tags", BCP 47, RFC 4647, DOI 10.17487/RFC4647, September
+              2006, <https://www.rfc-editor.org/info/rfc4647>.
+
+              Phillips, A., Ed. and M. Davis, Ed., "Tags for Identifying
+              Languages", BCP 47, RFC 5646, DOI 10.17487/RFC5646,
+              September 2009, <https://www.rfc-editor.org/info/rfc5646>.
+
    [I-D.dekater-scion-controlplane]
               de Kater, C., Rustignoli, N., and S. Hitz, "SCION Control
               Plane", Work in Progress, Internet-Draft, draft-dekater-
@@ -2183,6 +2228,10 @@ Table of Contents
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+   [RFC5198]  Klensin, J. and M. Padlipsky, "Unicode Format for Network
+              Interchange", RFC 5198, DOI 10.17487/RFC5198, March 2008,
+              <https://www.rfc-editor.org/rfc/rfc5198>.
 
    [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
               Housley, R., and W. Polk, "Internet X.509 Public Key
@@ -2299,54 +2348,60 @@ Appendix A.  Certificate Extensions in ASN.1 Syntax
 
 Appendix B.  TRC in ASN.1 Syntax
 
-   SCION-CP-PKI-TRC {
-       iso(1) identified-organization(3) dod(6) internet(1) private(4)
-       enterprise(1) scion(55324) module(0) trc(1)
-   }
+SCION-CP-PKI-TRC {
+    iso(1) identified-organization(3) dod(6) internet(1) private(4)
+    enterprise(1) scion(55324) module(0) trc(1)
+}
 
-   DEFINITIONS EXPLICIT TAGS ::=
-   BEGIN
+DEFINITIONS EXPLICIT TAGS ::=
+BEGIN
 
-   IMPORTS
-       Certificate
-           FROM PKIX1Explicit88 {
-               iso(1) identified-organization(3) dod(6) internet(1)
-               security(5) mechanisms(5) pkix(7) id-mod(0)
-               id-pkix1-explicit(18)
-           };
+IMPORTS
+    Certificate
+        FROM PKIX1Explicit88 {
+            iso(1) identified-organization(3) dod(6) internet(1)
+            security(5) mechanisms(5) pkix(7) id-mod(0)
+            id-pkix1-explicit(18)
+        };
 
-   TRCValidity ::= SEQUENCE {
-       notBefore          GeneralizedTime,
-       notAfter           GeneralizedTime
-   }
+TRCValidity ::= SEQUENCE {
+    notBefore          GeneralizedTime,
+    notAfter           GeneralizedTime
+}
 
-   TRCPayload ::= SEQUENCE {
-       version            TRCFormatVersion,
-       iD                 TRCID,
-       validity           TRCValidity,
-       gracePeriod        INTEGER,
-       noTrustReset       BOOLEAN,
-       votes              SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
-       votingQuorum       INTEGER (1..2047),
-       coreASes           SEQUENCE OF ASN,
-       authoritativeASes  SEQUENCE OF ASN,
-       description        UTF8String (SIZE (0..8192)),
-       certificates       SEQUENCE SIZE (0..4095) OF Certificate
-   }
+LocalizedText ::= SEQUENCE {
+    language        PrintableString (SIZE (1..64)),
+    content         UTF8String (SIZE (1..8192))
+}
+TRCPayload ::= SEQUENCE {
+    version               TRCFormatVersion,
+    iD                    TRCID,
+    validity              TRCValidity,
+    gracePeriod           INTEGER,
+    noTrustReset          BOOLEAN,
+    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votingQuorum          INTEGER (1..2047),
+    coreASes              SEQUENCE OF ASN,
+    authoritativeASes     SEQUENCE OF ASN,
+    description           UTF8String (SIZE (1..8192)) OPTIONAL,
+    certificates          SEQUENCE SIZE (1..4095) OF Certificate,
+    localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
+    descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
+}
 
-   TRCFormatVersion ::= INTEGER { v1(0) }
+TRCFormatVersion ::= INTEGER { v1(0) }
 
-   TRCID ::= SEQUENCE {
-       iSD                ISD,
-       serialNumber       INTEGER (1..MAX),
-       baseNumber         INTEGER (1..MAX)
-   }
+TRCID ::= SEQUENCE {
+    iSD                ISD,
+    serialNumber       INTEGER (1..MAX),
+    baseNumber         INTEGER (1..MAX)
+}
 
-   ISD ::= INTEGER (1..65535)
+ISD ::= INTEGER (1..65535)
 
-   ASN ::= PrintableString
+ASN ::= PrintableString (SIZE (1..16))
 
-   END
+END
 
 Appendix C.  Signing Ceremony Initial TRC
 
@@ -2553,6 +2608,10 @@ draft-dekater-scion-pki-13
 
    *  Certificate validity recommendations: align to current practice
 
+   *  TRC: introduce introduce language tags ([BCP47]) and
+      localizedDescriptions, introduce more sequence limits in ASN.1 and
+      recommend maximum size.
+
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
 
@@ -2664,13 +2723,14 @@ draft-dekater-scion-pki-06
 Acknowledgments
 
    Many thanks go to Fritz Steinmann (SIX Group AG), Juan A.  Garcia
-   Prado (ETH Zurich), Russ Housley (IETF), Brian Trammell (Google),
-   Ramon Keller (LibC Technologies), Patrick Ambord (independent),
-   Dominik Roos (Anapaya), and Kevin Meynell (SCION Association) for
-   reviewing this document.  We are also very grateful to Adrian Perrig
-   (ETH Zurich), for providing guidance and feedback about each aspect
-   of SCION.  Finally, we are indebted to the SCION development teams of
-   Anapaya and ETH Zurich, for their practical knowledge and for the
+   Prado (ETH Zurich), Russ Housley (Vigil Security LLC), Alexey
+   Melnikov (Isode), Brian Trammell (Google), Ramon Keller (LibC
+   Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya
+   Systems AG), and Kevin Meynell (SCION Association) for reviewing this
+   document.  We are also very grateful to Adrian Perrig (ETH Zurich),
+   for providing guidance and feedback about each aspect of SCION.
+   Finally, we are indebted to the SCION development teams of Anapaya
+   and ETH Zurich, for their practical knowledge and for the
    documentation about the CP-PKI, as well as to the authors of
    [CHUAT22] - the book is an important source of input and inspiration
    for this draft.
