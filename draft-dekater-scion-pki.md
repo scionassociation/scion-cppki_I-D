@@ -961,8 +961,6 @@ Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an I
 
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in [](#update).
 
-Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.
-
 SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:
 
 - *Beaconing Process*: The TRC version is announced during the beaconing process (see {{I-D.dekater-scion-controlplane}} section "AS Entry Signed Header"). Each AS MUST announce the latest TRC's base and serial number known to it. Consequently, relying parties involved in the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process.
@@ -971,10 +969,11 @@ SCION provides the following mechanisms for discovering TRC updates and fulfilli
 
 - *Active Discovery*: A relying party can actively request any TRC —either a specific version or the latest available version— from the sender of the secured information at any time. The necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material".
 
+Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.
 
 ## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
 
-The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties MUST be able to verify signatures with the help of the Control Plane PKI.
+The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties verify signatures with the help of the Control Plane PKI.
 
 The following sections specify the requirements that apply to the signing and verification of control plane messages.
 
