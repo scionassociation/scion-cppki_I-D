@@ -3568,7 +3568,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-trc-distribution-and-trust-" class="section-name selfRef">TRC Distribution and Trust on First Use</a>
         </h3>
 <p id="section-6.3-1">Base TRCs act as an ISD root of trust (see <a href="#trust-relations" class="auto internal xref">Section 1.4</a>).<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">If an endpoint retrieves the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it effectively operates under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">In typical deployments, initial TRCs are provisioned out of band. Should an endpoint retrieve the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it would effectively operate under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
 <p id="section-6.3-3">Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, thereby limiting impact of a malicious TRC.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
