@@ -1098,7 +1098,7 @@ This does not apply for certificate renewal. Denial of Service on the CA infrast
 
 Base TRCs act as an ISD root of trust (see [](#trust-relations)).
 
-If an endpoint retrieves the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it effectively operates under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.
+In typical deployments, initial TRCs are provisioned out of band. Should an endpoint retrieve the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it would effectively operate under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.
 
 Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, thereby limiting impact of a malicious TRC.
 
