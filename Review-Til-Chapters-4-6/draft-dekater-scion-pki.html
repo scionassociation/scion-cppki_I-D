@@ -2673,7 +2673,7 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
       </h2>
 <p id="section-3-1">The Trust Root Configuration (TRC) contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD. It enables the securing of control plane interactions and is thus an integral part of the SCION infrastructure.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">The initial TRC of an ISD is signed during a Signing Ceremony and then distributed throughout the ISD. This Signing Ceremony follows specific rules which are described in <a href="#trc-ceremony" class="auto internal xref">Section 3.6</a>.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">The TRC is a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data (<span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> section 5).<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">The TRC contains a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data (<span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> section 5).<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC; a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">This section specifies the TRC including format definitions and payload fields. The section uses the ITU-T <span>[<a href="#X.680" class="cite xref">X.680</a>]</span> syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <div id="trc-states">
@@ -3895,7 +3895,7 @@ END
           <h4 id="name-generation-of-the-trc-paylo">
 <a href="#appendix-C.3.2" class="section-number selfRef">C.3.2. </a><a href="#name-generation-of-the-trc-paylo" class="section-name selfRef">Generation of the TRC Payload</a>
           </h4>
-<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and <a href="#trcfields" class="auto internal xref">Section 3.2</a> completed in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix C.2</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and completed TRC fields (see <a href="#trcfields" class="auto internal xref">Section 3.2</a>) in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix C.2</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.2-2">For each bundled certificate, the voting representatives must then verify the certificate type and that the following fields contain the correct information:<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.3.2-3.1">
