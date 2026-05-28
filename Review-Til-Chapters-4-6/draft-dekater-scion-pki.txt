@@ -2111,10 +2111,9 @@ Table of Contents
       one of these private root keys is compromised, the adversary could
       issue illegitimate issuing CA certificates which may be used in
       further attacks.  To maliciously perform a TRC update, an attacker
-      would need to compromise enough voting keys for a voting quorum,
-      the number of which is dependent on the voting quorum set in the
-      TRC.  The higher the quorum, the harder a malicious update
-      becomes.
+      would need to compromise enough voting keys to reach the voting
+      quorum set in the TRC.  The higher the quorum, the harder a
+      malicious update becomes.
 
    *  At CA level: The private keys of an ISD's issuing CA certificates
       are used to sign the AS certificates and all ASes within an ISD
@@ -2455,9 +2454,9 @@ C.1.   Ceremony Participants
 
 C.2.  Ceremony Preparations
 
-   The participants agree in advance on the physical location of the
-   Signing Ceremony, the devices that will be used, and the ISD policy
-   as follows:
+   The participants agree in advance on the location of the Signing
+   Ceremony, the devices that will be used, and the ISD policy as
+   follows:
 
    *  ISD number - for public ISDs these are obtained from the SCION
       registry, see Section 3.2.2;
@@ -2516,7 +2515,7 @@ C.3.   Ceremony Phases
 
 C.3.1.  Certificate Exchange
 
-   All certificates that must be part of the TRC must be shared with the
+   All certificates that are part of the TRC must be shared with the
    Ceremony Administrator.  For the Voting ASes, these are the sensitive
    and the regular voting certificates, and for the Certificate
    Authority these are the control plane root certificates.
@@ -2533,19 +2532,21 @@ C.3.1.  Certificate Exchange
    validity, that the signature algorithms are correct, and that the
    certificate type is valid (root, sensitive voting or regular voting
    certificate).  If these parameters are correct, the Ceremony
-   Administrator computes the SHA-512 hash value for each certificate,
+   Administrator computes the hash value for each certificate,
    aggregates and bundles all the provided certificates, and finally
-   calculates the SHA-512 hash value for the entire bundle.  All hash
-   values must be displayed to the participants.
+   calculates the hash value for the entire bundle.  SHA-512 is
+   typically used as hashing algorithm, although any equivalent or
+   better algorithm may be used.  All hash values must be displayed to
+   the participants.
 
    The Ceremony Administrator must then share the bundle with the
-   representatives of the Voting ASes who MUST validate on their machine
+   representatives of the Voting ASes who must validate on their machine
    that the hash value of their certificates and that of the bundled
    certificates is the same as displayed by the Ceremony Administrator.
 
    This phase concludes when every representative has confirmed the
-   SHA-512 sums are correct.  If there is any mismatch then this phase
-   MUST be repeated.
+   hashes are correct.  If there is any mismatch then this phase must be
+   repeated.
 
 C.3.2.  Generation of the TRC Payload
 
