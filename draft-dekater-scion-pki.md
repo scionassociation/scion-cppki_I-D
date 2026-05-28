@@ -196,7 +196,7 @@ If the ISD's TRC has been compromised, it is necessary for an ISD to re-establis
 
 ### Substitutes to Certificate Revocation {#substitutes-to-revocation}
 
-The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the regular and sensitive TRC update mechanisms on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:
+The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism, on trust resets, and  on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:
 
 - Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL {{RFC5280}} and OCSP {{RFC6960}} checks improves performance by removing additional network lookups during PKI processing.
 - Even with a revocation system, a compromised key cannot be instantaneously revoked. Through their validity period, both short-lived certificates and revocation lists implicitly define an attack window (i.e. a period during which an attacker who managed to compromise a key could use it before it becomes invalid). In both cases, the CA must consider a tradeoff between efficiency and security when picking this validity period.
