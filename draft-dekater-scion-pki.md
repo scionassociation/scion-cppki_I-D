@@ -613,7 +613,7 @@ The Trust Root Configuration (TRC) contains policy information about an ISD and 
 
 The initial TRC of an ISD is signed during a Signing Ceremony and then distributed throughout the ISD. This Signing Ceremony follows specific rules which are described in [](#trc-ceremony).
 
-The TRC contains a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ({{RFC5652}} section 5).
+The TRC contains a signed collection of {{X.509}} v3 certificates and ISD-specific policies. Encoding for the purpose of signature calculation is described in [](#signed-format).
 
 The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC; a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.
 
@@ -1283,7 +1283,7 @@ For each bundled certificate, the voting representatives must then verify the ce
 - `validity`
 - `signature`
 
-Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding {see [[RFC5280]])of the data according to [](#trc-asn1) and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing it on their machine and checking that it matches the one displayed by the Ceremony Administrator.
+Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to [](#signed-format) and the hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing it on their machine and checking that it matches the one displayed by the Ceremony Administrator.
 
 This phase concludes when all voting representatives confirm that the contents of the TRC payload are correct.
 
