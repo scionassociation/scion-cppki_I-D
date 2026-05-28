@@ -1917,7 +1917,7 @@ Table of Contents
 4.2.1.  Signing a Control Plane Message
 
    An AS signs control plane messages with the private key that
-   corresponds to its own valid certificate.
+   corresponds to the valid certificate for the AS.
 
    The AS MUST attach the following information as signature metadata to
    ensure that a relying party can identify which certificate to use to
@@ -2016,10 +2016,10 @@ Table of Contents
    party MUST query the originator of the message for the missing
    material.  If it cannot be resolved, the verification process fails.
 
-   *Important:* An implication of the above procedure is that path
-   segments MUST be verifiable at time of use.  It is not enough to rely
-   on path segments being verified on insert since TRC updates that
-   change the root key can invalidate a certificate chain.
+   An implication of the above procedure is that path segments are
+   verifiable at time of use.  It is not enough to rely on path segments
+   being verified on insert since TRC updates that change the root key
+   can invalidate a certificate chain.
 
 4.3.  Issuing Control Plane AS Certificates
 
@@ -2082,8 +2082,8 @@ Table of Contents
 
    *  actions in case of compromise or regulations breach
 
-   This document may also describe a TRC Signing Ceremony, such as that
-   described in Appendix C.
+   Appendix C describes a typical TRC Signing Ceremony, but further
+   processes are out-of-scope.
 
 6.  Security Considerations
 
