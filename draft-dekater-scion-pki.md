@@ -613,7 +613,7 @@ The Trust Root Configuration (TRC) contains policy information about an ISD and 
 
 The initial TRC of an ISD is signed during a Signing Ceremony and then distributed throughout the ISD. This Signing Ceremony follows specific rules which are described in [](#trc-ceremony).
 
-The TRC is a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ({{RFC5652}} section 5).
+The TRC contains a signed collection of {{X.509}} v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ({{RFC5652}} section 5).
 
 The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC; a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.
 
@@ -1274,7 +1274,7 @@ This phase concludes when every representative has confirmed the hashes are corr
 
 ### Generation of the TRC Payload {#phase2}
 
-The Ceremony Administrator generates the TRC payload based on the bundled certificates and [](#trcfields) completed in accordance with ISD policy, see [](#ceremonyprep).
+The Ceremony Administrator generates the TRC payload based on the bundled certificates and completed TRC fields (see [](#trcfields)) in accordance with ISD policy, see [](#ceremonyprep).
 
 For each bundled certificate, the voting representatives must then verify the certificate type and that the following fields contain the correct information:
 
