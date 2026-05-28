@@ -1146,9 +1146,9 @@ Table of Contents
    then distributed throughout the ISD.  This Signing Ceremony follows
    specific rules which are described in Section 3.6.
 
-   The TRC contains a signed collection of [X.509] v3 certificates.
-   Additionally, the TRC contains ISD-specific policies encoded in CMS
-   signed-data ([RFC5652] section 5).
+   The TRC contains a signed collection of [X.509] v3 certificates and
+   ISD-specific policies.  Encoding for the purpose of signature
+   calculation is described in Section 3.3.
 
    The TRC's certificates collection consists of a set of control plane
    root certificates which build the root of the certification chain for
@@ -2567,12 +2567,12 @@ C.3.2.  Generation of the TRC Payload
    *  signature
 
    Once the voting representatives have verified the TRC data, the
-   Ceremony Administrator computes the DER encoding {see [[RFC5280]])of
-   the data according to Appendix B and the SHA-512 hash value of the
-   TRC payload file.  The TRC payload file is then shared with the
-   voting representatives via the data exchange device who verify the
-   TRC payload hash value by computing it on their machine and checking
-   that it matches the one displayed by the Ceremony Administrator.
+   Ceremony Administrator computes the DER encoding of the data
+   according to Section 3.3 and the hash value of the TRC payload file.
+   The TRC payload file is then shared with the voting representatives
+   via the data exchange device who verify the TRC payload hash value by
+   computing it on their machine and checking that it matches the one
+   displayed by the Ceremony Administrator.
 
    This phase concludes when all voting representatives confirm that the
    contents of the TRC payload are correct.
