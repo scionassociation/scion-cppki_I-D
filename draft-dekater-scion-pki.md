@@ -1066,7 +1066,7 @@ This section discusses the implications of such trust architecture, covering *in
 
 In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:
 
-- At TRC level: The private root keys of the root certificates contained in a TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise enough voting keys for a voting quorum, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the harder a malicious update becomes.
+- At TRC level: The private root keys of the root certificates contained in a TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise enough voting keys to reach the voting quorum set in the TRC. The higher the quorum, the harder a malicious update becomes.
 - At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.
 - At AS level: Each AS within an ISD signs control plane messages with their AS private key. If the keys of an AS are compromised by an adversary, this adversary can illegitimately sign control plane messages including Path Construction Beacons (PCBs). This means that the adversary can manipulate the PCBs and propagate them to neighboring ASes or register/store them as path segments.
 
@@ -1229,7 +1229,7 @@ The Signing Ceremony should include the following participants:
 
 ## Ceremony Preparations {#ceremonyprep}
 
-The participants agree in advance on the physical location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:
+The participants agree in advance on the location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:
 
 - ISD number - for public ISDs these are obtained from the SCION registry, see [](#id);
 - The description of the TRC, see [](#description);
@@ -1261,15 +1261,15 @@ The signing process has four phases of data sharing, led by the Ceremony Adminis
 
 ### Certificate Exchange {#phase1}
 
-All certificates that must be part of the TRC must be shared with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.
+All certificates that are part of the TRC must be shared with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.
 
 Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.
 
-The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA-512 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA-512 hash value for the entire bundle. All hash values must be displayed to the participants.
+The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the hash value for the entire bundle. SHA-512 is typically used as hashing algorithm, although any equivalent or better algorithm may be used. All hash values must be displayed to the participants.
 
-The Ceremony Administrator must then share the bundle with the representatives of the Voting ASes who MUST validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
+The Ceremony Administrator must then share the bundle with the representatives of the Voting ASes who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
 
-This phase concludes when every representative has confirmed the SHA-512 sums are correct. If there is any mismatch then this phase MUST be repeated.
+This phase concludes when every representative has confirmed the hashes are correct. If there is any mismatch then this phase must be repeated.
 
 
 ### Generation of the TRC Payload {#phase2}
