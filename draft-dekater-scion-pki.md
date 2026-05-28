@@ -979,7 +979,7 @@ The following sections specify the requirements that apply to the signing and ve
 
 ### Signing a Control Plane Message
 
-An AS signs control plane messages with the private key that corresponds to its own valid certificate.
+An AS signs control plane messages with the private key that corresponds to the valid certificate for the AS.
 
 The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:
 
@@ -1018,7 +1018,7 @@ To verify a control plane message, the relying party MUST perform the following 
 
 If any cryptographic material is missing in the process, the relying party MUST query the originator of the message for the missing material. If it cannot be resolved, the verification process fails.
 
-**Important:** An implication of the above procedure is that path segments MUST be verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.
+An implication of the above procedure is that path segments are verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.
 
 
 ## Issuing Control Plane AS Certificates
@@ -1053,7 +1053,7 @@ An ISD is governed by Voting ASes who may produce a regulations document to faci
   - protection measures for keys (e.g. use of HSMs)
   - actions in case of compromise or regulations breach
 
-This document may also describe a TRC Signing Ceremony, such as that described in [](#initial-ceremony).
+[](#initial-ceremony) describes a typical TRC Signing Ceremony, but further processes are out-of-scope.
 
 # Security Considerations
 
