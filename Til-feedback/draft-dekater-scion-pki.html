@@ -1051,7 +1051,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 28 November 2026</td>
+<td class="center">Expires 29 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-27" class="published">27 May 2026</time>
+<time datetime="2026-05-28" class="published">28 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-28">28 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-29">29 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 29 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1574,8 +1574,9 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-updates-and-trust-resets">
 <a href="#section-1.4.1" class="section-number selfRef">1.4.1. </a><a href="#name-updates-and-trust-resets" class="section-name selfRef">Updates and Trust Resets</a>
           </h4>
-<p id="section-1.4.1-1">There are two types of TRC updates: regular and sensitive. The update type depends on which fields are changed (see <a href="#update" class="auto internal xref">Section 3.5</a>). In both cases the base TRC remains unchanged.<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-2">If the ISD's base TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if permitted by the ISD's trust policy) when a new base TRC is created.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.4.1-1">There are two types of TRC updates: regular and sensitive. The update type depends on which fields are changed (see <a href="#update" class="auto internal xref">Section 3.5</a>). In both cases the base TRC remains unchanged.
+Authoritative ASes announce these TRC updates (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>).<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.1-2">If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if permitted by the ISD's trust policy) when a new base TRC is created.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="substitutes-to-revocation">
@@ -1583,7 +1584,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-substitutes-to-certificate-">
 <a href="#section-1.4.2" class="section-number selfRef">1.4.2. </a><a href="#name-substitutes-to-certificate-" class="section-name selfRef">Substitutes to Certificate Revocation</a>
           </h4>
-<p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the regular and sensitive TRC update mechanisms on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism, on trust resets, and  on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.4.2-2.1">
               <p id="section-1.4.2-2.1.1">Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> and OCSP <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span> checks improves performance by removing additional network lookups during PKI processing.<a href="#section-1.4.2-2.1.1" class="pilcrow">¶</a></p>
@@ -1678,8 +1679,9 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <polygon class="arrowhead" points="176,568 164,562.4 164,573.6" fill="black" transform="rotate(90,168,568)"></polygon>
                 <polygon class="arrowhead" points="128,128 116,122.4 116,133.6" fill="black" transform="rotate(0,120,128)"></polygon>
                 <g class="text">
-                  <text x="280" y="52">TRC</text>
-                  <text x="304" y="52">2</text>
+                  <text x="216" y="52">TRC</text>
+                  <text x="240" y="52">2</text>
+                  <text x="316" y="52">(SerialNumber=2)</text>
                   <text x="152" y="84">-</text>
                   <text x="192" y="84">Version</text>
                   <text x="280" y="84">-</text>
@@ -2063,8 +2065,9 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                 <polygon class="arrowhead" points="136,728 124,722.4 124,733.6" fill="black" transform="rotate(90,128,728)"></polygon>
                 <polygon class="arrowhead" points="112,824 100,818.4 100,829.6" fill="black" transform="rotate(90,104,824)"></polygon>
                 <g class="text">
-                  <text x="184" y="52">TRC</text>
-                  <text x="208" y="52">1</text>
+                  <text x="144" y="52">TRC</text>
+                  <text x="168" y="52">1</text>
+                  <text x="244" y="52">(SerialNumber=1)</text>
                   <text x="196" y="68">(base/initial)</text>
                   <text x="40" y="100">-</text>
                   <text x="80" y="100">Version</text>
@@ -2088,10 +2091,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
                   <text x="228" y="148">Voting</text>
                   <text x="284" y="148">Quorum</text>
                   <text x="40" y="164">-</text>
-                  <text x="104" y="164">SerialNumber:</text>
-                  <text x="168" y="164">1</text>
-                  <text x="192" y="164">-</text>
-                  <text x="216" y="164">...</text>
+                  <text x="64" y="164">...</text>
                   <text x="112" y="228">Votes</text>
                   <text x="256" y="228">Regular</text>
                   <text x="316" y="228">Voting</text>

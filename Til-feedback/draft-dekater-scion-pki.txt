@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 28 November 2026                                        S. Hitz
+Expires: 29 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             27 May 2026
+                                                             28 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 28 November 2026.
+   This Internet-Draft will expire on 29 November 2026.
 
 Copyright Notice
 
@@ -361,20 +361,20 @@ Table of Contents
 
    There are two types of TRC updates: regular and sensitive.  The
    update type depends on which fields are changed (see Section 3.5).
-   In both cases the base TRC remains unchanged.
+   In both cases the base TRC remains unchanged.  Authoritative ASes
+   announce these TRC updates (see Section 3.2.9).
 
-   If the ISD's base TRC has been compromised, it is necessary for an
-   ISD to re-establish the trust root.  This is possible with a process
-   called *trust reset* (if permitted by the ISD's trust policy) when a
-   new base TRC is created.
+   If the ISD's TRC has been compromised, it is necessary for an ISD to
+   re-establish the trust root.  This is possible with a process called
+   *trust reset* (if permitted by the ISD's trust policy) when a new
+   base TRC is created.
 
 1.4.2.  Substitutes to Certificate Revocation
 
    The Control Plane PKI does not explicitly support certificate
-   revocation.  Instead it relies on the regular and sensitive TRC
-   update mechanisms on short-lived certificates.  This approach
-   constitutes an alternative to a revocation system for the following
-   reasons:
+   revocation.  Instead it relies on the TRC update mechanism, on trust
+   resets, and on short-lived certificates.  This approach constitutes
+   an alternative to a revocation system for the following reasons:
 
    *  Instead of periodically signing a new revocation list, the CA can
       re-issue all the non-revoked certificates.  Although the overhead
@@ -401,7 +401,7 @@ Table of Contents
    For detailed descriptions, please refer to Section 2 and Section 3.
 
                 +----------------------------------------+
-                |                 TRC 2                  |
+                |         TRC 2 (SerialNumber=2)         |
                 | +------------------------------------+ |
                 | |- Version       - Core ASes         | |
  +--------+     | |- ID            - Description       | |    +--------+
@@ -654,14 +654,14 @@ Table of Contents
    certificates with the first regular update to the base TRC.
 
    +----------------------------------------------+
-   |                    TRC 1                     |
+   |               TRC 1 (SerialNumber=1)         |
    |                (base/initial)                |
    | +------------------------------------------+ |
    | | - Version          - Core ASes           | |
    | | - ID               - Description         | |
    | | - Validity         - No Trust Reset      | |
    | | - Grace Period     - Voting Quorum       | |
-   | | - SerialNumber: 1  - ...                 | |
+   | | - ...                                    | |
    | +------------------------------------------+ |
    |                                              |
    | +-------------------+ +--------------------+ |
