@@ -189,7 +189,7 @@ While it is not necessary that all the ASes of the ISD trust each other, all ASe
 ### Updates and Trust Resets {#trust-reset}
 
 There are two types of TRC updates: regular and sensitive. The update type depends on which fields are changed (see [](#update)). In both cases the base TRC remains unchanged.
-Authoritative ASes announce these TRC updates (see [](#auth)). 
+Authoritative ASes announce these TRC updates (see [](#auth)).
 
 If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called **trust reset** (if permitted by the ISD's trust policy) when a new base TRC is created.
 
@@ -208,7 +208,7 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~aasvg
 
                +----------------------------------------+
-               |                 TRC 2                  |
+               |         TRC 2 (SerialNumber=2)         |
                | +------------------------------------+ |
                | |- Version       - Core ASes         | |
 +--------+     | |- ID            - Description       | |    +--------+
@@ -346,14 +346,14 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 ~~~aasvg
 +----------------------------------------------+
-|                    TRC 1                     |
+|               TRC 1 (SerialNumber=1)         |
 |                (base/initial)                |
 | +------------------------------------------+ |
 | | - Version          - Core ASes           | |
 | | - ID               - Description         | |
 | | - Validity         - No Trust Reset      | |
 | | - Grace Period     - Voting Quorum       | |
-| | - SerialNumber: 1  - ...                 | |
+| | - ...                                    | |
 | +------------------------------------------+ |
 |                                              |	
 | +-------------------+ +--------------------+ |
