@@ -1870,14 +1870,6 @@ Table of Contents
    The specifications and rules that apply to updating a TRC are
    described in Section 3.5.
 
-   Relying parties such as an AS Control Service require at least one
-   valid TRC available and should therefore discover TRC updates within
-   the grace period defined in the updated TRC.  Additionally, any
-   entity sending information that is secured by the Control Plane PKI
-   MUST be able to provide all the necessary trust material to verify
-   said information, ensuring that relying parties can discover TRC
-   updates in a matter of minutes to hours.
-
    SCION provides the following mechanisms for discovering TRC updates
    and fulfilling the above requirement:
 
@@ -1902,14 +1894,22 @@ Table of Contents
       [I-D.dekater-scion-controlplane], section "Distribution of
       Cryptographic Material".
 
+   Relying parties such as an AS Control Service require at least one
+   valid TRC available and should therefore discover TRC updates within
+   the grace period defined in the updated TRC.  Additionally, any
+   entity sending information that is secured by the Control Plane PKI
+   MUST be able to provide all the necessary trust material to verify
+   said information, ensuring that relying parties can discover TRC
+   updates in a matter of minutes to hours.
+
 4.2.   Signing and Verifying Control Plane Messages
 
    The main purpose of the Control Plane PKI is providing a mechanism to
    distribute and authenticate public keys that are used to verify
    control plane messages and information, e.g. each hop information in
    a path segment is signed by the respective AS.  Consequently, all
-   relying parties MUST be able to verify signatures with the help of
-   the Control Plane PKI.
+   relying parties verify signatures with the help of the Control Plane
+   PKI.
 
    The following sections specify the requirements that apply to the
    signing and verification of control plane messages.

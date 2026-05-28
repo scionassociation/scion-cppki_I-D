@@ -3311,19 +3311,19 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 <a href="#section-4.1.2" class="section-number selfRef">4.1.2. </a><a href="#name-trc-update-discovery" class="section-name selfRef">TRC Update Discovery</a>
           </h4>
 <p id="section-4.1.2-1">All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in <a href="#update" class="auto internal xref">Section 3.5</a>.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-2">Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI <span class="bcp14">MUST</span> be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-3">SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-2">SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.1.2-4.1">
-              <p id="section-4.1.2-4.1.1"><em>Beaconing Process</em>: The TRC version is announced during the beaconing process (see <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "AS Entry Signed Header"). Each AS <span class="bcp14">MUST</span> announce the latest TRC's base and serial number known to it. Consequently, relying parties involved in the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process.<a href="#section-4.1.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4.1.2-3.1">
+              <p id="section-4.1.2-3.1.1"><em>Beaconing Process</em>: The TRC version is announced during the beaconing process (see <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "AS Entry Signed Header"). Each AS <span class="bcp14">MUST</span> announce the latest TRC's base and serial number known to it. Consequently, relying parties involved in the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process.<a href="#section-4.1.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.1.2-4.2">
-              <p id="section-4.1.2-4.2.1"><em>Path Lookup</em>: In every path segment, all ASes <span class="bcp14">MUST</span> reference the latest TRC of their ISD. Consequently, relying parties will detect TRC updates, including those from remote ISDs, during path lookups.<a href="#section-4.1.2-4.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.1.2-3.2">
+              <p id="section-4.1.2-3.2.1"><em>Path Lookup</em>: In every path segment, all ASes <span class="bcp14">MUST</span> reference the latest TRC of their ISD. Consequently, relying parties will detect TRC updates, including those from remote ISDs, during path lookups.<a href="#section-4.1.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.1.2-4.3">
-              <p id="section-4.1.2-4.3.1"><em>Active Discovery</em>: A relying party can actively request any TRC —either a specific version or the latest available version— from the sender of the secured information at any time. The necessary query and response is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material".<a href="#section-4.1.2-4.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.1.2-3.3">
+              <p id="section-4.1.2-3.3.1"><em>Active Discovery</em>: A relying party can actively request any TRC —either a specific version or the latest available version— from the sender of the secured information at any time. The necessary query and response is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material".<a href="#section-4.1.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
+<p id="section-4.1.2-4">Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI <span class="bcp14">MUST</span> be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.<a href="#section-4.1.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3333,7 +3333,7 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
         <h3 id="name-signing-and-verifying-contr">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-signing-and-verifying-contr" class="section-name selfRef">Signing and Verifying Control Plane Messages</a>
         </h3>
-<p id="section-4.2-1">The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties <span class="bcp14">MUST</span> be able to verify signatures with the help of the Control Plane PKI.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties verify signatures with the help of the Control Plane PKI.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">The following sections specify the requirements that apply to the signing and verification of control plane messages.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <div id="signing-a-control-plane-message">
 <section id="section-4.2.1">
