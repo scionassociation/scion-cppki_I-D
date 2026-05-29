@@ -1023,7 +1023,7 @@ An implication of the above procedure is that path segments are verifiable at ti
 
 ## Issuing Control Plane AS Certificates
 
-The steps REQUIRED to issue a new AS certificate are the following:
+The steps required to issue a new AS certificate are the following:
 
 1. The AS creates a new key pair and a certificate signing request (CSR) using that key pair.
 2. The AS sends the certificate signing request to the relevant CA within the ISD.
