@@ -180,8 +180,10 @@ An ISD is governed by one or multiple ASes, known as the **Voting ASes**. Furthe
 Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. An ISD's TRC is used for signatures pertaining to information originating from that ISD, such as paths, but for nothing originating outside of the ISD. This ISD-level scoping of trust roots enhances security by strictly limiting effect of a compromise to data originating from the compromised AS.
 An ISD's trust roots and policy are encoded in the TRC, which has a base and serial number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used to efficiently revoke compromised roots of trust.
 
-The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that ASes are free to choose one or more ISDs they believe maintain an uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network, which differs from trust models provided by other PKI architectures.
+The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that ASes are free to choose one or more ISDs they believe maintain an uncompromised set of trust roots. ASes can thus transparently define trust relationships between parts of the network, which differs from trust models provided by other established PKI architectures.
 
+To achieve trust agility, SCION avoids global PKIs such as the RPKI {{RFC8210}} where trust roots are provided by the Regional Internet Registries. Instead,
+in the CP-PKI, each ISD has its own trust root. Note that SCION does not provide IP prefix origin validation.
 
 ## Trust Relations within an Isolation Domain {#trust-relations}
 
