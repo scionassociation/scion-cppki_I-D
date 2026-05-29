@@ -2023,7 +2023,7 @@ Table of Contents
 
 4.3.  Issuing Control Plane AS Certificates
 
-   The steps REQUIRED to issue a new AS certificate are the following:
+   The steps required to issue a new AS certificate are the following:
 
    1.  The AS creates a new key pair and a certificate signing request
        (CSR) using that key pair.
