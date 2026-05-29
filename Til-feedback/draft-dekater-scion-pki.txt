@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 29 November 2026                                        S. Hitz
+Expires: 30 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             28 May 2026
+                                                             29 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 November 2026.
+   This Internet-Draft will expire on 30 November 2026.
 
 Copyright Notice
 
@@ -343,7 +343,13 @@ Table of Contents
    that ASes are free to choose one or more ISDs they believe maintain
    an uncompromised set of trust roots.  ASes can thus transparently
    define trust relationships between parts of the network, which
-   differs from trust models provided by other PKI architectures.
+   differs from trust models provided by other established PKI
+   architectures.
+
+   To achieve trust agility, SCION avoids global PKIs such as the RPKI
+   [RFC8210] where trust roots are provided by the Regional Internet
+   Registries.  Instead, in the CP-PKI, each ISD has its own trust root.
+   Note that SCION does not provide IP prefix origin validation.
 
 1.4.  Trust Relations within an Isolation Domain
 
