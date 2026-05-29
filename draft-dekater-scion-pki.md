@@ -121,7 +121,7 @@ SCION relies on three main components:
 
 *PKI* - providing cryptographic material within an unique trust model. It is described in this document.
 
-*Control Plane* - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
+*Control Plane* (CP) - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
 
 *Data Plane* - carrying out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. It is described in {{I-D.dekater-scion-dataplane}}.
 
@@ -465,7 +465,7 @@ The string representation of the `id-at-ia` attribute MUST follow the formatting
 
 ### `validity`
 
-The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
+The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. `GeneralizedTime` value "99991231235959Z" MUST NOT be used.
 
 The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
 
@@ -766,17 +766,6 @@ A certificate that is not a control plane root or voting certificate MUST NOT be
 
 A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
 
-### `localizedDescriptions` {#description-multilang}
-
-The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
-It consists of a sequence of `LocalizedText` structures, each containing:
-
-- `language`: specifies the description's language. It MUST contain a valid language tag according to {{BCP47}}.
-- `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
-
-### `descriptionLanguage` {#langtag}
-
-The OPTIONAL `descriptionLanguage` field identifies the language used to express the `description` field. When `descriptionLanguage` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLanguage` MUST be a valid language tag as described in {{BCP47}}.
 
 The following constraints must hold for each certificate in the `certificates` field of the TRC payload:
 
@@ -793,6 +782,17 @@ That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST
 - `votingQuorum` <= count (regular voting certificates) <br>
 That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of regular voting certificates specified in the TRC's `certificates` field.
 
+### `localizedDescriptions` {#description-multilang}
+
+The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
+It consists of a sequence of `LocalizedText` structures, each containing:
+
+- `language`: specifies the description's language. It MUST contain a valid language tag according to {{BCP47}}.
+- `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
+
+### `descriptionLanguage` {#langtag}
+
+The OPTIONAL `descriptionLanguage` field identifies the language used to express the `description` field. When `descriptionLanguage` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLanguage` MUST be a valid language tag as described in {{BCP47}}.
 
 ## TRC Signature Syntax {#signed-format}
 
