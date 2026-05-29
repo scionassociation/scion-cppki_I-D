@@ -335,8 +335,8 @@ Table of Contents
    public keys that serves as root of trust for various purposes, and a
    voting quorum governing the number of signatures required to update
    TRCs.  The TRC serves as a way to bootstrap all authentication within
-   SCION.  Additionally, TRC versioning is used to efficiently revoke
-   compromised roots of trust.
+   SCION.  Additionally, TRC versioning is used as an alternative to
+   revocation in case of compromised roots of trust.
 
    The TRC also provides _trust agility_ - enabling users to select the
    trust roots used to initiate certificate validation.  This implies
