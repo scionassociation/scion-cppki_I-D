@@ -632,7 +632,7 @@ A TRC can have the following states:
 
 - Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity-trc)). A TRC is considered valid if the current time falls within its validity period.
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the `gracePeriod` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
-- Invalid: The TRC is neither valid nor active.
+- Invalid: The TRC is considered invalid if the current time falls outside its validity period.
 
 {{figure-2}} shows the content of both a base/initial TRC. All elements of the TRC are detailed in the following subsections.
 
