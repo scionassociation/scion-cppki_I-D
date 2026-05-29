@@ -1297,7 +1297,7 @@ This phase concludes when all voting representatives have attached their signatu
 
 ### TRC Validation {#phase4}
 
-All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during phase [](#phase1). The Ceremony Administrator then shares the assembled TRC with all participants who MUST again inspect the signatures and verify them based on the certificates exchanged in phase [](#phase1).
+All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during phase [](#phase1). The Ceremony Administrator then shares the assembled TRC with all participants who must again inspect the signatures and verify them based on the certificates exchanged in phase [](#phase1).
 
 The Signing Ceremony is completed when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.
 
