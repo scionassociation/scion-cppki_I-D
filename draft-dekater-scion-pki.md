@@ -336,7 +336,7 @@ The RECOMMENDED maximum validity period of a voting certificate is 5 years.
 | CP AS certificate      | C<sub>AS</sub>    | SK<sub>CA</sub>                          | PK<sub>AS</sub>                                         | 3 days       |
 {: #table-3 title="Certificates"}
 
-(1) Multiple signatures and certificates of each type MAY be included in a TRC.<br>
+(1) A TRC may include multiple certificates of each type.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
 (3) A validity of 15 days with 8 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing an issuing CA certificate rollover.
 
@@ -403,13 +403,13 @@ The RECOMMENDED maximum validity period of a voting certificate is 5 years.
 
 ## X.509 Certificate Profiles and Constraints
 
-Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
+Control Plane PKI certificates are X.509 v3 certificate with additional constraints applied. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
 
 The following subsections define the specific constraints for the fields contained in the `TBSCertificate` sequence.
 
 ### `version`
 
-The `version` field describes the version of the encoded certificate. It MUST be set to "v3" because extensions are required.
+The `version` field describes the X.509 version of the encoded certificate. It MUST be set to "v3" because X.509 extensions are required.
 
 ### `serialNumber`
 
@@ -441,18 +441,16 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 
 The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
 
-In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute identifying the SCION ISD and AS numbers.
+In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific ISD and AS number attribute.
 
 #### `id-at-ia` Attribute {#isd-as-nr}
 
-The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in [](#cert-asn1).
+The `id-at-ia` attribute  identifies the SCION ISD and AS numbers. It is is included in a `AttributeTypeAndValue` sequence with `type`: `id-at-ia` and `value` containing the ISD-AS number. The `id-at-ia` object identifier is defined in [](#cert-asn1). The string representation of the `id-at-ia` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
 The `id-at-ia` attribute MUST be included in the `issuer` and `subject` fields of root, issuing CA, and AS certificates. It SHOULD be included in voting certificates.
 
 
 When present, the `id-at-ia` attribute MUST appear exactly once in a given distinguished name (DN), and implementations MUST reject certificates if the `id-at-ia` appears more than once.
-
-The string representation of the `id-at-ia` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
 
 
 ### `validity`
