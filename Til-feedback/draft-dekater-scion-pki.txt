@@ -376,8 +376,8 @@ Table of Contents
 
    If the ISD's TRC has been compromised, it is necessary for an ISD to
    re-establish the trust root.  This is possible with a process called
-   *trust reset* (if permitted by the ISD's trust policy) when a new
-   base TRC is created.
+   *trust reset* (if permitted by the ISD's trust policy).  In this
+   case, a new base TRC is created.
 
 1.4.2.  Substitutes to Certificate Revocation
 
