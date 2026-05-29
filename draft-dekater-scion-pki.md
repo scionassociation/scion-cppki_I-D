@@ -121,7 +121,7 @@ SCION relies on three main components:
 
 *PKI* - providing cryptographic material within an unique trust model. It is described in this document.
 
-*Control Plane* - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
+*Control Plane* (CP) - performing inter-domain routing by discovering and securely disseminating path information. It is described in {{I-D.dekater-scion-controlplane}}.
 
 *Data Plane* - carrying out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. It is described in {{I-D.dekater-scion-dataplane}}.
 
@@ -276,7 +276,7 @@ The trust is anchored in the TRC for each ISD. The trust root is axiomatic: All 
 
 ## Control Plane Root Certificate {#cp-root-cert}
 
-The private key of the control plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as Issuing CAs in an ISD.
+The private key of the control plane root (CP root) certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as Issuing CAs in an ISD.
 
 In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. They are embedded in the TRC of an ISD, and they act as the starting point of an ISD's certificate verification path.
 
@@ -440,6 +440,7 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 ### `issuer` {#issuer}
 
 The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
+
 In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute identifying the SCION ISD and AS numbers.
 
 #### `id-at-ia` Attribute {#isd-as-nr}
@@ -456,13 +457,13 @@ The string representation of the `id-at-ia` attribute MUST follow the formatting
 
 ### `validity`
 
-The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. GeneralizedTime value "99991231235959Z" MUST NOT be used.
+The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. `GeneralizedTime` value "99991231235959Z" MUST NOT be used.
+
 The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
 
 ### `subject`
 
-The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
-The same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
+The `subject` field defines the entity that owns the certificate. It MUST NOT be empty and the same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
 
 ### `subjectPublicKeyInfo`
 
@@ -623,13 +624,15 @@ A TRC can have the following states:
 
 - Valid: The validity period of a TRC is defined in the TRC itself, in the `validity` field (see [](#validity-trc)). A TRC is considered valid if the current time falls within its validity period.
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the `gracePeriod` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
+- Invalid: The TRC is considered invalid if the current time falls outside its validity period.
 
-{{figure-2}} shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.
+{{figure-2}} shows the content of both a base/initial TRC. All elements of the TRC are detailed in the following subsections.
 
 
 ## TRC Fields {#trcfields}
 
 The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in [](#trc-asn1).
+Although the ASN.1 schema permits larger structures, the total TRC size SHOULD NOT exceed 4 MB.
 Its fields are contained in a `TRCPayload` sequence. This section describes their syntax and semantics.
 
 ### `version`
@@ -642,7 +645,7 @@ The `version` field describes the version of the TRC format specification. It MU
 The `iD` field contains an unique identifier for the TRC, constituted by a sequence of:
 
 - ISD number (`iSD` attribute),
-- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.
+- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.
 - TRC serial number (`serialNumber` attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 All numbers MUST be positive integers.
@@ -672,7 +675,7 @@ The `validity` field defines the TRC validity period. The `notBefore` and `notAf
 An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see [](#trc-states).
 
 The `validity` field consists of a sequence of a `notBefore` and a `notAfter` date, both encoded as `GeneralizedTime`.
-All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers MUST reject such a TRC.
+All TRCs MUST have a well-defined expiration date. SCION implementations MUST NOT create TRCs that use `GeneralizedTime` value "99991231235959Z", and verifiers MUST reject such a TRC.
 
 
 ### `gracePeriod` {#grace}
@@ -682,7 +685,7 @@ The `gracePeriod` field specifies the duration, in seconds, during which the pre
 A predecessor TRC ceases to be active when the earliest of the following events occurs:
 
 - the grace period expires;
-- the predecessor TRC reaches its expiration time (`notAfter`); or
+- the predecessor TRC reaches its expiration time (`notAfter`);
 - a subsequent TRC update (i.e., the successor to the new TRC) is announced.
 
 In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod` SHOULD be greater than zero. The defined duration SHOULD provide sufficient overlap between the two TRCs to ensure uninterrupted operations within the ISD. If the grace period is too short, some control plane AS certificates may expire before the corresponding ASes can fetch an updated version from their CA.
@@ -692,7 +695,7 @@ In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod
 
 The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value MUST NOT be changed by a regular or sensitive update. However, it is possible to change the `noTrustReset` value in the event of a trust reset where a new base TRC is created.
 
-The `noTrustReset` field is OPTIONAL and defaults to FALSE.
+The `noTrustReset` field defaults to FALSE.
 
 Note that once the `noTrustReset` Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs SHOULD always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
 
@@ -715,7 +718,7 @@ The `votes` sequence MUST be present to prevent the stripping of voting signatur
 The `votingQuorum` field defines the number of necessary votes on a successor TRC to make it verifiable.
 
 A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.
-
+A voting quorum lower than the number of Voting ASes ensures that votes can be cast even if some of the voters are unavailable.
 
 ### `coreASes` {#core}
 
@@ -736,10 +739,10 @@ As with Core ASes, assigning or revoking Authoritative status is performed by ad
 
 ### `description` {#description}
 
-The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization. If present, it SHOULD NOT be empty.
+The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization.
 When this field contains a language other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).
 
-Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present.
+Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present and not be empty.
 
 ### `certificates` {#cert}
 
@@ -749,23 +752,12 @@ The `certificates` field is a sequence of self-signed X.509 certificates. Each c
 
 - a sensitive voting certificate,
 - a regular voting certificate, or
-- a CP root certificate.
+- a control plane root certificate.
 
-A certificate that is no control plane root or voting certificate MUST NOT be included in the sequence of certificates in the `certificates` field.
+A certificate that is not a control plane root or voting certificate MUST NOT be included in the sequence of certificates in the `certificates` field.
 
 A certificate's type (voting or root) is specified in the `extKeyUsage` extension of the certificate, by means of the SCION-specific attributes `id-kp-regular`, `id-kp-sensitive`, and `id-kp-root`, respectively. For more information, see [](#ext-key-usage-ext).
 
-### `localizedDescriptions` {#description-multilang}
-
-The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
-It consists of a sequence of `LocalizedText` structures, each containing:
-
-- `language`: specifies the description's language. It MUST contain a valid language tag according to {{BCP47}}.
-- `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
-
-### `descriptionLanguage` {#langtag}
-
-The OPTIONAL `descriptionLanguage` field identifies the language used to express the `description` field. When `descriptionLanguage` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLanguage` MUST be a valid language tag as described in {{BCP47}}.
 
 The following constraints must hold for each certificate in the `certificates` field of the TRC payload:
 
@@ -782,6 +774,17 @@ That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST
 - `votingQuorum` <= count (regular voting certificates) <br>
 That is, the quorum defined in the TRC's `votingQuorum` field ([](#quorum)) MUST be smaller than or equal to the number of regular voting certificates specified in the TRC's `certificates` field.
 
+### `localizedDescriptions` {#description-multilang}
+
+The `localizedDescriptions` field provides an optional mechanism for including multilingual descriptions.
+It consists of a sequence of `LocalizedText` structures, each containing:
+
+- `language`: specifies the description's language. It MUST contain a valid language tag according to {{BCP47}}.
+- `content`: contains the localized description. It MUST be formatted in accordance with "Net-Unicode" {{RFC5198}}.
+
+### `descriptionLanguage` {#langtag}
+
+The OPTIONAL `descriptionLanguage` field identifies the language used to express the `description` field. When `descriptionLanguage` is absent, English (equivalent to the "en" language tag) is used. The value of the `descriptionLanguage` MUST be a valid language tag as described in {{BCP47}}.
 
 ## TRC Signature Syntax {#signed-format}
 
@@ -879,6 +882,7 @@ The following rules hold for each updated TRC, independent of the update type:
 - The `noTrustReset` field MUST NOT change (see also [](#notrustreset)).
 - The `votes` sequence of the updated TRC MUST only contain indices that refer to sensitive or regular voting certificates in the predecessor TRC. This guarantees that the updated TRC only contains valid votes authenticated by sensitive or regular voting certificates in the predecessor TRC. For more information, see [](#votes) and [](#cert).
 - The number of votes in the updated TRC MUST be greater than or equal to the number set in the `votingQuorum` field of the predecessor TRC (see [](#quorum)). The number of votes corresponds to the number of indices in the `votes` field of the updated TRC.
+- Voting ASes SHOULD distribute the updated TRC to all authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
 
 
 ### Regular TRC Update
@@ -1173,7 +1177,7 @@ TRCValidity ::= SEQUENCE {
 }
 
 LocalizedText ::= SEQUENCE {
-    language        PrintableString,
+    language        PrintableString (SIZE (1..64)),
     content         UTF8String (SIZE (1..8192))
 }
 TRCPayload ::= SEQUENCE {
@@ -1188,8 +1192,8 @@ TRCPayload ::= SEQUENCE {
     authoritativeASes     SEQUENCE OF ASN,
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
-    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLanguage   [1] PrintableString OPTIONAL
+    localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
+    descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
@@ -1202,7 +1206,7 @@ TRCID ::= SEQUENCE {
 
 ISD ::= INTEGER (1..65535)
 
-ASN ::= PrintableString
+ASN ::= PrintableString (SIZE (1..16))
 
 END
 ~~~~
@@ -1315,7 +1319,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Draftforge review
 - remove trust Hierarchy subsection and redundant code block
 - Certificate validity recommendations: align to current practice
-- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions
+- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 
 ## draft-dekater-scion-pki-12
