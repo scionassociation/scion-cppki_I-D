@@ -203,10 +203,9 @@ Table of Contents
 
 1.1.  Terminology
 
-   *Control Plane PKI (CP-PKI)*: It is the Public Key Infrastructure
-   upon which SCION's Control Plane relies for the authentication of
-   messages.  It is a set of policies, roles, and procedures that are
-   used to manage Trust Root Configurations (TRCs) and certificates.
+   *Authoritative AS*: Authoritative ASes are those ASes in an ISD that
+   always have the latest TRC of the ISD.  As a consequence,
+   Authoritative ASes also start the announcement of a TRC update.
 
    *SCION Autonomous System (AS)*: A SCION Autonomous System is a
    network under a common administrative control.  For example, the
@@ -217,10 +216,17 @@ Table of Contents
    hosts.  References to ASes throughout this document refer to SCION
    ASes.
 
-   *Isolation Domain (ISD)*: SCION ASes are organized into logical
-   groups called Isolation Domains or ISDs.  Each ISD consists of ASes
-   that span an area with a uniform trust environment (e.g. a common
-   jurisdiction).
+   *Base TRC*: A base TRC is a Trust Root Configuration (TRC) that other
+   parties trust axiomatically.  In other words, trust for a base TRC is
+   assumed, not derived from another cryptographic object.  ISD
+   operators create and sign a base TRC when the ISD is established.  A
+   base TRC is either the first TRC of the ISD or the result of a trust
+   reset.
+
+   *Control Plane PKI (CP-PKI)*: It is the Public Key Infrastructure
+   upon which SCION's Control Plane relies for the authentication of
+   messages.  It is a set of policies, roles, and procedures that are
+   used to manage Trust Root Configurations (TRCs) and certificates.
 
    *Core AS*: Each Isolation Domain (ISD) is administered by a set of
    distinguished SCION Autonomous Systems (ASes) called Core ASes, which
@@ -228,20 +234,10 @@ Table of Contents
    construction process (called "beaconing" in SCION).  Each ISD has at
    least one Core AS.
 
-   *Trust Root Configuration (TRC)*: A Trust Root Configuration or TRC
-   is a signed collection of certificates pertaining to an Isolation
-   Domain (ISD).  TRCs also contain ISD-specific policies.
-
-   *Authoritative AS*: Authoritative ASes are those ASes in an ISD that
-   always have the latest TRCs of the ISD.  As a consequence,
-   Authoritative ASes also start the announcement of a TRC update.
-
-   *Base TRC*: A base TRC is a Trust Root Configuration (TRC) that other
-   parties trust axiomatically.  In other words, trust for a base TRC is
-   assumed, not derived from another cryptographic object.  ISD
-   operators create and sign a base TRC when the ISD is established.  A
-   base TRC is either the first TRC of the ISD or the result of a trust
-   reset.
+   *Isolation Domain (ISD)*: SCION ASes are organized into logical
+   groups called Isolation Domains or ISDs.  Each ISD consists of ASes
+   that span an area with a uniform trust environment (e.g. a common
+   jurisdiction).
 
    *TRC Signing Ceremony*: The ceremony during which the very first base
    TRC of an ISD, called the initial TRC, is signed.  The initial TRC is
@@ -254,22 +250,20 @@ Table of Contents
    critical aspects of the TRC, such as the set of Core ASes.  In both
    cases, the base TRC remains unchanged.
 
+   *Trust Reset*: A trust reset is the action of creating and announcing
+   a new base TRC for an existing ISD, to mitigate a compromised TRC.
+
+   *Trust Root Configuration (TRC)*: A Trust Root Configuration or TRC
+   is a signed collection of certificates pertaining to an Isolation
+   Domain (ISD).  TRCs also contain ISD-specific policies.
+
    *Voting ASes*: Those ASes within an ISD that may sign TRC updates.
    The process of appending a signature to a new TRC is called "casting
    a vote".
 
    *Voting Quorum*: The voting quorum is a Trust Root Configuration
    (TRC) field that indicates the number of votes (signatures) needed on
-   a successor TRC for it to be verifiable.  A voting quorum greater
-   than one will thus prevent a single entity from creating a malicious
-   TRC update.
-
-   *Grace Period*: The grace period is an interval during which the
-   previous version of a Trust Root Configuration (TRC) is still
-   considered active after a new version has been published.
-
-   *Trust Reset*: A trust reset is the action of announcing a new base
-   TRC for an existing ISD, to mitigate a compromised TRC.
+   a successor TRC for it to be verifiable.
 
 1.2.  Conventions and Definitions
 
@@ -292,21 +286,16 @@ Table of Contents
    is only as strong as its weakest link (oligopoly model) - see also
    [BARRERA17].
 
-   The monopoly model suffers from two main drawbacks: First, all
-   parties must agree on a single root of trust.  Secondly, the single
-   root of trust represents a single point of failure, the misuse of
-   which enables the forging of certificates.  Its revocation can also
-   result in a kill switch for all the entities it certifies.
+   The monopoly model requires global consensus on a single root of
+   trust, which introduces a single point of failure.  The oligopoly
+   model, conversely, utilizes multiple roots of trust that are
+   typically afforded equal authority, introducing multiple potential
+   points of vulnerability, as the compromise of any individual root can
+   undermine the security of the broader ecosystem.
 
-   The oligopoly model relies on several roots of trust, all equally and
-   completely trusted.  However, this is not automatically better:
-   whereas the monopoly model has a single point of failure, the
-   oligopoly model has the drawback of exposing more than one point of
-   failure.
-
-   Thus, there is a need for a trust architecture that supports
-   meaningful trust roots in a global environment with inherently
-   distrustful parties.  This new trust architecture should provide the
+   The SCION trust architecture allows parties that mutually trust each
+   other to form their own trust domain, and to freely decide which
+   other trust domains should be trusted.  It therefore provides the
    following properties:
 
    *  Trust agility (see further below);
@@ -317,40 +306,37 @@ Table of Contents
 
    *  Support for policy versioning and updates.
 
-   Ideally, the trust architecture allows parties that mutually trust
-   each other to form their own trust domain, and to freely decide
-   whether to trust other trust domains.
-
-   To fulfill the above requirements, which in fact apply well to inter-
-   domain networking, SCION introduces the concept of *Isolation
-   Domains*. An Isolation Domain (ISD) is a building block to support
-   heterogeneous trust while achieving high availability and scalability
-   in its control plane ([I-D.dekater-scion-controlplane]).  It consists
-   of a logical grouping of SCION ASes that share a uniform trust
-   environment (i.e. a common jurisdiction).
+   To fulfill these requirements, SCION introduces the concept of
+   *Isolation Domains*. An Isolation Domain (ISD) is a building block to
+   support heterogeneous trust while achieving high availability and
+   scalability in its control plane ([I-D.dekater-scion-controlplane]).
+   It consists of a logical grouping of SCION ASes that share a uniform
+   trust environment (i.e. a common jurisdiction).
 
    An ISD is governed by one or multiple ASes, known as the *Voting
    ASes*. Furthermore, each ISD has a set of ASes that form the ISD
    core, known as the *Core ASes*. The set of Core and Voting ASes may
    be, but do not necessarily have to be the same ASes.  Governance is
    implemented by a policy called the *Trust Root Configuration* (TRC),
-   which is negotiated by the Voting ASes, and which defines the locally
+   which is negotiated by the Voting ASes and which defines the locally
    scoped roots of trust used to validate bindings between names and
    public keys.
 
    Authentication in SCION is based on X.509 certificates that bind
    identifiers to public keys and carry digital signatures that are
    verified by roots of trust.  SCION allows each ISD to define its own
-   set of trust roots, along with the policy governing their use.  Such
-   scoping of trust roots within an ISD improves security as compromise
-   of a private key associated with a trust root cannot be used to forge
-   a certificate outside the ISD.  An ISD's trust roots and policy are
-   encoded in the TRC, which has a version number, a list of public keys
-   that serves as root of trust for various purposes, and a voting
-   quorum governing the number of signatures required to update TRCs.
-   The TRC serves as a way to bootstrap all authentication within SCION.
-   Additionally, TRC versioning is used to efficiently revoke
-   compromised roots of trust.
+   set of trust roots, along with the policy governing their use.  An
+   ISD's TRC is used for signatures pertaining to information
+   originating from that ISD, such as paths, but for nothing originating
+   outside of the ISD.  This ISD-level scoping of trust roots enhances
+   security by strictly limiting effect of a compromise to data
+   originating from the compromised AS.  An ISD's trust roots and policy
+   are encoded in the TRC, which has a base and serial number, a list of
+   public keys that serves as root of trust for various purposes, and a
+   voting quorum governing the number of signatures required to update
+   TRCs.  The TRC serves as a way to bootstrap all authentication within
+   SCION.  Additionally, TRC versioning is used as an alternative to
+   revocation in case of compromised roots of trust.
 
    The TRC also provides _trust agility_ - enabling users to select the
    trust roots used to initiate certificate validation.  This implies
@@ -360,11 +346,10 @@ Table of Contents
    relationships between parts of the network.  The SCION trust model
    therefore, differs from the one provided by other PKI architectures.
 
-   The need for trust agility also means that SCION does not by design
-   provide IP prefix origin validation as provided by RPKI [RFC8210].
-   RPKI's trust model is currently reliant on the trust roots provided
-   by the five Regional Internet Registries, and therefore outside of
-   the governance of an ISD.
+   To achieve trust agility, SCION avoids global PKIs such as the RPKI
+   [RFC8210] where trust roots are provided by the Regional Internet
+   Registries.  Instead, in the CP-PKI, each ISD has its own trust root.
+   Note that SCION does not provide IP prefix origin validation.
 
 1.4.  Trust Relations within an Isolation Domain
 
@@ -379,17 +364,15 @@ Table of Contents
    Ceremony by the Voting ASes and then distributed throughout the ISD.
 
    While it is not necessary that all the ASes of the ISD trust each
-   other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes,
-   Voting ASes, as well as its CA(s).
+   other, within the CP-PKI all ASes implicitly trust the ISD's Voting
+   ASes, as well as its CA(s).
 
 1.4.1.  Updates and Trust Resets
 
-   There are two types of TRC updates: regular and sensitive (see
-   Section 3.5).  A *regular TRC update* is a periodic re-issuance of
-   the TRC where the entities and policies listed in the TRC remain
-   unchanged, whereas a *sensitive TRC update* is an update that
-   modifies critical aspects of the TRC, such as the set of Core ASes.
-   In both cases the base TRC remains unchanged.
+   There are two types of TRC updates: regular and sensitive.  The
+   update type depends on which fields are changed (see Section 3.5).
+   In both cases the base TRC remains unchanged.  Authoritative ASes
+   announce these TRC updates (see Section 3.2.9).
 
    If the ISD's TRC has been compromised, it is necessary for an ISD to
    re-establish the trust root.  This is possible with a process called
@@ -399,20 +382,18 @@ Table of Contents
 1.4.2.  Substitutes to Certificate Revocation
 
    The Control Plane PKI does not explicitly support certificate
-   revocation.  Instead it relies on the two mechanisms described above
-   and on short-lived certificates.  This approach constitutes an
-   attractive alternative to a revocation system for the following
-   reasons:
+   revocation.  Instead it relies on the TRC update mechanism, on trust
+   resets, and on short-lived certificates.  This approach constitutes
+   an alternative to a revocation system for the following reasons:
 
-   *  Both short-lived certificates and revocation lists must be signed
-      by a CA.  Instead of periodically signing a new revocation list,
-      the CA can re-issue all the non-revoked certificates.  Although
-      the overhead of signing multiple certificates is greater than that
-      of signing a single revocation list, the overall complexity of the
-      system is reduced.  In the Control Plane PKI the number of
-      certificates that each CA must renew is manageable as it is
-      limited to at most the number of ASes within an ISD.  The absence
-      of CRL/OCSP checks improves performance by removing additional
+   *  Instead of periodically signing a new revocation list, the CA can
+      re-issue all the non-revoked certificates.  Although the overhead
+      of signing multiple certificates is greater than that of signing a
+      single revocation list, the overall complexity of the system is
+      reduced.  In the Control Plane PKI the number of certificates that
+      each CA must renew is manageable as it is limited to at most the
+      number of ASes within an ISD.  The absence of CRL [RFC5280] and
+      OCSP [RFC6960] checks improves performance by removing additional
       network lookups during PKI processing.
 
    *  Even with a revocation system, a compromised key cannot be
@@ -430,7 +411,7 @@ Table of Contents
    For detailed descriptions, please refer to Section 2 and Section 3.
 
                 +----------------------------------------+
-                |                 TRC 2                  |
+                |         TRC 2 (SerialNumber=2)         |
                 | +------------------------------------+ |
                 | |- Version       - Core ASes         | |
  +--------+     | |- ID            - Description       | |    +--------+
@@ -468,7 +449,8 @@ Table of Contents
             |Certificate| |Certificate|  |Certificate|
             +-----------+ +-----------+  +-----------+
 
-                 Figure 1: Chain of trust within an ISD
+     Figure 1: Chain of trust within an ISD.  The TRC number (e.g.,
+                TRC 1) refers to the TRC's serialNumber.
 
    All certificates used in the Control Plane PKI are in X.509 v3 format
    [RFC5280] and additionally the TRC contains self-signed certificates
@@ -682,7 +664,7 @@ Table of Contents
    certificates with the first regular update to the base TRC.
 
    +----------------------------------------------+
-   |                    TRC 1                     |
+   |               TRC 1 (SerialNumber=1)         |
    |                (base/initial)                |
    | +------------------------------------------+ |
    | | - Version          - Core ASes           | |
@@ -2331,6 +2313,12 @@ Table of Contents
 
    [ISD-AS-assignments]
               "SCION Registry", 2026, <http://scion.org/registry/>.
+
+   [RFC6960]  Santesson, S., Myers, M., Ankney, R., Malpani, A.,
+              Galperin, S., and C. Adams, "X.509 Internet Public Key
+              Infrastructure Online Certificate Status Protocol - OCSP",
+              RFC 6960, DOI 10.17487/RFC6960, June 2013,
+              <https://www.rfc-editor.org/rfc/rfc6960>.
 
    [RFC8210]  Bush, R. and R. Austein, "The Resource Public Key
               Infrastructure (RPKI) to Router Protocol, Version 1",
