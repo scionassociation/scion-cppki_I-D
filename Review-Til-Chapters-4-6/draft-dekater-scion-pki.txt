@@ -1917,7 +1917,7 @@ Table of Contents
 4.2.1.  Signing a Control Plane Message
 
    An AS signs control plane messages with the private key that
-   corresponds to the valid certificate for the AS.
+   corresponds to its own valid certificate.
 
    The AS MUST attach the following information as signature metadata to
    ensure that a relying party can identify which certificate to use to
