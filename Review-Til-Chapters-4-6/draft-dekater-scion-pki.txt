@@ -2598,7 +2598,7 @@ C.3.4.  TRC Validation
    final TRC by aggregating the payload data and verifying the
    signatures based on the certificates exchanged during phase
    Appendix C.3.1.  The Ceremony Administrator then shares the assembled
-   TRC with all participants who MUST again inspect the signatures and
+   TRC with all participants who must again inspect the signatures and
    verify them based on the certificates exchanged in phase
    Appendix C.3.1.
 
