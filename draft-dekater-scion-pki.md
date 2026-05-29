@@ -439,13 +439,14 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 
 ### `issuer` {#issuer}
 
-The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
+The `issuer` field contains the distinguished name (DN) of the entity that issued and signed the certificate (usually a CA). This field MUST NOT be empty.
 
-In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific ISD and AS number attribute.
+In addition to the attributes described in section 4.1.2.4 {{RFC5280}}, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute.
 
 #### `id-at-ia` Attribute {#isd-as-nr}
 
-The `id-at-ia` attribute  identifies the SCION ISD and AS numbers. It is is included in a `AttributeTypeAndValue` sequence with `type`: `id-at-ia` and `value` containing the ISD-AS number. The `id-at-ia` object identifier is defined in [](#cert-asn1). The string representation of the `id-at-ia` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The `id-at-ia` attribute  identifies the SCION ISD and AS numbers. It is is included in an `AttributeTypeAndValue` sequence where the `type` is `id-at-ia` and `value` contains the ISD-AS number string. Its formatting MUST follow {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The `id-at-ia` object identifier is defined in [](#cert-asn1).
 
 The `id-at-ia` attribute MUST be included in the `issuer` and `subject` fields of root, issuing CA, and AS certificates. It SHOULD be included in voting certificates.
 
