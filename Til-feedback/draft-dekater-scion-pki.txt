@@ -340,11 +340,11 @@ Table of Contents
 
    The TRC also provides _trust agility_ - enabling users to select the
    trust roots used to initiate certificate validation.  This implies
-   that ASes are free to choose one or more ISDs they believe maintain
-   an uncompromised set of trust roots.  ASes can thus transparently
-   define trust relationships between parts of the network, which
-   differs from trust models provided by other established PKI
-   architectures.
+   that users are free to choose an ISD they believe maintains an
+   uncompromised set of trust roots.  ISD members can also decide
+   whether to trust other ISDs and thus transparently define trust
+   relationships between parts of the network.  The SCION trust model
+   therefore, differs from the one provided by other PKI architectures.
 
    To achieve trust agility, SCION avoids global PKIs such as the RPKI
    [RFC8210] where trust roots are provided by the Regional Internet
