@@ -189,7 +189,7 @@ in the CP-PKI, each ISD has its own trust root. Note that SCION does not provide
 
 The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called **base TRC** constitutes the ISD's trust anchor which is signed during a Signing Ceremony by the Voting ASes and then distributed throughout the ISD.
 
-While it is not necessary that all the ASes of the ISD trust each other, all ASes implicitly trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).
+While it is not necessary that all the ASes of the ISD trust each other, within the CP-PKI all ASes implicitly trust the ISD's Voting ASes, as well as its CA(s).
 
 ### Updates and Trust Resets {#trust-reset}
 
