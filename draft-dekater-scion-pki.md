@@ -726,7 +726,7 @@ The `votes` sequence MUST be present to prevent the stripping of voting signatur
 The `votingQuorum` field defines the number of necessary votes on a successor TRC to make it verifiable.
 
 A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.
-
+A voting quorum lower than the number of Voting ASes ensures that votes can be cast even if some of the voters are unavailable.
 
 ### `coreASes` {#core}
 
