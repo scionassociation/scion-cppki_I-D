@@ -193,8 +193,8 @@ Table of Contents
    _PKI_ - providing cryptographic material within an unique trust
    model.  It is described in this document.
 
-   _Control Plane_ - performing inter-domain routing by discovering and
-   securely disseminating path information.  It is described in
+   _Control Plane_ (CP) - performing inter-domain routing by discovering
+   and securely disseminating path information.  It is described in
    [I-D.dekater-scion-controlplane].
 
    _Data Plane_ - carrying out secure packet forwarding between SCION-
@@ -1437,26 +1437,6 @@ Table of Contents
    attributes id-kp-regular, id-kp-sensitive, and id-kp-root,
    respectively.  For more information, see Section 2.7.4.
 
-3.2.12.  localizedDescriptions
-
-   The localizedDescriptions field provides an optional mechanism for
-   including multilingual descriptions.  It consists of a sequence of
-   LocalizedText structures, each containing:
-
-   *  language: specifies the description's language.  It MUST contain a
-      valid language tag according to [BCP47].
-
-   *  content: contains the localized description.  It MUST be formatted
-      in accordance with "Net-Unicode" [RFC5198].
-
-3.2.13.  descriptionLanguage
-
-   The OPTIONAL descriptionLanguage field identifies the language used
-   to express the description field.  When descriptionLanguage is
-   absent, English (equivalent to the "en" language tag) is used.  The
-   value of the descriptionLanguage MUST be a valid language tag as
-   described in [BCP47].
-
    The following constraints must hold for each certificate in the
    certificates field of the TRC payload:
 
@@ -1493,6 +1473,26 @@ Table of Contents
       (Section 3.2.7) MUST be smaller than or equal to the number of
       regular voting certificates specified in the TRC's certificates
       field.
+
+3.2.12.  localizedDescriptions
+
+   The localizedDescriptions field provides an optional mechanism for
+   including multilingual descriptions.  It consists of a sequence of
+   LocalizedText structures, each containing:
+
+   *  language: specifies the description's language.  It MUST contain a
+      valid language tag according to [BCP47].
+
+   *  content: contains the localized description.  It MUST be formatted
+      in accordance with "Net-Unicode" [RFC5198].
+
+3.2.13.  descriptionLanguage
+
+   The OPTIONAL descriptionLanguage field identifies the language used
+   to express the description field.  When descriptionLanguage is
+   absent, English (equivalent to the "en" language tag) is used.  The
+   value of the descriptionLanguage MUST be a valid language tag as
+   described in [BCP47].
 
 3.3.  TRC Signature Syntax
 
