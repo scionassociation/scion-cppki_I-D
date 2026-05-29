@@ -2701,7 +2701,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
             <p id="section-3.1-4.2.1">Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the <code>gracePeriod</code> field of the new TRC, see <a href="#grace" class="auto internal xref">Section 3.2.4</a>). No more than two TRCs can be active at the same time for any ISD.<a href="#section-3.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-4.3">
-            <p id="section-3.1-4.3.1">Invalid: The TRC is neither valid nor active.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-4.3.1">Invalid: The TRC is considered invalid if the current time falls outside its validity period.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.1-5"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC. All elements of the TRC are detailed in the following subsections.<a href="#section-3.1-5" class="pilcrow">¶</a></p>

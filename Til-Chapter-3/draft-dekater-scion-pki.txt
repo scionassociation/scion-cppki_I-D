@@ -1192,7 +1192,8 @@ Table of Contents
       Section 3.2.4).  No more than two TRCs can be active at the same
       time for any ISD.
 
-   *  Invalid: The TRC is neither valid nor active.
+   *  Invalid: The TRC is considered invalid if the current time falls
+      outside its validity period.
 
    Figure 2 shows the content of both a base/initial TRC.  All elements
    of the TRC are detailed in the following subsections.
