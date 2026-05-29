@@ -1091,7 +1091,7 @@ As the corresponding PKI messaging only occurs when the control plane is already
 This does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:
 
 - CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface;
-- relying on multiple CAs within an ISD;
+- relying on multiple CAs within an ISD (e.g., for certificate renewal);
 - creating policies and processes to renew certificates out-of-band.
 
 ## TRC Distribution and Trust on First Use
