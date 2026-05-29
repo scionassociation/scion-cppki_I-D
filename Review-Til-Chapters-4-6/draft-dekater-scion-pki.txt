@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 29 November 2026                                        S. Hitz
+Expires: 30 November 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             28 May 2026
+                                                             29 May 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 November 2026.
+   This Internet-Draft will expire on 30 November 2026.
 
 Copyright Notice
 
@@ -2061,8 +2061,8 @@ Table of Contents
 
    Furthermore, PKI operators need to ensure that the CAs maintain
    accurate time.  Further considerations related to this aspect are
-   discussed in [I-D.dekater-scion-controlplane], section "Effects of
-   Clock Inaccuracy".
+   discussed in [I-D.dekater-scion-controlplane], sections "Effects of
+   Clock Inaccuracy" and "Attacks on Time Sources".
 
 5.2.  Operational Processes for ISD Governance
 
