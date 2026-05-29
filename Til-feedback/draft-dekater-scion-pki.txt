@@ -364,8 +364,8 @@ Table of Contents
    Ceremony by the Voting ASes and then distributed throughout the ISD.
 
    While it is not necessary that all the ASes of the ISD trust each
-   other, all ASes implicitly trust the ISD's Core ASes, Authoritative
-   ASes, Voting ASes, as well as its CA(s).
+   other, within the CP-PKI all ASes implicitly trust the ISD's Voting
+   ASes, as well as its CA(s).
 
 1.4.1.  Updates and Trust Resets
 
