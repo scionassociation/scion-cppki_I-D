@@ -1051,7 +1051,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 28 November 2026</td>
+<td class="center">Expires 30 November 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-27" class="published">27 May 2026</time>
+<time datetime="2026-05-29" class="published">29 May 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-28">28 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-11-30">30 November 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 28 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 30 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1500,7 +1500,7 @@ svg {
 <p id="section-1-1">SCION is a path-aware internetworking routing architecture as described in <span>[<a href="#RFC9217" class="cite xref">RFC9217</a>]</span>. A more detailed introduction, motivation, and problem statement are provided in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>. Readers are encouraged to read the introduction in that document first.<a href="#section-1-1" class="pilcrow">¶</a></p>
 <p id="section-1-2">SCION relies on three main components:<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3"><em>PKI</em> - providing cryptographic material within an unique trust model. It is described in this document.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4"><em>Control Plane</em> - performing inter-domain routing by discovering and securely disseminating path information. It is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4"><em>Control Plane</em> (CP) - performing inter-domain routing by discovering and securely disseminating path information. It is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5"><em>Data Plane</em> - carrying out secure packet forwarding between SCION-enabled ASes over paths selected by endpoints. It is described in <span>[<a href="#I-D.dekater-scion-dataplane" class="cite xref">I-D.dekater-scion-dataplane</a>]</span>.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="terminology">
 <section id="section-1.1">
@@ -1780,7 +1780,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
         <h3 id="name-control-plane-root-certific">
 <a href="#section-2.1" class="section-number selfRef">2.1. </a><a href="#name-control-plane-root-certific" class="section-name selfRef">Control Plane Root Certificate</a>
         </h3>
-<p id="section-2.1-1">The private key of the control plane root certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as Issuing CAs in an ISD.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
+<p id="section-2.1-1">The private key of the control plane root (CP root) certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as Issuing CAs in an ISD.<a href="#section-2.1-1" class="pilcrow">¶</a></p>
 <p id="section-2.1-2">In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. They are embedded in the TRC of an ISD, and they act as the starting point of an ISD's certificate verification path.<a href="#section-2.1-2" class="pilcrow">¶</a></p>
 <p id="section-2.1-3">The <span class="bcp14">RECOMMENDED</span> maximum validity period of a control plane root certificate is 5 years.<a href="#section-2.1-3" class="pilcrow">¶</a></p>
 <p id="section-2.1-4"><strong>Note</strong>: The TRC of each ISD contains a trusted set of control plane root certificates, and this set builds the root of each ISD's verification path. For more information on the selection of this trusted set of root certificates, see <a href="#trc-specification" class="auto internal xref">Section 3</a>.<a href="#section-2.1-4" class="pilcrow">¶</a></p>
@@ -2212,8 +2212,8 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
           <h4 id="name-issuer">
 <a href="#section-2.6.4" class="section-number selfRef">2.6.4. </a><a href="#name-issuer" class="section-name selfRef"><code>issuer</code></a>
           </h4>
-<p id="section-2.6.4-1">The <code>issuer</code> field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field <span class="bcp14">MUST</span> be non-empty.
-In addition to the attributes described in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> section 4.1.2.4, SCION implementations <span class="bcp14">MUST</span> also support the SCION-specific <code>id-at-ia</code> attribute identifying the SCION ISD and AS numbers.<a href="#section-2.6.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.6.4-1">The <code>issuer</code> field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field <span class="bcp14">MUST</span> be non-empty.<a href="#section-2.6.4-1" class="pilcrow">¶</a></p>
+<p id="section-2.6.4-2">In addition to the attributes described in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> section 4.1.2.4, SCION implementations <span class="bcp14">MUST</span> also support the SCION-specific <code>id-at-ia</code> attribute identifying the SCION ISD and AS numbers.<a href="#section-2.6.4-2" class="pilcrow">¶</a></p>
 <div id="isd-as-nr">
 <section id="section-2.6.4.1">
             <h5 id="name-id-at-ia-attribute">
@@ -2232,8 +2232,8 @@ In addition to the attributes described in <span>[<a href="#RFC5280" class="cite
           <h4 id="name-validity">
 <a href="#section-2.6.5" class="section-number selfRef">2.6.5. </a><a href="#name-validity" class="section-name selfRef"><code>validity</code></a>
           </h4>
-<p id="section-2.6.5-1">The <code>validity</code> field defines the validity period of the certificate. All certificates <span class="bcp14">MUST</span> have a well-defined expiration date. GeneralizedTime value "99991231235959Z" <span class="bcp14">MUST NOT</span> be used.
-The recommended maximum validity period for each type of certificate is described in <a href="#key-pair-notation" class="auto internal xref">Section 2.5</a>. SCION implementations <span class="bcp14">SHOULD</span> adopt these values.<a href="#section-2.6.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.6.5-1">The <code>validity</code> field defines the validity period of the certificate. All certificates <span class="bcp14">MUST</span> have a well-defined expiration date. <code>GeneralizedTime</code> value "99991231235959Z" <span class="bcp14">MUST NOT</span> be used.<a href="#section-2.6.5-1" class="pilcrow">¶</a></p>
+<p id="section-2.6.5-2">The recommended maximum validity period for each type of certificate is described in <a href="#key-pair-notation" class="auto internal xref">Section 2.5</a>. SCION implementations <span class="bcp14">SHOULD</span> adopt these values.<a href="#section-2.6.5-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subject">
@@ -2241,8 +2241,7 @@ The recommended maximum validity period for each type of certificate is describe
           <h4 id="name-subject">
 <a href="#section-2.6.6" class="section-number selfRef">2.6.6. </a><a href="#name-subject" class="section-name selfRef"><code>subject</code></a>
           </h4>
-<p id="section-2.6.6-1">The <code>subject</code> field defines the entity that owns the certificate. It <span class="bcp14">MUST NOT</span> be empty.
-The same constraints as the <code>issuer</code> field apply. For details, see <a href="#issuer" class="auto internal xref">Section 2.6.4</a> and <a href="#isd-as-nr" class="auto internal xref">Section 2.6.4.1</a>.<a href="#section-2.6.6-1" class="pilcrow">¶</a></p>
+<p id="section-2.6.6-1">The <code>subject</code> field defines the entity that owns the certificate. It <span class="bcp14">MUST NOT</span> be empty and the same constraints as the <code>issuer</code> field apply. For details, see <a href="#issuer" class="auto internal xref">Section 2.6.4</a> and <a href="#isd-as-nr" class="auto internal xref">Section 2.6.4.1</a>.<a href="#section-2.6.6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="subjectpublickeyinfo">
@@ -2677,8 +2676,11 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
           <li class="normal" id="section-3.1-4.2">
             <p id="section-3.1-4.2.1">Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the <code>gracePeriod</code> field of the new TRC, see <a href="#grace" class="auto internal xref">Section 3.2.4</a>). No more than two TRCs can be active at the same time for any ISD.<a href="#section-3.1-4.2.1" class="pilcrow">¶</a></p>
 </li>
+          <li class="normal" id="section-3.1-4.3">
+            <p id="section-3.1-4.3.1">Invalid: The TRC is considered invalid if the current time falls outside its validity period.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
+</li>
         </ul>
-<p id="section-3.1-5"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-5"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC. All elements of the TRC are detailed in the following subsections.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trcfields">
@@ -2687,6 +2689,7 @@ The same constraints as the <code>issuer</code> field apply. For details, see <a
 <a href="#section-3.2" class="section-number selfRef">3.2. </a><a href="#name-trc-fields" class="section-name selfRef">TRC Fields</a>
         </h3>
 <p id="section-3.2-1">The TRC holds the root and voting certificates of the ISD, defining the ISD's trust policy. Its ASN.1 module is described in <a href="#trc-asn1" class="auto internal xref">Appendix B</a>.
+Although the ASN.1 schema permits larger structures, the total TRC size <span class="bcp14">SHOULD NOT</span> exceed 4 MB.
 Its fields are contained in a <code>TRCPayload</code> sequence. This section describes their syntax and semantics.<a href="#section-3.2-1" class="pilcrow">¶</a></p>
 <div id="version-1">
 <section id="section-3.2.1">
@@ -2707,7 +2710,7 @@ Its fields are contained in a <code>TRCPayload</code> sequence. This section des
               <p id="section-3.2.2-2.1.1">ISD number (<code>iSD</code> attribute),<a href="#section-3.2.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.2-2.2">
-              <p id="section-3.2.2-2.2.1">base number (<code>baseNumber</code> attribute). It indicates the starting point of the current TRC update chain. This starting point is either the ISD's initial TRC or the currently valid base TRC, if the valid base TRC differs from the initial TRC. The latter is the case after a trust reset.<a href="#section-3.2.2-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.2.1">base number (<code>baseNumber</code> attribute). It indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.<a href="#section-3.2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.2-2.3">
               <p id="section-3.2.2-2.3.1">TRC serial number (<code>serialNumber</code> attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.<a href="#section-3.2.2-2.3.1" class="pilcrow">¶</a></p>
@@ -2779,7 +2782,7 @@ Its fields are contained in a <code>TRCPayload</code> sequence. This section des
 <p id="section-3.2.3-1">The <code>validity</code> field defines the TRC validity period. The <code>notBefore</code> and <code>notAfter</code> attributes of the <code>validity</code> field specify the lower and upper bound of the time interval during which a TRC can be active.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-2">An active TRC is a valid TRC that can be used for verifying certificate signatures. The time period during which a TRC is active can be shorter than the time period during which the TRC is valid. For more information, see <a href="#trc-states" class="auto internal xref">Section 3.1</a>.<a href="#section-3.2.3-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-3">The <code>validity</code> field consists of a sequence of a <code>notBefore</code> and a <code>notAfter</code> date, both encoded as <code>GeneralizedTime</code>.
-All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SCION implementations <span class="bcp14">MUST NOT</span> create TRCs that use GeneralizedTime value "99991231235959Z", and verifiers <span class="bcp14">MUST</span> reject such a TRC.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SCION implementations <span class="bcp14">MUST NOT</span> create TRCs that use <code>GeneralizedTime</code> value "99991231235959Z", and verifiers <span class="bcp14">MUST</span> reject such a TRC.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="grace">
@@ -2794,7 +2797,7 @@ All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SC
               <p id="section-3.2.4-3.1.1">the grace period expires;<a href="#section-3.2.4-3.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.4-3.2">
-              <p id="section-3.2.4-3.2.1">the predecessor TRC reaches its expiration time (<code>notAfter</code>); or<a href="#section-3.2.4-3.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.4-3.2.1">the predecessor TRC reaches its expiration time (<code>notAfter</code>);<a href="#section-3.2.4-3.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.4-3.3">
               <p id="section-3.2.4-3.3.1">a subsequent TRC update (i.e., the successor to the new TRC) is announced.<a href="#section-3.2.4-3.3.1" class="pilcrow">¶</a></p>
@@ -2809,7 +2812,7 @@ All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SC
 <a href="#section-3.2.5" class="section-number selfRef">3.2.5. </a><a href="#name-notrustreset" class="section-name selfRef"><code>noTrustReset</code></a>
           </h4>
 <p id="section-3.2.5-1">The <code>noTrustReset</code> Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value <span class="bcp14">MUST NOT</span> be changed by a regular or sensitive update. However, it is possible to change the <code>noTrustReset</code> value in the event of a trust reset where a new base TRC is created.<a href="#section-3.2.5-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.5-2">The <code>noTrustReset</code> field is <span class="bcp14">OPTIONAL</span> and defaults to FALSE.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.5-2">The <code>noTrustReset</code> field defaults to FALSE.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-3">Note that once the <code>noTrustReset</code> Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs <span class="bcp14">SHOULD</span> always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-4">Note that a trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.<a href="#section-3.2.5-4" class="pilcrow">¶</a></p>
 </section>
@@ -2832,7 +2835,8 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
 <a href="#section-3.2.7" class="section-number selfRef">3.2.7. </a><a href="#name-votingquorum" class="section-name selfRef"><code>votingQuorum</code></a>
           </h4>
 <p id="section-3.2.7-1">The <code>votingQuorum</code> field defines the number of necessary votes on a successor TRC to make it verifiable.<a href="#section-3.2.7-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.7-2">A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.<a href="#section-3.2.7-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.7-2">A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.
+A voting quorum lower than the number of Voting ASes ensures that votes can be cast even if some of the voters are unavailable.<a href="#section-3.2.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="core">
@@ -2860,9 +2864,9 @@ Further restrictions on votes are discussed in <a href="#update" class="auto int
           <h4 id="name-description">
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
-<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization. If present, it <span class="bcp14">SHOULD NOT</span> be empty.
+<p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization.
 When this field contains a language other than English, the corresponding language <span class="bcp14">SHOULD</span> be identified explicitly in the <code>descriptionLanguage</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead of the <code>description</code> field. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead of the <code>description</code> field. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present and not be empty.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="cert">
@@ -2880,11 +2884,40 @@ When this field contains a language other than English, the corresponding langua
               <p id="section-3.2.11-3.2.1">a regular voting certificate, or<a href="#section-3.2.11-3.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.11-3.3">
-              <p id="section-3.2.11-3.3.1">a CP root certificate.<a href="#section-3.2.11-3.3.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.11-3.3.1">a control plane root certificate.<a href="#section-3.2.11-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-3.2.11-4">A certificate that is no control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-4">A certificate that is not a control plane root or voting certificate <span class="bcp14">MUST NOT</span> be included in the sequence of certificates in the <code>certificates</code> field.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-5">A certificate's type (voting or root) is specified in the <code>extKeyUsage</code> extension of the certificate, by means of the SCION-specific attributes <code>id-kp-regular</code>, <code>id-kp-sensitive</code>, and <code>id-kp-root</code>, respectively. For more information, see <a href="#ext-key-usage-ext" class="auto internal xref">Section 2.7.4</a>.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-6">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.11-7.1">
+              <p id="section-3.2.11-7.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates.<a href="#section-3.2.11-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.11-7.2">
+              <p id="section-3.2.11-7.2.1">The <code>issuer</code> / <code>serialNumber</code> pair for each certificate <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.11-7.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.11-7.3">
+              <p id="section-3.2.11-7.3.1">If an ISD-AS number is present in the distinguished name of the certificate, this ISD number <span class="bcp14">MUST</span> be equal to the ISD number of the TRC (which is defined in the <code>iD</code> field (see <a href="#id" class="auto internal xref">Section 3.2.2</a>).<a href="#section-3.2.11-7.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.11-7.4">
+              <p id="section-3.2.11-7.4.1">Every certificate <span class="bcp14">MUST</span> have a validity period that fully contains the validity period of this TRC. That is, the <code>notBefore</code> date of this TRC's validity period <span class="bcp14">MUST</span> be equal to or later than the certificate's <code>notBefore</code> date, and the <code>notAfter</code> date of this TRC's validity period <span class="bcp14">MUST</span> be before or equal to the certificate's <code>notAfter</code> date.<a href="#section-3.2.11-7.4.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.11-7.5">
+              <p id="section-3.2.11-7.5.1">Per certificate type, every certificate distinguished name <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.11-7.5.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.2.11-8">The following must hold for the entire sequence of certificates in the <code>certificates</code> field:<a href="#section-3.2.11-8" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.11-9.1">
+              <p id="section-3.2.11-9.1.1"><code>votingQuorum</code> &lt;= count (sensitive voting certificates) <br>
+That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of sensitive voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.2.11-9.2">
+              <p id="section-3.2.11-9.2.1"><code>votingQuorum</code> &lt;= count (regular voting certificates) <br>
+That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of regular voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.11-9.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 </section>
 </div>
 <div id="description-multilang">
@@ -2910,35 +2943,6 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 <a href="#section-3.2.13" class="section-number selfRef">3.2.13. </a><a href="#name-descriptionlanguage" class="section-name selfRef"><code>descriptionLanguage</code></a>
           </h4>
 <p id="section-3.2.13-1">The <span class="bcp14">OPTIONAL</span> <code>descriptionLanguage</code> field identifies the language used to express the <code>description</code> field. When <code>descriptionLanguage</code> is absent, English (equivalent to the "en" language tag) is used. The value of the <code>descriptionLanguage</code> <span class="bcp14">MUST</span> be a valid language tag as described in <span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>.<a href="#section-3.2.13-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.13-2">The following constraints must hold for each certificate in the <code>certificates</code> field of the TRC payload:<a href="#section-3.2.13-2" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2.13-3.1">
-              <p id="section-3.2.13-3.1.1">Each certificate <span class="bcp14">MUST</span> be unique in the sequence of certificates.<a href="#section-3.2.13-3.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.13-3.2">
-              <p id="section-3.2.13-3.2.1">The <code>issuer</code> / <code>serialNumber</code> pair for each certificate <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.13-3.2.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.13-3.3">
-              <p id="section-3.2.13-3.3.1">If an ISD-AS number is present in the distinguished name of the certificate, this ISD number <span class="bcp14">MUST</span> be equal to the ISD number of the TRC (which is defined in the <code>iD</code> field (see <a href="#id" class="auto internal xref">Section 3.2.2</a>).<a href="#section-3.2.13-3.3.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.13-3.4">
-              <p id="section-3.2.13-3.4.1">Every certificate <span class="bcp14">MUST</span> have a validity period that fully contains the validity period of this TRC. That is, the <code>notBefore</code> date of this TRC's validity period <span class="bcp14">MUST</span> be equal to or later than the certificate's <code>notBefore</code> date, and the <code>notAfter</code> date of this TRC's validity period <span class="bcp14">MUST</span> be before or equal to the certificate's <code>notAfter</code> date.<a href="#section-3.2.13-3.4.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.13-3.5">
-              <p id="section-3.2.13-3.5.1">Per certificate type, every certificate distinguished name <span class="bcp14">MUST</span> be unique.<a href="#section-3.2.13-3.5.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
-<p id="section-3.2.13-4">The following must hold for the entire sequence of certificates in the <code>certificates</code> field:<a href="#section-3.2.13-4" class="pilcrow">¶</a></p>
-<ul class="normal">
-<li class="normal" id="section-3.2.13-5.1">
-              <p id="section-3.2.13-5.1.1"><code>votingQuorum</code> &lt;= count (sensitive voting certificates) <br>
-That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of sensitive voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.13-5.1.1" class="pilcrow">¶</a></p>
-</li>
-            <li class="normal" id="section-3.2.13-5.2">
-              <p id="section-3.2.13-5.2.1"><code>votingQuorum</code> &lt;= count (regular voting certificates) <br>
-That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a href="#quorum" class="auto internal xref">Section 3.2.7</a>) <span class="bcp14">MUST</span> be smaller than or equal to the number of regular voting certificates specified in the TRC's <code>certificates</code> field.<a href="#section-3.2.13-5.2.1" class="pilcrow">¶</a></p>
-</li>
-          </ul>
 </section>
 </div>
 </section>
@@ -3145,6 +3149,9 @@ That is, the quorum defined in the TRC's <code>votingQuorum</code> field (<a hre
 </li>
             <li class="normal" id="section-3.5.3-2.5">
               <p id="section-3.5.3-2.5.1">The number of votes in the updated TRC <span class="bcp14">MUST</span> be greater than or equal to the number set in the <code>votingQuorum</code> field of the predecessor TRC (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>). The number of votes corresponds to the number of indices in the <code>votes</code> field of the updated TRC.<a href="#section-3.5.3-2.5.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.5.3-2.6">
+              <p id="section-3.5.3-2.6.1">Voting ASes <span class="bcp14">SHOULD</span> distribute the updated TRC to all authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.<a href="#section-3.5.3-2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 </section>
@@ -3742,7 +3749,7 @@ TRCValidity ::= SEQUENCE {
 }
 
 LocalizedText ::= SEQUENCE {
-    language        PrintableString,
+    language        PrintableString (SIZE (1..64)),
     content         UTF8String (SIZE (1..8192))
 }
 TRCPayload ::= SEQUENCE {
@@ -3757,8 +3764,8 @@ TRCPayload ::= SEQUENCE {
     authoritativeASes     SEQUENCE OF ASN,
     description           UTF8String (SIZE (1..8192)) OPTIONAL,
     certificates          SEQUENCE SIZE (1..4095) OF Certificate,
-    localizedDescriptions [0] SEQUENCE SIZE (1..MAX) OF LocalizedText OPTIONAL,
-    descriptionLanguage   [1] PrintableString OPTIONAL
+    localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
+    descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
 }
 
 TRCFormatVersion ::= INTEGER { v1(0) }
@@ -3771,7 +3778,7 @@ TRCID ::= SEQUENCE {
 
 ISD ::= INTEGER (1..65535)
 
-ASN ::= PrintableString
+ASN ::= PrintableString (SIZE (1..16))
 
 END
 </pre><a href="#appendix-B-1" class="pilcrow">¶</a>
@@ -3940,7 +3947,7 @@ END
             <p id="appendix-D.1-1.3.1">Certificate validity recommendations: align to current practice<a href="#appendix-D.1-1.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.4">
-            <p id="appendix-D.1-1.4.1">TRC: introduce introduce language tags (<span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>) and localizedDescriptions<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.4.1">TRC: introduce introduce language tags (<span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.5">
             <p id="appendix-D.1-1.5.1"><code>authorityKeyIdentifier</code> Extension: clarify support for <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> attributes<a href="#appendix-D.1-1.5.1" class="pilcrow">¶</a></p>
