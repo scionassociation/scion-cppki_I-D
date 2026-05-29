@@ -1194,9 +1194,8 @@ Table of Contents
 
    *  Invalid: The TRC is neither valid nor active.
 
-   Figure 2 shows the content of both a base/initial TRC, the changes
-   made with the first regular update to the base TRC.  All elements of
-   the TRC is detailed in the following subsections.
+   Figure 2 shows the content of both a base/initial TRC.  All elements
+   of the TRC are detailed in the following subsections.
 
 3.2.  TRC Fields
 
@@ -1326,7 +1325,7 @@ Table of Contents
    change the noTrustReset value in the event of a trust reset where a
    new base TRC is created.
 
-   The noTrustReset field is OPTIONAL and defaults to FALSE.
+   The noTrustReset field defaults to FALSE.
 
    Note that once the noTrustReset Boolean is set to TRUE and a trust
    reset is disallowed, this cannot be reversed.  Therefore, ISDs SHOULD

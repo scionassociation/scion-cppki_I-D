@@ -2704,7 +2704,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
             <p id="section-3.1-4.3.1">Invalid: The TRC is neither valid nor active.<a href="#section-3.1-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-3.1-5"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
+<p id="section-3.1-5"><a href="#_figure-2" class="auto internal xref">Figure 2</a> shows the content of both a base/initial TRC. All elements of the TRC are detailed in the following subsections.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trcfields">
@@ -2836,7 +2836,7 @@ All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SC
 <a href="#section-3.2.5" class="section-number selfRef">3.2.5. </a><a href="#name-notrustreset" class="section-name selfRef"><code>noTrustReset</code></a>
           </h4>
 <p id="section-3.2.5-1">The <code>noTrustReset</code> Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value <span class="bcp14">MUST NOT</span> be changed by a regular or sensitive update. However, it is possible to change the <code>noTrustReset</code> value in the event of a trust reset where a new base TRC is created.<a href="#section-3.2.5-1" class="pilcrow">¶</a></p>
-<p id="section-3.2.5-2">The <code>noTrustReset</code> field is <span class="bcp14">OPTIONAL</span> and defaults to FALSE.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.5-2">The <code>noTrustReset</code> field defaults to FALSE.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-3">Note that once the <code>noTrustReset</code> Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs <span class="bcp14">SHOULD</span> always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-4">Note that a trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.<a href="#section-3.2.5-4" class="pilcrow">¶</a></p>
 </section>
