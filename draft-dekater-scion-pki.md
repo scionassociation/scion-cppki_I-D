@@ -634,7 +634,7 @@ A TRC can have the following states:
 - Active: An active TRC is a valid TRC that can be used for verifying certificate signatures. This is either the latest TRC or the predecessor TRC if it is still in its grace period (as defined in the `gracePeriod` field of the new TRC, see [](#grace)). No more than two TRCs can be active at the same time for any ISD.
 - Invalid: The TRC is neither valid nor active.
 
-{{figure-2}} shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC. All elements of the TRC is detailed in the following subsections.
+{{figure-2}} shows the content of both a base/initial TRC. All elements of the TRC are detailed in the following subsections.
 
 
 ## TRC Fields {#trcfields}
@@ -703,7 +703,7 @@ In a base TRC, `gracePeriod` value MUST be zero. In a non-base TRC, `gracePeriod
 
 The `noTrustReset` Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value MUST NOT be changed by a regular or sensitive update. However, it is possible to change the `noTrustReset` value in the event of a trust reset where a new base TRC is created.
 
-The `noTrustReset` field is OPTIONAL and defaults to FALSE.
+The `noTrustReset` field defaults to FALSE.
 
 Note that once the `noTrustReset` Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs SHOULD always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
 
