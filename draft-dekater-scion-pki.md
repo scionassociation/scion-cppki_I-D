@@ -457,11 +457,12 @@ When present, the `id-at-ia` attribute MUST appear exactly once in a given disti
 
 The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. `GeneralizedTime` value "99991231235959Z" MUST NOT be used.
 
-The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
+The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION deployments SHOULD adopt these values.
 
 ### `subject`
 
-The `subject` field defines the entity that owns the certificate. It MUST NOT be empty and the same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
+The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
+In addition to the attributes described in section 4.1.2.6 {{RFC5280}}, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute, see  [](#isd-as-nr).
 
 ### `subjectPublicKeyInfo`
 
