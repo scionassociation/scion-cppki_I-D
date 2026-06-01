@@ -2500,8 +2500,8 @@ C.2.  Ceremony Preparations
 
    The Ceremony Administrator and Voting ASes must each bring to the
    Signing Ceremony a secure machine capable of signing and verifying
-   TRCs and computing a digest (e.g., SHA-512 or any equivalent or
-   better algorithm) of the files.  For Voting ASes, the machine
+   TRCs and computing a hash of the files (e.g., SHA-512 or any
+   equivalent or better algorithm).  For Voting ASes, the machine
    requires access to their own sensitive and regular voting private
    keys.
 
