@@ -99,8 +99,7 @@ Table of Contents
        2.6.5.  validity
        2.6.6.  subject
        2.6.7.  subjectPublicKeyInfo
-       2.6.8.  issuerUniqueID
-       2.6.9.  subjectUniqueID
+       2.6.8.  Unique Identifiers
      2.7.  Extensions
        2.7.1.  authorityKeyIdentifier Extension
        2.7.2.  subjectKeyIdentifier Extension
@@ -821,13 +820,10 @@ Table of Contents
    *  *SCION constraints*: For constraints regarding the algorithm, see
       the signature field.
 
-2.6.8.  issuerUniqueID
+2.6.8.  Unique Identifiers
 
-   The issuerUniqueID field MUST NOT be used.
-
-2.6.9.  subjectUniqueID
-
-   The subjectUniqueID field MUST NOT be used.
+   The issuerUniqueID and subjectUniqueID fields MUST NOT be used
+   according to [RFC5280] section 4.1.2.8.
 
 2.7.  Extensions
 
