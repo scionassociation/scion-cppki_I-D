@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-05-31T00:58:20.251959+00:00",
+  "timestamp": "2026-06-02T01:00:27.943912+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -10284,13 +10284,13 @@
       "labels": [],
       "body": "Resolves #143 \r\nContributes to #149 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/til-chapter2/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-13T16:40:26Z",
-      "updatedAt": "2026-05-29T15:02:25Z",
+      "updatedAt": "2026-06-01T08:36:01Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "30ffc38efaa0f88657ea33b3cac83e3a0ea0213d",
+      "baseRefOid": "8a07963b1cb346d0e1f4d0da2f2eaa25a0b0a59b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "til-chapter2",
-      "headRefOid": "d97292dc916acde6c5c1c33d3254406f1aa60492",
+      "headRefOid": "44b66d45746a31b9d41760cbc3d2cfc33358074e",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -10767,13 +10767,13 @@
       "labels": [],
       "body": "Resolves https://github.com/scionassociation/scion-cppki_I-D/issues/150\r\nContributes to https://github.com/scionassociation/scion-cppki_I-D/issues/149\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/Review-Til-Chapters-4-6/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-26T14:02:25Z",
-      "updatedAt": "2026-05-29T15:47:15Z",
+      "updatedAt": "2026-06-01T09:59:50Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "42f4c20eee112c68fc40a3604af7a0d91bc5da44",
+      "baseRefOid": "8a07963b1cb346d0e1f4d0da2f2eaa25a0b0a59b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Review-Til-Chapters-4-6",
-      "headRefOid": "071358dbdd75819aa21c1e2307abf30a6d50124e",
+      "headRefOid": "9098191cbb368499c28a192225e7c491652e8443",
       "closedAt": null,
       "mergedAt": null,
       "mergedBy": null,
@@ -10907,6 +10907,66 @@
               "updatedAt": "2026-05-29T15:47:15Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBjyAdA",
+          "commit": {
+            "abbreviatedOid": "071358d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-01T08:21:20Z",
+          "updatedAt": "2026-06-01T08:21:21Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "What if a PKI cert gets used to sign any other types of messages? I think we want to leave PKI as generic as possible, therefore I would leave wording as it is",
+              "createdAt": "2026-06-01T08:21:20Z",
+              "updatedAt": "2026-06-01T08:21:21Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBkVgvw",
+          "commit": {
+            "abbreviatedOid": "9098191"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-01T09:54:52Z",
+          "updatedAt": "2026-06-01T09:54:53Z",
+          "comments": [
+            {
+              "originalPosition": 367,
+              "body": "I don't quite understand how this relates to signing other types of messages, you mean CP messages other than PCBs? \n\nI had actually multiple comments on the part, I'll put them here (rephrased and updated):\n\n- It is unclear what \"if\" means here, maybe it should be clarified: \n  - `if` refers to `contain`, e.g. \"if the PCB contains a number\" -> this is impossible, because the PCB MUST contain a base and a serial number.\n  - `if` refers to `latest`, e.g. \"if the contained number is the *latest* number`. \n- How does a receiver know whether this is the latest TRC? I think the real point here is that if an **unknown** TRC number is received, the client MUST request it.\n- I think the MUST here can be non-normative. Section 4.2 states: `Consequently, all relying parties MUST be able to verify signatures with the help of the Control Plane PKI.`\n  In order to verify a message, the latest certificate must implicitly be available. I 'd say this pretty much implies that the latest TRC is also available?\n  - or is the point here that all certificates must be validated with the latest TRC?\n\nI would now rephrase it to something like:\n\n```suggestion\n2. If the signature metadata of the message contains the serial and base number of a previously unseen TRC, the relying party MUST ensure that they have this TRC.\n```\n\nThis is probably still a redundant MUST, and it doesn't say why we need the TRC, but I think it makes it a bit clearer what is meant?",
+              "createdAt": "2026-06-01T09:54:52Z",
+              "updatedAt": "2026-06-01T09:54:53Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBkXalg",
+          "commit": {
+            "abbreviatedOid": "9098191"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-01T09:59:50Z",
+          "updatedAt": "2026-06-01T09:59:50Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\n- Serial and base number of the current TRC: Including this information allows relying parties to discover TRC updates and trust resets. For specification details, see [](#id).\n```\nI would use `current` to make clear that the OPTIONAL part is whether to contain the relevant base/serial number. It is NOT OPTIONAL whether the base/serial, if present, are the latest. They must be the latest, or not?\n",
+              "createdAt": "2026-06-01T09:59:50Z",
+              "updatedAt": "2026-06-01T09:59:50Z"
+            }
+          ]
         }
       ]
     },
@@ -10922,7 +10982,7 @@
       "labels": [],
       "body": "Resolves #159\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/trust-agility/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-29T15:45:18Z",
-      "updatedAt": "2026-05-29T15:47:22Z",
+      "updatedAt": "2026-06-01T08:54:17Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "8a07963b1cb346d0e1f4d0da2f2eaa25a0b0a59b",
@@ -10934,7 +10994,41 @@
       "mergedBy": null,
       "mergeCommit": null,
       "comments": [],
-      "reviews": []
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABBj1FMw",
+          "commit": {
+            "abbreviatedOid": "a8ec36d"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-01T08:29:44Z",
+          "updatedAt": "2026-06-01T08:29:44Z",
+          "comments": [
+            {
+              "originalPosition": 6,
+              "body": "Other slightly reworded version by Kevin:\n```suggestion\nThe TRC also provides *trust agility* by enabling relying parties (endpoints and ASes) to select the trust roots used to initiate certificate validation.\nFor endpoints, this implies users can choose trusted ISDs when verifying path segments. For ASes, this implies they can choose trusted ISDs for beaconing, thereby establishing transparent trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.\n```",
+              "createdAt": "2026-06-01T08:29:44Z",
+              "updatedAt": "2026-06-01T08:29:44Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBj98wQ",
+          "commit": {
+            "abbreviatedOid": "a8ec36d"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2026-06-01T08:54:17Z",
+          "updatedAt": "2026-06-01T08:54:17Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
