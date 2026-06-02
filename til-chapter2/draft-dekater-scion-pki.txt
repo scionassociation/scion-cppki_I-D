@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 3 December 2026                                         S. Hitz
+Expires: 4 December 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                             1 June 2026
+                                                             2 June 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 December 2026.
+   This Internet-Draft will expire on 4 December 2026.
 
 Copyright Notice
 
@@ -801,14 +801,15 @@ Table of Contents
    GeneralizedTime value "99991231235959Z" MUST NOT be used.
 
    The recommended maximum validity period for each type of certificate
-   is described in Section 2.5.  SCION implementations SHOULD adopt
-   these values.
+   is described in Section 2.5.  SCION deployments SHOULD adopt these
+   values.
 
 2.6.6.  subject
 
    The subject field defines the entity that owns the certificate.  It
-   MUST NOT be empty and the same constraints as the issuer field apply.
-   For details, see Section 2.6.4 and Section 2.6.4.1.
+   MUST NOT be empty.  In addition to the attributes described in
+   section 4.1.2.6 [RFC5280], SCION implementations MUST also support
+   the SCION-specific id-at-ia attribute, see Section 2.6.4.1.
 
 2.6.7.  subjectPublicKeyInfo
 
