@@ -470,14 +470,9 @@ The `subjectPublicKeyInfo` field carries the public key of the certificate's sub
 
   - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
 
-### `issuerUniqueID`
+### Unique Identifiers
 
-The `issuerUniqueID` field MUST NOT be used.
-
-### `subjectUniqueID`
-
-The `subjectUniqueID` field MUST NOT be used.
-
+The `issuerUniqueID` and `subjectUniqueID` fields MUST NOT be used according to {{RFC5280}} section 4.1.2.8.
 
 ## Extensions {#exts}
 
