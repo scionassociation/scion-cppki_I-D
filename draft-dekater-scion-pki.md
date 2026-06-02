@@ -497,7 +497,7 @@ To ensure deterministic matching, the authorityKeyIdentifier attributes are stri
 - `keyIdentifier`: MUST be included.
 - `authorityCertIssuer` & `authorityCertSerialNumber`: MUST NOT be included. Implementations MUST return an error if either is present.
 
-This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
+This extension MUST be marked as non-critical as per {{RFC5280}} section 4.2. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
 
 ### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
 
