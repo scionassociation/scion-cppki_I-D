@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 30 November 2026                                        S. Hitz
+Expires: 4 December 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                             29 May 2026
+                                                             2 June 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 30 November 2026.
+   This Internet-Draft will expire on 4 December 2026.
 
 Copyright Notice
 
@@ -338,13 +338,14 @@ Table of Contents
    SCION.  Additionally, TRC versioning is used as an alternative to
    revocation in case of compromised roots of trust.
 
-   The TRC also provides _trust agility_ - enabling users to select the
-   trust roots used to initiate certificate validation.  This implies
-   that users are free to choose an ISD they believe maintains an
-   uncompromised set of trust roots.  ISD members can also decide
-   whether to trust other ISDs and thus transparently define trust
-   relationships between parts of the network.  The SCION trust model
-   therefore, differs from the one provided by other PKI architectures.
+   The TRC also provides _trust agility_ by enabling relying parties
+   (endpoints and ASes) to select the trust roots used to initiate
+   certificate validation.  For endpoints, this implies users can choose
+   trusted ISDs when verifying path segments.  For ASes, this implies
+   they can choose trusted ISDs for beaconing, thereby establishing
+   transparent trust relationships between parts of the network.  The
+   SCION trust model therefore, differs from the one provided by other
+   PKI architectures.
 
    To achieve trust agility, SCION avoids global PKIs such as the RPKI
    [RFC8210] where trust roots are provided by the Regional Internet
