@@ -518,7 +518,7 @@ The attributes of the `keyUsage` extension define possible ways of using the pub
 
 Other attributes are not used.
 
-If a relying party uses the certificate’s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party MUST be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
+When a relying party uses the certificate’s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party traces back the private key used to sign the certificate by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
 When present, this extension SHOULD be marked as critical.
 
