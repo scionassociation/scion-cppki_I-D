@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 3 December 2026                                         S. Hitz
+Expires: 4 December 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                             1 June 2026
+                                                             2 June 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 3 December 2026.
+   This Internet-Draft will expire on 4 December 2026.
 
 Copyright Notice
 
@@ -1968,8 +1968,8 @@ Table of Contents
        collection of certificates, see Section 3.4.
 
    2.  If the signature metadata of the message contains the serial and
-       base number of the latest TRC, the relying party MUST ensure that
-       they have this latest TRC.
+       base number of a previously unseen TRC, the relying party MUST
+       ensure that they have this TRC.
 
    3.  After constructing the pool of root certificates, the relying
        party selects the certificate chain used to verify the message.
