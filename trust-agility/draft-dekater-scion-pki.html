@@ -1047,11 +1047,11 @@ svg {
 <thead><tr>
 <td class="left">Internet-Draft</td>
 <td class="center">SCION CP-PKI</td>
-<td class="right">May 2026</td>
+<td class="right">June 2026</td>
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 30 November 2026</td>
+<td class="center">Expires 4 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-05-29" class="published">29 May 2026</time>
+<time datetime="2026-06-02" class="published">2 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-11-30">30 November 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-04">4 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 30 November 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 4 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1566,8 +1566,8 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
 <p id="section-1.3-6">An ISD is governed by one or multiple ASes, known as the <strong>Voting ASes</strong>. Furthermore, each ISD has a set of ASes that form the ISD core, known as the <strong>Core ASes</strong>. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the <strong>Trust Root Configuration</strong> (TRC), which is negotiated by the Voting ASes and which defines the locally scoped roots of trust used to validate bindings between names and public keys.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
 <p id="section-1.3-7">Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. An ISD's TRC is used for signatures pertaining to information originating from that ISD, such as paths, but for nothing originating outside of the ISD. This ISD-level scoping of trust roots enhances security by strictly limiting effect of a compromise to data originating from the compromised AS.
 An ISD's trust roots and policy are encoded in the TRC, which has a base and serial number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used as an alternative to revocation in case of compromised roots of trust.<a href="#section-1.3-7" class="pilcrow">¶</a></p>
-<p id="section-1.3-8">The TRC also provides <em>trust agility</em> - enabling relying parties (endpoints and ASes) to select the trust roots used to initiate certificate validation.
-For endpoints, this implies that users are free to choose ISDs trusted when verifying path segments. For ASes, this implies that they can decide whether to trust other ISDs for beaconing, thus transparently defining trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-8" class="pilcrow">¶</a></p>
+<p id="section-1.3-8">The TRC also provides <em>trust agility</em> by enabling relying parties (endpoints and ASes) to select the trust roots used to initiate certificate validation.
+For endpoints, this implies users can choose trusted ISDs when verifying path segments. For ASes, this implies they can choose trusted ISDs for beaconing, thereby establishing transparent trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-8" class="pilcrow">¶</a></p>
 <p id="section-1.3-9">To achieve trust agility, SCION avoids global PKIs such as the RPKI <span>[<a href="#RFC8210" class="cite xref">RFC8210</a>]</span> where trust roots are provided by the Regional Internet Registries. Instead,
 in the CP-PKI, each ISD has its own trust root. Note that SCION does not provide IP prefix origin validation.<a href="#section-1.3-9" class="pilcrow">¶</a></p>
 </section>
