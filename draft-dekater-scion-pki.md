@@ -44,9 +44,9 @@ normative:
   RFC5758:
   RFC9217:
   X.509:
-    title: "ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"
-    date: 10/2016
-    target: https://handle.itu.int/11.1002/1000/13031
+    title: "ITU-T X.509 (10/2019) - Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"
+    date: 10/2019
+    target: https://handle.itu.int/11.1002/1000/14033
   X.680:
     title: "ITU-T X.680 (02/2021) | Information technology - Abstract Syntax Notation One (ASN.1): Specification of basic notation"
     date: 02/2021
@@ -411,7 +411,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 ## X.509 Certificate Profiles and Constraints
 
-Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
+Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.1.
 
 The following subsections define the specific constraints for the fields contained in the `TBSCertificate` sequence.
 
@@ -490,7 +490,7 @@ The `subjectUniqueID` field MUST NOT be used.
 
 ## Extensions {#exts}
 
-{{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2 and clause 9, respectively.
+{{RFC5280}}, section 4.2.1, defines the syntax of the `Extensions` sequence in a X.509 certificate. Descriptions of each standard certificate extension can be found in {{RFC5280}}, section 4.2.1. The corresponding clauses in {{X.509}} are clause 7.2.1 and clause 9, respectively.
 
 The following extensions are relevant for the SCION PKI:
 
@@ -574,7 +574,7 @@ The specifications of the `extKeyUsage` extension differ per SCION Control Plane
 | SCION-specific attributes (see [](#specatt)) | `id-kp-root` MUST be included |  |                       | Regular voting cert: `id-kp-regular` MUST be included.<br> Sensitive voting cert: `id-kp-sensitive` MUST be included |
 {: #table-5 title="extKeyUsage extension - Specifications per certificate type"}
 
-**Note**: the use of `extKeyUsage` in root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
+**Note**: the use of `extKeyUsage` in root certificates renders them incompatible with standard TLS handshakes according to {{RFC5280}}, because the `id-kp-serverAuth` attribute is not set. While current implementations follow what is described in this document, the use of `extKeyUsage` should be revised in future protocol iterations.
 
 #### SCION-Specific Key Purposes {#specatt}
 
@@ -1329,6 +1329,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Certificate validity recommendations: align to current practice
 - TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
+- Update X.509 reference from 10/2016 to 10/2019
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
