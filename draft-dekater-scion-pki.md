@@ -1003,7 +1003,7 @@ A certificate chain is verified against the control plane root certificate, alth
 To verify a control plane message, the relying party MUST perform the following steps:
 
 1. Build a collection of root certificates from the latest TRC of the relevant ISD (that is, the ISD referenced in the signature metadata of the message). If the grace period (see [](#grace)) introduced by the latest TRC is still on-going, the root certificates in the second-to-latest TRC MUST also be included. For a description on how to build the correct collection of certificates, see [](#trc-selection).
-2. If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party MUST ensure that they have this latest TRC.
+2. If the signature metadata of the message contains the serial and base number of a previously unseen TRC, the relying party MUST ensure that they have this TRC.
 3. After constructing the pool of root certificates, the relying party selects the certificate chain used to verify the message. The AS certificate included in this certificate chain MUST satisfy all of the following properties:
    - The ISD-AS number in the subject of the AS certificate matches the ISD-AS number in the signature metadata. See also [](#isd-as-nr).
    - The subject key identifier of the AS certificate matches the subject key identifier in the signature metadata. See also [](#subject-key-id-ext).
