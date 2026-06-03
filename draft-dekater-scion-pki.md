@@ -880,6 +880,7 @@ The following rules hold for each updated TRC, independent of the update type:
 - The number of votes in the updated TRC MUST be greater than or equal to the number set in the `votingQuorum` field of the predecessor TRC (see [](#quorum)). The number of votes corresponds to the number of indices in the `votes` field of the updated TRC.
 - Voting ASes SHOULD distribute the updated TRC to all authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
 
+Discovery mechanisms for new TRCs are described in [](#trc-update-discovery).
 
 ### Regular TRC Update
 
