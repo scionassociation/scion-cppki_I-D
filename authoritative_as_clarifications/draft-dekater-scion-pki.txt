@@ -1351,14 +1351,15 @@ Table of Contents
 
 3.2.9.  authoritativeASes
 
-   The authoritativeASes field contains a sequence listing the
-   Authoritative AS numbers in the ISD.  Authoritative ASes are those
-   ASes in an ISD that always possess the latest TRCs for the ISD and
-   initiate TRC update announcements.
+   Authoritative ASes are those ASes in an ISD that always possess the
+   latest TRCs for the ISD and therefore initiate TRC update
+   announcements.  Every Authoritative AS MUST be a Core AS (i.e., be
+   listed in the coreASes field).
 
-   Every Authoritative AS MUST be a Core AS (i.e., be listed in the
-   coreASes field).  The encoding and uniqueness requirements for this
-   sequence are identical to those of the coreASes field.
+   The authoritativeASes field contains a sequence listing the
+   Authoritative AS numbers in the ISD.  The encoding and uniqueness
+   requirements for this sequence are identical to those of the coreASes
+   field.
 
    As with Core ASes, assigning or revoking Authoritative status is
    performed by adding or removing the target AS number from this
@@ -2042,6 +2043,9 @@ Table of Contents
    related to this aspect are discussed in
    [I-D.dekater-scion-controlplane], sections "Effects of Clock
    Inaccuracy" and "Attacks on Time Sources".
+
+   It is also recommended to have multiple Authoritative ASes in an ISD
+   (see Section 3.2.9).
 
 5.2.  Operational Processes for ISD Governance
 
