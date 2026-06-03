@@ -276,9 +276,9 @@ The trust is anchored in the TRC for each ISD. The trust root is axiomatic: All 
 
 ## Control Plane Root Certificate {#cp-root-cert}
 
-The private key of the control plane root (CP root) certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as a CA in an ISD.
+The private key of the control plane root (CP root) certificate is used to sign Control Plane issuing CA certificates. Consequently, the public key of the control plane root certificate is used to verify control plane issuing CA certificates, i.e. root certificates determine which ASes act as Issuing CAs in an ISD.
 
-In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. The public key of the control plane root certificate and proof of ownership of the private key are embedded in the TRC of an ISD, via the self-signed control plane root certificate. This facilitates the bootstrapping of trust within an ISD, and marks the control plane root certificates as the starting point of an ISD's certificate verification path.
+In X.509 terms, control plane root certificates are CA certificates. For simplicity, this document calls them 'root certificates', distinguishing them from the subordinate 'issuing CA certificates'. Root certificates are self-signed; the issuer and subject are the same entity, and the public key within the certificate is used to verify its own signature. They are embedded in the TRC of an ISD, and they act as the starting point of an ISD's certificate verification path.
 
 The RECOMMENDED maximum validity period of a control plane root certificate is 5 years.
 
@@ -303,21 +303,13 @@ AS operators are advised to renew these certificates by a margin of at least the
 
 ## Voting Certificates {#cp-voting-cert}
 
-There are two types of voting certificates: the (1) regular voting certificates and the (2) sensitive voting certificates. They contain the public keys associated with the private keys that may cast votes in the TRC update process.
+There are two types of voting certificates: regular voting certificates and sensitive voting certificates. They contain the public keys associated with the private keys that may cast votes in the TRC update process.
 
-Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC.
+Regular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC. The distinction between regular and sensitive updates is described in [](#update).
 
-### Regular Voting Certificate
+ Voting certificates may be used to cast votes in a TRC updates. In X.509 terms, voting certificates are self-signed end entity certificates. This means that the issuer and subject of a voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a voting certificate cannot be used to verify other certificates.
 
-Regular voting certificates may be used to cast a vote in a regular update. In X.509 terms, regular voting certificates are self-signed end entity certificates. This means that the issuer and subject of a regular voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a regular voting certificate cannot be used to verify other certificates.
-
-The RECOMMENDED maximum validity period of a regular voting certificate is 5 years.
-
-### Sensitive Voting Certificate
-
-Sensitive voting certificates may be used to cast a vote in a sensitive update. In X.509 terms, sensitive voting certificates are self-signed end entity certificates. This means that the issuer and subject of a sensitive voting certificate are the same entity, and the public key within the certificate can be used to verify the certificate's signature. However, a sensitive voting certificate cannot be used to verify other certificates.
-
-The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 years.
+The RECOMMENDED maximum validity period of a voting certificate is 5 years.
 
 ## Key Pairs Overview and Notations {#key-pair-notation}
 
@@ -345,7 +337,7 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 | CP AS certificate      | C<sub>AS</sub>    | SK<sub>CA</sub>                          | PK<sub>AS</sub>                                         | 3 days       |
 {: #table-3 title="Certificates"}
 
-(1) Multiple signatures and certificates of each type MAY be included in a TRC.<br>
+(1) A TRC may include multiple certificates of each type.<br>
 (2) Recommended maximum validity period. Note that initial AS certificates may have a longer validity (e.g. 10-30 days) to allow for enough time for deployment.<br>
 (3) A validity of 15 days with 8 days overlap between two issuing CA certificates is RECOMMENDED to enable the best possible operational procedures when performing an issuing CA certificate rollover.
 
@@ -412,13 +404,13 @@ The RECOMMENDED maximum validity period of a sensitive voting certificate is 5 y
 
 ## X.509 Certificate Profiles and Constraints
 
-Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
+Control Plane PKI certificates are X.509 v3 certificate with additional constraints applied. This section defines these additional constraints and conditions in comparison to {{RFC5280}}, which apply to all SCION certificate types. For the baseline X.509 v3 format, refer to {{RFC5280}} and {{X.509}} Clause 7.2.
 
 The following subsections define the specific constraints for the fields contained in the `TBSCertificate` sequence.
 
 ### `version`
 
-The `version` field describes the version of the encoded certificate. It MUST be set to "v3" because extensions are required.
+The `version` field describes the X.509 version of the encoded certificate. It MUST be set to "v3" because X.509 extensions are required.
 
 ### `serialNumber`
 
@@ -448,31 +440,31 @@ The appropriate hash size to use when producing a signature with an ECDSA key is
 
 ### `issuer` {#issuer}
 
-The `issuer` field contains the distinguished name (DN) of the entity that has issued and signed the certificate (usually a CA). This field MUST be non-empty.
+The `issuer` field contains the distinguished name (DN) of the entity that issued and signed the certificate (usually a CA). This field MUST NOT be empty.
 
-In addition to the attributes described in {{RFC5280}} section 4.1.2.4, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute identifying the SCION ISD and AS numbers.
+In addition to the attributes described in section 4.1.2.4 {{RFC5280}}, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute.
 
 #### `id-at-ia` Attribute {#isd-as-nr}
 
-The `id-at-ia` attribute identifies the SCION ISD and AS numbers. Its object identifier is defined in [](#cert-asn1).
+The `id-at-ia` attribute  identifies the SCION ISD and AS numbers. It is is included in an `AttributeTypeAndValue` sequence where the `type` is `id-at-ia` and `value` contains the ISD-AS number string. Its formatting MUST follow {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
+The `id-at-ia` object identifier is defined in [](#cert-asn1).
 
 The `id-at-ia` attribute MUST be included in the `issuer` and `subject` fields of root, issuing CA, and AS certificates. It SHOULD be included in voting certificates.
 
 
 When present, the `id-at-ia` attribute MUST appear exactly once in a given distinguished name (DN), and implementations MUST reject certificates if the `id-at-ia` appears more than once.
 
-The string representation of the `id-at-ia` attribute MUST follow the formatting defined in {{I-D.dekater-scion-controlplane}}, section "Text Representation" where AS numbers in the lower 32-bit range are represented in decimal notation, and others in hexadecimal notation.
-
 
 ### `validity`
 
 The `validity` field defines the validity period of the certificate. All certificates MUST have a well-defined expiration date. `GeneralizedTime` value "99991231235959Z" MUST NOT be used.
 
-The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION implementations SHOULD adopt these values.
+The recommended maximum validity period for each type of certificate is described in [](#key-pair-notation). SCION deployments SHOULD adopt these values.
 
 ### `subject`
 
-The `subject` field defines the entity that owns the certificate. It MUST NOT be empty and the same constraints as the `issuer` field apply. For details, see [](#issuer) and [](#isd-as-nr).
+The `subject` field defines the entity that owns the certificate. It MUST NOT be empty.
+In addition to the attributes described in section 4.1.2.6 {{RFC5280}}, SCION implementations MUST also support the SCION-specific `id-at-ia` attribute, see  [](#isd-as-nr).
 
 ### `subjectPublicKeyInfo`
 
@@ -480,14 +472,9 @@ The `subjectPublicKeyInfo` field carries the public key of the certificate's sub
 
   - **SCION constraints**: For constraints regarding the algorithm, see the `signature` field.
 
-### `issuerUniqueID`
+### Unique Identifiers
 
-The `issuerUniqueID` field MUST NOT be used.
-
-### `subjectUniqueID`
-
-The `subjectUniqueID` field MUST NOT be used.
-
+The `issuerUniqueID` and `subjectUniqueID` fields MUST NOT be used according to {{RFC5280}} section 4.1.2.8.
 
 ## Extensions {#exts}
 
@@ -512,7 +499,7 @@ To ensure deterministic matching, the authorityKeyIdentifier attributes are stri
 - `keyIdentifier`: MUST be included.
 - `authorityCertIssuer` & `authorityCertSerialNumber`: MUST NOT be included. Implementations MUST return an error if either is present.
 
-This extension MUST be marked as non-critical. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
+This extension MUST be marked as non-critical as per {{RFC5280}} section 4.2. Implementations MUST return an error if the extension is not present AND the certificate is not self-signed.
 
 ### `subjectKeyIdentifier` Extension {#subject-key-id-ext}
 
@@ -533,7 +520,7 @@ The attributes of the `keyUsage` extension define possible ways of using the pub
 
 Other attributes are not used.
 
-If a relying party uses the certificate’s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party MUST be able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
+When a relying party uses the certificate’s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party traces back the private key used to sign the certificate by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).
 
 When present, this extension SHOULD be marked as critical.
 
@@ -867,7 +854,7 @@ In the context of a TRC update,
 Every new sensitive or regular voting certificate in a TRC attaches a signature to the TRC. This is done to ensure that the freshly included voting entity agrees with the contents of the TRC it is now part of.
 
 
-### Update Rules - Overview
+### Update Rules - Overview {#update-rules-overview}
 
 The following table gives an overview of the types of TRC update, as well as the rules that must apply in regard to the updated TRC's payload information.
 
