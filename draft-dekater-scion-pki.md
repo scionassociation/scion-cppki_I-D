@@ -727,6 +727,7 @@ To assign or revoke core status, the target AS number is added to or removed fro
 ### `authoritativeASes` {#auth}
 
 Authoritative ASes are those ASes in an ISD that always possess the latest TRCs for the ISD and therefore initiate TRC update announcements.
+They are provisioned with the latest TRC by Voters following an update (see [](#trc-update-general)).
 Every Authoritative AS MUST be a Core AS (i.e., be listed in the `coreASes` field).
 
 The `authoritativeASes` field contains a sequence listing the Authoritative AS numbers in the ISD. The encoding and uniqueness requirements for this sequence are identical to those of the `coreASes` field.
@@ -870,7 +871,7 @@ The sections that follow provide more detailed descriptions of each rule.
 {: #table-8 title="Overview of the update types and corresponding rules"}
 
 
-### General Update Rules
+### General Update Rules {#trc-update-general}
 
 The following rules hold for each updated TRC, independent of the update type:
 
@@ -879,7 +880,7 @@ The following rules hold for each updated TRC, independent of the update type:
 - The `noTrustReset` field MUST NOT change (see also [](#notrustreset)).
 - The `votes` sequence of the updated TRC MUST only contain indices that refer to sensitive or regular voting certificates in the predecessor TRC. This guarantees that the updated TRC only contains valid votes authenticated by sensitive or regular voting certificates in the predecessor TRC. For more information, see [](#votes) and [](#cert).
 - The number of votes in the updated TRC MUST be greater than or equal to the number set in the `votingQuorum` field of the predecessor TRC (see [](#quorum)). The number of votes corresponds to the number of indices in the `votes` field of the updated TRC.
-- Voting ASes SHOULD distribute the updated TRC to all authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
+- Voting ASes SHOULD distribute the updated TRC to all Authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
 
 Discovery mechanisms for new TRCs are described in [](#trc-update-discovery).
 
@@ -964,7 +965,7 @@ SCION provides the following mechanisms for discovering TRC updates and fulfilli
 
 Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.
 
-Once discovered, a relying party can obtain the latest TRC from one of the Authoritative ASes (see [](auth)).
+Once it discovers a new TRC, a relying party can obtain the TRC from one of the Authoritative ASes (see [](#auth)).
 
 ## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
 
@@ -1037,7 +1038,8 @@ It is therefore recommended to deploy multiple, independent CAs within an ISD th
 
 Furthermore, PKI operators need to ensure that the CAs maintain time synchronization with other system components. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, sections "Effects of Clock Inaccuracy" and "Attacks on Time Sources".
 
-It is also recommended to have multiple Authoritative ASes in an ISD (see [](#auth)).
+To ensure redundancy, an ISD should contain multiple Authoritative ASes (see [](#auth)). However, the total number of Authoritative ASes should be kept relatively low since Voters need to provision each Authoritative AS with the latest TRC following each update (see [](#trc-update-general)).
+
 
 ## Operational Processes for ISD Governance
 
