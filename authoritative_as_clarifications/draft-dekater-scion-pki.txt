@@ -1875,6 +1875,9 @@ Table of Contents
    said information, ensuring that relying parties can discover TRC
    updates in a matter of minutes to hours.
 
+   Once discovered, a relying party can obtain the latest TRC from one
+   of the Authoritative ASes (see auth).
+
 4.2.   Signing and Verifying Control Plane Messages
 
    The main purpose of the Control Plane PKI is providing a mechanism to
