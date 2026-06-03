@@ -965,7 +965,7 @@ SCION provides the following mechanisms for discovering TRC updates and fulfilli
 
 Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.
 
-Once it discovers a new TRC, a relying party can obtain the TRC from one of the Authoritative ASes (see [](#auth)).
+Once a relying party learns of a new TRC, it can obtain the TRC from one of the Authoritative ASes (see [](#auth)).
 
 ## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
 
