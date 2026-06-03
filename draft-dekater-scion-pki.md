@@ -1022,11 +1022,15 @@ An implication of the above procedure is that path segments are verifiable at ti
 The steps required to issue a new AS certificate are the following:
 
 1. The AS creates a new key pair and a certificate signing request (CSR) using that key pair.
-2. The AS sends the certificate signing request to the relevant CA within the ISD.
-3. The CA uses its CA key and the CSR to create the new AS certificate.
+2. The AS sends the certificate signing request to the relevant issuing CA within the ISD.
+3. The CA uses its CA key and the CSR to issue the new AS certificate.
 4. The CA sends the AS certificate back to the AS.
 
 When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals may be automated and can leverage the control plane communication infrastructure (see {{I-D.dekater-scion-controlplane}}, section "Renewal of Cryptographic Material").
+When using this automated in-band renewal process, the request requires two distinct cryptographic signatures to ensure both proof of possession and authorization:
+
+- Proof of possession: the inner PKCS#10 CSR MUST be signed using the newly generated private key corresponding to the requested certificate.
+- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.
 
 # Deployment Considerations
 
@@ -1313,6 +1317,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Certificate validity recommendations: align to current practice
 - TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
+- Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
