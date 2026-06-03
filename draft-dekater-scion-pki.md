@@ -726,9 +726,10 @@ To assign or revoke core status, the target AS number is added to or removed fro
 
 ### `authoritativeASes` {#auth}
 
-The `authoritativeASes` field contains a sequence listing the Authoritative AS numbers in the ISD. Authoritative ASes are those ASes in an ISD that always possess the latest TRCs for the ISD and initiate TRC update announcements.
+Authoritative ASes are those ASes in an ISD that always possess the latest TRCs for the ISD and therefore initiate TRC update announcements.
+Every Authoritative AS MUST be a Core AS (i.e., be listed in the `coreASes` field).
 
-Every Authoritative AS MUST be a Core AS (i.e., be listed in the `coreASes` field). The encoding and uniqueness requirements for this sequence are identical to those of the `coreASes` field.
+The `authoritativeASes` field contains a sequence listing the Authoritative AS numbers in the ISD. The encoding and uniqueness requirements for this sequence are identical to those of the `coreASes` field.
 
 As with Core ASes, assigning or revoking Authoritative status is performed by adding or removing the target AS number from this sequence. For such modification, a sensitive TRC update is REQUIRED.
 
@@ -1035,6 +1036,8 @@ The Control Plane PKI relies on short-lived certificates as an alternative to re
 It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load. ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.
 
 Furthermore, PKI operators need to ensure that the CAs maintain time synchronization with other system components. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, sections "Effects of Clock Inaccuracy" and "Attacks on Time Sources".
+
+It is also recommended to have multiple Authoritative ASes in an ISD (see [](#auth)).
 
 ## Operational Processes for ISD Governance
 
