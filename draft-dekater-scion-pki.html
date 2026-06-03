@@ -2642,7 +2642,7 @@ In addition to the attributes described in section 4.1.2.6 <span>[<a href="#RFC5
       </h2>
 <p id="section-3-1">The Trust Root Configuration (TRC) contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD. It enables the securing of control plane interactions and is thus an integral part of the SCION infrastructure.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <p id="section-3-2">The initial TRC of an ISD is signed during a Signing Ceremony and then distributed throughout the ISD. This Signing Ceremony follows specific rules which are described in <a href="#trc-ceremony" class="auto internal xref">Section 3.6</a>.<a href="#section-3-2" class="pilcrow">¶</a></p>
-<p id="section-3-3">The TRC is a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data (<span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span> section 5).<a href="#section-3-3" class="pilcrow">¶</a></p>
+<p id="section-3-3">The TRC contains a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates and ISD-specific policies. Encoding for the purpose of signature calculation is described in <a href="#signed-format" class="auto internal xref">Section 3.3</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC; a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">This section specifies the TRC including format definitions and payload fields. The section uses the ITU-T <span>[<a href="#X.680" class="cite xref">X.680</a>]</span> syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
 <div id="trc-states">
@@ -3287,23 +3287,19 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 <a href="#section-4.1.2" class="section-number selfRef">4.1.2. </a><a href="#name-trc-update-discovery" class="section-name selfRef">TRC Update Discovery</a>
           </h4>
 <p id="section-4.1.2-1">All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in <a href="#update" class="auto internal xref">Section 3.5</a>.<a href="#section-4.1.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-2">Relying parties <span class="bcp14">MUST</span> have at least one valid TRC available. Relying parties <span class="bcp14">MUST</span> discover TRC updates within the grace period defined in the updated TRC, and <span class="bcp14">SHOULD</span> discover TRC updates in a matter of minutes to hours. Additionally, any entity sending information that is secured by the Control Plane PKI <span class="bcp14">MUST</span> be able to provide all the necessary trust material to verify said information.<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-3">SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:<a href="#section-4.1.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-2">SCION provides the following mechanisms for discovering TRC updates and fulfilling the above requirement:<a href="#section-4.1.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4.1.2-4.1">
-              <p id="section-4.1.2-4.1.1"><em>Beaconing Process</em><br>
-The TRC version is announced in the beaconing process. Each AS <span class="bcp14">MUST</span> announce what it considers to be the latest TRC, and <span class="bcp14">MUST</span> include the hash value of the TRC contents to facilitate the discovery of discrepancies. Therefore, relying parties that are part of the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process. The creation of a new TRC <span class="bcp14">SHOULD</span> trigger the generation of new control plane messages, as the propagation of control plane messages will help other ASes rapidly discover the new TRC.<a href="#section-4.1.2-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="section-4.1.2-3.1">
+              <p id="section-4.1.2-3.1.1"><em>Beaconing Process</em>: The TRC version is announced during the beaconing process (see <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "AS Entry Signed Header"). Each AS <span class="bcp14">MUST</span> announce the latest TRC's base and serial number known to it. Consequently, relying parties involved in the beaconing process discover TRC updates passively, i.e. a Core AS notices TRC updates for remote ISDs that are on the beaconing path. A non-core AS only notices TRC updates for the local ISD through the beaconing process.<a href="#section-4.1.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.1.2-4.2">
-              <p id="section-4.1.2-4.2.1"><em>Path Lookup</em><br>
-In every path segment, all ASes <span class="bcp14">MUST</span> reference the latest TRC of their ISD. Therefore, when resolving paths, every relying party will notice TRC updates, even remote ones.<br><a href="#section-4.1.2-4.2.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.1.2-3.2">
+              <p id="section-4.1.2-3.2.1"><em>Path Lookup</em>: In every path segment, all ASes <span class="bcp14">MUST</span> reference the latest TRC of their ISD. Consequently, relying parties will detect TRC updates, including those from remote ISDs, during path lookups.<a href="#section-4.1.2-3.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-4.1.2-4.3">
-              <p id="section-4.1.2-4.3.1"><em>Active Discovery</em><br>
-Any TRC can be obtained at any time from the sender of the information it secures; either in a specific version or in its latest available version. The necessary query and response is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material".<a href="#section-4.1.2-4.3.1" class="pilcrow">¶</a></p>
+            <li class="normal" id="section-4.1.2-3.3">
+              <p id="section-4.1.2-3.3.1"><em>Active Discovery</em>: A relying party can actively request any TRC —either a specific version or the latest available version— from the sender of the secured information at any time. The necessary query and response is described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material".<a href="#section-4.1.2-3.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="section-4.1.2-5"><strong>Note:</strong> The first two mechanisms above only work when there is active communication between the relying party and the ISD in question.<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-4">Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI <span class="bcp14">MUST</span> be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.<a href="#section-4.1.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3313,14 +3309,14 @@ Any TRC can be obtained at any time from the sender of the information it secure
         <h3 id="name-signing-and-verifying-contr">
 <a href="#section-4.2" class="section-number selfRef">4.2. </a><a href="#name-signing-and-verifying-contr" class="section-name selfRef">Signing and Verifying Control Plane Messages</a>
         </h3>
-<p id="section-4.2-1">The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties <span class="bcp14">MUST</span> be able to verify signatures with the help of the Control Plane PKI.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.2-1">The main purpose of the Control Plane PKI is providing a mechanism to distribute and authenticate public keys that are used to verify control plane messages and information, e.g. each hop information in a path segment is signed by the respective AS. Consequently, all relying parties verify signatures with the help of the Control Plane PKI.<a href="#section-4.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2-2">The following sections specify the requirements that apply to the signing and verification of control plane messages.<a href="#section-4.2-2" class="pilcrow">¶</a></p>
 <div id="signing-a-control-plane-message">
 <section id="section-4.2.1">
           <h4 id="name-signing-a-control-plane-mes">
 <a href="#section-4.2.1" class="section-number selfRef">4.2.1. </a><a href="#name-signing-a-control-plane-mes" class="section-name selfRef">Signing a Control Plane Message</a>
           </h4>
-<p id="section-4.2.1-1">An AS signs control plane messages with the private key that corresponds to the (valid) AS' certificate.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.2.1-1">An AS signs control plane messages with the private key that corresponds to its own valid certificate.<a href="#section-4.2.1-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.1-2">The AS <span class="bcp14">MUST</span> attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:<a href="#section-4.2.1-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2.1-3.1">
@@ -3347,7 +3343,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 <a href="#section-4.2.2" class="section-number selfRef">4.2.2. </a><a href="#name-verifying-a-control-plane-m" class="section-name selfRef">Verifying a Control Plane Message</a>
           </h4>
 <p id="section-4.2.2-1">To verify a received control plane message, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-2">AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, SCION distributes these certificate chains separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-2">AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, these certificate chains are distributed separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-3">A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and <strong>not</strong> in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-4">To verify a control plane message, the relying party <span class="bcp14">MUST</span> perform the following steps:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.2.2-5">
@@ -3355,19 +3351,19 @@ Any TRC can be obtained at any time from the sender of the information it secure
               <p id="section-4.2.2-5.1.1">Build a collection of root certificates from the latest TRC of the relevant ISD (that is, the ISD referenced in the signature metadata of the message). If the grace period (see <a href="#grace" class="auto internal xref">Section 3.2.4</a>) introduced by the latest TRC is still on-going, the root certificates in the second-to-latest TRC <span class="bcp14">MUST</span> also be included. For a description on how to build the correct collection of certificates, see <a href="#trc-selection" class="auto internal xref">Section 3.4</a>.<a href="#section-4.2.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-4.2.2-5.2">
-              <p id="section-4.2.2-5.2.1">If the signature metadata of the message contains the serial and base number of the latest TRC, the relying party <span class="bcp14">MUST</span> check that they have this latest TRC. If not, the relying party <span class="bcp14">MUST</span> request the latest TRC.<a href="#section-4.2.2-5.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.2-5.2.1">If the signature metadata of the message contains the serial and base number of a previously unseen TRC, the relying party <span class="bcp14">MUST</span> ensure that they have this TRC.<a href="#section-4.2.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-4.2.2-5.3">
-              <p id="section-4.2.2-5.3.1">After constructing the pool of root certificates, the relying party <span class="bcp14">MUST</span> select the certificate chain used to verify the message. The AS certificate included in this certificate chain <span class="bcp14">MUST</span> have the following properties:<a href="#section-4.2.2-5.3.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.2-5.3.1">After constructing the pool of root certificates, the relying party selects the certificate chain used to verify the message. The AS certificate included in this certificate chain <span class="bcp14">MUST</span> satisfy all of the following properties:<a href="#section-4.2.2-5.3.1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4.2.2-5.3.2.1">
-                  <p id="section-4.2.2-5.3.2.1.1">The ISD-AS number in the subject of the AS certificate <span class="bcp14">MUST</span> match the ISD-AS number in the signature metadata. See also <a href="#isd-as-nr" class="auto internal xref">Section 2.6.4.1</a>.<a href="#section-4.2.2-5.3.2.1.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.3.2.1.1">The ISD-AS number in the subject of the AS certificate matches the ISD-AS number in the signature metadata. See also <a href="#isd-as-nr" class="auto internal xref">Section 2.6.4.1</a>.<a href="#section-4.2.2-5.3.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-4.2.2-5.3.2.2">
-                  <p id="section-4.2.2-5.3.2.2.1">The subject key identifier of the AS certificate <span class="bcp14">MUST</span> match the subject key identifier in the signature metadata. See also <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2</a>.<a href="#section-4.2.2-5.3.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.3.2.2.1">The subject key identifier of the AS certificate matches the subject key identifier in the signature metadata. See also <a href="#subject-key-id-ext" class="auto internal xref">Section 2.7.2</a>.<a href="#section-4.2.2-5.3.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-4.2.2-5.3.2.3">
-                  <p id="section-4.2.2-5.3.2.3.1">The AS certificate <span class="bcp14">MUST</span> be valid at verification time, which will normally be the current time. In special cases, e.g. auditing, the time can be set to the past to check if the message was verifiable at the given time.<a href="#section-4.2.2-5.3.2.3.1" class="pilcrow">¶</a></p>
+                  <p id="section-4.2.2-5.3.2.3.1">The AS certificate is valid at time of verification. While this is typically the current time, specific scenarios such as auditing may require verifying against a historical timestamp. Refer to <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> section "Effects of Clock Inaccuracy" for considerations about time synchronization.<a href="#section-4.2.2-5.3.2.3.1" class="pilcrow">¶</a></p>
 </li>
               </ul>
 </li>
@@ -3398,7 +3394,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 </li>
           </ol>
 <p id="section-4.2.2-6">If any cryptographic material is missing in the process, the relying party <span class="bcp14">MUST</span> query the originator of the message for the missing material. If it cannot be resolved, the verification process fails.<a href="#section-4.2.2-6" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-7"><strong>Important:</strong> An implication of the above procedure is that path segments <span class="bcp14">SHOULD</span> be verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-7">An implication of the above procedure is that path segments are verifiable at time of use. It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.<a href="#section-4.2.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3408,7 +3404,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
         <h3 id="name-issuing-control-plane-as-ce">
 <a href="#section-4.3" class="section-number selfRef">4.3. </a><a href="#name-issuing-control-plane-as-ce" class="section-name selfRef">Issuing Control Plane AS Certificates</a>
         </h3>
-<p id="section-4.3-1">The steps <span class="bcp14">REQUIRED</span> to issue a new AS certificate are the following:<a href="#section-4.3-1" class="pilcrow">¶</a></p>
+<p id="section-4.3-1">The steps required to issue a new AS certificate are the following:<a href="#section-4.3-1" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.3-2">
 <li id="section-4.3-2.1">
             <p id="section-4.3-2.1.1">The AS creates a new key pair and a certificate signing request (CSR) using that key pair.<a href="#section-4.3-2.1.1" class="pilcrow">¶</a></p>
@@ -3423,7 +3419,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
             <p id="section-4.3-2.4.1">The CA sends the AS certificate back to the AS.<a href="#section-4.3-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-4.3-3">When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals <span class="bcp14">MAY</span> be automated and can leverage the control plane communication infrastructure (see <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Renewal of Cryptographic Material").<a href="#section-4.3-3" class="pilcrow">¶</a></p>
+<p id="section-4.3-3">When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as part of the formalities to join the ISD. Subsequent certificate renewals may be automated and can leverage the control plane communication infrastructure (see <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Renewal of Cryptographic Material").<a href="#section-4.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3440,7 +3436,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
         </h3>
 <p id="section-5.1-1">The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>. AS certificates typically have a validity of days (see <a href="#_table-3" class="auto internal xref">Table 2</a>), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load. ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
-<p id="section-5.1-3">Furthermore, PKI operators need to ensure that the CAs maintain accurate time. Further considerations related to this aspect are discussed in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Attacks on Time Sources".<a href="#section-5.1-3" class="pilcrow">¶</a></p>
+<p id="section-5.1-3">Furthermore, PKI operators need to ensure that the CAs maintain time synchronization with other system components. Further considerations related to this aspect are discussed in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, sections "Effects of Clock Inaccuracy" and "Attacks on Time Sources".<a href="#section-5.1-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-processes-for-isd-governance">
@@ -3448,7 +3444,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
         <h3 id="name-operational-processes-for-i">
 <a href="#section-5.2" class="section-number selfRef">5.2. </a><a href="#name-operational-processes-for-i" class="section-name selfRef">Operational Processes for ISD Governance</a>
         </h3>
-<p id="section-5.2-1">An ISD is governed by Voting ASes. In existing deployments, Voting ASes may produce a regulations document to facilitate operations. Such document typically describes:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
+<p id="section-5.2-1">An ISD is governed by Voting ASes who may produce a regulations document to facilitate operations. Such document typically describes:<a href="#section-5.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-5.2-2.1">
             <p id="section-5.2-2.1.1">governance structure<a href="#section-5.2-2.1.1" class="pilcrow">¶</a></p>
@@ -3469,7 +3465,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
             <p id="section-5.2-2.6.1">actions in case of compromise or regulations breach<a href="#section-5.2-2.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="section-5.2-3">This document describes a typical TRC Signing Ceremony in <a href="#initial-ceremony" class="auto internal xref">Appendix C</a>, but further processes are out-of-scope.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
+<p id="section-5.2-3"><a href="#initial-ceremony" class="auto internal xref">Appendix C</a> describes a typical TRC Signing Ceremony, but further processes are out-of-scope.<a href="#section-5.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3480,7 +3476,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-security-considerations" class="section-name selfRef">Security Considerations</a>
       </h2>
 <p id="section-6-1">SCION fundamentally differs from a global monopolistic trust model as each ISD manages its own trust roots instead of a single global entity providing those roots. This structure gives each ISD autonomy in terms of key management and in terms of trust, and prevents the occurrence of a global kill switch affecting all ISDs at once. However, each ISD is still susceptible to compromises that could affect or halt other components (control plane and forwarding).<a href="#section-6-1" class="pilcrow">¶</a></p>
-<p id="section-6-2">This section discussed implication of such trust architecture, covering <em>inter</em>-AS security considerations. All <em>intra</em>-AS trust- and security aspects are out of scope.<a href="#section-6-2" class="pilcrow">¶</a></p>
+<p id="section-6-2">This section discusses the implications of such trust architecture, covering <em>inter</em>-AS security considerations. All <em>intra</em>-AS trust- and security aspects are out of scope.<a href="#section-6-2" class="pilcrow">¶</a></p>
 <div id="compromise-of-an-isd">
 <section id="section-6.1">
         <h3 id="name-compromise-of-an-isd">
@@ -3489,7 +3485,7 @@ Any TRC can be obtained at any time from the sender of the information it secure
 <p id="section-6.1-1">In SCION there is no central authority that could "switch off" an ISD as each relies on its own independent trust roots. Each AS within an ISD is therefore dependent on its ISD's PKI for its functioning, although the following compromises are potentially possible:<a href="#section-6.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1-2.1">
-            <p id="section-6.1-2.1.1">At TRC level: The private root keys of the root certificates contained in a TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise multiple voting keys, the number of which is dependent on the voting quorum set in the TRC. The higher the quorum, the more unlikely a malicious update will be.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.1-2.1.1">At TRC level: The private root keys of the root certificates contained in a TRC are used to sign issuing CA certificates. If one of these private root keys is compromised, the adversary could issue illegitimate issuing CA certificates which may be used in further attacks. To maliciously perform a TRC update, an attacker would need to compromise enough voting keys to reach the voting quorum set in the TRC. The higher the quorum, the harder a malicious update becomes.<a href="#section-6.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.1-2.2">
             <p id="section-6.1-2.2.1">At CA level: The private keys of an ISD's issuing CA certificates are used to sign the AS certificates and all ASes within an ISD obtain certificates directly from the CAs. If one of the CA’s keys is compromised, an adversary could issue illegitimate AS certificates which may be used to impersonate ASes in further attacks. A compromised or misbehaving CA could also refuse to issue certificates to legitimate ASes, cutting them off the network if no alternative redundant CA is available.<a href="#section-6.1-2.2.1" class="pilcrow">¶</a></p>
@@ -3528,16 +3524,16 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <p id="section-6.2-1">The Control Plane PKI lays the foundation for the authentication procedures in SCION by providing each AS within a specific ISD with a certified key pair. These keys enable the authentication of all control plane messages - every AS and endpoint can verify all control plane messages by following the certificate chain.<a href="#section-6.2-1" class="pilcrow">¶</a></p>
 <p id="section-6.2-2">The relying party needs to be able to discover and obtain new or updated cryptographic material. For the control plane messages, this is simplified by the observation that the sender of a message (e.g. of a Path Construction Beacon during path exploration or a path segment during a path lookup) always has all the cryptographic material to verify it. Thus, the receiver can always immediately obtain all the cryptographic material from the message originator.<a href="#section-6.2-2" class="pilcrow">¶</a></p>
 <p id="section-6.2-3">As the corresponding PKI messaging only occurs when the control plane is already communicating, these requests to obtain cryptographic material are not prone to additional denial of service attacks. We refer to the security considerations of <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span> for a more detailed description of DoS vulnerabilities of control plane messages.<a href="#section-6.2-3" class="pilcrow">¶</a></p>
-<p id="section-6.2-4">On the other hand, this does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:<a href="#section-6.2-4" class="pilcrow">¶</a></p>
+<p id="section-6.2-4">This does not apply for certificate renewal. Denial of Service on the CA infrastructure or on the communication links from the individual ASes to the CA could be used by an attacker to prevent victim ASes from renewing their certificates and halting the path discovery process. This risk can be mitigated in multiple ways:<a href="#section-6.2-4" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.2-5.1">
-            <p id="section-6.2-5.1.1">CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface<a href="#section-6.2-5.1.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-5.1.1">CAs only need to be accessible from ASes within the ISD, reducing the potential DoS attack surface;<a href="#section-6.2-5.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.2-5.2">
-            <p id="section-6.2-5.2.1">relying on multiple CAs within an ISD<a href="#section-6.2-5.2.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-5.2.1">relying on multiple CAs within an ISD (e.g., for certificate renewal);<a href="#section-6.2-5.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-6.2-5.3">
-            <p id="section-6.2-5.3.1">creating policies and processes to renew certificates out-of-band<a href="#section-6.2-5.3.1" class="pilcrow">¶</a></p>
+            <p id="section-6.2-5.3.1">creating policies and processes to renew certificates out-of-band.<a href="#section-6.2-5.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -3548,7 +3544,7 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-trc-distribution-and-trust-" class="section-name selfRef">TRC Distribution and Trust on First Use</a>
         </h3>
 <p id="section-6.3-1">Base TRCs act as an ISD root of trust (see <a href="#trust-relations" class="auto internal xref">Section 1.4</a>).<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">If an endpoint retrieves the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it effectively operates under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
+<p id="section-6.3-2">In typical deployments, initial TRCs are provisioned out of band. Should an endpoint retrieve the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it would effectively operate under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
 <p id="section-6.3-3">Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, thereby limiting impact of a malicious TRC.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3794,19 +3790,20 @@ END
         <h3 id="name-ceremony-participants">
 <a href="#appendix-C.1" class="section-number selfRef">C.1. </a><a href="#name-ceremony-participants" class="section-name selfRef">Ceremony Participants</a>
         </h3>
-<p id="appendix-C.1-1">The Signing Ceremony <span class="bcp14">SHOULD</span> include the following participants:<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.1-1">The Signing Ceremony should include the following participants:<a href="#appendix-C.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.1-2.1">
             <p id="appendix-C.1-2.1.1"><strong>Ceremony Administrator</strong> - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.<a href="#appendix-C.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-2.2">
-            <p id="appendix-C.1-2.2.1"><strong>Voting AS representatives</strong> - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of a device with the private keys of their respective certificates in the TRC.<a href="#appendix-C.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.1-2.2.1"><strong>Voting AS representatives</strong> - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of the private keys of their respective certificates in the TRC.<a href="#appendix-C.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.1-2.3">
             <p id="appendix-C.1-2.3.1"><strong>Witness(es)</strong> - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.<a href="#appendix-C.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.1-3"><strong>Note:</strong> The ISD members must decide on the roles of the Signing Ceremony participants in advance of the Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). It is assumed that all parties are trustworthy and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent. Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine. The Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.1-3">The ISD members must decide on the roles of the Signing Ceremony participants in advance of the Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.1-4">The private keys of each participant never leave their machine, so the Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ceremonyprep">
@@ -3814,10 +3811,10 @@ END
         <h3 id="name-ceremony-preparations">
 <a href="#appendix-C.2" class="section-number selfRef">C.2. </a><a href="#name-ceremony-preparations" class="section-name selfRef">Ceremony Preparations</a>
         </h3>
-<p id="appendix-C.2-1">The participants agree in advance on the physical location of the Signing Ceremony, the devices that will be used, and <span class="bcp14">MUST</span> decide the ISD policy as follows:<a href="#appendix-C.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-1">The participants agree in advance on the location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:<a href="#appendix-C.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.2-2.1">
-            <p id="appendix-C.2-2.1.1">ISD number - usually obtained from the SCION registry, see <a href="#id" class="auto internal xref">Section 3.2.2</a>;<a href="#appendix-C.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.2-2.1.1">ISD number - for public ISDs these are obtained from the SCION registry, see <a href="#id" class="auto internal xref">Section 3.2.2</a>;<a href="#appendix-C.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.2-2.2">
             <p id="appendix-C.2-2.2.1">The description of the TRC, see <a href="#description" class="auto internal xref">Section 3.2.10</a>;<a href="#appendix-C.2-2.2.1" class="pilcrow">¶</a></p>
@@ -3841,7 +3838,7 @@ END
             <p id="appendix-C.2-2.8.1">The list of control plane root certificates.<a href="#appendix-C.2-2.8.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.2-3">Each representative of a Voting AS <span class="bcp14">MUST</span> also create the following before the ceremony:<a href="#appendix-C.2-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-3">Each representative of a Voting AS must also create the following before the ceremony:<a href="#appendix-C.2-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.2-4.1">
             <p id="appendix-C.2-4.1.1">A sensitive voting private key and a self-signed certificate containing the corresponding public key.<a href="#appendix-C.2-4.1.1" class="pilcrow">¶</a></p>
@@ -3850,11 +3847,9 @@ END
             <p id="appendix-C.2-4.2.1">A regular voting private key and a self-signed certificate containing the corresponding public key.<a href="#appendix-C.2-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.2-5">In addition, each Certificate Authority <span class="bcp14">MUST</span> create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they <span class="bcp14">MUST</span> provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance <span class="bcp14">MUST</span> cover the full TRC validity period.<a href="#appendix-C.2-5" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-6">The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.<a href="#appendix-C.2-6" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-7">The Ceremony Administrator and Voting ASes <span class="bcp14">MUST</span> each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing the SHA-512 digest of the files. For Voting ASes, the machine requires access to their own sensitive and regular voting private keys.<a href="#appendix-C.2-7" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-8">The Ceremony Administrator <span class="bcp14">MUST</span> provide or be provided with a device to exchange data between the ceremony participants.<a href="#appendix-C.2-8" class="pilcrow">¶</a></p>
-<p id="appendix-C.2-9">The Signing Ceremony <span class="bcp14">SHOULD</span> include a procedure to verify that all devices are secure.<a href="#appendix-C.2-9" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-5">In addition, each Certificate Authority must create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they must provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance must cover the full TRC validity period.<a href="#appendix-C.2-5" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-6">The Ceremony Administrator and Voting ASes must each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing a hash of the files (e.g., SHA-512 or any equivalent or better algorithm). For Voting ASes, the machine requires access to their own sensitive and regular voting private keys.<a href="#appendix-C.2-6" class="pilcrow">¶</a></p>
+<p id="appendix-C.2-7">The Ceremony Administrator must provide or be provided with a device to exchange data between the ceremony participants, and the Signing Ceremony must include a procedure to verify that all devices are secure.<a href="#appendix-C.2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ceremonyprocess">
@@ -3869,11 +3864,11 @@ END
           <h4 id="name-certificate-exchange">
 <a href="#appendix-C.3.1" class="section-number selfRef">C.3.1. </a><a href="#name-certificate-exchange" class="section-name selfRef">Certificate Exchange</a>
           </h4>
-<p id="appendix-C.3.1-1">All parties share the certificates that must be part of the TRC with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.<a href="#appendix-C.3.1-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-2">Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives <span class="bcp14">MUST NOT</span> copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.<a href="#appendix-C.3.1-2" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-3">The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the SHA-512 hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the SHA-512 hash value for the entire bundle. All hash values must be displayed to the participants.<a href="#appendix-C.3.1-3" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-4">The Ceremony Administrator <span class="bcp14">MUST</span> then share the bundle with the representatives of the Voting ASes who <span class="bcp14">MUST</span> validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-C.3.1-4" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.1-5">This phase concludes when every representative has confirmed the SHA-512 sums are correct. If there is any mismatch then this phase <span class="bcp14">MUST</span> be repeated.<a href="#appendix-C.3.1-5" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-1">All certificates that are part of the TRC must be shared with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.<a href="#appendix-C.3.1-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-2">Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.<a href="#appendix-C.3.1-2" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-3">The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the hash value for the entire bundle. SHA-512 is typically used as hashing algorithm, although any equivalent or better algorithm may be used. All hash values must be displayed to the participants.<a href="#appendix-C.3.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-4">The Ceremony Administrator must then share the bundle with the representatives of the Voting ASes who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.<a href="#appendix-C.3.1-4" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.1-5">This phase concludes when every representative has confirmed the hashes are correct. If there is any mismatch then this phase must be repeated.<a href="#appendix-C.3.1-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="phase2">
@@ -3881,8 +3876,8 @@ END
           <h4 id="name-generation-of-the-trc-paylo">
 <a href="#appendix-C.3.2" class="section-number selfRef">C.3.2. </a><a href="#name-generation-of-the-trc-paylo" class="section-name selfRef">Generation of the TRC Payload</a>
           </h4>
-<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and the <a href="#trcfields" class="auto internal xref">Section 3.2</a> completed in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix C.2</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.2-2">For each bundled certificate, the voting representatives <span class="bcp14">MUST</span> then verify the certificate type and that the following fields contain the correct information:<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.2-1">The Ceremony Administrator generates the TRC payload based on the bundled certificates and completed TRC fields (see <a href="#trcfields" class="auto internal xref">Section 3.2</a>) in accordance with ISD policy, see <a href="#ceremonyprep" class="auto internal xref">Appendix C.2</a>.<a href="#appendix-C.3.2-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.2-2">For each bundled certificate, the voting representatives must then verify the certificate type and that the following fields contain the correct information:<a href="#appendix-C.3.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.3.2-3.1">
               <p id="appendix-C.3.2-3.1.1"><code>issuer</code><a href="#appendix-C.3.2-3.1.1" class="pilcrow">¶</a></p>
@@ -3897,7 +3892,7 @@ END
               <p id="appendix-C.3.2-3.4.1"><code>signature</code><a href="#appendix-C.3.2-3.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
-<p id="appendix-C.3.2-4">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to <a href="#trc-asn1" class="auto internal xref">Appendix B</a> and the SHA-512 hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing this on their machine and checking it matches the one displayed by the Ceremony Administrator.<a href="#appendix-C.3.2-4" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.2-4">Once the voting representatives have verified the TRC data, the Ceremony Administrator computes the DER encoding of the data according to <a href="#signed-format" class="auto internal xref">Section 3.3</a> and the hash value of the TRC payload file. The TRC payload file is then shared with the voting representatives via the data exchange device who verify the TRC payload hash value by computing it on their machine and checking that it matches the one displayed by the Ceremony Administrator.<a href="#appendix-C.3.2-4" class="pilcrow">¶</a></p>
 <p id="appendix-C.3.2-5">This phase concludes when all voting representatives confirm that the contents of the TRC payload are correct.<a href="#appendix-C.3.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3915,8 +3910,8 @@ END
           <h4 id="name-trc-validation">
 <a href="#appendix-C.3.4" class="section-number selfRef">C.3.4. </a><a href="#name-trc-validation" class="section-name selfRef">TRC Validation</a>
           </h4>
-<p id="appendix-C.3.4-1">All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during phase <a href="#phase1" class="auto internal xref">Appendix C.3.1</a>. The Ceremony Administrator then shares the assembled TRC with all participants who <span class="bcp14">MUST</span> again inspect the signatures and verify them based on the certificates exchanged in phase <a href="#phase1" class="auto internal xref">Appendix C.3.1</a>.<a href="#appendix-C.3.4-1" class="pilcrow">¶</a></p>
-<p id="appendix-C.3.4-2">The Signing Ceremony is completed once when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.<a href="#appendix-C.3.4-2" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.4-1">All voting representatives copy the TRC payload signed with their private voting keys to the data exchange device and return this to the Ceremony Administrator. The Ceremony Administrator assembles the final TRC by aggregating the payload data and verifying the signatures based on the certificates exchanged during phase <a href="#phase1" class="auto internal xref">Appendix C.3.1</a>. The Ceremony Administrator then shares the assembled TRC with all participants who must again inspect the signatures and verify them based on the certificates exchanged in phase <a href="#phase1" class="auto internal xref">Appendix C.3.1</a>.<a href="#appendix-C.3.4-1" class="pilcrow">¶</a></p>
+<p id="appendix-C.3.4-2">The Signing Ceremony is completed when every voting representative confirms that the signatures match. All participants can then use the TRC to distribute trust anchors for the ISD.<a href="#appendix-C.3.4-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
