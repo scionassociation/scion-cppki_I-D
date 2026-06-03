@@ -1025,7 +1025,7 @@ When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as
 When using this automated in-band renewal process, the request requires two distinct cryptographic signatures to ensure both proof of possession and authorization:
 
 - Proof of possession: the inner PKCS#10 CSR MUST be signed using the newly generated private key corresponding to the requested certificate.
-- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to the AS's currently active and valid AS certificate.
+- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.
 
 # Deployment Considerations
 
