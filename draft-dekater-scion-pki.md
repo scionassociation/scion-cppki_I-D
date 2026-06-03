@@ -299,6 +299,7 @@ SCION ASes sign control plane messages, such as Path Construction Beacons, with 
 In X.509 terms, control plane AS certificates are end entity certificates. That is, they cannot be used to verify other certificates.
 
 The RECOMMENDED maximum validity period of a CP AS certificate is 3 days.
+AS operators are advised to renew these certificates by a margin of at least their configured Hop Field expiration time, as described in the "AS Entry Signature" section of {{I-D.dekater-scion-controlplane}}.
 
 ## Voting Certificates {#cp-voting-cert}
 
