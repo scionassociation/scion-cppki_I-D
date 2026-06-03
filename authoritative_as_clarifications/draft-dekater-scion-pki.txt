@@ -1818,7 +1818,7 @@ Table of Contents
    special case of the base TRC.  The initial TRC MUST be signed during
    a Signing Ceremony where all voting representatives of the initial
    TRC take part to sign the TRC and exchange their public keys.
-   Following this, all entities within an ISD can obtain the TRC by
+   Following this, all entities within an ISD can obtain that TRC by
    means of a secure offline or online mechanism.
 
    Appendix C describes a possible procedure for the Signing Ceremony of
