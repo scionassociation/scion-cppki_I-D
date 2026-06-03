@@ -1879,7 +1879,7 @@ Table of Contents
    said information, ensuring that relying parties can discover TRC
    updates in a matter of minutes to hours.
 
-   Once it discovers a new TRC, a relying party can obtain the TRC from
+   Once a relying party learns of a new TRC, it can obtain the TRC from
    one of the Authoritative ASes (see Section 3.2.9).
 
 4.2.   Signing and Verifying Control Plane Messages
