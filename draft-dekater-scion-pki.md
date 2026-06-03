@@ -934,7 +934,7 @@ If one or more of the above checks gives a negative result, the updated TRC SHOU
 
 ## Initial TRC Signing Ceremony {#trc-ceremony}
 
-The very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC. The initial TRC MUST be signed during a Signing Ceremony where all voting representatives of the initial TRC take part to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain that TRC by means of a secure offline or online mechanism.
+The very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC. The initial TRC MUST be signed during a Signing Ceremony where all voting representatives of the initial TRC take part to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain the initial TRC by means of a secure offline or online mechanism.
 
 [](#initial-ceremony) describes a possible procedure for the Signing Ceremony of an ISD's initial TRC. Whilst it is up to the initial members of an ISD how to organize the Signing Ceremony, it recommended to implement a process in line with the ceremony described in the appendix.
 
