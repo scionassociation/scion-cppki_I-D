@@ -928,6 +928,11 @@ To verify a TRC update, the relying party MUST perform the following checks:
 
 If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.
 
+## Trust Reset {#trust-reset-description}
+
+If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called trust reset (if permitted by the ISD's trust policy). In this case, a new base TRC is created.
+If a TRC is compromised, it means that the root keys or voting keys are compromised. If the number of compromised keys is smaller than the voting quorum, a TRC update is sufficient [](#update).
+A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and a invalid update has been produced and distributed in the network.
 
 ## Initial TRC Signing Ceremony {#trc-ceremony}
 
