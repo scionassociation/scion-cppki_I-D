@@ -1312,6 +1312,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - Certificate validity recommendations: align to current practice
 - TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
+- Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
