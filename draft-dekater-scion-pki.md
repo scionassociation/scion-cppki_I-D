@@ -948,7 +948,7 @@ This section details the procedures for deploying the CP-PKI and securing contro
 Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an ISD MUST be pre-loaded with the currently valid base-version TRC of their own ISD. For all specifications regarding the creation and distribution of initial/base TRCs, see [](#trc-ceremony).
 
 
-### TRC Update Discovery
+### TRC Update Discovery {#trc-update-discovery}
 
 All non-base TRCs of an ISD are updates of the ISD's base TRC(s). The TRC update chain consists of regular and sensitive TRC updates. The specifications and rules that apply to updating a TRC are described in [](#update).
 
@@ -961,6 +961,8 @@ SCION provides the following mechanisms for discovering TRC updates and fulfilli
 - *Active Discovery*: A relying party can actively request any TRC —either a specific version or the latest available version— from the sender of the secured information at any time. The necessary query and response is described in {{I-D.dekater-scion-controlplane}}, section "Distribution of Cryptographic Material".
 
 Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI MUST be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.
+
+Once discovered, a relying party can obtain the latest TRC from one of the Authoritative ASes (see [](auth)).
 
 ## Signing and Verifying Control Plane Messages {#signing-verifying-cp-messages}
 
