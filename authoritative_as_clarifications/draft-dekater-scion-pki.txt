@@ -1701,6 +1701,8 @@ Table of Contents
       ASes within the ISD.  The distribution mechanism is typically out
       of band and it is outside of the scope of this document.
 
+   Discovery mechanisms for new TRCs are described in Section 4.1.2.
+
 3.5.4.  Regular TRC Update
 
    A regular TRC update is a periodic re-issuance of the TRC where the
