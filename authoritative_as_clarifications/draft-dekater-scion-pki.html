@@ -2849,6 +2849,7 @@ A voting quorum lower than the number of Voting ASes ensures that votes can be c
 <a href="#section-3.2.9" class="section-number selfRef">3.2.9. </a><a href="#name-authoritativeases" class="section-name selfRef"><code>authoritativeASes</code></a>
           </h4>
 <p id="section-3.2.9-1">Authoritative ASes are those ASes in an ISD that always possess the latest TRCs for the ISD and therefore initiate TRC update announcements.
+They are provisioned with the latest TRC by Voters following an update (see <a href="#trc-update-general" class="auto internal xref">Section 3.5.3</a>).
 Every Authoritative AS <span class="bcp14">MUST</span> be a Core AS (i.e., be listed in the <code>coreASes</code> field).<a href="#section-3.2.9-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-2">The <code>authoritativeASes</code> field contains a sequence listing the Authoritative AS numbers in the ISD. The encoding and uniqueness requirements for this sequence are identical to those of the <code>coreASes</code> field.<a href="#section-3.2.9-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-3">As with Core ASes, assigning or revoking Authoritative status is performed by adding or removing the target AS number from this sequence. For such modification, a sensitive TRC update is <span class="bcp14">REQUIRED</span>.<a href="#section-3.2.9-3" class="pilcrow">¶</a></p>
@@ -3123,7 +3124,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 </div>
 </section>
 </div>
-<div id="general-update-rules">
+<div id="trc-update-general">
 <section id="section-3.5.3">
           <h4 id="name-general-update-rules">
 <a href="#section-3.5.3" class="section-number selfRef">3.5.3. </a><a href="#name-general-update-rules" class="section-name selfRef">General Update Rules</a>
@@ -3146,7 +3147,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
               <p id="section-3.5.3-2.5.1">The number of votes in the updated TRC <span class="bcp14">MUST</span> be greater than or equal to the number set in the <code>votingQuorum</code> field of the predecessor TRC (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>). The number of votes corresponds to the number of indices in the <code>votes</code> field of the updated TRC.<a href="#section-3.5.3-2.5.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.5.3-2.6">
-              <p id="section-3.5.3-2.6.1">Voting ASes <span class="bcp14">SHOULD</span> distribute the updated TRC to all authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.<a href="#section-3.5.3-2.6.1" class="pilcrow">¶</a></p>
+              <p id="section-3.5.3-2.6.1">Voting ASes <span class="bcp14">SHOULD</span> distribute the updated TRC to all Authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.<a href="#section-3.5.3-2.6.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.5.3-3">Discovery mechanisms for new TRCs are described in <a href="#trc-update-discovery" class="auto internal xref">Section 4.1.2</a>.<a href="#section-3.5.3-3" class="pilcrow">¶</a></p>
@@ -3302,7 +3303,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 </li>
           </ul>
 <p id="section-4.1.2-4">Relying parties such as an AS Control Service require at least one valid TRC available and should therefore discover TRC updates within the grace period defined in the updated TRC. Additionally, any entity sending information that is secured by the Control Plane PKI <span class="bcp14">MUST</span> be able to provide all the necessary trust material to verify said information, ensuring that relying parties can discover TRC updates in a matter of minutes to hours.<a href="#section-4.1.2-4" class="pilcrow">¶</a></p>
-<p id="section-4.1.2-5">Once discovered, a relying party can obtain the latest TRC from one of the Authoritative ASes (see <span><a href="auth">auth</a></span>).<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
+<p id="section-4.1.2-5">Once it discovers a new TRC, a relying party can obtain the TRC from one of the Authoritative ASes (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>).<a href="#section-4.1.2-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3440,7 +3441,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 <p id="section-5.1-1">The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>. AS certificates typically have a validity of days (see <a href="#_table-3" class="auto internal xref">Table 2</a>), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load. ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <p id="section-5.1-3">Furthermore, PKI operators need to ensure that the CAs maintain time synchronization with other system components. Further considerations related to this aspect are discussed in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, sections "Effects of Clock Inaccuracy" and "Attacks on Time Sources".<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">It is also recommended to have multiple Authoritative ASes in an ISD (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>).<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.1-4">To ensure redundancy, an ISD should contain multiple Authoritative ASes (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>). However, the total number of Authoritative ASes should be kept relatively low since Voters need to provision each Authoritative AS with the latest TRC following each update (see <a href="#trc-update-general" class="auto internal xref">Section 3.5.3</a>).<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-processes-for-isd-governance">
