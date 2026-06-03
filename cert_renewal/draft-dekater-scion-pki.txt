@@ -2619,6 +2619,9 @@ draft-dekater-scion-pki-13
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
 
+   *  Issuing Control Plane AS Certificates: clarify signatures in case
+      of automatic renewal
+
 draft-dekater-scion-pki-12
 
    *  Overall review and wording polish
