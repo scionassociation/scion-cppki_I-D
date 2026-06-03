@@ -2025,8 +2025,8 @@ Table of Contents
    *  Authorization: The AS MUST authenticate the request to the Issuing
       CA by wrapping the CSR in a CMS SignedData structure
       (cms_signed_request).  This outer CMS structure MUST be signed
-      using the existing private key corresponding to the AS's currently
-      active and valid AS certificate.
+      using the existing private key corresponding to one of the AS's
+      currently active and valid AS certificate.
 
 5.  Deployment Considerations
 

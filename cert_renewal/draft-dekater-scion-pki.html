@@ -3426,7 +3426,7 @@ When using this automated in-band renewal process, the request requires two dist
             <p id="section-4.3-4.1.1">Proof of possession: the inner PKCS#10 CSR <span class="bcp14">MUST</span> be signed using the newly generated private key corresponding to the requested certificate.<a href="#section-4.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-4.3-4.2">
-            <p id="section-4.3-4.2.1">Authorization: The AS <span class="bcp14">MUST</span> authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure <span class="bcp14">MUST</span> be signed using the existing private key corresponding to the AS's currently active and valid AS certificate.<a href="#section-4.3-4.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.3-4.2.1">Authorization: The AS <span class="bcp14">MUST</span> authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure <span class="bcp14">MUST</span> be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.<a href="#section-4.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
