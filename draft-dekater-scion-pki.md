@@ -150,7 +150,7 @@ SCION relies on three main components:
 
 **Trust Root Configuration (TRC)**: A Trust Root Configuration or TRC is a signed collection of certificates pertaining to an Isolation Domain (ISD). TRCs also contain ISD-specific policies.
 
-**Voting ASes**: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".
+**Voters**: Those parties within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote".
 
 **Voting Quorum**: The voting quorum is a Trust Root Configuration (TRC) field that indicates the number of votes (signatures) needed on a successor TRC for it to be verifiable.
 
@@ -175,7 +175,7 @@ The SCION trust architecture allows parties that mutually trust each other to fo
 
 To fulfill these requirements, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane ({{I-D.dekater-scion-controlplane}}). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
-An ISD is governed by one or multiple ASes, known as the **Voting ASes**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core and Voting ASes may be, but do not necessarily have to be the same ASes. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voting ASes and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
+An ISD is governed by one or multiple **Voters**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core ASes and Voters may be, but do not necessarily have to be the same entities, since Voters do not require an AS number. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voters and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. An ISD's TRC is used for signatures pertaining to information originating from that ISD, such as paths, but for nothing originating outside of the ISD. This ISD-level scoping of trust roots enhances security by strictly limiting effect of a compromise to data originating from the compromised AS.
 An ISD's trust roots and policy are encoded in the TRC, which has a base and serial number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used as an alternative to revocation in case of compromised roots of trust.
@@ -188,9 +188,9 @@ in the CP-PKI, each ISD has its own trust root. Note that SCION does not provide
 
 ## Trust Relations within an Isolation Domain {#trust-relations}
 
-The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called **base TRC** constitutes the ISD's trust anchor which is signed during a Signing Ceremony by the Voting ASes and then distributed throughout the ISD.
+The Control Plane PKI is organized at an ISD level whereby each ISD can independently specify its own Trust Root Configuration (TRC) and build its own verification chain. Each TRC consists of a collection of signed root certificates which are used to sign issuing CA certificates, which are in turn used to sign AS certificates. The TRC also includes ISD policies that specify, for example, the TRC's usage, validity, and future updates. The so-called **base TRC** constitutes the ISD's trust anchor which is signed during a Signing Ceremony by the Voters and then distributed throughout the ISD.
 
-While it is not necessary that all the ASes of the ISD trust each other, within the CP-PKI all ASes implicitly trust the ISD's Voting ASes, as well as its CA(s).
+While it is not necessary that all the ASes of the ISD trust each other, within the CP-PKI all ASes implicitly trust the ISD's Voters, as well as its CA(s).
 
 ### Updates and Trust Resets {#trust-reset}
 
@@ -255,13 +255,13 @@ The base TRC constitutes the root of trust within an ISD. {{figure-1}} provides 
 ~~~~
 {: #figure-1 title="Chain of trust within an ISD. The TRC number (e.g., TRC 1) refers to the TRC's serialNumber."}
 
-All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of Voting AS certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)) that is used to bootstrap trust for the initial TRC.
+All certificates used in the Control Plane PKI are in X.509 v3 format {{RFC5280}} and additionally the TRC contains self-signed certificates instead of plain public keys. Self-signed certificates have the following advantages over plain public keys: (1) They make the binding between name and public key explicit; and (2) the binding is signed to prove possession of the corresponding private key. The public keys of voting certificates must therefore be explicitly verified during the Signing Ceremony ([](#initial-ceremony)) that is used to bootstrap trust for the initial TRC.
 
 SCION ASes sign and verify control plane messages. Certain ASes have additional roles:
 
 - **Core ASes**: They are a distinct set of ASes in the SCION Control Plane. For each ISD, the Core ASes are listed in the TRC and each Core AS has links to the other Core ASes (in the same or in different ISDs).
 - **Certification Authorities (CAs)**: CAs are responsible for issuing AS certificates to other ASes and/or themselves.
-- **Voting ASes**: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated ASes that hold the private keys to sign a TRC update are "Voting ASes".
+- **Voters**: They may sign TRC updates. The process of appending a signature to a new TRC is called "casting a vote", and the designated "Voters" hold the private keys to sign a TRC update.
 - **Authoritative ASes**: They always have the latest TRCs of the ISD. They start the announcement of a TRC update.
 
 
@@ -714,7 +714,7 @@ The `votes` sequence MUST be present to prevent the stripping of voting signatur
 The `votingQuorum` field defines the number of necessary votes on a successor TRC to make it verifiable.
 
 A voting quorum greater than one will prevent a single entity from creating a malicious TRC update.
-A voting quorum lower than the number of Voting ASes ensures that votes can be cast even if some of the voters are unavailable.
+A voting quorum lower than the number of Voters ensures that votes can be cast even if some of the voters are unavailable.
 
 ### `coreASes` {#core}
 
@@ -744,7 +744,7 @@ Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the 
 
 ### `certificates` {#cert}
 
-The Voting ASes and the Certification Authorities (CAs) of an ISD are not specified explicitly in the ISD's TRC. Instead, this information is defined by the list of voting and root certificates in the `certificates` field of the TRC payload.
+The Voters and the Certification Authorities (CAs) of an ISD are not specified explicitly in the ISD's TRC. Instead, this information is defined by the list of voting and root certificates in the `certificates` field of the TRC payload.
 
 The `certificates` field is a sequence of self-signed X.509 certificates. Each certificate in the certificate sequence MUST be one of the following types:
 
@@ -880,7 +880,7 @@ The following rules hold for each updated TRC, independent of the update type:
 - The `noTrustReset` field MUST NOT change (see also [](#notrustreset)).
 - The `votes` sequence of the updated TRC MUST only contain indices that refer to sensitive or regular voting certificates in the predecessor TRC. This guarantees that the updated TRC only contains valid votes authenticated by sensitive or regular voting certificates in the predecessor TRC. For more information, see [](#votes) and [](#cert).
 - The number of votes in the updated TRC MUST be greater than or equal to the number set in the `votingQuorum` field of the predecessor TRC (see [](#quorum)). The number of votes corresponds to the number of indices in the `votes` field of the updated TRC.
-- Voting ASes SHOULD distribute the updated TRC to all Authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
+- Voters SHOULD distribute the updated TRC to all Authoritative ASes within the ISD. The distribution mechanism is typically out of band and it is outside of the scope of this document.
 
 Discovery mechanisms for new TRCs are described in [](#trc-update-discovery).
 
@@ -1047,7 +1047,7 @@ To ensure redundancy, an ISD should contain multiple Authoritative ASes (see [](
 
 ## Operational Processes for ISD Governance
 
-An ISD is governed by Voting ASes who may produce a regulations document to facilitate operations. Such document typically describes:
+An ISD is governed by Voters who may produce a regulations document to facilitate operations. Such document typically describes:
 
   - governance structure
   - roles and responsibilities
@@ -1222,11 +1222,11 @@ A Signing Ceremony is used to create the initial (first) Trust Root Configuratio
 
 The Signing Ceremony should include the following participants:
 
-- **Ceremony Administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voting ASes.
+- **Ceremony Administrator** - an individual in charge of moderating the signing process, guiding the participants through the steps, and acting as an intermediary for sharing information. The Ceremony Administrator is typically appointed by the ISD Manager or by resolution of the Voters.
 
-- **Voting AS representatives** - individuals representing each Voting AS who are able to create voting signatures on the TRC. They are in possession of the private keys of their respective certificates in the TRC.
+- **Voter representatives** - individuals representing each Voter who are able to create voting signatures on the TRC. They are in possession of the private keys of their respective certificates in the TRC.
 
-- **Witness(es)** - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voting ASes.
+- **Witness(es)** - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voter.
 
 The ISD members must decide on the roles of the Signing Ceremony participants in advance of the Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data.
 
@@ -1245,34 +1245,34 @@ The participants agree in advance on the location of the Signing Ceremony, the d
 - AS numbers of the Authoritative ASes, see [](#auth);
 - The list of control plane root certificates.
 
-Each representative of a Voting AS must also create the following before the ceremony:
+Each representative of a Voter must also create the following before the ceremony:
 
 - A sensitive voting private key and a self-signed certificate containing the corresponding public key.
 - A regular voting private key and a self-signed certificate containing the corresponding public key.
 
 In addition, each Certificate Authority must create a control plane root private key and a self-signed certificate containing the corresponding public key. A representative of the Certificate Authority need not be present at the ceremony as they do not need to sign the TRC, but they must provide their root certificate to be shared at the ceremony. The validity period of the certificates generated in advance must cover the full TRC validity period.
 
-The Ceremony Administrator and Voting ASes must each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing a hash of the files (e.g., SHA-512 or any equivalent or better algorithm). For Voting ASes, the machine requires access to their own sensitive and regular voting private keys.
+The Ceremony Administrator and Voters must each bring to the Signing Ceremony a secure machine capable of signing and verifying TRCs and computing a hash of the files (e.g., SHA-512 or any equivalent or better algorithm). For Voters, the machine requires access to their own sensitive and regular voting private keys.
 
 The Ceremony Administrator must provide or be provided with a device to exchange data between the ceremony participants, and the Signing Ceremony must include a procedure to verify that all devices are secure.
 
 
 ## Ceremony Phases {#ceremonyprocess}
 
-The number of Voting ASes present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
+The number of Voters present at the Signing Ceremony must be equal to or larger than the specified voting quorum.
 
 The signing process has four phases of data sharing, led by the Ceremony Administrator who provides instructions to the other participants:
 
 
 ### Certificate Exchange {#phase1}
 
-All certificates that are part of the TRC must be shared with the Ceremony Administrator. For the Voting ASes, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.
+All certificates that are part of the TRC must be shared with the Ceremony Administrator. For the Voters, these are the sensitive and the regular voting certificates, and for the Certificate Authority these are the control plane root certificates.
 
 Each representative copies the requested certificates from their machine onto a data exchange device provided by the Ceremony Administrator that is passed between all representatives, before being returned to the Ceremony Administrator. Representatives must not copy the corresponding private keys onto the data exchange device as this invalidates the security of the ceremony.
 
 The Ceremony Administrator then checks that the validity period of each provided certificate covers the previously agreed upon TRC validity, that the signature algorithms are correct, and that the certificate type is valid (root, sensitive voting or regular voting certificate). If these parameters are correct, the Ceremony Administrator computes the hash value for each certificate, aggregates and bundles all the provided certificates, and finally calculates the hash value for the entire bundle. SHA-512 is typically used as hashing algorithm, although any equivalent or better algorithm may be used. All hash values must be displayed to the participants.
 
-The Ceremony Administrator must then share the bundle with the representatives of the Voting ASes who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
+The Ceremony Administrator must then share the bundle with the representatives of the Voters who must validate on their machine that the hash value of their certificates and that of the bundled certificates is the same as displayed by the Ceremony Administrator.
 
 This phase concludes when every representative has confirmed the hashes are correct. If there is any mismatch then this phase must be repeated.
 
@@ -1321,6 +1321,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 - Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
+- Rename Voting AS to Voter and clarify that it does not require an AS number
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
