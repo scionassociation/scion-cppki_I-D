@@ -1181,7 +1181,7 @@ Table of Contents
    The iD field contains an unique identifier for the TRC, constituted
    by a sequence of these attributes:
 
-   *  iSD: ISD number,
+   *  iSD: ISD number.
 
    *  baseNumber: The base number indicates the starting point of the
       current TRC update chain.  This starting point is the currently
