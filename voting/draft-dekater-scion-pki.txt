@@ -2029,7 +2029,7 @@ Table of Contents
       certificate.
 
    *  Authorization: The AS MUST authenticate the request to the Issuing
-      CA by wrapping the CSR in a CMS SignedData structure
+      CA by wrapping the CSR in a CMS signed-data structure
       (cms_signed_request).  This outer CMS structure MUST be signed
       using the existing private key corresponding to one of the AS's
       currently active and valid AS certificate.
@@ -2135,7 +2135,7 @@ Table of Contents
       the TRC are compromised, the TRC MUST be updated as described in
       Section 3.5.  A trust reset is only required in the case the
       number of compromised keys at the same time is greater or equal
-      than the TRC's quorum (see Section 3.2.7), and a invalid update
+      than the TRC's quorum (see Section 3.2.7), and an invalid update
       has been produced and distributed in the network.
 
    *  At CA level: If the private key related to an issuing CA
@@ -2613,24 +2613,49 @@ Change Log
 
 draft-dekater-scion-pki-13
 
-   *  Draftforge review
+   *  Draftforge review, sort terminology alphabetically
+
+   *  Rename Voting AS to Voter and clarify that it does not require an
+      AS number
 
    *  remove trust Hierarchy subsection and redundant code block
 
-   *  Certificate validity recommendations: align to current practice
+   *  "Trust Model": reword and shorten section about monopoly/oligopoly
 
-   *  TRC: introduce introduce language tags ([BCP47]) and
-      localizedDescriptions, introduce more sequence limits in ASN.1 and
-      recommend maximum size.
+   *  "Trust as a function" and "Trust Hierarchy": remove redundant
+      sections, since concepts are also explained elsewhere
+
+   *  Certificate validity: align maximum validity recommendations to
+      current practice, clarify margin for AS certificate renewal
+
+   *  "Regular Voting Certificate" and "Sensitive Voting Certificate":
+      merge two nearly identical sections into one
+
+   *  issuerUniqueID and subjectUniqueID: merge two nearly identical
+      sections into one
 
    *  authorityKeyIdentifier Extension: clarify support for
       authorityCertIssuer and authorityCertSerialNumber attributes
 
+   *  pathLenConstraint: clarify it MUST be set
+
+   *  authoritativeASes: improve wording to clarify their role and how
+      they are provisioned with TRCs
+
+   *  TRC: introduce introduce language tags ([BCP47]) and
+      localizedDescriptions, introduce more sequence limits in ASN.1 and
+      recommend a maximum size.
+
+   *  "Certification Path - Trust Anchor Pool" replace python pseudocode
+      with a list of steps
+
    *  Issuing Control Plane AS Certificates: clarify signatures in case
       of automatic renewal
 
-   *  Rename Voting AS to Voter and clarify that it does not require an
-      AS number
+   *  PKI Availability: mention need to ensure time sync, and that there
+      should be multiple Authoritative ASes
+
+   *  Signing Ceremony: remove normative language from appendix
 
 draft-dekater-scion-pki-12
 
