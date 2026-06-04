@@ -1030,7 +1030,7 @@ When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as
 When using this automated in-band renewal process, the request requires two distinct cryptographic signatures to ensure both proof of possession and authorization:
 
 - Proof of possession: the inner PKCS#10 CSR MUST be signed using the newly generated private key corresponding to the requested certificate.
-- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.
+- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS signed-data structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.
 
 # Deployment Considerations
 
@@ -1078,7 +1078,7 @@ In SCION there is no central authority that could "switch off" an ISD as each re
 This section deals with possible recovery from the compromises discussed in the previous paragraph.
 As described in [](#substitutes-to-revocation), there is no revocation in the Control Plane PKI.
 
-- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and a invalid update has been produced and distributed in the network.
+- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and an invalid update has been produced and distributed in the network.
 - At CA level: If the private key related to an issuing CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update new root keys can also be forced, invalidating the compromised CA.
 - At AS level: In the event of a key compromise of a non-core AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
 
@@ -1315,13 +1315,22 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 ## draft-dekater-scion-pki-13
 {:numbered="false"}
 
-- Draftforge review
-- remove trust Hierarchy subsection and redundant code block
-- Certificate validity recommendations: align to current practice
-- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
-- `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
-- Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
+- Draftforge review, sort terminology alphabetically
 - Rename Voting AS to Voter and clarify that it does not require an AS number
+- remove trust Hierarchy subsection and redundant code block
+- "Trust Model": reword and shorten section about monopoly/oligopoly
+- "Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere
+- Certificate validity: align maximum validity recommendations to current practice, clarify margin for AS certificate renewal
+- "Regular Voting Certificate" and "Sensitive Voting Certificate": merge two nearly identical sections into one
+- issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one
+- `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
+- pathLenConstraint: clarify it MUST be set
+- authoritativeASes: improve wording to clarify their role and how they are provisioned with TRCs
+- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a maximum size.
+- "Certification Path - Trust Anchor Pool" replace python pseudocode with a list of steps
+- Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
+- PKI Availability: mention need to ensure time sync, and that there should be multiple Authoritative ASes
+- Signing Ceremony: remove normative language from appendix
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
