@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-02T01:00:27.943912+00:00",
+  "timestamp": "2026-06-04T01:06:42.377985+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1654,17 +1654,17 @@
       "id": "I_kwDOH386tM8AAAABB5090Q",
       "title": "Review Til Chpt 2",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/143",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tzaeschke",
-      "authorAssociation": "NONE",
+      "authorAssociation": "CONTRIBUTOR",
       "assignees": [
         "nicorusti"
       ],
       "labels": [],
       "body": "## 2.1 \n\n- \"proof of ownership of the private key\" who owns these private keys? If they are owned by \"TRC\", why have multiple?\n- \" This facilitates the bootstrapping of trust within an ISD\". This process is not clear to me. Maybe give step by step instructions of who does what? Or reference the chapter if it is described later.\n\n- \" 5 years.\" -> Why not 1 year? 5 years means there is no operational routine and it is a first for many operators each time it happens....\n\n## 2.2.\n- \"must first be extracted from one or more active TRCs\" Why do we need to consider \"more\" TRCs? Only during the grace period, right?\n\n## 2.3\n- \"3 days\" -> What about the grace period? Paths can be valid for a long time.\n\n## 2.4\n- just for clarity, add \"There is one private key per voting AS (and per sensitive/regular)\". I.e. not 0 keys and not more than 1 key, right?\n\n- In this chapter, maybe explain the rationale for different certificates for regular/sensitive?  Table 7 explains the difference and 3.5.6 gives a motivation. Maybe just reference 3.5 here?\n\n- 2.4.1 and 2.4.2 should be merged, they have identical text except for regular vs sensitive.\n\n## 2.5\n- table 2: \n  - (1) Explain why it makes sense to include multiple certificates\n  - (3) Why 8 days?\n  - ... What is the overlap for other certificates?\n - What is \"TRC 1\"? Is it a name or number stored in the TRC? Or is it just a virtual name used here?\n\n\n## 2.6\n- `whilst` -> `while`\n- Simplify 1st sentence from \n  ``` \n  Whilst the certificates used in the Control Plane PKI are X.509 v3 certificates, this specification is more restrictive.\n   ``` \n   to\n  ```\n  Control Plane PKI certificates are X.509 v3 certificate with additional constraints applied.\n  ```  \n\n### 2.6.1: \n- Clarify that this is the X.509 version and not the TRC version. \n- Clarify that this refers to X.509 extensions (not SCION extensions; this is the first time extensions are mentioned)\n- Assuming this is not the TRC version, where actually is the TRC version stored? Or is it implicit from the issuing date (if there is such a thing)?\n\n### 2.6.2: \n- Digits? Hex/decimal? \n\n### 2.6.4: \n- Also, maybe the issuer name MUST be unique? (at least within the scope of an ISD?\n\n#### 2.6.4.1: \n- What is the format of \"issuer\" and \"subject\", how is \"id-at-ia\" included? Separator? Is appended or prepended? Sorry if there is a standard way of doing this and this question makes no sense.\n\n### 2.6.5\n- \"SCION implementations SHOULD adopt these values.\" Change\n  \"implementations\" -> \"deployments\"? I assume this is configurable and not hardcoded?\n\n### 2.6.6\n- Is it worth being more specific than \"same constraints as issuer\"? There is only one additional constraint in \"issuer\" in addition to not being empty. Rephrase to `... it MUST NOT be empty and in addition include the \"id-at-ia\" field.`?\n\n### 2.6.8/2.6.9 \n- Maybe out of scope, but a brief mention _why_ they should not be used could be interesting.\n\n\n### 2.7.1: \n- \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\n### 2.7.2: \n - \"It can be used, for example, by control plane messages to identify which certificate to use for verification.\"\n - ` It can be used, for example, by control plane messages to identify which certificate to use for verification.` I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n- Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? Rationale?\n\n### 2.7.3:\n- `digitalSignature: The public key can be used to verify the digital signature of a control plane payload.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate.` ->\n  If it can be used, this implies implementations MUST support this?\n\n- `Other attributes are not used.` -> `Other attributes MUST NOT be used`?\n\n- `...  the relying party MUST be able to trace back the private key used to sign the certificate`\n  How is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\n### 2.7.4 \n- \"Note\":  `Root` -> `root`\n- `... implementations follow what --is-- described in this document` \n- `the use of extKeyUsage should be revised in future protocol iterations`\n  This is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\n### 2.7.5\n- The reference to X.509 points to a \"superseded\" document\n\n\n### 3.2.6 \n- Maybe add some suggestions on the value of this field? E.g. should be (voting members - 2) two allow for removing members? Or if a member loses its certificates (and two events overlap)?\n\n",
       "createdAt": "2026-05-11T17:01:05Z",
-      "updatedAt": "2026-05-13T15:28:00Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-03T09:07:52Z",
+      "closedAt": "2026-06-03T09:07:52Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1683,9 +1683,16 @@
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "## 2.7.1:\n> \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n\nGood point, yes, we can reference https://www.rfc-editor.org/rfc/rfc5280#section-4.2 that clearly defines critical and non-critical\n\n>  It can be used, for example, by control plane messages to identify which certificate to use for verification. I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n\nWe mention this in https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-4.2.1-3.2.1 : \n\"The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:\n... \nSubject key identifier: The identifier of the public key to be used to verify the message. For specification details, see [Section 2.7.2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#subject-key-id-ext).\n\"\n\n## 2.7.2:\n\n> Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\nCorrect. If a cert is self signed, there is no higher level Certificate Authority. This is why you don't need an `authorityKeyIdentifier` field.  \n\n## 2.7.3:\n\n> digitalSignature: The public key can be used to verify the digital signature of a control plane payload. ->\nIf it can be used, this implies implementations MUST support this?\n\n\n\n> keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate. ->\nIf it can be used, this implies implementations MUST support this?\n\n> Other attributes are not used. -> Other attributes MUST NOT be used?\n\nThese are standard X.509 attributes, so there is no need to say that they MUST or MUST NOT be used in this document. We piggyback on what is in RFC5289.\n\n\n...  the relying party MUST be able to trace back the private key used to sign the certificate\nHow is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\nRight, let me think of a better wording\n\n## 2.7.4\n\n> the use of extKeyUsage should be revised in future protocol iterations\nThis is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\nBecause it makes it hard to use SCION certificates for TLS. See https://github.com/scionassociation/scion-cppki_I-D/issues/79#issuecomment-3748761461 \n\n## 2.7.5 \n\n> The reference to X.509 points to a \"superseded\" document\n\nRight, we can reference the next base version https://handle.itu.int/11.1002/1000/14033",
+          "body": "## 2.7.1:\n> \"non-critical\" I assume \"critical refers to something in X.509, maybe add \"... non-critical in the sense of RFC0000\"?\n\nGood point, yes, we can reference https://www.rfc-editor.org/rfc/rfc5280#section-4.2 that clearly defines critical and non-critical\n\n>  It can be used, for example, by control plane messages to identify which certificate to use for verification. I think this implies that implementations MUST be able to use this to identify which certificate to use? Is this specified anywhere?\n\nWe mention this in https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#section-4.2.1-3.2.1 : \n\"The AS MUST attach the following information as signature metadata to ensure that a relying party can identify which certificate to use to verify the signed message:\n... \nSubject key identifier: The identifier of the public key to be used to verify the message. For specification details, see [Section 2.7.2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#subject-key-id-ext).\n\"\n\n## 2.7.2:\n\n> Last sentence: So it must be accepted if extension is missing but the certificate is self-signed? What is the rationale?\n\nCorrect. If a cert is self signed, there is no higher level Certificate Authority. This is why you don't need an `authorityKeyIdentifier` field.  \n\n## 2.7.3:\n\n> digitalSignature: The public key can be used to verify the digital signature of a control plane payload. ->\nIf it can be used, this implies implementations MUST support this?\n\n\n\n> keyCertSign: The public key can be used to verify the CA signature on a control plane AS certificate. ->\nIf it can be used, this implies implementations MUST support this?\n\n> Other attributes are not used. -> Other attributes MUST NOT be used?\n\nThese are standard X.509 attributes, so there is no need to say that they MUST or MUST NOT be used in this document. We piggyback on what is in RFC5289.\n\nPlus, we already have table 4 where we have normative language on each attribute, including digitalSignature and keyCertSign\n\n\n...  the relying party MUST be able to trace back the private key used to sign the certificate\nHow is this MUST actionable? \"MUST be able to do something\" seems a strange use of \"MUST\". Is this a requirement on implementations?\n\nRight, let me think of a better wording\n\n## 2.7.4\n\n> the use of extKeyUsage should be revised in future protocol iterations\nThis is a strange statement. Maybe explain why it should be revised? Why is that mentioned here?\n\nBecause it makes it hard to use SCION certificates for TLS. See https://github.com/scionassociation/scion-cppki_I-D/issues/79#issuecomment-3748761461 \n\n## 2.7.5 \n\n> The reference to X.509 points to a \"superseded\" document\n\n-  #161 ",
           "createdAt": "2026-05-13T14:51:22Z",
-          "updatedAt": "2026-05-13T14:51:22Z"
+          "updatedAt": "2026-06-03T07:18:46Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> 2.6.2:\nDigits? Hex/decimal?\n \nThis is just an integer as defined in the ASN.1 module: \n```\n    serialNumber       INTEGER (1..MAX),\n```\nthe way is encoded depends on the cert overall encoding. So I don't think we need to add anything to the text\n\n\n> 2.6.4:\nAlso, maybe the issuer name MUST be unique? (at least within the scope of an ISD?\n \nNo, the issuer may be unique for self-signed certificates (Root, Voting), because by definition the issuer is the same as the subject. However, it is NOT unique  for AS certificates, since many AS certificates are issued by the same CA, and therefore share the same Issuer. \n\n\n> 2.6.8/2.6.9\nMaybe out of scope, but a brief mention why they should not be used could be interesting.\n\nThis is because of https://datatracker.ietf.org/doc/html/rfc5280#section-4.1.2.8 which says that these fields can basically be there (for backwards compatibility), but that \"CAs conforming to this profile MUST NOT generate certificates with unique identifiers.\" : \n```\nThis profile RECOMMENDS that names not be reused for\n   different entities and that Internet certificates not make use of\n   unique identifiers.  CAs conforming to this profile MUST NOT generate\n   certificates with unique identifiers.  Applications conforming to\n   this profile SHOULD be capable of parsing certificates that include\n   unique identifiers, but there are no processing requirements\n   associated with the unique identifiers.\n```\nI think we could completely remove this constraint, since it is covered by rfc5280, or at least reference the RFC.",
+          "createdAt": "2026-06-02T16:54:11Z",
+          "updatedAt": "2026-06-02T17:15:37Z"
         }
       ]
     },
@@ -1746,19 +1753,19 @@
       "id": "I_kwDOH386tM8AAAABCJXABw",
       "title": "Double check cert max validity",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/148",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
-      "body": "From #143: \n\n> \"3 days\" -> What about the grace period? Paths can be valid for a long time. \n\nThere is no grace period for AS certificates. Two certificates can be valid at the same time, and during verification the relying party selects the right cert based on the  subject key identifier  (see https://www.ietf.org/archive/id/draft-dekater-scion-pki-12.html#name-verifying-a-control-plane-m ). We could add some wording saying that they are renewed before the old one expires, with a cross reference to that section. \n\nOn path segments validity, in -controlplane, we say: \n```\n2.2.2.6.  AS Entry Signature\n\n   Each AS entry MUST be signed with the AS certificate's private key\n   K_i.  The certificate MUST have a validity period that is longer than\n   the Hop Field absolute expiration time (described in\n   Section 2.2.2.5). \n```\nA hop field max validity is 24h, so with 3 days you should have enough time to overlap and keep beaconing.. However, we should think if we want to extend it. ",
+      "body": "From #143: \n\n> 2.3\n\"3 days\" -> What about the grace period? Paths can be valid for a long time. \n\nThere is no grace period for AS certificates. Two certificates can be valid at the same time, and during verification the relying party selects the right cert based on the  subject key identifier  (see https://www.ietf.org/archive/id/draft-dekater-scion-pki-12.html#name-verifying-a-control-plane-m ). We could add some wording saying that they are renewed before the old one expires, with a cross reference to that section. \n\nOn path segments validity, in -controlplane, we say: \n```\n2.2.2.6.  AS Entry Signature\n\n   Each AS entry MUST be signed with the AS certificate's private key\n   K_i.  The certificate MUST have a validity period that is longer than\n   the Hop Field absolute expiration time (described in\n   Section 2.2.2.5). \n```\nA hop field max validity is 24h, so with 3 days you should have enough time to overlap and keep beaconing.. However, we should think if we want to extend it. ",
       "createdAt": "2026-05-13T15:08:16Z",
-      "updatedAt": "2026-05-15T14:50:32Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-03T08:33:04Z",
+      "closedAt": "2026-06-03T08:33:04Z",
       "comments": [
         {
           "author": "tzaeschke",
-          "authorAssociation": "NONE",
+          "authorAssociation": "CONTRIBUTOR",
           "body": "If I understand this correctly, we could suggest: \n\"Certificates must be valid as long as paths are valid. Hopfields in paths may be valid up to 24h. Different hopfields in a path segment may have different expiration dates. To ensure that paths segments are valid until the expiration time of each of their hopfields, it is recommended to create a new certificate every 24h.\"?",
           "createdAt": "2026-05-15T14:50:32Z",
           "updatedAt": "2026-05-15T14:50:32Z"
@@ -1794,15 +1801,15 @@
       "id": "I_kwDOH386tM8AAAABCJpRMg",
       "title": "Review Til Chpt 4, 5, 6 and Appendix C",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/150",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "tzaeschke",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "### 4.1.2\n\n- `Relying parties MUST have at least one valid TRC available.`\n  Maybe specify what relying parties are. I assume it is control services of every AS in the ISD (== AS operators/infrastructure)?\n  I assume it is not border routers and not endhosts.\n\n- The 1st MUST does not give any instructions on what to do or how to achieve it, usually I expect MUST before a description of an  action, not before a description of a state. I suggest moving it to the 3rd point, see below.\n- The 2nd MUST overlaps with the first, I suggest moving it to the 3rd bullet.\n- How to proceed if any of these MUSTs fail (e.g. due to network separation)?\n\n- Beaconing + path discovery: This section is about _ discovering_  TRC updates, but it contains normative language about CP traffic creation. Moreover these MUSTs appear to duplicate the MUSTs in section 4.2.1. Maybe remove the normative language here?\n\n- There is an empty line between 2nd and 3rd point.\n\n- Active discovery: `Any TRC can be obtained at any time from the sender of the information it secures; `\n  This sentence is unclear to me, what is \"it\"?\n  Also, why `any` TRC? Is should probably only get the latest one?\n  Maybe rephrase to: `The latest TRC can be actively queried from any entity (control service) that has it.`\n\n- `Note`: What is the point of this note, why is this relevant? Also, it seems incorrect, also the third mechanism involves active communication.\n  Moreover, the first two mechanisms require the third one, correct?\n\nSuggestion: \n  - Before the bullet list, insert: `New TRCs can be obtained from any AS that has them. The necessary query and response is described in [I-D.dekater-scion-controlplane], section \"Distribution of Cryptographic Material\"`.\n  - Change third bullet to `Any relying party can actively poll other parties for new TRC.`\n  - Add a separate list below the bullet list:  \n    ```\n    When to poll:\n    - A relying party MUST poll if the current TRC is about to expire.\n    - A relying party SHOULD poll if path lookup or beaconing traffic is sparse\n    - A relying party MAY poll at any time.\n    ``` \n  - Remove `Note: ...`\n\n\n\n## 4.2\n- `parties MUST be able`  What is the implication here? What must an implementer do to achieve this? Or does this follow implicitly from following from other sections of this document (including the following sections)? In that case maybe simply replace this `MUST be` with `are`?\n\n### 4.2.1\n- remove parenthesis around `(valid)` or simplify/rephrase to `An AS signs control plane messages with the private key that corresponds to its own certificate.`\n\n### 4.2.2\n- remove reference to SCION: `For efficiency, SCION distributes these certificate chains separately from the signed messages.`\n  -> `For efficiency, these certificate chains are distributed separately from the signed messages.`\n\n\n- 2nd point: Why is this a MUST? If this is security critical, why is this information optional for the sender? \n- 2nd point: How does one know whether this is the `latest TRC`? Do they have to perform a TRC query to check?\n- 2nd point: Combine two MUST into one: `... the relying party MUST ensure that they have this latest TRC.`\n\n- 3rd point: Remove 1st MUST, it seems unnecessary ->  `the relying party selects the certificate chain that will be used to verify the message`\n- 3rd point: Remove the three sub-MUSTs, they are duplicates, the first MUST implies the other 3. Maybe make it similar to 4th point.\n- 3rd point: Is it worth adding something about the `current time`? I.e. that \"coarse synchronization` is sufficient (reference CP draft 7.3? Maybe a reference to a section that discusses time tolerance?\n\n- 5th point: What happens if the verification or the check fails?\n\n- It seems a bit inconsistent that the failure of (4.) is discussed in a separate point (5.) while the failure of (3.) is discussed in a separate paragraph afterwards.\n\n- `Important`: \n  - Remove normative SHOULD, it is not actionable. Also an \"implication\" usually means that something \"is\" or \"is not\", rather than \"should\".\n\n  - I'm not sure what is said here. Why SHOULD they, or rather, may not be, verifiable? As long as I have a certificate, I can verify them (verification may fail because the certificate is outdated)?\n    Is this meant to say: \"An implication of the above procedure is that path segments SHOULD be _valid_ at time of use.\"?\n    How is this an implication of the procedure, the procedure says nothing about storing the path and using it later...\n    Maybe remove the first sentence and shorten the whole paragraph to \"Important: It is not enough to rely on path segments being verified on insert since TRC updates that change the root key can invalidate a certificate chain.\"?\n\n  - Does \"It is not enough\" mean that something MUST be done? -> Insert MUST\n\n## 4.3\n- Does \"REQUIRED\" need to be normative? This is just a listing of steps, they technically require each other implicitly.\n- Does \"MAY\" need to be normative?\n  \n\n## 5.1\n- `PKI operators need to ensure that the CAs maintain accurate time.`\n  In CP-draft, it is not called \"accurate\" but \"coarse\", maybe write `PKI operators need to (MUST?) maintain coarse time synchronization as discussed in [I-D.dekater-scion-controlplane], section \"Attacks on Time Sources\"`.\n- Also, maybe replace `Attacks on Time Sources` with `7.3. Effects of Clock Inaccuracy`?\n\n- `This document describes a typical TRC signing ceremony in Appendix C, but further processes are out-of-scope.` \n  `This document` is misleading, the previous sentence mentions a document, but a different one. How about: `The documentation of a typical TRC signing ceremony is discussed in Appendix C.`\n\n# 6\n- `This section discussed implication of such trust architecture, covering inter-AS security considerations.`\n   Typo: past tense and singular: `discusseS implicationS`\n\n## 6.1\n- `In SCION there is no central authority that could \"switch off\" an ISD as each`\n  add `In SCION there is no central authority that could \"switch off\" an ISD (except the ISD itself) as each ...`\n\n- 1st point: Maybe simplify to  `... To maliciously perform a TRC update, an attacker would need to compromise enough voting keys for a voting quorum. The higher the quorum, the _harder_ a malicious update _becomes_.`\n\n## 6.2\n- `On the other hand,` -> `However,`  .  On the other hand usually comes after \"on one hand\"\n\n- 1st point: Is this a SHOULD?\n- This is not obvious to me. Every path segment is signed with a specific CA, right? So does that mean every AS should sign its PCBs with different CAs round-robin? If so, maybe that is worth making explicit? \n  Generally, can we be more specific in how one \"relies\" on multiple CAs?\n\n# Appendix C\n\n- In general, the signing procedure document will not be an RFC. Should there be any normative language here?\n  Also, it says the procedure is RECOMMENDED, implying that all the following MUSTs are recommended, so the MUSTs are all optional .... ?\n  Maybe we should remove all normative language from this section, including the \"RECOMMENDED\"?\n\n## C.1\n- The SHOULD and the previous RECOMMENDED seem redundant.\n- `Voting ASes` is spelled with upper case here (several occurrences) but lower case elsewhere. Change to lower case?\n- 2nd point `They are in possession of a device with the private keys of their respective certificates in the TRC.`\n  Device? Maybe shorten to: `They are in possession of the private keys of their respective certificates in the TRC.`\n\n- remove ` and issues encountered during the Signing Ceremony may be assumed to be caused by honest mistakes and not by malicious intent.`\n- The sentence `Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data, and the private keys of each participant never leave their machine.` seems wrong: \n  - \"Hash comparison checks are included\" -> where? by whom? should they be part of a protocol? What should be hashed? The private keys? Why?\n  - How does hash comparison _ensure_ that a private keys never leave a machine?\n  - Mentioning of \"avoiding mistakes\" seems unnecessary\n\n## C.2\n- The initial sentence seems off:\n  - Do we really need to specify that participants need to agree on a meeting location?\n    If anything we could suggest to use a _physical_ _in-person_ meeting, but the location is irrelevant. \n  - It sounds like, physical location and devices are not a MUST, so why even mention it?\n  - `MUST decide the ISD policy as follows;` makes it sound like the list gives instruction on how to decide on a policy. That is not the case.\n    Maybe: `An ISD policy MUST include the following items:`?\n\n- 1st point: change to `ISD number - for public ISDs obtained from the SCION registry, see Section 3.2.2;`\n\n- `Voting AS` is upper case...\n\n- `Each representative of a Voting AS MUST also create the following before the ceremony:`\n  Why MUST _before_ the ceremony? Also, maybe remove the MUST, it seems implicit/obvious for providing voting keys.\n\n- `In addition,.. ` all the MUSTs here seem obvious/implicit, I think they can be removed.\n\n- `The location should provide electricity and power sockets for each participant, and should provide a monitor or projector that allows the Ceremony Administrator to display proceedings.`\n  I'm not sure, does this really belong here?\n \n- `The Ceremony Administrator MUST provide or be provided with a device to exchange data between the ceremony participants.`\n  Again, these seems obvious to me. I would either remove the sentence or remove the MUST, it does not even specify who is actionable. \n\n- `SHOULD`: So after all these MUSTs, the security of the devices is optional?\n\n### C.3.1\n- Simplify sentence: `All parties share the certificates that must be part of the TRC with the Ceremony Administrator.` to \n  `All certificates that must be part of the TRC must be shared with the Ceremony Administrator.`\n\n- `The Ceremony Administrator MUST then` this MUST seems implicit (= a precondition) for the following MUST. Remove it?\n- Does it need to be SHA-512? What is wrong with SHA-3 or others?\n  Maybe add `SHA-512 (or any equivalent or better algorithm)`?\n  Then again, this document is only a recommended example, so maybe we can leave it as is.\n\n### C.3.2\n- 1st sentence: remove words `the` before Section 3.2 and `completed`?\n\n- \"DER encoding\", provide reference?\n\n- `by computing this on their` -> `by computing IT on their`\n- `checking it matches` -> `checking THAT it matches`\n\n### C.3.4\n- `The Signing Ceremony is completed once when every voting representative` -> remove `once` or `when`",
       "createdAt": "2026-05-13T15:53:13Z",
-      "updatedAt": "2026-05-28T16:44:06Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-03T10:26:23Z",
+      "closedAt": "2026-06-03T10:26:23Z",
       "comments": [
         {
           "author": "tzaeschke",
@@ -1944,7 +1951,7 @@
       "labels": [],
       "body": "In #142, Till points out: \n\n> Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\nI think we could add one more rule in `3.5.3.  General Update Rules` saying that:\n\n- After an update, Voters MUST distribute the TRC to all authoritative ASes. I'm not sure how that works in practice..",
       "createdAt": "2026-05-22T15:43:32Z",
-      "updatedAt": "2026-05-29T13:23:18Z",
+      "updatedAt": "2026-06-03T12:21:30Z",
       "closedAt": null,
       "comments": [
         {
@@ -1960,6 +1967,41 @@
           "body": "There are more points on Authoritative ASes from @tzaeschke : \n\nWhat is missing here is a recommendation on:\n\n- How many authorative ASes should have?\n- How do we chose them (is it okay if they are voting ASes?)\n- Do authorative ASes require additional infrastructure?\n\n\nAnd some explanation what their purpose is:\n\n- Why do we need them? They are not part of the trust model...\n- If there is no purpose beyond just giving the concept a name, maybe state just that. As it is, the reader is left wondering whether there is importance or not.\n- Maybe from the AS perspective: What are the advantages/disadvantages for an AS of being authorative?\n\n\n\n\nI am not sure if this fits best \n\n- 3.2.9.  authoritativeASes\n- 4.1.2.  TRC Update Discovery (we should mention the role of authoritative ASes here!)\n- 5.  Deployment Considerations (maybe we could say something about the availability requirements)",
           "createdAt": "2026-05-29T13:22:00Z",
           "updatedAt": "2026-05-29T13:22:42Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "In 4.1.2 we also say: \n\n> Beaconing Process\nThe TRC version is announced in the beaconing process. Each AS MUST announce what it considers to be the latest TRC, and MUST include the hash value of the TRC contents to facilitate the discovery of discrepancies. \n\nWhere is this TRC hash included in beaconing? AFAIK there is no such field\nThis wording was introduced very early (https://github.com/scionassociation/scion-cppki_I-D/commit/f929f37a9645dd509a7f2a6200755f9fb4692568 )\nThis comes from https://docs.scion.org/en/latest/cryptography/interactions.html ",
+          "createdAt": "2026-06-03T10:12:10Z",
+          "updatedAt": "2026-06-03T10:14:14Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Leftover from #157\n\nI indeed think we should change the sentence:\n\nAdditionally, the signer SHOULD include the following information:\n\nAnd turn it into a MUST, so we align with -dataplane. Asked on [slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1780418195444589)\n\nThis SHOULD was introduced in a [very early draft version](https://github.com/scionassociation/scion-cppki_I-D/commit/6db6cc71211767996eac23814968bef0d3368d03) and comes from https://docs.scion.org/en/latest/cryptography/interactions.html#signing-process",
+          "createdAt": "2026-06-03T10:26:41Z",
+          "updatedAt": "2026-06-03T10:26:41Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "> How many authorative ASes should have?\n> How do we chose them (is it okay if they are voting ASes?)\n\nI was looking at some existing TRCs. SSFN and SCIERA have 3 authoritative ASes. The SSFN regulations do not specifically mention them for distribution of certs.",
+          "createdAt": "2026-06-03T10:45:43Z",
+          "updatedAt": "2026-06-03T10:45:43Z"
+        },
+        {
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> > How many authorative ASes should have?\n> > How do we chose them (is it okay if they are voting ASes?)\n> \n> I was looking at some existing TRCs. SSFN and SCIERA have 3 authoritative ASes. The SSFN regulations do not specifically mention them for distribution of certs.\n\nDo we know why they have three? Are there any pros/cons that we could give?",
+          "createdAt": "2026-06-03T10:50:13Z",
+          "updatedAt": "2026-06-03T10:50:13Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "I'm not sure, I think it is a bit of redundancy.. If you have too many, provisioning of updated TRCs becomes cumbersome. If you have too little, you loose redundancy. I added this to the text",
+          "createdAt": "2026-06-03T12:21:29Z",
+          "updatedAt": "2026-06-03T12:21:29Z"
         }
       ]
     },
@@ -1975,15 +2017,22 @@
       "labels": [],
       "body": "From @tzaeschke: > I also noticed another problem (I also added a note the the PR of section 3: There is no real description of \"trust reset\". The closest thing is section 6.1.1, but that feels somewhat hidden. For comparison, there are section about \"trust update\" and \"signing ceremony\".\n\nIndeed, trust resets are spread across various sections: \n\n```\n1.4.1.  Updates and Trust Resets\n\n   If the ISD's TRC has been compromised, it is necessary for an ISD to\n   re-establish the trust root.  This is possible with a process called\n   *trust reset* (if permitted by the ISD's trust policy).  In this\n   case, a new base TRC is created.\n```\n\n```\n3.2.5.  noTrustReset\n\n   The noTrustReset Boolean specifies whether a trust reset is forbidden\n   by the ISD.  Within a TRC update chain, this value MUST NOT be\n   changed by a regular or sensitive update.  However, it is possible to\n   change the noTrustReset value in the event of a trust reset where a\n   new base TRC is created.\n\n   The noTrustReset field is OPTIONAL and defaults to FALSE.\n\n   Note that once the noTrustReset Boolean is set to TRUE and a trust\n   reset is disallowed, this cannot be reversed.  Therefore, ISDs SHOULD\n   always set this value to FALSE, unless they have sufficiently\n   assessed the risks and implications of making a trust reset\n   impossible.\n\n   Note that a trust reset represents a special use case where a new\n   base TRC is created.  It therefore differs from a TRC update (regular\n   or sensitive) as the signatures in the new base TRC cannot be\n   verified with the certificates contained in the predecessor TRC.\n   Instead, a trust reset base TRC must be axiomatically trusted,\n   similarly to how the initial TRC is trusted.\n\n```\n\n\n```\n6.1.1.  Recovery from Compromise\n\n   This section deals with possible recovery from the compromises\n   discussed in the previous paragraph.  As described in Section 1.4.2,\n   there is no revocation in the Control Plane PKI.\n\n   *  At TRC level: If any of the root keys or voting keys contained in\n      the TRC are compromised, the TRC MUST be updated as described in\n      Section 3.5.  A trust reset is only required in the case the\n      number of compromised keys at the same time is greater or equal\n      than the TRC's quorum (see Section 3.2.7), and a invalid update\n      has been produced and distributed in the network.\n```\n\nLet's check if we can consolidate and cross reference it",
       "createdAt": "2026-05-29T12:57:19Z",
-      "updatedAt": "2026-05-29T13:02:43Z",
+      "updatedAt": "2026-06-03T09:28:57Z",
       "closedAt": null,
       "comments": [
         {
           "author": "nicorusti",
           "authorAssociation": "MEMBER",
-          "body": "Proposal by @tzaeschke \n\n```\n## Trust Reset\nIf the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called trust reset (if permitted by the ISD's trust policy). In this case, a new base TRC is created.\nIf a TRC is compromised, it means that the root keys or voting keys are compromised. If the number of compromised keys is smaller than the voting quorum, the TRC can be updated as described in [Section 3.5](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#update). \nA trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [Section 3.2.7](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#quorum)), and a invalid update has been produced and distributed in the network.\n```",
+          "body": "Proposal by @tzaeschke \n\n```\n## Trust Reset\nIf the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called trust reset (if permitted by the ISD's trust policy). In this case, a new base TRC is created.\nIf a TRC is compromised, it means that the root keys or voting keys are compromised. If the number of compromised keys is smaller than the voting quorum, the TRC can be updated as described in [Section 3.5](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#update). \nA trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [Section 3.2.7](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#quorum)), and a invalid update has been produced and distributed in the network.\n```\n\nTill proposes to insert it between [3.4](https://scionassociation.github.io/scion-cppki_I-D/til-chapter2/draft-dekater-scion-pki.html#section-3.4).  [Certification Path - Trust Anchor Pool](https://scionassociation.github.io/scion-cppki_I-D/til-chapter2/draft-dekater-scion-pki.html#name-certification-path-trust-an)\n[3.5](https://scionassociation.github.io/scion-cppki_I-D/til-chapter2/draft-dekater-scion-pki.html#section-3.5).  [TRC Updates](https://scionassociation.github.io/scion-cppki_I-D/til-chapter2/draft-dekater-scion-pki.html#name-trc-updates) ",
           "createdAt": "2026-05-29T13:02:43Z",
-          "updatedAt": "2026-05-29T13:02:43Z"
+          "updatedAt": "2026-06-03T09:28:57Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Related to this, Til also asked: \n\n> Maybe add some suggestions on the value of this field? E.g. should be (voting members - 2) two allow for removing members? Or if a member loses its certificates (and two events overlap)?\n ",
+          "createdAt": "2026-06-02T18:39:36Z",
+          "updatedAt": "2026-06-02T18:39:36Z"
         }
       ]
     },
@@ -1992,16 +2041,49 @@
       "id": "I_kwDOH386tM8AAAABDy6nkg",
       "title": "Trust agility wording",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/159",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Following long discussions in #146 and then in [Slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1780045194860189), I'm deferring this to a dedicated issue. \n\nThis is the initial wording being discussed: \n\n> The TRC also provides *trust agility* - enabling users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains an uncompromised set of trust roots. ISD members can also decide whether to trust other ISDs and thus transparently define trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.\n\nMany variations were discussed, yet inconclusive.",
       "createdAt": "2026-05-29T15:38:36Z",
-      "updatedAt": "2026-05-29T15:38:36Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-02T15:35:17Z",
+      "closedAt": "2026-06-02T15:35:17Z",
       "comments": []
+    },
+    {
+      "number": 161,
+      "id": "I_kwDOH386tM8AAAABEKI7Xg",
+      "title": "Update X.509 reference to version 9?",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/161",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [
+        "nicorusti"
+      ],
+      "labels": [],
+      "body": "@tzaeschke noted that the currently referenced version of X.509 (10/2016) is marked as superseded. Shall we update to v9? \n\nWe currently reference to specific clauses, that according to Gemini and to the enclosed diff, were not changed too much. An AI comparison is below. I did a quick manual side by side comparison to verify this and not much changed, except clause 7.2 which is now 7.2.1. \n\nHowever, we are using go standard [PKI library](https://pkg.go.dev/crypto/x509), I'm not sure if it supports revision 9: \n> The package targets the X.509 technical profile defined by the IETF ([RFC 2459](https://rfc-editor.org/rfc/rfc2459.html)/3280/5280), and as further restricted by the CA/Browser Forum Baseline Requirements. There is minimal support for features outside of these profiles, as the primary goal of the package is to provide compatibility with the publicly trusted TLS certificate ecosystem and its policies and constraints. \n\n AFAIK the main novelty introduced by version 9 is support of Multiple cryptographic algorithms, which could be useful for post-quantum PKI. \n\nAI Comparison:\n- Clause 7.2: Public-key certificate10/2016: This was a single, unified clause detailing the creation, syntax, and components of a public-key certificate.  10/2019: The clause was heavily restructured and split into subclauses. The original text was moved into 7.2.1 Public-key certificate syntax. A completely new section, 7.2.2 Multiple cryptographic algorithms for public-key certificates, was added. This new addition introduces the ability for a public-key certificate to hold alternative public key information (subjectAltPublicKeyInfo), an alternative signature algorithm (altSignatureAlgorithm), and an alternative digital signature (altSignatureValue). \n-  Clause 9: Public-key certificate and CRL extensions10/2016: The introductory text lists five areas of extensions (a through e), ending with \"CRL distribution points and delta CRLs\".  10/2019: While the introductory text in Clause 9 listing the first five areas remains identical, the overall contents of Section 9 were expanded. The 2019 edition adds two entirely new extension categories: 9.7 Authorization and validation list extensions and 9.8 Alternative cryptographic algorithms and digital signature extensions.  \n- Clause 9.2.2.2: Subject key identifier extensionBoth Editions: The text and the ASN.1 syntax for this extension are completely identical between the 2016 and 2019 editions. This is the only clause on your list that remained untouched.  \n- Clause 9.2.2.3: Key usage extension10/2016: Defines the standard intended usage bit strings (e.g., digitalSignature, keyEncipherment).  10/2019: The 2019 edition inserts a brand new paragraph explicitly applying this extension to the new multi-algorithm features: \"For a multiple cryptographic algorithm public-key certificate, the keyUsage extension applies also to the alternative SubjectAltPublicKeyInfo in the subjectAltPublicKeyInfo extension.\"  \n-  Clause 9.2.2.4: Extended key usage extension10/2016: Defines the standard extended key usage definitions.  10/2019: Similar to the Key Usage clause, the 2019 edition adds a new paragraph to accommodate multi-algorithm certificates: \"For a multiple cryptographic algorithm public-key certificate, the extKeyUsage extension applies also to the alternative SubjectAltPublicKeyInfo in the subjectAltPublicKeyInfo extension.\"   \n\n\n\n",
+      "createdAt": "2026-06-02T18:34:21Z",
+      "updatedAt": "2026-06-03T09:19:17Z",
+      "closedAt": null,
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "[Slack discussion](https://scionproto.slack.com/archives/C8ADA9CEP/p1780425920424539)",
+          "createdAt": "2026-06-02T18:45:41Z",
+          "updatedAt": "2026-06-02T18:45:41Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Example of a change in 10/2019 v.s. 10/2016\n<img width=\"852\" height=\"749\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bb719c24-0fcb-420e-a3c5-b67df7e4aadc\" />",
+          "createdAt": "2026-06-03T09:19:17Z",
+          "updatedAt": "2026-06-03T09:19:17Z"
+        }
+      ]
     }
   ],
   "pulls": [
@@ -10277,24 +10359,26 @@
       "id": "PR_kwDOH386tM7bNHSF",
       "title": "chapter 2 review",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/151",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #143 \r\nContributes to #149 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/til-chapter2/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-13T16:40:26Z",
-      "updatedAt": "2026-06-01T08:36:01Z",
+      "updatedAt": "2026-06-03T09:08:20Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "8a07963b1cb346d0e1f4d0da2f2eaa25a0b0a59b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "til-chapter2",
-      "headRefOid": "44b66d45746a31b9d41760cbc3d2cfc33358074e",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "a4392336daa2dbdf5713b7f410992993e001eaf7",
+      "closedAt": "2026-06-03T09:07:50Z",
+      "mergedAt": "2026-06-03T09:07:50Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a8bc2920b14844f596167658aeeff2c7ccb4286a"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -10302,6 +10386,13 @@
           "body": "Comments are addressed until 2.4 so far",
           "createdAt": "2026-05-27T07:51:36Z",
           "updatedAt": "2026-05-27T07:51:36Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "[Diff_ draft-dekater-scion-pki.txt - draft-dekater-scion-pki.txt.html](https://github.com/user-attachments/files/28544083/Diff_.draft-dekater-scion-pki.txt.-.draft-dekater-scion-pki.txt.html)\r\n",
+          "createdAt": "2026-06-03T09:08:17Z",
+          "updatedAt": "2026-06-03T09:08:17Z"
         }
       ],
       "reviews": [
@@ -10342,6 +10433,52 @@
               "body": "```suggestion\r\nRegular and sensitive voting certificates are used to verify regular and sensitive TRC updates respectively, and are embedded in the TRC. The distinction between regular and sensitive updates is described in [](#update).\r\n```",
               "createdAt": "2026-05-27T07:43:22Z",
               "updatedAt": "2026-05-27T07:43:23Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB0SG0w",
+          "commit": {
+            "abbreviatedOid": "2cc5ade"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "LGTM except my comment on 2.7.3",
+          "createdAt": "2026-06-03T08:46:53Z",
+          "updatedAt": "2026-06-03T08:50:42Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "```suggestion\nIf a relying party uses the certificate\u2019s public key to verify the signature of a control plane payload (`digitalSignature` attribute), the relying party is able to trace back the private key used to sign the certificate. This is done by referencing the ISD-AS and the subject key identifier (via the `subjectKeyIdentifier` extension). For more information about the `subjectKeyIdentifier` extension (see [](#subject-key-id-ext)).\n```",
+              "createdAt": "2026-06-03T08:46:53Z",
+              "updatedAt": "2026-06-03T08:50:42Z"
+            },
+            {
+              "originalPosition": 1,
+              "body": "See https://github.com/scionassociation/scion-cppki_I-D/issues/143#issuecomment-4442258914",
+              "createdAt": "2026-06-03T08:49:13Z",
+              "updatedAt": "2026-06-03T08:50:42Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB0bSRQ",
+          "commit": {
+            "abbreviatedOid": "2cc5ade"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-03T09:07:25Z",
+          "updatedAt": "2026-06-03T09:07:25Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Uups I forgot to push, this was in [a439233](https://github.com/scionassociation/scion-cppki_I-D/pull/151/commits/a4392336daa2dbdf5713b7f410992993e001eaf7)",
+              "createdAt": "2026-06-03T09:07:25Z",
+              "updatedAt": "2026-06-03T09:07:25Z"
             }
           ]
         }
@@ -10760,24 +10897,26 @@
       "id": "PR_kwDOH386tM7fb5GK",
       "title": "Til and Dominik Review Chapters 4-6+AppC",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/157",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "knmeynell",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "Resolves https://github.com/scionassociation/scion-cppki_I-D/issues/150\r\nContributes to https://github.com/scionassociation/scion-cppki_I-D/issues/149\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/Review-Til-Chapters-4-6/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-26T14:02:25Z",
-      "updatedAt": "2026-06-01T09:59:50Z",
+      "updatedAt": "2026-06-03T10:26:48Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "8a07963b1cb346d0e1f4d0da2f2eaa25a0b0a59b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "Review-Til-Chapters-4-6",
-      "headRefOid": "9098191cbb368499c28a192225e7c491652e8443",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "7f1c51946fc9529e236a5c79561c614dda8f7d72",
+      "closedAt": "2026-06-03T10:26:22Z",
+      "mergedAt": "2026-06-03T10:26:22Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "0b5d4332a8a0678e15c48e24538698d28035805f"
+      },
       "comments": [
         {
           "author": "nicorusti",
@@ -10967,6 +11106,86 @@
               "updatedAt": "2026-06-01T09:59:50Z"
             }
           ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBvIKMQ",
+          "commit": {
+            "abbreviatedOid": "9098191"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-02T16:07:08Z",
+          "updatedAt": "2026-06-02T16:07:09Z",
+          "comments": [
+            {
+              "originalPosition": 367,
+              "body": "Ok, makes senes, I applied your suggestion. Thank you! ",
+              "createdAt": "2026-06-02T16:07:08Z",
+              "updatedAt": "2026-06-02T16:07:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBvRkJw",
+          "commit": {
+            "abbreviatedOid": "9098191"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-02T16:29:40Z",
+          "updatedAt": "2026-06-02T16:29:40Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Thank you for raising this, I  actually realize that the reference in this paragraph is wrong, because these metadata are actually encoded in a `VerificationKeyID` protobuf message,\r\nso the right reference would be: \"AS Entry Signed Header\". \r\n\r\nIn -controlplane, we already write:\r\n\r\n```\r\n   The VerificationKeyID message contains the following REQUIRED fields:\r\n\r\n   *  trc_base: Defines the _base_ number of the latest Trust Root\r\n      Configuration (TRC) available to the signer at the time of the\r\n      signature creation.\r\n\r\n   *  trc_serial: Defines the _serial_ number of the latest TRC\r\n      available to the signer at the time of the signature creation.\r\n ```\r\n \r\n So I'm wondering if we need to reword the section overall, to align it with what -controlplane says\r\n \r\n ",
+              "createdAt": "2026-06-02T16:29:40Z",
+              "updatedAt": "2026-06-02T16:29:40Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABBvUsyw",
+          "commit": {
+            "abbreviatedOid": "9098191"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-02T16:36:50Z",
+          "updatedAt": "2026-06-02T16:36:51Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "I indeed think we should change the sentence: \r\n> Additionally, the signer SHOULD include the following information:\r\n \r\n And turn it into a MUST, so we align with -dataplane. Asked on [slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1780418195444589)\r\n \r\n This SHOULD was introduced in a [very early draft version](https://github.com/scionassociation/scion-cppki_I-D/commit/6db6cc71211767996eac23814968bef0d3368d03) and comes from https://docs.scion.org/en/latest/cryptography/interactions.html#signing-process ",
+              "createdAt": "2026-06-02T16:36:51Z",
+              "updatedAt": "2026-06-02T16:38:00Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB09JtQ",
+          "commit": {
+            "abbreviatedOid": "9098191"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-03T10:26:09Z",
+          "updatedAt": "2026-06-03T10:26:09Z",
+          "comments": [
+            {
+              "originalPosition": 1,
+              "body": "Continuing this in #164 ",
+              "createdAt": "2026-06-03T10:26:09Z",
+              "updatedAt": "2026-06-03T10:26:09Z"
+            }
+          ]
         }
       ]
     },
@@ -10975,24 +11194,26 @@
       "id": "PR_kwDOH386tM7gtXu_",
       "title": "trust agility wording",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/160",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #159\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/trust-agility/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-05-29T15:45:18Z",
-      "updatedAt": "2026-06-01T08:54:17Z",
+      "updatedAt": "2026-06-02T15:35:20Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "8a07963b1cb346d0e1f4d0da2f2eaa25a0b0a59b",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "trust-agility",
-      "headRefOid": "a8ec36d7213652e591ebc1eee585fa4f34490f46",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "95c74da731dbed5e5bc616deb792a754a46fd3d1",
+      "closedAt": "2026-06-02T15:35:15Z",
+      "mergedAt": "2026-06-02T15:35:15Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "0bdbc92ec4dba0e26dce697d52d88c932bd2d039"
+      },
       "comments": [],
       "reviews": [
         {
@@ -11029,6 +11250,261 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 162,
+      "id": "PR_kwDOH386tM7h679u",
+      "title": "update X.509 reference to revision 9",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/162",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #161 \r\n\r\nI want to have more discussion before merging this.",
+      "createdAt": "2026-06-02T18:35:49Z",
+      "updatedAt": "2026-06-02T18:35:49Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "0bdbc92ec4dba0e26dce697d52d88c932bd2d039",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "x509-update",
+      "headRefOid": "076e4672abec1ac5878e0bc82d8b0201381e5b4e",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
+    },
+    {
+      "number": 163,
+      "id": "PR_kwDOH386tM7iHUTV",
+      "title": "cert validity: clarify that renewal should happen before hop field ex\u2026",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/163",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #148 ",
+      "createdAt": "2026-06-03T07:32:25Z",
+      "updatedAt": "2026-06-03T08:33:06Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "0bdbc92ec4dba0e26dce697d52d88c932bd2d039",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "cert_validity",
+      "headRefOid": "09b4d8b0e64344f3ccef4f497be1862d5a176b29",
+      "closedAt": "2026-06-03T08:33:03Z",
+      "mergedAt": "2026-06-03T08:33:03Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "b57bbb11465ed05f17b8a8ad8da87a371fe9c2ac"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABB0GWhQ",
+          "commit": {
+            "abbreviatedOid": "09b4d8b"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2026-06-03T08:18:32Z",
+          "updatedAt": "2026-06-03T08:18:32Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 164,
+      "id": "PR_kwDOH386tM7iKy39",
+      "title": "Clarify role and processes for authoritative ASes",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/164",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #155 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/authoritative_as_clarifications/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-06-03T10:15:48Z",
+      "updatedAt": "2026-06-03T15:14:24Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "0b5d4332a8a0678e15c48e24538698d28035805f",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "authoritative_as_clarifications",
+      "headRefOid": "32419d0c8c791bc677fd01c021a940d41234b911",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABB2VmNQ",
+          "commit": {
+            "abbreviatedOid": "5972cf1"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM, but I have some suggestions.",
+          "createdAt": "2026-06-03T13:40:15Z",
+          "updatedAt": "2026-06-03T13:46:09Z",
+          "comments": [
+            {
+              "originalPosition": 39,
+              "body": "```suggestion\nThe very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC. The initial TRC MUST be signed during a Signing Ceremony where all voting representatives of the initial TRC take part to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain the initial TRC by means of a secure offline or online mechanism.\n```",
+              "createdAt": "2026-06-03T13:40:16Z",
+              "updatedAt": "2026-06-03T13:46:09Z"
+            },
+            {
+              "originalPosition": 56,
+              "body": "```suggestion\nOnce a relying party learns of a new TRC, it can obtain the TRC from one of the Authoritative ASes (see [](#auth)).\n```",
+              "createdAt": "2026-06-03T13:42:38Z",
+              "updatedAt": "2026-06-03T13:46:09Z"
+            },
+            {
+              "originalPosition": 65,
+              "body": "Is this a good argument?\nHow much effort is it to provision an Authorative AS with a TRC?\nIt does not need to be done out of band (= travelling there), or does it?\n\nMaybe remove the second sentence?",
+              "createdAt": "2026-06-03T13:45:38Z",
+              "updatedAt": "2026-06-03T13:46:09Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB2vSVg",
+          "commit": {
+            "abbreviatedOid": "5972cf1"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-03T14:24:55Z",
+          "updatedAt": "2026-06-03T14:24:55Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "The second sentence was an attempt to describe why you want a certain number of authoritative ASes (basically not too many).\r\nI am ok to remove it too\r\n```suggestion\r\nTo ensure redundancy, an ISD should contain multiple Authoritative ASes (see [](#auth)).\r\n```",
+              "createdAt": "2026-06-03T14:24:55Z",
+              "updatedAt": "2026-06-03T14:24:56Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB3McgA",
+          "commit": {
+            "abbreviatedOid": "32419d0"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-03T15:14:24Z",
+          "updatedAt": "2026-06-03T15:14:24Z",
+          "comments": [
+            {
+              "originalPosition": 65,
+              "body": "Yes, I was asking for an argument, but I feel this one isn't really very strong?\nRemoving it may be the best call, up to you.",
+              "createdAt": "2026-06-03T15:14:24Z",
+              "updatedAt": "2026-06-03T15:14:24Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 165,
+      "id": "PR_kwDOH386tM7iQHOU",
+      "title": "automated cert renewal: clarify signatures",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/165",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Follow up to https://github.com/scionassociation/scion-cppki_I-D/pull/157 \r\n\r\n",
+      "createdAt": "2026-06-03T13:55:38Z",
+      "updatedAt": "2026-06-03T15:15:56Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "0b5d4332a8a0678e15c48e24538698d28035805f",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "cert_renewal",
+      "headRefOid": "a924a95396a9e2024dc079948a357e9d6462eaab",
+      "closedAt": "2026-06-03T15:15:53Z",
+      "mergedAt": "2026-06-03T15:15:52Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "51d03faf5ae8c7dda3173c206f5875242fe2ba56"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABB2_Agw",
+          "commit": {
+            "abbreviatedOid": "df4c831"
+          },
+          "author": "oncilla",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-03T14:49:37Z",
+          "updatedAt": "2026-06-03T14:49:38Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "```suggestion\n- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.\n```\n\nAn AS can have many certificates that are active and valid.",
+              "createdAt": "2026-06-03T14:49:37Z",
+              "updatedAt": "2026-06-03T14:49:38Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB3M9KA",
+          "commit": {
+            "abbreviatedOid": "a924a95"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-03T15:15:21Z",
+          "updatedAt": "2026-06-03T15:15:21Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 166,
+      "id": "PR_kwDOH386tM7iSTJo",
+      "title": "Trust Reset - consolidate concepts in dedicated section",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/166",
+      "state": "OPEN",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #158 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/trust_reset/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-06-03T15:15:35Z",
+      "updatedAt": "2026-06-03T16:02:26Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "51d03faf5ae8c7dda3173c206f5875242fe2ba56",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "trust_reset",
+      "headRefOid": "9816cdaaf9357ffef33b2b0d301d0f9a0badc51c",
+      "closedAt": null,
+      "mergedAt": null,
+      "mergedBy": null,
+      "mergeCommit": null,
+      "comments": [],
+      "reviews": []
     }
   ]
 }
