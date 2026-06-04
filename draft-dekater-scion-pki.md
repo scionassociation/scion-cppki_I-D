@@ -639,7 +639,7 @@ The `version` field describes the version of the TRC format specification. It MU
 
 The `iD` field contains an unique identifier for the TRC, constituted by a sequence of these attributes:
 
-- `iSD`: ISD number,
+- `iSD`: ISD number.
 - `baseNumber`: The base number indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.
 - `serialNumber`: The TRC serial number represents the current update cycle, counting from the initial TRC of a specific ISD.
 
