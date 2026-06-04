@@ -1332,14 +1332,16 @@ Table of Contents
 
 3.2.9.  authoritativeASes
 
-   The authoritativeASes field contains a sequence listing the
-   Authoritative AS numbers in the ISD.  Authoritative ASes are those
-   ASes in an ISD that always possess the latest TRCs for the ISD and
-   initiate TRC update announcements.
+   Authoritative ASes are those ASes in an ISD that always possess the
+   latest TRCs for the ISD and therefore initiate TRC update
+   announcements.  They are provisioned with the latest TRC by Voters
+   following an update (see Section 3.5.3).  Every Authoritative AS MUST
+   be a Core AS (i.e., be listed in the coreASes field).
 
-   Every Authoritative AS MUST be a Core AS (i.e., be listed in the
-   coreASes field).  The encoding and uniqueness requirements for this
-   sequence are identical to those of the coreASes field.
+   The authoritativeASes field contains a sequence listing the
+   Authoritative AS numbers in the ISD.  The encoding and uniqueness
+   requirements for this sequence are identical to those of the coreASes
+   field.
 
    As with Core ASes, assigning or revoking Authoritative status is
    performed by adding or removing the target AS number from this
@@ -1678,9 +1680,11 @@ Table of Contents
       corresponds to the number of indices in the votes field of the
       updated TRC.
 
-   *  Voting ASes SHOULD distribute the updated TRC to all authoritative
+   *  Voting ASes SHOULD distribute the updated TRC to all Authoritative
       ASes within the ISD.  The distribution mechanism is typically out
       of band and it is outside of the scope of this document.
+
+   Discovery mechanisms for new TRCs are described in Section 4.1.2.
 
 3.5.4.  Regular TRC Update
 
@@ -1819,8 +1823,8 @@ Table of Contents
    special case of the base TRC.  The initial TRC MUST be signed during
    a Signing Ceremony where all voting representatives of the initial
    TRC take part to sign the TRC and exchange their public keys.
-   Following this, all entities within an ISD can obtain the TRC by
-   means of a secure offline or online mechanism.
+   Following this, all entities within an ISD can obtain the initial TRC
+   by means of a secure offline or online mechanism.
 
    Appendix C describes a possible procedure for the Signing Ceremony of
    an ISD's initial TRC.  Whilst it is up to the initial members of an
@@ -1879,6 +1883,9 @@ Table of Contents
    MUST be able to provide all the necessary trust material to verify
    said information, ensuring that relying parties can discover TRC
    updates in a matter of minutes to hours.
+
+   Once a relying party learns of a new TRC, it can obtain the TRC from
+   one of the Authoritative ASes (see Section 3.2.9).
 
 4.2.   Signing and Verifying Control Plane Messages
 
@@ -2054,6 +2061,9 @@ Table of Contents
    related to this aspect are discussed in
    [I-D.dekater-scion-controlplane], sections "Effects of Clock
    Inaccuracy" and "Attacks on Time Sources".
+
+   To ensure redundancy, an ISD should contain multiple Authoritative
+   ASes (see Section 3.2.9).
 
 5.2.  Operational Processes for ISD Governance
 
