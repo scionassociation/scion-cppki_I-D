@@ -313,8 +313,8 @@ Table of Contents
 
    An ISD is governed by one or multiple *Voters*. Furthermore, each ISD
    has a set of ASes that form the ISD core, known as the *Core ASes*.
-   The set of Core ASes and Voters may be, but do not necessarily have
-   to be the same entities, since Voters do not require an AS number.
+   The set of Core ASes and Voters may be but do not necessarily have to
+   be the same entities, since Voters do not require an AS number.
    Governance is implemented by a policy called the *Trust Root
    Configuration* (TRC), which is negotiated by the Voters and which
    defines the locally scoped roots of trust used to validate bindings
@@ -1445,10 +1445,9 @@ Table of Contents
 
    To guarantee the integrity and authenticity of the distributed trust
    anchors, each TRC is digitally signed using the Cryptographic Message
-   Syntax (CMS).  The signed TRC payload uses the CMS signed-data
-   content type as specified in Section 5 of [RFC5652], and is
-   encapsulated in a CMS ContentInfo element, as defined in Section 3 of
-   [RFC5652].
+   Syntax (CMS).  The signed TRC payload uses the CMS SignedData content
+   type as specified in Section 5 of [RFC5652], and is encapsulated in a
+   CMS ContentInfo element, as defined in Section 3 of [RFC5652].
 
    For signature calculation, the data that is to be signed MUST be
    encoded using ASN.1 Distinguished Encoding Rules (DER) [X.690].
@@ -2035,7 +2034,7 @@ Table of Contents
       certificate.
 
    *  Authorization: The AS MUST authenticate the request to the Issuing
-      CA by wrapping the CSR in a CMS signed-data structure
+      CA by wrapping the CSR in a CMS SignedData structure
       (cms_signed_request).  This outer CMS structure MUST be signed
       using the existing private key corresponding to one of the AS's
       currently active and valid AS certificate.
