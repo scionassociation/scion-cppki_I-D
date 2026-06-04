@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 5 December 2026                                         S. Hitz
+Expires: 6 December 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                             3 June 2026
+                                                             4 June 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 December 2026.
+   This Internet-Draft will expire on 6 December 2026.
 
 Copyright Notice
 
@@ -374,8 +374,8 @@ Table of Contents
    announce these TRC updates (see Section 3.2.9).
 
    In case the TRC has been compromised, it may be re-established
-   through a process called trust reset if permitted by the ISD policy
-   (see Section 3.6).  In this case, a new base TRC is created.
+   through a process called trust reset (see Section 3.6).  In this
+   case, a new base TRC is created.
 
 1.4.2.  Substitutes to Certificate Revocation
 
