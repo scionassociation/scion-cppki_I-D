@@ -932,7 +932,7 @@ If one or more of the above checks gives a negative result, the updated TRC MUST
 A trust reset is a process that results in the creation of a new base TRC. It is only permitted if the `noTrustReset` field of the active TRC is set to FALSE (see [](#notrustreset)).
 
 It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
-Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted.
+Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted. The base number of a new TRC following a trust reset is changed as shown in {{#table-7}}.
 
 This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
 
@@ -1328,7 +1328,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 - Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
-- Trust reset: clarify concept with a dedicated section, improve readability of table 6
+- Trust reset: clarify concept with a dedicated section, improve readability of table 7
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
