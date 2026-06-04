@@ -637,11 +637,11 @@ The `version` field describes the version of the TRC format specification. It MU
 
 ### `iD` {#id}
 
-The `iD` field contains an unique identifier for the TRC, constituted by a sequence of:
+The `iD` field contains an unique identifier for the TRC, constituted by a sequence of these attributes:
 
-- ISD number (`iSD` attribute),
-- base number (`baseNumber` attribute). It indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.
-- TRC serial number (`serialNumber` attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.
+- `iSD`: ISD number,
+- `baseNumber`: The base number indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.
+- `serialNumber`: The TRC serial number represents the current update cycle, counting from the initial TRC of a specific ISD.
 
 All numbers MUST be positive integers.
 
@@ -658,7 +658,7 @@ If a trust reset is necessary, a new base TRC is announced in order to start a n
 | Sensitive   | 15    | 1            | 4              |
 | Trust reset | 15    | **5**        | 5              |
 | Regular     | 15    | 5            | 6              |
-{: #table-7 title="Example of the fields contained in `iD` through a TRC update chain for ISD 15. Note that the `baseNumber` is only changed in case of a trust reset, where the new base number follows the serial number "4" of the latest TRC resulting from a non-compromised TRC update for this ISD."}
+{: #table-7 title="Example of the attributes contained in `iD` through a TRC update chain for ISD 15. Note that the base number is only changed in case of a trust reset, where the new base number follows the serial number "4" of the latest TRC resulting from a non-compromised TRC update for this ISD."}
 
 
 ### `validity` {#validity-trc}
@@ -929,14 +929,14 @@ If one or more of the above checks gives a negative result, the updated TRC SHOU
 
 ## Trust Reset {#trust-reset-description}
 
-A trust reset is a special procedure that results in the creation of a new base TRC. It is only permitted if the `noTrustReset` field of the active TRC is set to FALSE (see [](#notrustreset)).
+A trust reset is a process that results in the creation of a new base TRC. It is only permitted if the `noTrustReset` field of the active TRC is set to FALSE (see [](#notrustreset)).
 
 It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
 Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted.
 
-This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
+This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
 
-A trust reset is only required when the number of simultaneously compromised keys meets or exceeds the TRC's voting quorum (see [](#quorum)), and an invalid or malicious TRC update has subsequently been produced and distributed across the network.
+A trust reset is only required when the number of simultaneously compromised voting keys meets or exceeds the TRC's voting quorum (see [](#quorum)), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.
 
 
 ## Initial TRC Signing Ceremony {#trc-ceremony}
@@ -1328,6 +1328,7 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 - TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend maximum size.
 - `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
 - Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
+- Trust reset: clarify concept with a dedicated section, improve readability of table 6
 
 ## draft-dekater-scion-pki-12
 {:numbered="false"}
