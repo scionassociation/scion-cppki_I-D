@@ -1051,7 +1051,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 5 December 2026</td>
+<td class="center">Expires 6 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1064,12 @@ svg {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-03" class="published">3 June 2026</time>
+<time datetime="2026-06-04" class="published">4 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-05">5 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-06">6 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1124,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 5 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 6 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -3441,7 +3441,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 <p id="section-5.1-1">The Control Plane PKI relies on short-lived certificates as an alternative to revocation, as described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>. AS certificates typically have a validity of days (see <a href="#_table-3" class="auto internal xref">Table 2</a>), except for the first issued AS certificate. Should an AS not be able to renew certificates, it would be cut off from the network.<a href="#section-5.1-1" class="pilcrow">¶</a></p>
 <p id="section-5.1-2">It is therefore recommended to deploy multiple, independent CAs within an ISD that can issue certificates to all member ASes and sustain the appropriate certificate renewal load. ASes should then be able to quickly switch over to a backup CA to renew their certificates in time.<a href="#section-5.1-2" class="pilcrow">¶</a></p>
 <p id="section-5.1-3">Furthermore, PKI operators need to ensure that the CAs maintain time synchronization with other system components. Further considerations related to this aspect are discussed in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, sections "Effects of Clock Inaccuracy" and "Attacks on Time Sources".<a href="#section-5.1-3" class="pilcrow">¶</a></p>
-<p id="section-5.1-4">To ensure redundancy, an ISD should contain multiple Authoritative ASes (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>). However, the total number of Authoritative ASes should be kept relatively low since Voters need to provision each Authoritative AS with the latest TRC following each update (see <a href="#trc-update-general" class="auto internal xref">Section 3.5.3</a>).<a href="#section-5.1-4" class="pilcrow">¶</a></p>
+<p id="section-5.1-4">To ensure redundancy, an ISD should contain multiple Authoritative ASes (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>).<a href="#section-5.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="operational-processes-for-isd-governance">

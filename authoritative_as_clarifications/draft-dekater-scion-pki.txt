@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 5 December 2026                                         S. Hitz
+Expires: 6 December 2026                                         S. Hitz
                                                          Anapaya Systems
-                                                             3 June 2026
+                                                             4 June 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 5 December 2026.
+   This Internet-Draft will expire on 6 December 2026.
 
 Copyright Notice
 
@@ -2046,10 +2046,7 @@ Table of Contents
    Inaccuracy" and "Attacks on Time Sources".
 
    To ensure redundancy, an ISD should contain multiple Authoritative
-   ASes (see Section 3.2.9).  However, the total number of Authoritative
-   ASes should be kept relatively low since Voters need to provision
-   each Authoritative AS with the latest TRC following each update (see
-   Section 3.5.3).
+   ASes (see Section 3.2.9).
 
 5.2.  Operational Processes for ISD Governance
 
