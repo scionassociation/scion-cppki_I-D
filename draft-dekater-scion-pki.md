@@ -925,7 +925,7 @@ To verify a TRC update, the relying party MUST perform the following checks:
 - In case of a sensitive update:
     - check that all votes are cast by a sensitive voting certificate.
 
-If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.
+If one or more of the above checks gives a negative result, the updated TRC MUST be rejected.
 
 ## Trust Reset {#trust-reset-description}
 
