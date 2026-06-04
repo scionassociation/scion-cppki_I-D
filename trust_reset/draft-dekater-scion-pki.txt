@@ -1179,18 +1179,17 @@ Table of Contents
 3.2.2.  iD
 
    The iD field contains an unique identifier for the TRC, constituted
-   by a sequence of:
+   by a sequence of these attributes:
 
-   *  ISD number (iSD attribute),
+   *  iSD: ISD number,
 
-   *  base number (baseNumber attribute).  It indicates the starting
-      point of the current TRC update chain.  This starting point is the
-      currently valid base TRC, which may differ from the initial TRC in
-      the case of a trust reset.
+   *  baseNumber: The base number indicates the starting point of the
+      current TRC update chain.  This starting point is the currently
+      valid base TRC, which may differ from the initial TRC in the case
+      of a trust reset.
 
-   *  TRC serial number (serialNumber attribute).  It represents the
-      current update cycle, counting from the initial TRC of a specific
-      ISD.
+   *  serialNumber: The TRC serial number represents the current update
+      cycle, counting from the initial TRC of a specific ISD.
 
    All numbers MUST be positive integers.
 
@@ -1223,11 +1222,11 @@ Table of Contents
              | Regular     | 15  | 5          | 6            |
              +-------------+-----+------------+--------------+
 
-                Table 6: Example of the fields contained in
-                `iD` through a TRC update chain for ISD 15.
-               Note that the `baseNumber` is only changed in
-                 case of a trust reset, where the new base
-                    number follows the serial number "4
+                Table 6: Example of the attributes contained
+                 in `iD` through a TRC update chain for ISD
+                   15.  Note that the base number is only
+                changed in case of a trust reset, where the
+                new base number follows the serial number "4
 
 3.2.3.  validity
 
@@ -1795,9 +1794,9 @@ Table of Contents
 
 3.6.  Trust Reset
 
-   A trust reset is a special procedure that results in the creation of
-   a new base TRC.  It is only permitted if the noTrustReset field of
-   the active TRC is set to FALSE (see Section 3.2.5).
+   A trust reset is a process that results in the creation of a new base
+   TRC.  It is only permitted if the noTrustReset field of the active
+   TRC is set to FALSE (see Section 3.2.5).
 
    It differs fundamentally from a TRC update (whether regular or
    sensitive) because the signatures on the new base TRC cannot be
@@ -1808,14 +1807,16 @@ Table of Contents
    This procedure serves as a remediation mechanism when an ISD must re-
    establish its root of trust following a severe compromise.  A TRC is
    considered compromised if its associated root or voting keys have
-   been exposed.  If the number of compromised keys is lower than the
-   voting quorum, a TRC update is sufficient to replace the affected
+   been exposed.  If the number of compromised voting keys is lower than
+   the voting quorum, a TRC update is sufficient to replace the affected
    keys (see Section 3.5).
 
    A trust reset is only required when the number of simultaneously
-   compromised keys meets or exceeds the TRC's voting quorum (see
+   compromised voting keys meets or exceeds the TRC's voting quorum (see
    Section 3.2.7), and an invalid or malicious TRC update has
-   subsequently been produced and distributed across the network.
+   subsequently been produced and distributed across the network.  The
+   new TRC must be axiomatically trusted and distributed via out-of-band
+   communication channels.
 
 3.7.  Initial TRC Signing Ceremony
 
@@ -2636,6 +2637,9 @@ draft-dekater-scion-pki-13
 
    *  Issuing Control Plane AS Certificates: clarify signatures in case
       of automatic renewal
+
+   *  Trust reset: clarify concept with a dedicated section, improve
+      readability of table 6
 
 draft-dekater-scion-pki-12
 
