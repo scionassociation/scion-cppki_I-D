@@ -1802,7 +1802,8 @@ Table of Contents
    sensitive) because the signatures on the new base TRC cannot be
    verified using the certificates contained in the predecessor TRC.
    Instead, a trust reset base TRC must be axiomatically trusted,
-   similar to how the initial TRC is trusted.
+   similar to how the initial TRC is trusted.  The base number of a new
+   TRC following a trust reset is changed as shown in Table 6.
 
    This procedure serves as a remediation mechanism when an ISD must re-
    establish its root of trust following a severe compromise.  A TRC is
@@ -2639,7 +2640,7 @@ draft-dekater-scion-pki-13
       of automatic renewal
 
    *  Trust reset: clarify concept with a dedicated section, improve
-      readability of table 6
+      readability of table 7
 
 draft-dekater-scion-pki-12
 

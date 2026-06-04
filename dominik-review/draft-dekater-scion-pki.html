@@ -3267,7 +3267,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
         </h3>
 <p id="section-3.6-1">A trust reset is a process that results in the creation of a new base TRC. It is only permitted if the <code>noTrustReset</code> field of the active TRC is set to FALSE (see <a href="#notrustreset" class="auto internal xref">Section 3.2.5</a>).<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 <p id="section-3.6-2">It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
-Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted. The base number of a new TRC following a trust reset is changed as shown in <a href="#_table-7" class="auto internal xref">Table 6</a>.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
 <p id="section-3.6-3">This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see <a href="#update" class="auto internal xref">Section 3.5</a>).<a href="#section-3.6-3" class="pilcrow">¶</a></p>
 <p id="section-3.6-4">A trust reset is only required when the number of simultaneously compromised voting keys meets or exceeds the TRC's voting quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
 </section>
@@ -3981,7 +3981,7 @@ END
             <p id="appendix-D.1-1.6.1">Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal<a href="#appendix-D.1-1.6.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.7">
-            <p id="appendix-D.1-1.7.1">Trust reset: clarify concept with a dedicated section, improve readability of table 6<a href="#appendix-D.1-1.7.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.7.1">Trust reset: clarify concept with a dedicated section, improve readability of table 7<a href="#appendix-D.1-1.7.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
