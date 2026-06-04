@@ -175,7 +175,7 @@ The SCION trust architecture allows parties that mutually trust each other to fo
 
 To fulfill these requirements, SCION introduces the concept of **Isolation Domains**. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane ({{I-D.dekater-scion-controlplane}}). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).
 
-An ISD is governed by one or multiple **Voters**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core ASes and Voters may be, but do not necessarily have to be the same entities, since Voters do not require an AS number. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voters and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
+An ISD is governed by one or multiple **Voters**. Furthermore, each ISD has a set of ASes that form the ISD core, known as the **Core ASes**. The set of Core ASes and Voters may be but do not necessarily have to be the same entities, since Voters do not require an AS number. Governance is implemented by a policy called the **Trust Root Configuration** (TRC), which is negotiated by the Voters and which defines the locally scoped roots of trust used to validate bindings between names and public keys.
 
 Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. An ISD's TRC is used for signatures pertaining to information originating from that ISD, such as paths, but for nothing originating outside of the ISD. This ISD-level scoping of trust roots enhances security by strictly limiting effect of a compromise to data originating from the compromised AS.
 An ISD's trust roots and policy are encoded in the TRC, which has a base and serial number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used as an alternative to revocation in case of compromised roots of trust.
@@ -782,7 +782,7 @@ The OPTIONAL `descriptionLanguage` field identifies the language used to express
 
 ## TRC Signature Syntax {#signed-format}
 
-To guarantee the integrity and authenticity of the distributed trust anchors, each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS signed-data content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
+To guarantee the integrity and authenticity of the distributed trust anchors, each TRC is digitally signed using the Cryptographic Message Syntax (CMS). The signed TRC payload uses the CMS SignedData content type as specified in Section 5 of {{RFC5652}}, and is encapsulated in a CMS `ContentInfo` element, as defined in Section 3 of {{RFC5652}}.
 
 For signature calculation, the data that is to be signed MUST be encoded using ASN.1 Distinguished Encoding Rules (DER) {{X.690}}.
 
@@ -1037,7 +1037,7 @@ When an AS joins an ISD, it sends the first CSR out of band to one of the CAs as
 When using this automated in-band renewal process, the request requires two distinct cryptographic signatures to ensure both proof of possession and authorization:
 
 - Proof of possession: the inner PKCS#10 CSR MUST be signed using the newly generated private key corresponding to the requested certificate.
-- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS signed-data structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.
+- Authorization: The AS MUST authenticate the request to the Issuing CA by wrapping the CSR in a CMS SignedData structure (cms_signed_request). This outer CMS structure MUST be signed using the existing private key corresponding to one of the AS's currently active and valid AS certificate.
 
 # Deployment Considerations
 
