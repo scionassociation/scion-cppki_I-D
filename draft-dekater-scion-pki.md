@@ -1038,7 +1038,7 @@ It is therefore recommended to deploy multiple, independent CAs within an ISD th
 
 Furthermore, PKI operators need to ensure that the CAs maintain time synchronization with other system components. Further considerations related to this aspect are discussed in {{I-D.dekater-scion-controlplane}}, sections "Effects of Clock Inaccuracy" and "Attacks on Time Sources".
 
-To ensure redundancy, an ISD should contain multiple Authoritative ASes (see [](#auth)). However, the total number of Authoritative ASes should be kept relatively low since Voters need to provision each Authoritative AS with the latest TRC following each update (see [](#trc-update-general)).
+To ensure redundancy, an ISD should contain multiple Authoritative ASes (see [](#auth)).
 
 
 ## Operational Processes for ISD Governance
