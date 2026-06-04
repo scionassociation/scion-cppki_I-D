@@ -134,7 +134,8 @@ Table of Contents
        3.5.5.  Sensitive TRC Update
        3.5.6.  Signing a TRC Update
        3.5.7.  TRC Update Verification
-     3.6.  Initial TRC Signing Ceremony
+     3.6.  Trust Reset
+     3.7.  Initial TRC Signing Ceremony
    4.  CP-PKI Operations
      4.1.  Distribution of TRCs
        4.1.1.  Base TRC
@@ -372,9 +373,8 @@ Table of Contents
    In both cases the base TRC remains unchanged.  Authoritative ASes
    announce these TRC updates (see Section 3.2.9).
 
-   If the ISD's TRC has been compromised, it is necessary for an ISD to
-   re-establish the trust root.  This is possible with a process called
-   *trust reset* (if permitted by the ISD's trust policy).  In this
+   In case the TRC has been compromised, it may be re-established
+   through a process called trust reset (see Section 3.6).  In this
    case, a new base TRC is created.
 
 1.4.2.  Substitutes to Certificate Revocation
@@ -1109,7 +1109,7 @@ Table of Contents
 
    The initial TRC of an ISD is signed during a Signing Ceremony and
    then distributed throughout the ISD.  This Signing Ceremony follows
-   specific rules which are described in Section 3.6.
+   specific rules which are described in Section 3.7.
 
    The TRC contains a signed collection of [X.509] v3 certificates and
    ISD-specific policies.  Encoding for the purpose of signature
@@ -1134,7 +1134,7 @@ Table of Contents
       the ISD is specified.
 
    *  Base: A base TRC is either the initial TRC, or the first TRC after
-      a trust reset (see Section 1.4.1).  Trust for a base TRC cannot be
+      a trust reset (see Section 3.6).  Trust for a base TRC cannot be
       inferred by verifying a TRC update; base TRCs are trusted
       axiomatically, similarly to how root certificates are trusted by
       clients in the Web PKI.
@@ -1178,18 +1178,17 @@ Table of Contents
 3.2.2.  iD
 
    The iD field contains an unique identifier for the TRC, constituted
-   by a sequence of:
+   by a sequence of these attributes:
 
-   *  ISD number (iSD attribute),
+   *  iSD: ISD number.
 
-   *  base number (baseNumber attribute).  It indicates the starting
-      point of the current TRC update chain.  This starting point is the
-      currently valid base TRC, which may differ from the initial TRC in
-      the case of a trust reset.
+   *  baseNumber: The base number indicates the starting point of the
+      current TRC update chain.  This starting point is the currently
+      valid base TRC, which may differ from the initial TRC in the case
+      of a trust reset.
 
-   *  TRC serial number (serialNumber attribute).  It represents the
-      current update cycle, counting from the initial TRC of a specific
-      ISD.
+   *  serialNumber: The TRC serial number represents the current update
+      cycle, counting from the initial TRC of a specific ISD.
 
    All numbers MUST be positive integers.
 
@@ -1198,47 +1197,35 @@ Table of Contents
    serial number of 1 and a base number of 1.  With every TRC update,
    the serial number MUST be incremented by one which facilitates the
    unique identification of the predecessor and successor TRC in an
-   update chain.
+   update chain.  Table 6 shows an example of a TRC update chain.
 
    If a trust reset is necessary, a new base TRC is announced in order
    to start a new and clean TRC update chain.  The base number of this
    new TRC update chain SHOULD be the number following the serial number
    of the latest TRC that was produced by a non-compromised TRC update
-   for this ISD.
+   for this ISD.  The trust reset process is described in Section 3.6.
 
-   The following example illustrates how to specify the ID of the TRCs
-   in a TRC update chain for _ISD 15_. The IDs are given in a human-
-   readable notation, where Bxx is the base number, and Sxx the serial
-   number.
+             +=============+=====+============+==============+
+             | Update      | iSD | baseNumber | serialNumber |
+             +=============+=====+============+==============+
+             | Initial     | 15  | 1          | 1            |
+             +-------------+-----+------------+--------------+
+             | Regular     | 15  | 1          | 2            |
+             +-------------+-----+------------+--------------+
+             | Regular     | 15  | 1          | 3            |
+             +-------------+-----+------------+--------------+
+             | Sensitive   | 15  | 1          | 4            |
+             +-------------+-----+------------+--------------+
+             | Trust reset | 15  | *5*        | 5            |
+             +-------------+-----+------------+--------------+
+             | Regular     | 15  | 5          | 6            |
+             +-------------+-----+------------+--------------+
 
-   +===========+=================+====================================+
-   | Update    | TRC ID          | Remarks                            |
-   +===========+=================+====================================+
-   | Initial   | ISD15-B01-S01   |                                    |
-   +-----------+-----------------+------------------------------------+
-   | Regular   | ISD15-B01-S02   | Only the serial number is          |
-   |           |                 | incremented.                       |
-   +-----------+-----------------+------------------------------------+
-   | Regular   | ISD15-B01-S03   | Only the serial number is          |
-   |           |                 | incremented.                       |
-   +-----------+-----------------+------------------------------------+
-   | Sensitive | ISD15-B01-S04   | Only the serial number is          |
-   |           |                 | incremented.                       |
-   +-----------+-----------------+------------------------------------+
-   | Trust     | ISD15-*B05*-S05 | A trust reset includes the         |
-   | reset     |                 | creation of a new base TRC.  The   |
-   |           |                 | new base number follows the serial |
-   |           |                 | number "04" of the latest TRC      |
-   |           |                 | resulting from a non-compromised   |
-   |           |                 | TRC update for this ISD.           |
-   +-----------+-----------------+------------------------------------+
-   | Regular   | ISD15-B05-S06   | Only the serial number is          |
-   |           |                 | incremented.                       |
-   +-----------+-----------------+------------------------------------+
-   | And so on |                 |                                    |
-   +-----------+-----------------+------------------------------------+
-
-                 Table 6: ID of TRCs in TRC update chain
+                Table 6: Example of the attributes contained
+                 in `iD` through a TRC update chain for ISD
+                   15.  Note that the base number is only
+                changed in case of a trust reset, where the
+                new base number follows the serial number "4
 
 3.2.3.  validity
 
@@ -1295,14 +1282,7 @@ Table of Contents
    reset is disallowed, this cannot be reversed.  Therefore, ISDs SHOULD
    always set this value to FALSE, unless they have sufficiently
    assessed the risks and implications of making a trust reset
-   impossible.
-
-   Note that a trust reset represents a special use case where a new
-   base TRC is created.  It therefore differs from a TRC update (regular
-   or sensitive) as the signatures in the new base TRC cannot be
-   verified with the certificates contained in the predecessor TRC.
-   Instead, a trust reset base TRC must be axiomatically trusted,
-   similarly to how the initial TRC is trusted.
+   impossible.  The trust reset process is described in Section 3.6.
 
 3.2.6.  votes
 
@@ -1811,7 +1791,33 @@ Table of Contents
    If one or more of the above checks gives a negative result, the
    updated TRC SHOULD be rejected.
 
-3.6.  Initial TRC Signing Ceremony
+3.6.  Trust Reset
+
+   A trust reset is a process that results in the creation of a new base
+   TRC.  It is only permitted if the noTrustReset field of the active
+   TRC is set to FALSE (see Section 3.2.5).
+
+   It differs fundamentally from a TRC update (whether regular or
+   sensitive) because the signatures on the new base TRC cannot be
+   verified using the certificates contained in the predecessor TRC.
+   Instead, a trust reset base TRC must be axiomatically trusted,
+   similar to how the initial TRC is trusted.
+
+   This procedure serves as a remediation mechanism when an ISD must re-
+   establish its root of trust following a severe compromise.  A TRC is
+   considered compromised if its associated root or voting keys have
+   been exposed.  If the number of compromised voting keys is lower than
+   the voting quorum, a TRC update is sufficient to replace the affected
+   keys (see Section 3.5).
+
+   A trust reset is only required when the number of simultaneously
+   compromised voting keys meets or exceeds the TRC's voting quorum (see
+   Section 3.2.7), and an invalid or malicious TRC update has
+   subsequently been produced and distributed across the network.  The
+   new TRC must be axiomatically trusted and distributed via out-of-band
+   communication channels.
+
+3.7.  Initial TRC Signing Ceremony
 
    The very first base TRC of an ISD - called the initial TRC - is a
    special case of the base TRC.  The initial TRC MUST be signed during
@@ -1837,7 +1843,7 @@ Table of Contents
    Base TRCs are trust anchors and thus axiomatically trusted.  All ASes
    within an ISD MUST be pre-loaded with the currently valid base-
    version TRC of their own ISD.  For all specifications regarding the
-   creation and distribution of initial/base TRCs, see Section 3.6.
+   creation and distribution of initial/base TRCs, see Section 3.7.
 
 4.1.2.  TRC Update Discovery
 
@@ -2651,6 +2657,9 @@ draft-dekater-scion-pki-13
 
    *  Issuing Control Plane AS Certificates: clarify signatures in case
       of automatic renewal
+
+   *  Trust reset: clarify concept with a dedicated section, improve
+      readability of table 6
 
    *  PKI Availability: mention need to ensure time sync, and that there
       should be multiple Authoritative ASes

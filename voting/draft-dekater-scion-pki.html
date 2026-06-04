@@ -1338,7 +1338,10 @@ svg {
                 </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
-                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-initial-trc-signing-ceremon" class="internal xref">Initial TRC Signing Ceremony</a></p>
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-trust-reset" class="internal xref">Trust Reset</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
+                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-initial-trc-signing-ceremon" class="internal xref">Initial TRC Signing Ceremony</a></p>
 </li>
             </ul>
 </li>
@@ -1575,7 +1578,7 @@ in the CP-PKI, each ISD has its own trust root. Note that SCION does not provide
           </h4>
 <p id="section-1.4.1-1">There are two types of TRC updates: regular and sensitive. The update type depends on which fields are changed (see <a href="#update" class="auto internal xref">Section 3.5</a>). In both cases the base TRC remains unchanged.
 Authoritative ASes announce these TRC updates (see <a href="#auth" class="auto internal xref">Section 3.2.9</a>).<a href="#section-1.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-1.4.1-2">If the ISD's TRC has been compromised, it is necessary for an ISD to re-establish the trust root. This is possible with a process called <strong>trust reset</strong> (if permitted by the ISD's trust policy). In this case, a new base TRC is created.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-1.4.1-2">In case the TRC has been compromised, it may be re-established through a process called trust reset (see <a href="#trust-reset-description" class="auto internal xref">Section 3.6</a>). In this case, a new base TRC is created.<a href="#section-1.4.1-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="substitutes-to-revocation">
@@ -2641,7 +2644,7 @@ In addition to the attributes described in section 4.1.2.6 <span>[<a href="#RFC5
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-trust-root-configuration-sp" class="section-name selfRef">Trust Root Configuration Specification</a>
       </h2>
 <p id="section-3-1">The Trust Root Configuration (TRC) contains policy information about an ISD and acts as a distribution mechanism for the trust anchors of that ISD. It enables the securing of control plane interactions and is thus an integral part of the SCION infrastructure.<a href="#section-3-1" class="pilcrow">¶</a></p>
-<p id="section-3-2">The initial TRC of an ISD is signed during a Signing Ceremony and then distributed throughout the ISD. This Signing Ceremony follows specific rules which are described in <a href="#trc-ceremony" class="auto internal xref">Section 3.6</a>.<a href="#section-3-2" class="pilcrow">¶</a></p>
+<p id="section-3-2">The initial TRC of an ISD is signed during a Signing Ceremony and then distributed throughout the ISD. This Signing Ceremony follows specific rules which are described in <a href="#trc-ceremony" class="auto internal xref">Section 3.7</a>.<a href="#section-3-2" class="pilcrow">¶</a></p>
 <p id="section-3-3">The TRC contains a signed collection of <span>[<a href="#X.509" class="cite xref">X.509</a>]</span> v3 certificates and ISD-specific policies. Encoding for the purpose of signature calculation is described in <a href="#signed-format" class="auto internal xref">Section 3.3</a>.<a href="#section-3-3" class="pilcrow">¶</a></p>
 <p id="section-3-4">The TRC's certificates collection consists of a set of control plane root certificates which build the root of the certification chain for the AS certificates in an ISD. The other certificates in the TRC are solely used for signing the next TRC; a process called "voting". The verification of a new TRC thus depends on the policies and voting certificates defined in the previous TRC.<a href="#section-3-4" class="pilcrow">¶</a></p>
 <p id="section-3-5">This section specifies the TRC including format definitions and payload fields. The section uses the ITU-T <span>[<a href="#X.680" class="cite xref">X.680</a>]</span> syntax.<a href="#section-3-5" class="pilcrow">¶</a></p>
@@ -2656,7 +2659,7 @@ In addition to the attributes described in section 4.1.2.6 <span>[<a href="#RFC5
             <p id="section-3.1-2.1.1">Initial: The very first TRC of an ISD is the initial TRC of that ISD. It is a special case of the base TRC, where the number of the ISD is specified.<a href="#section-3.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.2">
-            <p id="section-3.1-2.2.1">Base: A base TRC is either the initial TRC, or the first TRC after a trust reset (see <a href="#trust-reset" class="auto internal xref">Section 1.4.1</a>). Trust for a base TRC cannot be inferred by verifying a TRC update; base TRCs are trusted axiomatically, similarly to how root certificates are trusted by clients in the Web PKI.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-2.2.1">Base: A base TRC is either the initial TRC, or the first TRC after a trust reset (see <a href="#trust-reset-description" class="auto internal xref">Section 3.6</a>). Trust for a base TRC cannot be inferred by verifying a TRC update; base TRCs are trusted axiomatically, similarly to how root certificates are trusted by clients in the Web PKI.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.3">
             <p id="section-3.1-2.3.1">Update: All non-base TRCs are updated TRCs. They are the product of either a regular or a sensitive update.<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
@@ -2698,70 +2701,73 @@ Its fields are contained in a <code>TRCPayload</code> sequence. This section des
           <h4 id="name-id">
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-id" class="section-name selfRef"><code>iD</code></a>
           </h4>
-<p id="section-3.2.2-1">The <code>iD</code> field contains an unique identifier for the TRC, constituted by a sequence of:<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-1">The <code>iD</code> field contains an unique identifier for the TRC, constituted by a sequence of these attributes:<a href="#section-3.2.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.2-2.1">
-              <p id="section-3.2.2-2.1.1">ISD number (<code>iSD</code> attribute),<a href="#section-3.2.2-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.1.1"><code>iSD</code>: ISD number.<a href="#section-3.2.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.2-2.2">
-              <p id="section-3.2.2-2.2.1">base number (<code>baseNumber</code> attribute). It indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.<a href="#section-3.2.2-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.2.1"><code>baseNumber</code>: The base number indicates the starting point of the current TRC update chain. This starting point is the currently valid base TRC, which may differ from the initial TRC in the case of a trust reset.<a href="#section-3.2.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.2-2.3">
-              <p id="section-3.2.2-2.3.1">TRC serial number (<code>serialNumber</code> attribute). It represents the current update cycle, counting from the initial TRC of a specific ISD.<a href="#section-3.2.2-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.2-2.3.1"><code>serialNumber</code>: The TRC serial number represents the current update cycle, counting from the initial TRC of a specific ISD.<a href="#section-3.2.2-2.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.2.2-3">All numbers <span class="bcp14">MUST</span> be positive integers.<a href="#section-3.2.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-4">A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and <span class="bcp14">MUST</span> have a serial number of 1 and a base number of 1. With every TRC update, the serial number <span class="bcp14">MUST</span> be incremented by one which facilitates the unique identification of the predecessor and successor TRC in an update chain.<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-5">If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain <span class="bcp14">SHOULD</span> be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD.<a href="#section-3.2.2-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.2-6">The following example illustrates how to specify the ID of the TRCs in a TRC update chain for <em>ISD 15</em>. The IDs are given in a human-readable notation, where Bxx is the base number, and Sxx the serial number.<a href="#section-3.2.2-6" class="pilcrow">¶</a></p>
-<span id="name-id-of-trcs-in-trc-update-ch"></span><div id="_table-7">
+<p id="section-3.2.2-4">A TRC where the base number is equal to the serial number is a base TRC. The initial TRC is a special case of a base TRC and <span class="bcp14">MUST</span> have a serial number of 1 and a base number of 1. With every TRC update, the serial number <span class="bcp14">MUST</span> be incremented by one which facilitates the unique identification of the predecessor and successor TRC in an update chain. <a href="#_table-7" class="auto internal xref">Table 6</a> shows an example of a TRC update chain.<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-5">If a trust reset is necessary, a new base TRC is announced in order to start a new and clean TRC update chain. The base number of this new TRC update chain <span class="bcp14">SHOULD</span> be the number following the serial number of the latest TRC that was produced by a non-compromised TRC update for this ISD. The trust reset process is described in <a href="#trust-reset-description" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.2-5" class="pilcrow">¶</a></p>
+<span id="name-example-of-the-attributes-c"></span><div id="_table-7">
 <table class="center" id="table-6">
             <caption>
 <a href="#table-6" class="selfRef">Table 6</a>:
-<a href="#name-id-of-trcs-in-trc-update-ch" class="selfRef">ID of TRCs in TRC update chain</a>
+<a href="#name-example-of-the-attributes-c" class="selfRef">Example of the attributes contained in `iD` through a TRC update chain for ISD 15. Note that the base number is only changed in case of a trust reset, where the new base number follows the serial number "4</a>
             </caption>
 <thead>
               <tr>
                 <th class="text-left" rowspan="1" colspan="1">Update</th>
-                <th class="text-left" rowspan="1" colspan="1">TRC ID</th>
-                <th class="text-left" rowspan="1" colspan="1">Remarks</th>
+                <th class="text-left" rowspan="1" colspan="1">iSD</th>
+                <th class="text-left" rowspan="1" colspan="1">baseNumber</th>
+                <th class="text-left" rowspan="1" colspan="1">serialNumber</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">Initial</td>
-                <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S01</td>
-                <td class="text-left" rowspan="1" colspan="1"> </td>
+                <td class="text-left" rowspan="1" colspan="1">15</td>
+                <td class="text-left" rowspan="1" colspan="1">1</td>
+                <td class="text-left" rowspan="1" colspan="1">1</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S02</td>
-                <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
+                <td class="text-left" rowspan="1" colspan="1">15</td>
+                <td class="text-left" rowspan="1" colspan="1">1</td>
+                <td class="text-left" rowspan="1" colspan="1">2</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S03</td>
-                <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
+                <td class="text-left" rowspan="1" colspan="1">15</td>
+                <td class="text-left" rowspan="1" colspan="1">1</td>
+                <td class="text-left" rowspan="1" colspan="1">3</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">Sensitive</td>
-                <td class="text-left" rowspan="1" colspan="1">ISD15-B01-S04</td>
-                <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
+                <td class="text-left" rowspan="1" colspan="1">15</td>
+                <td class="text-left" rowspan="1" colspan="1">1</td>
+                <td class="text-left" rowspan="1" colspan="1">4</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">Trust reset</td>
-                <td class="text-left" rowspan="1" colspan="1">ISD15-<strong>B05</strong>-S05</td>
-                <td class="text-left" rowspan="1" colspan="1">A trust reset includes the creation of a new base TRC. The new base number follows the serial number "04" of the latest TRC resulting from a non-compromised TRC update for this ISD.</td>
+                <td class="text-left" rowspan="1" colspan="1">15</td>
+                <td class="text-left" rowspan="1" colspan="1">
+                  <strong>5</strong>
+</td>
+                <td class="text-left" rowspan="1" colspan="1">5</td>
               </tr>
               <tr>
                 <td class="text-left" rowspan="1" colspan="1">Regular</td>
-                <td class="text-left" rowspan="1" colspan="1">ISD15-B05-S06</td>
-                <td class="text-left" rowspan="1" colspan="1">Only the serial number is incremented.</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">And so on</td>
-                <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1"> </td>
+                <td class="text-left" rowspan="1" colspan="1">15</td>
+                <td class="text-left" rowspan="1" colspan="1">5</td>
+                <td class="text-left" rowspan="1" colspan="1">6</td>
               </tr>
             </tbody>
           </table>
@@ -2807,8 +2813,8 @@ All TRCs <span class="bcp14">MUST</span> have a well-defined expiration date. SC
           </h4>
 <p id="section-3.2.5-1">The <code>noTrustReset</code> Boolean specifies whether a trust reset is forbidden by the ISD. Within a TRC update chain, this value <span class="bcp14">MUST NOT</span> be changed by a regular or sensitive update. However, it is possible to change the <code>noTrustReset</code> value in the event of a trust reset where a new base TRC is created.<a href="#section-3.2.5-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-2">The <code>noTrustReset</code> field defaults to FALSE.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.5-3">Note that once the <code>noTrustReset</code> Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs <span class="bcp14">SHOULD</span> always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.5-4">Note that a trust reset represents a special use case where a new base TRC is created. It therefore differs from a TRC update (regular or sensitive) as the signatures in the new base TRC cannot be verified with the certificates contained in the predecessor TRC. Instead, a trust reset base TRC must be axiomatically trusted, similarly to how the initial TRC is trusted.<a href="#section-3.2.5-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.5-3">Note that once the <code>noTrustReset</code> Boolean is set to TRUE and a trust reset is disallowed, this cannot be reversed. Therefore, ISDs <span class="bcp14">SHOULD</span> always set this value to FALSE, unless they have sufficiently assessed the risks and implications of making a trust reset impossible.
+The trust reset process is described in <a href="#trust-reset-description" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="votes">
@@ -3254,13 +3260,25 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 </div>
 </section>
 </div>
-<div id="trc-ceremony">
+<div id="trust-reset-description">
 <section id="section-3.6">
-        <h3 id="name-initial-trc-signing-ceremon">
-<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-initial-trc-signing-ceremon" class="section-name selfRef">Initial TRC Signing Ceremony</a>
+        <h3 id="name-trust-reset">
+<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-trust-reset" class="section-name selfRef">Trust Reset</a>
         </h3>
-<p id="section-3.6-1">The very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC. The initial TRC <span class="bcp14">MUST</span> be signed during a Signing Ceremony where all voting representatives of the initial TRC take part to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain the initial TRC by means of a secure offline or online mechanism.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.6-2"><a href="#initial-ceremony" class="auto internal xref">Appendix C</a> describes a possible procedure for the Signing Ceremony of an ISD's initial TRC. Whilst it is up to the initial members of an ISD how to organize the Signing Ceremony, it recommended to implement a process in line with the ceremony described in the appendix.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.6-1">A trust reset is a process that results in the creation of a new base TRC. It is only permitted if the <code>noTrustReset</code> field of the active TRC is set to FALSE (see <a href="#notrustreset" class="auto internal xref">Section 3.2.5</a>).<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
+Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.6-3">This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see <a href="#update" class="auto internal xref">Section 3.5</a>).<a href="#section-3.6-3" class="pilcrow">¶</a></p>
+<p id="section-3.6-4">A trust reset is only required when the number of simultaneously compromised voting keys meets or exceeds the TRC's voting quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="trc-ceremony">
+<section id="section-3.7">
+        <h3 id="name-initial-trc-signing-ceremon">
+<a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-initial-trc-signing-ceremon" class="section-name selfRef">Initial TRC Signing Ceremony</a>
+        </h3>
+<p id="section-3.7-1">The very first base TRC of an ISD - called the initial TRC - is a special case of the base TRC. The initial TRC <span class="bcp14">MUST</span> be signed during a Signing Ceremony where all voting representatives of the initial TRC take part to sign the TRC and exchange their public keys. Following this, all entities within an ISD can obtain the initial TRC by means of a secure offline or online mechanism.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.7-2"><a href="#initial-ceremony" class="auto internal xref">Appendix C</a> describes a possible procedure for the Signing Ceremony of an ISD's initial TRC. Whilst it is up to the initial members of an ISD how to organize the Signing Ceremony, it recommended to implement a process in line with the ceremony described in the appendix.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3281,7 +3299,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
           <h4 id="name-base-trc">
 <a href="#section-4.1.1" class="section-number selfRef">4.1.1. </a><a href="#name-base-trc" class="section-name selfRef">Base TRC</a>
           </h4>
-<p id="section-4.1.1-1">Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an ISD <span class="bcp14">MUST</span> be pre-loaded with the currently valid base-version TRC of their own ISD. For all specifications regarding the creation and distribution of initial/base TRCs, see <a href="#trc-ceremony" class="auto internal xref">Section 3.6</a>.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
+<p id="section-4.1.1-1">Base TRCs are trust anchors and thus axiomatically trusted. All ASes within an ISD <span class="bcp14">MUST</span> be pre-loaded with the currently valid base-version TRC of their own ISD. For all specifications regarding the creation and distribution of initial/base TRCs, see <a href="#trc-ceremony" class="auto internal xref">Section 3.7</a>.<a href="#section-4.1.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trc-update-discovery">
@@ -3987,10 +4005,13 @@ END
             <p id="appendix-D.1-1.14.1">Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal<a href="#appendix-D.1-1.14.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.15">
-            <p id="appendix-D.1-1.15.1">PKI Availability: mention need to ensure time sync, and that there should be multiple Authoritative ASes<a href="#appendix-D.1-1.15.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.15.1">Trust reset: clarify concept with a dedicated section, improve readability of table 6<a href="#appendix-D.1-1.15.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-D.1-1.16">
-            <p id="appendix-D.1-1.16.1">Signing Ceremony: remove normative language from appendix<a href="#appendix-D.1-1.16.1" class="pilcrow">¶</a></p>
+            <p id="appendix-D.1-1.16.1">PKI Availability: mention need to ensure time sync, and that there should be multiple Authoritative ASes<a href="#appendix-D.1-1.16.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.17">
+            <p id="appendix-D.1-1.17.1">Signing Ceremony: remove normative language from appendix<a href="#appendix-D.1-1.17.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
