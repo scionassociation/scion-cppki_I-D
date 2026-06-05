@@ -925,14 +925,14 @@ To verify a TRC update, the relying party MUST perform the following checks:
 - In case of a sensitive update:
     - check that all votes are cast by a sensitive voting certificate.
 
-If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.
+If one or more of the above checks gives a negative result, the updated TRC MUST be rejected.
 
 ## Trust Reset {#trust-reset-description}
 
 A trust reset is a process that results in the creation of a new base TRC. It is only permitted if the `noTrustReset` field of the active TRC is set to FALSE (see [](#notrustreset)).
 
 It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
-Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted.
+Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted. The base number of a new TRC following a trust reset is changed as shown in {{#table-7}}.
 
 This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
 
@@ -1323,21 +1323,24 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Draftforge review, sort terminology alphabetically
-- Rename Voting AS to Voter and clarify that it does not require an AS number
+- Review of normative language
+- Rename "Voting AS" to "Voter" and clarify that it does not require an AS number
 - remove trust Hierarchy subsection and redundant code block
 - "Trust Model": reword and shorten section about monopoly/oligopoly
-- "Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere
+- "Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere (intro and Ceremony)
 - Certificate validity: align maximum validity recommendations to current practice, clarify margin for AS certificate renewal
 - "Regular Voting Certificate" and "Sensitive Voting Certificate": merge two nearly identical sections into one
-- issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one
-- `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
+- id-at-ia Attribute": reword and clarify that it is optional in voting certificates
+- issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one "Unique Identifiers" section
+- `authorityKeyIdentifier` Extension: clarify that `authorityCertIssuer` and `authorityCertSerialNumber` MUST NOT be used
 - pathLenConstraint: clarify it MUST be set
-- authoritativeASes: improve wording to clarify their role and how they are provisioned with TRCs
-- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a maximum size.
+- authoritativeASes: improve wording to clarify their role and how they are provisioned with the latest TRC
+- TRC: mandate normalization, introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a  4MB maximum size.
 - "Certification Path - Trust Anchor Pool" replace python pseudocode with a list of steps
-- Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
-- Trust reset: clarify concept with a dedicated section, improve readability of table 6
-- PKI Availability: mention need to ensure time sync, and that there should be multiple Authoritative ASes
+- "Issuing Control Plane AS Certificates": clarify signatures in case of automatic renewal
+- "Trust reset": clarify concept with a dedicated section, improve readability of {{#table-7}}
+- "TRC Update Discovery" clarify text
+- "PKI Availability": clarify dependency on time sync, and that there should be multiple Authoritative ASes
 - Signing Ceremony: remove normative language from appendix
 
 ## draft-dekater-scion-pki-12
