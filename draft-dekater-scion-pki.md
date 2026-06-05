@@ -1323,21 +1323,24 @@ Changes made to drafts since ISE submission. This section is to be removed befor
 {:numbered="false"}
 
 - Draftforge review, sort terminology alphabetically
-- Rename Voting AS to Voter and clarify that it does not require an AS number
+- Review of normative language
+- Rename "Voting AS" to "Voter" and clarify that it does not require an AS number
 - remove trust Hierarchy subsection and redundant code block
 - "Trust Model": reword and shorten section about monopoly/oligopoly
-- "Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere
+- "Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere (intro and Ceremony)
 - Certificate validity: align maximum validity recommendations to current practice, clarify margin for AS certificate renewal
 - "Regular Voting Certificate" and "Sensitive Voting Certificate": merge two nearly identical sections into one
-- issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one
-- `authorityKeyIdentifier` Extension: clarify support for `authorityCertIssuer` and `authorityCertSerialNumber` attributes
+- id-at-ia Attribute": reword and clarify that it is optional in voting certificates
+- issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one "Unique Identifiers" section
+- `authorityKeyIdentifier` Extension: clarify that `authorityCertIssuer` and `authorityCertSerialNumber` MUST NOT be used
 - pathLenConstraint: clarify it MUST be set
-- authoritativeASes: improve wording to clarify their role and how they are provisioned with TRCs
-- TRC: introduce introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a maximum size.
+- authoritativeASes: improve wording to clarify their role and how they are provisioned with the latest TRC
+- TRC: mandate normalization, introduce language tags ({{BCP47}}) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a  4MB maximum size.
 - "Certification Path - Trust Anchor Pool" replace python pseudocode with a list of steps
-- Issuing Control Plane AS Certificates: clarify signatures in case of automatic renewal
-- Trust reset: clarify concept with a dedicated section, improve readability of table 7
-- PKI Availability: mention need to ensure time sync, and that there should be multiple Authoritative ASes
+- "Issuing Control Plane AS Certificates": clarify signatures in case of automatic renewal
+- "Trust reset": clarify concept with a dedicated section, improve readability of {{#table-7}}
+- "TRC Update Discovery" clarify text
+- "PKI Availability": clarify dependency on time sync, and that there should be multiple Authoritative ASes
 - Signing Ceremony: remove normative language from appendix
 
 ## draft-dekater-scion-pki-12
