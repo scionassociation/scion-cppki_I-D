@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-04T01:06:42.377985+00:00",
+  "timestamp": "2026-06-07T01:01:38.820712+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -1378,7 +1378,7 @@
       "labels": [],
       "body": "I read through draft-dekater-scion-pk and have a few comments, marked [in here](https://drive.google.com/file/d/10PvbbZ4fe8ejq78fQ5w_VshiRTmHnfa1/view?usp=sharing).\n\nSome TODOs: \n\n- [x] #124\n- [x] Sections 2 and 3: reduce indents by removing one section\n- [x] #128\n- [ ] > ~The TRC also provides *trust agility* - that is it enables users to select the trust roots used to initiate certificate validation. This implies that users are free to choose an ISD they believe maintains a uncompromised set of trust roots. . Is this a bit idealistic / theoretical?~\n- [x] 4. Deploying the CP PKI - Specifications --> find a better title\n- [ ] ~5.2 Initial TRC ceremony: does it belong to 5.2 - Processes?~\n- [x] Terminology: check that wording is same as -controlplane / -dataplane\n- [ ] ~Voting ASes: do they need to partecipate in routing? (CAs do I think)~\n- [x] Table 1: Key chain. Does it add something? Can it be moved to the beginning of section 2 or completely removed?\n- [x] Reduce introduction and reference to -controlplane (similar to https://github.com/scionassociation/scion-dp_I-D/pull/133 ) --> #129\n- [x] Reduce use of passive tense and be more precise about subjects\n- [x] #132\n- [x] Deployment Testing: SCIONLab: do we need this section in all drafts? Especially in PKI?\n\nMore in the scanned [paper review](url)",
       "createdAt": "2026-02-06T15:13:34Z",
-      "updatedAt": "2026-05-22T13:48:04Z",
+      "updatedAt": "2026-06-05T12:08:49Z",
       "closedAt": "2026-05-22T13:48:04Z",
       "comments": [
         {
@@ -1473,8 +1473,8 @@
       "labels": [],
       "body": "Can we do something better than having all this code? \n\n```\n~~~~python\n    def select_trust_anchors(trcs: Dict[(int,int), TRC], \\\n    verification_time: int) -> Set[RootCert]:\n        \"\"\"\n        Args:\n            trcs: The dictionary mapping (serial number, \\\n            base number) to the TRC for a given ISD.\n            verification_time: The time of verification.\n\n        Returns:\n            The set of CP Root certificates acting as trust anchors.\n        \"\"\"\n        # Find highest base number that has a TRC with validity\n        # period starting before verification time.\n        base_nr = 1\n        for trc in trcs.values()\n            if trc.id.base_nr > base_nr and trc.validity.not_before \\\n            <= verification_time:\n                base_nr = trc.id.base_nr\n\n        # Find TRC with highest serial number with given base number\n        # and a validity period starting before verification time.\n        serial_nr = 1\n        for trc in trcs[isd].values():\n            if trc.id.base_nr != base_nr:\n                continue\n            if trc.id.serial_nr > serial_nr and \\\n            trc.validity.not_before <= verification_time:\n                serial_nr = trc.id.serial_nr\n\n        candidate = trcs[(serial_nr, base_nr)]\n\n        # If the verification time is not inside the validity period,\n        # there is no valid set of trust anchors.\n        if not candidate.validity.contains(verification_time):\n            return set()\n\n        # If the grace period has passed, only the certificates in\n        # that TRC may be used as trust anchors.\n        if candidate.validity.not_before + candidate.grace_period \\\n        < verification_time:\n            return collect_trust_anchors(candidate)\n\n        predecessor = trcs.get((serial_nr-1, base_nr))\n        if not predecessor or predecessor.validity.not_after < \\\n        verification_time:\n            return collect_trust_anchors(candidate)\n\n        return collect_trust_anchors(candidate) | \\\n        collect_trust_anchors(predecessor)\n\n\n    def collect_trust_anchors(trc: TRC) -> Set[RootCert]:\n        \"\"\"\n        Args:\n            trc: A TRC from which the CP Root Certificates shall \\\n            be extracted.\n\n        Returns:\n            The set of CP Root certificates acting as trust anchors.\n        \"\"\"\n        roots = set()\n        for cert in trc.certificates:\n            if not cert.basic_constraints.ca:\n                continue\n            roots.add(cert)\n        return roots\n```",
       "createdAt": "2026-04-15T16:03:25Z",
-      "updatedAt": "2026-05-01T13:57:02Z",
-      "closedAt": "2026-05-01T13:57:02Z",
+      "updatedAt": "2026-06-05T12:08:48Z",
+      "closedAt": "2026-06-05T12:08:48Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1482,6 +1482,13 @@
           "body": "e.g. Gemini proposes: \n```\n### Trust Anchor Selection Algorithm\n\nThe selection of the right set of TRCs to build the trust anchor pool depends on the verification time. For control plane messages, the verification time is typically the current time. For auditing purposes, the verification time is the historical point in time when the signature was created.\n\nTo construct the trust anchor pool for a specific ISD at a given `verification_time`, a relying party MUST execute the following steps:\n\n1. **Determine the Active Base Number:**\n   Filter the set of all available TRCs for the ISD to those whose `notBefore` validity date is less than or equal to the `verification_time`. From this filtered set, select the highest `baseNumber`.\n\n2. **Identify the Candidate TRC:**\n   Filter the set of available TRCs again to find only those that match the `baseNumber` identified in Step 1, and whose `notBefore` date is less than or equal to the `verification_time`. From this set, select the TRC with the highest `serialNumber`. This is the *Candidate TRC*.\n\n3. **Verify Candidate TRC Expiration:**\n   If the `verification_time` is strictly greater than the Candidate TRC's `notAfter` date, the algorithm terminates and returns an empty set. There are no valid trust anchors for this time.\n\n4. **Extract Candidate Trust Anchors:**\n   Parse the `certificates` sequence of the Candidate TRC. Extract all certificates that possess a `basicConstraints` extension with the `cA` boolean asserted. Add these CP Root Certificates to the trust anchor pool.\n\n5. **Evaluate the Grace Period:**\n   Check if the Candidate TRC is currently within its grace period (i.e., `verification_time` <= `notBefore` + `gracePeriod`). If the grace period has expired, the algorithm terminates and returns the current trust anchor pool.\n\n6. **Process the Predecessor TRC (If Applicable):**\n   If the Candidate TRC is still within its grace period, attempt to retrieve the Predecessor TRC (the TRC with the same `baseNumber` and a `serialNumber` exactly one less than the Candidate TRC). \n   If the Predecessor TRC exists and its `notAfter` date is greater than or equal to the `verification_time`, extract its CP Root Certificates (as described in Step 4) and add them to the trust anchor pool.\n\n7. **Return the Pool:**\n   The algorithm terminates and returns the assembled trust anchor pool.\n```",
           "createdAt": "2026-04-15T16:07:39Z",
           "updatedAt": "2026-04-15T16:07:39Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "From Dominik:\n\n### 3.4\n\nI think the algorithm has an issue. In step 2, we identify the highest baseNumber from the pre-filtered TRCs.\nInstead, the highest baseNumber should be selected from all known TRCs.\n\nOtherwise, it could happen that a TRC chain from the highest baseNumber expires (by accident), and an older TRC chain gets to be valid again. (E.g., by malicious actor continuing to create new TRCs in the chain.)",
+          "createdAt": "2026-06-04T11:48:37Z",
+          "updatedAt": "2026-06-04T11:48:37Z"
         }
       ]
     },
@@ -1777,15 +1784,15 @@
       "id": "I_kwDOH386tM8AAAABCJhjNw",
       "title": "Review Dominik",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/149",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "oncilla",
       "authorAssociation": "CONTRIBUTOR",
       "assignees": [],
       "labels": [],
       "body": "### 1.1. Terminology\n\n> Voting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\nIt is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\nI am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.\n\n### 1.3 \n\n> , which has a version number, \n\nVersion number here is imprecise. There is a field called version in the TRC payload which indicates the semantic version of the payload.\nFor TRC you should generally talk about serial and base numbers as to not confuse the reader. I think here, I would replace version number with serial number and gloss over the base number.\n\n### 1.4\n\n> While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).\n\nI wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\n### 2.6.4\n\n> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies\n\nThat sentence does not really make sense. We never have to retrieve the intermediate CA certificate. The AS certificate is always bundled together with the intermediate CA certificate as a certificate chain.\n\n### 2.7.1 \n\n> authorityCertIssuer & authorityCertSerialNumber: MUST NOT be included. Implementations MUST return an error if either is present.\n\nAs also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\n\n### 3\n\n> The TRC is a signed collection of [[X.509](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#X.509)] v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ([[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)] section 5).\n\nThis makes it sound like the certificates are not part of the CMS signed-data. I think it could be rephrased to be clearer.\n\n### 3.1\n\n> [Figure 2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#_figure-2) shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC.\n\nI don't understand the meaning of the second part of the sentence. In figure 2, there is only a base TRC AFAICT.\n\n### 3.2.5\n\n> The noTrustReset field is OPTIONAL and defaults to FALSE.\n\nI think we changed this to not be in the ASN.1 module to follow our implementation\n\n### 3.4\n\nI think the algorithm has an issue. In step 2, we identify the highest baseNumber from the pre-filtered TRCs.\nInstead, the highest baseNumber should be selected from all known TRCs.\n\nOtherwise, it could happen that a TRC chain from the highest baseNumber expires (by accident), and an older TRC chain gets to be valid again. (E.g., by malicious actor continuing to create new TRCs in the chain.)\n\n### 3.5.7\n\n> If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.\n\nIs this a SHOULD or a MUST? \n\n### 4.1.2\n\n> Relying parties MUST discover TRC updates within the grace period defined in the updated TRC\n\nThat MUST is really hard to uphold, especially given the relying party does not know what the future value is going to be.\n\n>  and MUST include the hash value of the TRC contents to facilitate the discovery of discrepancies.\n\nWhere is this currently reflected in the specs/implementation. I do not remember where we put this information.\n\n### 4.2.2\n\n> the relying party MUST check that they have this latest TRC. If not, the relying party MUST request the latest TRC\n\nWe do not mention what to do with that requested TRC. We need to go back to step 1, no?\n\n### 6.3\n\nFor the record, the current implementation does not behave this way.\nIf a TRC is unknown, it is ignored, and the relying party fails to verify.\n\n\n\n\n\n\n\n\n",
       "createdAt": "2026-05-13T15:33:53Z",
-      "updatedAt": "2026-05-22T15:44:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-05T12:09:28Z",
+      "closedAt": "2026-06-05T12:09:28Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1793,6 +1800,27 @@
           "body": "> 1.1. Terminology: Renaming Voting ASes affects many parts of the text - tracked in \n\n- https://github.com/scionassociation/scion-cppki_I-D/issues/154 ",
           "createdAt": "2026-05-22T14:00:08Z",
           "updatedAt": "2026-05-22T15:44:57Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Let me show you the overall diff of changes that relate to your comments. These are diffs to the last version in datatracker.\n \n### 1.3 \n\n> , which has a version number, \n\nVersion number here is imprecise. There is a field called version in the TRC payload which indicates the semantic version of the payload.\nFor TRC you should generally talk about serial and base numbers as to not confuse the reader. I think here, I would replace version number with serial number and gloss over the base number.\n\n<img width=\"1035\" height=\"206\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d59be125-3738-4fb0-a77d-b8f3b1a7f2bc\" />\n\n\n### 1.4\n\n> While it is not necessary that all the ASes of the ISD trust each other, all ASes MUST trust the ISD's Core ASes, Authoritative ASes, Voting ASes, as well as its CA(s).\n\nI wonder if we need to distinguish the level of trust that we need to have in these entities. For the CP-PKI, we do not really need to trust Core or Autoritative ASes. CAs and Voters need to be trusted though.\n\n<img width=\"1026\" height=\"101\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/76b1ecdf-2ba9-4201-bb44-2b489e41449a\" />\n\n### 2.6.4\n\n> In issuing CA certificates, the presence of this attribute ensures that the Control Plane can identify from which AS to retrieve the intermediate CA certificate, thereby avoiding circular dependencies\n\nThat sentence does not really make sense. We never have to retrieve the intermediate CA certificate. The AS certificate is always bundled together with the intermediate CA certificate as a certificate chain.\n\n<img width=\"1071\" height=\"396\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6ba38106-ed82-40fe-b581-f7acf32d3745\" />\n\n### 2.7.1 \n\n> authorityCertIssuer & authorityCertSerialNumber: MUST NOT be included. Implementations MUST return an error if either is present.\n\nAs also mentioned elsewhere, currently this is not enforced by our implementation. I am fine however to add this, as we are not setting these fields in our current implementations.\n\n<img width=\"1067\" height=\"413\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/e00aa5bb-5124-4837-879a-e47c8a3b6aa9\" />\n\n### 3\n\n> The TRC is a signed collection of [[X.509](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#X.509)] v3 certificates. Additionally, the TRC contains ISD-specific policies encoded in CMS signed-data ([[RFC5652](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#RFC5652)] section 5).\n\nThis makes it sound like the certificates are not part of the CMS signed-data. I think it could be rephrased to be clearer.\n\n<img width=\"1050\" height=\"65\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/341b123b-2c90-4174-a550-89b1f66a0fe5\" />\n\n### 3.1\n\n> [Figure 2](https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.html#_figure-2) shows the content of both a base/initial TRC, the changes made with the first regular update to the base TRC.\n\nI don't understand the meaning of the second part of the sentence. In figure 2, there is only a base TRC AFAICT.\n\n<img width=\"1085\" height=\"86\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/9cd465ce-0af5-4066-a5fe-c9a3ebc307e2\" />\n\n### 3.2.5\n\n> The noTrustReset field is OPTIONAL and defaults to FALSE.\n\nI think we changed this to not be in the ASN.1 module to follow our implementation\n\n<img width=\"838\" height=\"36\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/8c0a8283-5255-4bf8-a933-44c8c8895c67\" />\n\n### 3.4\n\nI think the algorithm has an issue. In step 2, we identify the highest baseNumber from the pre-filtered TRCs.\nInstead, the highest baseNumber should be selected from all known TRCs.\n\nOtherwise, it could happen that a TRC chain from the highest baseNumber expires (by accident), and an older TRC chain gets to be valid again. (E.g., by malicious actor continuing to create new TRCs in the chain.)\n\nSee question below. I reopened  https://github.com/scionassociation/scion-cppki_I-D/issues/128 to make sure I don't forget about it \n\n### 3.5.7\n\n> If one or more of the above checks gives a negative result, the updated TRC SHOULD be rejected.\n\nIs this a SHOULD or a MUST? \n\nChanging to a MUST in https://github.com/scionassociation/scion-cppki_I-D/pull/168 \n\n### 4.1.2\n\n> Relying parties MUST discover TRC updates within the grace period defined in the updated TRC\n\nThat MUST is really hard to uphold, especially given the relying party does not know what the future value is going to be.\n\n<img width=\"1069\" height=\"108\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/3de6ed74-87d0-4f5b-a9b8-ccc492bae368\" />\n\n<img width=\"1051\" height=\"157\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/50b1676f-fc78-4124-882b-0d653f455084\" />\n\n>  and MUST include the hash value of the TRC contents to facilitate the discovery of discrepancies.\n\nWhere is this currently reflected in the specs/implementation. I do not remember where we put this information.\n\n<img width=\"1075\" height=\"180\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/80cb748d-ed6c-4e52-88c7-d363d0d9b4a5\" />\n\n### 4.2.2\n\n> the relying party MUST check that they have this latest TRC. If not, the relying party MUST request the latest TRC\n\nWe do not mention what to do with that requested TRC. We need to go back to step 1, no?\n\n<img width=\"1036\" height=\"73\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/6cbb8f00-7ca4-4e02-b38d-fe3089a5b52d\" />\n\n### 6.3\n\nFor the record, the current implementation does not behave this way.\nIf a TRC is unknown, it is ignored, and the relying party fails to verify.\n\nReworded as hypotetical, since this approach may be used by some endpoints \n\n<img width=\"1067\" height=\"203\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/d9a12a28-e90f-4af5-a869-ca5641432a76\" />\n",
+          "createdAt": "2026-06-04T11:53:35Z",
+          "updatedAt": "2026-06-04T16:08:18Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@oncilla I have a question about: 3.4\n> I think the algorithm has an issue. In step 2, we identify the highest baseNumber from the pre-filtered TRCs.\nInstead, the highest baseNumber should be selected from all known TRCs.\n\nAre  you sure?  Step 1 only filters out future TRCs (notBefore < verification time), but not past TRCs.\n\n\n> Otherwise, it could happen that a TRC chain from the highest baseNumber expires (by accident), and an older TRC chain gets to be valid again. (E.g., by malicious actor continuing to create new TRCs in the chain.)\n\nStep 1 would not filter out that TRC, because the check is on the notBefore date only. So that TRC would stay and move to step 2, where it is selected as the TRC. However, since it is expired, step 3 fails.  Do you agree? Or did I miss something?\n\nP.S. this is the current text (which did not change since you reviewed): \n\n```\n To validate a certification path, a relying party builds a collection\n   of root certificates known as the trust anchor pool.  Because TRC\n   updates can introduce a grace period where multiple TRCs overlap,\n   relying parties MUST execute the following steps to determine the\n   correct trust anchor pool for a given verification time:\n\n   1.  From the set of all available TRCs for the ISD, keep only TRCs\n       whose validity start time (notBefore date) is at or before the\n       verification time.  If no such TRC exists, the process terminates\n       unsuccessfully.\n\n   2.  From the selected TRCs, identify those with the highest base\n       number (baseNumber), then select the TRC among them with the\n       highest serial number (serialNumber).\n\n   3.  If the verification time is strictly greater than the selected\n       TRC's notAfter date then the process terminates unsuccessfully.\n\n   4.  If the TRC is valid, add its root certificates to the trust\n       anchor pool.\n\n   5.  If the TRC is in its grace period, add the preceding TRC's root\n       certificates to the trust anchor pool.\n```\n\n",
+          "createdAt": "2026-06-04T16:07:29Z",
+          "updatedAt": "2026-06-04T16:07:29Z"
+        },
+        {
+          "author": "oncilla",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "> \n> Are you sure? Step 1 only filters out future TRCs (notBefore < verification time), but not past TRCs.\n> \n\nAh. Indeed. I read it wrong. Looks good to me.",
+          "createdAt": "2026-06-05T08:44:37Z",
+          "updatedAt": "2026-06-05T08:44:37Z"
         }
       ]
     },
@@ -1909,7 +1937,7 @@
       "id": "I_kwDOH386tM8AAAABDGldtQ",
       "title": "Rename Voting ASes (they may not have an AS number)",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/154",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1918,8 +1946,8 @@
       "labels": [],
       "body": "As reported by @oncilla in #149 \n\n>> 1.1. Terminology\nVoting ASes: Those ASes within an ISD that may sign TRC updates. The process of appending a signature to a new TRC is called \"casting a vote\".\n\n>It is technically possible that voters are not actual routable SCION ASes. That is actually also reflected later on by the recommendation that voters should have an ISD-AS number in their subject, but are not required to have it. If we want to be technically correct, we probably should use a different word than AS. For example, in the SSUN, we have a case where VSE is a voter (and we allocated an AS number), but for the time being they are not routable.\n\n>I am also fine with leaving it as is, just wanted to point this out in case it was not known/obvious.",
       "createdAt": "2026-05-22T13:59:31Z",
-      "updatedAt": "2026-05-26T08:26:59Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-04T13:36:46Z",
+      "closedAt": "2026-06-04T13:36:46Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -1934,6 +1962,13 @@
           "body": "Asked for any objections on [slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1779783986660779)",
           "createdAt": "2026-05-26T08:26:59Z",
           "updatedAt": "2026-05-26T08:26:59Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "SSFN docs uses \"Voting members\"",
+          "createdAt": "2026-06-04T08:28:38Z",
+          "updatedAt": "2026-06-04T08:28:38Z"
         }
       ]
     },
@@ -1942,7 +1977,7 @@
       "id": "I_kwDOH386tM8AAAABDHN9bw",
       "title": "Clarify roles and processes for  authoritative ASes",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/155",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -1951,8 +1986,8 @@
       "labels": [],
       "body": "In #142, Till points out: \n\n> Authorative ASes: Do they get contacted by voting ASes when a TRC update is ready to be distributed?\n\n\nI think we could add one more rule in `3.5.3.  General Update Rules` saying that:\n\n- After an update, Voters MUST distribute the TRC to all authoritative ASes. I'm not sure how that works in practice..",
       "createdAt": "2026-05-22T15:43:32Z",
-      "updatedAt": "2026-06-03T12:21:30Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-04T07:07:52Z",
+      "closedAt": "2026-06-04T07:07:52Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -2010,15 +2045,15 @@
       "id": "I_kwDOH386tM8AAAABDx5uog",
       "title": "Clarify and consolidate trust reset process",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/158",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "From @tzaeschke: > I also noticed another problem (I also added a note the the PR of section 3: There is no real description of \"trust reset\". The closest thing is section 6.1.1, but that feels somewhat hidden. For comparison, there are section about \"trust update\" and \"signing ceremony\".\n\nIndeed, trust resets are spread across various sections: \n\n```\n1.4.1.  Updates and Trust Resets\n\n   If the ISD's TRC has been compromised, it is necessary for an ISD to\n   re-establish the trust root.  This is possible with a process called\n   *trust reset* (if permitted by the ISD's trust policy).  In this\n   case, a new base TRC is created.\n```\n\n```\n3.2.5.  noTrustReset\n\n   The noTrustReset Boolean specifies whether a trust reset is forbidden\n   by the ISD.  Within a TRC update chain, this value MUST NOT be\n   changed by a regular or sensitive update.  However, it is possible to\n   change the noTrustReset value in the event of a trust reset where a\n   new base TRC is created.\n\n   The noTrustReset field is OPTIONAL and defaults to FALSE.\n\n   Note that once the noTrustReset Boolean is set to TRUE and a trust\n   reset is disallowed, this cannot be reversed.  Therefore, ISDs SHOULD\n   always set this value to FALSE, unless they have sufficiently\n   assessed the risks and implications of making a trust reset\n   impossible.\n\n   Note that a trust reset represents a special use case where a new\n   base TRC is created.  It therefore differs from a TRC update (regular\n   or sensitive) as the signatures in the new base TRC cannot be\n   verified with the certificates contained in the predecessor TRC.\n   Instead, a trust reset base TRC must be axiomatically trusted,\n   similarly to how the initial TRC is trusted.\n\n```\n\n\n```\n6.1.1.  Recovery from Compromise\n\n   This section deals with possible recovery from the compromises\n   discussed in the previous paragraph.  As described in Section 1.4.2,\n   there is no revocation in the Control Plane PKI.\n\n   *  At TRC level: If any of the root keys or voting keys contained in\n      the TRC are compromised, the TRC MUST be updated as described in\n      Section 3.5.  A trust reset is only required in the case the\n      number of compromised keys at the same time is greater or equal\n      than the TRC's quorum (see Section 3.2.7), and a invalid update\n      has been produced and distributed in the network.\n```\n\nLet's check if we can consolidate and cross reference it",
       "createdAt": "2026-05-29T12:57:19Z",
-      "updatedAt": "2026-06-03T09:28:57Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-05T12:08:31Z",
+      "closedAt": "2026-06-05T12:08:31Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -2033,6 +2068,13 @@
           "body": "Related to this, Til also asked: \n\n> Maybe add some suggestions on the value of this field? E.g. should be (voting members - 2) two allow for removing members? Or if a member loses its certificates (and two events overlap)?\n ",
           "createdAt": "2026-06-02T18:39:36Z",
           "updatedAt": "2026-06-02T18:39:36Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Leaving open until @tzaeschke confirms that change is ok for him",
+          "createdAt": "2026-06-04T11:33:57Z",
+          "updatedAt": "2026-06-04T11:33:57Z"
         }
       ]
     },
@@ -2057,7 +2099,7 @@
       "id": "I_kwDOH386tM8AAAABEKI7Xg",
       "title": "Update X.509 reference to version 9?",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/161",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [
@@ -2066,8 +2108,8 @@
       "labels": [],
       "body": "@tzaeschke noted that the currently referenced version of X.509 (10/2016) is marked as superseded. Shall we update to v9? \n\nWe currently reference to specific clauses, that according to Gemini and to the enclosed diff, were not changed too much. An AI comparison is below. I did a quick manual side by side comparison to verify this and not much changed, except clause 7.2 which is now 7.2.1. \n\nHowever, we are using go standard [PKI library](https://pkg.go.dev/crypto/x509), I'm not sure if it supports revision 9: \n> The package targets the X.509 technical profile defined by the IETF ([RFC 2459](https://rfc-editor.org/rfc/rfc2459.html)/3280/5280), and as further restricted by the CA/Browser Forum Baseline Requirements. There is minimal support for features outside of these profiles, as the primary goal of the package is to provide compatibility with the publicly trusted TLS certificate ecosystem and its policies and constraints. \n\n AFAIK the main novelty introduced by version 9 is support of Multiple cryptographic algorithms, which could be useful for post-quantum PKI. \n\nAI Comparison:\n- Clause 7.2: Public-key certificate10/2016: This was a single, unified clause detailing the creation, syntax, and components of a public-key certificate.  10/2019: The clause was heavily restructured and split into subclauses. The original text was moved into 7.2.1 Public-key certificate syntax. A completely new section, 7.2.2 Multiple cryptographic algorithms for public-key certificates, was added. This new addition introduces the ability for a public-key certificate to hold alternative public key information (subjectAltPublicKeyInfo), an alternative signature algorithm (altSignatureAlgorithm), and an alternative digital signature (altSignatureValue). \n-  Clause 9: Public-key certificate and CRL extensions10/2016: The introductory text lists five areas of extensions (a through e), ending with \"CRL distribution points and delta CRLs\".  10/2019: While the introductory text in Clause 9 listing the first five areas remains identical, the overall contents of Section 9 were expanded. The 2019 edition adds two entirely new extension categories: 9.7 Authorization and validation list extensions and 9.8 Alternative cryptographic algorithms and digital signature extensions.  \n- Clause 9.2.2.2: Subject key identifier extensionBoth Editions: The text and the ASN.1 syntax for this extension are completely identical between the 2016 and 2019 editions. This is the only clause on your list that remained untouched.  \n- Clause 9.2.2.3: Key usage extension10/2016: Defines the standard intended usage bit strings (e.g., digitalSignature, keyEncipherment).  10/2019: The 2019 edition inserts a brand new paragraph explicitly applying this extension to the new multi-algorithm features: \"For a multiple cryptographic algorithm public-key certificate, the keyUsage extension applies also to the alternative SubjectAltPublicKeyInfo in the subjectAltPublicKeyInfo extension.\"  \n-  Clause 9.2.2.4: Extended key usage extension10/2016: Defines the standard extended key usage definitions.  10/2019: Similar to the Key Usage clause, the 2019 edition adds a new paragraph to accommodate multi-algorithm certificates: \"For a multiple cryptographic algorithm public-key certificate, the extKeyUsage extension applies also to the alternative SubjectAltPublicKeyInfo in the subjectAltPublicKeyInfo extension.\"   \n\n\n\n",
       "createdAt": "2026-06-02T18:34:21Z",
-      "updatedAt": "2026-06-03T09:19:17Z",
-      "closedAt": null,
+      "updatedAt": "2026-06-05T11:33:32Z",
+      "closedAt": "2026-06-05T11:33:32Z",
       "comments": [
         {
           "author": "nicorusti",
@@ -2082,6 +2124,13 @@
           "body": "Example of a change in 10/2019 v.s. 10/2016\n<img width=\"852\" height=\"749\" alt=\"Image\" src=\"https://github.com/user-attachments/assets/bb719c24-0fcb-420e-a3c5-b67df7e4aadc\" />",
           "createdAt": "2026-06-03T09:19:17Z",
           "updatedAt": "2026-06-03T09:19:17Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Our PKI reviewer says\n\n> It looks like the most accurate (and not necessarily the latest) reference would be fine. If Eliot has a problem with that, he will tell you :-).\n\n\nSo I will leave the ref as it is today",
+          "createdAt": "2026-06-05T11:33:32Z",
+          "updatedAt": "2026-06-05T11:33:32Z"
         }
       ]
     }
@@ -11256,25 +11305,33 @@
       "id": "PR_kwDOH386tM7h679u",
       "title": "update X.509 reference to revision 9",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/162",
-      "state": "OPEN",
+      "state": "CLOSED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #161 \r\n\r\nI want to have more discussion before merging this.",
       "createdAt": "2026-06-02T18:35:49Z",
-      "updatedAt": "2026-06-02T18:35:49Z",
+      "updatedAt": "2026-06-05T11:33:50Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "0bdbc92ec4dba0e26dce697d52d88c932bd2d039",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "x509-update",
       "headRefOid": "076e4672abec1ac5878e0bc82d8b0201381e5b4e",
-      "closedAt": null,
+      "closedAt": "2026-06-05T11:33:49Z",
       "mergedAt": null,
       "mergedBy": null,
       "mergeCommit": null,
-      "comments": [],
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "We won't change the reference, see #161 ",
+          "createdAt": "2026-06-05T11:33:49Z",
+          "updatedAt": "2026-06-05T11:33:49Z"
+        }
+      ],
       "reviews": []
     },
     {
@@ -11324,24 +11381,26 @@
       "id": "PR_kwDOH386tM7iKy39",
       "title": "Clarify role and processes for authoritative ASes",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/164",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #155 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/authoritative_as_clarifications/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-06-03T10:15:48Z",
-      "updatedAt": "2026-06-03T15:14:24Z",
+      "updatedAt": "2026-06-04T07:07:51Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
       "baseRefOid": "0b5d4332a8a0678e15c48e24538698d28035805f",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "authoritative_as_clarifications",
-      "headRefOid": "32419d0c8c791bc677fd01c021a940d41234b911",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
+      "headRefOid": "fff109aecc76453941b8dcb51befcf2c31d26a16",
+      "closedAt": "2026-06-04T07:07:51Z",
+      "mergedAt": "2026-06-04T07:07:51Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "c3b7f250e3aa495923e1115bc4fa52a1871f6319"
+      },
       "comments": [],
       "reviews": [
         {
@@ -11485,26 +11544,218 @@
       "id": "PR_kwDOH386tM7iSTJo",
       "title": "Trust Reset - consolidate concepts in dedicated section",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/166",
-      "state": "OPEN",
+      "state": "MERGED",
       "author": "nicorusti",
       "authorAssociation": "MEMBER",
       "assignees": [],
       "labels": [],
       "body": "Resolves #158 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/trust_reset/draft-dekater-scion-pki.txt)",
       "createdAt": "2026-06-03T15:15:35Z",
-      "updatedAt": "2026-06-03T16:02:26Z",
+      "updatedAt": "2026-06-04T11:55:14Z",
       "baseRepository": "scionassociation/scion-cppki_I-D",
       "baseRefName": "main",
-      "baseRefOid": "51d03faf5ae8c7dda3173c206f5875242fe2ba56",
+      "baseRefOid": "c3b7f250e3aa495923e1115bc4fa52a1871f6319",
       "headRepository": "scionassociation/scion-cppki_I-D",
       "headRefName": "trust_reset",
-      "headRefOid": "9816cdaaf9357ffef33b2b0d301d0f9a0badc51c",
-      "closedAt": null,
-      "mergedAt": null,
-      "mergedBy": null,
-      "mergeCommit": null,
-      "comments": [],
-      "reviews": []
+      "headRefOid": "a9028cb3452016f7670e17c159a2d5ff90700f69",
+      "closedAt": "2026-06-04T11:33:32Z",
+      "mergedAt": "2026-06-04T11:33:32Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "a33d89d5f2ad07382e7758a1d3a5f348308920f7"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Compiled diff is here:\r\n[Diff_ draft-dekater-scion-pki.txt - draft-dekater-scion-pki.txt.html](https://github.com/user-attachments/files/28593542/Diff_.draft-dekater-scion-pki.txt.-.draft-dekater-scion-pki.txt.html)\r\n",
+          "createdAt": "2026-06-04T11:31:02Z",
+          "updatedAt": "2026-06-04T11:31:02Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@tzaeschke  I'll merge since Dominik already gave it a look, and I need to start consolidating outstanding PRs.. \r\nIf you see any issues, let me know and we can fix them. In my previous comment you also find the compiled diff, in case it is easier for you too see the changes",
+          "createdAt": "2026-06-04T11:33:27Z",
+          "updatedAt": "2026-06-04T11:55:03Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "Tilmann Z\u00e4schke\r\nIt seems this PR 166 has already been merged.\r\n\r\nMy comments:\r\n\r\nI like the updated table 7\r\nI like the new section, it describes when to perform trust reset and why it is needed.\r\nHowever, I think the new section is missing something:\r\nA description on how a trust reset is performed (or a reference to a section that describes it)\r\nA reference to table 7 as an example of a trust reset\r\nAlso, the Changelog references table 6, however in the text table description it is called table 7.",
+          "createdAt": "2026-06-04T11:55:14Z",
+          "updatedAt": "2026-06-04T11:55:14Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABB9UZUA",
+          "commit": {
+            "abbreviatedOid": "a9028cb"
+          },
+          "author": "oncilla",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "",
+          "createdAt": "2026-06-04T09:01:44Z",
+          "updatedAt": "2026-06-04T09:01:44Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 167,
+      "id": "PR_kwDOH386tM7imVvh",
+      "title": "Rename Voting AS to Voter",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/167",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Resolves #154 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/voting/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-06-04T08:41:26Z",
+      "updatedAt": "2026-06-04T13:37:21Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "a33d89d5f2ad07382e7758a1d3a5f348308920f7",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "voting",
+      "headRefOid": "8aa8894b6513669a4b9fe0377eb03644b122f805",
+      "closedAt": "2026-06-04T13:36:45Z",
+      "mergedAt": "2026-06-04T13:36:45Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "c600906ffbdc4ff683eb3ced443852398544c780"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@knmeynell if you are ok with it, feel free to merge it directly\r\n",
+          "createdAt": "2026-06-04T11:34:34Z",
+          "updatedAt": "2026-06-04T11:34:34Z"
+        },
+        {
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "body": "FYI, the references to Voting AS have not been changed in the Signing Ceremony appendix.",
+          "createdAt": "2026-06-04T12:39:39Z",
+          "updatedAt": "2026-06-04T12:39:39Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "\r\n> FYI, the references to Voting AS have not been changed in the Signing Ceremony appendix.\r\n\r\nWhere? I don't see any",
+          "createdAt": "2026-06-04T13:30:36Z",
+          "updatedAt": "2026-06-04T13:30:36Z"
+        },
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "[Diff_ draft-dekater-scion-pki.txt - draft-dekater-scion-pki.txt.html](https://github.com/user-attachments/files/28598307/Diff_.draft-dekater-scion-pki.txt.-.draft-dekater-scion-pki.txt.html)\r\n",
+          "createdAt": "2026-06-04T13:37:19Z",
+          "updatedAt": "2026-06-04T13:37:19Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABB-m83A",
+          "commit": {
+            "abbreviatedOid": "ab5b035"
+          },
+          "author": "knmeynell",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "CHANGES_REQUESTED",
+          "body": "",
+          "createdAt": "2026-06-04T12:21:21Z",
+          "updatedAt": "2026-06-04T12:23:32Z",
+          "comments": [
+            {
+              "originalPosition": 14,
+              "body": "comma is not needed here...\n\n_but do not necessarily have to be the same entities since Voters do not require an AS number_\n",
+              "createdAt": "2026-06-04T12:21:21Z",
+              "updatedAt": "2026-06-04T12:23:32Z"
+            },
+            {
+              "originalPosition": 78,
+              "body": "Don't think a hyphen isn't needed here...\n\n_by wrapping the CSR in a CMS signed data structure_ \n",
+              "createdAt": "2026-06-04T12:22:55Z",
+              "updatedAt": "2026-06-04T12:23:32Z"
+            }
+          ]
+        },
+        {
+          "id": "PRR_kwDOH386tM8AAAABB-wUUg",
+          "commit": {
+            "abbreviatedOid": "ab5b035"
+          },
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "state": "COMMENTED",
+          "body": "",
+          "createdAt": "2026-06-04T12:43:15Z",
+          "updatedAt": "2026-06-04T12:43:16Z",
+          "comments": [
+            {
+              "originalPosition": 78,
+              "body": "There are two versions of it in the draft.. I'll double check what is the best and be consistent. Maybe like in -controlplane, we can use: `CMS SignedData`",
+              "createdAt": "2026-06-04T12:43:15Z",
+              "updatedAt": "2026-06-04T12:43:16Z"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "number": 168,
+      "id": "PR_kwDOH386tM7iqaN0",
+      "title": "Dominik & Till review - last points",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/168",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "A few las points.\r\n\r\nResolves #149  \r\n\r\nFollow up on trust resets to #166 \r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/dominik-review/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-06-04T11:51:53Z",
+      "updatedAt": "2026-06-05T12:09:27Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "c600906ffbdc4ff683eb3ced443852398544c780",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "dominik-review",
+      "headRefOid": "ded4cac7d1411a214127b85dfc26063e0db7927b",
+      "closedAt": "2026-06-05T12:09:27Z",
+      "mergedAt": "2026-06-05T12:09:27Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "60757d70466d70b28c96769aa9852bfb794007fb"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "@tzaeschke I don't know what else to write about trust resets, I asked in[ Slack](https://scionproto.slack.com/archives/C8ADA9CEP/p1780589737244109)",
+          "createdAt": "2026-06-04T16:16:29Z",
+          "updatedAt": "2026-06-04T16:16:29Z"
+        }
+      ],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABCFYGZg",
+          "commit": {
+            "abbreviatedOid": "da024b9"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2026-06-05T08:31:32Z",
+          "updatedAt": "2026-06-05T08:31:32Z",
+          "comments": []
+        }
+      ]
     }
   ]
 }
