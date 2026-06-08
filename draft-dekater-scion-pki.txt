@@ -5,9 +5,9 @@
 Network Working Group                                        C. de Kater
 Internet-Draft                                             N. Rustignoli
 Intended status: Informational                         SCION Association
-Expires: 7 December 2026                                         S. Hitz
+Expires: 10 December 2026                                        S. Hitz
                                                          Anapaya Systems
-                                                             5 June 2026
+                                                             8 June 2026
 
 
                         SCION Control Plane PKI
@@ -62,7 +62,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 7 December 2026.
+   This Internet-Draft will expire on 10 December 2026.
 
 Copyright Notice
 
@@ -2785,14 +2785,14 @@ Acknowledgments
    Prado (ETH Zurich), Russ Housley (Vigil Security LLC), Alexey
    Melnikov (Isode), Brian Trammell (Google), Ramon Keller (LibC
    Technologies), Patrick Ambord (independent), Dominik Roos (Anapaya
-   Systems AG), and Kevin Meynell (SCION Association) for reviewing this
-   document.  We are also very grateful to Adrian Perrig (ETH Zurich),
-   for providing guidance and feedback about each aspect of SCION.
-   Finally, we are indebted to the SCION development teams of Anapaya
-   and ETH Zurich, for their practical knowledge and for the
-   documentation about the CP-PKI, as well as to the authors of
-   [CHUAT22] - the book is an important source of input and inspiration
-   for this draft.
+   Systems AG), Tilmann Zäschke (ETH Zurich), and Kevin Meynell (SCION
+   Association) for reviewing this document.  We are also very grateful
+   to Adrian Perrig (ETH Zurich), for providing guidance and feedback
+   about each aspect of SCION.  Finally, we are indebted to the SCION
+   development teams of Anapaya and ETH Zurich, for their practical
+   knowledge and for the documentation about the CP-PKI, as well as to
+   the authors of [CHUAT22] - the book is an important source of input
+   and inspiration for this draft.
 
 Authors' Addresses
 
