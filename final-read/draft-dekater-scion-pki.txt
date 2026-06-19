@@ -1558,8 +1558,7 @@ Table of Contents
    for the missing material through the control plane API described in
    [I-D.dekater-scion-controlplane], section "Distribution of
    Cryptographic Material".  If it cannot be resolved, the verification
-   process fails.  For more details, see 4.2 "Signing and Verifying
-   Control Plane Messages" Section 4.2.
+   process fails.  For more details, see Section 4.2.
 
 3.5.  TRC Updates
 
