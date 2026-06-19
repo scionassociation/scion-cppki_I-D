@@ -1930,9 +1930,9 @@ Table of Contents
 
    A certificate chain is verified against the control plane root
    certificate, although the root certificate is bundled with the TRC
-   and *not* in the chain.  This makes it possible to extend the
-   validity period of the root certificate and update the corresponding
-   TRC without having to modify the certificate chain.
+   and not in the chain.  This makes it possible to extend the validity
+   period of the root certificate and update the corresponding TRC
+   without having to modify the certificate chain.
 
    To verify a control plane message, the relying party MUST perform the
    following steps:
@@ -2133,9 +2133,8 @@ Table of Contents
    *  At TRC level: If any of the root keys or voting keys contained in
       the TRC are compromised, the TRC MUST be updated as described in
       Section 3.5.  A trust reset is only required in the case the
-      number of compromised keys at the same time is greater or equal
-      than the TRC's quorum (see Section 3.2.7), and an invalid update
-      has been produced and distributed in the network.
+      number of compromised voting keys at the same time is greater or
+      equal than the TRC's quorum (see Section 3.2.7).
 
    *  At CA level: If the private key related to an issuing CA
       certificate is compromised, the impacted CA AS MUST obtain a new
