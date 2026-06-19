@@ -1489,7 +1489,7 @@ Table of Contents
 
       -  The algorithm specified in the signatureAlgorithm field MUST be
          one of the algorithms supported by SCION . For details, see
-         signature Field - Additional Information (Section 2.6.3).
+         Section 2.6.3.
 
       -  The digestAlgorithm is determined by the algorithm specified in
          the signatureAlgorithm field.
