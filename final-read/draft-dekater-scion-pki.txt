@@ -2459,7 +2459,7 @@ C.2.  Ceremony Preparations
    follows:
 
    *  ISD number - for public ISDs these are obtained from the SCION
-      registry, see Section 3.2.2;
+      registry, see Section 7;
 
    *  The description of the TRC, see Section 3.2.10;
 
