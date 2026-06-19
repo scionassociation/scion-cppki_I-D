@@ -611,7 +611,7 @@ The following types of TRCs exist:
 
 - Initial: The very first TRC of an ISD is the initial TRC of that ISD. It is a special case of the base TRC, where the number of the ISD is specified.
 - Base: A base TRC is either the initial TRC, or the first TRC after a trust reset (see [](#trust-reset-description)). Trust for a base TRC cannot be inferred by verifying a TRC update; base TRCs are trusted axiomatically, similarly to how root certificates are trusted by clients in the Web PKI.
-- Update: All non-base TRCs are updated TRCs. They are the product of either a regular or a sensitive update.
+- Updated: All non-base TRCs are updated TRCs. They are the product of either a regular or a sensitive update.
 
 A TRC can have the following states:
 
