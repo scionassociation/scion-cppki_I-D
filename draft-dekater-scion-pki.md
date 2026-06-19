@@ -799,7 +799,7 @@ SCION implementations MUST fulfill the following additional rules, as well as th
    - The type of signer identifier chosen here MUST be `IssuerAndSerialNumber`.
 - `SignerInfo` sequence:
    - The `version` field MUST be set to "1". This is because SCION uses the `IssuerAndSerialNumber` type of signer identifier (see also Section 5.3 of {{RFC5652}}).
-   - The algorithm specified in the `signatureAlgorithm` field MUST be one of the algorithms supported by SCION . For details, see [signature Field - Additional Information](#certsign).
+   - The algorithm specified in the `signatureAlgorithm` field MUST be one of the algorithms supported by SCION . For details, see [](#certsign).
    - The `digestAlgorithm` is determined by the algorithm specified in the `signatureAlgorithm` field.
 
 
