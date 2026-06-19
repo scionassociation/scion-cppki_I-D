@@ -201,7 +201,7 @@ In case the TRC has been compromised, it may be re-established through a process
 
 ### Substitutes to Certificate Revocation {#substitutes-to-revocation}
 
-The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism, on trust resets, and  on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:
+The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism, on trust resets, and  on short-lived certificates. These approaches constitute an alternative to a revocation system for the following reasons:
 
 - Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL {{RFC5280}} and OCSP {{RFC6960}} checks improves performance by removing additional network lookups during PKI processing.
 - Even with a revocation system, a compromised key cannot be instantaneously revoked. Through their validity period, both short-lived certificates and revocation lists implicitly define an attack window (i.e. a period during which an attacker who managed to compromise a key could use it before it becomes invalid). In both cases, the CA must consider a tradeoff between efficiency and security when picking this validity period.
@@ -934,9 +934,9 @@ A trust reset is a process that results in the creation of a new base TRC. It is
 It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
 Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted. The base number of a new TRC following a trust reset is changed as shown in {{#table-7}}.
 
-This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise or loss of the voting keys. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised or lost voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
+This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed or lost. If the number of exposed or lost voting keys is lower than the voting quorum (see [](#quorum)), a TRC update is sufficient to replace the affected keys (see [](#update)).
 
-A trust reset is only required when the number of simultaneously compromised or lost voting keys meets or exceeds the TRC's voting quorum (see [](#quorum)), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.
+The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.
 
 
 ## Initial TRC Signing Ceremony {#trc-ceremony}
