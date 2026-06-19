@@ -13,22 +13,23 @@
        This specification introduces its localized trust model, anchored in Isolation Domains (ISDs). It defines the distinct certificate types, and specifies the structure, format and lifecycle of the Trust Root Configuration (TRC). Furthermore, it provides practical guidelines for deploying and maintaining the CP-PKI infrastructure. 
        This document contains new approaches to secure path aware networking. It is not an Internet Standard, has not received any formal review of the IETF, nor was the work developed through the rough consensus process. The approaches offered in this work are offered to the community for its consideration in the further evolution of the Internet. 
     " name="description">
-<meta content="xml2rfc 3.33.0" name="generator">
+<meta content="xml2rfc 3.34.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-dekater-scion-pki-latest" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.33.0
-    Python 3.12.13
-    ConfigArgParse 1.7
+  xml2rfc 3.34.0
+    Python 3.14.5
+    ConfigArgParse 1.7.5
     google-i18n-address 3.1.1
     intervaltree 3.2.1
     Jinja2 3.1.6
-    lxml 6.0.2
-    platformdirs 4.9.6
+    lxml 6.1.1
+    natsort 8.4.0
+    platformdirs 4.10.0
     pycountry 24.6.1
     PyYAML 6.0.3
     requests 2.33.1
-    wcwidth 0.7.0
+    wcwidth 0.8.1
 -->
 <link href="draft-dekater-scion-pki.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -1051,7 +1052,7 @@ svg {
 </tr></thead>
 <tfoot><tr>
 <td class="left">de Kater, et al.</td>
-<td class="center">Expires 10 December 2026</td>
+<td class="center">Expires 21 December 2026</td>
 <td class="right">[Page]</td>
 </tr></tfoot>
 </table>
@@ -1064,12 +1065,12 @@ svg {
 <dd class="internet-draft">draft-dekater-scion-pki-latest</dd>
 <dt class="label-published">Published:</dt>
 <dd class="published">
-<time datetime="2026-06-08" class="published">8 June 2026</time>
+<time datetime="2026-06-19" class="published">19 June 2026</time>
     </dd>
 <dt class="label-intended-status">Intended Status:</dt>
 <dd class="intended-status">Informational</dd>
 <dt class="label-expires">Expires:</dt>
-<dd class="expires"><time datetime="2026-12-10">10 December 2026</time></dd>
+<dd class="expires"><time datetime="2026-12-21">21 December 2026</time></dd>
 <dt class="label-authors">Authors:</dt>
 <dd class="authors">
 <div class="author">
@@ -1124,7 +1125,7 @@ svg {
         time. It is inappropriate to use Internet-Drafts as reference
         material or to cite them other than as "work in progress."<a href="#section-boilerplate.1-3" class="pilcrow">¶</a></p>
 <p id="section-boilerplate.1-4">
-        This Internet-Draft will expire on 10 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
+        This Internet-Draft will expire on 21 December 2026.<a href="#section-boilerplate.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="copyright">
@@ -1457,28 +1458,31 @@ svg {
             <p id="section-toc.1-1.12.1"><a href="#appendix-D" class="auto internal xref"></a><a href="#name-change-log" class="internal xref">Change Log</a></p>
 <ul class="compact toc ulBare ulEmpty">
 <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.1">
-                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-13" class="internal xref">draft-dekater-scion-pki-13</a></p>
+                <p id="section-toc.1-1.12.2.1.1"><a href="#appendix-D.1" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-14" class="internal xref">draft-dekater-scion-pki-14</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.2">
-                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-12" class="internal xref">draft-dekater-scion-pki-12</a></p>
+                <p id="section-toc.1-1.12.2.2.1"><a href="#appendix-D.2" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-13" class="internal xref">draft-dekater-scion-pki-13</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.3">
-                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-11" class="internal xref">draft-dekater-scion-pki-11</a></p>
+                <p id="section-toc.1-1.12.2.3.1"><a href="#appendix-D.3" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-12" class="internal xref">draft-dekater-scion-pki-12</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.4">
-                <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-D.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-10" class="internal xref">draft-dekater-scion-pki-10</a></p>
+                <p id="section-toc.1-1.12.2.4.1"><a href="#appendix-D.4" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-11" class="internal xref">draft-dekater-scion-pki-11</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.5">
-                <p id="section-toc.1-1.12.2.5.1"><a href="#appendix-D.5" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
+                <p id="section-toc.1-1.12.2.5.1"><a href="#appendix-D.5" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-10" class="internal xref">draft-dekater-scion-pki-10</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.6">
-                <p id="section-toc.1-1.12.2.6.1"><a href="#appendix-D.6" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
+                <p id="section-toc.1-1.12.2.6.1"><a href="#appendix-D.6" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-09" class="internal xref">draft-dekater-scion-pki-09</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.7">
-                <p id="section-toc.1-1.12.2.7.1"><a href="#appendix-D.7" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+                <p id="section-toc.1-1.12.2.7.1"><a href="#appendix-D.7" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-08" class="internal xref">draft-dekater-scion-pki-08</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.8">
-                <p id="section-toc.1-1.12.2.8.1"><a href="#appendix-D.8" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
+                <p id="section-toc.1-1.12.2.8.1"><a href="#appendix-D.8" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-07" class="internal xref">draft-dekater-scion-pki-07</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.12.2.9">
+                <p id="section-toc.1-1.12.2.9.1"><a href="#appendix-D.9" class="auto internal xref"></a><a href="#name-draft-dekater-scion-pki-06" class="internal xref">draft-dekater-scion-pki-06</a></p>
 </li>
             </ul>
 </li>
@@ -1556,7 +1560,7 @@ appear in all capitals, as shown here.<a href="#section-1.2-1" class="pilcrow">�
         </ul>
 <p id="section-1.3-5">To fulfill these requirements, SCION introduces the concept of <strong>Isolation Domains</strong>. An Isolation Domain (ISD) is a building block to support heterogeneous trust while achieving high availability and scalability in its control plane (<span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>). It consists of a logical grouping of SCION ASes that share a uniform trust environment (i.e. a common jurisdiction).<a href="#section-1.3-5" class="pilcrow">¶</a></p>
 <p id="section-1.3-6">An ISD is governed by one or multiple <strong>Voters</strong>. Furthermore, each ISD has a set of ASes that form the ISD core, known as the <strong>Core ASes</strong>. The set of Core ASes and Voters may be but do not necessarily have to be the same entities, since Voters do not require an AS number. Governance is implemented by a policy called the <strong>Trust Root Configuration</strong> (TRC), which is negotiated by the Voters and which defines the locally scoped roots of trust used to validate bindings between names and public keys.<a href="#section-1.3-6" class="pilcrow">¶</a></p>
-<p id="section-1.3-7">Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. An ISD's TRC is used for signatures pertaining to information originating from that ISD, such as paths, but for nothing originating outside of the ISD. This ISD-level scoping of trust roots enhances security by strictly limiting effect of a compromise to data originating from the compromised AS.
+<p id="section-1.3-7">Authentication in SCION is based on X.509 certificates that bind identifiers to public keys and carry digital signatures that are verified by roots of trust. SCION allows each ISD to define its own set of trust roots, along with the policy governing their use. An ISD's TRC is used for signatures pertaining to information originating from that ISD, such as paths, but for nothing originating outside of the ISD. This ISD-level scoping of trust roots enhances security by strictly limiting effect of a compromise to data originating from the compromised ISD.
 An ISD's trust roots and policy are encoded in the TRC, which has a base and serial number, a list of public keys that serves as root of trust for various purposes, and a voting quorum governing the number of signatures required to update TRCs. The TRC serves as a way to bootstrap all authentication within SCION. Additionally, TRC versioning is used as an alternative to revocation in case of compromised roots of trust.<a href="#section-1.3-7" class="pilcrow">¶</a></p>
 <p id="section-1.3-8">The TRC also provides <em>trust agility</em> by enabling relying parties (endpoints and ASes) to select the trust roots used to initiate certificate validation.
 For endpoints, this implies users can choose trusted ISDs when verifying path segments. For ASes, this implies they can choose trusted ISDs for beaconing, thereby establishing transparent trust relationships between parts of the network. The SCION trust model therefore, differs from the one provided by other PKI architectures.<a href="#section-1.3-8" class="pilcrow">¶</a></p>
@@ -1586,7 +1590,7 @@ Authoritative ASes announce these TRC updates (see <a href="#auth" class="auto i
           <h4 id="name-substitutes-to-certificate-">
 <a href="#section-1.4.2" class="section-number selfRef">1.4.2. </a><a href="#name-substitutes-to-certificate-" class="section-name selfRef">Substitutes to Certificate Revocation</a>
           </h4>
-<p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism, on trust resets, and  on short-lived certificates. This approach constitutes an alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
+<p id="section-1.4.2-1">The Control Plane PKI does not explicitly support certificate revocation. Instead it relies on the TRC update mechanism, on trust resets, and  on short-lived certificates. These approaches constitute an alternative to a revocation system for the following reasons:<a href="#section-1.4.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.4.2-2.1">
               <p id="section-1.4.2-2.1.1">Instead of periodically signing a new revocation list, the CA can re-issue all the non-revoked certificates. Although the overhead of signing multiple certificates is greater than that of signing a single revocation list, the overall complexity of the system is reduced. In the Control Plane PKI the number of certificates that each CA must renew is manageable as it is limited to at most the number of ASes within an ISD. The absence of CRL <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> and OCSP <span>[<a href="#RFC6960" class="cite xref">RFC6960</a>]</span> checks improves performance by removing additional network lookups during PKI processing.<a href="#section-1.4.2-2.1.1" class="pilcrow">¶</a></p>
@@ -2391,7 +2395,7 @@ In addition to the attributes described in section 4.1.2.6 <span>[<a href="#RFC5
                 <td class="text-left" rowspan="1" colspan="1">
                   <span class="bcp14">MUST NOT</span> be asserted (1)</td>
                 <td class="text-left" rowspan="1" colspan="1">
-                  <span class="bcp14">MUST NOT</span> be asserted (2)</td>
+                  <span class="bcp14">MUST NOT</span> be asserted (1)</td>
                 <td class="text-left" rowspan="1" colspan="1">
                   <span class="bcp14">MUST</span> be asserted</td>
                 <td class="text-left" rowspan="1" colspan="1">
@@ -2412,8 +2416,7 @@ In addition to the attributes described in section 4.1.2.6 <span>[<a href="#RFC5
             </tbody>
           </table>
 </div>
-<p id="section-2.7.3-9">(1)  Root certificates <span class="bcp14">SHOULD NOT</span> be used to verify control plane messages.<br>
-(2)  Issuing CA certificates <span class="bcp14">SHOULD NOT</span> be used to verify control plane messages.<a href="#section-2.7.3-9" class="pilcrow">¶</a></p>
+<p id="section-2.7.3-9">(1)  Root and Issuing CA certificates <span class="bcp14">SHOULD NOT</span> be used to verify control plane messages.<a href="#section-2.7.3-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="ext-key-usage-ext">
@@ -2662,7 +2665,7 @@ In addition to the attributes described in section 4.1.2.6 <span>[<a href="#RFC5
             <p id="section-3.1-2.2.1">Base: A base TRC is either the initial TRC, or the first TRC after a trust reset (see <a href="#trust-reset-description" class="auto internal xref">Section 3.6</a>). Trust for a base TRC cannot be inferred by verifying a TRC update; base TRCs are trusted axiomatically, similarly to how root certificates are trusted by clients in the Web PKI.<a href="#section-3.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.1-2.3">
-            <p id="section-3.1-2.3.1">Update: All non-base TRCs are updated TRCs. They are the product of either a regular or a sensitive update.<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
+            <p id="section-3.1-2.3.1">Updated: All non-base TRCs are updated TRCs. They are the product of either a regular or a sensitive update.<a href="#section-3.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.1-3">A TRC can have the following states:<a href="#section-3.1-3" class="pilcrow">¶</a></p>
@@ -2867,7 +2870,7 @@ Every Authoritative AS <span class="bcp14">MUST</span> be a Core AS (i.e., be li
 <a href="#section-3.2.10" class="section-number selfRef">3.2.10. </a><a href="#name-description" class="section-name selfRef"><code>description</code></a>
           </h4>
 <p id="section-3.2.10-1">The <code>description</code> field contains a UTF-8 encoded string that describes the ISD. The text <span class="bcp14">MUST</span> be formatted in accordance with "Net-Unicode" <span>[<a href="#RFC5198" class="cite xref">RFC5198</a>]</span> to ensure consistent normalization.
-When this field contains a language other than English, the corresponding language <span class="bcp14">SHOULD</span> be identified explicitly in the <code>descriptionLanguage</code> field (see ()[#langtag]).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
+When this field contains a language other than English, the corresponding language <span class="bcp14">SHOULD</span> be identified explicitly in the <code>descriptionLanguage</code> field (see <a href="#langtag" class="auto internal xref">Section 3.2.13</a>).<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-2">Multi-language TRCs <span class="bcp14">SHOULD</span> use the <code>localizedDescriptions</code> field instead of the <code>description</code> field. Either the <code>description</code> or the <code>localizedDescriptions</code>field <span class="bcp14">MUST</span> be present and not be empty.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3000,7 +3003,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
                   <p id="section-3.3.1-2.4.2.1.1">The <code>version</code> field <span class="bcp14">MUST</span> be set to "1". This is because SCION uses the <code>IssuerAndSerialNumber</code> type of signer identifier (see also Section 5.3 of <span>[<a href="#RFC5652" class="cite xref">RFC5652</a>]</span>).<a href="#section-3.3.1-2.4.2.1.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-3.3.1-2.4.2.2">
-                  <p id="section-3.3.1-2.4.2.2.1">The algorithm specified in the <code>signatureAlgorithm</code> field <span class="bcp14">MUST</span> be one of the algorithms supported by SCION . For details, see <span><a href="#certsign" class="internal xref">signature Field - Additional Information</a> (<a href="#certsign" class="auto internal xref">Section 2.6.3</a>)</span>.<a href="#section-3.3.1-2.4.2.2.1" class="pilcrow">¶</a></p>
+                  <p id="section-3.3.1-2.4.2.2.1">The algorithm specified in the <code>signatureAlgorithm</code> field <span class="bcp14">MUST</span> be one of the algorithms supported by SCION . For details, see <a href="#certsign" class="auto internal xref">Section 2.6.3</a>.<a href="#section-3.3.1-2.4.2.2.1" class="pilcrow">¶</a></p>
 </li>
                 <li class="normal" id="section-3.3.1-2.4.2.3">
                   <p id="section-3.3.1-2.4.2.3.1">The <code>digestAlgorithm</code> is determined by the algorithm specified in the <code>signatureAlgorithm</code> field.<a href="#section-3.3.1-2.4.2.3.1" class="pilcrow">¶</a></p>
@@ -3054,7 +3057,7 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
             <p id="section-3.4-3.5.1">If the TRC is in its grace period, add the preceding TRC's root certificates to the trust anchor pool.<a href="#section-3.4-3.5.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
-<p id="section-3.4-4">Note that any entity sending information secured by the Control Plane PKI, such as control plane messages, <span class="bcp14">MUST</span> be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party <span class="bcp14">MUST</span> query the originator of the message for the missing material through the control plane API described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see 4.2 "Signing and Verifying Control Plane Messages" <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
+<p id="section-3.4-4">Note that any entity sending information secured by the Control Plane PKI, such as control plane messages, <span class="bcp14">MUST</span> be able to provide all the necessary trust material including certificates to verify said information. If any cryptographic material is missing in the process, the relying party <span class="bcp14">MUST</span> query the originator of the message for the missing material through the control plane API described in <span>[<a href="#I-D.dekater-scion-controlplane" class="cite xref">I-D.dekater-scion-controlplane</a>]</span>, section "Distribution of Cryptographic Material". If it cannot be resolved, the verification process fails. For more details, see <a href="#signing-verifying-cp-messages" class="auto internal xref">Section 4.2</a>.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="update">
@@ -3268,8 +3271,8 @@ It consists of a sequence of <code>LocalizedText</code> structures, each contain
 <p id="section-3.6-1">A trust reset is a process that results in the creation of a new base TRC. It is only permitted if the <code>noTrustReset</code> field of the active TRC is set to FALSE (see <a href="#notrustreset" class="auto internal xref">Section 3.2.5</a>).<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 <p id="section-3.6-2">It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
 Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted. The base number of a new TRC following a trust reset is changed as shown in <a href="#_table-7" class="auto internal xref">Table 6</a>.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
-<p id="section-3.6-3">This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see <a href="#update" class="auto internal xref">Section 3.5</a>).<a href="#section-3.6-3" class="pilcrow">¶</a></p>
-<p id="section-3.6-4">A trust reset is only required when the number of simultaneously compromised voting keys meets or exceeds the TRC's voting quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+<p id="section-3.6-3">This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed or lost. If the number of exposed or lost voting keys is lower than the voting quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), a TRC update is sufficient to replace the affected keys (see <a href="#update" class="auto internal xref">Section 3.5</a>).<a href="#section-3.6-3" class="pilcrow">¶</a></p>
+<p id="section-3.6-4">The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="trc-ceremony">
@@ -3366,7 +3369,7 @@ Instead, a trust reset base TRC must be axiomatically trusted, similar to how th
           </h4>
 <p id="section-4.2.2-1">To verify a received control plane message, the relying party first needs to identify the certificate needed to validate the corresponding signature on the message.<a href="#section-4.2.2-1" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-2">AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, these certificate chains are distributed separately from the signed messages.<a href="#section-4.2.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.2.2-3">A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and <strong>not</strong> in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2.2-3">A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and not in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.<a href="#section-4.2.2-3" class="pilcrow">¶</a></p>
 <p id="section-4.2.2-4">To verify a control plane message, the relying party <span class="bcp14">MUST</span> perform the following steps:<a href="#section-4.2.2-4" class="pilcrow">¶</a></p>
 <ol start="1" type="1" class="normal type-1" id="section-4.2.2-5">
 <li id="section-4.2.2-5.1">
@@ -3535,7 +3538,7 @@ When using this automated in-band renewal process, the request requires two dist
 As described in <a href="#substitutes-to-revocation" class="auto internal xref">Section 1.4.2</a>, there is no revocation in the Control Plane PKI.<a href="#section-6.1.1-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-6.1.1-2.1">
-              <p id="section-6.1.1-2.1.1">At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC <span class="bcp14">MUST</span> be updated as described in <a href="#update" class="auto internal xref">Section 3.5</a>. A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>), and an invalid update has been produced and distributed in the network.<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
+              <p id="section-6.1.1-2.1.1">At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC <span class="bcp14">MUST</span> be updated as described in <a href="#update" class="auto internal xref">Section 3.5</a>. A trust reset is only required in the case the number of compromised voting keys at the same time is greater or equal than the TRC's quorum (see <a href="#quorum" class="auto internal xref">Section 3.2.7</a>).<a href="#section-6.1.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-6.1.1-2.2">
               <p id="section-6.1.1-2.2.1">At CA level: If the private key related to an issuing CA certificate is compromised, the impacted CA AS <span class="bcp14">MUST</span> obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update new root keys can also be forced, invalidating the compromised CA.<a href="#section-6.1.1-2.2.1" class="pilcrow">¶</a></p>
@@ -3575,14 +3578,14 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
         <h3 id="name-trc-distribution-and-trust-">
 <a href="#section-6.3" class="section-number selfRef">6.3. </a><a href="#name-trc-distribution-and-trust-" class="section-name selfRef">TRC Distribution and Trust on First Use</a>
         </h3>
-<p id="section-6.3-1">Base TRCs act as an ISD root of trust (see <a href="#trust-relations" class="auto internal xref">Section 1.4</a>).<a href="#section-6.3-1" class="pilcrow">¶</a></p>
-<p id="section-6.3-2">In typical deployments, initial TRCs are provisioned out of band. Should an endpoint retrieve the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it would effectively operate under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.<a href="#section-6.3-2" class="pilcrow">¶</a></p>
-<p id="section-6.3-3">Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, thereby limiting impact of a malicious TRC.<a href="#section-6.3-3" class="pilcrow">¶</a></p>
+<p id="section-6.3-1">Base TRCs act as an ISD root of trust (see <a href="#trust-relations" class="auto internal xref">Section 1.4</a>).
+In typical deployments, initial TRCs are provisioned out of band. Should an endpoint retrieve the initial TRC in-band (e.g. from a local control service or a resolution server) without prior validation, it would effectively operate under a "Trust on First Use" (TOFU) assumption. Care should therefore be taken in trusting the TRC source.
+Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, thereby limiting impact of a malicious TRC.<a href="#section-6.3-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
 </div>
-<div id="iana-considerations">
+<div id="iana">
 <section id="section-7">
       <h2 id="name-iana-considerations">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
@@ -3652,6 +3655,10 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
         <dd>
 <span class="refAuthor">Trammell, B.</span>, <span class="refTitle">"Current Open Questions in Path-Aware Networking"</span>, <span class="seriesInfo">RFC 9217</span>, <span class="seriesInfo">DOI 10.17487/RFC9217</span>, <time datetime="2022-03" class="refDate">March 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9217">https://www.rfc-editor.org/rfc/rfc9217</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="X9.62">[X9.62]</dt>
+        <dd>
+<span class="refTitle">"ANSI X9.62-1998 | Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"</span>, <time datetime="1998" class="refDate">1998</time>. </dd>
+<dd class="break"></dd>
 <dt id="X.509">[X.509]</dt>
         <dd>
 <span class="refTitle">"ITU-T X.509 (10/2016) | Information technology – Open Systems Interconnection – The Directory: Public-key and attribute certificate frameworks"</span>, <time datetime="2016-01" class="refDate">January 2016</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/13031">https://handle.itu.int/11.1002/1000/13031</a>&gt;</span>. </dd>
@@ -3661,12 +3668,8 @@ As described in <a href="#substitutes-to-revocation" class="auto internal xref">
 <span class="refTitle">"ITU-T X.680 (02/2021) | Information technology - Abstract Syntax Notation One (ASN.1): Specification of basic notation"</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/14468">https://handle.itu.int/11.1002/1000/14468</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="X.690">[X.690]</dt>
-        <dd>
-<span class="refTitle">"ITU-T X.690 (02/2021) | Information technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/14472">https://handle.itu.int/11.1002/1000/14472</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="X9.62">[X9.62]</dt>
       <dd>
-<span class="refTitle">"ANSI X9.62-1998 | Public Key Cryptography For The Financial Services Industry: The Elliptic Curve Digital Signature Algorithm"</span>, <time datetime="1998" class="refDate">1998</time>. </dd>
+<span class="refTitle">"ITU-T X.690 (02/2021) | Information technology - ASN.1 encoding rules: Specification of Basic Encoding Rules (BER), Canonical Encoding Rules (CER) and Distinguished Encoding Rules (DER)"</span>, <time datetime="2021-01" class="refDate">January 2021</time>, <span>&lt;<a href="https://handle.itu.int/11.1002/1000/14472">https://handle.itu.int/11.1002/1000/14472</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -3834,7 +3837,7 @@ END
             <p id="appendix-C.1-2.3.1"><strong>Witness(es)</strong> - individual(s) who have no active role in the Signing Ceremony but may stop the process and request more information if they feel its integrity may have been compromised. The Witness(es) are typically appointed by resolution of the Voter.<a href="#appendix-C.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-C.1-3">The ISD members must decide on the roles of the Signing Ceremony participants in advance of the Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the root certificates). Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
+<p id="appendix-C.1-3">The ISD members must decide on the roles of the Signing Ceremony participants in advance of the Signing Ceremony, and must have reached agreement about the Certificate Authority (CA) ASes (that will also issue the AS certificates). Hash comparison checks are included to counter mistakes and so that every participant can ensure they are operating on the same data.<a href="#appendix-C.1-3" class="pilcrow">¶</a></p>
 <p id="appendix-C.1-4">The private keys of each participant never leave their machine, so the Ceremony Administrator does not have to be entrusted with private keys.<a href="#appendix-C.1-4" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3846,7 +3849,7 @@ END
 <p id="appendix-C.2-1">The participants agree in advance on the location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:<a href="#appendix-C.2-1" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="appendix-C.2-2.1">
-            <p id="appendix-C.2-2.1.1">ISD number - for public ISDs these are obtained from the SCION registry, see <a href="#id" class="auto internal xref">Section 3.2.2</a>;<a href="#appendix-C.2-2.1.1" class="pilcrow">¶</a></p>
+            <p id="appendix-C.2-2.1.1">ISD number - for public ISDs these are obtained from the SCION registry, see <a href="#iana" class="auto internal xref">Section 7</a>;<a href="#appendix-C.2-2.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="appendix-C.2-2.2">
             <p id="appendix-C.2-2.2.1">The description of the TRC, see <a href="#description" class="auto internal xref">Section 3.2.10</a>;<a href="#appendix-C.2-2.2.1" class="pilcrow">¶</a></p>
@@ -3956,238 +3959,253 @@ END
 <a href="#name-change-log" class="section-name selfRef">Change Log</a>
       </h2>
 <p id="appendix-D-1">Changes made to drafts since ISE submission. This section is to be removed before publication.<a href="#appendix-D-1" class="pilcrow">¶</a></p>
-<div id="draft-dekater-scion-pki-13">
+<div id="draft-dekater-scion-pki-14">
 <section id="appendix-D.1">
+        <h3 id="name-draft-dekater-scion-pki-14">
+<a href="#name-draft-dekater-scion-pki-14" class="section-name selfRef">draft-dekater-scion-pki-14</a>
+        </h3>
+<ul class="normal">
+<li class="normal" id="appendix-D.1-1.1">
+            <p id="appendix-D.1-1.1.1">Final check (check cross-references, minor changes)<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="appendix-D.1-1.2">
+            <p id="appendix-D.1-1.2.1">Trust reset - clarify text<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+</section>
+</div>
+<div id="draft-dekater-scion-pki-13">
+<section id="appendix-D.2">
         <h3 id="name-draft-dekater-scion-pki-13">
 <a href="#name-draft-dekater-scion-pki-13" class="section-name selfRef">draft-dekater-scion-pki-13</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.1-1.1">
-            <p id="appendix-D.1-1.1.1">Draftforge review, sort terminology alphabetically<a href="#appendix-D.1-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.2-1.1">
+            <p id="appendix-D.2-1.1.1">Draftforge review, sort terminology alphabetically<a href="#appendix-D.2-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.2">
-            <p id="appendix-D.1-1.2.1">Review of normative language<a href="#appendix-D.1-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.2">
+            <p id="appendix-D.2-1.2.1">Review of normative language<a href="#appendix-D.2-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.3">
-            <p id="appendix-D.1-1.3.1">Rename "Voting AS" to "Voter" and clarify that it does not require an AS number<a href="#appendix-D.1-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.3">
+            <p id="appendix-D.2-1.3.1">Rename "Voting AS" to "Voter" and clarify that it does not require an AS number<a href="#appendix-D.2-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.4">
-            <p id="appendix-D.1-1.4.1">remove trust Hierarchy subsection and redundant code block<a href="#appendix-D.1-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.4">
+            <p id="appendix-D.2-1.4.1">remove trust Hierarchy subsection and redundant code block<a href="#appendix-D.2-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.5">
-            <p id="appendix-D.1-1.5.1">"Trust Model": reword and shorten section about monopoly/oligopoly<a href="#appendix-D.1-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.5">
+            <p id="appendix-D.2-1.5.1">"Trust Model": reword and shorten section about monopoly/oligopoly<a href="#appendix-D.2-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.6">
-            <p id="appendix-D.1-1.6.1">"Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere (intro and Ceremony)<a href="#appendix-D.1-1.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.6">
+            <p id="appendix-D.2-1.6.1">"Trust as a function" and "Trust Hierarchy": remove redundant sections, since concepts are also explained elsewhere (intro and Ceremony)<a href="#appendix-D.2-1.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.7">
-            <p id="appendix-D.1-1.7.1">Certificate validity: align maximum validity recommendations to current practice, clarify margin for AS certificate renewal<a href="#appendix-D.1-1.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.7">
+            <p id="appendix-D.2-1.7.1">Certificate validity: align maximum validity recommendations to current practice, clarify margin for AS certificate renewal<a href="#appendix-D.2-1.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.8">
-            <p id="appendix-D.1-1.8.1">"Regular Voting Certificate" and "Sensitive Voting Certificate": merge two nearly identical sections into one<a href="#appendix-D.1-1.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.8">
+            <p id="appendix-D.2-1.8.1">"Regular Voting Certificate" and "Sensitive Voting Certificate": merge two nearly identical sections into one<a href="#appendix-D.2-1.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.9">
-            <p id="appendix-D.1-1.9.1">id-at-ia Attribute": reword and clarify that it is optional in voting certificates<a href="#appendix-D.1-1.9.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.9">
+            <p id="appendix-D.2-1.9.1">id-at-ia Attribute": reword and clarify that it is optional in voting certificates<a href="#appendix-D.2-1.9.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.10">
-            <p id="appendix-D.1-1.10.1">issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one "Unique Identifiers" section<a href="#appendix-D.1-1.10.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.10">
+            <p id="appendix-D.2-1.10.1">issuerUniqueID and subjectUniqueID: merge two nearly identical sections into one "Unique Identifiers" section<a href="#appendix-D.2-1.10.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.11">
-            <p id="appendix-D.1-1.11.1"><code>authorityKeyIdentifier</code> Extension: clarify that <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> <span class="bcp14">MUST NOT</span> be used<a href="#appendix-D.1-1.11.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.11">
+            <p id="appendix-D.2-1.11.1"><code>authorityKeyIdentifier</code> Extension: clarify that <code>authorityCertIssuer</code> and <code>authorityCertSerialNumber</code> <span class="bcp14">MUST NOT</span> be used<a href="#appendix-D.2-1.11.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.12">
-            <p id="appendix-D.1-1.12.1">pathLenConstraint: clarify it <span class="bcp14">MUST</span> be set<a href="#appendix-D.1-1.12.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.12">
+            <p id="appendix-D.2-1.12.1">pathLenConstraint: clarify it <span class="bcp14">MUST</span> be set<a href="#appendix-D.2-1.12.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.13">
-            <p id="appendix-D.1-1.13.1">authoritativeASes: improve wording to clarify their role and how they are provisioned with the latest TRC<a href="#appendix-D.1-1.13.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.13">
+            <p id="appendix-D.2-1.13.1">authoritativeASes: improve wording to clarify their role and how they are provisioned with the latest TRC<a href="#appendix-D.2-1.13.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.14">
-            <p id="appendix-D.1-1.14.1">TRC: mandate normalization, introduce language tags (<span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a  4MB maximum size.<a href="#appendix-D.1-1.14.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.14">
+            <p id="appendix-D.2-1.14.1">TRC: mandate normalization, introduce language tags (<span>[<a href="#BCP47" class="cite xref">BCP47</a>]</span>) and localizedDescriptions, introduce more sequence limits in ASN.1 and recommend a  4MB maximum size.<a href="#appendix-D.2-1.14.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.15">
-            <p id="appendix-D.1-1.15.1">"Certification Path - Trust Anchor Pool" replace python pseudocode with a list of steps<a href="#appendix-D.1-1.15.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.15">
+            <p id="appendix-D.2-1.15.1">"Certification Path - Trust Anchor Pool" replace python pseudocode with a list of steps<a href="#appendix-D.2-1.15.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.16">
-            <p id="appendix-D.1-1.16.1">"Issuing Control Plane AS Certificates": clarify signatures in case of automatic renewal<a href="#appendix-D.1-1.16.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.16">
+            <p id="appendix-D.2-1.16.1">"Issuing Control Plane AS Certificates": clarify signatures in case of automatic renewal<a href="#appendix-D.2-1.16.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.17">
-            <p id="appendix-D.1-1.17.1">"Trust reset": clarify concept with a dedicated section, improve readability of <a href="#_table-7" class="auto internal xref">Table 6</a><a href="#appendix-D.1-1.17.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.17">
+            <p id="appendix-D.2-1.17.1">"Trust reset": clarify concept with a dedicated section, improve readability of <a href="#_table-7" class="auto internal xref">Table 6</a><a href="#appendix-D.2-1.17.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.18">
-            <p id="appendix-D.1-1.18.1">"TRC Update Discovery" clarify text<a href="#appendix-D.1-1.18.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.18">
+            <p id="appendix-D.2-1.18.1">"TRC Update Discovery" clarify text<a href="#appendix-D.2-1.18.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.19">
-            <p id="appendix-D.1-1.19.1">"PKI Availability": clarify dependency on time sync, and that there should be multiple Authoritative ASes<a href="#appendix-D.1-1.19.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.19">
+            <p id="appendix-D.2-1.19.1">"PKI Availability": clarify dependency on time sync, and that there should be multiple Authoritative ASes<a href="#appendix-D.2-1.19.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.1-1.20">
-            <p id="appendix-D.1-1.20.1">Signing Ceremony: remove normative language from appendix<a href="#appendix-D.1-1.20.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.2-1.20">
+            <p id="appendix-D.2-1.20.1">Signing Ceremony: remove normative language from appendix<a href="#appendix-D.2-1.20.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-12">
-<section id="appendix-D.2">
+<section id="appendix-D.3">
         <h3 id="name-draft-dekater-scion-pki-12">
 <a href="#name-draft-dekater-scion-pki-12" class="section-name selfRef">draft-dekater-scion-pki-12</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.2-1.1">
-            <p id="appendix-D.2-1.1.1">Overall review and wording polish<a href="#appendix-D.2-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.3-1.1">
+            <p id="appendix-D.3-1.1.1">Overall review and wording polish<a href="#appendix-D.3-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.2">
-            <p id="appendix-D.2-1.2.1">Introduction: shorten and refer to -controlplane<a href="#appendix-D.2-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-1.2">
+            <p id="appendix-D.3-1.2.1">Introduction: shorten and refer to -controlplane<a href="#appendix-D.3-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.3">
-            <p id="appendix-D.2-1.3.1">Consistently use "Issuing CA certificate" / root certificate"<a href="#appendix-D.2-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-1.3">
+            <p id="appendix-D.3-1.3.1">Consistently use "Issuing CA certificate" / root certificate"<a href="#appendix-D.3-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.4">
-            <p id="appendix-D.2-1.4.1">Sections 2 and 3 (Certificate, TRC specification): reduce number of subheadings, reword TRC field descriptions. - Clarify that TRC validity uses GeneralizedTime<a href="#appendix-D.2-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-1.4">
+            <p id="appendix-D.3-1.4.1">Sections 2 and 3 (Certificate, TRC specification): reduce number of subheadings, reword TRC field descriptions. - Clarify that TRC validity uses GeneralizedTime<a href="#appendix-D.3-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.5">
-            <p id="appendix-D.2-1.5.1">Add ASN.1 modules in the appendix for Certificate extensions and TRCs<a href="#appendix-D.2-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-1.5">
+            <p id="appendix-D.3-1.5.1">Add ASN.1 modules in the appendix for Certificate extensions and TRCs<a href="#appendix-D.3-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.2-1.6">
-            <p id="appendix-D.2-1.6.1">Tables 3-7: sharpen normative language use<a href="#appendix-D.2-1.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.3-1.6">
+            <p id="appendix-D.3-1.6.1">Tables 3-7: sharpen normative language use<a href="#appendix-D.3-1.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-11">
-<section id="appendix-D.3">
+<section id="appendix-D.4">
         <h3 id="name-draft-dekater-scion-pki-11">
 <a href="#name-draft-dekater-scion-pki-11" class="section-name selfRef">draft-dekater-scion-pki-11</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.3-1.1">
-            <p id="appendix-D.3-1.1.1">Signing Ceremony: minor updates to align with current process<a href="#appendix-D.3-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.4-1.1">
+            <p id="appendix-D.4-1.1.1">Signing Ceremony: minor updates to align with current process<a href="#appendix-D.4-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.2">
-            <p id="appendix-D.3-1.2.1">Signature field: clarify implications of using other algorithms or curves and mention mti set may be updated in future protocol iterations<a href="#appendix-D.3-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.2">
+            <p id="appendix-D.4-1.2.1">Signature field: clarify implications of using other algorithms or curves and mention mti set may be updated in future protocol iterations<a href="#appendix-D.4-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.3">
-            <p id="appendix-D.3-1.3.1">Clarify distinction between SCION ASes and BGP ASes through the text.<a href="#appendix-D.3-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.3">
+            <p id="appendix-D.4-1.3.1">Clarify distinction between SCION ASes and BGP ASes through the text.<a href="#appendix-D.4-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.4">
-            <p id="appendix-D.3-1.4.1">Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane<a href="#appendix-D.3-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.4">
+            <p id="appendix-D.4-1.4.1">Intro: remove duplicated motivation and component description and add a reference to the same text in -controlplane<a href="#appendix-D.4-1.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.5">
-            <p id="appendix-D.3-1.5.1">Clarify that initial AS certificates may have a longer validity to allow enough time for deployment<a href="#appendix-D.3-1.5.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.5">
+            <p id="appendix-D.4-1.5.1">Clarify that initial AS certificates may have a longer validity to allow enough time for deployment<a href="#appendix-D.4-1.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.6">
-            <p id="appendix-D.3-1.6.1">"SCION-Specific Constraints and Conditions" section: drop requirement to use "UTF8String" for all fields, allow use of GeneralizedTime to align with RFC5280<a href="#appendix-D.3-1.6.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.6">
+            <p id="appendix-D.4-1.6.1">"SCION-Specific Constraints and Conditions" section: drop requirement to use "UTF8String" for all fields, allow use of GeneralizedTime to align with RFC5280<a href="#appendix-D.4-1.6.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.7">
-            <p id="appendix-D.3-1.7.1">Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"<a href="#appendix-D.3-1.7.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.7">
+            <p id="appendix-D.4-1.7.1">Security considerations: move and reword section "Dependency on Certificates" to new section "Deployment Considerations"<a href="#appendix-D.4-1.7.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.8">
-            <p id="appendix-D.3-1.8.1">Security considerations: new section on TRC Distribution<a href="#appendix-D.3-1.8.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.8">
+            <p id="appendix-D.4-1.8.1">Security considerations: new section on TRC Distribution<a href="#appendix-D.4-1.8.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.3-1.9">
-            <p id="appendix-D.3-1.9.1">Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.<a href="#appendix-D.3-1.9.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.4-1.9">
+            <p id="appendix-D.4-1.9.1">Remove informative reference to I-D.dekater-panrg-scion-overview and to Anapaya's ISD assignments, since they are taken over by SCION Association in 2026. Remove unused references to RFC5398 and RFC6996.<a href="#appendix-D.4-1.9.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-10">
-<section id="appendix-D.4">
+<section id="appendix-D.5">
         <h3 id="name-draft-dekater-scion-pki-10">
 <a href="#name-draft-dekater-scion-pki-10" class="section-name selfRef">draft-dekater-scion-pki-10</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.4-1.1">
-            <p id="appendix-D.4-1.1.1">removed ISD assignment table and replaced to reference in Control Plane draft<a href="#appendix-D.4-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.5-1.1">
+            <p id="appendix-D.5-1.1.1">removed ISD assignment table and replaced to reference in Control Plane draft<a href="#appendix-D.5-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.4-1.2">
-            <p id="appendix-D.4-1.2.1">Updated number assignment reference<a href="#appendix-D.4-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.5-1.2">
+            <p id="appendix-D.5-1.2.1">Updated number assignment reference<a href="#appendix-D.5-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.4-1.3">
-            <p id="appendix-D.4-1.3.1">Signatures: mention that other algorithms that ECDSA may be used in the future<a href="#appendix-D.4-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.5-1.3">
+            <p id="appendix-D.5-1.3.1">Signatures: mention that other algorithms that ECDSA may be used in the future<a href="#appendix-D.5-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.4-1.4">
-            <p id="appendix-D.4-1.4.1">Figures: add SVG version<a href="#appendix-D.4-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.5-1.4">
+            <p id="appendix-D.5-1.4.1">Figures: add SVG version<a href="#appendix-D.5-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-09">
-<section id="appendix-D.5">
+<section id="appendix-D.6">
         <h3 id="name-draft-dekater-scion-pki-09">
 <a href="#name-draft-dekater-scion-pki-09" class="section-name selfRef">draft-dekater-scion-pki-09</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.5-1.1">
-            <p id="appendix-D.5-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-D.5-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.6-1.1">
+            <p id="appendix-D.6-1.1.1">Signing ceremony and introduction - improved text<a href="#appendix-D.6-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.5-1.2">
-            <p id="appendix-D.5-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-D.5-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.6-1.2">
+            <p id="appendix-D.6-1.2.1">Clarified why a CA must have an ISD-AS number assigned<a href="#appendix-D.6-1.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.5-1.3">
-            <p id="appendix-D.5-1.3.1">Mention Active Discovery as a TRC discovery mechanism<a href="#appendix-D.5-1.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.6-1.3">
+            <p id="appendix-D.6-1.3.1">Mention Active Discovery as a TRC discovery mechanism<a href="#appendix-D.6-1.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.5-1.4">
-            <p id="appendix-D.5-1.4.1">Abstract: mention goal and that document is not an Internet Standard<a href="#appendix-D.5-1.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.6-1.4">
+            <p id="appendix-D.6-1.4.1">Abstract: mention goal and that document is not an Internet Standard<a href="#appendix-D.6-1.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-08">
-<section id="appendix-D.6">
+<section id="appendix-D.7">
         <h3 id="name-draft-dekater-scion-pki-08">
 <a href="#name-draft-dekater-scion-pki-08" class="section-name selfRef">draft-dekater-scion-pki-08</a>
         </h3>
 <ul class="normal">
-<li class="normal" id="appendix-D.6-1.1">
-            <p id="appendix-D.6-1.1.1">Fix some oversized diagrams<a href="#appendix-D.6-1.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.7-1.1">
+            <p id="appendix-D.7-1.1.1">Fix some oversized diagrams<a href="#appendix-D.7-1.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.6-1.2">
-            <p id="appendix-D.6-1.2.1">Introduction text rewording<a href="#appendix-D.6-1.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.7-1.2">
+            <p id="appendix-D.7-1.2.1">Introduction text rewording<a href="#appendix-D.7-1.2.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-07">
-<section id="appendix-D.7">
+<section id="appendix-D.8">
         <h3 id="name-draft-dekater-scion-pki-07">
 <a href="#name-draft-dekater-scion-pki-07" class="section-name selfRef">draft-dekater-scion-pki-07</a>
         </h3>
-<p id="appendix-D.7-1">Minor changes:<a href="#appendix-D.7-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.8-1">Minor changes:<a href="#appendix-D.8-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.7-2.1">
-            <p id="appendix-D.7-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.7-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.8-2.1">
+            <p id="appendix-D.8-2.1.1">Clarified relationship with RPKI.<a href="#appendix-D.8-2.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.7-2.2">
-            <p id="appendix-D.7-2.2.1">Added this changelog<a href="#appendix-D.7-2.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.8-2.2">
+            <p id="appendix-D.8-2.2.1">Added this changelog<a href="#appendix-D.8-2.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.7-2.3">
-            <p id="appendix-D.7-2.3.1">General text editing<a href="#appendix-D.7-2.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.8-2.3">
+            <p id="appendix-D.8-2.3.1">General text editing<a href="#appendix-D.8-2.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.7-2.4">
-            <p id="appendix-D.7-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.7-2.4.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.8-2.4">
+            <p id="appendix-D.8-2.4.1">References: fixed ITU, ANSI, Assigned ISD-AS, fixed cross-reference to text formatting in the CP draft<a href="#appendix-D.8-2.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
 </div>
 <div id="draft-dekater-scion-pki-06">
-<section id="appendix-D.8">
+<section id="appendix-D.9">
         <h3 id="name-draft-dekater-scion-pki-06">
 <a href="#name-draft-dekater-scion-pki-06" class="section-name selfRef">draft-dekater-scion-pki-06</a>
         </h3>
-<p id="appendix-D.8-1">Major changes:<a href="#appendix-D.8-1" class="pilcrow">¶</a></p>
+<p id="appendix-D.9-1">Major changes:<a href="#appendix-D.9-1" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.8-2.1">
-            <p id="appendix-D.8-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.8-2.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.9-2.1">
+            <p id="appendix-D.9-2.1.1">Added overview of SCION components to Introduction section.<a href="#appendix-D.9-2.1.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
-<p id="appendix-D.8-3">Minor changes:<a href="#appendix-D.8-3" class="pilcrow">¶</a></p>
+<p id="appendix-D.9-3">Minor changes:<a href="#appendix-D.9-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="appendix-D.8-4.1">
-            <p id="appendix-D.8-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.8-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal" id="appendix-D.9-4.1">
+            <p id="appendix-D.9-4.1.1">General edits to make terminology consistent, remove duplication and rationalize text.<a href="#appendix-D.9-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.8-4.2">
-            <p id="appendix-D.8-4.2.1">Removed forward references.<a href="#appendix-D.8-4.2.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.9-4.2">
+            <p id="appendix-D.9-4.2.1">Removed forward references.<a href="#appendix-D.9-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="appendix-D.8-4.3">
-            <p id="appendix-D.8-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.8-4.3.1" class="pilcrow">¶</a></p>
+          <li class="normal" id="appendix-D.9-4.3">
+            <p id="appendix-D.9-4.3.1">Added RFC2119 compliant terminology.<a href="#appendix-D.9-4.3.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
