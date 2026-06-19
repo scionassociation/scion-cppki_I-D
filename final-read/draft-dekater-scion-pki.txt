@@ -930,7 +930,7 @@ Table of Contents
     | digitalSignature | MUST NOT be | MUST NOT | MUST be  | MUST NOT |
     | bit              | asserted    | be       | asserted | be       |
     |                  | (1)         | asserted |          | asserted |
-    |                  |             | (2)      |          |          |
+    |                  |             | (1)      |          |          |
     +------------------+-------------+----------+----------+----------+
     | keyCertSign bit  | MUST be     | MUST be  | MUST NOT | MUST NOT |
     |                  | asserted    | asserted | be       | be       |
@@ -939,10 +939,8 @@ Table of Contents
 
      Table 3: keyUsage extension - Specifications per certificate type
 
-   (1) Root certificates SHOULD NOT be used to verify control plane
-   messages.
-   (2) Issuing CA certificates SHOULD NOT be used to verify control
-   plane messages.
+   (1) Root and Issuing CA certificates SHOULD NOT be used to verify
+   control plane messages.
 
 2.7.4.  extKeyUsage Extension
 
