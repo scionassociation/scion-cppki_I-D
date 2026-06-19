@@ -999,7 +999,7 @@ To verify a received control plane message, the relying party first needs to ide
 
 AS certificates are bundled together with the corresponding issuing CA certificate into certificate chains. For efficiency, these certificate chains are distributed separately from the signed messages.
 
-A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and **not** in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.
+A certificate chain is verified against the control plane root certificate, although the root certificate is bundled with the TRC and not in the chain. This makes it possible to extend the validity period of the root certificate and update the corresponding TRC without having to modify the certificate chain.
 
 To verify a control plane message, the relying party MUST perform the following steps:
 
@@ -1083,7 +1083,7 @@ In SCION there is no central authority that could "switch off" an ISD as each re
 This section deals with possible recovery from the compromises discussed in the previous paragraph.
 As described in [](#substitutes-to-revocation), there is no revocation in the Control Plane PKI.
 
-- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)), and an invalid update has been produced and distributed in the network.
+- At TRC level: If any of the root keys or voting keys contained in the TRC are compromised, the TRC MUST be updated as described in [](#update). A trust reset is only required in the case the number of compromised voting keys at the same time is greater or equal than the TRC's quorum (see [](#quorum)).
 - At CA level: If the private key related to an issuing CA certificate is compromised, the impacted CA AS MUST obtain a new CA certificate from the corresponding root AS. Issuing CA certificates are generally short lived to limit the impact of compromise. Alternatively, with a TRC update new root keys can also be forced, invalidating the compromised CA.
 - At AS level: In the event of a key compromise of a non-core AS, the impacted AS needs to obtain a new certificate from its CA. This process will vary depending on internal issuance processes.
 
