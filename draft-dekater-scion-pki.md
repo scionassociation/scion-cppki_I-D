@@ -1315,6 +1315,12 @@ The Signing Ceremony is completed when every voting representative confirms that
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
 
+## draft-dekater-scion-pki-14
+{:numbered="false"}
+
+- Final check (check cross-references, minor changes)
+- Trust reset - clarify text
+
 ## draft-dekater-scion-pki-13
 {:numbered="false"}
 
