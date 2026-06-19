@@ -529,13 +529,11 @@ Each Control Plane PKI certificate type uses the public key differently, and con
 | ---------------------------- | ------------------------ | ------------------------- | --------------------- | -------------------- |
 | *Attribute:*                 |                          |                           |                       |                      |
 | `keyUsage` extension itself  | REQUIRED                 | REQUIRED                  | REQUIRED              | OPTIONAL             |
-| `digitalSignature` bit       | MUST NOT be asserted (1) | MUST NOT be asserted (2)  | MUST be asserted      | MUST NOT be asserted |
+| `digitalSignature` bit       | MUST NOT be asserted (1) | MUST NOT be asserted (1)  | MUST be asserted      | MUST NOT be asserted |
 | `keyCertSign` bit            | MUST be asserted         | MUST be asserted          | MUST NOT be asserted  | MUST NOT be asserted |
 {: #table-4 title="keyUsage extension - Specifications per certificate type"}
 
-(1)  Root certificates SHOULD NOT be used to verify control plane messages.<br>
-(2)  Issuing CA certificates SHOULD NOT be used to verify control plane messages.
-
+(1)  Root and Issuing CA certificates SHOULD NOT be used to verify control plane messages.
 
 ### `extKeyUsage` Extension {#ext-key-usage-ext}
 
