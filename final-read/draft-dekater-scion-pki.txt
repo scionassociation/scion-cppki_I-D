@@ -2444,7 +2444,7 @@ C.1.   Ceremony Participants
    The ISD members must decide on the roles of the Signing Ceremony
    participants in advance of the Signing Ceremony, and must have
    reached agreement about the Certificate Authority (CA) ASes (that
-   will also issue the root certificates).  Hash comparison checks are
+   will also issue the AS certificates).  Hash comparison checks are
    included to counter mistakes and so that every participant can ensure
    they are operating on the same data.
 
