@@ -381,7 +381,7 @@ Table of Contents
 
    The Control Plane PKI does not explicitly support certificate
    revocation.  Instead it relies on the TRC update mechanism, on trust
-   resets, and on short-lived certificates.  This approach constitutes
+   resets, and on short-lived certificates.  These approaches constitute
    an alternative to a revocation system for the following reasons:
 
    *  Instead of periodically signing a new revocation list, the CA can
@@ -1804,16 +1804,12 @@ Table of Contents
    TRC following a trust reset is changed as shown in Table 6.
 
    This procedure serves as a remediation mechanism when an ISD must re-
-   establish its root of trust following a severe compromise or loss of
-   the voting keys.  A TRC is considered compromised if its associated
-   root or voting keys have been exposed.  If the number of compromised
-   or lost voting keys is lower than the voting quorum, a TRC update is
+   establish its root of trust following a severe compromise.  A TRC is
+   considered compromised if its associated root or voting keys have
+   been exposed or lost.  If the number of exposed or lost voting keys
+   is lower than the voting quorum (see Section 3.2.7), a TRC update is
    sufficient to replace the affected keys (see Section 3.5).
 
-   A trust reset is only required when the number of simultaneously
-   compromised or lost voting keys meets or exceeds the TRC's voting
-   quorum (see Section 3.2.7), and an invalid or malicious TRC update
-   has subsequently been produced and distributed across the network.
    The new TRC must be axiomatically trusted and distributed via out-of-
    band communication channels.
 
