@@ -1137,7 +1137,7 @@ Table of Contents
       axiomatically, similarly to how root certificates are trusted by
       clients in the Web PKI.
 
-   *  Update: All non-base TRCs are updated TRCs.  They are the product
+   *  Updated: All non-base TRCs are updated TRCs.  They are the product
       of either a regular or a sensitive update.
 
    A TRC can have the following states:
