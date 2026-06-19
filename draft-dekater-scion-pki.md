@@ -734,7 +734,7 @@ As with Core ASes, assigning or revoking Authoritative status is performed by ad
 ### `description` {#description}
 
 The `description` field contains a UTF-8 encoded string that describes the ISD. The text MUST be formatted in accordance with "Net-Unicode" {{RFC5198}} to ensure consistent normalization.
-When this field contains a language other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see ()[#langtag]).
+When this field contains a language other than English, the corresponding language SHOULD be identified explicitly in the `descriptionLanguage` field (see [](#langtag)).
 
 Multi-language TRCs SHOULD use the `localizedDescriptions` field instead of the `description` field. Either the `description` or the `localizedDescriptions`field MUST be present and not be empty.
 
@@ -934,9 +934,9 @@ A trust reset is a process that results in the creation of a new base TRC. It is
 It differs fundamentally from a TRC update (whether regular or sensitive) because the signatures on the new base TRC cannot be verified using the certificates contained in the predecessor TRC.
 Instead, a trust reset base TRC must be axiomatically trusted, similar to how the initial TRC is trusted. The base number of a new TRC following a trust reset is changed as shown in {{#table-7}}.
 
-This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
+This procedure serves as a remediation mechanism when an ISD must re-establish its root of trust following a severe compromise or loss of the voting keys. A TRC is considered compromised if its associated root or voting keys have been exposed. If the number of compromised or lost voting keys is lower than the voting quorum, a TRC update is sufficient to replace the affected keys (see [](#update)).
 
-A trust reset is only required when the number of simultaneously compromised voting keys meets or exceeds the TRC's voting quorum (see [](#quorum)), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.
+A trust reset is only required when the number of simultaneously compromised or lost voting keys meets or exceeds the TRC's voting quorum (see [](#quorum)), and an invalid or malicious TRC update has subsequently been produced and distributed across the network. The new TRC must be axiomatically trusted and distributed via out-of-band communication channels.
 
 
 ## Initial TRC Signing Ceremony {#trc-ceremony}
