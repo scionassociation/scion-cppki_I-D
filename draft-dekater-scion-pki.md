@@ -1109,7 +1109,7 @@ In typical deployments, initial TRCs are provisioned out of band. Should an endp
 Should an AS be provisioned with a malicious TRC, it would not be able to communicate to other ASes in the affected ISD, thereby limiting impact of a malicious TRC.
 
 
-# IANA Considerations
+# IANA Considerations {#iana}
 
 This document has no IANA actions.
 
@@ -1239,7 +1239,7 @@ The private keys of each participant never leave their machine, so the Ceremony 
 
 The participants agree in advance on the location of the Signing Ceremony, the devices that will be used, and the ISD policy as follows:
 
-- ISD number - for public ISDs these are obtained from the SCION registry, see [](#id);
+- ISD number - for public ISDs these are obtained from the SCION registry, see [](#iana);
 - The description of the TRC, see [](#description);
 - Validity period of the TRC, see [](#validity-trc);
 - Grace period of the TRC (except for Base TRCs);
