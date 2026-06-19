@@ -328,13 +328,13 @@ Table of Contents
    originating from that ISD, such as paths, but for nothing originating
    outside of the ISD.  This ISD-level scoping of trust roots enhances
    security by strictly limiting effect of a compromise to data
-   originating from the compromised AS.  An ISD's trust roots and policy
-   are encoded in the TRC, which has a base and serial number, a list of
-   public keys that serves as root of trust for various purposes, and a
-   voting quorum governing the number of signatures required to update
-   TRCs.  The TRC serves as a way to bootstrap all authentication within
-   SCION.  Additionally, TRC versioning is used as an alternative to
-   revocation in case of compromised roots of trust.
+   originating from the compromised ISD.  An ISD's trust roots and
+   policy are encoded in the TRC, which has a base and serial number, a
+   list of public keys that serves as root of trust for various
+   purposes, and a voting quorum governing the number of signatures
+   required to update TRCs.  The TRC serves as a way to bootstrap all
+   authentication within SCION.  Additionally, TRC versioning is used as
+   an alternative to revocation in case of compromised roots of trust.
 
    The TRC also provides _trust agility_ by enabling relying parties
    (endpoints and ASes) to select the trust roots used to initiate
