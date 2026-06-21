@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-07T01:01:38.820712+00:00",
+  "timestamp": "2026-06-21T01:04:05.964511+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -11753,6 +11753,48 @@
           "body": "LGTM",
           "createdAt": "2026-06-05T08:31:32Z",
           "updatedAt": "2026-06-05T08:31:32Z",
+          "comments": []
+        }
+      ]
+    },
+    {
+      "number": 169,
+      "id": "PR_kwDOH386tM7oVnSn",
+      "title": "final read",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/169",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "Minnor fixes before publication\r\n\r\n[Diff with main](https://author-tools.ietf.org/api/iddiff?url_1=https://scionassociation.github.io/scion-cppki_I-D/draft-dekater-scion-pki.txt&url_2=https://scionassociation.github.io/scion-cppki_I-D/final-read/draft-dekater-scion-pki.txt)",
+      "createdAt": "2026-06-19T10:47:26Z",
+      "updatedAt": "2026-06-19T13:29:05Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "ff77dbbf590f09a1e84f2e01ddafc05f06f6da36",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "final-read",
+      "headRefOid": "83071dedc8bc9cb86594a953db80d953962c6f75",
+      "closedAt": "2026-06-19T13:29:05Z",
+      "mergedAt": "2026-06-19T13:29:05Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "aaa7d089065a397bc06b82aec401f4172d44cfbd"
+      },
+      "comments": [],
+      "reviews": [
+        {
+          "id": "PRR_kwDOH386tM8AAAABDiUIsA",
+          "commit": {
+            "abbreviatedOid": "efc16b3"
+          },
+          "author": "tzaeschke",
+          "authorAssociation": "CONTRIBUTOR",
+          "state": "APPROVED",
+          "body": "LGTM",
+          "createdAt": "2026-06-19T11:02:43Z",
+          "updatedAt": "2026-06-19T11:02:43Z",
           "comments": []
         }
       ]
