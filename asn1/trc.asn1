@@ -2,10 +2,8 @@ SCION-CP-PKI-TRC {
     iso(1) identified-organization(3) dod(6) internet(1) private(4)
     enterprise(1) scion(55324) module(0) trc(1)
 }
-
 DEFINITIONS EXPLICIT TAGS ::=
 BEGIN
-
 IMPORTS
     Certificate
         FROM PKIX1Explicit88 {
@@ -13,12 +11,10 @@ IMPORTS
             security(5) mechanisms(5) pkix(7) id-mod(0)
             id-pkix1-explicit(18)
         };
-
 TRCValidity ::= SEQUENCE {
     notBefore          GeneralizedTime,
     notAfter           GeneralizedTime
 }
-
 LocalizedText ::= SEQUENCE {
     language        PrintableString (SIZE (1..64)),
     content         UTF8String (SIZE (1..8192))
@@ -38,17 +34,12 @@ TRCPayload ::= SEQUENCE {
     localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
     descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
 }
-
 TRCFormatVersion ::= INTEGER { v1(0) }
-
 TRCID ::= SEQUENCE {
     iSD                ISD,
     serialNumber       INTEGER (1..MAX),
     baseNumber         INTEGER (1..MAX)
 }
-
 ISD ::= INTEGER (1..65535)
-
 ASN ::= PrintableString (SIZE (1..16))
-
 END

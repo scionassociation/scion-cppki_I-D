@@ -20,7 +20,7 @@ venue:
 author:
  -   ins: C. de Kater
      name: Corine de Kater
-     org: SCION Association
+     org: Independent
      email: c_de_kater@gmx.ch
 
  -   ins: N. Rustignoli
@@ -344,22 +344,19 @@ The RECOMMENDED maximum validity period of a voting certificate is 5 years.
 
 ~~~aasvg
 +----------------------------------------------+
-|               TRC 1 (SerialNumber=1)         |
-|                (base/initial)                |
+|     TRC 1 (base/initial, SerialNumber=1)     |
 | +------------------------------------------+ |
 | | - Version          - Core ASes           | |
 | | - ID               - Description         | |
 | | - Validity         - No Trust Reset      | |
-| | - Grace Period     - Voting Quorum       | |
-| | - ...                                    | |
+| | - Grace Period     - Voting Quorum ...   | |
 | +------------------------------------------+ |
 |                                              |	
 | +-------------------+ +--------------------+ |
 | |        Votes      | |   Regular Voting   | |
 | |  (cert. indices)  | |    Certificates    | |
 | |                   | |  +-----+ +-----+   | |
-| |       (empty)     | |  | (1) | | (2) |   | |
-| |                   | |  |  C  | |  C  |   | |
+| |      (empty)      | |  |  C  | |  C  |   | |
 | |                   | |  | reg | | reg |   | |
 | |                   | |  +-----+ +-----+   | |
 | +-------------------+ +--------------------+ |
@@ -367,37 +364,30 @@ The RECOMMENDED maximum validity period of a voting certificate is 5 years.
 | +--------------------+ +-------------------+ |
 | |     Signatures     | | Sensitive Voting  | |
 | | +----------------+ | |    Certificates   | |
-| | | 73 A9 4E AO ...| | |                   | |
-| | +----------------+ | | +-----+ +-----+   | |
-| |         ...        | | | (3) | | (4) |   | |
+| | | 73 A9 4E AO ...| | | +-----+ +-----+   | |
 | | +----------------+ | | |  C  | |  C  |   | |
-| | | 53 B7 7C 98 ...| | | | sens| | sens|   | |
-| | +----------------+ | | +-----+ +-----+   | |
+| |        ...         | | | sens| | sens|   | |
+| |                    | | +-----+ +-----+   | |
 | +--------------------+ +-------------------+ |
 |                                              |	
 | +------------------------------------------+ |
 | |          CP Root Certificates            | |
-| |                                          | |
 | | +-----+ +-----+ +-----+ +-----+          | |
-| | | (5) | | (6) | | (7) | | (8) |          | |
 | | |  C  | |  C  | |  C  | |  C  |          | |
 | | | root| | root| | root| | root| ...      | |
 | | +-----+ +--+--+ +-----+ +--+--+          | |
 | +------------+---------------+-------------+ |
 +--------------+---------------+---------------+
-               |               |
                v               v
      +-------------+       +-------------+
      |CP Issuing CA|       |CP Issuing CA|
      | Certificate |       | Certificate |
      +------+------+       +------+------+
-            |                     |
             v                     v
       +-----------+         +-----------+
       |   CP AS   |         |   CP AS   |
       |Certificate|         |Certificate|
       +-----------+         +-----------+
-
 ~~~~
 {: #figure-2 title="TRC and the different types of associated certificates. Arrows indicate the certificate hierarchy."}
 
@@ -1163,10 +1153,8 @@ SCION-CP-PKI-TRC {
     iso(1) identified-organization(3) dod(6) internet(1) private(4)
     enterprise(1) scion(55324) module(0) trc(1)
 }
-
 DEFINITIONS EXPLICIT TAGS ::=
 BEGIN
-
 IMPORTS
     Certificate
         FROM PKIX1Explicit88 {
@@ -1174,12 +1162,10 @@ IMPORTS
             security(5) mechanisms(5) pkix(7) id-mod(0)
             id-pkix1-explicit(18)
         };
-
 TRCValidity ::= SEQUENCE {
     notBefore          GeneralizedTime,
     notAfter           GeneralizedTime
 }
-
 LocalizedText ::= SEQUENCE {
     language        PrintableString (SIZE (1..64)),
     content         UTF8String (SIZE (1..8192))
@@ -1199,19 +1185,14 @@ TRCPayload ::= SEQUENCE {
     localizedDescriptions [0] SEQUENCE SIZE (1..1024) OF LocalizedText OPTIONAL,
     descriptionLanguage   [1] PrintableString (SIZE (1..64)) OPTIONAL
 }
-
 TRCFormatVersion ::= INTEGER { v1(0) }
-
 TRCID ::= SEQUENCE {
     iSD                ISD,
     serialNumber       INTEGER (1..MAX),
     baseNumber         INTEGER (1..MAX)
 }
-
 ISD ::= INTEGER (1..65535)
-
 ASN ::= PrintableString (SIZE (1..16))
-
 END
 ~~~~
 
