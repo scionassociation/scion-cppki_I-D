@@ -1296,6 +1296,12 @@ The Signing Ceremony is completed when every voting representative confirms that
 
 Changes made to drafts since ISE submission. This section is to be removed before publication.
 
+## draft-dekater-scion-pki-15
+{:numbered="false"}
+
+- Shrink figure 2 and to fit in one page
+- TRC ASN.1 module: remove empty lines to fit in a page
+
 ## draft-dekater-scion-pki-14
 {:numbered="false"}
 
