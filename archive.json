@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-06-21T01:04:05.964511+00:00",
+  "timestamp": "2026-06-25T00:55:38.334757+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -11798,6 +11798,42 @@
           "comments": []
         }
       ]
+    },
+    {
+      "number": 170,
+      "id": "PR_kwDOH386tM7p2Eq3",
+      "title": "Shrink figure",
+      "url": "https://github.com/scionassociation/scion-cppki_I-D/pull/170",
+      "state": "MERGED",
+      "author": "nicorusti",
+      "authorAssociation": "MEMBER",
+      "assignees": [],
+      "labels": [],
+      "body": "As requested by RFC editor",
+      "createdAt": "2026-06-23T21:37:41Z",
+      "updatedAt": "2026-06-23T21:39:33Z",
+      "baseRepository": "scionassociation/scion-cppki_I-D",
+      "baseRefName": "main",
+      "baseRefOid": "aaa7d089065a397bc06b82aec401f4172d44cfbd",
+      "headRepository": "scionassociation/scion-cppki_I-D",
+      "headRefName": "shrink-figure",
+      "headRefOid": "b546271a0b3002e254af197890b98f7212473725",
+      "closedAt": "2026-06-23T21:39:33Z",
+      "mergedAt": "2026-06-23T21:39:33Z",
+      "mergedBy": "nicorusti",
+      "mergeCommit": {
+        "oid": "065b5ae3dd0dfede8353747f70241d4fed1af367"
+      },
+      "comments": [
+        {
+          "author": "nicorusti",
+          "authorAssociation": "MEMBER",
+          "body": "<img width=\"3248\" height=\"2122\" alt=\"Screenshot 2026-06-23 at 23 38 03\" src=\"https://github.com/user-attachments/assets/8c9b0348-50a0-4a83-b741-710e21921c53\" />\r\nThe ASN.1 module still compiles",
+          "createdAt": "2026-06-23T21:38:17Z",
+          "updatedAt": "2026-06-23T21:38:17Z"
+        }
+      ],
+      "reviews": []
     }
   ]
 }
