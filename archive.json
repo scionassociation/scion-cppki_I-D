@@ -1,6 +1,6 @@
 {
   "magic": "E!vIA5L86J2I",
-  "timestamp": "2026-07-16T00:36:46.202815+00:00",
+  "timestamp": "2026-07-26T00:42:51.635793+00:00",
   "repo": "scionassociation/scion-cppki_I-D",
   "labels": [
     {
@@ -2144,7 +2144,7 @@
     {
       "number": 171,
       "id": "I_kwDOH386tM8AAAABIvwOew",
-      "title": "AUTH48 changes",
+      "title": "Final review changes",
       "url": "https://github.com/scionassociation/scion-cppki_I-D/issues/171",
       "state": "OPEN",
       "author": "nicorusti",
@@ -2153,7 +2153,7 @@
       "labels": [],
       "body": "Changes:\ndraft-dekater-scion-pki section 2.6.4.1.  id-at-ia Attribute\nWe could clarify that the \"ia\u201d abbreviation stands for ISD and AS number in this section, where `id-at-ia` is introduced. \nCurrent: \t\tThe id-at-ia attribute identifies the SCION ISD and AS numbers.\nProposed: \tThe id-at-ia attribute identifies the SCION ISD and AS numbers, where `ia` stands for ISD-AS.\n\ndraft-dekater-scion-pki section 2.7.4.1.  SCION-Specific Key Purposes\u201d \nIn -pki We use \"certificate type\u201d consistently except in this section, where we say \u201ccertificate role\u201d.\nCurrent: \t\tThree additional key purpose attributes differentiate certificate roles within the CP-PKI:\nProposed:\tThree additional key purpose attributes differentiate certificate types within the CP-PKI:\nAn even better word would be certificate class  (to be consistent with wording used in  rfc5280), however that would be a much bigger change since the word is used many times, I\u2019m not sure if the RPC would do such change.",
       "createdAt": "2026-07-14T09:53:30Z",
-      "updatedAt": "2026-07-14T09:53:30Z",
+      "updatedAt": "2026-07-23T09:53:47Z",
       "closedAt": null,
       "comments": []
     }
