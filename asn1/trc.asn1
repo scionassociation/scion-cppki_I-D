@@ -25,7 +25,7 @@ TRCPayload ::= SEQUENCE {
     validity              TRCValidity,
     gracePeriod           INTEGER,
     noTrustReset          BOOLEAN,
-    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4095),
+    votes                 SEQUENCE SIZE (0..2047) OF INTEGER (0..4094),
     votingQuorum          INTEGER (1..2047),
     coreASes              SEQUENCE OF ASN,
     authoritativeASes     SEQUENCE OF ASN,
